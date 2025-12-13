@@ -2,306 +2,568 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IELTS Preparation | LizOn Education</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IELTS | LizOn Education</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    :root{
-      --bg1:#03160f;
-      --bg2:#062c1e;
-      --card:#0b2b21cc;
-      --stroke:#134a38;
-      --text:#eaf3ef;
-      --muted:#cfe1d9;
-      --gold:#d6b24c;
-      --gold2:#b9932d;
-      --shadow:0 18px 50px rgba(0,0,0,.45);
-      --radius:18px;
-      --max:1100px;
+    /* --- Page-only helpers (keeps your style.css intact) --- */
+    .section-title { margin-top: 28px; font-size: 20px; font-weight: 800; }
+    .subtext { color: rgba(234,243,239,0.78); font-size: 13px; margin-top: 6px; }
+    .pill {
+      display:inline-block; padding:6px 12px; border-radius:999px;
+      border: 1px solid rgba(255, 215, 64, 0.35);
+      color: rgba(255,215,64,0.92);
+      background: rgba(10,20,16,0.35);
+      font-size: 12px;
+      margin-bottom: 14px;
     }
-    *{box-sizing:border-box}
-    body{
+    .card p { margin: 10px 0; }
+
+    .learnmore-wrap { margin-top: 14px; }
+    .learnmore-btn {
+      width: 100%;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.22);
+      color: rgba(234,243,239,0.95);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .learnmore-btn span { opacity: 0.9; }
+    .learnmore-btn .arrow { opacity: 0.8; transition: transform 0.2s ease; }
+    .learnmore-content {
+      display: none;
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+    }
+    .learnmore-content.active { display:block; }
+    .learnmore-content h4 {
+      margin: 14px 0 8px;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+    }
+    .learnmore-content ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+      color: rgba(234,243,239,0.88);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .two-col {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    @media (max-width: 860px){
+      .two-col { grid-template-columns: 1fr; }
+    }
+    .mini-box {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(0,0,0,0.14);
+    }
+    .mini-box b { display:block; margin-bottom: 6px; }
+    .iconline {
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+      margin: 8px 0;
+      color: rgba(234,243,239,0.88);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .icon {
+      width: 26px; height: 26px;
+      border-radius: 10px;
+      display:grid; place-items:center;
+      border: 1px solid rgba(255,215,64,0.25);
+      background: rgba(255,215,64,0.08);
+      flex: 0 0 26px;
+      font-size: 14px;
+    }
+
+    /* Model Placeholder */
+    .model-area {
+      margin-top: 14px;
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.16);
+    }
+    .model-top {
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .model-top b { font-size: 13px; }
+    .model-top small { opacity: 0.8; font-size: 12px; }
+    .model-img {
+      height: 180px;
+      display:grid;
+      place-items:center;
+      color: rgba(234,243,239,0.7);
+      font-size: 12px;
+      background: linear-gradient(135deg, rgba(0,0,0,0.18), rgba(0,0,0,0.08));
+    }
+    .model-actions {
+      padding: 12px 14px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn.whats {
+      background: #ffd740;
+      color: #0a1210;
+      border: none;
+    }
+    .btn.ghost {
+      background: rgba(0,0,0,0.18);
+      color: rgba(234,243,239,0.92);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    /* Sticky CTA */
+    .sticky-cta {
+      position: sticky;
+      bottom: 16px;
+      margin-top: 26px;
+      display:flex;
+      justify-content:center;
+      z-index: 10;
+    }
+    .sticky-cta .bar{
+      width:min(980px, 96%);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.28);
+      backdrop-filter: blur(10px);
+      padding: 12px;
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      justify-content: space-between;
+    }
+    .sticky-cta .bar p{
       margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(900px 400px at 15% 0%, rgba(214,178,76,.18), transparent 60%),
-        linear-gradient(180deg, var(--bg2), var(--bg1) 60%, #020c08);
+      color: rgba(234,243,239,0.88);
+      font-size: 13px;
+      line-height: 1.35;
     }
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:var(--max);margin:auto;padding:42px 18px 80px}
-
-    .badge{
-      display:inline-block;
-      border:1px solid rgba(214,178,76,.4);
-      color:var(--gold);
-      padding:6px 14px;
-      border-radius:999px;
-      font-size:12px;
-      background:rgba(0,0,0,.2);
-    }
-
-    h1{font-size:40px;margin:14px 0 10px;line-height:1.1}
-    h2{font-size:24px;margin:0 0 10px}
-    h3{margin:0 0 8px}
-    p{color:var(--muted);line-height:1.6}
-
-    .hero{
-      background:linear-gradient(180deg, rgba(12,70,55,.5), rgba(0,0,0,.2));
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:24px;
-      padding:34px 26px;
-      box-shadow:var(--shadow);
-    }
-
-    .btnrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
-    .btn{
-      padding:12px 18px;
-      border-radius:14px;
-      font-weight:700;
-      font-size:14px;
-      border:1px solid rgba(255,255,255,.15);
-      background:rgba(0,0,0,.2);
-      min-width:180px;
-      text-align:center;
-    }
-    .btn.primary{
-      background:linear-gradient(180deg,var(--gold),var(--gold2));
-      color:#0b1a13;
-      border:none;
-    }
-
-    .helper{
-      margin-top:12px;
-      font-size:13px;
-      color:rgba(234,243,239,.85);
-    }
-
-    .section{margin-top:48px}
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:14px;
-      margin-top:16px;
-    }
-    @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:560px){.grid{grid-template-columns:1fr}}
-
-    .card{
-      background:linear-gradient(180deg, rgba(14,60,45,.55), rgba(0,0,0,.22));
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:var(--radius);
-      padding:16px;
-      box-shadow:var(--shadow);
-    }
-    .tag{
-      font-size:12px;
-      color:var(--gold);
-      border:1px solid rgba(214,178,76,.3);
-      padding:4px 10px;
-      border-radius:999px;
-      display:inline-block;
-      margin-bottom:6px;
-    }
-    ul{padding-left:18px;color:rgba(234,243,239,.88);line-height:1.55}
-
-    .icons{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:14px;
-      margin-top:16px;
-    }
-    @media(max-width:900px){.icons{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:560px){.icons{grid-template-columns:1fr}}
-
-    .iconCard{
-      background:rgba(0,0,0,.25);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:14px;
-      padding:14px;
-      text-align:center;
-    }
-    .icon{font-size:26px;margin-bottom:6px}
-
-    .details{margin-top:36px}
-    .details h2{margin-bottom:6px}
-    .ctaBox{
-      margin-top:18px;
-      background:linear-gradient(180deg, rgba(214,178,76,.18), rgba(0,0,0,.15));
-      border:1px solid rgba(214,178,76,.3);
-      border-radius:18px;
-      padding:16px;
-    }
-
-    .anchor{scroll-margin-top:20px}
-
-    .footer{
-      margin-top:50px;
-      border-top:1px solid rgba(255,255,255,.08);
-      padding-top:16px;
-      font-size:13px;
-      color:rgba(234,243,239,.75);
-    }
+    .sticky-cta .bar b { color: rgba(234,243,239,0.98); }
   </style>
 </head>
 
 <body>
-<div class="wrap">
+  <div class="container">
 
-  <!-- HERO -->
-  <section class="hero">
-    <span class="badge">IELTS by LizOn Education</span>
-    <h1>IELTS Preparation<br>Designed for Your Desired Score</h1>
-    <p>
-      ZERO → HOPE → STEP-UP → DESPERATE.  
-      One clear journey from confusion to exam-ready confidence.
+    <section class="hero">
+      <div class="badge">IELTS by LizOn Education</div>
+      <h1>IELTS Preparation<br/>Designed for Your Desired Score</h1>
+      <p>From absolute beginner to exam-ready confidence — one structured journey, no confusion.</p>
+
+      <div class="btn-row">
+        <a class="btn primary" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Talk / Chat with LizOn</a>
+        <a class="btn secondary" href="#levels">View IELTS Levels</a>
+      </div>
+
+      <p style="margin-top:16px; font-size:12px; color:rgba(234,243,239,0.7);">
+        Built for Bangladeshi students. Grammar + confidence + evaluation — all in one system.
+      </p>
+    </section>
+
+    <section id="levels" class="grid">
+      <!-- ===================== ZERO ===================== -->
+      <div class="card">
+        <div class="pill">IELTS ZERO • English Starts Here</div>
+        <h2>IELTS ZERO</h2>
+        <p class="subtext">For students who feel lost, scared, or confused about IELTS.</p>
+
+        <!-- Model Placeholder -->
+        <div class="model-area">
+          <div class="model-top">
+            <div>
+              <b>Model Space (ZERO)</b><br/>
+              <small>Upload later: /assets/models/zero.jpg</small>
+            </div>
+            <small>Recommended: 1200×800</small>
+          </div>
+          <div class="model-img">Model image will appear here</div>
+          <div class="model-actions">
+            <a class="btn whats" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Admit in WhatsApp</a>
+            <a class="btn ghost" href="https://wa.me/8801611611139?text=I%20want%20to%20join%20IELTS%20ZERO.%20Please%20guide%20me." target="_blank" rel="noopener">Send Auto Message</a>
+          </div>
+        </div>
+
+        <!-- Learn More -->
+        <div class="learnmore-wrap">
+          <button class="learnmore-btn" type="button" data-target="lm-zero">
+            <span>Learn More (Full Details)</span>
+            <span class="arrow">▾</span>
+          </button>
+
+          <div id="lm-zero" class="learnmore-content">
+            <h4>This Course Comes With</h4>
+            <div class="two-col">
+              <div class="mini-box">
+                <b>✅ Classes & Support</b>
+                <div class="iconline"><div class="icon">🎓</div><div>Live classes + structured practice</div></div>
+                <div class="iconline"><div class="icon">🧠</div><div>Grammar foundation + speaking confidence build-up</div></div>
+              </div>
+              <div class="mini-box">
+                <b>✅ Guidance</b>
+                <div class="iconline"><div class="icon">📌</div><div>Clear routine: what to do, how to do, why it works</div></div>
+                <div class="iconline"><div class="icon">💬</div><div>WhatsApp-based admission + quick support</div></div>
+              </div>
+            </div>
+
+            <h4>Skilled Covered</h4>
+            <ul>
+              <li>Grammar foundation (accuracy + sentence control)</li>
+              <li>Pronunciation & sound clarity</li>
+              <li>Basic sentence formation (free speaking base)</li>
+              <li>Reading without translating from Bangla (starter approach)</li>
+            </ul>
+
+            <h4>Benefited Modules</h4>
+            <ul>
+              <li>Speaking (pronunciation + fluency base)</li>
+              <li>Writing (sentence correctness)</li>
+              <li>Grammar (core understanding)</li>
+            </ul>
+
+            <h4>Aim of ZERO</h4>
+            <ul>
+              <li>Fix the “English base” so IELTS doesn’t feel impossible</li>
+              <li>Build correct sentence habits + confident speaking start</li>
+              <li>Stop the fear: “I don’t know where to start”</li>
+            </ul>
+
+            <h4>After ZERO, Who Will You Become?</h4>
+            <ul>
+              <li>You can speak basic English without panic</li>
+              <li>You can form correct sentences faster</li>
+              <li>You understand what IELTS requires (not guessing anymore)</li>
+              <li>You feel ready to enter HOPE (skill repair stage)</li>
+            </ul>
+
+            <h4>Who Should Take ZERO?</h4>
+            <ul>
+              <li>You understand English a bit, but can’t speak properly</li>
+              <li>Grammar confuses you and you make frequent mistakes</li>
+              <li>You translate from Bangla while reading</li>
+              <li>You feel lost starting IELTS</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== HOPE ===================== -->
+      <div class="card">
+        <div class="pill">IELTS HOPE • Skill Repair Stage</div>
+        <h2>IELTS HOPE</h2>
+        <p class="subtext">For students who practiced but scores didn’t improve. HOPE fixes the blockers.</p>
+
+        <div class="model-area">
+          <div class="model-top">
+            <div>
+              <b>Model Space (HOPE)</b><br/>
+              <small>Upload later: /assets/models/hope.jpg</small>
+            </div>
+            <small>Recommended: 1200×800</small>
+          </div>
+          <div class="model-img">Model image will appear here</div>
+          <div class="model-actions">
+            <a class="btn whats" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Admit in WhatsApp</a>
+            <a class="btn ghost" href="https://wa.me/8801611611139?text=I%20want%20to%20join%20IELTS%20HOPE.%20Please%20guide%20me." target="_blank" rel="noopener">Send Auto Message</a>
+          </div>
+        </div>
+
+        <div class="learnmore-wrap">
+          <button class="learnmore-btn" type="button" data-target="lm-hope">
+            <span>Learn More (Full Details)</span>
+            <span class="arrow">▾</span>
+          </button>
+
+          <div id="lm-hope" class="learnmore-content">
+            <h4>This Course Comes With</h4>
+            <div class="two-col">
+              <div class="mini-box">
+                <b>✅ Skill Repair System</b>
+                <div class="iconline"><div class="icon">⚙️</div><div>Speed + accuracy focused drills</div></div>
+                <div class="iconline"><div class="icon">📝</div><div>Freehand writing guidance (no memorization)</div></div>
+              </div>
+              <div class="mini-box">
+                <b>✅ Clarity & Direction</b>
+                <div class="iconline"><div class="icon">🧭</div><div>Fix “I practiced but didn’t improve” problem</div></div>
+                <div class="iconline"><div class="icon">📣</div><div>WhatsApp-based guidance for next steps</div></div>
+              </div>
+            </div>
+
+            <h4>Skilled Covered</h4>
+            <ul>
+              <li>Reading faster without translating</li>
+              <li>Listening clarity (catch answers confidently)</li>
+              <li>Writing without memorizing templates</li>
+              <li>Speaking with clear ideas (not blank mind)</li>
+            </ul>
+
+            <h4>Benefited Modules</h4>
+            <ul>
+              <li>Reading (speed + strategy)</li>
+              <li>Listening (accuracy + understanding)</li>
+              <li>Writing (freehand structure)</li>
+              <li>Speaking (idea flow)</li>
+            </ul>
+
+            <h4>Aim of HOPE</h4>
+            <ul>
+              <li>Fix the real skill gaps blocking your score</li>
+              <li>Make you consistent across all IELTS modules</li>
+              <li>Prepare you for STEP-UP (advanced question control)</li>
+            </ul>
+
+            <h4>After HOPE, Who Will You Become?</h4>
+            <ul>
+              <li>You read without translating</li>
+              <li>You catch answers confidently in listening</li>
+              <li>You write freely with your own ideas</li>
+              <li>You speak confidently on any topic</li>
+            </ul>
+
+            <h4>Who Should Take HOPE?</h4>
+            <ul>
+              <li>IELTS feels difficult even after practice</li>
+              <li>You read slowly</li>
+              <li>Accents confuse you in listening</li>
+              <li>Writing feels stuck</li>
+              <li>Speaking is not fluent</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== STEP-UP ===================== -->
+      <div class="card">
+        <div class="pill">IELTS STEP-UP • Band 6+ Checkpoint</div>
+        <h2>IELTS STEP-UP</h2>
+        <p class="subtext">For students aiming to push scores higher with strategy + advanced control.</p>
+
+        <div class="model-area">
+          <div class="model-top">
+            <div>
+              <b>Model Space (STEP-UP)</b><br/>
+              <small>Upload later: /assets/models/stepup.jpg</small>
+            </div>
+            <small>Recommended: 1200×800</small>
+          </div>
+          <div class="model-img">Model image will appear here</div>
+          <div class="model-actions">
+            <a class="btn whats" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Admit in WhatsApp</a>
+            <a class="btn ghost" href="https://wa.me/8801611611139?text=I%20want%20to%20join%20IELTS%20STEP-UP.%20Please%20guide%20me." target="_blank" rel="noopener">Send Auto Message</a>
+          </div>
+        </div>
+
+        <div class="learnmore-wrap">
+          <button class="learnmore-btn" type="button" data-target="lm-stepup">
+            <span>Learn More (Full Details)</span>
+            <span class="arrow">▾</span>
+          </button>
+
+          <div id="lm-stepup" class="learnmore-content">
+            <h4>This Course Comes With</h4>
+            <div class="two-col">
+              <div class="mini-box">
+                <b>✅ Mentorship & Support</b>
+                <div class="iconline"><div class="icon">🤝</div><div>Mentorship by Shuvo Sarker Joy</div></div>
+                <div class="iconline"><div class="icon">💻</div><div>Private discord/community support</div></div>
+              </div>
+              <div class="mini-box">
+                <b>✅ Career/Abroad Extras</b>
+                <div class="iconline"><div class="icon">🌍</div><div>Abroad job + scholarship preparation guidance</div></div>
+                <div class="iconline"><div class="icon">📄</div><div>Documentation guideline support</div></div>
+              </div>
+            </div>
+
+            <h4>Skilled Covered</h4>
+            <ul>
+              <li><b>Listening:</b> Part 1 → Part 4</li>
+              <li><b>Reading:</b> True/False/NG, Yes/No/NG, Fill in the Gaps (all types)</li>
+              <li><b>Writing Task 1:</b> Overall + comparison sentence making</li>
+              <li><b>Writing Task 2:</b> Main idea find out, what to cover, body segmentation, topic sentence</li>
+              <li><b>Speaking:</b> Topic-based presentation (100 seconds control) + cue card handling</li>
+            </ul>
+
+            <h4>Benefited Modules</h4>
+            <ul>
+              <li>Listening</li>
+              <li>Reading</li>
+              <li>Speaking</li>
+              <li>Writing</li>
+            </ul>
+
+            <h4>Aim of STEP-UP</h4>
+            <ul>
+              <li>Learn important question types for Listening & Reading</li>
+              <li>Build the structure of right writing</li>
+              <li>Increase fluent speaking capability</li>
+              <li>Cross the “Band 6 skill barrier” with real strategy</li>
+            </ul>
+
+            <h4>After STEP-UP, Who Will You Become?</h4>
+            <ul>
+              <li>No panic in Listening</li>
+              <li>Proven improvement + confidence</li>
+              <li>Write with clean structure</li>
+              <li>Speak smoothly for 100 seconds on any topic</li>
+            </ul>
+
+            <h4>Who Should Take STEP-UP?</h4>
+            <ul>
+              <li>You’re not yet sure about Band 6 in each module</li>
+              <li>You face accuracy problems in Listening/Reading question types</li>
+              <li>You struggle with idea generation in Speaking & Writing</li>
+              <li>You want to move up seriously — STEP-UP is your stage</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== DESPERATE ===================== -->
+      <div class="card">
+        <div class="pill">IELTS DESPERATE • Final & Emergency Stage</div>
+        <h2>IELTS DESPERATE</h2>
+        <p class="subtext">For students who need serious revision + testing + proper evaluation before the exam.</p>
+
+        <div class="model-area">
+          <div class="model-top">
+            <div>
+              <b>Model Space (DESPERATE)</b><br/>
+              <small>Upload later: /assets/models/desperate.jpg</small>
+            </div>
+            <small>Recommended: 1200×800</small>
+          </div>
+          <div class="model-img">Model image will appear here</div>
+          <div class="model-actions">
+            <a class="btn whats" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Admit in WhatsApp</a>
+            <a class="btn ghost" href="https://wa.me/8801611611139?text=I%20want%20to%20join%20IELTS%20DESPERATE.%20Please%20guide%20me." target="_blank" rel="noopener">Send Auto Message</a>
+          </div>
+        </div>
+
+        <div class="learnmore-wrap">
+          <button class="learnmore-btn" type="button" data-target="lm-desperate">
+            <span>Learn More (Full Details)</span>
+            <span class="arrow">▾</span>
+          </button>
+
+          <div id="lm-desperate" class="learnmore-content">
+            <h4>This Course Comes With</h4>
+            <div class="two-col">
+              <div class="mini-box">
+                <b>✅ Evaluation Focus</b>
+                <div class="iconline"><div class="icon">🧪</div><div>Test, Practice & Proper Evaluations</div></div>
+                <div class="iconline"><div class="icon">📊</div><div>Speaking + Writing evaluations (mock style)</div></div>
+              </div>
+              <div class="mini-box">
+                <b>✅ High-Ticket Support</b>
+                <div class="iconline"><div class="icon">🧠</div><div>Intensive correction + targeted improvement plan</div></div>
+                <div class="iconline"><div class="icon">⚡</div><div>Emergency-stage readiness (fast + final)</div></div>
+              </div>
+            </div>
+
+            <h4>Skilled Covered</h4>
+            <ul>
+              <li><b>Listening:</b> Part 1, Part 4, MCQ, Maps, Matching</li>
+              <li><b>Reading:</b> Passage 1, Passage 2, Passage 3 + other question types</li>
+              <li><b>Writing:</b> Task 1 (Graph, Flow Chart) + Task 2 (All types)</li>
+              <li><b>Speaking:</b> Part 1, Part 2, Part 3</li>
+              <li><b>Mock:</b> Speaking evaluation + Writing evaluation</li>
+            </ul>
+
+            <h4>Benefited Modules</h4>
+            <ul>
+              <li>Reading</li>
+              <li>Listening</li>
+              <li>Writing</li>
+              <li>Speaking</li>
+            </ul>
+
+            <h4>Aim of DESPERATE</h4>
+            <ul>
+              <li>Cover everything fast — with proper evaluation</li>
+              <li>Fix the last-minute mistakes before the real exam</li>
+              <li>Make you exam-ready through guided practice + correction</li>
+            </ul>
+
+            <h4>After DESPERATE, Who Will You Become?</h4>
+            <ul>
+              <li>Understand IELTS at an exam-ready level</li>
+              <li>Know exactly where you lose marks — and fix it</li>
+              <li>Write with clean structure under pressure</li>
+              <li>Speak with more control and confidence</li>
+              <li>Feel “final-ready” for the exam</li>
+            </ul>
+
+            <h4>Who Should Take DESPERATE?</h4>
+            <ul>
+              <li>You will take IELTS within 1–2 months</li>
+              <li>You want a final revision + testing stage</li>
+              <li>You need serious evaluation (not random practice)</li>
+              <li>You want the fastest path to become exam-ready</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sticky CTA bar -->
+    <div class="sticky-cta">
+      <div class="bar">
+        <p><b>Ready to start?</b><br/>Message us on WhatsApp and we’ll place you in the correct IELTS level.</p>
+        <a class="btn primary" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+    </div>
+
+    <p style="margin:24px 0 10px; font-size:12px; color:rgba(234,243,239,0.65); text-align:center;">
+      © LizOn Education • IELTS • PTE • Study Abroad
     </p>
 
-    <div class="btnrow">
-      <a class="btn primary" href="https://wa.me/8801611611139" target="_blank">Talk / Chat with LizOn</a>
-      <a class="btn" href="#levels">View IELTS Levels</a>
-    </div>
-
-    <div class="helper">
-      Not sure which level? Message us. We’ll guide you honestly.
-    </div>
-  </section>
-
-  <!-- LEVEL CARDS -->
-  <section class="section" id="levels">
-    <h2>IELTS Programs at LizOn</h2>
-    <p>Choose the stage that matches where you are now.</p>
-
-    <div class="grid">
-      <div class="card">
-        <span class="tag">English Starts Here</span>
-        <h3>IELTS ZERO</h3>
-        <ul>
-          <li>Grammar foundation</li>
-          <li>Pronunciation & sound</li>
-          <li>Sentence confidence</li>
-        </ul>
-        <div class="btnrow">
-          <a class="btn primary" href="#zero">Learn More</a>
-          <a class="btn" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="tag">Skill Repair</span>
-        <h3>IELTS HOPE</h3>
-        <ul>
-          <li>Reading speed</li>
-          <li>Listening clarity</li>
-          <li>Freehand writing</li>
-        </ul>
-        <div class="btnrow">
-          <a class="btn primary" href="#hope">Learn More</a>
-          <a class="btn" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="tag">Band 6+</span>
-        <h3>IELTS STEP-UP</h3>
-        <ul>
-          <li>Question types</li>
-          <li>Writing structure</li>
-          <li>Speaking control</li>
-        </ul>
-        <div class="btnrow">
-          <a class="btn primary" href="#stepup">Learn More</a>
-          <a class="btn" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="tag">Final Stage</span>
-        <h3>IELTS DESPERATE</h3>
-        <ul>
-          <li>Mock tests</li>
-          <li>Evaluation</li>
-          <li>Exam readiness</li>
-        </ul>
-        <div class="btnrow">
-          <a class="btn primary" href="#desperate">Learn More</a>
-          <a class="btn" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMES WITH -->
-  <section class="section">
-    <h2>This Course Comes With</h2>
-    <p>These supports stay with you throughout the IELTS journey.</p>
-
-    <div class="icons">
-      <div class="iconCard"><div class="icon">🎥</div>Live Classes</div>
-      <div class="iconCard"><div class="icon">🧑‍🏫</div>Mentorship by Joy Sir</div>
-      <div class="iconCard"><div class="icon">💬</div>Private Support Group</div>
-      <div class="iconCard"><div class="icon">🧪</div>Mock Tests & Evaluation</div>
-      <div class="iconCard"><div class="icon">📄</div>Documentation Guidance</div>
-      <div class="iconCard"><div class="icon">🎓</div>Scholarship Direction</div>
-      <div class="iconCard"><div class="icon">✈️</div>Abroad Job Approach</div>
-      <div class="iconCard"><div class="icon">📚</div>Resources & Notes</div>
-    </div>
-  </section>
-
-  <!-- DETAILS -->
-  <section class="details anchor" id="zero">
-    <h2>IELTS ZERO — Foundation Stage</h2>
-    <p>For students who feel lost, scared, or confused about IELTS.</p>
-    <div class="ctaBox">
-      <strong>Start from ZERO?</strong>
-      <div class="btnrow">
-        <a class="btn primary" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-        <a class="btn" href="#levels">Back to Levels</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="details anchor" id="hope">
-    <h2>IELTS HOPE — Skill Repair Stage</h2>
-    <p>Fix the skills that block your IELTS score.</p>
-    <div class="ctaBox">
-      <strong>Score stuck?</strong>
-      <div class="btnrow">
-        <a class="btn primary" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-        <a class="btn" href="#levels">Back to Levels</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="details anchor" id="stepup">
-    <h2>IELTS STEP-UP — Band 6+ Stage</h2>
-    <p>Strategy, structure, and control.</p>
-    <div class="ctaBox">
-      <strong>Ready to move up?</strong>
-      <div class="btnrow">
-        <a class="btn primary" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-        <a class="btn" href="#levels">Back to Levels</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="details anchor" id="desperate">
-    <h2>IELTS DESPERATE — Final Evaluation Stage</h2>
-    <p>Learning + Testing + Practice + Proper Evaluation.</p>
-    <div class="ctaBox">
-      <strong>Exam close?</strong>
-      <div class="btnrow">
-        <a class="btn primary" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-        <a class="btn" href="#levels">Back to Levels</a>
-      </div>
-    </div>
-  </section>
-
-  <div class="footer">
-    <strong>LizOn Education</strong> — IELTS • PTE • Study Abroad  
-    <br>WhatsApp: 01611611139
   </div>
 
-</div>
+  <script>
+    // Toggle Learn More panels
+    const buttons = document.querySelectorAll(".learnmore-btn");
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-target");
+        const panel = document.getElementById(id);
+        const arrow = btn.querySelector(".arrow");
+
+        const isOpen = panel.classList.contains("active");
+
+        // Close others (clean UX)
+        document.querySelectorAll(".learnmore-content").forEach(p => p.classList.remove("active"));
+        document.querySelectorAll(".learnmore-btn .arrow").forEach(a => a.style.transform = "rotate(0deg)");
+
+        if (!isOpen) {
+          panel.classList.add("active");
+          arrow.style.transform = "rotate(180deg)";
+          panel.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -2,40 +2,622 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PTE Preparation | myLizOn</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  <title>PTE | LizOn Education</title>
 
+  <style>
+    :root{
+      --bg:#07110d;
+      --panel:rgba(0,0,0,0.20);
+      --stroke:rgba(255,255,255,0.08);
+      --text:rgba(234,243,239,0.95);
+      --muted:rgba(234,243,239,0.76);
+      --gold:#ffd740;
+      --gold2: rgba(255,215,64,0.14);
+      --shadow: 0 18px 60px rgba(0,0,0,0.35);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    a{ color:inherit; }
+    .container{ width:min(1200px, 94%); margin:0 auto; padding:26px 0 44px; }
+
+    /* Top bar */
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid var(--stroke);
+      background:rgba(0,0,0,0.18);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      font-weight:950;
+    }
+    .brand .tag{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,215,64,0.26);
+      background:rgba(255,215,64,0.10);
+      color:rgba(255,215,64,0.95);
+      font-size:12px;
+      font-weight:950;
+      letter-spacing:0.2px;
+    }
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .nav a{
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background:rgba(0,0,0,0.12);
+      font-weight:900;
+      color:rgba(234,243,239,0.92);
+    }
+    .nav a.primary{
+      border:1px solid rgba(255,215,64,0.28);
+      background:rgba(255,215,64,0.10);
+      color:rgba(255,215,64,0.95);
+    }
+
+    /* Hero */
+    .hero{
+      margin-top:16px;
+      border-radius:24px;
+      border:1px solid var(--stroke);
+      background:var(--panel);
+      padding:22px;
+      box-shadow: var(--shadow);
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size:40px;
+      line-height:1.08;
+      letter-spacing:-0.4px;
+    }
+    @media(max-width:900px){ h1{ font-size:32px; } }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+      max-width:900px;
+      font-size:14px;
+    }
+    .hl{ color:var(--gold); font-weight:950; }
+    .hl2{
+      display:inline-block;
+      padding:2px 10px;
+      border-radius:999px;
+      background:var(--gold2);
+      border:1px solid rgba(255,215,64,0.22);
+      color:rgba(255,215,64,0.95);
+      font-weight:950;
+    }
+
+    .btnrow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background:rgba(0,0,0,0.14);
+      color:rgba(234,243,239,0.95);
+      font-weight:950;
+      text-decoration:none;
+    }
+    .btn.primary{
+      border:1px solid rgba(255,215,64,0.30);
+      background:rgba(255,215,64,0.11);
+      color:rgba(255,215,64,0.95);
+    }
+
+    .micro{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:18px;
+      border:1px solid rgba(255,215,64,0.16);
+      background:rgba(255,215,64,0.06);
+      color:var(--muted);
+      line-height:1.6;
+      font-size:13px;
+    }
+
+    /* Sections */
+    .section{
+      margin-top:16px;
+      border-radius:24px;
+      border:1px solid var(--stroke);
+      background:var(--panel);
+      padding:18px;
+    }
+    .section h2{
+      margin:0 0 10px;
+      font-size:20px;
+      letter-spacing:-0.2px;
+    }
+    .section p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:13px;
+    }
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+      align-items:stretch;
+    }
+    @media(max-width:980px){ .grid{ grid-template-columns:1fr; } }
+    .card{
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(0,0,0,0.14);
+      padding:14px;
+    }
+    .card .t{
+      font-weight:950;
+      margin-bottom:8px;
+    }
+    .card .d{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    /* Bullets */
+    ul{ margin:10px 0 0 18px; padding:0; }
+    li{ color:rgba(234,243,239,0.88); font-size:13px; line-height:1.65; margin:6px 0; }
+
+    /* Pricing box */
+    .pricing{
+      margin-top:14px;
+      border-radius:22px;
+      border:1px solid rgba(255,215,64,0.22);
+      background:rgba(255,215,64,0.06);
+      padding:16px;
+    }
+    .priceTop{
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      align-items:flex-start;
+    }
+    .priceName{
+      font-weight:950;
+      font-size:16px;
+      color:rgba(255,215,64,0.95);
+    }
+    .priceVal{
+      font-weight:950;
+      font-size:18px;
+      color:rgba(255,215,64,0.95);
+      white-space:nowrap;
+    }
+    .pill{
+      display:inline-block;
+      margin-top:8px;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.04);
+      color:rgba(234,243,239,0.82);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    /* FAQ accordion */
+    .faq{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .q{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(0,0,0,0.14);
+      padding:12px;
+    }
+    .q button{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
+      background:transparent;
+      border:none;
+      color:rgba(234,243,239,0.92);
+      font-weight:950;
+      font-size:13px;
+      text-align:left;
+      padding:2px 0;
+    }
+    .q .a{
+      display:none;
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+    .q.open .a{ display:block; }
+    .arrow{ opacity:0.8; transition:transform 0.2s ease; }
+    .q.open .arrow{ transform:rotate(180deg); }
+
+    /* Sticky WhatsApp */
+    .stickyWA{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:9998;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,215,64,0.30);
+      background:rgba(6,14,10,0.92);
+      color:rgba(255,215,64,0.95);
+      font-weight:950;
+      text-decoration:none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    }
+    .stickyWA small{
+      display:block;
+      color:rgba(234,243,239,0.80);
+      font-weight:800;
+      font-size:11px;
+      line-height:1.2;
+    }
+    @media(max-width:520px){
+      .stickyWA span{ display:none; }
+      .stickyWA small{ display:none; }
+    }
+
+    footer{
+      margin-top:18px;
+      text-align:center;
+      color:rgba(234,243,239,0.62);
+      font-size:12px;
+    }
+  </style>
+</head>
+
+<body>
   <div class="container">
 
-    <section class="hero">
-      <div class="badge">PTE Preparation</div>
-      <h1>PTE Full Preparation</h1>
-      <p>Fast-track PTE course with exam-focused strategy</p>
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="brand">
+        <span>LizOn Education</span>
+        <span class="tag">PTE</span>
+      </div>
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a class="primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education!%20I%20want%20to%20check%20if%20PTE%20is%20right%20for%20me.%20Please%20guide%20me." target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <span class="tag" style="display:inline-block;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,215,64,0.26);background:rgba(255,215,64,0.10);color:rgba(255,215,64,0.95);font-weight:950;font-size:12px;">
+        PTE Smart Track — 30 Days
+      </span>
+
+      <h1>PTE in <span class="hl">30 Days</span><br/>Designed for Fast Results</h1>
+
+      <p class="sub">
+        A focused PTE program for students who don’t want to waste another 3 months.
+        <span class="hl2">15 Question-Based Sessions</span> + <span class="hl2">5 Mandatory Typing Speed Fix Sessions</span> —
+        because PTE is <span class="hl">speed + accuracy</span>, not theory.
+      </p>
+
+      <div class="btnrow">
+        <a class="btn primary"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education!%20I%20want%20to%20check%20if%20PTE%20is%20right%20for%20me.%20Please%20guide%20me."
+           target="_blank" rel="noopener">
+          Check if PTE is Right for You (WhatsApp)
+        </a>
+        <a class="btn" href="#structure">View Course Structure</a>
+        <a class="btn" href="#pricing">See Fee & What’s Included</a>
+      </div>
+
+      <div class="micro">
+        <b class="hl">No pressure.</b> We’ll tell you honestly if PTE fits your timeline and background.
+        If IELTS feels slow, PTE might be your <span class="hl">shortcut</span> — but only if done right.
+      </div>
     </section>
 
-    <section class="grid">
+    <!-- What it is -->
+    <section class="section" id="about">
+      <h2>What is PTE Smart Track?</h2>
+      <p>
+        PTE Smart Track is a <span class="hl">1-month, result-focused</span> program designed to train you to handle PTE patterns
+        under real exam pressure. You don’t “study forever” — you follow a clear plan and build
+        <span class="hl">computer-based confidence</span>.
+      </p>
 
-      <div class="card">
-        <h2>PTE Complete Course</h2>
-        <p>Speaking • Writing • Reading • Listening</p>
-        <p>Personalized strategy & practice</p>
+      <div class="grid" style="margin-top:14px;">
+        <div class="card">
+          <div class="t">⏱ Fast Timeline</div>
+          <p class="d">30 days. Focused. Built for urgency.</p>
+        </div>
+        <div class="card">
+          <div class="t">🧩 Question-Focused</div>
+          <p class="d">We train question formats the way PTE actually tests.</p>
+        </div>
+        <div class="card">
+          <div class="t">⌨️ Typing Fixed Inside</div>
+          <p class="d">Typing is not optional in PTE. We correct it in-course.</p>
+        </div>
+      </div>
+    </section>
 
-        <div class="btn-row">
-          <a class="btn primary" href="#">Admit Now</a>
-          <a class="btn secondary" href="index.html">Back to Home</a>
+    <!-- Structure -->
+    <section class="section" id="structure">
+      <h2>Course Duration & Structure</h2>
+      <p>
+        A clean structure that removes confusion and forces progress.
+      </p>
+
+      <div class="grid" style="grid-template-columns:repeat(2,1fr);">
+        <div class="card">
+          <div class="t">🗓 Duration</div>
+          <p class="d"><span class="hl">1 Month</span> • Total <span class="hl">20 Sessions</span></p>
+          <span class="pill">Short + serious</span>
+        </div>
+        <div class="card">
+          <div class="t">📚 Session Breakdown</div>
+          <ul>
+            <li><b class="hl">15</b> PTE Question-Based Sessions</li>
+            <li><b class="hl">5</b> Mandatory Typing Speed Improvement Sessions</li>
+          </ul>
+          <span class="pill">Typing included by default</span>
         </div>
       </div>
 
+      <div class="micro" style="margin-top:12px;">
+        <b class="hl">Important:</b> We don’t sell typing separately. We fix speed and accuracy inside the program so your PTE performance stays stable under time pressure.
+      </div>
     </section>
 
-    <footer>
-      © 2026 myLizOn.com | LizOn Education
-    </footer>
+    <!-- Why it works -->
+    <section class="section" id="why">
+      <h2>Why This Works</h2>
+      <p>
+        PTE does not reward “good English.” It rewards <span class="hl">speed</span>, <span class="hl">accuracy</span>, and
+        <span class="hl">system familiarity</span>. Most students fail because they think like IELTS students, type too slowly,
+        or panic under time pressure. We fix all four.
+      </p>
 
+      <div class="grid">
+        <div class="card">
+          <div class="t">🎯 Score Logic</div>
+          <p class="d">You learn how marks are gained and lost, so you stop guessing.</p>
+        </div>
+        <div class="card">
+          <div class="t">🧠 Pattern Control</div>
+          <p class="d">You practice real question formats until they feel familiar.</p>
+        </div>
+        <div class="card">
+          <div class="t">⚡ Speed + Stability</div>
+          <p class="d">Typing + timed strategy so you don’t collapse under pressure.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Covered -->
+    <section class="section" id="skills">
+      <h2>What You Will Learn (Skills Covered)</h2>
+      <p>
+        Your focus is not “more content.” Your focus is <span class="hl">better execution</span>.
+      </p>
+      <div class="grid" style="grid-template-columns:repeat(2,1fr);">
+        <div class="card">
+          <div class="t">🧩 PTE Question Handling</div>
+          <ul>
+            <li>All major question formats</li>
+            <li>Time-based answering strategy</li>
+            <li>Score-focused approach (no guessing)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="t">⌨️ Typing Speed & Accuracy</div>
+          <ul>
+            <li>Daily typing drills</li>
+            <li>Error reduction techniques</li>
+            <li>Exam-style typing simulation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:repeat(2,1fr); margin-top:12px;">
+        <div class="card">
+          <div class="t">🖥 Computer-Based Confidence</div>
+          <ul>
+            <li>Screen reading speed</li>
+            <li>Mouse + keyboard coordination</li>
+            <li>Exam interface familiarity</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="t">🧠 Strategy Lock</div>
+          <ul>
+            <li>Reduce panic under time pressure</li>
+            <li>Build repeatable performance</li>
+            <li>Convert practice into marks</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who it's for -->
+    <section class="section" id="fit">
+      <h2>Who This Course is For</h2>
+      <p>
+        This course is built for urgency-driven students who want a clean plan.
+      </p>
+
+      <div class="grid" style="grid-template-columns:repeat(2,1fr);">
+        <div class="card">
+          <div class="t">✅ Perfect for you if</div>
+          <ul>
+            <li>IELTS is taking too long</li>
+            <li>You need results <span class="hl">fast</span></li>
+            <li>You want a short, focused plan</li>
+            <li>You’re ready to practice typing seriously</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="t">🚫 Not for you if</div>
+          <ul>
+            <li>You want long theory classes</li>
+            <li>You won’t practice typing</li>
+            <li>You want “easy shortcuts”</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="micro" style="margin-top:12px;">
+        This course demands <span class="hl">discipline</span>, not memorization.
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section" id="pricing">
+      <h2>Course Fee & What’s Included</h2>
+      <p>
+        Priced for speed, focus, and responsibility — not for stretching time.
+      </p>
+
+      <div class="pricing">
+        <div class="priceTop">
+          <div>
+            <div class="priceName">PTE Smart Track — 30 Days</div>
+            <span class="pill">Complete PTE Plan</span>
+          </div>
+          <div class="priceVal">Course Fee: 9,000 BDT</div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div class="t" style="font-weight:950;margin-bottom:8px;">📦 What’s Included</div>
+          <ul>
+            <li><span class="hl">20 Live Sessions</span> (15 Question-Based + 5 Typing Skill Fix)</li>
+            <li><span class="hl">1 Month Unlimited Portal Access</span> (practice anytime, repeat lessons)</li>
+            <li><span class="hl">Typing Skill Fix Included</span> (no separate course, no extra payment)</li>
+            <li>Guided strategy for timed performance</li>
+          </ul>
+        </div>
+
+        <div class="micro" style="margin-top:12px;">
+          <b class="hl">Why 9,000 BDT?</b><br/>
+          PTE is a time-sensitive exam. We don’t stretch courses. We don’t sell parts separately. We don’t waste your time.
+        </div>
+
+        <div class="micro" style="margin-top:10px;">
+          <b class="hl">About Discounts</b><br/>
+          We don’t run public discounts on PTE — because results don’t come from shortcuts.
+        </div>
+
+        <div class="btnrow" style="margin-top:12px;">
+          <a class="btn primary"
+             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education!%20I%20want%20PTE%20Smart%20Track%20(30%20Days)%20admission.%20Course%20fee%209000%20BDT%20and%201%20month%20unlimited%20portal%20access%20details%20please."
+             target="_blank" rel="noopener">
+            Talk to LizOn on WhatsApp (PTE Admission)
+          </a>
+          <a class="btn" href="#faq">Common Questions</a>
+        </div>
+
+        <p style="margin-top:8px;color:rgba(234,243,239,0.72);font-size:12px;line-height:1.5;">
+          We’ll tell you honestly if PTE fits your timeline. <span class="hl">No pressure.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <h2>Quick FAQ</h2>
+      <p>Short answers for the most common objections — so you decide faster.</p>
+
+      <div class="faq">
+        <div class="q">
+          <button type="button">
+            Is typing really that important in PTE?
+            <span class="arrow">▾</span>
+          </button>
+          <div class="a">
+            Yes. PTE is computer-based, and speed matters. That’s why we include <span class="hl">5 mandatory typing sessions</span> inside the course.
+          </div>
+        </div>
+
+        <div class="q">
+          <button type="button">
+            I’m an IELTS student — can I switch to PTE?
+            <span class="arrow">▾</span>
+          </button>
+          <div class="a">
+            Many students do. We’ll check your timeline and background first, then guide you to the best decision.
+          </div>
+        </div>
+
+        <div class="q">
+          <button type="button">
+            Do you give portal access?
+            <span class="arrow">▾</span>
+          </button>
+          <div class="a">
+            Yes. You get <span class="hl">1 month unlimited portal access</span> to practice anytime and repeat lessons as needed.
+          </div>
+        </div>
+
+        <div class="q">
+          <button type="button">
+            Do you show public discounts?
+            <span class="arrow">▾</span>
+          </button>
+          <div class="a">
+            No. We keep PTE premium and focused because results don’t come from shortcuts.
+          </div>
+        </div>
+      </div>
+
+      <div class="btnrow" style="margin-top:12px;">
+        <a class="btn primary"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education!%20Please%20check%20if%20PTE%20is%20right%20for%20me.%20I%20want%20a%20quick%20guidance."
+           target="_blank" rel="noopener">
+          Check if PTE is Right for You (WhatsApp)
+        </a>
+        <a class="btn" href="#top">Back to Top</a>
+      </div>
+    </section>
+
+    <footer>© LizOn Education • PTE • Designed for Desired Score</footer>
   </div>
 
+  <!-- Sticky WhatsApp button -->
+  <a class="stickyWA"
+     href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education!%20I%20want%20to%20check%20if%20PTE%20is%20right%20for%20me.%20Please%20guide%20me."
+     target="_blank" rel="noopener">
+    💬 <span>WhatsApp</span>
+    <small>Check if PTE fits you</small>
+  </a>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll(".q button").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const wrap = btn.closest(".q");
+        wrap.classList.toggle("open");
+      });
+    });
+  </script>
 </body>
 </html>

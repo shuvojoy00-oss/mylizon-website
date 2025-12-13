@@ -1,63 +1,476 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>myLizOn | IELTS • PTE • Study Abroad</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LizOn Education | IELTS • PTE • Study Abroad</title>
+  <meta name="description" content="LizOn Education — IELTS, PTE & Study Abroad guidance. Skill-based preparation, proper evaluation, designed for your desired score." />
+
+  <style>
+    :root{
+      --bg:#04140f;
+      --bg2:#062016;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --border: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.58);
+      --gold:#d7b34a;
+      --gold2:#f2cf6f;
+      --shadow: 0 18px 55px rgba(0,0,0,.55);
+      --radius: 18px;
+      --radius2: 22px;
+      --max: 1100px;
+      --focus: rgba(215,179,74,.25);
+      --greenGlow: rgba(0,255,170,.07);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 650px at 20% 5%, rgba(0,255,170,.08), transparent 60%),
+        radial-gradient(900px 500px at 80% 15%, rgba(215,179,74,.10), transparent 62%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:28px 18px 70px; }
+
+    /* Top bar */
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      border-radius:999px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding-left:6px;
+      min-width: 210px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:var(--gold);
+      box-shadow:0 0 0 6px rgba(215,179,74,.12);
+    }
+    .brand strong{ letter-spacing:.2px; font-size:14px; }
+    .brand span{ display:block; font-size:12px; color:var(--muted2); margin-top:1px; }
+
+    .nav{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .pill{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      padding:9px 12px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+      transition:.2s ease;
+    }
+    .pill:hover{ transform:translateY(-1px); background:rgba(255,255,255,.06); }
+
+    /* Hero */
+    .hero{
+      margin-top:22px;
+      padding:28px 18px;
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background:
+        radial-gradient(900px 420px at 15% 10%, rgba(215,179,74,.15), transparent 60%),
+        radial-gradient(900px 500px at 75% 0%, rgba(0,255,170,.10), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(215,179,74,.35);
+      background: rgba(215,179,74,.08);
+      color:var(--gold2);
+      font-size:12px;
+      letter-spacing:.2px;
+    }
+    .hero h1{
+      margin:14px 0 6px;
+      font-size: clamp(30px, 4.1vw, 54px);
+      line-height:1.08;
+      letter-spacing:-.7px;
+    }
+    .hero h1 .spark{ color:var(--gold2); }
+    .hero p{
+      margin:10px 0 0;
+      color:var(--muted);
+      max-width: 780px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .subline{
+      margin-top:14px;
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+    }
+    .subline strong{ color:var(--gold2); font-weight:700; }
+
+    .ctaRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:18px;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:11px 14px;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight:700;
+      font-size:13px;
+      transition:.2s ease;
+    }
+    .btn:hover{ transform:translateY(-1px); background: rgba(255,255,255,.06); }
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(215,179,74,.95), rgba(215,179,74,.80));
+      color:#1a1404;
+      border-color: rgba(215,179,74,.85);
+      box-shadow: 0 10px 25px rgba(215,179,74,.15);
+    }
+    .btn.primary:hover{ filter:brightness(1.03); }
+    .btn.ghost{
+      background: rgba(255,255,255,.03);
+    }
+
+    /* Trust strip */
+    .trustStrip{
+      margin-top:16px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(0,0,0,.18);
+      border-radius: 14px;
+      padding:12px 12px;
+      color: rgba(255,255,255,.72);
+      font-size:12px;
+      line-height:1.45;
+    }
+    .trustStrip b{ color:var(--gold2); }
+
+    /* Cards */
+    .grid{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .card{
+      grid-column: span 4;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.32);
+      position:relative;
+      overflow:hidden;
+    }
+    .card::after{
+      content:"";
+      position:absolute; inset:-40px -40px auto auto;
+      width:160px; height:160px;
+      background: radial-gradient(circle, rgba(215,179,74,.16), transparent 60%);
+      transform: rotate(25deg);
+      pointer-events:none;
+    }
+    .card h2{
+      margin:0;
+      font-size:18px;
+      letter-spacing:-.2px;
+    }
+    .card p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+      min-height: 40px;
+    }
+    .tag{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.78);
+      margin-bottom:10px;
+    }
+    .tag strong{ color:var(--gold2); font-weight:800; }
+
+    .cardBtns{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    /* Why LizOn */
+    .why{
+      margin-top:18px;
+      padding:16px;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .why h3{
+      grid-column: span 12;
+      margin:0;
+      font-size:16px;
+      letter-spacing:-.2px;
+    }
+    .whyItem{
+      grid-column: span 4;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding:12px;
+      background: rgba(0,0,0,.18);
+    }
+    .whyItem b{ color:var(--gold2); }
+    .whyItem div{ color:var(--muted); font-size:12.5px; line-height:1.55; margin-top:6px; }
+
+    /* Pricing teaser */
+    .pricing{
+      margin-top:16px;
+      border:1px solid rgba(215,179,74,.25);
+      background: rgba(215,179,74,.06);
+      border-radius: var(--radius);
+      padding:14px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .pricing .left{
+      color: rgba(255,255,255,.85);
+      font-size:13px;
+      line-height:1.5;
+    }
+    .pricing .left strong{ color:var(--gold2); }
+    .pricing .right{ display:flex; gap:10px; flex-wrap:wrap; }
+
+    /* Footer */
+    footer{
+      margin-top:22px;
+      padding:16px 2px 0;
+      color: rgba(255,255,255,.55);
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+
+    /* Sticky WhatsApp */
+    .waSticky{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 999;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(215,179,74,.55);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 16px 60px rgba(0,0,0,.55);
+    }
+    .waSticky .mini{
+      width:10px;height:10px;border-radius:999px;background: #27d367;
+      box-shadow:0 0 0 6px rgba(39,211,103,.12);
+    }
+    .waSticky span{ font-size:12px; color: rgba(255,255,255,.80); }
+    .waSticky a{
+      padding:9px 12px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(215,179,74,.95), rgba(215,179,74,.80));
+      color:#1a1404;
+      font-weight:900;
+      font-size:12px;
+      border:1px solid rgba(215,179,74,.85);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .card{ grid-column: span 6; }
+      .whyItem{ grid-column: span 6; }
+    }
+    @media (max-width: 640px){
+      .brand{ min-width:auto; }
+      .nav{ justify-content:flex-start; }
+      .card{ grid-column: span 12; }
+      .whyItem{ grid-column: span 12; }
+      .hero{ padding:22px 14px; }
+    }
+  </style>
 </head>
+
 <body>
-
-  <div class="container">
-
-    <section class="hero">
-      <div class="badge">Powered by LizOn Education</div>
-      <h1>IELTS • PTE • STUDY ABROAD</h1>
-      <p>Start Your FREE Preparation Now</p>
-
-      <div class="btn-row">
-        <a class="btn primary" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Talk / Chat with LizOn</a>
-        <a class="btn secondary" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Who Already Succeeded?</a>
+  <div class="wrap">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>
+          <strong>LizOn Education</strong>
+          <span>IELTS • PTE • Study Abroad</span>
+        </div>
       </div>
 
-      <p style="margin-top:16px; font-size:12px; color:rgba(234,243,239,0.7);">
-        Partnership with: British Council, IDP, Birmingham University & Others
+      <div class="nav">
+        <a class="pill" href="ielts.html">IELTS</a>
+        <a class="pill" href="pte.html">PTE</a>
+        <a class="pill" href="studyabroad.html">Study Abroad</a>
+        <a class="pill" href="https://wa.me/8801611611139?text=Hi%20LizOn%20Education!%20I%20need%20free%20guidance.%20(Source:%20Homepage%20Top)" target="_blank" rel="noopener">WhatsApp Helpline</a>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="badge">Powered by LizOn Education • <b>Designed for Desired Score</b></div>
+
+      <h1>IELTS • PTE • <span class="spark">Study Abroad</span></h1>
+
+      <p>
+        A structured journey from confusion to confidence — <b>skill-based learning</b>, proper evaluation,
+        and clear guidance so you stop wasting time and start improving.
       </p>
+
+      <div class="subline">
+        Not sure what to choose? <strong>Message first.</strong> We’ll guide you honestly — then you decide.
+      </div>
+
+      <div class="ctaRow">
+        <a class="btn primary" href="https://wa.me/8801611611139?text=Hi%20LizOn%20Education!%20I%20want%20FREE%20guidance%20to%20choose%20IELTS%20or%20PTE.%20(Source:%20Homepage%20Hero)" target="_blank" rel="noopener">
+          Talk / Chat with LizOn
+        </a>
+        <a class="btn ghost" href="#programs">Explore Programs</a>
+        <a class="btn" href="ielts.html#levels">IELTS Levels</a>
+      </div>
+
+      <div class="trustStrip">
+        Partnership mentions can stay minimal here. Keep it clean. The goal is: <b>trust + action.</b>
+      </div>
     </section>
 
-    <section class="grid">
+    <!-- Programs -->
+    <section id="programs" class="grid">
+      <!-- IELTS -->
       <div class="card">
-        <h2>IELTS</h2>
-        <p>ZERO • HOPE • STEP-UP • DESPERATE</p>
-        <div class="btn-row">
-          <a class="btn primary" href="ielts.html">Learn More</a>
+        <div class="tag"><strong>IELTS</strong> • ZERO → HOPE → STEP-UP → DESPERATE</div>
+        <h2>IELTS Programs</h2>
+        <p>
+          For beginners to exam-ready students. We place you correctly and build real performance —
+          not memorized lines.
+        </p>
+        <div class="cardBtns">
+          <a class="btn primary" href="ielts.html#levels">Learn More</a>
+          <a class="btn" href="https://wa.me/8801611611139?text=Hi%20LizOn%20Education!%20I%20want%20to%20start%20IELTS.%20Please%20guide%20me%20which%20level%20fits%20me.%20(Source:%20Homepage%20IELTS)" target="_blank" rel="noopener">Chat on WhatsApp</a>
         </div>
       </div>
 
+      <!-- PTE -->
       <div class="card">
-        <h2>PTE</h2>
-        <p>PTE Full Preparation</p>
-        <div class="btn-row">
+        <div class="tag"><strong>PTE</strong> • 30 Days • 20 Sessions</div>
+        <h2>PTE Preparation</h2>
+        <p>
+          One focused course: <b>15 question-based sessions</b> + <b>5 typing speed sessions</b>
+          with 1 month unlimited portal access.
+        </p>
+        <div class="cardBtns">
           <a class="btn primary" href="pte.html">Learn More</a>
-          <a class="btn secondary" href="register.html">Admit Now</a>
+          <a class="btn" href="https://wa.me/8801611611139?text=Hi%20LizOn%20Education!%20I%20want%20PTE%20admission.%20Please%20tell%20me%20the%20course%20process.%20(Source:%20Homepage%20PTE)" target="_blank" rel="noopener">Admit in WhatsApp</a>
         </div>
       </div>
 
+      <!-- Study Abroad -->
       <div class="card">
+        <div class="tag"><strong>Study Abroad</strong> • Counseling • Visa Guidance</div>
         <h2>Study Abroad</h2>
-        <p>Book a FREE 15-minute 1-on-1 meeting with counselor</p>
-        <div class="btn-row">
-          <a class="btn primary" href="studyabroad.html">Book Free 15-min Meeting</a>
+        <p>
+          Country + university shortlisting, scholarship focus, and application guidance.
+          (We’ll finalize this page tomorrow.)
+        </p>
+        <div class="cardBtns">
+          <a class="btn primary" href="studyabroad.html">Learn More</a>
+          <a class="btn" href="https://wa.me/8801608881545?text=Hi%20LizOn%20Education!%20I%20need%20Study%20Abroad%20guidance.%20(Source:%20Homepage%20Study%20Abroad)" target="_blank" rel="noopener">Book Free 15-min Meeting</a>
         </div>
+      </div>
+    </section>
+
+    <!-- Why LizOn -->
+    <section class="why">
+      <h3>Why LizOn works (and why students stay)</h3>
+
+      <div class="whyItem">
+        <b>Placement-first</b>
+        <div>We don’t guess your level. We place you correctly, so you don’t waste weeks in the wrong batch.</div>
+      </div>
+
+      <div class="whyItem">
+        <b>Skill-based improvement</b>
+        <div>No “magic tips”. We fix the skills that actually move your score: accuracy, speed, structure, clarity.</div>
+      </div>
+
+      <div class="whyItem">
+        <b>Evaluation culture</b>
+        <div>Practice + feedback + correction. That’s what makes improvement real — not just motivation.</div>
+      </div>
+    </section>
+
+    <!-- Pricing teaser -->
+    <section class="pricing">
+      <div class="left">
+        IELTS starts from <strong>4200</strong>. Best value combo: <strong>N2F (all 4) — 50% off = 12700</strong>.
+        <span style="color: rgba(255,255,255,.70);">See full pricing inside IELTS “Learn More”.</span>
+      </div>
+      <div class="right">
+        <a class="btn primary" href="ielts.html#pricing">See IELTS Pricing</a>
+        <a class="btn" href="https://wa.me/8801611611139?text=Hi%20LizOn%20Education!%20I%20want%20combo%20pricing%20details%20(ZERO%2FHOPE%2FSTEP-UP%2FDESPERATE%20or%20N2F).%20(Source:%20Homepage%20Pricing)" target="_blank" rel="noopener">Ask on WhatsApp</a>
       </div>
     </section>
 
     <footer>
-      © 2026 myLizOn.com | LizOn Education
+      <div>© <span id="year"></span> LizOn Education • mylizon.com</div>
+      <div style="color: rgba(255,255,255,.55);">
+        Dhaka • Online + Offline • WhatsApp: <b style="color: rgba(255,255,255,.82);">01611611139</b>
+      </div>
     </footer>
-
   </div>
 
+  <!-- Sticky WhatsApp -->
+  <div class="waSticky">
+    <div class="mini"></div>
+    <span>Need guidance?</span>
+    <a href="https://wa.me/8801611611139?text=Hi%20LizOn%20Education!%20I%20need%20guidance.%20(Source:%20Sticky%20WhatsApp)" target="_blank" rel="noopener">Chat on WhatsApp</a>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-

@@ -1,0 +1,122 @@
+/* myLizOn - LizOn Education (V1) */
+:root{
+  --bg: #071b12;         /* deep dark green */
+  --panel: #0c2a1c;      /* card green */
+  --gold: #d4af37;       /* gold accent */
+  --text: #eaf3ef;       /* soft white */
+  --muted: #b9d0c6;      /* muted text */
+  --border: rgba(212,175,55,0.25);
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(1200px 600px at 20% 0%, #0e3a28 0%, var(--bg) 55%, #06130d 100%);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.container{
+  width: min(1050px, 92vw);
+  margin: 0 auto;
+}
+
+.hero{
+  padding: 70px 0 40px;
+  text-align: left;
+}
+
+.hero h1{
+  margin: 0 0 10px;
+  font-size: clamp(28px, 4vw, 46px);
+  letter-spacing: 0.5px;
+}
+
+.hero p{
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.badge{
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--gold);
+  background: rgba(212,175,55,0.08);
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  margin-bottom: 16px;
+}
+
+.btn-row{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.btn{
+  display: inline-block;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.btn.primary{
+  background: var(--gold);
+  color: #101010;
+  border-color: rgba(212,175,55,0.6);
+}
+.btn.secondary{
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+}
+
+.btn:hover{ transform: translateY(-1px); }
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 22px 0 60px;
+}
+
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.card h2{
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+.card p{
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.card .btn-row{ margin-top: 8px; }
+
+footer{
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 18px 0;
+  color: rgba(234,243,239,0.7);
+  font-size: 13px;
+}
+
+/* Mobile */
+@media (max-width: 900px){
+  .grid{ grid-template-columns: 1fr; }
+  .hero{ padding: 50px 0 24px; }
+}

@@ -6,6 +6,7 @@
   <title>LizOn Education — IELTS • PTE • Study Abroad</title>
   <meta name="description" content="LizOn Education — skill-based IELTS & PTE preparation with proper evaluation and honest guidance. Start with WhatsApp and get placed in the right program." />
   <meta name="theme-color" content="#0b2a1f" />
+
   <style>
     :root{
       --bg1:#06140f;
@@ -17,7 +18,6 @@
       --muted:#b7c9c2;
       --gold:#d7b24a;
       --gold2:#b8922f;
-      --greenGlow: 0 0 0 1px rgba(29,74,58,.7), 0 10px 40px rgba(0,0,0,.45);
       --soft: 0 12px 40px rgba(0,0,0,.35);
       --radius: 22px;
     }
@@ -35,29 +35,45 @@
     }
 
     a{color:inherit; text-decoration:none}
-    .container{max-width:1100px; margin:0 auto; padding:22px 18px 70px}
+    .container{max-width:1100px; margin:0 auto; padding:22px 18px 84px}
+
+    /* Topbar */
     .topbar{
       position:sticky; top:0;
       backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(6,20,15,.85), rgba(6,20,15,.55));
+      background: linear-gradient(180deg, rgba(6,20,15,.88), rgba(6,20,15,.58));
       border-bottom:1px solid rgba(29,74,58,.6);
       z-index:50;
     }
+
+    /* IMPORTANT: checkbox is direct child of .topbar so sibling selector works */
+    .menu-toggle{
+      position:absolute;
+      left:-9999px;
+      width:1px; height:1px;
+      opacity:0;
+    }
+
     .topbar-inner{
       max-width:1100px; margin:0 auto; padding:14px 18px;
       display:flex; align-items:center; justify-content:space-between; gap:14px;
     }
+
     .brand{
       display:flex; align-items:center; gap:10px;
-      font-weight:700; letter-spacing:.2px;
+      font-weight:800; letter-spacing:.2px;
     }
     .brand-badge{
       width:12px; height:12px; border-radius:6px;
       background: linear-gradient(180deg, var(--gold), var(--gold2));
       box-shadow: 0 0 0 3px rgba(215,178,74,.14);
+      flex: 0 0 auto;
     }
     .brand small{
-      display:block; font-weight:600; color:var(--muted); letter-spacing:.2px;
+      display:block;
+      font-weight:650;
+      color:var(--muted);
+      letter-spacing:.2px;
       margin-top:2px;
     }
 
@@ -71,30 +87,36 @@
       background: rgba(10,26,20,.55);
       border-radius:999px;
       color:var(--text);
-      font-weight:650;
+      font-weight:750;
       font-size:13px;
       transition:.18s ease;
     }
     .nav a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
 
-    /* Mobile menu */
-    .menu-toggle{ display:none; }
+    /* Mobile menu button */
     .hamburger{
       display:none;
       padding:10px 12px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.7);
       background: rgba(10,26,20,.55);
-      font-weight:750;
+      font-weight:850;
       cursor:pointer;
       user-select:none;
+      gap:8px;
+      align-items:center;
     }
+    .hamburger span{opacity:.9}
+
+    /* Mobile drawer (HIDDEN by default, shown only when menu-toggle checked) */
     .mobile-drawer{
       display:none;
       border-top:1px solid rgba(29,74,58,.55);
-      background: rgba(6,20,15,.86);
+      background: rgba(6,20,15,.88);
       backdrop-filter: blur(14px);
     }
+    #menuToggle:checked ~ .mobile-drawer{ display:block; }
+
     .drawer-inner{
       max-width:1100px; margin:0 auto;
       padding:12px 18px 16px;
@@ -105,7 +127,7 @@
       border-radius:14px;
       border:1px solid rgba(29,74,58,.7);
       background: rgba(10,26,20,.55);
-      font-weight:750;
+      font-weight:850;
     }
     .drawer-inner a strong{ color: var(--gold); }
     .drawer-social{
@@ -115,13 +137,11 @@
       display:inline-flex; align-items:center; gap:8px;
       padding:10px 12px;
       border-radius:999px;
-      font-weight:750;
+      font-weight:850;
     }
 
     /* Hero */
-    .hero{
-      padding:28px 0 14px;
-    }
+    .hero{ padding:28px 0 12px; }
     .hero-card{
       border-radius: var(--radius);
       border:1px solid rgba(29,74,58,.7);
@@ -136,13 +156,9 @@
       position:absolute; inset:-80px -120px auto auto;
       width:320px; height:320px;
       background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.18), transparent 60%);
-      filter: blur(0px);
       pointer-events:none;
     }
-    .chips{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-bottom:14px;
-    }
+    .chips{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
     .chip{
       display:inline-flex; align-items:center; gap:8px;
       padding:9px 12px;
@@ -150,7 +166,7 @@
       border:1px solid rgba(29,74,58,.75);
       background: rgba(10,26,20,.55);
       color: var(--muted);
-      font-weight:750;
+      font-weight:850;
       font-size:12px;
     }
     .chip b{ color: var(--gold); }
@@ -166,7 +182,7 @@
       color: var(--muted);
       font-size:16px;
       line-height:1.6;
-      max-width:740px;
+      max-width:760px;
     }
     .sub strong{ color: var(--gold); }
 
@@ -175,16 +191,15 @@
       margin-top:16px;
     }
     .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      display:inline-flex; align-items:center; justify-content:center;
       padding:12px 16px;
       border-radius:14px;
       border:1px solid rgba(29,74,58,.75);
       background: rgba(10,26,20,.55);
-      font-weight:850;
+      font-weight:900;
       letter-spacing:.2px;
       cursor:pointer;
       transition:.18s ease;
-      box-shadow: var(--greenGlow);
     }
     .btn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
     .btn.primary{
@@ -194,25 +209,13 @@
       box-shadow: 0 18px 60px rgba(215,178,74,.12);
     }
 
-    .note{
-      margin-top:14px;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px dashed rgba(215,178,74,.4);
-      background: rgba(10,26,20,.45);
-      color: var(--muted);
-      font-size:13px;
-      line-height:1.5;
-    }
-    .note strong{ color: var(--gold); }
-
     /* Programs */
     .section-title{
-      margin:24px 0 10px;
+      margin:22px 0 10px;
       font-size:16px;
       letter-spacing:.2px;
       color: var(--text);
-      font-weight:900;
+      font-weight:950;
     }
     .grid{
       display:grid;
@@ -226,9 +229,24 @@
       background: linear-gradient(180deg, rgba(12,32,25,.62), rgba(10,26,20,.48));
       box-shadow: var(--soft);
       padding:18px;
-      min-height: 200px;
+      min-height: 210px;
       display:flex; flex-direction:column; gap:10px;
     }
+    .tagline{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(10,26,20,.55);
+      font-weight:900;
+      font-size:12px;
+      color: var(--muted);
+    }
+    .tagline b{ color: var(--gold); }
+
     .card h2{
       margin:0;
       font-size:18px;
@@ -241,30 +259,13 @@
       line-height:1.6;
       font-size:13px;
     }
-    .tagline{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      width:max-content;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.75);
-      background: rgba(10,26,20,.55);
-      font-weight:850;
-      font-size:12px;
-      color: var(--muted);
-    }
-    .tagline b{ color: var(--gold); }
-
     .card .actions{
       margin-top:auto;
       display:flex; gap:10px; flex-wrap:wrap;
     }
-    .card .actions .btn{ width:100%; justify-content:center; box-shadow:none; }
-    .card .actions .btn.secondary{ background: rgba(10,26,20,.55); }
-    .card .actions .btn.primary{ box-shadow:none; }
+    .card .actions .btn{ width:100%; }
 
-    /* Footer */
+    /* Footer / Trust */
     .footer{
       margin-top:18px;
       padding:18px;
@@ -290,7 +291,7 @@
       border-radius:999px;
       border:1px solid rgba(29,74,58,.7);
       background: rgba(10,26,20,.55);
-      font-weight:850; font-size:13px;
+      font-weight:900; font-size:13px;
       transition:.18s ease;
     }
     .iconbtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
@@ -329,8 +330,6 @@
       .footer{ grid-template-columns: 1fr; }
       .nav{ display:none; }
       .hamburger{ display:inline-flex; }
-      .mobile-drawer{ display:block; }
-      #menuToggle:not(:checked) ~ .mobile-drawer{ display:none; }
     }
     @media (max-width: 520px){
       .hero-card{ padding:18px; }
@@ -343,8 +342,10 @@
 
 <body>
 
-  <!-- Sticky Top Bar -->
   <div class="topbar">
+    <!-- FIXED: toggle is sibling of drawer -->
+    <input class="menu-toggle" type="checkbox" id="menuToggle" autocomplete="off" />
+
     <div class="topbar-inner">
       <div class="brand">
         <span class="brand-badge"></span>
@@ -354,7 +355,6 @@
         </div>
       </div>
 
-      <!-- Desktop Nav -->
       <nav class="nav" aria-label="Primary">
         <a href="ielts.html">IELTS</a>
         <a href="pte.html">PTE</a>
@@ -362,17 +362,14 @@
         <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_menu)" target="_blank" rel="noopener">WhatsApp Helpline</a>
       </nav>
 
-      <!-- Mobile Menu Toggle -->
-      <input class="menu-toggle" type="checkbox" id="menuToggle" />
-      <label class="hamburger" for="menuToggle">☰ Menu</label>
+      <label class="hamburger" for="menuToggle">☰ <span>Menu</span></label>
     </div>
 
-    <!-- Mobile Drawer (hidden until tapped) -->
     <div class="mobile-drawer">
       <div class="drawer-inner">
         <a href="ielts.html"><strong>IELTS</strong> — Explore Levels</a>
         <a href="pte.html"><strong>PTE</strong> — 30 Days Plan</a>
-        <a href="studyabroad.html"><strong>Study Abroad</strong> — (We’ll update tomorrow)</a>
+        <a href="studyabroad.html"><strong>Study Abroad</strong> — Consultation & Visa Guidance</a>
         <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20talk%20to%20a%20counselor.%20(Source%3A%20home_mobile_menu)" target="_blank" rel="noopener">WhatsApp Helpline</a>
         <a href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Location on Map</a>
 
@@ -386,8 +383,6 @@
   </div>
 
   <main class="container">
-
-    <!-- HERO -->
     <section class="hero" id="top">
       <div class="hero-card">
         <div class="chips">
@@ -410,14 +405,9 @@
           <a class="btn" href="#programs">Explore Programs</a>
           <a class="btn" href="ielts.html">IELTS Levels</a>
         </div>
-
-        <div class="note">
-          Partnership mentions can stay minimal here. Keep it clean. The goal is <strong>trust + action</strong>.
-        </div>
       </div>
     </section>
 
-    <!-- PROGRAMS -->
     <section id="programs">
       <div class="section-title">Programs</div>
 
@@ -426,11 +416,11 @@
           <span class="tagline"><b>IELTS</b> — ZERO • HOPE • STEP-UP • DESPERATE</span>
           <h2>IELTS Preparation</h2>
           <p>
-            We don’t guess your level. We place you correctly and build your skills with structure + evaluation.
+            We place you correctly and train with structure + evaluation — no random practice, no confusion.
           </p>
           <div class="actions">
             <a class="btn primary" href="ielts.html">Learn More</a>
-            <a class="btn secondary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20IELTS.%20Please%20suggest%20the%20right%20level.%20(Source%3A%20home_ielts_card)" target="_blank" rel="noopener">Chat on WhatsApp</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20IELTS.%20Please%20suggest%20the%20right%20level.%20(Source%3A%20home_ielts_card)" target="_blank" rel="noopener">Chat on WhatsApp</a>
           </div>
         </div>
 
@@ -442,7 +432,7 @@
           </p>
           <div class="actions">
             <a class="btn primary" href="pte.html">Learn More</a>
-            <a class="btn secondary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20admit%20in%20PTE%20(30%20Days).%20Please%20guide%20me.%20(Source%3A%20home_pte_card)" target="_blank" rel="noopener">Admit Now</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20admit%20in%20PTE%20(30%20Days).%20Please%20guide%20me.%20(Source%3A%20home_pte_card)" target="_blank" rel="noopener">Admit on WhatsApp</a>
           </div>
         </div>
 
@@ -450,17 +440,16 @@
           <span class="tagline"><b>Study Abroad</b> — Guidance First</span>
           <h2>Study Abroad & Consultation</h2>
           <p>
-            We’ll finalize the full section tomorrow. For now, message us for a quick clarity session.
+            Get clear guidance on country, intake, documents, and next steps — then we proceed with your best plan.
           </p>
           <div class="actions">
             <a class="btn primary" href="studyabroad.html">Learn More</a>
-            <a class="btn secondary" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20study%20abroad%20guidance.%20(Source%3A%20home_abroad_card)" target="_blank" rel="noopener">Book on WhatsApp</a>
+            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20study%20abroad%20guidance.%20(Source%3A%20home_abroad_card)" target="_blank" rel="noopener">Talk on WhatsApp</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FOOTER / TRUST -->
     <section class="footer" aria-label="Footer">
       <div>
         <h3>Contact & Location</h3>
@@ -473,7 +462,7 @@
         </p>
 
         <div class="footer-links">
-          <a class="iconbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener" title="Open Map">
+          <a class="iconbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">
             <span class="icon">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 22s7-4.5 7-12a7 7 0 1 0-14 0c0 7.5 7 12 7 12z" stroke="currentColor" stroke-width="2"/>
@@ -483,7 +472,7 @@
             Open Map
           </a>
 
-          <a class="iconbtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_footer)" target="_blank" rel="noopener" title="WhatsApp">
+          <a class="iconbtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_footer)" target="_blank" rel="noopener">
             <span class="icon">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20 12a8 8 0 0 1-12.4 6.7L4 20l1.4-3.4A8 8 0 1 1 20 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
@@ -498,9 +487,9 @@
       </div>
 
       <div>
-        <h3>Social Proof</h3>
+        <h3>Social Media</h3>
         <p>
-          People trust brands they can verify. Keep these visible — it increases conversions.
+          Follow our updates, results, and student guidance content.
         </p>
 
         <div class="footer-links" style="margin-top:10px;">
@@ -534,14 +523,28 @@
         </div>
       </div>
     </section>
-
   </main>
 
-  <!-- Floating WhatsApp -->
   <a class="floatwa" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20home_float)" target="_blank" rel="noopener">
     <span class="dot"></span>
     Need guidance? <b>Chat on WhatsApp</b>
   </a>
+
+  <script>
+    // Extra safety: close menu on load + close after clicking any drawer link
+    (function(){
+      const t = document.getElementById('menuToggle');
+      if (t) t.checked = false;
+
+      const drawer = document.querySelector('.mobile-drawer');
+      if (drawer && t){
+        drawer.addEventListener('click', function(e){
+          const a = e.target.closest('a');
+          if (a) t.checked = false;
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>

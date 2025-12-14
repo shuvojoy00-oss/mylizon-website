@@ -8,7 +8,6 @@
 
 <style>
   :root{
-    /* Dark (default) */
     --bg:#071b16;
     --grad1: radial-gradient(1000px 700px at 20% 0%, rgba(35,140,110,.18), transparent 55%);
     --grad2: radial-gradient(900px 700px at 80% 30%, rgba(255,190,100,.08), transparent 55%);
@@ -17,26 +16,24 @@
     --text:#e9f3ef;
     --muted:rgba(233,243,239,.78);
     --border:rgba(233,243,239,.14);
-    --border2:rgba(233,243,239,.20);
+    --border2:rgba(233,243,239,.22);
     --chip-bg: rgba(255,255,255,.03);
     --card-grad: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
     --mini-bg: rgba(255,255,255,.02);
     --highlight-grad: linear-gradient(180deg, rgba(35,140,110,.16), rgba(255,190,100,.06));
     --shadow: 0 10px 30px rgba(0,0,0,.25);
     --gold: rgba(255,190,100,.55);
-    --gold-strong: rgba(255,190,100,.70);
+    --gold-strong: rgba(255,190,100,.80);
     --goldbg: rgba(255,190,100,.10);
     --success: #9ee6b8;
-    --chip-text: var(--muted);
 
-    /* topbar */
-    --topbar-bg: rgba(7,27,22,.78);
-    --topbar-bg-scrolled: rgba(7,27,22,.50);
+    --topbar-bg: rgba(7,27,22,.85);
+    --topbar-bg-scrolled: rgba(7,27,22,.55);
   }
 
   .theme-light{
     --bg:#eef6f3;
-    --grad1: radial-gradient(1100px 800px at 10% -10%, rgba(12, 123, 89,.10), transparent 60%);
+    --grad1: radial-gradient(1100px 800px at 10% -10%, rgba(12,123,89,.10), transparent 60%);
     --grad2: radial-gradient(1000px 800px at 100% 0%, rgba(255,190,100,.10), transparent 60%);
     --panel:#ffffff;
     --panel2:#ffffff;
@@ -45,7 +42,6 @@
     --border:rgba(11,32,26,.12);
     --border2:rgba(11,32,26,.22);
     --chip-bg:#ffffff;
-    --chip-text:#0b201a;
     --card-grad: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.98));
     --mini-bg:#f5faf7;
     --highlight-grad: linear-gradient(180deg, rgba(255,230,180,.38), rgba(12,123,89,.08));
@@ -55,8 +51,8 @@
     --goldbg: #f3ebd7;
     --success: #0d9a55;
 
-    --topbar-bg: rgba(255,255,255,.78);
-    --topbar-bg-scrolled: rgba(255,255,255,.55);
+    --topbar-bg: rgba(255,255,255,.88);
+    --topbar-bg-scrolled: rgba(255,255,255,.62);
   }
 
   *{ box-sizing:border-box; }
@@ -70,52 +66,72 @@
   }
   a{ color:inherit; }
   .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
-  .sr-only{ position:absolute; left:-9999px; }
 
-  /* =========================
-     TOPBAR (always there)
-     ========================= */
+  /* ===== TOPBAR: NEVER DISAPPEARS ===== */
   .topbar{
-    position:sticky; top:0; z-index:2000;
-    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 9999;         /* higher than everything */
+    isolation: isolate;     /* fixes blur stacking issues */
+    backdrop-filter: blur(12px);
     background: var(--topbar-bg);
     border-bottom:1px solid var(--border);
-    transition: background .2s ease, transform .2s ease;
+    transition: background .2s ease;
   }
-  .topbar.scrolled{
-    background: var(--topbar-bg-scrolled);
-  }
+  .topbar.scrolled{ background: var(--topbar-bg-scrolled); }
+
   .topbar-inner{
-    display:flex; align-items:center; justify-content:space-between;
-    padding: 12px 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
     gap:12px;
-    transition: padding .2s ease;
-  }
-  .topbar.scrolled .topbar-inner{
-    padding: 8px 0; /* slimmer while scrolling */
+    padding: 10px 0;
   }
 
   .brand{
-    display:flex; align-items:center; gap:10px;
-    min-width: 220px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width: 0; /* important for no overlap */
   }
   .logo-link{
-    display:flex; align-items:center; gap:10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
     text-decoration:none;
+    min-width: 0;
   }
   .logo-img{
-    width:42px; height:42px;
+    width:44px; height:44px;
     border-radius:12px;
     object-fit:contain;
     background: rgba(255,255,255,.06);
     border:1px solid var(--border);
     box-shadow: var(--shadow);
+    flex: 0 0 auto;
   }
-  .brand-text{ display:flex; flex-direction:column; line-height:1.15; }
-  .brand-text b{ font-size:18px; letter-spacing:.2px; }
-  .brand-text span{ font-size:12px; color:var(--muted); }
-
-  .nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
+  .brand-text{
+    display:flex;
+    flex-direction:column;
+    line-height:1.15;
+    min-width:0;
+  }
+  .brand-text b{
+    font-size:18px;
+    letter-spacing:.2px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width: 170px; /* prevents overlap */
+  }
+  .brand-text span{
+    font-size:12px;
+    color:var(--muted);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width: 170px;
+  }
 
   .chip{
     padding:8px 10px;
@@ -123,38 +139,17 @@
     border-radius:999px;
     text-decoration:none;
     font-size:13px;
-    color:var(--chip-text);
+    color:var(--muted);
     background: var(--chip-bg);
-    position:relative;
+    white-space:nowrap;
   }
-  .chip:hover{ border-color:var(--border2); }
+  .chip:hover{ border-color:var(--border2); color:var(--text); }
 
-  /* Dropdown attached to chips */
-  .dropdown{
-    position:fixed; /* stay visible while scrolling */
-    z-index:2200;
-    display:none;
-    min-width:260px;
-    max-width:90vw;
-    background: var(--panel);
-    border:1px solid var(--border);
-    border-radius:14px;
-    box-shadow: var(--shadow);
-    overflow:hidden;
-  }
-  .dropdown.open{ display:block; }
-  .drop-item{
-    display:block; padding:12px 14px; text-decoration:none; color:var(--text);
-    border-bottom:1px solid var(--border);
-    font-size:14px;
-  }
-  .drop-item:last-child{ border-bottom:none; }
-  .drop-item:hover{ background: rgba(255,255,255,.04); }
-
-  /* Toggle switch */
   .toggle{
     display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none;
     border:1px solid var(--border); border-radius:999px; padding:6px 10px; background: var(--chip-bg);
+    white-space:nowrap;
+    flex:0 0 auto;
   }
   .switch{
     width:52px; height:28px; border-radius:999px; background: var(--panel2);
@@ -167,45 +162,98 @@
   }
   .theme-light .knob{ left:26px; border-color: var(--gold-strong); background: var(--goldbg); }
 
-  /* =========================
-     BUTTONS
-     ========================= */
-  .btn{
-    display:inline-block;
-    padding:12px 16px;
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:800;
-    border:1px solid transparent;
+  /* ===== MOBILE MENU BUTTON (fix overlap) ===== */
+  .right-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex:0 0 auto;
+  }
+  .desktop-nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
+  .menu-btn{
+    display:none;
+    align-items:center;
+    gap:10px;
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background: var(--chip-bg);
+    color: var(--muted);
+    cursor:pointer;
     white-space:nowrap;
   }
-  .btn-primary{
-    background: var(--goldbg);
-    border-color: var(--gold);
-  }
-  .btn-primary:hover{
-    background: color-mix(in oklab, var(--goldbg) 70%, white 30%);
-    border-color: var(--gold-strong);
-  }
-  .btn-ghost{
-    background: transparent;
-    border-color: var(--border);
-    color: var(--muted);
-  }
-  .btn-ghost:hover{
-    border-color: var(--border2);
-    color: var(--text);
-    background: rgba(255,255,255,.03);
-  }
-  .btn-tiny{
-    padding:8px 10px; font-weight:800; border-radius:10px; font-size:12px;
-    background: var(--chip-bg); border:1px solid var(--border); color:var(--text);
+  .menu-icon{
+    width:22px; height:22px; border-radius:8px;
+    border:1px solid var(--border);
+    display:grid; place-items:center;
+    background: rgba(255,255,255,.02);
   }
 
-  /* =========================
-     CARDS & LAYOUT
-     ========================= */
-  header{ padding: 24px 0 10px; }
+  /* ===== MENU DRAWER ===== */
+  .backdrop{
+    position:fixed; inset:0;
+    background: rgba(0,0,0,.45);
+    display:none;
+    z-index: 9998;
+  }
+  .backdrop.open{ display:block; }
+
+  .drawer{
+    position:fixed;
+    top:12px;
+    left:12px;
+    right:12px;
+    max-height: calc(100vh - 24px);
+    overflow:auto;
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow: var(--shadow);
+    padding:14px;
+    display:none;
+    z-index: 10000;
+  }
+  .drawer.open{ display:block; }
+  .drawer h3{
+    margin:0 0 10px;
+    font-size:14px;
+    color: var(--muted);
+    letter-spacing:.2px;
+  }
+  .drawer-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10px;
+  }
+  .drawer a{
+    display:block;
+    padding:12px 12px;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    text-decoration:none;
+    color: var(--text);
+    font-weight:800;
+    text-align:center;
+  }
+  .drawer a:hover{ border-color: var(--border2); }
+  .drawer .full{ grid-column: 1 / -1; }
+  .drawer-close{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:10px;
+  }
+  .xbtn{
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    color: var(--text);
+    border-radius:12px;
+    padding:8px 10px;
+    cursor:pointer;
+    font-weight:900;
+  }
+
+  /* ===== MAIN LAYOUT ===== */
+  header{ padding: 18px 0 10px; }
   .hero-card{
     background: var(--card-grad);
     border: 1px solid var(--border);
@@ -219,11 +267,8 @@
   }
   h1{ margin:10px 0 6px; font-size:28px; line-height:1.2; }
   .lead{ margin:0; color:var(--muted); max-width:880px; }
-  .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
-  .trust-row{ margin-top:12px; display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--muted); }
-  .trusted{ color: var(--success); }
 
-  section{ padding: 22px 0; }
+  section{ padding: 20px 0; }
   .section-title{ margin:10px 0 8px; font-size:22px; line-height:1.25; }
   .muted{ color:var(--muted); }
   .rule{ height:1px; background: var(--border); margin:18px 0; }
@@ -245,7 +290,7 @@
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 12px;
-    background: var(--mini-bg);
+    background:var(--mini-bg);
   }
   .mini-title{ margin:0 0 6px; font-weight:900; font-size:13px; }
   .mini-text{ margin:0; color:var(--muted); font-size:13px; }
@@ -257,6 +302,38 @@
     padding: 16px;
   }
 
+  .btn{
+    display:inline-block;
+    padding:12px 16px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:900;
+    border:1px solid transparent;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background: var(--goldbg);
+    border-color: var(--gold);
+  }
+  .btn-ghost{
+    background: transparent;
+    border-color: var(--border);
+    color: var(--muted);
+  }
+  .btn-tiny{
+    padding:8px 10px; font-weight:900; border-radius:10px; font-size:12px;
+    background: rgba(255,255,255,.02); border:1px solid var(--border); color:var(--text);
+    text-decoration:none;
+  }
+  .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+
+  /* Icons list items */
+  .i{ width:18px; height:18px; margin-right:8px; vertical-align:-3px; }
+  .item{
+    display:flex; align-items:center; gap:8px; padding:12px; border:1px solid var(--border);
+    border-radius:14px; background:var(--mini-bg); margin-top:8px;
+  }
+
   /* Pricing */
   .price-row{
     display:flex; align-items:center; justify-content:space-between;
@@ -264,7 +341,7 @@
     border-bottom: 1px dashed var(--border);
   }
   .price-row:last-child{ border-bottom:none; }
-  .price-name{ font-weight:900; }
+  .price-name{ font-weight:950; }
   .price-meta{ color:var(--muted); font-size:12px; margin-top:4px; }
   .price-value{ font-weight:950; white-space:nowrap; }
   .price-actions{ display:flex; gap:8px; align-items:center; }
@@ -274,7 +351,7 @@
     background: linear-gradient(180deg, rgba(255,190,100,.10), rgba(255,255,255,.01));
   }
 
-  /* Footer (card style) */
+  /* Footer */
   footer{
     padding: 10px 0 110px;
     border-top: 1px solid var(--border);
@@ -289,7 +366,6 @@
     padding:16px;
     box-shadow: var(--shadow);
   }
-  .footer-row{ display:grid; gap:14px; grid-template-columns:1fr; }
   .footer-buttons{ display:flex; gap:10px; flex-wrap:wrap; }
   .socials{ display:flex; gap:10px; flex-wrap:wrap; }
   .footer-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
@@ -308,15 +384,10 @@
   }
   .bar .dot{ width:10px; height:10px; border-radius:50%; background:#00d26a; }
 
-  /* Scroll buttons (⬆️ ⬇️) */
+  /* Scroll buttons */
   .scroll-fab{
-    position:fixed;
-    right:14px;
-    bottom:78px; /* sits above WhatsApp bar */
-    z-index:2300;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+    position:fixed; right:14px; bottom:78px; z-index:2300;
+    display:flex; flex-direction:column; gap:10px;
   }
   .fab-btn{
     width:44px; height:44px;
@@ -324,45 +395,34 @@
     border:1px solid var(--border);
     background: var(--panel);
     color: var(--text);
-    display:grid;
-    place-items:center;
+    display:grid; place-items:center;
     box-shadow: var(--shadow);
-    cursor:pointer;
-    user-select:none;
-    font-size:18px;
-    font-weight:900;
+    cursor:pointer; user-select:none;
+    font-size:18px; font-weight:950;
   }
-  .fab-btn:hover{ border-color:var(--border2); }
-  .fab-btn:active{ transform: translateY(1px); }
 
+  /* ===== RESPONSIVE FIX: NO MORE OVERLAP ===== */
+  @media (max-width: 860px){
+    .desktop-nav{ display:none; }
+    .menu-btn{ display:flex; }
+    .brand-text b, .brand-text span{ max-width: 140px; }
+  }
   @media (max-width: 920px){
     .grid-2{ grid-template-columns: 1fr; }
     .grid-3{ grid-template-columns: 1fr; }
     h1{ font-size:24px; }
-    .dropdown{ min-width:230px; }
-    .brand{ min-width: 0; }
   }
-
-  /* Inline icons */
-  .i{ width:18px; height:18px; margin-right:8px; vertical-align:-3px; }
-  .item{
-    display:flex; align-items:center; gap:8px; padding:12px; border:1px solid var(--border);
-    border-radius:14px; background:var(--mini-bg); margin-top:8px;
-  }
-  .center{ justify-content:center; }
 </style>
 </head>
 
 <body>
 
-  <!-- TOPBAR -->
+  <!-- Topbar -->
   <div class="topbar" id="topbar">
     <div class="container">
       <div class="topbar-inner">
-
-        <!-- Real logo image from your folder + clickable to Home -->
         <div class="brand">
-          <a class="logo-link" href="index.html" title="Go to Home" aria-label="LizOn Home">
+          <a class="logo-link" href="index.html" title="Go to Home" aria-label="Go to Home">
             <img class="logo-img" id="logoImg" src="assests/logo-dark.png" alt="LizOn Education Logo" />
             <div class="brand-text">
               <b>LizOn Education</b>
@@ -371,50 +431,53 @@
           </a>
         </div>
 
-        <div class="nav">
-          <a class="chip" href="index.html">Home</a>
-
-          <a class="chip" href="#zero" data-dd="dd-zero">ZERO ▾</a>
-          <a class="chip" href="#hope" data-dd="dd-hope">HOPE ▾</a>
-          <a class="chip" href="#stepup" data-dd="dd-step">STEP-UP ▾</a>
-          <a class="chip" href="#desperate" data-dd="dd-desp">DESPERATE ▾</a>
-
-          <a class="chip" href="#pricing">Pricing</a>
+        <div class="right-controls">
+          <!-- Desktop nav (hidden on mobile) -->
+          <div class="desktop-nav" aria-label="Top navigation">
+            <a class="chip" href="index.html">Home</a>
+            <a class="chip" href="#zero">ZERO</a>
+            <a class="chip" href="#hope">HOPE</a>
+            <a class="chip" href="#stepup">STEP-UP</a>
+            <a class="chip" href="#desperate">DESPERATE</a>
+            <a class="chip" href="#pricing">Pricing</a>
+          </div>
 
           <div class="toggle" id="themeToggle" role="button" aria-label="Toggle theme">
             <span id="themeLabel">Dark</span>
             <div class="switch"><div class="knob"></div></div>
           </div>
+
+          <!-- Mobile Menu button -->
+          <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">
+            <span class="menu-icon">≡</span> Menu
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- DROPDOWNS -->
-  <div class="dropdown" id="dd-zero">
-    <a class="drop-item" href="#zero-benefit">Who should take ZERO?</a>
-    <a class="drop-item" href="#zero-after">After ZERO</a>
-    <a class="drop-item" href="#pricing">See Pricing</a>
-  </div>
-  <div class="dropdown" id="dd-hope">
-    <a class="drop-item" href="#hope-comes">This course comes with</a>
-    <a class="drop-item" href="#hope-benefit">Benefited Modules</a>
-    <a class="drop-item" href="#hope-after">After HOPE</a>
-    <a class="drop-item" href="#pricing">See Pricing</a>
-  </div>
-  <div class="dropdown" id="dd-step">
-    <a class="drop-item" href="#step-comes">This course comes with</a>
-    <a class="drop-item" href="#step-benefit">Benefited Modules</a>
-    <a class="drop-item" href="#step-skill">Skills Covered</a>
-    <a class="drop-item" href="#step-after">Aim + Admit</a>
-    <a class="drop-item" href="#pricing">See Pricing</a>
-  </div>
-  <div class="dropdown" id="dd-desp">
-    <a class="drop-item" href="#desp-comes">This course comes with</a>
-    <a class="drop-item" href="#desp-benefit">Benefited Modules</a>
-    <a class="drop-item" href="#desp-skill">Skills Covered</a>
-    <a class="drop-item" href="#desp-after">Aim + Admit</a>
-    <a class="drop-item" href="#pricing">See Pricing</a>
+  <!-- Mobile Drawer -->
+  <div class="backdrop" id="backdrop"></div>
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Navigation Menu">
+    <div class="drawer-close">
+      <h3 style="margin:0;">Navigate</h3>
+      <button class="xbtn" id="closeDrawer" type="button">✕</button>
+    </div>
+
+    <div class="drawer-grid">
+      <a href="index.html" class="full">Home</a>
+      <a href="#zero">ZERO</a>
+      <a href="#hope">HOPE</a>
+      <a href="#stepup">STEP-UP</a>
+      <a href="#desperate">DESPERATE</a>
+      <a href="#pricing" class="full">Pricing</a>
+    </div>
+
+    <div style="margin-top:12px;">
+      <a class="btn-tiny" style="display:block;text-align:center;"
+         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
+         target="_blank" rel="noopener">Talk with LizOn</a>
+    </div>
   </div>
 
   <!-- HERO -->
@@ -432,20 +495,8 @@
           <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
              target="_blank" rel="noopener">Talk with LizOn</a>
-
-          <span class="muted">Choose your step:</span>
-          <a class="chip" href="#zero">ZERO</a>
-          <a class="chip" href="#hope">HOPE</a>
-          <a class="chip" href="#stepup">STEP-UP</a>
-          <a class="chip" href="#desperate">DESPERATE</a>
-        </div>
-
-        <div class="cta-row">
           <a class="btn btn-ghost" href="#pricing">Choose with an Expert</a>
-          <span class="trusted">✅ Live Classes</span>
-          <span>✅ Mentorship</span>
-          <span>✅ Evaluation Focus</span>
-          <span>✅ Transparent Pricing</span>
+          <span class="muted">✅ Live Classes • ✅ Mentorship • ✅ Evaluation Focus • ✅ Transparent Pricing</span>
         </div>
       </div>
     </div>
@@ -469,7 +520,7 @@
       </div>
 
       <div class="grid-2" style="margin-top:14px;">
-        <div class="card" id="zero-benefit">
+        <div class="card">
           <h3>Who should take ZERO?</h3>
           <ul class="list">
             <li>Kothay theke shuru korbo bujhi na</li>
@@ -493,7 +544,7 @@
         </div>
       </div>
 
-      <div class="highlight" id="zero-after" style="margin-top:14px;">
+      <div class="highlight" style="margin-top:14px;">
         <h3 style="margin:0 0 6px;">After ZERO, who will you become?</h3>
         <div class="grid-3" style="margin-top:10px;">
           <div class="mini-card"><p class="mini-title">Stable Start</p><p class="mini-text">Apni “start point” niye sure thakben.</p></div>
@@ -527,7 +578,7 @@
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
-      <div class="grid-2" style="margin-top:14px;" id="hope-comes">
+      <div class="grid-2" style="margin-top:14px;">
         <div class="card">
           <h3>This course comes with</h3>
 
@@ -539,7 +590,7 @@
           <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v10H4z"/><path d="M8 18h8"/></svg><b>Abroad Job</b> • Opportunity guidance</div>
         </div>
 
-        <div class="card" id="hope-benefit">
+        <div class="card">
           <h3>Benefited modules</h3>
           <ul class="list">
             <li>Listening</li>
@@ -555,33 +606,6 @@
             <li>Writing e basic control + structure</li>
             <li>Speaking e idea flow + confidence</li>
           </ul>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top:14px;">
-        <div class="card">
-          <h3>Who should take HOPE?</h3>
-          <ul class="list">
-            <li>You are not yet stable in any module</li>
-            <li>Reading slow, translate korte hoy</li>
-            <li>Listening e accent / speed e miss hoy</li>
-            <li>Writing e template chara atke jay</li>
-            <li>Speaking e topic handle korte pressure lage</li>
-          </ul>
-        </div>
-
-        <div class="highlight" id="hope-after">
-          <h3 style="margin:0 0 6px;">After HOPE, who will you become?</h3>
-          <ul class="list">
-            <li>Reading e speed + confidence barবে</li>
-            <li>Listening e answer dhora easy hobe</li>
-            <li>Writing e clean structure ashbe</li>
-            <li>Speaking e idea + fluency stable hobe</li>
-          </ul>
-          <div class="cta-row">
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20HOPE." target="_blank" rel="noopener">Admit Now</a>
-            <a class="btn-tiny" href="#pricing">See Price</a>
-          </div>
         </div>
       </div>
 
@@ -604,63 +628,6 @@
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
-      <div class="grid-2" style="margin-top:14px;" id="step-comes">
-        <div class="card">
-          <h3>This course comes with</h3>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6l7 4-7 4-7-4 7-4z"/><path d="M5 10v6l7 4 7-4v-6"/></svg><b>Live Classes</b> • Band 8+ instructors</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 22a6.5 6.5 0 0 1 13 0"/></svg><b>Mentorship</b> • By Shuvo Sarker Joy</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg><b>Private Discord</b> • Practice + updates</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg><b>Documentation</b> • Guidelines</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7-6.5-4.5L5 20l2-7L2 9h7z"/></svg><b>Scholarship</b> • Preparation support</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v10H4z"/><path d="M8 18h8"/></svg><b>Abroad Job</b> • Personalized plan</div>
-        </div>
-
-        <div class="card" id="step-benefit">
-          <h3>Course format</h3>
-          <ul class="list">
-            <li>12 live classes</li>
-            <li>+ 4 evaluation classes</li>
-            <li><b>Total: 16 sessions</b></li>
-          </ul>
-          <p class="note">STEP-UP includes evaluation.</p>
-
-          <h3 style="margin-top:14px;">Benefited modules</h3>
-          <ul class="list">
-            <li>Listening</li>
-            <li>Reading</li>
-            <li>Speaking</li>
-            <li>Writing</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top:14px;" id="step-skill">
-        <div class="card">
-          <h3>Skills covered</h3>
-          <ul class="list">
-            <li><b>Listening:</b> Part 1 → Part 4</li>
-            <li><b>Reading:</b> T/F/NG, Yes/No/NG, Fill-in-the-Gaps (all types)</li>
-            <li><b>Writing Task 1:</b> overall + comparison sentence making</li>
-            <li><b>Writing Task 2:</b> main idea find out, what to cover, body segmentation, topic sentence</li>
-            <li><b>Speaking:</b> topic-based presentation (100 seconds — cue card handling)</li>
-          </ul>
-        </div>
-
-        <div class="highlight" id="step-after">
-          <h3 style="margin:0 0 6px;">Aim of STEP-UP</h3>
-          <ul class="list">
-            <li>Band 6 barrier fix</li>
-            <li>Important question types mastery</li>
-            <li>Right writing structure build</li>
-            <li>Speaking e fluent capability build</li>
-          </ul>
-          <div class="cta-row">
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20STEP-UP." target="_blank" rel="noopener">Admit Now</a>
-            <a class="btn-tiny" href="#pricing">See Price</a>
-          </div>
-        </div>
-      </div>
-
       <div class="rule"></div>
     </div>
   </section>
@@ -669,71 +636,15 @@
   <section id="desperate">
     <div class="container">
       <p class="badge">Level 4</p>
-      <h2 class="section-title">IELTS DESPERATE — Fast. Final. A Must for Repeaters.</h2>
+      <h2 class="section-title">IELTS DESPERATE — Fast. Final. Evaluation Focused</h2>
       <p class="muted" style="max-width:920px;">
-        DESPERATE is for students jader exam near, or jara 1–2 bar (or more) diyeo desired score pay nai.
+        DESPERATE is for students jader exam near, or jara repeat koreo desired score pay nai.
         Focus: Learning + Testing + Practice + Proper Evaluation.
       </p>
 
       <div class="cta-row">
         <a class="btn btn-primary" href="https://wa.me/8801611611139?text=IELTS%20DESPERATE%20admission%20info%20please." target="_blank" rel="noopener">Admission (DESPERATE)</a>
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
-      </div>
-
-      <div class="grid-2" style="margin-top:14px;" id="desp-comes">
-        <div class="card">
-          <h3>This course comes with</h3>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6l7 4-7 4-7-4 7-4z"/><path d="M5 10v6l7 4 7-4v-6"/></svg><b>Live Classes</b> • Band 8+ instructors</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 22a6.5 6.5 0 0 1 13 0"/></svg><b>Mentorship</b> • By Shuvo Sarker Joy</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg><b>Private Discord</b> • Practice + updates</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7-6.5-4.5L5 20l2-7L2 9h7z"/></svg><b>Scholarship</b> • Preparation support</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v10H4z"/><path d="M8 18h8"/></svg><b>Abroad Job</b> • Application support</div>
-          <div class="item"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14l-1 7H6L5 3z"/><path d="M6 10v7h12v-7"/></svg><b>Evaluation Focus</b> • Exam-focused tips</div>
-        </div>
-
-        <div class="card" id="desp-benefit">
-          <h3>Evaluation focus</h3>
-          <ul class="list">
-            <li>Mock evaluation</li>
-            <li>Speaking evaluation</li>
-            <li>Writing evaluation</li>
-          </ul>
-          <p class="note">Revision + evaluation-heavy execution.</p>
-
-          <h3 style="margin-top:14px;">Benefited modules</h3>
-          <ul class="list">
-            <li>Listening</li>
-            <li>Reading</li>
-            <li>Speaking</li>
-            <li>Writing</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top:14px;" id="desp-skill">
-        <div class="card">
-          <h3>Skills covered</h3>
-          <ul class="list">
-            <li><b>Listening:</b> Part 1–4, MCQ, Maps, Matching</li>
-            <li><b>Reading:</b> Passage 1–3 + common question types</li>
-            <li><b>Writing:</b> Task 1 (graphs) & Task 2 (all types)</li>
-            <li><b>Speaking:</b> Part 1–3 (full coverage)</li>
-          </ul>
-        </div>
-
-        <div class="highlight" id="desp-after">
-          <h3 style="margin:0 0 6px;">Aim of DESPERATE</h3>
-          <ul class="list">
-            <li>All question types practice + evaluation</li>
-            <li>Real exam environment practice</li>
-            <li>Weakness identify করে targeted fix</li>
-            <li>Pressure handling + timing control</li>
-          </ul>
-          <div class="cta-row">
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20DESPERATE." target="_blank" rel="noopener">Admit Now</a>
-            <a class="btn-tiny" href="#pricing">See Price</a>
-          </div>
-        </div>
       </div>
 
       <div class="rule"></div>
@@ -784,23 +695,9 @@
         <div class="card best" style="margin-top:14px;">
           <h3 style="margin:0 0 6px;">N2F — Now to Fly (All 4 Levels) — BEST VALUE</h3>
           <p class="muted" style="margin:0;">All 4 courses combo with maximum savings and full direction.</p>
-          <div class="cta-row center" style="margin-top:12px;">
+          <div class="cta-row" style="justify-content:center;">
             <a class="btn btn-primary" href="https://wa.me/8801611611139?text=N2F%20(All%204%20courses)%20details" target="_blank" rel="noopener">Talk (N2F)</a>
             <span class="btn btn-ghost" style="cursor:default;">Price: 12,700</span>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:14px;">
-          <h3 style="margin:0 0 10px;">Combo Prices</h3>
-
-          <div class="price-row"><div class="price-name">ZERO + HOPE</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20ZERO%20%2B%20HOPE" target="_blank" rel="noopener">Admit now</a><div class="price-value">6,790</div></div></div>
-          <div class="price-row"><div class="price-name">HOPE + STEP-UP</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20HOPE%20%2B%20STEP-UP" target="_blank" rel="noopener">Admit now</a><div class="price-value">8,190</div></div></div>
-          <div class="price-row"><div class="price-name">STEP-UP + DESPERATE</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20STEP-UP%20%2B%20DESPERATE" target="_blank" rel="noopener">Admit now</a><div class="price-value">9,590</div></div></div>
-          <div class="price-row"><div class="price-name">ZERO + HOPE + STEP-UP</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20ZERO%20%2B%20HOPE%20%2B%20STEP-UP" target="_blank" rel="noopener">Admit now</a><div class="price-value">9,540</div></div></div>
-          <div class="price-row"><div class="price-name">HOPE + STEP-UP + DESPERATE</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20HOPE%20%2B%20STEP-UP%20%2B%20DESPERATE" target="_blank" rel="noopener">Admit now</a><div class="price-value">11,520</div></div></div>
-
-          <div class="cta-row center" style="margin-top:12px; justify-content:center;">
-            <a class="btn btn-primary" href="https://wa.me/8801611611139?text=Help%20me%20choose%20the%20right%20IELTS%20combo" target="_blank" rel="noopener">Help Me Choose</a>
           </div>
         </div>
 
@@ -812,49 +709,39 @@
   <footer>
     <div class="container">
       <div class="footer-card">
-        <div class="footer-row">
 
-          <div>
-            <h3 style="margin:0 0 8px;">Options</h3>
-            <div class="footer-links">
-              <a class="btn btn-ghost" href="ielts.html">IELTS Courses</a>
-              <a class="btn btn-ghost" href="pte.html">PTE Courses</a>
-              <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
-            </div>
-          </div>
+        <h3 style="margin:0 0 8px;">Options</h3>
+        <div class="footer-links">
+          <a class="btn btn-ghost" href="ielts.html">IELTS Courses</a>
+          <a class="btn btn-ghost" href="pte.html">PTE Courses</a>
+          <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
+        </div>
 
-          <div>
-            <h3 style="margin:10px 0 8px;">Contact & Location</h3>
-            <p style="margin:0 0 10px;">
-              <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
-              <b>IELTS/PTE Helpline:</b> 01611611139<br/>
-              <b>Study Abroad/Visa Processing:</b> 01608881545
-            </p>
-            <div class="footer-buttons">
-              <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-              <a class="btn btn-primary"
-                 href="https://wa.me/8801611611139?text=Need%20guidance%20about%20IELTS%20or%20Study%20Abroad"
-                 target="_blank" rel="noopener">WhatsApp</a>
-            </div>
-          </div>
+        <h3 style="margin:14px 0 8px;">Contact & Location</h3>
+        <p style="margin:0 0 10px;">
+          <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
+          <b>IELTS/PTE Helpline:</b> 01611611139<br/>
+          <b>Study Abroad/Visa Processing:</b> 01608881545
+        </p>
+        <div class="footer-buttons">
+          <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+          <a class="btn btn-primary"
+             href="https://wa.me/8801611611139?text=Need%20guidance%20about%20IELTS%20or%20Study%20Abroad"
+             target="_blank" rel="noopener">WhatsApp</a>
+        </div>
 
-          <div>
-            <h3 style="margin:10px 0 8px;">Social Media</h3>
-            <p class="muted" style="margin:0 0 10px;">Follow our updates, results, and guidance content.</p>
-            <div class="socials">
-              <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-              <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
-              <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
-            </div>
-          </div>
-
+        <h3 style="margin:14px 0 8px;">Social Media</h3>
+        <p class="muted" style="margin:0 0 10px;">Follow our updates, results, and guidance content.</p>
+        <div class="socials">
+          <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+          <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
         </div>
 
         <p class="muted" style="margin:14px 0 0;">© 2025 myLizOn.com | LizOn Education</p>
       </div>
     </div>
 
-    <!-- Floating WhatsApp bar -->
     <div class="sticky-wa">
       <div class="bar">
         <span class="dot"></span>
@@ -873,7 +760,7 @@
   </div>
 
 <script>
-  /* THEME TOGGLE (persist) */
+  /* Theme toggle (persist) */
   const body = document.body;
   const themeLabel = document.getElementById('themeLabel');
   const topbar = document.getElementById('topbar');
@@ -893,7 +780,7 @@
     themeLabel.textContent = isLight ? 'Light' : 'Dark';
   });
 
-  /* TOPBAR transparency while scrolling */
+  /* Topbar transparency while scrolling */
   function handleTopbar(){
     if(window.scrollY > 8) topbar.classList.add('scrolled');
     else topbar.classList.remove('scrolled');
@@ -901,58 +788,44 @@
   handleTopbar();
   window.addEventListener('scroll', handleTopbar, {passive:true});
 
-  /* VIEWPORT-SAFE DROPDOWNS */
-  const chips = document.querySelectorAll('[data-dd]');
-  const dropdowns = {};
-  ['dd-zero','dd-hope','dd-step','dd-desp'].forEach(id=> dropdowns[id] = document.getElementById(id));
+  /* Mobile drawer */
+  const menuBtn = document.getElementById('menuBtn');
+  const drawer = document.getElementById('drawer');
+  const backdrop = document.getElementById('backdrop');
+  const closeDrawer = document.getElementById('closeDrawer');
 
-  function closeAll(){ Object.values(dropdowns).forEach(x=> x.classList.remove('open')); }
-
-  function openDropdown(chip){
-    const id = chip.getAttribute('data-dd');
-    const dd = dropdowns[id];
-    if(!dd) return;
-
-    closeAll();
-
-    // temporarily show to measure width
-    dd.classList.add('open');
-    const width = dd.getBoundingClientRect().width;
-
-    const r = chip.getBoundingClientRect();
-    const padding = 8;
-
-    let left = r.left;
-    const maxLeft = window.innerWidth - width - padding;
-    if(left > maxLeft) left = maxLeft;
-    if(left < padding) left = padding;
-
-    dd.style.left = left + 'px';
-    dd.style.top  = (r.bottom + 8) + 'px';
+  function openDrawer(){
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+  }
+  function closeIt(){
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
   }
 
-  chips.forEach(chip=>{
-    chip.addEventListener('click', (e)=>{
-      e.preventDefault();
-      const id = chip.getAttribute('data-dd');
-      const dd = dropdowns[id];
-      if(!dd) return;
-      if(dd.classList.contains('open')) dd.classList.remove('open');
-      else openDropdown(chip);
-    });
+  menuBtn.addEventListener('click', openDrawer);
+  closeDrawer.addEventListener('click', closeIt);
+  backdrop.addEventListener('click', closeIt);
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeIt(); });
+
+  // close drawer on click any link
+  drawer.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', closeIt);
   });
 
-  document.addEventListener('click', (e)=>{
-    if(!(e.target.closest('.dropdown') || e.target.closest('[data-dd]'))) closeAll();
-  });
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeAll(); });
-
-  /* Smooth scroll buttons */
+  /* Scroll buttons */
   document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
   document.getElementById('scrollBottomBtn').addEventListener('click', ()=>{
     window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+  });
+
+  /* Logo fallback if path wrong (prevents broken icon look) */
+  const logoImg = document.getElementById('logoImg');
+  logoImg.addEventListener('error', ()=>{
+    // try common alternative spelling
+    logoImg.src = 'assets/logo-dark.png';
   });
 </script>
 

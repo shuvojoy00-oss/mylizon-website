@@ -7,9 +7,6 @@
 <meta name="description" content="LizOn Education IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Clear path, mentorship, evaluation, transparent pricing." />
 
 <style>
-  /* =========================
-     THEME TOKENS
-     ========================= */
   :root{
     /* Dark (default) */
     --bg:#071b16;
@@ -31,9 +28,12 @@
     --goldbg: rgba(255,190,100,.10);
     --success: #9ee6b8;
     --chip-text: var(--muted);
+
+    /* topbar */
+    --topbar-bg: rgba(7,27,22,.78);
+    --topbar-bg-scrolled: rgba(7,27,22,.50);
   }
 
-  /* Light theme overrides */
   .theme-light{
     --bg:#eef6f3;
     --grad1: radial-gradient(1100px 800px at 10% -10%, rgba(12, 123, 89,.10), transparent 60%);
@@ -54,11 +54,11 @@
     --gold-strong: rgba(165,127,50,.80);
     --goldbg: #f3ebd7;
     --success: #0d9a55;
+
+    --topbar-bg: rgba(255,255,255,.78);
+    --topbar-bg-scrolled: rgba(255,255,255,.55);
   }
 
-  /* =========================
-     BASE
-     ========================= */
   *{ box-sizing:border-box; }
   html,body{ height:100%; }
   body{
@@ -73,36 +73,50 @@
   .sr-only{ position:absolute; left:-9999px; }
 
   /* =========================
-     TOPBAR
+     TOPBAR (always there)
      ========================= */
   .topbar{
-    position:sticky; top:0; z-index:1000;
+    position:sticky; top:0; z-index:2000;
     backdrop-filter: blur(10px);
-    background: color-mix(in oklab, var(--panel) 72%, transparent);
+    background: var(--topbar-bg);
     border-bottom:1px solid var(--border);
+    transition: background .2s ease, transform .2s ease;
+  }
+  .topbar.scrolled{
+    background: var(--topbar-bg-scrolled);
   }
   .topbar-inner{
     display:flex; align-items:center; justify-content:space-between;
-    padding: 10px 0;
+    padding: 12px 0;
     gap:12px;
+    transition: padding .2s ease;
   }
+  .topbar.scrolled .topbar-inner{
+    padding: 8px 0; /* slimmer while scrolling */
+  }
+
   .brand{
-    display:flex; align-items:flex-start; gap:10px;
+    display:flex; align-items:center; gap:10px;
+    min-width: 220px;
   }
-  .logo{
-    width:40px; height:40px; border-radius:12px;
-    display:grid; place-items:center;
-    background: var(--panel2);
-    border:1px solid var(--border);
-    box-shadow: var(--shadow);
+  .logo-link{
+    display:flex; align-items:center; gap:10px;
     text-decoration:none;
   }
-  .logo svg{ width:22px; height:22px; }
+  .logo-img{
+    width:42px; height:42px;
+    border-radius:12px;
+    object-fit:contain;
+    background: rgba(255,255,255,.06);
+    border:1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
   .brand-text{ display:flex; flex-direction:column; line-height:1.15; }
   .brand-text b{ font-size:18px; letter-spacing:.2px; }
   .brand-text span{ font-size:12px; color:var(--muted); }
 
   .nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
+
   .chip{
     padding:8px 10px;
     border:1px solid var(--border);
@@ -118,7 +132,7 @@
   /* Dropdown attached to chips */
   .dropdown{
     position:fixed; /* stay visible while scrolling */
-    z-index:1200;
+    z-index:2200;
     display:none;
     min-width:260px;
     max-width:90vw;
@@ -139,8 +153,8 @@
 
   /* Toggle switch */
   .toggle{
-    display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none;
-    border:1px solid var(--border); border-radius:999px; padding:6px 8px; background: var(--chip-bg);
+    display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none;
+    border:1px solid var(--border); border-radius:999px; padding:6px 10px; background: var(--chip-bg);
   }
   .switch{
     width:52px; height:28px; border-radius:999px; background: var(--panel2);
@@ -224,7 +238,6 @@
     padding: 16px;
   }
   .card h3{ margin:0 0 8px; font-size:16px; }
-
   .list{ margin:10px 0 0; padding-left:18px; }
   .note{ margin-top: 10px; color:var(--muted); font-size: 13px; }
 
@@ -263,7 +276,7 @@
 
   /* Footer (card style) */
   footer{
-    padding: 10px 0 90px;
+    padding: 10px 0 110px;
     border-top: 1px solid var(--border);
     margin-top: 18px;
     color: var(--muted);
@@ -279,10 +292,11 @@
   .footer-row{ display:grid; gap:14px; grid-template-columns:1fr; }
   .footer-buttons{ display:flex; gap:10px; flex-wrap:wrap; }
   .socials{ display:flex; gap:10px; flex-wrap:wrap; }
+  .footer-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
 
   /* Sticky WhatsApp bar */
   .sticky-wa{
-    position:fixed; left:0; right:0; bottom:12px; z-index:1200;
+    position:fixed; left:0; right:0; bottom:12px; z-index:2200;
     display:flex; justify-content:center; pointer-events:none;
   }
   .sticky-wa .bar{
@@ -294,14 +308,42 @@
   }
   .bar .dot{ width:10px; height:10px; border-radius:50%; background:#00d26a; }
 
+  /* Scroll buttons (⬆️ ⬇️) */
+  .scroll-fab{
+    position:fixed;
+    right:14px;
+    bottom:78px; /* sits above WhatsApp bar */
+    z-index:2300;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .fab-btn{
+    width:44px; height:44px;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background: var(--panel);
+    color: var(--text);
+    display:grid;
+    place-items:center;
+    box-shadow: var(--shadow);
+    cursor:pointer;
+    user-select:none;
+    font-size:18px;
+    font-weight:900;
+  }
+  .fab-btn:hover{ border-color:var(--border2); }
+  .fab-btn:active{ transform: translateY(1px); }
+
   @media (max-width: 920px){
     .grid-2{ grid-template-columns: 1fr; }
     .grid-3{ grid-template-columns: 1fr; }
     h1{ font-size:24px; }
     .dropdown{ min-width:230px; }
+    .brand{ min-width: 0; }
   }
 
-  /* Inline icons (simple SVG holder) */
+  /* Inline icons */
   .i{ width:18px; height:18px; margin-right:8px; vertical-align:-3px; }
   .item{
     display:flex; align-items:center; gap:8px; padding:12px; border:1px solid var(--border);
@@ -313,31 +355,25 @@
 
 <body>
 
-  <!-- =========================
-       TOPBAR
-       ========================= -->
-  <div class="topbar">
+  <!-- TOPBAR -->
+  <div class="topbar" id="topbar">
     <div class="container">
       <div class="topbar-inner">
 
-        <!-- Logo + brand (clickable to Home) -->
-        <a class="logo" href="index.html" title="Go to Home" aria-label="LizOn Home">
-          <!-- simple hex-like mark -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="#2f9b78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 4l-4 4v8l4 4h12l4-4V8l-4-4H6z"/>
-            <path d="M8 16l4-8 4 8M10 12h4"/>
-          </svg>
-        </a>
-        <div class="brand-text">
-          <b>LizOn Education</b>
-          <span>IELTS Journey (4 Levels)</span>
+        <!-- Real logo image from your folder + clickable to Home -->
+        <div class="brand">
+          <a class="logo-link" href="index.html" title="Go to Home" aria-label="LizOn Home">
+            <img class="logo-img" id="logoImg" src="assests/logo-dark.png" alt="LizOn Education Logo" />
+            <div class="brand-text">
+              <b>LizOn Education</b>
+              <span>IELTS Journey (4 Levels)</span>
+            </div>
+          </a>
         </div>
 
-        <!-- Right actions -->
         <div class="nav">
           <a class="chip" href="index.html">Home</a>
 
-          <!-- Level chips with dropdowns -->
           <a class="chip" href="#zero" data-dd="dd-zero">ZERO ▾</a>
           <a class="chip" href="#hope" data-dd="dd-hope">HOPE ▾</a>
           <a class="chip" href="#stepup" data-dd="dd-step">STEP-UP ▾</a>
@@ -345,7 +381,6 @@
 
           <a class="chip" href="#pricing">Pricing</a>
 
-          <!-- Theme switch -->
           <div class="toggle" id="themeToggle" role="button" aria-label="Toggle theme">
             <span id="themeLabel">Dark</span>
             <div class="switch"><div class="knob"></div></div>
@@ -355,10 +390,9 @@
     </div>
   </div>
 
-  <!-- DROPDOWNS (fixed + viewport-safe) -->
+  <!-- DROPDOWNS -->
   <div class="dropdown" id="dd-zero">
-    <a class="drop-item" href="#zero-comes">This course comes with</a>
-    <a class="drop-item" href="#zero-benefit">Benefited Modules</a>
+    <a class="drop-item" href="#zero-benefit">Who should take ZERO?</a>
     <a class="drop-item" href="#zero-after">After ZERO</a>
     <a class="drop-item" href="#pricing">See Pricing</a>
   </div>
@@ -372,20 +406,18 @@
     <a class="drop-item" href="#step-comes">This course comes with</a>
     <a class="drop-item" href="#step-benefit">Benefited Modules</a>
     <a class="drop-item" href="#step-skill">Skills Covered</a>
-    <a class="drop-item" href="#step-after">After STEP-UP</a>
+    <a class="drop-item" href="#step-after">Aim + Admit</a>
     <a class="drop-item" href="#pricing">See Pricing</a>
   </div>
   <div class="dropdown" id="dd-desp">
     <a class="drop-item" href="#desp-comes">This course comes with</a>
     <a class="drop-item" href="#desp-benefit">Benefited Modules</a>
     <a class="drop-item" href="#desp-skill">Skills Covered</a>
-    <a class="drop-item" href="#desp-after">After DESPERATE</a>
+    <a class="drop-item" href="#desp-after">Aim + Admit</a>
     <a class="drop-item" href="#pricing">See Pricing</a>
   </div>
 
-  <!-- =========================
-       HERO
-       ========================= -->
+  <!-- HERO -->
   <header>
     <div class="container">
       <div class="hero-card">
@@ -401,7 +433,6 @@
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
              target="_blank" rel="noopener">Talk with LizOn</a>
 
-          <!-- Four steps as buttons -->
           <span class="muted">Choose your step:</span>
           <a class="chip" href="#zero">ZERO</a>
           <a class="chip" href="#hope">HOPE</a>
@@ -420,9 +451,7 @@
     </div>
   </header>
 
-  <!-- =========================
-       ZERO
-       ========================= -->
+  <!-- ZERO -->
   <section id="zero">
     <div class="container">
       <p class="badge">Level 1</p>
@@ -435,9 +464,7 @@
       <div class="cta-row">
         <a class="btn btn-primary"
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20ZERO%20e%20admission%20nite%20chai.%20Details%20diben%3F"
-           target="_blank" rel="noopener">
-          Admission (ZERO)
-        </a>
+           target="_blank" rel="noopener">Admission (ZERO)</a>
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
@@ -474,9 +501,7 @@
           <div class="mini-card"><p class="mini-title">Next Step Clear</p><p class="mini-text">HOPE e jaben kina—proper guidance paben.</p></div>
         </div>
         <div class="cta-row">
-          <a class="btn-tiny"
-             href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20ZERO%20please."
-             target="_blank" rel="noopener">Admit Now</a>
+          <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20ZERO%20please." target="_blank" rel="noopener">Admit Now</a>
           <a class="btn-tiny" href="#pricing">See Price</a>
         </div>
       </div>
@@ -485,9 +510,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       HOPE
-       ========================= -->
+  <!-- HOPE -->
   <section id="hope">
     <div class="container">
       <p class="badge">Level 2</p>
@@ -500,9 +523,7 @@
       <div class="cta-row">
         <a class="btn btn-primary"
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20HOPE%20niye%20details%20chai."
-           target="_blank" rel="noopener">
-          Admission (HOPE)
-        </a>
+           target="_blank" rel="noopener">Admission (HOPE)</a>
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
@@ -558,9 +579,7 @@
             <li>Speaking e idea + fluency stable hobe</li>
           </ul>
           <div class="cta-row">
-            <a class="btn-tiny"
-               href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20HOPE."
-               target="_blank" rel="noopener">Admit Now</a>
+            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20HOPE." target="_blank" rel="noopener">Admit Now</a>
             <a class="btn-tiny" href="#pricing">See Price</a>
           </div>
         </div>
@@ -570,9 +589,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       STEP-UP
-       ========================= -->
+  <!-- STEP-UP -->
   <section id="stepup">
     <div class="container">
       <p class="badge">Level 3</p>
@@ -583,9 +600,7 @@
       </p>
 
       <div class="cta-row">
-        <a class="btn btn-primary"
-           href="https://wa.me/8801611611139?text=IELTS%20STEP-UP%20admission%20info%20please."
-           target="_blank" rel="noopener">Admission (STEP-UP)</a>
+        <a class="btn btn-primary" href="https://wa.me/8801611611139?text=IELTS%20STEP-UP%20admission%20info%20please." target="_blank" rel="noopener">Admission (STEP-UP)</a>
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
@@ -640,9 +655,7 @@
             <li>Speaking e fluent capability build</li>
           </ul>
           <div class="cta-row">
-            <a class="btn-tiny"
-               href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20STEP-UP."
-               target="_blank" rel="noopener">Admit Now</a>
+            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20STEP-UP." target="_blank" rel="noopener">Admit Now</a>
             <a class="btn-tiny" href="#pricing">See Price</a>
           </div>
         </div>
@@ -652,9 +665,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       DESPERATE
-       ========================= -->
+  <!-- DESPERATE -->
   <section id="desperate">
     <div class="container">
       <p class="badge">Level 4</p>
@@ -665,9 +676,7 @@
       </p>
 
       <div class="cta-row">
-        <a class="btn btn-primary"
-           href="https://wa.me/8801611611139?text=IELTS%20DESPERATE%20admission%20info%20please."
-           target="_blank" rel="noopener">Admission (DESPERATE)</a>
+        <a class="btn btn-primary" href="https://wa.me/8801611611139?text=IELTS%20DESPERATE%20admission%20info%20please." target="_blank" rel="noopener">Admission (DESPERATE)</a>
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
@@ -721,9 +730,7 @@
             <li>Pressure handling + timing control</li>
           </ul>
           <div class="cta-row">
-            <a class="btn-tiny"
-               href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20DESPERATE."
-               target="_blank" rel="noopener">Admit Now</a>
+            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20DESPERATE." target="_blank" rel="noopener">Admit Now</a>
             <a class="btn-tiny" href="#pricing">See Price</a>
           </div>
         </div>
@@ -733,9 +740,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       PRICING
-       ========================= -->
+  <!-- PRICING -->
   <section id="pricing">
     <div class="container">
       <div class="card">
@@ -744,10 +749,7 @@
 
         <div style="margin-top:10px;">
           <div class="price-row">
-            <div>
-              <div class="price-name">IELTS ZERO</div>
-              <div class="price-meta">English Starts Here</div>
-            </div>
+            <div><div class="price-name">IELTS ZERO</div><div class="price-meta">English Starts Here</div></div>
             <div class="price-actions">
               <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20IELTS%20ZERO" target="_blank" rel="noopener">Admit now</a>
               <div class="price-value">4,200</div>
@@ -783,9 +785,7 @@
           <h3 style="margin:0 0 6px;">N2F — Now to Fly (All 4 Levels) — BEST VALUE</h3>
           <p class="muted" style="margin:0;">All 4 courses combo with maximum savings and full direction.</p>
           <div class="cta-row center" style="margin-top:12px;">
-            <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=N2F%20(All%204%20courses)%20details"
-               target="_blank" rel="noopener">Talk (N2F)</a>
+            <a class="btn btn-primary" href="https://wa.me/8801611611139?text=N2F%20(All%204%20courses)%20details" target="_blank" rel="noopener">Talk (N2F)</a>
             <span class="btn btn-ghost" style="cursor:default;">Price: 12,700</span>
           </div>
         </div>
@@ -793,50 +793,14 @@
         <div class="card" style="margin-top:14px;">
           <h3 style="margin:0 0 10px;">Combo Prices</h3>
 
-          <div class="price-row">
-            <div class="price-name">ZERO + HOPE</div>
-            <div class="price-actions">
-              <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20ZERO%20%2B%20HOPE" target="_blank" rel="noopener">Admit now</a>
-              <div class="price-value">6,790</div>
-            </div>
-          </div>
-
-          <div class="price-row">
-            <div class="price-name">HOPE + STEP-UP</div>
-            <div class="price-actions">
-              <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20HOPE%20%2B%20STEP-UP" target="_blank" rel="noopener">Admit now</a>
-              <div class="price-value">8,190</div>
-            </div>
-          </div>
-
-          <div class="price-row">
-            <div class="price-name">STEP-UP + DESPERATE</div>
-            <div class="price-actions">
-              <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20STEP-UP%20%2B%20DESPERATE" target="_blank" rel="noopener">Admit now</a>
-              <div class="price-value">9,590</div>
-            </div>
-          </div>
-
-          <div class="price-row">
-            <div class="price-name">ZERO + HOPE + STEP-UP</div>
-            <div class="price-actions">
-              <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20ZERO%20%2B%20HOPE%20%2B%20STEP-UP" target="_blank" rel="noopener">Admit now</a>
-              <div class="price-value">9,540</div>
-            </div>
-          </div>
-
-          <div class="price-row">
-            <div class="price-name">HOPE + STEP-UP + DESPERATE</div>
-            <div class="price-actions">
-              <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20HOPE%20%2B%20STEP-UP%20%2B%20DESPERATE" target="_blank" rel="noopener">Admit now</a>
-              <div class="price-value">11,520</div>
-            </div>
-          </div>
+          <div class="price-row"><div class="price-name">ZERO + HOPE</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20ZERO%20%2B%20HOPE" target="_blank" rel="noopener">Admit now</a><div class="price-value">6,790</div></div></div>
+          <div class="price-row"><div class="price-name">HOPE + STEP-UP</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20HOPE%20%2B%20STEP-UP" target="_blank" rel="noopener">Admit now</a><div class="price-value">8,190</div></div></div>
+          <div class="price-row"><div class="price-name">STEP-UP + DESPERATE</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20STEP-UP%20%2B%20DESPERATE" target="_blank" rel="noopener">Admit now</a><div class="price-value">9,590</div></div></div>
+          <div class="price-row"><div class="price-name">ZERO + HOPE + STEP-UP</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20ZERO%20%2B%20HOPE%20%2B%20STEP-UP" target="_blank" rel="noopener">Admit now</a><div class="price-value">9,540</div></div></div>
+          <div class="price-row"><div class="price-name">HOPE + STEP-UP + DESPERATE</div><div class="price-actions"><a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20HOPE%20%2B%20STEP-UP%20%2B%20DESPERATE" target="_blank" rel="noopener">Admit now</a><div class="price-value">11,520</div></div></div>
 
           <div class="cta-row center" style="margin-top:12px; justify-content:center;">
-            <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=Help%20me%20choose%20the%20right%20IELTS%20combo"
-               target="_blank" rel="noopener">Help Me Choose</a>
+            <a class="btn btn-primary" href="https://wa.me/8801611611139?text=Help%20me%20choose%20the%20right%20IELTS%20combo" target="_blank" rel="noopener">Help Me Choose</a>
           </div>
         </div>
 
@@ -844,15 +808,23 @@
     </div>
   </section>
 
-  <!-- =========================
-       FOOTER (card style)
-       ========================= -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-card">
         <div class="footer-row">
+
           <div>
-            <h3 style="margin:0 0 8px;">Contact & Location</h3>
+            <h3 style="margin:0 0 8px;">Options</h3>
+            <div class="footer-links">
+              <a class="btn btn-ghost" href="ielts.html">IELTS Courses</a>
+              <a class="btn btn-ghost" href="pte.html">PTE Courses</a>
+              <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="margin:10px 0 8px;">Contact & Location</h3>
             <p style="margin:0 0 10px;">
               <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
               <b>IELTS/PTE Helpline:</b> 01611611139<br/>
@@ -875,7 +847,9 @@
               <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
             </div>
           </div>
+
         </div>
+
         <p class="muted" style="margin:14px 0 0;">© 2025 myLizOn.com | LizOn Education</p>
       </div>
     </div>
@@ -892,15 +866,25 @@
     </div>
   </footer>
 
+  <!-- Scroll buttons -->
+  <div class="scroll-fab" aria-label="Scroll controls">
+    <div class="fab-btn" id="scrollTopBtn" title="Scroll to top">⬆️</div>
+    <div class="fab-btn" id="scrollBottomBtn" title="Scroll to bottom">⬇️</div>
+  </div>
+
 <script>
-  /* =========================
-     THEME TOGGLE (persist)
-     ========================= */
+  /* THEME TOGGLE (persist) */
   const body = document.body;
   const themeLabel = document.getElementById('themeLabel');
+  const topbar = document.getElementById('topbar');
+
   const current = localStorage.getItem('lizon-theme') || 'dark';
-  if(current === 'light'){ body.classList.add('theme-light'); themeLabel.textContent = 'Light'; }
-  else { themeLabel.textContent = 'Dark'; }
+  if(current === 'light'){
+    body.classList.add('theme-light');
+    themeLabel.textContent = 'Light';
+  } else {
+    themeLabel.textContent = 'Dark';
+  }
 
   document.getElementById('themeToggle').addEventListener('click', ()=>{
     body.classList.toggle('theme-light');
@@ -909,25 +893,34 @@
     themeLabel.textContent = isLight ? 'Light' : 'Dark';
   });
 
-  /* =========================
-     VIEWPORT-SAFE DROPDOWNS
-     ========================= */
+  /* TOPBAR transparency while scrolling */
+  function handleTopbar(){
+    if(window.scrollY > 8) topbar.classList.add('scrolled');
+    else topbar.classList.remove('scrolled');
+  }
+  handleTopbar();
+  window.addEventListener('scroll', handleTopbar, {passive:true});
+
+  /* VIEWPORT-SAFE DROPDOWNS */
   const chips = document.querySelectorAll('[data-dd]');
   const dropdowns = {};
   ['dd-zero','dd-hope','dd-step','dd-desp'].forEach(id=> dropdowns[id] = document.getElementById(id));
+
+  function closeAll(){ Object.values(dropdowns).forEach(x=> x.classList.remove('open')); }
 
   function openDropdown(chip){
     const id = chip.getAttribute('data-dd');
     const dd = dropdowns[id];
     if(!dd) return;
 
-    // Close others
-    Object.values(dropdowns).forEach(x=> x.classList.remove('open'));
+    closeAll();
 
-    // Compute position (viewport-safe)
+    // temporarily show to measure width
+    dd.classList.add('open');
+    const width = dd.getBoundingClientRect().width;
+
     const r = chip.getBoundingClientRect();
     const padding = 8;
-    const width = dd.offsetWidth || 280;
 
     let left = r.left;
     const maxLeft = window.innerWidth - width - padding;
@@ -936,27 +929,32 @@
 
     dd.style.left = left + 'px';
     dd.style.top  = (r.bottom + 8) + 'px';
-    dd.classList.add('open');
   }
 
   chips.forEach(chip=>{
     chip.addEventListener('click', (e)=>{
-      const id = chip.getAttribute('data-dd');
-      if(!id){ return; }
       e.preventDefault();
+      const id = chip.getAttribute('data-dd');
       const dd = dropdowns[id];
+      if(!dd) return;
       if(dd.classList.contains('open')) dd.classList.remove('open');
       else openDropdown(chip);
     });
   });
 
-  // Close on outside click / ESC / scroll
-  function closeAll(){ Object.values(dropdowns).forEach(x=> x.classList.remove('open')); }
   document.addEventListener('click', (e)=>{
     if(!(e.target.closest('.dropdown') || e.target.closest('[data-dd]'))) closeAll();
   });
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeAll(); });
-  document.addEventListener('scroll', ()=>{ /* keep fixed; no need to close */ }, {passive:true});
+
+  /* Smooth scroll buttons */
+  document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.getElementById('scrollBottomBtn').addEventListener('click', ()=>{
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+  });
 </script>
+
 </body>
 </html>

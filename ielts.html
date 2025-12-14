@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,6 +7,9 @@
   <meta name="description" content="LizOn Education IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Clear path, mentorship, evaluation, transparent pricing." />
 
   <style>
+    /* =========================
+       THEME (Dark default + Light)
+       ========================= */
     :root{
       --bg:#071b16;
       --panel:#0b241e;
@@ -20,14 +23,45 @@
       --radius2:14px;
       --gold: rgba(255,190,100,.55);
       --goldbg: rgba(255,190,100,.10);
+
+      --bgGrad1: rgba(35,140,110,.18);
+      --bgGrad2: rgba(255,190,100,.08);
+
+      --menuBg: rgba(11,36,30,.94);
+      --menuBorder: rgba(233,243,239,.16);
     }
 
+    html[data-theme="light"]{
+      --bg:#f5fbf8;
+      --panel:#ffffff;
+      --panel2:#f0fbf6;
+      --text:#0b1b14;
+      --muted:rgba(11,27,20,.74);
+      --border:rgba(11,27,20,.12);
+      --border2:rgba(11,27,20,.18);
+      --shadow: 0 10px 26px rgba(6,20,15,.10);
+      --gold: rgba(184,146,47,.55);
+      --goldbg: rgba(184,146,47,.12);
+
+      --bgGrad1: rgba(35,140,110,.10);
+      --bgGrad2: rgba(184,146,47,.10);
+
+      --menuBg: rgba(255,255,255,.96);
+      --menuBorder: rgba(11,27,20,.14);
+    }
+
+    /* =========================
+       GLOBAL SAFETY (fix right-side cut)
+       ========================= */
     *{ box-sizing:border-box; }
+    html, body{ max-width:100%; overflow-x:hidden; }
+    img, video, iframe{ max-width:100%; height:auto; }
+
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1000px 700px at 20% 0%, rgba(35,140,110,.18), transparent 55%),
-                  radial-gradient(900px 700px at 80% 30%, rgba(255,190,100,.08), transparent 55%),
+      background: radial-gradient(1000px 700px at 20% 0%, var(--bgGrad1), transparent 55%),
+                  radial-gradient(900px 700px at 80% 30%, var(--bgGrad2), transparent 55%),
                   var(--bg);
       color:var(--text);
       line-height:1.6;
@@ -35,24 +69,33 @@
     a{ color:inherit; }
     .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
 
-    /* Topbar */
+    /* =========================
+       Topbar
+       ========================= */
     .topbar{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
       background: rgba(7,27,22,.72);
       border-bottom:1px solid var(--border);
     }
+    html[data-theme="light"] .topbar{
+      background: rgba(245,251,248,.78);
+    }
+
     .topbar-inner{
       display:flex; align-items:center; justify-content:space-between;
       padding: 12px 0;
       gap:12px;
     }
-    .brand{ display:flex; flex-direction:column; gap:2px; }
+    .brand{ display:flex; flex-direction:column; gap:2px; min-width:0; }
     .brand b{ font-size:14px; letter-spacing:.2px; }
     .brand span{ font-size:12px; color:var(--muted); }
 
-    .nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
-    .chip{
+    .nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
+
+    /* Chip + Chip button */
+    .chip,
+    .chipbtn{
       padding:8px 10px;
       border:1px solid var(--border);
       border-radius:999px;
@@ -60,10 +103,63 @@
       font-size:12px;
       color:var(--muted);
       background: rgba(255,255,255,.03);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
     }
-    .chip:hover{ border-color:var(--border2); color:var(--text); }
+    .chip:hover,
+    .chipbtn:hover{ border-color:var(--border2); color:var(--text); }
 
-    /* Buttons */
+    .chipbtn{
+      appearance:none;
+      outline:none;
+    }
+
+    /* Dropdown */
+    .navDrop{ position:relative; }
+    .dropMenu{
+      position:absolute;
+      right:0;
+      top: calc(100% + 8px);
+      min-width: 250px;
+      max-width: 320px;
+      background: var(--menuBg);
+      border:1px solid var(--menuBorder);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 8px;
+      display:none;
+      z-index:999;
+      backdrop-filter: blur(10px);
+    }
+    .navDrop.open .dropMenu{ display:block; }
+
+    .dropMenu button{
+      width:100%;
+      text-align:left;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      font-weight: 850;
+      cursor:pointer;
+    }
+    .dropMenu button:hover{
+      border-color: rgba(255,190,100,.25);
+      background: rgba(255,190,100,.08);
+    }
+    html[data-theme="light"] .dropMenu button:hover{
+      border-color: rgba(184,146,47,.25);
+      background: rgba(184,146,47,.10);
+    }
+
+    /* =========================
+       Buttons
+       ========================= */
     .btn{
       display:inline-block;
       padding:12px 16px;
@@ -81,6 +177,11 @@
       background: rgba(255,190,100,.18);
       border-color: rgba(255,190,100,.70);
     }
+    html[data-theme="light"] .btn-primary:hover{
+      background: rgba(184,146,47,.16);
+      border-color: rgba(184,146,47,.70);
+    }
+
     .btn-ghost{
       background: transparent;
       border-color: var(--border);
@@ -92,7 +193,13 @@
       background: rgba(255,255,255,.03);
     }
 
-    /* Hero */
+    /* CTA row helpers */
+    .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; }
+    .cta-center{ justify-content:center; }
+
+    /* =========================
+       Hero
+       ========================= */
     header{ padding: 28px 0 10px; }
     .hero-card{
       background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
@@ -101,6 +208,10 @@
       padding: 18px;
       box-shadow: var(--shadow);
     }
+    html[data-theme="light"] .hero-card{
+      background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.01));
+    }
+
     .badge{
       display:inline-block;
       padding:6px 10px;
@@ -112,10 +223,53 @@
     }
     h1{ margin:10px 0 6px; font-size:28px; line-height:1.2; }
     .lead{ margin:0; color:var(--muted); max-width:880px; }
-    .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; }
+
     .trust-row{ margin-top:12px; display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--muted); }
 
-    /* Sections */
+    /* 4 step buttons block */
+    .stepsWrap{
+      margin-top:12px;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      background: rgba(255,255,255,.02);
+    }
+    .tinyTag{
+      font-size:12px;
+      color: var(--muted);
+      font-weight: 850;
+      margin-bottom: 10px;
+    }
+    .stepBtns{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap:10px;
+    }
+    .stepBtn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 10px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      text-decoration:none;
+      font-weight: 950;
+      color: var(--text);
+    }
+    .stepBtn:hover{
+      border-color: var(--border2);
+      background: rgba(255,255,255,.05);
+    }
+    .expertCta{
+      margin-top:10px;
+      display:block;
+      text-align:center;
+    }
+
+    /* =========================
+       Sections
+       ========================= */
     section{ padding: 22px 0; }
     .section-title{ margin:10px 0 8px; font-size:22px; line-height:1.25; }
     .muted{ color:var(--muted); }
@@ -130,6 +284,10 @@
       border-radius: var(--radius);
       padding: 16px;
     }
+    html[data-theme="light"] .card{
+      background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.01));
+    }
+
     .card h3{ margin:0 0 8px; font-size:16px; }
     .list{ margin:10px 0 0; padding-left:18px; }
     .note{ margin-top: 10px; color:var(--muted); font-size: 13px; }
@@ -149,6 +307,10 @@
       border-radius: var(--radius);
       padding: 16px;
     }
+    html[data-theme="light"] .highlight{
+      background: linear-gradient(180deg, rgba(35,140,110,.10), rgba(184,146,47,.12));
+      border: 1px solid rgba(184,146,47,.22);
+    }
 
     /* Pricing */
     .price-row{
@@ -166,6 +328,10 @@
       border: 1px solid rgba(255,190,100,.35);
       background: linear-gradient(180deg, rgba(255,190,100,.10), rgba(255,255,255,.01));
     }
+    html[data-theme="light"] .best{
+      border: 1px solid rgba(184,146,47,.30);
+      background: linear-gradient(180deg, rgba(184,146,47,.10), rgba(0,0,0,.01));
+    }
 
     footer{
       padding: 26px 0 40px;
@@ -176,10 +342,16 @@
     }
     footer b{ color: var(--text); }
 
+    /* Smooth jump offset for sticky topbar */
+    .anchor{
+      scroll-margin-top: 88px;
+    }
+
     @media (max-width: 920px){
       .grid-2{ grid-template-columns: 1fr; }
       .grid-3{ grid-template-columns: 1fr; }
       h1{ font-size:24px; }
+      .stepBtns{ grid-template-columns: repeat(2, minmax(0,1fr)); }
     }
   </style>
 </head>
@@ -196,11 +368,71 @@
 
         <div class="nav">
           <a class="chip" href="index.html">Home</a>
-          <a class="chip" href="#zero">ZERO</a>
-          <a class="chip" href="#hope">HOPE</a>
-          <a class="chip" href="#stepup">STEP-UP</a>
-          <a class="chip" href="#desperate">DESPERATE</a>
+
+          <!-- ZERO dropdown -->
+          <div class="navDrop">
+            <button class="chipbtn" type="button" data-menu="zeroMenu">ZERO ▾</button>
+            <div class="dropMenu" id="zeroMenu">
+              <button type="button" data-jump="#zero-comeswith">This course comes with</button>
+              <button type="button" data-jump="#zero-modules">Benefited Modules</button>
+              <button type="button" data-jump="#zero-mentors">Mentors</button>
+              <button type="button" data-jump="#zero-discord">Private Discord</button>
+              <button type="button" data-jump="#zero-abroadjob">Abroad Job</button>
+              <button type="button" data-jump="#zero-scholarship">Scholarship</button>
+              <button type="button" data-jump="#zero-documentation">Documentation</button>
+              <button type="button" data-jump="#pricing">Pricing</button>
+            </div>
+          </div>
+
+          <!-- HOPE dropdown -->
+          <div class="navDrop">
+            <button class="chipbtn" type="button" data-menu="hopeMenu">HOPE ▾</button>
+            <div class="dropMenu" id="hopeMenu">
+              <button type="button" data-jump="#hope-comeswith">This course comes with</button>
+              <button type="button" data-jump="#hope-modules">Benefited Modules</button>
+              <button type="button" data-jump="#hope-mentors">Mentors</button>
+              <button type="button" data-jump="#hope-discord">Private Discord</button>
+              <button type="button" data-jump="#hope-abroadjob">Abroad Job</button>
+              <button type="button" data-jump="#hope-scholarship">Scholarship</button>
+              <button type="button" data-jump="#hope-documentation">Documentation</button>
+              <button type="button" data-jump="#pricing">Pricing</button>
+            </div>
+          </div>
+
+          <!-- STEP-UP dropdown -->
+          <div class="navDrop">
+            <button class="chipbtn" type="button" data-menu="stepMenu">STEP-UP ▾</button>
+            <div class="dropMenu" id="stepMenu">
+              <button type="button" data-jump="#step-comeswith">This course comes with</button>
+              <button type="button" data-jump="#step-modules">Benefited Modules</button>
+              <button type="button" data-jump="#step-mentors">Mentors</button>
+              <button type="button" data-jump="#step-discord">Private Discord</button>
+              <button type="button" data-jump="#step-abroadjob">Abroad Job</button>
+              <button type="button" data-jump="#step-scholarship">Scholarship</button>
+              <button type="button" data-jump="#step-documentation">Documentation</button>
+              <button type="button" data-jump="#pricing">Pricing</button>
+            </div>
+          </div>
+
+          <!-- DESPERATE dropdown -->
+          <div class="navDrop">
+            <button class="chipbtn" type="button" data-menu="despMenu">DESPERATE ▾</button>
+            <div class="dropMenu" id="despMenu">
+              <button type="button" data-jump="#desp-comeswith">This course comes with</button>
+              <button type="button" data-jump="#desp-modules">Benefited Modules</button>
+              <button type="button" data-jump="#desp-mentors">Mentors</button>
+              <button type="button" data-jump="#desp-discord">Private Discord</button>
+              <button type="button" data-jump="#desp-abroadjob">Abroad Job</button>
+              <button type="button" data-jump="#desp-scholarship">Scholarship</button>
+              <button type="button" data-jump="#desp-documentation">Documentation</button>
+              <button type="button" data-jump="#pricing">Pricing</button>
+            </div>
+          </div>
+
           <a class="chip" href="#pricing">Pricing</a>
+
+          <!-- Theme toggle -->
+          <button class="chipbtn" id="themeToggle" type="button" title="Switch Dark/Light">Dark</button>
         </div>
       </div>
     </div>
@@ -220,9 +452,27 @@
           <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20Journey%20niye%20guidance%20nite%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
              target="_blank" rel="noopener">
-            Talk to Mentor (WhatsApp)
+            Talk with LizOn (WhatsApp)
           </a>
-          <a class="btn btn-ghost" href="#zero">Start from ZERO</a>
+        </div>
+
+        <div class="stepsWrap">
+          <div class="tinyTag">Tiny tagline: Choose your step — then we guide you properly.</div>
+
+          <div class="stepBtns">
+            <a class="stepBtn" href="#zero">ZERO</a>
+            <a class="stepBtn" href="#hope">HOPE</a>
+            <a class="stepBtn" href="#stepup">STEP-UP</a>
+            <a class="stepBtn" href="#desperate">DESPERATE</a>
+          </div>
+
+          <div class="expertCta">
+            <a class="btn btn-primary"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20confused.%20Amar%20jonno%20best%20IELTS%20level%20ta%20choose%20kore%20diben%3F"
+               target="_blank" rel="noopener">
+              Choose with an Expert Now (WhatsApp)
+            </a>
+          </div>
         </div>
 
         <div class="trust-row">
@@ -256,9 +506,33 @@
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
+      <!-- Anchors for dropdown -->
+      <div id="zero-comeswith" class="anchor"></div>
+
       <div class="grid-2" style="margin-top:14px;">
         <div class="card">
-          <h3>Who should take ZERO?</h3>
+          <h3>This course comes with</h3>
+
+          <div class="grid-3" style="margin-top:10px;">
+            <div class="mini-card" id="zero-mentors"><p class="mini-title">Mentors</p><p class="mini-text">Mentorship by Shuvo Sarker Joy</p></div>
+            <div class="mini-card" id="zero-discord"><p class="mini-title">Private Discord</p><p class="mini-text">Practice + updates</p></div>
+            <div class="mini-card" id="zero-documentation"><p class="mini-title">Documentation</p><p class="mini-text">Guidelines</p></div>
+            <div class="mini-card" id="zero-abroadjob"><p class="mini-title">Abroad Job</p><p class="mini-text">Opportunity guidance</p></div>
+            <div class="mini-card" id="zero-scholarship"><p class="mini-title">Scholarship</p><p class="mini-text">Preparation support</p></div>
+            <div class="mini-card"><p class="mini-title">Evaluation Focus</p><p class="mini-text">Proper direction from the start</p></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 id="zero-modules" class="anchor">Benefited modules</h3>
+          <ul class="list">
+            <li>Listening</li>
+            <li>Reading</li>
+            <li>Speaking</li>
+            <li>Writing</li>
+          </ul>
+
+          <h3 style="margin-top:14px;">Who should take ZERO?</h3>
           <ul class="list">
             <li>Kothay theke shuru korbo bujhi na</li>
             <li>Grammar e confusion & fear</li>
@@ -268,7 +542,9 @@
             <li>Writing e structure + idea generation weak</li>
           </ul>
         </div>
+      </div>
 
+      <div class="grid-2" style="margin-top:14px;">
         <div class="card">
           <h3>Aim of ZERO</h3>
           <ul class="list">
@@ -279,14 +555,14 @@
           </ul>
           <p class="note">Target: confusion remove, ekta follow-kora routine set.</p>
         </div>
-      </div>
 
-      <div class="highlight" style="margin-top:14px;">
-        <h3 style="margin:0 0 6px;">After ZERO, who will you become?</h3>
-        <div class="grid-3" style="margin-top:10px;">
-          <div class="mini-card"><p class="mini-title">Stable Start</p><p class="mini-text">Apni “start point” niye sure thakben.</p></div>
-          <div class="mini-card"><p class="mini-title">Grammar Control</p><p class="mini-text">Sentence banano easy lagbe.</p></div>
-          <div class="mini-card"><p class="mini-title">Next Step Clear</p><p class="mini-text">HOPE e jaben kina—proper guidance paben.</p></div>
+        <div class="highlight">
+          <h3 style="margin:0 0 6px;">After ZERO, who will you become?</h3>
+          <div class="grid-3" style="margin-top:10px;">
+            <div class="mini-card"><p class="mini-title">Stable Start</p><p class="mini-text">Apni “start point” niye sure thakben.</p></div>
+            <div class="mini-card"><p class="mini-title">Grammar Control</p><p class="mini-text">Sentence banano easy lagbe.</p></div>
+            <div class="mini-card"><p class="mini-title">Next Step Clear</p><p class="mini-text">HOPE e jaben kina—proper guidance paben.</p></div>
+          </div>
         </div>
       </div>
 
@@ -295,7 +571,7 @@
   </section>
 
   <!-- =========================
-       HOPE (Built from your note sheets)
+       HOPE
        ========================= -->
   <section id="hope">
     <div class="container">
@@ -315,21 +591,23 @@
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
+      <div id="hope-comeswith" class="anchor"></div>
+
       <div class="grid-2" style="margin-top:14px;">
         <div class="card">
           <h3>This course comes with</h3>
           <div class="grid-3" style="margin-top:10px;">
-            <div class="mini-card"><p class="mini-title">Live Classes</p><p class="mini-text">Band 8+ instructors</p></div>
-            <div class="mini-card"><p class="mini-title">Mentorship</p><p class="mini-text">By Shuvo Sarker Joy</p></div>
-            <div class="mini-card"><p class="mini-title">Private Discord</p><p class="mini-text">Practice + updates</p></div>
-            <div class="mini-card"><p class="mini-title">Abroad Job</p><p class="mini-text">Opportunity guidance</p></div>
-            <div class="mini-card"><p class="mini-title">Scholarship</p><p class="mini-text">Preparation support</p></div>
-            <div class="mini-card"><p class="mini-title">Documentation</p><p class="mini-text">Guidelines</p></div>
+            <div class="mini-card" id="hope-mentors"><p class="mini-title">Mentors</p><p class="mini-text">Mentorship by Shuvo Sarker Joy</p></div>
+            <div class="mini-card" id="hope-discord"><p class="mini-title">Private Discord</p><p class="mini-text">Practice + updates</p></div>
+            <div class="mini-card" id="hope-abroadjob"><p class="mini-title">Abroad Job</p><p class="mini-text">Opportunity guidance</p></div>
+            <div class="mini-card" id="hope-scholarship"><p class="mini-title">Scholarship</p><p class="mini-text">Preparation support</p></div>
+            <div class="mini-card" id="hope-documentation"><p class="mini-title">Documentation</p><p class="mini-text">Guidelines</p></div>
+            <div class="mini-card"><p class="mini-title">Evaluation Focus</p><p class="mini-text">Real skill improvement tracking</p></div>
           </div>
         </div>
 
         <div class="card">
-          <h3>Benefited modules</h3>
+          <h3 id="hope-modules" class="anchor">Benefited modules</h3>
           <ul class="list">
             <li>Listening</li>
             <li>Reading</li>
@@ -376,7 +654,7 @@
   </section>
 
   <!-- =========================
-       STEP-UP (Your pink sheet details)
+       STEP-UP
        ========================= -->
   <section id="stepup">
     <div class="container">
@@ -396,16 +674,18 @@
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
+      <div id="step-comeswith" class="anchor"></div>
+
       <div class="grid-2" style="margin-top:14px;">
         <div class="card">
           <h3>This course comes with</h3>
           <div class="grid-3" style="margin-top:10px;">
-            <div class="mini-card"><p class="mini-title">Live Classes</p><p class="mini-text">Band 8+ instructors</p></div>
-            <div class="mini-card"><p class="mini-title">Mentorship</p><p class="mini-text">By Shuvo Sarker Joy</p></div>
-            <div class="mini-card"><p class="mini-title">Private Discord</p><p class="mini-text">Practice + updates</p></div>
-            <div class="mini-card"><p class="mini-title">Abroad Job</p><p class="mini-text">Personalized plan</p></div>
-            <div class="mini-card"><p class="mini-title">Scholarship</p><p class="mini-text">Preparation support</p></div>
-            <div class="mini-card"><p class="mini-title">Documentation</p><p class="mini-text">Guidelines</p></div>
+            <div class="mini-card" id="step-mentors"><p class="mini-title">Mentors</p><p class="mini-text">Mentorship by Shuvo Sarker Joy</p></div>
+            <div class="mini-card" id="step-discord"><p class="mini-title">Private Discord</p><p class="mini-text">Practice + updates</p></div>
+            <div class="mini-card" id="step-abroadjob"><p class="mini-title">Abroad Job</p><p class="mini-text">Personalized plan</p></div>
+            <div class="mini-card" id="step-scholarship"><p class="mini-title">Scholarship</p><p class="mini-text">Preparation support</p></div>
+            <div class="mini-card" id="step-documentation"><p class="mini-title">Documentation</p><p class="mini-text">Guidelines</p></div>
+            <div class="mini-card"><p class="mini-title">Evaluation Focus</p><p class="mini-text">Progress proof tracking</p></div>
           </div>
         </div>
 
@@ -418,7 +698,7 @@
           </ul>
           <p class="note">Routine can be shown later. Main point: STEP-UP includes evaluation.</p>
 
-          <h3 style="margin-top:14px;">Benefited modules</h3>
+          <h3 id="step-modules" class="anchor" style="margin-top:14px;">Benefited modules</h3>
           <ul class="list">
             <li>Listening</li>
             <li>Reading</li>
@@ -480,7 +760,7 @@
   </section>
 
   <!-- =========================
-       DESPERATE (Your brown sheet details)
+       DESPERATE
        ========================= -->
   <section id="desperate">
     <div class="container">
@@ -500,15 +780,17 @@
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
 
+      <div id="desp-comeswith" class="anchor"></div>
+
       <div class="grid-2" style="margin-top:14px;">
         <div class="card">
           <h3>This course comes with</h3>
           <div class="grid-3" style="margin-top:10px;">
-            <div class="mini-card"><p class="mini-title">Live Classes</p><p class="mini-text">Band 8+ instructors</p></div>
-            <div class="mini-card"><p class="mini-title">Mentorship</p><p class="mini-text">By Shuvo Sarker Joy</p></div>
-            <div class="mini-card"><p class="mini-title">Private Discord</p><p class="mini-text">Practice + updates</p></div>
-            <div class="mini-card"><p class="mini-title">Abroad Job</p><p class="mini-text">Application support</p></div>
-            <div class="mini-card"><p class="mini-title">Scholarship</p><p class="mini-text">Preparation support</p></div>
+            <div class="mini-card" id="desp-mentors"><p class="mini-title">Mentors</p><p class="mini-text">Mentorship by Shuvo Sarker Joy</p></div>
+            <div class="mini-card" id="desp-discord"><p class="mini-title">Private Discord</p><p class="mini-text">Practice + updates</p></div>
+            <div class="mini-card" id="desp-abroadjob"><p class="mini-title">Abroad Job</p><p class="mini-text">Application support</p></div>
+            <div class="mini-card" id="desp-scholarship"><p class="mini-title">Scholarship</p><p class="mini-text">Preparation support</p></div>
+            <div class="mini-card" id="desp-documentation"><p class="mini-title">Documentation</p><p class="mini-text">Guidelines</p></div>
             <div class="mini-card"><p class="mini-title">Secret Suggestion</p><p class="mini-text">Exam-focused tips</p></div>
           </div>
         </div>
@@ -522,7 +804,7 @@
           </ul>
           <p class="note">DESPERATE = revision + evaluation-heavy execution, not “basic learning only”.</p>
 
-          <h3 style="margin-top:14px;">Benefited modules</h3>
+          <h3 id="desp-modules" class="anchor" style="margin-top:14px;">Benefited modules</h3>
           <ul class="list">
             <li>Listening</li>
             <li>Reading</li>
@@ -592,6 +874,15 @@
         <h2 class="section-title">Pricing (Locked)</h2>
         <p class="muted">No EMI. No coupon clutter. Clear pricing so students can decide fast.</p>
 
+        <div class="highlight" style="margin-top:12px;">
+          <h3 style="margin:0 0 6px;">Discount Structure (Simple)</h3>
+          <ul class="list">
+            <li><b>2 courses:</b> 30% off</li>
+            <li><b>3 courses:</b> 40% off</li>
+            <li><b>All 4 (N2F):</b> 50% off (Best Value)</li>
+          </ul>
+        </div>
+
         <div style="margin-top:10px;">
           <div class="price-row">
             <div><div class="price-name">IELTS ZERO</div><div class="price-meta">English Starts Here</div></div>
@@ -617,7 +908,7 @@
         <div class="card best" style="margin-top:14px;">
           <h3 style="margin:0 0 6px;">N2F — Now to Fly (All 4 Levels) — BEST VALUE</h3>
           <p class="muted" style="margin:0;">All 4 courses combo with maximum savings and full direction.</p>
-          <div class="cta-row" style="margin-top:12px;">
+          <div class="cta-row cta-center" style="margin-top:12px;">
             <a class="btn btn-primary"
                href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20N2F%20(All%204%20courses)%20niye%20details%20jante%20chai.%20Best%20Value%20ta%20explain%20korben%3F"
                target="_blank" rel="noopener">
@@ -636,7 +927,7 @@
           <div class="price-row"><div class="price-name">ZERO + HOPE + STEP-UP</div><div class="price-value">9,540</div></div>
           <div class="price-row"><div class="price-name">HOPE + STEP-UP + DESPERATE</div><div class="price-value">11,520</div></div>
 
-          <div class="cta-row" style="margin-top:12px;">
+          <div class="cta-row cta-center" style="margin-top:12px;">
             <a class="btn btn-primary"
                href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20combo%20pricing%20niye%20help%20chai.%20Amar%20jonno%20best%20combo%20kontaa%3F"
                target="_blank" rel="noopener">
@@ -658,6 +949,66 @@
       <span class="muted">Designed for Desired Score</span>
     </div>
   </footer>
+
+  <script>
+    (function(){
+      // ===== Theme Toggle (Dark default) =====
+      const root = document.documentElement;
+      const themeBtn = document.getElementById("themeToggle");
+
+      function setTheme(t){
+        root.setAttribute("data-theme", t);
+        localStorage.setItem("lizon_theme_ielts", t);
+        if(themeBtn) themeBtn.textContent = (t === "light") ? "Light" : "Dark";
+      }
+
+      const saved = localStorage.getItem("lizon_theme_ielts");
+      if(saved === "light" || saved === "dark") setTheme(saved);
+      else setTheme("dark");
+
+      if(themeBtn){
+        themeBtn.addEventListener("click", () => {
+          const cur = root.getAttribute("data-theme") || "dark";
+          setTheme(cur === "dark" ? "light" : "dark");
+        });
+      }
+
+      // ===== Dropdown open/close =====
+      const drops = document.querySelectorAll(".navDrop");
+      const triggers = document.querySelectorAll(".chipbtn[data-menu]");
+
+      function closeAll(){
+        drops.forEach(d => d.classList.remove("open"));
+      }
+
+      triggers.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const parent = btn.closest(".navDrop");
+          const isOpen = parent.classList.contains("open");
+          closeAll();
+          if(!isOpen) parent.classList.add("open");
+        });
+      });
+
+      document.addEventListener("click", closeAll);
+      document.addEventListener("keydown", (e) => {
+        if(e.key === "Escape") closeAll();
+      });
+
+      // ===== Jump to section =====
+      document.querySelectorAll(".dropMenu button[data-jump]").forEach(b => {
+        b.addEventListener("click", () => {
+          const sel = b.getAttribute("data-jump");
+          const el = document.querySelector(sel);
+          closeAll();
+          if(el){
+            el.scrollIntoView({ behavior:"smooth", block:"start" });
+          }
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>

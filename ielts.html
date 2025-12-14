@@ -3,589 +3,89 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#062b1f" />
-  <title>LizOn Education — IELTS • PTE • Study Abroad</title>
-  <meta name="description" content="LizOn Education — skill-based IELTS & PTE preparation with proper evaluation and honest guidance. Dhaka Basabo campus. Chat on WhatsApp to get the right path." />
+  <title>IELTS Preparation — LizOn Education</title>
+  <meta name="description" content="IELTS preparation at LizOn Education — ZERO, HOPE, STEP-UP, DESPERATE. Structured learning with evaluation and guidance." />
 
   <style>
-    :root{
-      --bg:#041f16;
-      --bg2:#062b1f;
-      --card:rgba(255,255,255,.05);
-      --card2:rgba(255,255,255,.07);
-      --stroke:rgba(255,255,255,.10);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.72);
-      --gold:#d6b35a;
-      --gold2:#caa64a;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 18px;
-      --radius2: 22px;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1100px 560px at 20% 10%, rgba(214,179,90,.10), transparent 55%),
-        radial-gradient(900px 520px at 85% 20%, rgba(31,120,92,.22), transparent 55%),
-        linear-gradient(180deg, var(--bg2), var(--bg));
-      overflow-x:hidden;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:#061f16;
+      color:#f0f6f3;
     }
-
-    a{color:inherit; text-decoration:none}
-    .container{width:min(1100px, calc(100% - 40px)); margin:0 auto}
-
-    /* Header */
-    header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(6,43,31,.92), rgba(6,43,31,.55));
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:16px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px; min-width:220px;
-    }
-    .brand img{
-      width:36px; height:36px; border-radius:10px;
-      background: rgba(0,0,0,.15);
-      padding:6px;
-      border:1px solid rgba(255,255,255,.10);
-    }
-    .brand .name{font-weight:800; letter-spacing:.2px; line-height:1.1}
-    .brand .tag{font-size:12px; color:var(--muted); margin-top:2px}
-
-    .nav-actions{
-      display:flex; align-items:center; gap:10px;
-    }
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:11px 14px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color:var(--text);
-      cursor:pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      font-weight:700;
-      font-size:14px;
-      white-space:nowrap;
-      user-select:none;
-    }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18)}
-    .btn-gold{
-      background: linear-gradient(180deg, rgba(214,179,90,.98), rgba(202,166,74,.92));
-      border-color: rgba(214,179,90,.42);
-      color:#122016;
-      box-shadow: 0 14px 30px rgba(214,179,90,.12);
-    }
-    .btn-gold:hover{background: linear-gradient(180deg, rgba(214,179,90,1), rgba(202,166,74,1))}
-
-    .menuBtn{
-      display:none;
-    }
-
-    /* Mobile menu panel (hidden by default) */
-    .menuPanel{
-      display:none;
-      padding:0 0 14px 0;
-    }
-    .menuPanel.open{display:block}
-    .menuGrid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:10px;
-      padding:10px 0 4px 0;
-    }
-    .menuItem{
-      padding:14px 14px;
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      display:flex; align-items:center; justify-content:space-between;
-      font-weight:800;
-    }
-    .menuItem small{color:var(--muted); font-weight:600}
-    .menuRow{
-      display:flex; gap:10px; flex-wrap:wrap;
-      padding:10px 0 0 0;
-    }
-
-    /* Hero */
-    .hero{padding:36px 0 18px}
-    .pill{
-      display:inline-flex; gap:10px; align-items:center;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(214,179,90,.28);
-      background: rgba(214,179,90,.08);
-      color: rgba(255,255,255,.90);
-      font-weight:800;
-      font-size:12px;
-      letter-spacing:.2px;
-    }
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:18px;
-      margin-top:14px;
-      align-items:stretch;
-    }
-    .panel{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-    }
-    .panel.pad{padding:22px}
-    h1{
-      margin:12px 0 10px;
-      font-size: clamp(30px, 4.2vw, 46px);
-      line-height:1.05;
-      letter-spacing:-.6px;
-    }
-    .accent{color: var(--gold)}
-    .sub{
-      color: var(--muted);
-      font-size: 15.5px;
-      line-height:1.55;
-      margin:0 0 18px;
-    }
-    .ctaRow{display:flex; gap:10px; flex-wrap:wrap}
-    .note{
-      margin-top:14px;
-      padding:12px 14px;
-      border-radius: 14px;
-      border:1px dashed rgba(255,255,255,.18);
-      background: rgba(0,0,0,.14);
-      color: rgba(255,255,255,.80);
-      font-size:13px;
-    }
-    .note b{color: #fff}
-    .note .accent{color: var(--gold)}
-
-    /* Quick scan box */
-    .scan{
-      display:grid;
-      gap:10px;
-    }
-    .scan h3{margin:0 0 2px; font-size:14px; color: rgba(255,255,255,.86); letter-spacing:.2px}
-    .kv{
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.10);
-      padding:12px 12px;
-      display:flex; justify-content:space-between; align-items:center;
-      gap:12px;
-      font-weight:800;
-    }
-    .kv span{color: var(--muted); font-weight:700; font-size:12px}
-    .kv b{color:#fff}
-
-    /* Sections */
-    section{padding:18px 0}
-    .sectionTitle{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
-      margin: 2px 0 12px;
-    }
-    .sectionTitle h2{
-      margin:0;
-      font-size: 18px;
-      letter-spacing:.2px;
-    }
-    .sectionTitle p{
-      margin:0;
-      color: var(--muted);
-      font-size:13px;
-    }
-
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
+    .container{max-width:1000px;margin:0 auto;padding:32px 18px}
+    h1{font-size:36px;margin:0 0 10px}
+    h2{font-size:22px;margin:22px 0 8px}
+    p{color:#b7c9c2;line-height:1.6}
     .card{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      padding:18px;
-      box-shadow: 0 18px 50px rgba(0,0,0,.35);
-      min-height: 170px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      gap:14px;
-    }
-    .card .topline{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-    .badge{
-      font-size:12px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(214,179,90,.28);
-      background: rgba(214,179,90,.08);
-      color: rgba(255,255,255,.90);
-      font-weight:800;
-      white-space:nowrap;
-    }
-    .card p{margin:0; color: var(--muted); line-height:1.5; font-size:13.5px}
-    .card .actions{display:flex; gap:10px; flex-wrap:wrap}
-
-    /* Trust bullets */
-    .bullets{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
-    .bullet{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.10);
-      padding:14px;
-    }
-    .bullet b{display:block; margin-bottom:6px}
-    .bullet span{color: var(--muted); font-size:13px; line-height:1.5}
-
-    /* Footer */
-    footer{
-      padding:26px 0 90px;
-      border-top:1px solid rgba(255,255,255,.08);
-      margin-top: 12px;
-    }
-    .footGrid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:14px;
-      align-items:start;
-    }
-    .footCard{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      padding:16px;
-    }
-    .footCard h3{margin:0 0 10px; font-size:14px}
-    .footCard p{margin:0; color: var(--muted); line-height:1.55; font-size:13px}
-    .socialRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-    .miniBtn{
-      padding:10px 12px;
-      border-radius:999px;
       border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
+      border-radius:18px;
+      padding:20px;
+      margin-bottom:18px;
+      background:rgba(255,255,255,.04);
+    }
+    .tag{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(214,179,90,.15);
+      color:#e0c26b;
       font-weight:800;
-      font-size:13px;
+      font-size:12px;
+      margin-bottom:8px;
     }
-
-    /* Floating WhatsApp */
-    .floatWA{
-      position:fixed;
-      right:16px;
-      bottom:16px;
-      z-index:60;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      padding:12px 14px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(214,179,90,.98), rgba(202,166,74,.92));
+    .cta{
+      display:inline-block;
+      margin-top:12px;
+      padding:12px 16px;
+      border-radius:999px;
+      background:#d6b35a;
       color:#122016;
-      border:1px solid rgba(214,179,90,.42);
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
       font-weight:900;
-    }
-    .dot{
-      width:10px; height:10px; border-radius:50%;
-      background:#25D366;
-      box-shadow: 0 0 0 6px rgba(37,211,102,.12);
-    }
-
-    /* Responsive */
-    @media (max-width: 960px){
-      .heroGrid{grid-template-columns:1fr}
-      .cards{grid-template-columns:1fr}
-      .bullets{grid-template-columns:1fr}
-      .footGrid{grid-template-columns:1fr}
-      .menuBtn{display:inline-flex}
-      .desktopOnly{display:none}
-      .brand{min-width:auto}
+      text-decoration:none;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <div class="container">
-    <div class="nav">
-      <a class="brand" href="index.html" aria-label="LizOn Education Home">
-        <img src="assets/logo-dark.png" alt="LizOn Education Logo" />
-        <div>
-          <div class="name">LizOn Education</div>
-          <div class="tag">IELTS • PTE • Study Abroad</div>
-        </div>
-      </a>
+<div class="container">
+  <h1>IELTS Preparation</h1>
+  <p>Choose the right level. Train with structure. Improve with clarity.</p>
 
-      <div class="nav-actions">
-        <a class="btn desktopOnly" href="#programs">Explore Programs</a>
-        <a class="btn btn-gold desktopOnly" id="waTop" href="#">Chat on WhatsApp</a>
-        <button class="btn menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">☰ Menu</button>
-      </div>
+  <!-- 🔑 THIS IS THE ANCHOR. DO NOT TOUCH -->
+  <section id="levels">
+
+    <div class="card">
+      <span class="tag">IELTS ZERO</span>
+      <h2>Foundation Stage</h2>
+      <p>For students who feel lost, confused, or scared to start IELTS. Grammar, pronunciation, sentence control.</p>
+      <a class="cta" href="https://wa.me/8801611611139">Ask about ZERO</a>
     </div>
 
-    <!-- Mobile menu (only opens on tap) -->
-    <div class="menuPanel" id="menuPanel">
-      <div class="menuGrid">
-        <a class="menuItem" href="#programs">Programs <small>IELTS / PTE / Abroad</small></a>
-        <a class="menuItem" href="ielts.html">IELTS <small>Explore Levels</small></a>
-        <a class="menuItem" href="pte.html">PTE <small>30 Days Plan</small></a>
-        <a class="menuItem" href="studyabroad.html">Study Abroad <small>Guidance First</small></a>
-        <a class="menuItem" id="mapTop" href="#">Open Location on Map <small>Basabo, Dhaka</small></a>
-      </div>
-      <div class="menuRow">
-        <a class="miniBtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-        <a class="miniBtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
-        <a class="miniBtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="miniBtn" id="waMenu" href="#">WhatsApp Helpline</a>
-      </div>
-    </div>
-  </div>
-</header>
-
-<main class="container">
-
-  <div class="hero">
-    <span class="pill">Powered by LizOn Education • <span class="accent">Designed for Desired Score</span></span>
-
-    <div class="heroGrid">
-      <div class="panel pad">
-        <h1>IELTS • PTE • <span class="accent">Study Abroad</span></h1>
-        <p class="sub">
-          A structured journey from confusion to confidence — <b>skill-based learning</b>,
-          <b>proper evaluation</b>, and <b>clear guidance</b> so you stop wasting time and start improving.
-          <br /><br />
-          Not sure what to choose? <b class="accent">Message first.</b> We’ll guide you honestly — then you decide.
-        </p>
-
-        <div class="ctaRow">
-          <a class="btn btn-gold" id="waHero" href="#">Talk / Chat with LizOn</a>
-          <a class="btn" href="#programs">Explore Programs</a>
-          <a class="btn" href="ielts.html">IELTS Levels</a>
-        </div>
-
-        <div class="note">
-          <b>LizOn promise:</b> We don’t push random courses. We check your goal + timeline, then recommend the right path.
-          <span class="accent"> Guidance first. Admission later.</span>
-        </div>
-      </div>
-
-      <div class="panel pad">
-        <div class="scan">
-          <h3>Fast clarity (3-second scan)</h3>
-
-          <div class="kv"><span>Best for</span> <b>Serious learners</b></div>
-          <div class="kv"><span>Method</span> <b>Skills + Evaluation</b></div>
-          <div class="kv"><span>Support</span> <b>WhatsApp guidance</b></div>
-          <div class="kv"><span>Location</span> <b>Basabo, Dhaka</b></div>
-
-          <div class="ctaRow" style="margin-top:6px">
-            <a class="btn btn-gold" id="waScan" href="#">Chat on WhatsApp</a>
-            <a class="btn" id="mapScan" href="#">Open Map</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <section>
-    <div class="sectionTitle">
-      <h2>Why LizOn works</h2>
-      <p>Less confusion. More progress. Real guidance.</p>
+    <div class="card">
+      <span class="tag">IELTS HOPE</span>
+      <h2>Skill Fixing Stage</h2>
+      <p>For students stuck at low bands. Reading speed, listening clarity, freehand writing, speaking ideas.</p>
+      <a class="cta" href="https://wa.me/8801611611139">Ask about HOPE</a>
     </div>
 
-    <div class="bullets">
-      <div class="bullet">
-        <b>Skill-based learning</b>
-        <span>No “random practice.” We train what actually improves your score.</span>
-      </div>
-      <div class="bullet">
-        <b>Proper evaluation</b>
-        <span>You’ll know what’s wrong, why it’s wrong, and how to fix it.</span>
-      </div>
-      <div class="bullet">
-        <b>Honest guidance</b>
-        <span>We’ll tell you what fits — even if that means “not now.”</span>
-      </div>
+    <div class="card">
+      <span class="tag">IELTS STEP-UP</span>
+      <h2>Band Push Stage</h2>
+      <p>Advanced question types, strategy refinement, accuracy control, band 6+ targeting.</p>
+      <a class="cta" href="https://wa.me/8801611611139">Ask about STEP-UP</a>
     </div>
+
+    <div class="card">
+      <span class="tag">IELTS DESPERATE</span>
+      <h2>Final & Emergency Stage</h2>
+      <p>Last-moment revision, full evaluation, exam mindset, and mistake elimination.</p>
+      <a class="cta" href="https://wa.me/8801611611139">Ask about DESPERATE</a>
+    </div>
+
   </section>
-
-  <section id="programs">
-    <div class="sectionTitle">
-      <h2>Programs</h2>
-      <p>Pick a direction — or message us and we’ll guide you.</p>
-    </div>
-
-    <div class="cards">
-      <div class="card">
-        <div>
-          <div class="topline">
-            <span>IELTS Preparation</span>
-            <span class="badge">ZERO • HOPE • STEP-UP • DESPERATE</span>
-          </div>
-          <p>Structured levels from foundation to final evaluation — built for real band improvement.</p>
-        </div>
-        <div class="actions">
-          <a class="btn" href="ielts.html">Learn More</a>
-          <a class="btn btn-gold" id="waIELTS" href="#">Ask which level fits</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <div class="topline">
-            <span>PTE Preparation</span>
-            <span class="badge">30 Days • 20 Sessions</span>
-          </div>
-          <p>15 question-based sessions + 5 typing speed sessions + 1 month unlimited portal access.</p>
-        </div>
-        <div class="actions">
-          <a class="btn" href="pte.html">Learn More</a>
-          <a class="btn btn-gold" id="waPTE" href="#">Check if PTE is right</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <div class="topline">
-            <span>Study Abroad & Consultation</span>
-            <span class="badge">Guidance First</span>
-          </div>
-          <p>We’ll map your best options based on profile + budget + intake timeline — then you decide.</p>
-        </div>
-        <div class="actions">
-          <a class="btn" href="studyabroad.html">Learn More</a>
-          <a class="btn btn-gold" id="waAbroad" href="#">Talk to counselor</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <div class="container">
-    <div class="footGrid">
-      <div class="footCard">
-        <h3>Visit LizOn Education</h3>
-        <p>
-          51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
-        </p>
-        <div class="socialRow">
-          <a class="miniBtn" id="mapFooter" href="#">Open Location on Map</a>
-          <a class="miniBtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-          <a class="miniBtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
-          <a class="miniBtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-      </div>
-
-      <div class="footCard">
-        <h3>Need guidance?</h3>
-        <p>
-          Message us on WhatsApp. We’ll ask 3–5 quick questions and recommend the best path.
-          <br /><br />
-          <b class="accent">Goal:</b> clarity first → correct program → better result.
-        </p>
-        <div class="socialRow">
-          <a class="miniBtn" href="ielts.html">IELTS</a>
-          <a class="miniBtn" href="pte.html">PTE</a>
-          <a class="miniBtn" href="studyabroad.html">Study Abroad</a>
-        </div>
-      </div>
-    </div>
-
-    <p style="margin:16px 0 0; color: rgba(255,255,255,.55); font-size:12px;">
-      © <span id="year"></span> LizOn Education • mylizon.com
-    </p>
-  </div>
-</footer>
-
-<a class="floatWA" id="waFloat" href="#">
-  <span class="dot" aria-hidden="true"></span>
-  <span>Chat on WhatsApp</span>
-</a>
-
-<script>
-  // ===== SETTINGS (change anytime) =====
-  const WHATSAPP_NUMBER = "01611611139"; // IELTS/PTE helpline (primary)
-  const MAP_LINK = "https://maps.app.goo.gl/JC9sikzCiSsQrNnH9";
-
-  // Build a WhatsApp link with lightweight tracking (page + referrer)
-  function buildWA(message){
-    const page = location.pathname.split("/").pop() || "index.html";
-    const ref = document.referrer ? (" | ref: " + document.referrer) : "";
-    const src = " | src: " + page;
-    const full = message + src + ref;
-    const encoded = encodeURIComponent(full);
-    const digits = WHATSAPP_NUMBER.replace(/\D/g, "");
-    // wa.me needs country code ideally; but BD local numbers often still work in app redirect.
-    // If you want strict format later: use 8801XXXXXXXXX.
-    return "https://wa.me/" + digits + "?text=" + encoded;
-  }
-
-  // Menu toggle (mobile only)
-  const menuBtn = document.getElementById("menuBtn");
-  const menuPanel = document.getElementById("menuPanel");
-  if(menuBtn && menuPanel){
-    menuBtn.addEventListener("click", () => {
-      const open = menuPanel.classList.toggle("open");
-      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-
-    // Close menu after clicking an item
-    menuPanel.addEventListener("click", (e) => {
-      if(e.target.closest("a")){
-        menuPanel.classList.remove("open");
-        menuBtn.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
-
-  // Wire all WhatsApp buttons
-  const waLinks = [
-    ["waTop", "Hi LizOn, I want guidance. Which program fits me?"],
-    ["waHero", "Hi LizOn, I want guidance. Which program fits me?"],
-    ["waScan", "Hi LizOn, I want guidance. Which program fits me?"],
-    ["waMenu", "Hi LizOn, I want guidance. Which program fits me?"],
-    ["waIELTS", "Hi LizOn, I want IELTS guidance. Which level fits me (ZERO/HOPE/STEP-UP/DESPERATE)?"],
-    ["waPTE", "Hi LizOn, I want PTE guidance. Is PTE right for me?"],
-    ["waAbroad", "Hi LizOn, I want Study Abroad guidance. Please guide me based on my profile."],
-    ["waFloat", "Hi LizOn, I want guidance. Which program fits me?"]
-  ];
-  waLinks.forEach(([id, msg]) => {
-    const el = document.getElementById(id);
-    if(el) el.href = buildWA(msg);
-  });
-
-  // Wire all map buttons
-  ["mapTop","mapScan","mapFooter"].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.href = MAP_LINK;
-  });
-
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+</div>
 
 </body>
 </html>

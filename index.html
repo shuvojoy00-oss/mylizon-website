@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LizOn Education — IELTS • PTE • Study Abroad</title>
-  <meta name="description" content="LizOn Education — skill-based IELTS & PTE preparation with proper evaluation and honest guidance. Start with WhatsApp and get placed in the right program." />
+  <meta name="description" content="LizOn Education — IELTS, PTE, Study Abroad. Make your family proud with skill-based learning, proper evaluation, and honest guidance. Message first. Decide later." />
   <meta name="theme-color" content="#0b2a1f" />
 
   <style>
@@ -20,6 +20,27 @@
       --gold2:#b8922f;
       --soft: 0 12px 40px rgba(0,0,0,.35);
       --radius: 22px;
+
+      --chipBg: rgba(10,26,20,.55);
+      --chipBd: rgba(29,74,58,.75);
+      --focus: rgba(215,178,74,.55);
+
+      --shadow2: 0 18px 60px rgba(0,0,0,.45);
+    }
+
+    /* LIGHT THEME (same layout, different colors) */
+    html[data-theme="light"]{
+      --bg1:#f5fbf8;
+      --bg2:#eaf6f0;
+      --card: rgba(255,255,255,.88);
+      --card2: rgba(255,255,255,.72);
+      --line: rgba(9,64,45,.18);
+      --text:#0b1b14;
+      --muted:#355247;
+      --chipBg: rgba(255,255,255,.78);
+      --chipBd: rgba(9,64,45,.18);
+      --soft: 0 14px 40px rgba(6,20,15,.10);
+      --shadow2: 0 18px 60px rgba(6,20,15,.10);
     }
 
     *{box-sizing:border-box}
@@ -32,10 +53,12 @@
         radial-gradient(1100px 700px at 80% 0%, rgba(72,255,191,.07), transparent 55%),
         linear-gradient(180deg, var(--bg2), var(--bg1));
       min-height:100vh;
+      overflow-x:hidden; /* stops right-side cut */
     }
 
     a{color:inherit; text-decoration:none}
-    .container{max-width:1100px; margin:0 auto; padding:22px 18px 84px}
+    .container{max-width:1100px; margin:0 auto; padding:22px 18px 96px}
+    @media (max-width:520px){ .container{padding:18px 14px 96px} }
 
     /* Topbar */
     .topbar{
@@ -45,8 +68,11 @@
       border-bottom:1px solid rgba(29,74,58,.6);
       z-index:50;
     }
+    html[data-theme="light"] .topbar{
+      background: linear-gradient(180deg, rgba(245,251,248,.88), rgba(245,251,248,.62));
+      border-bottom:1px solid var(--line);
+    }
 
-    /* IMPORTANT: checkbox is direct child of .topbar so sibling selector works */
     .menu-toggle{
       position:absolute;
       left:-9999px;
@@ -56,33 +82,73 @@
 
     .topbar-inner{
       max-width:1100px; margin:0 auto; padding:14px 18px;
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
     }
 
     .brand{
       display:flex; align-items:center; gap:10px;
       font-weight:800; letter-spacing:.2px;
+      min-width: 0;
     }
-
-    /* Logo */
     .brand-logo{
-      width:38px;
-      height:38px;
+      width:38px; height:38px;
       border-radius:12px;
       padding:6px;
-      background: rgba(10,26,20,.55);
-      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      border:1px solid var(--chipBd);
       box-shadow: 0 0 0 3px rgba(215,178,74,.10);
       flex:0 0 auto;
     }
-
+    .brand .titleWrap{min-width:0}
     .brand small{
       display:block;
       font-weight:650;
       color:var(--muted);
       letter-spacing:.2px;
       margin-top:2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 58vw;
     }
+
+    .rightTools{
+      display:flex; align-items:center; gap:10px;
+    }
+
+    /* Theme toggle */
+    .themeBtn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      font-weight:900;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+    .themeBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .togglePill{
+      width:44px; height:24px;
+      border-radius:999px;
+      background: rgba(215,178,74,.18);
+      border:1px solid rgba(215,178,74,.35);
+      position:relative;
+      flex:0 0 auto;
+    }
+    .toggleDot{
+      width:18px; height:18px;
+      border-radius:999px;
+      background: var(--gold);
+      position:absolute; top:50%;
+      transform: translateY(-50%);
+      left:3px;
+      transition: left .18s ease;
+    }
+    html[data-theme="light"] .toggleDot{ left:23px; }
 
     /* Desktop nav */
     .nav{
@@ -91,12 +157,13 @@
     .nav a{
       padding:10px 12px;
       border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.55);
+      background: var(--chipBg);
       border-radius:999px;
       color:var(--text);
       font-weight:750;
       font-size:13px;
       transition:.18s ease;
+      white-space:nowrap;
     }
     .nav a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
 
@@ -106,21 +173,26 @@
       padding:10px 12px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.55);
+      background: var(--chipBg);
       font-weight:850;
       cursor:pointer;
       user-select:none;
       gap:8px;
       align-items:center;
+      white-space:nowrap;
     }
     .hamburger span{opacity:.9}
 
-    /* Mobile drawer (HIDDEN by default, shown only when menu-toggle checked) */
+    /* Mobile drawer */
     .mobile-drawer{
       display:none;
       border-top:1px solid rgba(29,74,58,.55);
       background: rgba(6,20,15,.88);
       backdrop-filter: blur(14px);
+    }
+    html[data-theme="light"] .mobile-drawer{
+      background: rgba(245,251,248,.92);
+      border-top:1px solid var(--line);
     }
     #menuToggle:checked ~ .mobile-drawer{ display:block; }
 
@@ -133,7 +205,7 @@
       padding:12px 12px;
       border-radius:14px;
       border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.55);
+      background: var(--chipBg);
       font-weight:850;
     }
     .drawer-inner a strong{ color: var(--gold); }
@@ -147,67 +219,18 @@
       font-weight:850;
     }
 
-    /* Hero */
-    .hero{ padding:28px 0 12px; }
-    .hero-card{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.72), rgba(10,26,20,.52));
-      box-shadow: var(--soft);
-      padding:26px;
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-card:before{
-      content:"";
-      position:absolute; inset:-80px -120px auto auto;
-      width:320px; height:320px;
-      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.18), transparent 60%);
-      pointer-events:none;
-    }
-    .chips{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.75);
-      background: rgba(10,26,20,.55);
-      color: var(--muted);
-      font-weight:850;
-      font-size:12px;
-    }
-    .chip b{ color: var(--gold); }
-
-    h1{
-      margin:10px 0 6px;
-      font-size:44px;
-      line-height:1.05;
-      letter-spacing:-.6px;
-    }
-    .sub{
-      margin:0;
-      color: var(--muted);
-      font-size:16px;
-      line-height:1.6;
-      max-width:760px;
-    }
-    .sub strong{ color: var(--gold); }
-
-    .cta-row{
-      display:flex; gap:12px; flex-wrap:wrap;
-      margin-top:16px;
-    }
+    /* Common Buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       padding:12px 16px;
       border-radius:14px;
       border:1px solid rgba(29,74,58,.75);
-      background: rgba(10,26,20,.55);
+      background: var(--chipBg);
       font-weight:900;
       letter-spacing:.2px;
       cursor:pointer;
       transition:.18s ease;
-      user-select:none;
+      text-align:center;
     }
     .btn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
     .btn.primary{
@@ -217,17 +240,117 @@
       box-shadow: 0 18px 60px rgba(215,178,74,.12);
     }
     .btn.ghost{
-      background: rgba(10,26,20,.35);
+      background: transparent;
+      border-color: rgba(29,74,58,.65);
+    }
+    html[data-theme="light"] .btn.ghost{
+      background: rgba(255,255,255,.55);
     }
 
-    /* Programs */
+    /* Hero */
+    .hero{ padding:22px 0 10px; }
+    .hero-card{
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      background: linear-gradient(180deg, rgba(12,32,25,.72), rgba(10,26,20,.52));
+      box-shadow: var(--soft);
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.72));
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute; inset:-80px -120px auto auto;
+      width:320px; height:320px;
+      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.18), transparent 60%);
+      pointer-events:none;
+    }
+
+    .chips{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: var(--chipBg);
+      color: var(--muted);
+      font-weight:850;
+      font-size:12px;
+    }
+    .chip b{ color: var(--gold); }
+
+    /* Hero segmented buttons (IELTS / PTE / Study Abroad) */
+    .seg{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin: 10px 0 14px;
+    }
+    .seg a{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: var(--chipBg);
+      font-weight:950;
+      font-size:13px;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+    .seg a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    h1{
+      margin:10px 0 8px;
+      font-size:42px;
+      line-height:1.05;
+      letter-spacing:-.6px;
+    }
+    .heroTitleGold{ color: var(--gold); }
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size:16px;
+      line-height:1.6;
+      max-width:780px;
+    }
+
+    .cta-row{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    /* Tiny program buttons row (requested) */
+    .miniProgramRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .miniProgram{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(10,26,20,.35);
+      font-weight:950;
+      font-size:13px;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+    html[data-theme="light"] .miniProgram{ background: rgba(255,255,255,.55); }
+    .miniProgram:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    /* Sections */
     .section-title{
       margin:22px 0 10px;
       font-size:16px;
       letter-spacing:.2px;
       color: var(--text);
       font-weight:950;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
     }
+    .section-title small{ color: var(--muted); font-weight:750; }
+
+    /* Cards grid */
     .grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -242,6 +365,10 @@
       padding:18px;
       min-height: 210px;
       display:flex; flex-direction:column; gap:10px;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.72));
     }
     .tagline{
       display:inline-flex;
@@ -251,13 +378,12 @@
       padding:8px 10px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.75);
-      background: rgba(10,26,20,.55);
+      background: var(--chipBg);
       font-weight:900;
       font-size:12px;
       color: var(--muted);
     }
     .tagline b{ color: var(--gold); }
-
     .card h2{
       margin:0;
       font-size:18px;
@@ -276,7 +402,304 @@
     }
     .card .actions .btn{ width:100%; }
 
-    /* Footer / Trust */
+    /* FEATURED UPCOMING */
+    .featured{
+      margin-top:14px;
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      background: linear-gradient(180deg, rgba(12,32,25,.72), rgba(10,26,20,.52));
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      position:relative;
+    }
+    html[data-theme="light"] .featured{
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.76));
+    }
+    .featuredTop{
+      padding:18px 18px 14px;
+      display:grid;
+      gap:10px;
+      position:relative;
+    }
+    .featuredTop:before{
+      content:"";
+      position:absolute; inset:-120px auto auto -140px;
+      width:420px; height:420px;
+      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.16), transparent 62%);
+      pointer-events:none;
+    }
+    .featuredKicker{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      position:relative;
+    }
+    .kickerPill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: var(--chipBg);
+      font-weight:950;
+      font-size:12px;
+      color: var(--muted);
+      position:relative;
+    }
+    .kickerPill b{ color: var(--gold); }
+
+    .featuredTitle{
+      font-size:22px;
+      font-weight:990;
+      letter-spacing:-.2px;
+      margin:0;
+      position:relative;
+    }
+    .featuredSub{
+      margin:0;
+      color: var(--muted);
+      font-weight:800;
+      font-size:13px;
+      line-height:1.55;
+      max-width: 920px;
+      position:relative;
+    }
+
+    .featuredRow{
+      display:flex; gap:12px; flex-wrap:wrap;
+      align-items:center;
+      position:relative;
+      margin-top:4px;
+    }
+
+    /* Calendar line */
+    .datePill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(10,26,20,.35);
+      font-weight:950;
+    }
+    html[data-theme="light"] .datePill{ background: rgba(255,255,255,.55); }
+    .datePill .date{
+      font-size:14px;
+      font-weight:990;
+    }
+    .datePill .icon{
+      width:18px; height:18px; display:inline-block;
+    }
+
+    /* Micro highlight pills */
+    .highlightPills{
+      display:flex; gap:10px; flex-wrap:wrap;
+      position:relative;
+      margin-top:2px;
+    }
+    .hiPill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(215,178,74,.32);
+      background: rgba(215,178,74,.10);
+      font-weight:950;
+      font-size:12px;
+      color: var(--text);
+    }
+    html[data-theme="light"] .hiPill{ color: var(--text); }
+
+    /* FEATURED ACCORDION BUTTONS */
+    .featuredActions{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:8px;
+      position:relative;
+    }
+    @media (max-width:520px){
+      .featuredActions{ grid-template-columns:1fr; }
+    }
+
+    .accBtn{
+      width:100%;
+      padding:14px 14px;
+      border-radius:16px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(10,26,20,.35);
+      font-weight:990;
+      display:flex; align-items:center; justify-content:center;
+      gap:10px;
+      cursor:pointer;
+      transition:.18s ease;
+      user-select:none;
+      text-align:center;
+    }
+    html[data-theme="light"] .accBtn{ background: rgba(255,255,255,.55); }
+    .accBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .accBtn.primary{
+      background: linear-gradient(180deg, var(--gold), var(--gold2));
+      color:#142015;
+      border-color: rgba(215,178,74,.85);
+      box-shadow: 0 18px 60px rgba(215,178,74,.12);
+    }
+
+    .accPanel{
+      margin-top:10px;
+      border-top:1px solid rgba(29,74,58,.55);
+      padding:14px 18px 18px;
+      display:none;
+    }
+    .accPanel.open{ display:block; }
+
+    /* Featured details grid */
+    .featurePoints{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width:920px){
+      .featurePoints{ grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:520px){
+      .featurePoints{ grid-template-columns:1fr; }
+    }
+    .point{
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(10,26,20,.28);
+      padding:12px;
+      min-height: 86px;
+      display:flex; gap:10px;
+      align-items:flex-start;
+    }
+    html[data-theme="light"] .point{ background: rgba(255,255,255,.55); }
+    .pointIcon{
+      width:22px; height:22px;
+      flex:0 0 auto;
+      opacity:.95;
+      color: var(--gold);
+    }
+    .point b{ display:block; margin-bottom:3px; }
+    .point span{ color: var(--muted); font-weight:750; font-size:12.5px; line-height:1.45; }
+
+    /* 4 month plan */
+    .planGrid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width:920px){
+      .planGrid{ grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:520px){
+      .planGrid{ grid-template-columns:1fr; }
+    }
+    .monthCard{
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(10,26,20,.26);
+      padding:12px;
+      display:grid;
+      gap:10px;
+    }
+    html[data-theme="light"] .monthCard{ background: rgba(255,255,255,.55); }
+    .monthCard h4{
+      margin:0;
+      font-size:14px;
+      font-weight:990;
+      letter-spacing:.1px;
+    }
+    .monthCard p{
+      margin:0;
+      color: var(--muted);
+      font-weight:800;
+      font-size:12.5px;
+      line-height:1.45;
+    }
+    .monthCard a{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(215,178,74,.32);
+      background: rgba(215,178,74,.10);
+      font-weight:990;
+      white-space:nowrap;
+      transition:.18s ease;
+      text-align:center;
+    }
+    .monthCard a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    /* Free learning */
+    .learnGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:10px;
+    }
+    @media (max-width:920px){ .learnGrid{ grid-template-columns:1fr; } }
+    .learnItem{
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
+      box-shadow: var(--soft);
+      padding:14px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .learnItem{
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.76));
+    }
+    .learnItem b{ font-weight:990; }
+    .learnItem span{ color: var(--muted); font-weight:800; font-size:12.5px; }
+
+    .watchBtn{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: var(--chipBg);
+      font-weight:990;
+      cursor:pointer;
+      transition:.18s ease;
+      flex:0 0 auto;
+      white-space:nowrap;
+    }
+    .watchBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    /* Reviews */
+    .reviewGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:10px;
+    }
+    @media (max-width:920px){ .reviewGrid{ grid-template-columns:1fr; } }
+    .review{
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
+      box-shadow: var(--soft);
+      padding:16px;
+      display:grid;
+      gap:10px;
+    }
+    html[data-theme="light"] .review{
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.76));
+    }
+    .review p{
+      margin:0;
+      color: var(--text);
+      font-weight:850;
+      line-height:1.55;
+      font-size:13.5px;
+    }
+    .review .meta{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      color: var(--muted);
+      font-weight:800;
+      font-size:12.5px;
+    }
+    .stars{ color: var(--gold); letter-spacing:1px; }
+
+    /* Footer */
     .footer{
       margin-top:18px;
       padding:18px;
@@ -288,6 +711,10 @@
       grid-template-columns: 1.2fr .8fr;
       gap:16px;
       align-items:start;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .footer{
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.76));
     }
     .footer h3{ margin:0 0 8px; font-size:14px; font-weight:950; }
     .footer p{ margin:0; color: var(--muted); line-height:1.6; font-size:13px; }
@@ -301,10 +728,10 @@
       padding:10px 12px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.55);
+      background: var(--chipBg);
       font-weight:900; font-size:13px;
       transition:.18s ease;
-      user-select:none;
+      white-space:nowrap;
     }
     .iconbtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
     .icon{ width:16px; height:16px; display:inline-block; }
@@ -317,7 +744,7 @@
     /* Floating WhatsApp */
     .floatwa{
       position:fixed;
-      right:16px; bottom:16px;
+      right:14px; bottom:14px;
       z-index:60;
       display:flex; align-items:center; gap:10px;
       padding:12px 14px;
@@ -327,332 +754,23 @@
       backdrop-filter: blur(14px);
       box-shadow: var(--soft);
       font-weight:950;
+      max-width: calc(100vw - 28px);
+    }
+    html[data-theme="light"] .floatwa{
+      background: rgba(255,255,255,.86);
     }
     .dot{
       width:10px; height:10px; border-radius:999px;
       background:#2cffb2;
       box-shadow: 0 0 0 3px rgba(44,255,178,.15);
+      flex:0 0 auto;
     }
     .floatwa b{ color: var(--gold); }
-
-    /* =========================
-       FEATURED SECTION (NEW)
-       ========================= */
-    .featured{ padding: 8px 0 4px; }
-    .featured-card{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.70), rgba(10,26,20,.50));
-      box-shadow: var(--soft);
-      padding:20px;
-      position:relative;
-      overflow:hidden;
-    }
-    .featured-card:before{
-      content:"";
-      position:absolute; inset:-120px auto auto -120px;
-      width:360px; height:360px;
-      background: radial-gradient(circle at 55% 45%, rgba(215,178,74,.14), transparent 62%);
-      pointer-events:none;
-    }
-    .eyebrow{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.75);
-      background: rgba(10,26,20,.55);
-      color: var(--muted);
-      font-weight:950;
-      font-size:12px;
-      letter-spacing:.2px;
-      width:max-content;
-    }
-    .eyebrow b{ color: var(--gold); }
-    .featured-head{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:14px;
-      align-items:start;
-      position:relative;
-      z-index:1;
-    }
-    .featured-title{
-      margin:8px 0 6px;
-      font-size:24px;
-      font-weight:1000;
-      letter-spacing:-.2px;
-      line-height:1.15;
-    }
-    .featured-title .gold{ color: var(--gold); }
-    .featured-sub{
-      margin:0;
-      color: var(--muted);
-      line-height:1.55;
-      font-size:14px;
-    }
-    .keylines{
-      margin-top:10px;
-      display:grid;
-      gap:8px;
-    }
-    .keyline{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.45);
-    }
-    .keyline strong{ font-weight:1000; }
-    .pill-gold{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(215,178,74,.55);
-      background: rgba(215,178,74,.10);
-      font-weight:1000;
-      color: var(--text);
-      font-size:12px;
-      width:max-content;
-    }
-    .pill-gold b{ color: var(--gold); }
-    .featured-actions{
-      margin-top:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+    @media (max-width:420px){
+      .floatwa{ font-size:13px; padding:10px 12px; }
     }
 
-    .proof-strip{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:10px;
-      position:relative;
-      z-index:1;
-    }
-    .proof{
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.45);
-      min-height:92px;
-    }
-    .proof .ptop{
-      display:flex; align-items:center; gap:10px;
-      font-weight:1000;
-      font-size:13px;
-      margin-bottom:6px;
-    }
-    .proof .ptop svg{ width:18px; height:18px; flex:0 0 auto; }
-    .proof p{ margin:0; color: var(--muted); font-size:12.5px; line-height:1.45; }
-
-    .twoCol{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    .block{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.40);
-      padding:16px;
-      box-shadow: 0 10px 28px rgba(0,0,0,.22);
-      position:relative;
-      z-index:1;
-    }
-    .block h3{
-      margin:0 0 8px;
-      font-size:14px;
-      font-weight:1000;
-      letter-spacing:.2px;
-    }
-    .block p{
-      margin:0;
-      color: var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
-    .planGrid{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    .planCard{
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(6,20,15,.55);
-      cursor:pointer;
-      transition:.18s ease;
-    }
-    .planCard:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .planCard .m{ font-weight:1000; }
-    .planCard .d{ color: var(--muted); font-size:12.5px; margin-top:4px; line-height:1.35; }
-    .planCard .go{
-      margin-top:10px;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.45);
-      font-weight:950;
-      font-size:12px;
-      width:max-content;
-    }
-    .planCard .go b{ color: var(--gold); }
-
-    .noteBox{
-      margin-top:10px;
-      padding:12px;
-      border-radius:16px;
-      border:1px dashed rgba(215,178,74,.35);
-      background: rgba(6,20,15,.35);
-      color: rgba(233,243,239,.88);
-      font-size:13px;
-      line-height:1.55;
-    }
-    .noteBox b{ color: var(--gold); }
-
-    .learnMore{
-      margin-top:12px;
-      padding:14px;
-      border-radius:18px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.42);
-    }
-    .learnMore h4{
-      margin:0 0 8px;
-      font-size:13.5px;
-      font-weight:1000;
-      letter-spacing:.2px;
-    }
-    .learnMore ul{
-      margin:0;
-      padding-left:18px;
-      color: var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
-    .learnMore .rp{
-      margin-top:10px;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(6,20,15,.45);
-      color: rgba(233,243,239,.88);
-      font-weight:900;
-      line-height:1.55;
-    }
-    .learnMore .rp b{ color: var(--gold); }
-
-    .videoList{
-      margin-top:10px;
-      display:grid;
-      gap:10px;
-    }
-    .vitem{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(6,20,15,.55);
-    }
-    .vitem .t{
-      font-weight:1000;
-      line-height:1.2;
-    }
-    .vitem .s{
-      display:block;
-      margin-top:4px;
-      color: var(--muted);
-      font-size:12px;
-      font-weight:800;
-    }
-    .watchBtn{
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.45);
-      font-weight:1000;
-      cursor:pointer;
-      transition:.18s ease;
-      user-select:none;
-      min-width:92px;
-      text-align:center;
-    }
-    .watchBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .watchBtn.primary{
-      background: linear-gradient(180deg, var(--gold), var(--gold2));
-      border-color: rgba(215,178,74,.85);
-      color:#142015;
-    }
-
-    .reviewsGrid{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-    }
-    .review{
-      padding:14px;
-      border-radius:18px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(6,20,15,.55);
-      min-height:140px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    .review .who{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      font-weight:1000;
-      font-size:13px;
-    }
-    .stars{
-      display:inline-flex;
-      gap:2px;
-      color: var(--gold);
-      font-size:12px;
-      opacity:.95;
-      white-space:nowrap;
-    }
-    .review p{
-      margin:0;
-      color: var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
-    .review .tag{
-      margin-top:auto;
-      display:inline-flex;
-      width:max-content;
-      gap:8px;
-      align-items:center;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.45);
-      font-weight:950;
-      font-size:12px;
-      color: rgba(233,243,239,.90);
-    }
-    .review .tag b{ color: var(--gold); }
-
-    /* Video Modal */
+    /* Video modal (watch inside site) */
     .modal{
       position:fixed;
       inset:0;
@@ -660,47 +778,43 @@
       display:none;
       align-items:center;
       justify-content:center;
-      padding:18px;
-      z-index:120;
+      padding:16px;
+      z-index:999;
     }
     .modal.open{ display:flex; }
     .modalCard{
       width:min(920px, 100%);
-      border-radius:18px;
-      border:1px solid rgba(29,74,58,.9);
-      background: linear-gradient(180deg, rgba(12,32,25,.92), rgba(6,20,15,.92));
-      box-shadow: 0 20px 70px rgba(0,0,0,.55);
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(12,32,25,.92), rgba(10,26,20,.86));
+      box-shadow: 0 22px 70px rgba(0,0,0,.55);
       overflow:hidden;
     }
-    .modalTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 14px;
-      border-bottom:1px solid rgba(29,74,58,.65);
+    html[data-theme="light"] .modalCard{
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
+      border:1px solid rgba(9,64,45,.18);
+      box-shadow: 0 22px 70px rgba(6,20,15,.18);
     }
-    .modalTop strong{ font-weight:1000; }
+    .modalHead{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(29,74,58,.55);
+    }
+    .modalHead b{ font-weight:990; }
     .closeBtn{
       padding:10px 12px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.7);
-      background: rgba(10,26,20,.55);
-      font-weight:1000;
+      background: var(--chipBg);
+      font-weight:990;
       cursor:pointer;
-      user-select:none;
-      transition:.18s ease;
     }
-    .closeBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .player{
-      position:relative;
+    .frameWrap{
+      aspect-ratio: 16 / 9;
       width:100%;
-      padding-top:56.25%;
       background:#000;
     }
-    .player iframe{
-      position:absolute;
-      inset:0;
+    .frameWrap iframe{
       width:100%;
       height:100%;
       border:0;
@@ -708,26 +822,18 @@
 
     /* Responsive */
     @media (max-width: 920px){
-      h1{ font-size:36px; }
+      h1{ font-size:34px; }
       .grid{ grid-template-columns: 1fr; }
       .footer{ grid-template-columns: 1fr; }
       .nav{ display:none; }
       .hamburger{ display:inline-flex; }
-
-      .featured-head{ grid-template-columns: 1fr; }
-      .proof-strip{ grid-template-columns: 1fr; }
-      .twoCol{ grid-template-columns: 1fr; }
-      .reviewsGrid{ grid-template-columns: 1fr; }
     }
     @media (max-width: 520px){
       .hero-card{ padding:18px; }
-      h1{ font-size:32px; }
+      h1{ font-size:30px; }
       .btn{ width:100%; }
       .cta-row{ gap:10px; }
-
-      .featured-card{ padding:16px; }
-      .featured-actions .btn{ width:100%; }
-      .watchBtn{ min-width:auto; }
+      .themeBtn{ padding:10px 10px; }
     }
   </style>
 </head>
@@ -735,26 +841,32 @@
 <body>
 
   <div class="topbar">
-    <!-- FIXED: toggle is sibling of drawer -->
     <input class="menu-toggle" type="checkbox" id="menuToggle" autocomplete="off" />
 
     <div class="topbar-inner">
       <a class="brand" href="index.html" aria-label="LizOn Education Home">
         <img class="brand-logo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
-        <div>
+        <div class="titleWrap">
           LizOn Education
           <small>IELTS • PTE • Study Abroad</small>
         </div>
       </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a href="ielts.html#levels">IELTS</a>
-        <a href="pte.html">PTE</a>
-        <a href="studyabroad.html">Study Abroad</a>
-        <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_menu)" target="_blank" rel="noopener">WhatsApp Helpline</a>
-      </nav>
+      <div class="rightTools">
+        <nav class="nav" aria-label="Primary">
+          <a href="ielts.html#levels">IELTS</a>
+          <a href="pte.html">PTE</a>
+          <a href="studyabroad.html">Study Abroad</a>
+          <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_menu)" target="_blank" rel="noopener">WhatsApp Helpline</a>
+        </nav>
 
-      <label class="hamburger" for="menuToggle">☰ <span>Menu</span></label>
+        <button class="themeBtn" id="themeBtn" type="button" aria-label="Toggle theme">
+          <span id="themeText">Dark</span>
+          <span class="togglePill" aria-hidden="true"><span class="toggleDot"></span></span>
+        </button>
+
+        <label class="hamburger" for="menuToggle">☰ <span>Menu</span></label>
+      </div>
     </div>
 
     <div class="mobile-drawer">
@@ -775,6 +887,8 @@
   </div>
 
   <main class="container">
+
+    <!-- HERO -->
     <section class="hero" id="top">
       <div class="hero-card">
         <div class="chips">
@@ -782,296 +896,228 @@
           <div class="chip"><b>Designed for Desired Score</b></div>
         </div>
 
-        <h1>IELTS • PTE • Study Abroad</h1>
+        <!-- Heading as buttons -->
+        <div class="seg" aria-label="Quick navigation">
+          <a href="ielts.html#levels">IELTS</a>
+          <a href="pte.html">PTE</a>
+          <a href="studyabroad.html">Study Abroad</a>
+        </div>
+
+        <h1 class="heroTitleGold">MAKE YOUR FAMILY PROUD</h1>
         <p class="sub">
-          A structured journey from confusion to confidence — <strong>skill-based learning</strong>, proper evaluation,
-          and clear guidance so you stop wasting time and start improving.
-          <br><br>
-          Not sure what to choose? <strong>Message first.</strong> We’ll guide you honestly — then you decide.
+          LizOn prepares you in the best strategic and skilled way — in Bangladesh and abroad.
+          Confused what to do? Let’s talk.
         </p>
 
         <div class="cta-row">
-          <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20guidance%20to%20choose%20IELTS%20or%20PTE.%20(Source%3A%20home_hero)" target="_blank" rel="noopener">
-            Talk / Chat with LizOn
-          </a>
-          <a class="btn" href="#programs">Explore Programs</a>
-          <a class="btn" href="ielts.html#levels">IELTS Levels</a>
+          <a class="btn primary" href="ielts.html#levels">Check IELTS Level</a>
+          <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20am%20confused%20and%20need%20guidance%20right%20now.%20(Source%3A%20home_hero)" target="_blank" rel="noopener">Talk on WhatsApp</a>
+        </div>
+
+        <!-- tiny 3 program buttons -->
+        <div class="miniProgramRow" aria-label="Programs">
+          <a class="miniProgram" href="ielts.html#levels">IELTS Programs</a>
+          <a class="miniProgram" href="pte.html">PTE Program</a>
+          <a class="miniProgram" href="studyabroad.html">Study Abroad</a>
         </div>
       </div>
     </section>
 
-    <!-- =========================
-         FEATURED (NEW) — after Hero
-         ========================= -->
-    <section class="featured" id="featured">
-      <div class="featured-card">
-        <div class="featured-head">
-          <div>
-            <div class="eyebrow">Upcoming Batch — <b>IELTS Complete Preparation</b></div>
+    <!-- FEATURED SECTION (after hero) -->
+    <section id="featured">
+      <div class="featured" aria-label="Upcoming batch featured">
+        <div class="featuredTop">
+          <div class="featuredKicker">
+            <span class="kickerPill">Upcoming Batch — <b>IELTS Complete Preparation</b></span>
+            <span class="kickerPill"><b>Early Bird:</b> Full N2F Access</span>
+          </div>
 
-            <div class="featured-title">
-              Basic theke <span class="gold">IELTS Complete Preparation</span> ✍️
+          <p class="featuredTitle">Basic theke IELTS Complete Preparation ✍️</p>
+          <p class="featuredSub">
+            IELTS <b style="color:var(--gold)">ZERO</b> to <b style="color:var(--gold)">Advanced</b> — Online & Night Batch.
+            Placement by level test + guided training until you take the exam.
+          </p>
+
+          <div class="featuredRow">
+            <div class="datePill" title="Class start date">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 2v3M17 2v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M3.5 9h17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M5 5h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M8 13h2v2H8v-2zM12 13h2v2h-2v-2zM16 13h2v2h-2v-2z" fill="currentColor" opacity=".85"/>
+                </svg>
+              </span>
+              <div>
+                <div style="font-weight:990;">Class Starts</div>
+                <div class="date">26 December</div>
+              </div>
             </div>
 
-            <p class="featured-sub">
-              <b class="gold">IELTS ZERO to Advanced</b> — Online & Night Batch
-            </p>
-
-            <div class="keylines">
-              <div class="keyline">
-                <span><strong>Class Starts:</strong> 26 December 🎓</span>
-                <span class="pill-gold"><b>Tagline:</b> Make Your Family Proud</span>
-              </div>
-              <div class="keyline">
-                <span><strong>Early Bird:</strong> full N2F access ✈️</span>
-                <span class="pill-gold"><b>Goal:</b> Desired Score</span>
-              </div>
-            </div>
-
-            <div class="featured-actions">
-              <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20%E2%80%98IELTS%20ZERO%20to%20Advanced%20(Night%20Batch)%E2%80%99%20er%20availability%20and%20admission%20process%20jante%20chai.%20Class%20starts%2026%20December.%20(Source%3A%20featured_check_availability)" target="_blank" rel="noopener">
-                Check Availability (WhatsApp)
-              </a>
-              <a class="btn" href="#featured-more">Learn More</a>
-              <a class="btn ghost" href="#featured-n2f">N2F (What’s Included?)</a>
+            <div class="highlightPills">
+              <span class="hiPill">✅ Make Your Family Proud</span>
+              <span class="hiPill">✅ N2F takes care of everything</span>
             </div>
           </div>
 
-          <div>
-            <div class="proof-strip">
-              <div class="proof">
-                <div class="ptop">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  Level Test + Proper Placement
-                </div>
-                <p>Prothom kichu din class-er por test diye tomake level-wise divide korbo.</p>
-              </div>
+          <div class="featuredActions">
+            <a class="accBtn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20check%20availability%20for%20the%20upcoming%20batch%20(26%20December).%20Please%20confirm%20seat.%20(Source%3A%20featured_check_availability)" target="_blank" rel="noopener">
+              Check Availability (WhatsApp)
+            </a>
 
-              <div class="proof">
-                <div class="ptop">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z" stroke="currentColor" stroke-width="2"/>
-                  </svg>
-                  Evaluation + Mock
-                </div>
-                <p>Score improve hocche kina — clear tracking + feedback. No guesswork.</p>
-              </div>
+            <button class="accBtn" type="button" data-acc="learnMorePanel" aria-expanded="false">
+              Learn More
+            </button>
 
-              <div class="proof">
-                <div class="ptop">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  Support Till Exam Day
-                </div>
-                <p>4 months por-o — exam-er age porjonto guidance & support.</p>
-              </div>
+            <button class="accBtn" type="button" data-acc="n2fPanel" aria-expanded="false">
+              N2F (What’s Included?)
+            </button>
 
-              <div class="proof">
-                <div class="ptop">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M14 7h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  N2F Access (Early Bird)
-                </div>
-                <p>LizOn takes care of everything — you’re not alone after classes.</p>
-              </div>
-            </div>
+            <a class="accBtn ghost" href="studyabroad.html" title="Learn about N2F / full support">
+              N2F Info (Study Abroad)
+            </a>
           </div>
         </div>
 
-        <div class="twoCol">
-          <div class="block">
-            <h3>Plan (4 months)</h3>
-            <p>Tap any month — go directly to that level (ZERO → HOPE → STEP-UP → DESPERATE).</p>
-
-            <div class="planGrid">
-              <a class="planCard" href="ielts.html#zero" aria-label="Month 1 goes to IELTS ZERO">
-                <div class="m">Month 1</div>
-                <div class="d">Grammar & Foundation</div>
-                <div class="go">Go to: <b>IELTS ZERO</b></div>
-              </a>
-
-              <a class="planCard" href="ielts.html#hope" aria-label="Month 2 goes to IELTS HOPE">
-                <div class="m">Month 2</div>
-                <div class="d">Foundation + IELTS Basic</div>
-                <div class="go">Go to: <b>IELTS HOPE</b></div>
-              </a>
-
-              <a class="planCard" href="ielts.html#stepup" aria-label="Month 3 goes to IELTS STEP-UP">
-                <div class="m">Month 3</div>
-                <div class="d">IELTS Basic + Intermediate</div>
-                <div class="go">Go to: <b>IELTS STEP-UP</b></div>
-              </a>
-
-              <a class="planCard" href="ielts.html#desperate" aria-label="Month 4 goes to IELTS DESPERATE">
-                <div class="m">Month 4</div>
-                <div class="d">Advanced + Mock + Last Moment Prep</div>
-                <div class="go">Go to: <b>IELTS DESPERATE</b></div>
-              </a>
-            </div>
-
-            <div class="noteBox">
-              4 months por-o — apnar exam-er age porjonto amader sathe connected thakte hobe,
-              karon amra assist korbo <b>until you take the exam</b>.
-            </div>
-
-            <div class="learnMore" id="featured-more">
-              <h4>Learn More — what you actually get</h4>
-              <p style="margin:0 0 10px;color:var(--muted);line-height:1.6;font-size:13px;">
-                LizOn e admission mane — tumi amader upor responsibility diccho. Amra tomake level-wise guide korbo,
-                improve korbo, and exam-er age porjonto support dibo. Goal hocche ekta: <b style="color:var(--gold);">Desired Score.</b>
-              </p>
-              <ul>
-                <li><b style="color:var(--gold);">Level placement</b> (wrong starting point off)</li>
-                <li><b style="color:var(--gold);">Routine + tracking</b> (confusion off)</li>
-                <li><b style="color:var(--gold);">Mock + last moment prep</b> (exam-ready approach)</li>
-                <li><b style="color:var(--gold);">WhatsApp support</b> when you get stuck</li>
-                <li><b style="color:var(--gold);">N2F support</b> (Early Bird access)</li>
-              </ul>
-
-              <div class="rp">
-                <b>If you’re not serious, don’t waste your time.</b> Serious hole — we’ll guide you properly.
+        <!-- Learn More panel -->
+        <div class="accPanel" id="learnMorePanel">
+          <div class="featurePoints">
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <b>Level Test + Proper Placement</b>
+                <span>First few classes er por test diye level-e divide kora hoy.</span>
               </div>
+            </div>
 
-              <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-                <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20%E2%80%98IELTS%20ZERO%20to%20Advanced%20(Night%20Batch)%E2%80%99%20e%20admission%20nibe.%20Please%20amake%20guide%20korben.%20(Source%3A%20featured_learn_more_cta)" target="_blank" rel="noopener">
-                  Admit / Talk on WhatsApp
-                </a>
-                <a class="btn" href="ielts.html#levels">See IELTS Levels</a>
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </span>
+              <div>
+                <b>Evaluation + Mock</b>
+                <span>Score improve hocche kina—clear tracking + correction.</span>
+              </div>
+            </div>
+
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 22s7-4.5 7-12a7 7 0 1 0-14 0c0 7.5 7 12 7 12z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 13.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </span>
+              <div>
+                <b>Support Till Exam Day</b>
+                <span>Exam er age porjonto guidance—until you take the exam.</span>
+              </div>
+            </div>
+
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 11l19-8-8 19-2-8-9-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <b>Early Bird N2F Access</b>
+                <span>LizOn takes care of everything—study abroad assist included.</span>
               </div>
             </div>
           </div>
 
-          <div class="block">
-            <h3>Learn for Free: How To Start From Zero</h3>
-            <p>Watch on-site (so you don’t get distracted by other channels). Then message us — we’ll place you correctly.</p>
+          <div class="section-title" style="margin-top:16px;">
+            4 Months Plan <small>(tap to open each level)</small>
+          </div>
 
-            <div class="videoList" id="videoList">
-              <!-- populated by JS -->
+          <div class="planGrid">
+            <div class="monthCard">
+              <h4>Month 1</h4>
+              <p>Grammar & Foundation</p>
+              <a href="ielts.html#zero">IELTS ZERO</a>
             </div>
 
-            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-              <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20free%20video%20dekhechi.%20Ekhon%20amake%20amar%20current%20level%20and%20right%20path%20suggest%20korben.%20(Source%3A%20featured_free_videos_cta)" target="_blank" rel="noopener">
-                Check Availability (WhatsApp)
-              </a>
-              <a class="btn ghost" href="#featured-reviews">Explore Others’ Success</a>
+            <div class="monthCard">
+              <h4>Month 2</h4>
+              <p>Foundation + IELTS Basic</p>
+              <a href="ielts.html#hope">IELTS HOPE</a>
             </div>
 
-            <div class="learnMore" id="featured-n2f" style="margin-top:12px;">
-              <h4>N2F — Now to Fly</h4>
-              <p style="margin:0;color:var(--muted);line-height:1.6;font-size:13px;">
-                <b style="color:var(--gold);">Avail N2F:</b> LizOn takes care of everything. LizOn serve you even after you get visa.
-              </p>
-              <ul style="margin-top:10px;">
-                <li>A-Z guidance ecosystem</li>
-                <li>Study abroad support (profile → plan → next steps)</li>
-                <li>Support mindset: exam + beyond</li>
-              </ul>
-              <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-                <a class="btn" href="studyabroad.html">Explore Study Abroad</a>
-                <a class="btn primary" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20N2F%20(Study%20Abroad)%20support%20jante%20chai.%20Please%20guide%20me.%20(Source%3A%20featured_n2f_whatsapp)" target="_blank" rel="noopener">
-                  Talk With Expert Counselor
-                </a>
-              </div>
+            <div class="monthCard">
+              <h4>Month 3</h4>
+              <p>IELTS Basic + Intermediate</p>
+              <a href="ielts.html#stepup">IELTS STEP-UP</a>
+            </div>
+
+            <div class="monthCard">
+              <h4>Month 4</h4>
+              <p>Advanced + Mock + Last Moment Prep</p>
+              <a href="ielts.html#desperate">IELTS DESPERATE</a>
             </div>
           </div>
+
+          <p class="featuredSub" style="margin-top:12px;">
+            4 months poro — apnar exam er age porjonto amader sathe connected thakte hobe,
+            karon amra assist korbo <b style="color:var(--gold)">until you take the exam</b>.
+          </p>
         </div>
 
-        <div class="block" id="featured-reviews" style="margin-top:12px;">
-          <h3>Explore Others’ Success</h3>
-          <p>Real students. Real feedback. Cleaned for website — authenticity intact.</p>
+        <!-- N2F panel -->
+        <div class="accPanel" id="n2fPanel">
+          <div class="section-title" style="margin:0 0 10px;">N2F — Now to Fly <small>(LizOn takes care of everything)</small></div>
 
-          <div class="reviewsGrid">
-            <div class="review">
-              <div class="who">
-                <span>Muhammad Ariful Islam</span>
-                <span class="stars">★★★★★</span>
+          <div class="featurePoints">
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">✅</span>
+              <div>
+                <b>Study Abroad Guidance</b>
+                <span>Country + intake + profile matching + next steps.</span>
               </div>
-              <p>
-                “Ato din pore mone hocche English basic ta finally bujhtesi. Class routine follow kora easy.
-                Teacher ra onek supportive. Thanks LizOn Education.”
-              </p>
-              <span class="tag">Result: <b>Confidence + Clarity</b></span>
             </div>
-
-            <div class="review">
-              <div class="who">
-                <span>Nhk Prince Nirob</span>
-                <span class="stars">★★★★★</span>
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">✅</span>
+              <div>
+                <b>Scholarship & Documentation</b>
+                <span>What to prepare, how to present, how to avoid mistakes.</span>
               </div>
-              <p>
-                “Onno koto jaygay coaching e porechi, but ekhankar teacher gula onek bhalo vabe poray.
-                Understanding ta clear hoye jay.”
-              </p>
-              <span class="tag">Best part: <b>Teaching Quality</b></span>
             </div>
-
-            <div class="review">
-              <div class="who">
-                <span>Il-Ew’r Sakib</span>
-                <span class="stars">★★★★★</span>
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">✅</span>
+              <div>
+                <b>Visa Processing Support</b>
+                <span>Process clarity + real guidance + case handling.</span>
               </div>
-              <p>
-                “Conference base e teacher der support paia onek bhalo lagse.
-                Reading–Listening e improvement feel korlam.”
-              </p>
-              <span class="tag">Focus: <b>Support + Progress</b></span>
             </div>
-
-            <div class="review">
-              <div class="who">
-                <span>Saurav Barua</span>
-                <span class="stars">★★★★★</span>
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">✅</span>
+              <div>
+                <b>After Visa Support</b>
+                <span>LizOn serves you even after you get visa.</span>
               </div>
-              <p>
-                “Teacher ra onek helpful. Ami Spoken English & IELTS e improvement feel korchi.
-                Overall experience ta bhalo.”
-              </p>
-              <span class="tag">Result: <b>Improvement</b></span>
-            </div>
-
-            <div class="review">
-              <div class="who">
-                <span>Justin Long</span>
-                <span class="stars">★★★★★</span>
-              </div>
-              <p>
-                “I attended both Spoken English and IELTS here. The classes were interactive,
-                easy to follow, and well-structured.”
-              </p>
-              <span class="tag">Strength: <b>Structure</b></span>
-            </div>
-
-            <div class="review">
-              <div class="who">
-                <span>Nayeem Ahmed</span>
-                <span class="stars">★★★★★</span>
-              </div>
-              <p>
-                “LizOn class gulo surprisingly easy to follow. Teacher ra clarity diye bujhay.
-                Genuinely feel kortesi English improve hocche.”
-              </p>
-              <span class="tag">Feel: <b>Clear + Easy</b></span>
             </div>
           </div>
 
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn" href="https://www.facebook.com/lizoneducation/reviews" target="_blank" rel="noopener">See More Reviews</a>
-            <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20review%20dekhechi.%20Ami%20admission%20nibo.%20Please%20amake%20next%20step%20bolben.%20(Source%3A%20featured_reviews_cta)" target="_blank" rel="noopener">Talk on WhatsApp</a>
+          <div class="cta-row" style="margin-top:12px;">
+            <a class="btn primary" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20N2F%20support%20(Study%20Abroad%20+%20Visa%20+%20After%20Visa).%20Please%20guide%20me.%20(Source%3A%20featured_n2f)" target="_blank" rel="noopener">
+              Talk With An Expert Counselor (WhatsApp)
+            </a>
+            <a class="btn" href="studyabroad.html">Learn Study Abroad</a>
           </div>
         </div>
 
       </div>
     </section>
 
+    <!-- PROGRAMS -->
     <section id="programs">
-      <div class="section-title">Programs</div>
+      <div class="section-title">Programs <small>Pick a path. Or message first.</small></div>
 
       <div class="grid">
         <div class="card">
@@ -1081,7 +1127,6 @@
             We place you correctly and train with structure + evaluation — no random practice, no confusion.
           </p>
           <div class="actions">
-            <!-- FIXED HERE: #level -> #levels -->
             <a class="btn primary" href="ielts.html#levels">Learn More</a>
             <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20IELTS.%20Please%20suggest%20the%20right%20level.%20(Source%3A%20home_ielts_card)" target="_blank" rel="noopener">Chat on WhatsApp</a>
           </div>
@@ -1103,7 +1148,7 @@
           <span class="tagline"><b>Study Abroad</b> — Guidance First</span>
           <h2>Study Abroad & Consultation</h2>
           <p>
-            Get clear guidance on country, intake, documents, and next steps — then we proceed with your best plan.
+            Country, intake, documents, IELTS/PTE plan — then we move with the best strategy for your profile.
           </p>
           <div class="actions">
             <a class="btn primary" href="studyabroad.html">Learn More</a>
@@ -1113,6 +1158,132 @@
       </div>
     </section>
 
+    <!-- LEARN FOR FREE (Watch inside site via modal) -->
+    <section id="learnfree">
+      <div class="section-title">Learn for Free <small>Watch inside this site (no distraction)</small></div>
+
+      <div class="learnGrid">
+        <div class="learnItem">
+          <div>
+            <b>Reading</b><br><span>How to start from zero</span>
+          </div>
+          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/iqr6_h49fYM">Watch</button>
+        </div>
+
+        <div class="learnItem">
+          <div>
+            <b>Speaking</b><br><span>Basics to confident speaking</span>
+          </div>
+          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/67ZBZt1sFtM">Watch</button>
+        </div>
+
+        <div class="learnItem">
+          <div>
+            <b>Writing Task 1</b><br><span>Core structure & mistakes</span>
+          </div>
+          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/smOEtZfUW9o">Watch</button>
+        </div>
+
+        <div class="learnItem">
+          <div>
+            <b>Writing Task 2</b><br><span>Idea + structure + clarity</span>
+          </div>
+          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/ZnTX486sd_o">Watch</button>
+        </div>
+
+        <div class="learnItem">
+          <div>
+            <b>Listening</b><br><span>Accuracy & control</span>
+          </div>
+          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/9VnHJfJgztE">Watch</button>
+        </div>
+
+        <div class="learnItem">
+          <div>
+            <b>Ultimate Basic Guideline</b><br><span>Complete basic direction</span>
+          </div>
+          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/BkfKx16N4q8">Watch</button>
+        </div>
+
+        <div class="learnItem" style="grid-column: 1 / -1;">
+          <div>
+            <b>Server ey Apni Jevabe Porben</b><br><span>How to study inside our system</span>
+          </div>
+          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/sGD0w0IlZVc">Watch</button>
+        </div>
+      </div>
+
+      <p class="sub" style="margin-top:14px;">
+        If you’re not serious, don’t waste your time. If you are — we’ll guide you properly.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20watched%20the%20free%20lessons.%20Now%20I%20want%20a%20proper%20plan.%20(Source%3A%20learnfree)" target="_blank" rel="noopener">Talk on WhatsApp</a>
+        <a class="btn" href="ielts.html#levels">Check IELTS Level</a>
+      </div>
+    </section>
+
+    <!-- REVIEWS (rewritten clean on-site versions) -->
+    <section id="reviews">
+      <div class="section-title">Explore Others’ Success <small>Real student voices (cleaned, not fake)</small></div>
+
+      <div class="reviewGrid">
+        <div class="review">
+          <p>“Ato din pore mone hocche English basic ta finally bujhtesi. Class routine ta follow kora easy, and teachers genuinely care.”</p>
+          <div class="meta">
+            <span>Muhammad Ariful Islam</span>
+            <span class="stars">★★★★★</span>
+          </div>
+        </div>
+
+        <div class="review">
+          <p>“Onek coaching center-e porashona korechi, kintu ekhane teacher gula onek bhalo vabe poray. Structured and clear.”</p>
+          <div class="meta">
+            <span>Nhk Prince Nirob</span>
+            <span class="stars">★★★★★</span>
+          </div>
+        </div>
+
+        <div class="review">
+          <p>“Teacher der support conference-base er moto. Reading + Listening duta tei improvement feel korlam.”</p>
+          <div class="meta">
+            <span>Il-Ewr Sakib</span>
+            <span class="stars">★★★★★</span>
+          </div>
+        </div>
+
+        <div class="review">
+          <p>“Ami really impressed. Speaking practice sessions + guidance boosted my confidence a lot. Environment tao comfortable.”</p>
+          <div class="meta">
+            <span>Sohan Islam</span>
+            <span class="stars">★★★★★</span>
+          </div>
+        </div>
+
+        <div class="review">
+          <p>“Classes easy to follow, teachers explain with clarity. Honestly, I felt my English improving step by step.”</p>
+          <div class="meta">
+            <span>Nayeen Ahmed</span>
+            <span class="stars">★★★★★</span>
+          </div>
+        </div>
+
+        <div class="review">
+          <p>“Interactive class + well-structured routine. I attended spoken English & IELTS — both were worth it.”</p>
+          <div class="meta">
+            <span>Justin Long</span>
+            <span class="stars">★★★★★</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row" style="margin-top:12px;">
+        <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20saw%20the%20reviews.%20I%20want%20to%20start%20properly.%20Please%20guide%20me.%20(Source%3A%20reviews)" target="_blank" rel="noopener">Start on WhatsApp</a>
+        <a class="btn" href="https://www.facebook.com/lizoneducation/reviews" target="_blank" rel="noopener">See Facebook Reviews</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
     <section class="footer" aria-label="Footer">
       <div>
         <h3>Contact & Location</h3>
@@ -1126,7 +1297,7 @@
 
         <div class="footer-links">
           <a class="iconbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">
-            <span class="icon">
+            <span class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 22s7-4.5 7-12a7 7 0 1 0-14 0c0 7.5 7 12 7 12z" stroke="currentColor" stroke-width="2"/>
                 <path d="M12 13.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="2"/>
@@ -1136,10 +1307,10 @@
           </a>
 
           <a class="iconbtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_footer)" target="_blank" rel="noopener">
-            <span class="icon">
+            <span class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20 12a8 8 0 0 1-12.4 6.7L4 20l1.4-3.4A8 8 0 1 1 20 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M9 8.8c.2-.6.5-.6.9-.6h.7c.2 0 .5 0 .6.4l.7 1.7c.1.3.1.6-.1.8l-.4.4c-.2.2-.2.5 0 .7.4.7 1.1 1.4 1.8 1.8.2.1.5.1.7-.1l.4-.4c.2-.2.5-.2.8-.1l1.7.7c.4.1.4.4.4.6v.7c0 .4 0 .7-.6.9-.6.2-1.7.4-3.6-.5-1.9-.9-3.7-2.7-4.6-4.6-.9-1.9-.7-3-.5-3.6z" driven fill="currentColor"/>
+                <path d="M9 8.8c.2-.6.5-.6.9-.6h.7c.2 0 .5 0 .6.4l.7 1.7c.1.3.1.6-.1.8l-.4.4c-.2.2-.2.5 0 .7.4.7 1.1 1.4 1.8 1.8.2.1.5.1.7-.1l.4-.4c.2-.2.5-.2.8-.1l1.7.7c.4.1.4.4.4.6v.7c0 .4 0 .7-.6.9-.6.2-1.7.4-3.6-.5-1.9-.9-3.7-2.7-4.6-4.6-.9-1.9-.7-3-.5-3.6z" fill="currentColor"/>
               </svg>
             </span>
             WhatsApp
@@ -1151,13 +1322,11 @@
 
       <div>
         <h3>Social Media</h3>
-        <p>
-          Follow our updates, results, and student guidance content.
-        </p>
+        <p>Follow our updates, results, and guidance content.</p>
 
         <div class="footer-links" style="margin-top:10px;">
           <a class="iconbtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">
-            <span class="icon">
+            <span class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13.5 22v-8h2.7l.4-3H13.5V9.2c0-.9.3-1.5 1.5-1.5H16.7V5.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V11H7.5v3H10v8h3.5z"/>
               </svg>
@@ -1166,17 +1335,17 @@
           </a>
 
           <a class="iconbtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">
-            <span class="icon">
+            <span class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12c0 1.6.1 3.2.4 4.8a3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1c.3-1.6.4-3.2.4-4.8s-.1-3.2-.4-4.8z"/>
-                <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="#06140f"/>
+                <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor" opacity=".22"/>
               </svg>
             </span>
             YouTube
           </a>
 
           <a class="iconbtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">
-            <span class="icon">
+            <span class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.5 6.8A2.1 2.1 0 1 1 6.5 2.6a2.1 2.1 0 0 1 0 4.2zM4.7 21.4h3.6V9H4.7v12.4zM9.9 9h3.4v1.7h.1c.5-1 1.8-2 3.7-2 3.9 0 4.6 2.5 4.6 5.8v6.9h-3.6v-6.1c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3v6.2H9.9V9z"/>
               </svg>
@@ -1186,29 +1355,35 @@
         </div>
       </div>
     </section>
+
   </main>
 
+  <!-- Floating WhatsApp -->
   <a class="floatwa" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20home_float)" target="_blank" rel="noopener">
-    <span class="dot"></span>
+    <span class="dot" aria-hidden="true"></span>
     Need guidance? <b>Chat on WhatsApp</b>
   </a>
 
   <!-- Video Modal -->
-  <div class="modal" id="videoModal" aria-hidden="true">
-    <div class="modalCard" role="dialog" aria-modal="true" aria-label="Video Player">
-      <div class="modalTop">
-        <strong id="videoTitle">Video</strong>
-        <button class="closeBtn" id="closeModal" type="button">✕ Close</button>
+  <div class="modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Video player">
+    <div class="modalCard">
+      <div class="modalHead">
+        <b id="videoTitle">Watch</b>
+        <button class="closeBtn" type="button" id="closeModal">Close</button>
       </div>
-      <div class="player">
-        <iframe id="videoFrame" src="" title="YouTube video player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      <div class="frameWrap">
+        <iframe id="videoFrame"
+          src=""
+          title="YouTube video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
       </div>
     </div>
   </div>
 
   <script>
-    // Extra safety: close menu on load + close after clicking any drawer link
     (function(){
+      // ===== MENU SAFETY =====
       const t = document.getElementById('menuToggle');
       if (t) t.checked = false;
 
@@ -1219,102 +1394,111 @@
           if (a) t.checked = false;
         });
       }
-    })();
 
-    // Year
-    document.getElementById("year").textContent = new Date().getFullYear();
+      // ===== YEAR =====
+      const y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
 
-    // =========================
-    // FREE VIDEOS (Play on-site)
-    // =========================
-    const videos = [
-      { title: "Reading", url: "https://youtu.be/iqr6_h49fYM?si=NFn68IQoN2UVK-qH", note: "Start here if reading feels slow" },
-      { title: "Speaking", url: "https://youtu.be/67ZBZt1sFtM?si=29IMeQ5BuCiv2w4A", note: "Confidence + fluency basics" },
-      { title: "Writing Task 1", url: "https://youtu.be/smOEtZfUW9o?si=dXCkR8AwUtaVSEwD", note: "Structure without memorizing" },
-      { title: "Writing Task 2", url: "https://youtu.be/ZnTX486sd_o?si=zYNfKOoPUomzR6p-", note: "Idea + structure + coherence" },
-      { title: "Listening", url: "https://youtu.be/9VnHJfJgztE?si=R6v9rbrxpcyn2GBW", note: "Answer finding approach" },
-      { title: "Ultimate Basic Guideline", url: "https://youtu.be/BkfKx16N4q8?si=_T28iirw2UudZ_Yx", note: "Full foundation guideline" },
-      { title: "Server ey Apni Jevabe Porben", url: "https://youtu.be/sGD0w0IlZVc?si=xfgePtipKEO7l7xx", note: "How to use the server properly" }
-    ];
+      // ===== THEME (default DARK) =====
+      const root = document.documentElement;
+      const themeBtn = document.getElementById('themeBtn');
+      const themeText = document.getElementById('themeText');
 
-    function getYouTubeId(link){
-      try{
-        const u = new URL(link);
-        // youtu.be/<id>
-        if(u.hostname.includes("youtu.be")){
-          return u.pathname.replace("/", "");
-        }
-        // youtube.com/watch?v=<id>
-        const v = u.searchParams.get("v");
-        if(v) return v;
-        // youtube.com/shorts/<id> or /embed/<id>
-        const parts = u.pathname.split("/").filter(Boolean);
-        const idx = parts.findIndex(p => p === "shorts" || p === "embed");
-        if(idx !== -1 && parts[idx+1]) return parts[idx+1];
-        return "";
-      } catch(e){
-        return "";
+      function setTheme(next){
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('lizon_theme', next);
+        if (themeText) themeText.textContent = (next === 'light') ? 'Light' : 'Dark';
+        // keep theme-color pleasant on mobile
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if(meta) meta.setAttribute('content', next === 'light' ? '#eaf6f0' : '#0b2a1f');
       }
-    }
 
-    const list = document.getElementById("videoList");
-    const modal = document.getElementById("videoModal");
-    const frame = document.getElementById("videoFrame");
-    const titleEl = document.getElementById("videoTitle");
-    const closeBtn = document.getElementById("closeModal");
+      // Force default dark unless user already chose
+      const saved = localStorage.getItem('lizon_theme');
+      if (saved === 'light' || saved === 'dark') setTheme(saved);
+      else setTheme('dark');
 
-    function openVideo(v){
-      const id = getYouTubeId(v.url);
-      if(!id) return;
-      titleEl.textContent = v.title;
-      // rel=0 reduces distractions; autoplay keeps the flow
-      frame.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1";
-      modal.classList.add("open");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    }
+      if (themeBtn){
+        themeBtn.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme') || 'dark';
+          setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+      }
 
-    function closeVideo(){
-      modal.classList.remove("open");
-      modal.setAttribute("aria-hidden", "true");
-      frame.src = "";
-      document.body.style.overflow = "";
-    }
+      // ===== FEATURED ACCORDIONS (only one open at a time) =====
+      const accButtons = document.querySelectorAll('[data-acc]');
+      const panels = {
+        learnMorePanel: document.getElementById('learnMorePanel'),
+        n2fPanel: document.getElementById('n2fPanel')
+      };
 
-    function renderVideos(){
-      if(!list) return;
-      list.innerHTML = "";
-      videos.forEach(v => {
-        const row = document.createElement("div");
-        row.className = "vitem";
+      function closeAll(){
+        Object.values(panels).forEach(p => p && p.classList.remove('open'));
+        accButtons.forEach(b => b.setAttribute('aria-expanded','false'));
+      }
 
-        const left = document.createElement("div");
-        left.innerHTML = '<div class="t">'+ v.title +'</div><span class="s">'+ (v.note || "") +'</span>';
+      accButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-acc');
+          const panel = panels[id];
+          if (!panel) return;
 
-        const btn = document.createElement("button");
-        btn.className = "watchBtn primary";
-        btn.type = "button";
-        btn.textContent = "Watch";
-        btn.addEventListener("click", () => openVideo(v));
-
-        row.appendChild(left);
-        row.appendChild(btn);
-        list.appendChild(row);
+          const isOpen = panel.classList.contains('open');
+          closeAll();
+          if (!isOpen){
+            panel.classList.add('open');
+            btn.setAttribute('aria-expanded','true');
+            // smooth scroll to panel
+            panel.scrollIntoView({behavior:'smooth', block:'start'});
+          }
+        });
       });
-    }
 
-    renderVideos();
+      // ===== VIDEO MODAL (watch inside site) =====
+      const modal = document.getElementById('videoModal');
+      const frame = document.getElementById('videoFrame');
+      const close = document.getElementById('closeModal');
+      const title = document.getElementById('videoTitle');
 
-    // Close modal events
-    closeBtn.addEventListener("click", closeVideo);
-    modal.addEventListener("click", (e) => {
-      if(e.target === modal) closeVideo();
-    });
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape") closeVideo();
-    });
+      function openModal(src, label){
+        if (!modal || !frame) return;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+        // autoplay inside modal
+        const join = src.includes('?') ? '&' : '?';
+        frame.src = src + join + 'autoplay=1';
+        if (title) title.textContent = label || 'Watch';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal(){
+        if (!modal || !frame) return;
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+        frame.src = '';
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.watchBtn[data-video]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const src = btn.getAttribute('data-video');
+          const label = btn.closest('.learnItem')?.querySelector('b')?.textContent || 'Watch';
+          openModal(src, label);
+        });
+      });
+
+      if (close) close.addEventListener('click', closeModal);
+      if (modal){
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+
+    })();
   </script>
 
 </body>
 </html>
-```0

@@ -4,278 +4,894 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Study Abroad — LizOn Education</title>
-  <meta name="description" content="Study Abroad guidance by LizOn Education. Learn about documents, IELTS/PTE scores, intakes, jobs, mistakes, and opportunities before you decide." />
+  <meta name="description" content="Study Abroad guidance by LizOn Education. Country-wise requirements, intakes, IELTS/PTE score guidance, documents, opportunities, and honest answers." />
   <meta name="theme-color" content="#062b1f" />
 
   <style>
+    :root{
+      --bg:#041f16;
+      --bg2:#062b1f;
+      --card:rgba(255,255,255,.05);
+      --card2:rgba(255,255,255,.07);
+      --stroke:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
+      --gold:#d6b35a;
+      --gold2:#caa64a;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 22px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:#061f16;
-      color:#eef4f1;
-      line-height:1.6;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 560px at 20% 10%, rgba(214,179,90,.10), transparent 55%),
+        radial-gradient(900px 520px at 85% 20%, rgba(31,120,92,.22), transparent 55%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      overflow-x:hidden;
     }
-    .container{max-width:1100px;margin:0 auto;padding:32px 18px}
-    h1{font-size:40px;margin:0 0 8px}
-    h2{font-size:26px;margin:28px 0 10px}
-    h3{font-size:20px;margin:18px 0 6px}
-    p{color:#b7c9c2;margin:0 0 10px}
-    ul{margin:6px 0 14px 18px;color:#b7c9c2}
-    li{margin-bottom:6px}
-    .tagline{
-      color:#d6b35a;
-      font-weight:800;
-      letter-spacing:.3px;
-      margin-bottom:14px;
+
+    a{color:inherit; text-decoration:none}
+    .container{width:min(1100px, calc(100% - 40px)); margin:0 auto}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(6,43,31,.92), rgba(6,43,31,.55));
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
-    .section{
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width:220px;
+    }
+    .brand img{
+      width:36px; height:36px; border-radius:10px;
+      background: rgba(0,0,0,.15);
+      padding:6px;
+      border:1px solid rgba(255,255,255,.10);
+      object-fit:contain;
+    }
+    .brand .name{font-weight:900; letter-spacing:.2px; line-height:1.1}
+    .brand .tag{font-size:12px; color:var(--muted); margin-top:2px}
+
+    .nav-actions{display:flex; align-items:center; gap:10px}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:11px 14px;
+      border-radius:999px;
       border:1px solid rgba(255,255,255,.12);
-      border-radius:18px;
-      padding:22px;
-      margin-bottom:22px;
-      background:rgba(255,255,255,.04);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      font-weight:850;
+      font-size:14px;
+      white-space:nowrap;
+      user-select:none;
     }
-    .country{
-      border-top:1px solid rgba(255,255,255,.14);
-      padding-top:24px;
-      margin-top:24px;
-    }
-    .badge{
-      display:inline-block;
-      padding:6px 12px;
-      border-radius:999px;
-      background:rgba(214,179,90,.15);
-      color:#e0c26b;
-      font-weight:800;
-      font-size:12px;
-      margin-bottom:10px;
-    }
-    .cta{
-      display:inline-block;
-      margin-top:10px;
-      padding:12px 18px;
-      border-radius:999px;
-      background:#d6b35a;
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18)}
+    .btn-gold{
+      background: linear-gradient(180deg, rgba(214,179,90,.98), rgba(202,166,74,.92));
+      border-color: rgba(214,179,90,.42);
       color:#122016;
+      box-shadow: 0 14px 30px rgba(214,179,90,.12);
+    }
+    .btn-gold:hover{background: linear-gradient(180deg, rgba(214,179,90,1), rgba(202,166,74,1))}
+    .btn-soft{
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.14);
+    }
+
+    .menuBtn{display:none}
+
+    /* Mobile menu */
+    .menuPanel{display:none; padding:0 0 14px 0}
+    .menuPanel.open{display:block}
+    .menuGrid{display:grid; grid-template-columns:1fr; gap:10px; padding:10px 0 4px 0}
+    .menuItem{
+      padding:14px 14px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      display:flex; align-items:center; justify-content:space-between;
       font-weight:900;
-      text-decoration:none;
     }
-    .cta.secondary{
-      background:rgba(255,255,255,.08);
-      color:#eef4f1;
-      border:1px solid rgba(255,255,255,.18);
-      margin-left:8px;
-    }
-    .note{
+    .menuItem small{color:var(--muted); font-weight:650}
+    .menuRow{display:flex; gap:10px; flex-wrap:wrap; padding:10px 0 0 0}
+    .miniBtn{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      font-weight:850;
       font-size:13px;
-      color:#9fb6ae;
-      border-left:3px solid #d6b35a;
+    }
+
+    /* Hero */
+    main{padding:22px 0 0}
+    .hero{padding:24px 0 12px}
+    .pill{
+      display:inline-flex; gap:10px; align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(214,179,90,.28);
+      background: rgba(214,179,90,.08);
+      color: rgba(255,255,255,.90);
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.2px;
+    }
+    .accent{color: var(--gold)}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:14px;
+      margin-top:14px;
+      align-items:stretch;
+    }
+    .panel{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+    }
+    .panel.pad{padding:20px}
+    h1{
+      margin:12px 0 10px;
+      font-size: clamp(30px, 4.2vw, 46px);
+      line-height:1.05;
+      letter-spacing:-.6px;
+    }
+    .sub{
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height:1.6;
+      margin:0 0 14px;
+    }
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap}
+    .note{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(0,0,0,.14);
+      color: rgba(255,255,255,.80);
+      font-size:13px;
+    }
+    .note b{color:#fff}
+
+    /* Small icon */
+    .icon{width:18px;height:18px;display:inline-block;vertical-align:-3px}
+    .irow{display:flex;gap:10px;align-items:flex-start}
+    .irow .iconWrap{
+      width:34px;height:34px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(214,179,90,.10);
+      border:1px solid rgba(214,179,90,.22);
+      flex:0 0 auto;
+    }
+
+    /* Sections */
+    section{padding:14px 0}
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
+      margin: 8px 0 12px;
+    }
+    .sectionTitle h2{margin:0;font-size:18px;letter-spacing:.2px}
+    .sectionTitle p{margin:0;color:var(--muted);font-size:13px}
+
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+    .card{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      padding:16px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.30);
+    }
+
+    .list{
+      margin:10px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .list li{
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+      color: rgba(255,255,255,.82);
+      font-size:13px;
+    }
+    .list li b{color:#fff}
+
+    /* Country buttons + content */
+    .countryBar{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin: 10px 0 0;
+    }
+    .countryBtn{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      font-weight:900;
+      cursor:pointer;
+      transition: .12s ease;
+      user-select:none;
+    }
+    .countryBtn:hover{transform: translateY(-1px); border-color: rgba(214,179,90,.35)}
+    .countryBtn.active{
+      background: rgba(214,179,90,.16);
+      border-color: rgba(214,179,90,.38);
+      color:#fff;
+    }
+    .countryPane{display:none; margin-top:12px}
+    .countryPane.active{display:block}
+
+    .kvs{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .kv{
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+      padding:12px 12px;
+    }
+    .kv small{color: var(--muted); display:block; margin-bottom:3px; font-weight:750}
+    .kv b{color:#fff}
+
+    .bullets{
+      margin:10px 0 0;
+      padding-left:18px;
+      color: rgba(255,255,255,.78);
+      line-height:1.6;
+      font-size:14px;
+    }
+    .bullets li{margin-bottom:6px}
+    .muted{color: var(--muted)}
+    .warn{
+      border-left:3px solid rgba(214,179,90,.85);
       padding-left:10px;
-      margin:10px 0 14px;
+      margin:10px 0 0;
+      color: rgba(255,255,255,.78);
+      font-size:13px;
+    }
+
+    /* FAQ */
+    .faq{display:grid; gap:10px}
+    details{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+      padding:12px 14px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:950;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .faq p{margin:10px 0 0; color: rgba(255,255,255,.78); font-size:14px; line-height:1.65}
+    .caret{opacity:.8}
+
+    /* N2F */
+    .n2f{
+      border:1px solid rgba(214,179,90,.22);
+      background: radial-gradient(700px 220px at 20% 10%, rgba(214,179,90,.14), transparent 55%),
+                  rgba(0,0,0,.12);
+    }
+    .n2f .big{
+      font-size:16px;
+      font-weight:950;
+      margin:0 0 6px;
+    }
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      font-weight:850;
+      font-size:12px;
+      color: rgba(255,255,255,.86);
+    }
+    .chip b{color: var(--gold)}
+
+    /* Footer */
+    footer{
+      padding:26px 0 90px;
+      border-top:1px solid rgba(255,255,255,.08);
+      margin-top: 14px;
+    }
+    .footGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:start;
+    }
+    .footCard{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding:16px;
+    }
+    .footCard h3{margin:0 0 10px; font-size:14px}
+    .footCard p{margin:0; color: var(--muted); line-height:1.55; font-size:13px}
+    .socialRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+
+    /* Floating WhatsApp */
+    .floatWA{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:60;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:12px 14px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(214,179,90,.98), rgba(202,166,74,.92));
+      color:#122016;
+      border:1px solid rgba(214,179,90,.42);
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      font-weight:950;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background:#25D366;
+      box-shadow: 0 0 0 6px rgba(37,211,102,.12);
+    }
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .heroGrid{grid-template-columns:1fr}
+      .grid2{grid-template-columns:1fr}
+      .kvs{grid-template-columns:1fr}
+      .footGrid{grid-template-columns:1fr}
+      .menuBtn{display:inline-flex}
+      .desktopOnly{display:none}
+      .brand{min-width:auto}
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
+  <div class="container">
+    <div class="nav">
+      <a class="brand" href="index.html" aria-label="LizOn Education Home">
+        <img src="assets/logo-dark.png" alt="LizOn Education Logo" />
+        <div>
+          <div class="name">LizOn Education</div>
+          <div class="tag">Study Abroad • IELTS • PTE</div>
+        </div>
+      </a>
 
-  <h1>Study Abroad</h1>
-  <div class="tagline">Make Your Family Proud</div>
+      <div class="nav-actions">
+        <a class="btn desktopOnly" href="#countries">Countries</a>
+        <a class="btn desktopOnly" href="#questions">Student Questions</a>
+        <a class="btn btn-gold desktopOnly" id="waTop" href="#">Talk With an Expert Counselor</a>
+        <button class="btn menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">☰ Menu</button>
+      </div>
+    </div>
 
-  <p>
-    This page is designed to help you <strong>understand</strong> study abroad before you decide.
-    We explain documents, scores, intakes, work reality, opportunities, and common mistakes —
-    clearly, positively, and truthfully.
-  </p>
+    <div class="menuPanel" id="menuPanel">
+      <div class="menuGrid">
+        <a class="menuItem" href="#countries">Countries <small>Australia / UK / Canada / USA / Europe</small></a>
+        <a class="menuItem" href="#which">Which Country Needs What? <small>Docs + scores + intakes</small></a>
+        <a class="menuItem" href="#questions">Problems Students Face <small>PR? job? eligibility?</small></a>
+        <a class="menuItem" href="#n2f">N2F (Now to Fly) <small>We stay with you</small></a>
+      </div>
+      <div class="menuRow">
+        <a class="miniBtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+        <a class="miniBtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
+        <a class="miniBtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="miniBtn" id="waMenu" href="#">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</header>
 
-  <div class="section">
-    <h2>How LizOn Guides You</h2>
-    <ul>
-      <li>We explain first — not sell first</li>
-      <li>We check your profile, budget, timeline, and exam readiness</li>
-      <li>We guide honestly, even if the answer is “not now”</li>
-    </ul>
-    <a class="cta" href="https://wa.me/8801608881545">Talk With an Expert Counselor</a>
+<main class="container">
+  <div class="hero">
+    <span class="pill">Study Abroad Guidance • <span class="accent">Make Your Family Proud</span></span>
+
+    <div class="heroGrid">
+      <div class="panel pad">
+        <h1>Study Abroad — <span class="accent">Clarity First</span>, Then Process</h1>
+        <p class="sub">
+          LizOn guides you with the real things students care about: <b>documents</b>, <b>IELTS/PTE score readiness</b>,
+          <b>intakes</b>, <b>work reality</b>, and <b>future opportunities</b> — without fake promises.
+          <br /><br />
+          Want the cleanest next step? Talk with an expert counselor and we’ll tell you what fits your profile.
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn btn-gold" id="waHero" href="#">Talk With an Expert Counselor</a>
+          <a class="btn btn-soft" href="#countries">Explore Countries</a>
+          <a class="btn btn-soft" href="#which">Which Country Needs What?</a>
+        </div>
+
+        <div class="note">
+          <b>Important:</b> For smoother admission and safer processing, you should have your <b class="accent">IELTS or PTE score ready</b>.
+          If not, we’ll guide you how to prepare first.
+        </div>
+      </div>
+
+      <div class="panel pad">
+        <div class="irow">
+          <div class="iconWrap" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <path d="M12 22s7-4.5 7-12a7 7 0 1 0-14 0c0 7.5 7 12 7 12z" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 13.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-weight:950; margin-bottom:4px;">Real Location</div>
+            <div class="muted" style="font-size:13px;">
+              Basabo, Dhaka • In-person + online guidance
+            </div>
+          </div>
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div class="irow">
+          <div class="iconWrap" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <path d="M20 12a8 8 0 0 1-12.4 6.7L4 20l1.4-3.4A8 8 0 1 1 20 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M9 8.8c.2-.6.5-.6.9-.6h.7c.2 0 .5 0 .6.4l.7 1.7c.1.3.1.6-.1.8l-.4.4c-.2.2-.2.5 0 .7.4.7 1.1 1.4 1.8 1.8.2.1.5.1.7-.1l.4-.4c.2-.2.5-.2.8-.1l1.7.7c.4.1.4.4.4.6v.7c0 .4 0 .7-.6.9-.6.2-1.7.4-3.6-.5-1.9-.9-3.7-2.7-4.6-4.6-.9-1.9-.7-3-.5-3.6z" fill="currentColor"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-weight:950; margin-bottom:4px;">Fast Guidance</div>
+            <div class="muted" style="font-size:13px;">
+              WhatsApp counseling → correct country → correct intake → correct next step
+            </div>
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="ctaRow">
+          <a class="btn btn-gold" id="waQuick" href="#">Check Eligibility</a>
+          <a class="btn btn-soft" id="mapQuick" href="#">Open Map</a>
+        </div>
+
+        <div class="warn">
+          We stay truthful: PR and job outcomes depend on your skills, planning, and policy — not shortcuts.
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- AUSTRALIA -->
-  <div class="country">
-    <span class="badge">Australia</span>
-    <h2>Study in Australia</h2>
+  <section id="which">
+    <div class="sectionTitle">
+      <h2>Which Country Needs What?</h2>
+      <p>Documents + scores + intakes — simplified</p>
+    </div>
 
-    <h3>Why students choose Australia</h3>
-    <ul>
-      <li>Globally recognised degrees</li>
-      <li>Strong part-time work culture</li>
-      <li>Post-study work opportunities (not guaranteed PR)</li>
-      <li>Safe, multicultural, English-speaking environment</li>
-    </ul>
+    <div class="grid2">
+      <div class="card">
+        <div class="irow">
+          <div class="iconWrap" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <path d="M7 3h10v18H7z" stroke="currentColor" stroke-width="2"/>
+              <path d="M9 7h6M9 11h6M9 15h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-weight:950">Documents (general)</div>
+            <div class="muted" style="font-size:13px">Country + profile based, but core stays same</div>
+          </div>
+        </div>
 
-    <h3>Probable intakes</h3>
-    <ul>
-      <li>February — main intake</li>
-      <li>July — second major intake</li>
-      <li>November — limited courses</li>
-    </ul>
+        <ul class="list">
+          <li><b>Academic</b> transcripts + certificates</li>
+          <li><b>Passport</b> (valid)</li>
+          <li><b>IELTS / PTE</b> score report (recommended to be ready)</li>
+          <li><b>Financial</b> documents (depends on country + profile)</li>
+          <li><b>GS / SOP</b> (why you + why this country)</li>
+        </ul>
 
-    <h3>IELTS / PTE requirement</h3>
-    <ul>
-      <li>IELTS minimum: 6.0 | Recommended: 6.5+</li>
-      <li>PTE minimum: 50–58 | Recommended: 58–65+</li>
-    </ul>
+        <div style="margin-top:12px" class="ctaRow">
+          <a class="btn btn-gold" id="waDocs" href="#">Talk With an Expert Counselor</a>
+        </div>
+      </div>
 
-    <h3>Documents needed</h3>
-    <ul>
-      <li>Academic transcripts</li>
-      <li>IELTS or PTE score report</li>
-      <li>Passport</li>
-      <li>Financial documents (profile-based)</li>
-      <li>GS / SOP</li>
-    </ul>
+      <div class="card">
+        <div class="irow">
+          <div class="iconWrap" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3v18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M3 12h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 7l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M17 7L7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-weight:950">Are you eligible?</div>
+            <div class="muted" style="font-size:13px">Check your eligibility with an expert counselor</div>
+          </div>
+        </div>
 
-    <h3>Work & job reality</h3>
-    <ul>
-      <li>Common student jobs: hospitality, retail, warehouses</li>
-      <li>City matters: Sydney & Melbourne vs regional areas</li>
-      <li>English skill and effort matter</li>
-    </ul>
+        <ul class="list">
+          <li><b>Goal:</b> Study / work exposure / long-term settlement planning</li>
+          <li><b>Timeline:</b> Next 3–6 months vs 6–12 months</li>
+          <li><b>Budget:</b> Tuition + living + visa process</li>
+          <li><b>Score:</b> IELTS/PTE ready or not</li>
+        </ul>
 
-    <h3>After study opportunities</h3>
-    <p>Temporary graduate visas and skill-based pathways depend on demand, policy, and timing.</p>
+        <div style="margin-top:12px" class="ctaRow">
+          <a class="btn btn-gold" id="waEligibility" href="#">Check Eligibility on WhatsApp</a>
+          <a class="btn btn-soft" href="#countries">Pick a country</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <h3>Common mistakes students make</h3>
-    <ul>
-      <li>Applying without IELTS/PTE score ready</li>
-      <li>Choosing city without understanding cost</li>
-      <li>Rushing due to agent pressure</li>
-    </ul>
+  <section id="questions">
+    <div class="sectionTitle">
+      <h2>Problems Students Face</h2>
+      <p>Honest answers — no fake promises</p>
+    </div>
 
-    <a class="cta" href="https://wa.me/8801608881545">Talk With an Expert Counselor</a>
+    <div class="faq">
+      <details>
+        <summary>
+          Why & which country should I choose?
+          <span class="caret">▾</span>
+        </summary>
+        <p>
+          Country choice should match your <b>profile</b>, <b>budget</b>, <b>intake timing</b>, and <b>future plan</b>.
+          Most people fail because they choose based on rumors. LizOn guides you with a clean shortlist.
+        </p>
+      </details>
+
+      <details>
+        <summary>
+          Will I get PR?
+          <span class="caret">▾</span>
+        </summary>
+        <p>
+          PR is not a “package”. It depends on <b>skill demand</b>, <b>policy</b>, <b>your course</b>, and <b>your work profile</b>.
+          We’ll explain realistic pathways (if applicable) — and what improves your chances.
+        </p>
+      </details>
+
+      <details>
+        <summary>
+          Job pabo tho?
+          <span class="caret">▾</span>
+        </summary>
+        <p>
+          Jobs exist, but outcomes depend on <b>English</b>, <b>flexibility</b>, and <b>city</b>. We’ll guide you with work reality:
+          typical student jobs, cost differences, and what you must prepare before landing.
+        </p>
+      </details>
+
+      <details>
+        <summary>
+          I don’t have IELTS/PTE yet — what now?
+          <span class="caret">▾</span>
+        </summary>
+        <p>
+          Then your best move is to <b>prepare and get the score first</b>. Score readiness makes your application stronger and faster.
+          LizOn can guide you to IELTS or PTE based on your timeline.
+        </p>
+      </details>
+
+      <details>
+        <summary>
+          What documents will be needed for my country?
+          <span class="caret">▾</span>
+        </summary>
+        <p>
+          Core documents are similar, but each country has profile-based variations. Talk to our expert counselor and we’ll give you a clear checklist.
+        </p>
+      </details>
+
+      <details>
+        <summary>
+          I’m scared about visa refusal / weak profile
+          <span class="caret">▾</span>
+        </summary>
+        <p>
+          Fear is normal. Most refusals happen due to <b>weak explanation</b>, <b>wrong planning</b>, or <b>document gaps</b>.
+          We guide you step-by-step so you don’t walk blind.
+        </p>
+      </details>
+    </div>
+
+    <div style="margin-top:12px" class="ctaRow">
+      <a class="btn btn-gold" id="waQuestions" href="#">Talk With an Expert Counselor</a>
+    </div>
+  </section>
+
+  <section id="countries">
+    <div class="sectionTitle">
+      <h2>Countries</h2>
+      <p>Click a country → see requirements, intakes, scores, mistakes</p>
+    </div>
+
+    <div class="countryBar" role="tablist" aria-label="Country tabs">
+      <button class="countryBtn active" data-target="au" role="tab" aria-selected="true">Australia</button>
+      <button class="countryBtn" data-target="uk" role="tab" aria-selected="false">UK</button>
+      <button class="countryBtn" data-target="ca" role="tab" aria-selected="false">Canada</button>
+      <button class="countryBtn" data-target="us" role="tab" aria-selected="false">USA</button>
+      <button class="countryBtn" data-target="eu" role="tab" aria-selected="false">Europe</button>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <!-- AUSTRALIA -->
+      <div id="au" class="countryPane active" role="tabpanel" aria-label="Australia">
+        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">Australia — opportunities + real planning</div>
+        <div class="muted" style="font-size:13px;">Good for: strong education, part-time work culture, post-study options (policy-based).</div>
+
+        <div class="kvs">
+          <div class="kv"><small>Probable intakes</small><b>Feb (main), Jul, Nov (limited)</b></div>
+          <div class="kv"><small>Score (IELTS / PTE)</small><b>Min 6.0 / 50–58 • Recommended 6.5+ / 58–65+</b></div>
+          <div class="kv"><small>Documents (general)</small><b>Academic + Passport + Score + Financial + GS/SOP</b></div>
+          <div class="kv"><small>Work reality</small><b>Jobs exist — English + flexibility + city matters</b></div>
+        </div>
+
+        <ul class="bullets">
+          <li><b>Why choose:</b> recognised degrees, multicultural, strong student work environment.</li>
+          <li><b>After study:</b> options depend on demand + policy + your profile (no shortcuts).</li>
+          <li><b>Mistakes:</b> applying without score ready, wrong city budgeting, rushing due to agent pressure.</li>
+        </ul>
+
+        <div class="warn">We will explain the safest plan based on your profile, not rumors.</div>
+
+        <div class="ctaRow" style="margin-top:12px;">
+          <a class="btn btn-gold" id="waAU" href="#">Talk With an Expert Counselor</a>
+        </div>
+      </div>
+
+      <!-- UK -->
+      <div id="uk" class="countryPane" role="tabpanel" aria-label="UK">
+        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">UK — faster degrees + strong global value</div>
+        <div class="muted" style="font-size:13px;">Good for: shorter duration, top universities, structured graduate route (policy-based).</div>
+
+        <div class="kvs">
+          <div class="kv"><small>Probable intakes</small><b>Sep (main), Jan (secondary)</b></div>
+          <div class="kv"><small>Score (IELTS / PTE)</small><b>Min 6.0 / 54–58 • Recommended 6.5+ / 58+</b></div>
+          <div class="kv"><small>Documents (general)</small><b>Academic + Passport + Score + Financial + GS/SOP</b></div>
+          <div class="kv"><small>Work reality</small><b>Cost varies by city — plan properly</b></div>
+        </div>
+
+        <ul class="bullets">
+          <li><b>Why choose:</b> shorter courses, strong reputation, global exposure.</li>
+          <li><b>After study:</b> graduate route depends on rules + your planning.</li>
+          <li><b>Mistakes:</b> late application, weak SOP/GS, choosing course without alignment.</li>
+        </ul>
+
+        <div class="ctaRow" style="margin-top:12px;">
+          <a class="btn btn-gold" id="waUK" href="#">Talk With an Expert Counselor</a>
+        </div>
+      </div>
+
+      <!-- CANADA -->
+      <div id="ca" class="countryPane" role="tabpanel" aria-label="Canada">
+        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">Canada — planning-heavy, profile-sensitive</div>
+        <div class="muted" style="font-size:13px;">Good for: quality education, multicultural environment, post-study options (policy-based).</div>
+
+        <div class="kvs">
+          <div class="kv"><small>Probable intakes</small><b>Sep, Jan, May (limited)</b></div>
+          <div class="kv"><small>Score (IELTS / PTE)</small><b>Min 6.0 / 58 • Recommended 6.5+ / 60+</b></div>
+          <div class="kv"><small>Documents (general)</small><b>Academic + Passport + Score + Financial + GS/SOP</b></div>
+          <div class="kv"><small>Key focus</small><b>Financial planning + correct college/program</b></div>
+        </div>
+
+        <ul class="bullets">
+          <li><b>Why choose:</b> long-term value if planning is strong.</li>
+          <li><b>After study:</b> depends on rules + your program + location.</li>
+          <li><b>Mistakes:</b> wrong college selection, weak financial plan, rushing without clarity.</li>
+        </ul>
+
+        <div class="ctaRow" style="margin-top:12px;">
+          <a class="btn btn-gold" id="waCA" href="#">Talk With an Expert Counselor</a>
+        </div>
+      </div>
+
+      <!-- USA -->
+      <div id="us" class="countryPane" role="tabpanel" aria-label="USA">
+        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">USA — highest options, needs strongest preparation</div>
+        <div class="muted" style="font-size:13px;">Good for: broad universities, strong research/career exposure, long-term skill value.</div>
+
+        <div class="kvs">
+          <div class="kv"><small>Probable intakes</small><b>Aug/Sep (main), Jan (secondary)</b></div>
+          <div class="kv"><small>Score (IELTS / PTE)</small><b>IELTS Min 6.5 • Recommended 7.0+ | PTE 60+</b></div>
+          <div class="kv"><small>Documents (general)</small><b>Academic + Passport + Score + Financial + SOP/GS</b></div>
+          <div class="kv"><small>Key focus</small><b>Strong SOP + academic alignment + planning</b></div>
+        </div>
+
+        <ul class="bullets">
+          <li><b>Why choose:</b> maximum options and high-value exposure.</li>
+          <li><b>After study:</b> policy-based pathways; plan realistically.</li>
+          <li><b>Mistakes:</b> late preparation, weak alignment, unrealistic expectations.</li>
+        </ul>
+
+        <div class="ctaRow" style="margin-top:12px;">
+          <a class="btn btn-gold" id="waUS" href="#">Talk With an Expert Counselor</a>
+        </div>
+      </div>
+
+      <!-- EUROPE -->
+      <div id="eu" class="countryPane" role="tabpanel" aria-label="Europe">
+        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">Europe — smart options if you choose correctly</div>
+        <div class="muted" style="font-size:13px;">Hungary • Netherlands • Denmark • Ireland • and more (country rules vary a lot).</div>
+
+        <div class="kvs">
+          <div class="kv"><small>Probable intakes</small><b>Sep (main), Jan/Feb (varies by country)</b></div>
+          <div class="kv"><small>Score (IELTS / PTE)</small><b>IELTS 6.0–6.5 | PTE 54–60+ (varies)</b></div>
+          <div class="kv"><small>Documents (general)</small><b>Academic + Passport + Score + Financial + SOP/GS</b></div>
+          <div class="kv"><small>Key focus</small><b>Country-specific rules + living cost differences</b></div>
+        </div>
+
+        <ul class="bullets">
+          <li><b>Why choose:</b> some affordable routes + English-taught programs.</li>
+          <li><b>Reality:</b> rules vary; you must choose country + course carefully.</li>
+          <li><b>Mistakes:</b> assuming all Europe is same, ignoring costs, not understanding rules.</li>
+        </ul>
+
+        <div class="ctaRow" style="margin-top:12px;">
+          <a class="btn btn-gold" id="waEU" href="#">Talk With an Expert Counselor</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ctaRow" style="margin-top:12px;">
+      <a class="btn btn-gold" id="waCountries" href="#">Talk With an Expert Counselor</a>
+      <a class="btn btn-soft" href="#n2f">See N2F (Now to Fly)</a>
+    </div>
+  </section>
+
+  <section id="n2f">
+    <div class="sectionTitle">
+      <h2>N2F — Now to Fly</h2>
+      <p>LizOn takes care of everything</p>
+    </div>
+
+    <div class="card n2f">
+      <p class="big">Avail N2F: <span class="accent">LizOn Takes Care of Everything</span></p>
+      <p class="muted" style="margin:0;">
+        This is for students who want a complete, guided process — not confusion.
+        And yes: <b>LizOn serves you even after you get visa.</b>
+      </p>
+
+      <div class="chips">
+        <div class="chip"><b>Eligibility</b> → correct country & intake</div>
+        <div class="chip"><b>Documents</b> → checklist + preparation</div>
+        <div class="chip"><b>University</b> → shortlist & plan</div>
+        <div class="chip"><b>Visa Guidance</b> → process support</div>
+        <div class="chip"><b>After Visa</b> → next-step support</div>
+      </div>
+
+      <div class="ctaRow" style="margin-top:12px;">
+        <a class="btn btn-gold" id="waN2F" href="#">Talk With an Expert Counselor</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footGrid">
+      <div class="footCard">
+        <h3>Visit LizOn Education</h3>
+        <p>
+          51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
+        </p>
+        <div class="socialRow">
+          <a class="miniBtn" id="mapFooter" href="#">Open Location on Map</a>
+          <a class="miniBtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+          <a class="miniBtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
+          <a class="miniBtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="footCard">
+        <h3>Talk With an Expert Counselor</h3>
+        <p>
+          WhatsApp us. We’ll ask 3–5 quick questions, then guide you with the safest next step.
+          <br /><br />
+          <b class="accent">Goal:</b> clarity first → correct country → correct intake → smooth process.
+        </p>
+        <div class="socialRow">
+          <a class="miniBtn" href="#countries">Countries</a>
+          <a class="miniBtn" href="#which">Requirements</a>
+          <a class="miniBtn" href="#n2f">N2F</a>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin:16px 0 0; color: rgba(255,255,255,.55); font-size:12px;">
+      © <span id="year"></span> LizOn Education • mylizon.com
+    </p>
   </div>
+</footer>
 
-  <!-- UK -->
-  <div class="country">
-    <span class="badge">United Kingdom</span>
-    <h2>Study in the UK</h2>
+<a class="floatWA" id="waFloat" href="#">
+  <span class="dot" aria-hidden="true"></span>
+  <span>Talk With an Expert Counselor</span>
+</a>
 
-    <h3>Why students choose the UK</h3>
-    <ul>
-      <li>Shorter degree duration</li>
-      <li>Globally respected universities</li>
-      <li>Graduate route work visa</li>
-    </ul>
+<script>
+  // ===== SETTINGS =====
+  const WA_LINK = "https://wa.me/8801608881545";
+  const MAP_LINK = "https://maps.app.goo.gl/JC9sikzCiSsQrNnH9";
 
-    <h3>Probable intakes</h3>
-    <ul>
-      <li>September — main intake</li>
-      <li>January — secondary intake</li>
-    </ul>
+  // Mobile menu toggle
+  const menuBtn = document.getElementById("menuBtn");
+  const menuPanel = document.getElementById("menuPanel");
+  if(menuBtn && menuPanel){
+    menuBtn.addEventListener("click", () => {
+      const open = menuPanel.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    menuPanel.addEventListener("click", (e) => {
+      if(e.target.closest("a")){
+        menuPanel.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
 
-    <h3>IELTS / PTE requirement</h3>
-    <ul>
-      <li>IELTS minimum: 6.0 | Recommended: 6.5+</li>
-      <li>PTE minimum: 54–58 | Recommended: 58+</li>
-    </ul>
+  // Wire WhatsApp buttons
+  [
+    "waTop","waMenu","waHero","waQuick","waDocs","waEligibility","waQuestions",
+    "waAU","waUK","waCA","waUS","waEU","waCountries","waN2F","waFloat"
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.href = WA_LINK;
+  });
 
-    <h3>Common mistakes</h3>
-    <ul>
-      <li>Ignoring course suitability</li>
-      <li>Weak SOP / GS</li>
-      <li>Late application</li>
-    </ul>
+  // Wire map buttons
+  ["mapQuick","mapFooter"].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.href = MAP_LINK;
+  });
 
-    <a class="cta" href="https://wa.me/8801608881545">Talk With an Expert Counselor</a>
-  </div>
+  // Country tab switch
+  const btns = Array.from(document.querySelectorAll(".countryBtn"));
+  const panes = Array.from(document.querySelectorAll(".countryPane"));
 
-  <!-- CANADA -->
-  <div class="country">
-    <span class="badge">Canada</span>
-    <h2>Study in Canada</h2>
+  function activate(target){
+    btns.forEach(b => {
+      const isActive = b.dataset.target === target;
+      b.classList.toggle("active", isActive);
+      b.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+    panes.forEach(p => p.classList.toggle("active", p.id === target));
+  }
 
-    <h3>Why students choose Canada</h3>
-    <ul>
-      <li>High quality education</li>
-      <li>Post-study work permit options</li>
-      <li>Multicultural environment</li>
-    </ul>
+  btns.forEach(b => b.addEventListener("click", () => activate(b.dataset.target)));
 
-    <h3>Probable intakes</h3>
-    <ul>
-      <li>September</li>
-      <li>January</li>
-      <li>May (limited)</li>
-    </ul>
-
-    <h3>IELTS / PTE requirement</h3>
-    <ul>
-      <li>IELTS minimum: 6.0 | Recommended: 6.5+</li>
-      <li>PTE minimum: 58 | Recommended: 60+</li>
-    </ul>
-
-    <h3>Common mistakes</h3>
-    <ul>
-      <li>Improper financial planning</li>
-      <li>Wrong college selection</li>
-    </ul>
-
-    <a class="cta" href="https://wa.me/8801608881545">Talk With an Expert Counselor</a>
-  </div>
-
-  <!-- USA -->
-  <div class="country">
-    <span class="badge">USA</span>
-    <h2>Study in the USA</h2>
-
-    <h3>Why students choose the USA</h3>
-    <ul>
-      <li>Wide course and university choices</li>
-      <li>Strong research and career exposure</li>
-    </ul>
-
-    <h3>IELTS / PTE requirement</h3>
-    <ul>
-      <li>IELTS minimum: 6.5 | Recommended: 7.0+</li>
-      <li>PTE minimum: 60+</li>
-    </ul>
-
-    <h3>Common mistakes</h3>
-    <ul>
-      <li>Weak academic alignment</li>
-      <li>Late preparation</li>
-    </ul>
-
-    <a class="cta" href="https://wa.me/8801608881545">Talk With an Expert Counselor</a>
-  </div>
-
-  <!-- EUROPE -->
-  <div class="country">
-    <span class="badge">Europe</span>
-    <h2>Study in Europe (Hungary, Netherlands, Denmark, Ireland)</h2>
-
-    <h3>Why students choose Europe</h3>
-    <ul>
-      <li>Affordable tuition in some countries</li>
-      <li>English-taught programs</li>
-      <li>Different lifestyle & exposure</li>
-    </ul>
-
-    <h3>IELTS / PTE requirement</h3>
-    <ul>
-      <li>IELTS: 6.0–6.5 (varies)</li>
-      <li>PTE: 54–60+</li>
-    </ul>
-
-    <h3>Common mistakes</h3>
-    <ul>
-      <li>Not understanding country-specific rules</li>
-      <li>Ignoring living cost differences</li>
-    </ul>
-
-    <a class="cta" href="https://wa.me/8801608881545">Talk With an Expert Counselor</a>
-  </div>
-
-</div>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>

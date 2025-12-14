@@ -37,7 +37,7 @@
     a{color:inherit; text-decoration:none}
     .container{max-width:1100px; margin:0 auto; padding:22px 18px 84px}
 
-    /* ===== TOPBAR ===== */
+    /* Topbar */
     .topbar{
       position:sticky; top:0;
       backdrop-filter: blur(14px);
@@ -45,209 +45,918 @@
       border-bottom:1px solid rgba(29,74,58,.6);
       z-index:50;
     }
-    .menu-toggle{position:absolute;left:-9999px}
+
+    /* IMPORTANT: checkbox is direct child of .topbar so sibling selector works */
+    .menu-toggle{
+      position:absolute;
+      left:-9999px;
+      width:1px; height:1px;
+      opacity:0;
+    }
+
     .topbar-inner{
       max-width:1100px; margin:0 auto; padding:14px 18px;
-      display:flex; align-items:center; justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
     }
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+    }
+
+    /* Logo */
     .brand-logo{
-      width:38px;height:38px;border-radius:12px;padding:6px;
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      padding:6px;
       background: rgba(10,26,20,.55);
       border:1px solid rgba(29,74,58,.7);
-      box-shadow:0 0 0 3px rgba(215,178,74,.1)
+      box-shadow: 0 0 0 3px rgba(215,178,74,.10);
+      flex:0 0 auto;
     }
-    .brand small{display:block;color:var(--muted);font-weight:600}
 
-    .nav{display:flex;gap:10px}
+    .brand small{
+      display:block;
+      font-weight:650;
+      color:var(--muted);
+      letter-spacing:.2px;
+      margin-top:2px;
+    }
+
+    /* Desktop nav */
+    .nav{
+      display:flex; align-items:center; gap:10px;
+    }
     .nav a{
-      padding:10px 12px;border-radius:999px;
+      padding:10px 12px;
       border:1px solid rgba(29,74,58,.7);
       background: rgba(10,26,20,.55);
-      font-weight:750;font-size:13px
+      border-radius:999px;
+      color:var(--text);
+      font-weight:750;
+      font-size:13px;
+      transition:.18s ease;
     }
-    .hamburger{display:none}
+    .nav a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
 
-    @media(max-width:920px){
-      .nav{display:none}
-      .hamburger{display:inline-flex}
+    /* Mobile menu button */
+    .hamburger{
+      display:none;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.7);
+      background: rgba(10,26,20,.55);
+      font-weight:850;
+      cursor:pointer;
+      user-select:none;
+      gap:8px;
+      align-items:center;
+    }
+    .hamburger span{opacity:.9}
+
+    /* Mobile drawer (HIDDEN by default, shown only when menu-toggle checked) */
+    .mobile-drawer{
+      display:none;
+      border-top:1px solid rgba(29,74,58,.55);
+      background: rgba(6,20,15,.88);
+      backdrop-filter: blur(14px);
+    }
+    #menuToggle:checked ~ .mobile-drawer{ display:block; }
+
+    .drawer-inner{
+      max-width:1100px; margin:0 auto;
+      padding:12px 18px 16px;
+      display:grid; gap:10px;
+    }
+    .drawer-inner a{
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.7);
+      background: rgba(10,26,20,.55);
+      font-weight:850;
+    }
+    .drawer-inner a strong{ color: var(--gold); }
+    .drawer-social{
+      display:flex; gap:10px; flex-wrap:wrap; padding-top:4px;
+    }
+    .drawer-social a{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:850;
     }
 
-    /* ===== HERO ===== */
+    /* Hero */
+    .hero{ padding:28px 0 12px; }
     .hero-card{
-      border-radius:var(--radius);
+      border-radius: var(--radius);
       border:1px solid rgba(29,74,58,.7);
       background: linear-gradient(180deg, rgba(12,32,25,.72), rgba(10,26,20,.52));
-      box-shadow:var(--soft);
+      box-shadow: var(--soft);
       padding:26px;
+      position:relative;
+      overflow:hidden;
     }
-    h1{font-size:44px;margin:10px 0}
-    .sub{color:var(--muted);max-width:760px}
-    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
-    .btn{
-      padding:12px 16px;border-radius:14px;
+    .hero-card:before{
+      content:"";
+      position:absolute; inset:-80px -120px auto auto;
+      width:320px; height:320px;
+      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.18), transparent 60%);
+      pointer-events:none;
+    }
+    .chips{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
       border:1px solid rgba(29,74,58,.75);
       background: rgba(10,26,20,.55);
-      font-weight:900;cursor:pointer
+      color: var(--muted);
+      font-weight:850;
+      font-size:12px;
     }
+    .chip b{ color: var(--gold); }
+
+    h1{
+      margin:10px 0 6px;
+      font-size:44px;
+      line-height:1.05;
+      letter-spacing:-.6px;
+    }
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size:16px;
+      line-height:1.6;
+      max-width:760px;
+    }
+    .sub strong{ color: var(--gold); }
+
+    .cta-row{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(10,26,20,.55);
+      font-weight:900;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
     .btn.primary{
-      background:linear-gradient(180deg,var(--gold),var(--gold2));
-      color:#142015
+      background: linear-gradient(180deg, var(--gold), var(--gold2));
+      color:#142015;
+      border-color: rgba(215,178,74,.85);
+      box-shadow: 0 18px 60px rgba(215,178,74,.12);
     }
 
-    /* ===== PROGRAMS ===== */
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    @media(max-width:920px){.grid{grid-template-columns:1fr}}
-
+    /* Programs */
+    .section-title{
+      margin:22px 0 10px;
+      font-size:16px;
+      letter-spacing:.2px;
+      color: var(--text);
+      font-weight:950;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin-top:10px;
+    }
     .card{
-      border-radius:var(--radius);
+      border-radius: var(--radius);
       border:1px solid rgba(29,74,58,.7);
       background: linear-gradient(180deg, rgba(12,32,25,.62), rgba(10,26,20,.48));
-      padding:18px;display:flex;flex-direction:column
-    }
-    .card .actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
-    .card .actions .btn{width:100%}
-
-    /* ===== FEATURED PROGRAM (SCOPED) ===== */
-    #lizon-featured{
-      margin:28px 0;
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow:0 18px 60px rgba(0,0,0,.35);
+      box-shadow: var(--soft);
       padding:18px;
+      min-height: 210px;
+      display:flex; flex-direction:column; gap:10px;
     }
-    #lizon-featured h2{margin:8px 0}
-    #lizon-featured .pill{
-      display:inline-block;padding:8px 12px;border-radius:999px;
-      border:1px solid rgba(215,178,74,.3);
-      background: rgba(215,178,74,.08);font-weight:900;font-size:12px
+    .tagline{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(10,26,20,.55);
+      font-weight:900;
+      font-size:12px;
+      color: var(--muted);
     }
-    #lizon-featured .gold{color:var(--gold);font-weight:900}
-    #lizon-featured .grid{grid-template-columns:1fr 1fr}
-    @media(max-width:920px){#lizon-featured .grid{grid-template-columns:1fr}}
+    .tagline b{ color: var(--gold); }
 
-    /* ===== FOOTER ===== */
-    .footer{margin-top:28px;padding:18px;border-radius:var(--radius)}
-    .footer-links{display:flex;gap:10px;flex-wrap:wrap}
+    .card h2{
+      margin:0;
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .card p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.6;
+      font-size:13px;
+    }
+    .card .actions{
+      margin-top:auto;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .card .actions .btn{ width:100%; }
 
-    /* ===== FLOAT WA ===== */
+    /* Footer / Trust */
+    .footer{
+      margin-top:18px;
+      padding:18px;
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
+      box-shadow: var(--soft);
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+      align-items:start;
+    }
+    .footer h3{ margin:0 0 8px; font-size:14px; font-weight:950; }
+    .footer p{ margin:0; color: var(--muted); line-height:1.6; font-size:13px; }
+    .footer p strong{ color: var(--gold); }
+
+    .footer-links{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;
+    }
+    .iconbtn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.7);
+      background: rgba(10,26,20,.55);
+      font-weight:900; font-size:13px;
+      transition:.18s ease;
+    }
+    .iconbtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .icon{ width:16px; height:16px; display:inline-block; }
+    .smallprint{
+      margin-top:12px;
+      font-size:12px;
+      color: rgba(183,201,194,.75);
+    }
+
+    /* Floating WhatsApp */
     .floatwa{
-      position:fixed;right:16px;bottom:16px;
-      padding:12px 14px;border-radius:999px;
-      background: rgba(6,20,15,.85);
+      position:fixed;
+      right:16px; bottom:16px;
+      z-index:60;
+      display:flex; align-items:center; gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
       border:1px solid rgba(29,74,58,.8);
-      font-weight:900;z-index:60
+      background: rgba(6,20,15,.82);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft);
+      font-weight:950;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:#2cffb2;
+      box-shadow: 0 0 0 3px rgba(44,255,178,.15);
+    }
+    .floatwa b{ color: var(--gold); }
+
+    /* ============== FEATURED (NEW) ============== */
+    .featured-wrap{ margin-top:16px; }
+    .featured{
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.75);
+      background: linear-gradient(180deg, rgba(12,32,25,.70), rgba(10,26,20,.50));
+      box-shadow: var(--soft);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .featured:before{
+      content:"";
+      position:absolute;
+      inset:-80px auto auto -120px;
+      width:320px; height:320px;
+      background: radial-gradient(circle at 40% 40%, rgba(215,178,74,.14), transparent 60%);
+      pointer-events:none;
+    }
+    .featured-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(10,26,20,.55);
+      color: var(--muted);
+      font-weight:950;
+      font-size:12px;
+    }
+    .pill b{ color: var(--gold); }
+    .featured h2{
+      margin:10px 0 6px;
+      font-size:22px;
+      letter-spacing:-.2px;
+      line-height:1.2;
+    }
+    .featured .meta{
+      margin:0;
+      color: var(--muted);
+      line-height:1.55;
+      font-size:13.5px;
+      max-width:760px;
+    }
+    .featured .meta strong{ color: var(--gold); }
+    .featured-actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .divider{
+      height:1px;
+      background: rgba(29,74,58,.65);
+      margin:14px 0;
+    }
+    .trust-strip{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+    }
+    .trust{
+      border-radius:16px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(10,26,20,.45);
+      padding:10px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .trust svg{ width:18px; height:18px; flex:0 0 auto; margin-top:1px; color: var(--gold); }
+    .trust b{ display:block; font-size:12.5px; }
+    .trust span{ display:block; font-size:12px; color: var(--muted); margin-top:2px; line-height:1.35; }
+
+    /* Accordion */
+    .accordion{
+      margin-top:12px;
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.70);
+      background: rgba(10,26,20,.40);
+      overflow:hidden;
+    }
+    .acc-head{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 14px;
+      background: rgba(10,26,20,.55);
+      border:0;
+      color: var(--text);
+      font-weight:950;
+      cursor:pointer;
+      text-align:left;
+    }
+    .acc-head span{ color: var(--muted); font-weight:850; font-size:12.5px; }
+    .acc-icon{
+      width:40px; height:40px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.70);
+      background: rgba(6,20,15,.55);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+    }
+    .acc-icon svg{ width:18px; height:18px; color: var(--gold); transition:.18s ease; }
+    .acc-body{
+      display:none;
+      padding:14px;
+    }
+    .accordion.open .acc-body{ display:block; }
+    .accordion.open .acc-icon svg{ transform: rotate(180deg); }
+
+    .learn-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:12px;
+    }
+    .box{
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(6,20,15,.35);
+      padding:12px;
+    }
+    .box h3{
+      margin:0 0 8px;
+      font-size:13px;
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .box p{
+      margin:0;
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+    .list{
+      margin:10px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:8px;
+    }
+    .li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+    .li svg{ width:16px; height:16px; color: var(--gold); flex:0 0 auto; margin-top:2px; }
+    .month-grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:10px;
+      margin-top:10px;
+    }
+    .month{
+      border-radius:16px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(10,26,20,.45);
+      padding:10px;
+    }
+    .month b{ display:block; font-size:12.5px; }
+    .month span{ display:block; font-size:12px; color: var(--muted); margin-top:2px; line-height:1.35; }
+    .rp{
+      margin-top:12px;
+      padding:12px;
+      border-radius:18px;
+      border:1px dashed rgba(215,178,74,.35);
+      background: rgba(215,178,74,.06);
+      color: rgba(233,243,239,.92);
+      line-height:1.55;
+      font-size:13px;
+    }
+    .rp b{ color: var(--gold); }
+
+    /* Responsive additions */
+    @media (max-width: 920px){
+      .trust-strip{ grid-template-columns: 1fr; }
+      .learn-grid{ grid-template-columns: 1fr; }
+      .month-grid{ grid-template-columns: 1fr; }
+    }
+    /* ============ END FEATURED ============ */
+
+    /* Responsive */
+    @media (max-width: 920px){
+      h1{ font-size:36px; }
+      .grid{ grid-template-columns: 1fr; }
+      .footer{ grid-template-columns: 1fr; }
+      .nav{ display:none; }
+      .hamburger{ display:inline-flex; }
+    }
+    @media (max-width: 520px){
+      .hero-card{ padding:18px; }
+      h1{ font-size:32px; }
+      .btn{ width:100%; }
+      .cta-row{ gap:10px; }
     }
   </style>
 </head>
 
 <body>
 
-<div class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="index.html">
-      <img class="brand-logo" src="assets/logo-dark.png" />
-      <div>LizOn Education<small>IELTS • PTE • Study Abroad</small></div>
-    </a>
-    <nav class="nav">
-      <a href="ielts.html#levels">IELTS</a>
-      <a href="pte.html">PTE</a>
-      <a href="studyabroad.html">Study Abroad</a>
-      <a href="https://wa.me/8801611611139" target="_blank">WhatsApp</a>
-    </nav>
-  </div>
-</div>
+  <div class="topbar">
+    <!-- FIXED: toggle is sibling of drawer -->
+    <input class="menu-toggle" type="checkbox" id="menuToggle" autocomplete="off" />
 
-<main class="container">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="LizOn Education Home">
+        <img class="brand-logo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+        <div>
+          LizOn Education
+          <small>IELTS • PTE • Study Abroad</small>
+        </div>
+      </a>
 
-<section class="hero">
-  <div class="hero-card">
-    <h1>IELTS • PTE • Study Abroad</h1>
-    <p class="sub">
-      Skill-based learning, proper evaluation, and honest guidance.
-      <br><br>
-      <strong>Message first.</strong> Decide later.
-    </p>
-    <div class="cta-row">
-      <a class="btn primary" href="https://wa.me/8801611611139">Talk on WhatsApp</a>
-      <a class="btn" href="#programs">Explore Programs</a>
-    </div>
-  </div>
-</section>
+      <nav class="nav" aria-label="Primary">
+        <a href="ielts.html#levels">IELTS</a>
+        <a href="pte.html">PTE</a>
+        <a href="studyabroad.html">Study Abroad</a>
+        <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_menu)" target="_blank" rel="noopener">WhatsApp Helpline</a>
+      </nav>
 
-<section id="programs">
-  <h2>Programs</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>IELTS Preparation</h3>
-      <p>ZERO • HOPE • STEP-UP • DESPERATE</p>
-      <div class="actions">
-        <a class="btn primary" href="ielts.html#levels">Learn More</a>
-      </div>
+      <label class="hamburger" for="menuToggle">☰ <span>Menu</span></label>
     </div>
-    <div class="card">
-      <h3>PTE Preparation</h3>
-      <p>30 Days • 20 Sessions</p>
-      <div class="actions">
-        <a class="btn primary" href="pte.html">Learn More</a>
-      </div>
-    </div>
-    <div class="card">
-      <h3>Study Abroad</h3>
-      <p>Guidance First</p>
-      <div class="actions">
-        <a class="btn primary" href="studyabroad.html">Learn More</a>
+
+    <div class="mobile-drawer">
+      <div class="drawer-inner">
+        <a href="ielts.html#levels"><strong>IELTS</strong> — Explore Levels</a>
+        <a href="pte.html"><strong>PTE</strong> — 30 Days Plan</a>
+        <a href="studyabroad.html"><strong>Study Abroad</strong> — Consultation & Visa Guidance</a>
+        <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20talk%20to%20a%20counselor.%20(Source%3A%20home_mobile_menu)" target="_blank" rel="noopener">WhatsApp Helpline</a>
+        <a href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Location on Map</a>
+
+        <div class="drawer-social">
+          <a href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ===== FEATURED PROGRAM INSERTED ===== -->
-<section id="lizon-featured">
-  <span class="pill">Featured Program · Upcoming</span>
-  <h2>IELTS ZERO to Advanced (Online Night Batch)</h2>
-  <p>
-    This is not for everyone. This is for students ready to stay consistent until exam day.
-    <br><br>
-    <span class="gold">No pressure. No obligation. Just clarity.</span>
-  </p>
+  <main class="container">
+    <section class="hero" id="top">
+      <div class="hero-card">
+        <div class="chips">
+          <div class="chip">Powered by <b>LizOn Education</b></div>
+          <div class="chip"><b>Designed for Desired Score</b></div>
+        </div>
 
-  <div class="grid">
-    <div>
-      <h3>Journey Map</h3>
-      <ul>
-        <li>Month 1: Grammar & Foundation</li>
-        <li>Month 2: Foundation + IELTS Basic</li>
-        <li>Month 3: Basic → Intermediate</li>
-        <li>Month 4: Advanced + Mock + Final Strategy</li>
-      </ul>
-      <p class="gold">Result depends on effort. Support does not.</p>
-    </div>
+        <h1>IELTS • PTE • Study Abroad</h1>
+        <p class="sub">
+          A structured journey from confusion to confidence — <strong>skill-based learning</strong>, proper evaluation,
+          and clear guidance so you stop wasting time and start improving.
+          <br><br>
+          Not sure what to choose? <strong>Message first.</strong> We’ll guide you honestly — then you decide.
+        </p>
 
-    <div>
-      <h3>Early Bird Bonus</h3>
-      <p>
-        Early Birds get <b class="gold">Full N2F Access</b>.<br>
-        LizOn supports you even after visa.
-      </p>
-      <a class="btn primary" href="https://wa.me/8801611611139?text=Check%20availability%20for%20IELTS%20ZERO%20to%20Advanced">Check Availability (WhatsApp)</a>
-    </div>
-  </div>
-</section>
+        <div class="cta-row">
+          <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20guidance%20to%20choose%20IELTS%20or%20PTE.%20(Source%3A%20home_hero)" target="_blank" rel="noopener">
+            Talk / Chat with LizOn
+          </a>
+          <a class="btn" href="#programs">Explore Programs</a>
+          <a class="btn" href="ielts.html#levels">IELTS Levels</a>
+        </div>
+      </div>
+    </section>
 
-<section class="footer">
-  <p><strong>Address:</strong> Basabo, Dhaka</p>
-  <div class="footer-links">
-    <a href="https://www.facebook.com/lizoneducation">Facebook</a>
-    <a href="https://www.youtube.com/@lizoneducation">YouTube</a>
-    <a href="https://linkedin.com/company/lizon-education">LinkedIn</a>
-  </div>
-</section>
+    <!-- ================= FEATURED SECTION (NEW) ================= -->
+    <section class="featured-wrap" id="featured">
+      <div class="featured" aria-label="Featured Upcoming Batch">
+        <div class="featured-top">
+          <div>
+            <div class="pill"><b>Upcoming Batch</b> • IELTS Complete Preparation</div>
+            <h2>Basic theke IELTS Complete Preparation ✍️</h2>
+            <p class="meta">
+              <strong>IELTS ZERO to Advanced</strong> — Online & Night Batch
+              <br />
+              <strong>Class Starts:</strong> 26 December 🎓
+              <br />
+              Tagline: <strong>Make Your Family Proud</strong>
+              <br />
+              <span style="color:rgba(183,201,194,.92)">
+                Early Birds will get the <strong>full N2F access</strong>.
+              </span>
+            </p>
 
-</main>
+            <div class="featured-actions">
+              <a class="btn primary"
+                 href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20check%20availability%20for%20IELTS%20ZERO%20to%20Advanced%20(Online%20Night%20Batch)%20starting%2026%20December.%20Please%20guide%20me.%20(Source%3A%20home_featured_check_availability)"
+                 target="_blank" rel="noopener">
+                Check Availability (WhatsApp)
+              </a>
 
-<a class="floatwa" href="https://wa.me/8801611611139">Chat on WhatsApp</a>
+              <button class="btn" type="button" id="toggleLearnMore" aria-expanded="false" aria-controls="learnMorePanel">
+                Learn More
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="trust-strip" aria-label="Quick Trust Points">
+          <div class="trust">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 7l-9 9-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <b>Level Test + Proper Placement</b>
+              <span>Start korar por test diye level-e divide.</span>
+            </div>
+          </div>
+
+          <div class="trust">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <b>Evaluation + Mock</b>
+              <span>Score improve hocche kina—clear tracking.</span>
+            </div>
+          </div>
+
+          <div class="trust">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 21s7-4.5 7-12a7 7 0 1 0-14 0c0 7.5 7 12 7 12z" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 13.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <div>
+              <b>Support Till Exam Day</b>
+              <span>Exam er age porjonto guidance.</span>
+            </div>
+          </div>
+
+          <div class="trust">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3l8 4v6c0 5-3.5 9.4-8 11-4.5-1.6-8-6-8-11V7l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M9.5 12l1.7 1.7L14.8 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <b>N2F Access (Early Bird)</b>
+              <span>LizOn takes care of everything.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion -->
+        <div class="accordion" id="learnMorePanel" aria-label="Learn More Accordion">
+          <button class="acc-head" type="button" id="accHead" aria-expanded="false">
+            <div>
+              Learn More — Full Details
+              <span>Tap to open / close</span>
+            </div>
+            <div class="acc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </button>
+
+          <div class="acc-body">
+            <div class="learn-grid">
+              <div class="box">
+                <h3>How it works (no confusion)</h3>
+                <p>
+                  Prothom kichu din class er por <strong style="color:var(--gold)">test</strong> hobe.
+                  Tarpor apnake level onujayi <strong style="color:var(--gold)">divide</strong> kore
+                  desired score na paoa porjonto structured vabe guide korbo.
+                </p>
+
+                <ul class="list">
+                  <li class="li">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 7l-9 9-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Level test + correct placement
+                  </li>
+                  <li class="li">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 7l-9 9-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Proper evaluation + fix list
+                  </li>
+                  <li class="li">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 7l-9 9-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Exam er age porjonto support
+                  </li>
+                </ul>
+              </div>
+
+              <div class="box">
+                <h3>Plan (4 months)</h3>
+                <div class="month-grid">
+                  <div class="month"><b>Month 1</b><span>Grammar & Foundation</span></div>
+                  <div class="month"><b>Month 2</b><span>Foundation + IELTS Basic</span></div>
+                  <div class="month"><b>Month 3</b><span>IELTS Basic + Intermediate</span></div>
+                  <div class="month"><b>Month 4</b><span>Advanced + Mock + Last Moment Prep</span></div>
+                </div>
+
+                <div style="margin-top:10px; color:var(--muted); font-size:13px; line-height:1.55;">
+                  4 months poro — apnar exam er age porjonto amader sathe connected thakte hobe,
+                  karon amra assist korbo <strong style="color:var(--gold)">until you take the exam</strong>.
+                </div>
+              </div>
+            </div>
+
+            <div class="box" style="margin-top:12px;">
+              <h3>N2F — LizOn takes care of everything</h3>
+              <p>
+                Study Abroad er jonno o sob dhoroner assist amra korbo —
+                <strong style="color:var(--gold)">country choose</strong> theke
+                <strong style="color:var(--gold)">outside job pipeline</strong> porjonto.
+              </p>
+              <ul class="list">
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3l8 4v6c0 5-3.5 9.4-8 11-4.5-1.6-8-6-8-11V7l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M9.5 12l1.7 1.7L14.8 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Early Bird = Full N2F access
+                </li>
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 7l-9 9-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Checklist + guidance (step-by-step)
+                </li>
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 7l-9 9-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Support continues even after visa
+                </li>
+              </ul>
+            </div>
+
+            <div class="rp">
+              <b>Reverse Psychology (Truth):</b>
+              Not for casual students. Jodi apni class skip koren, practice avoid koren,
+              shortcut khujen — then this is not for you.
+              But if you want a real score and will stay consistent — <b>message now</b>.
+              <div style="margin-top:10px;">
+                <a class="btn primary"
+                  href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20admit%20in%20IELTS%20ZERO%20to%20Advanced%20(Online%20Night%20Batch)%20starting%2026%20December.%20Please%20guide%20me%20with%20availability%20and%20process.%20(Source%3A%20home_featured_learnmore_cta)"
+                  target="_blank" rel="noopener">
+                  Check Availability (WhatsApp)
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- ================= END FEATURED SECTION ================= -->
+
+    <section id="programs">
+      <div class="section-title">Programs</div>
+
+      <div class="grid">
+        <div class="card">
+          <span class="tagline"><b>IELTS</b> — ZERO • HOPE • STEP-UP • DESPERATE</span>
+          <h2>IELTS Preparation</h2>
+          <p>
+            We place you correctly and train with structure + evaluation — no random practice, no confusion.
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="ielts.html#levels">Learn More</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20IELTS.%20Please%20suggest%20the%20right%20level.%20(Source%3A%20home_ielts_card)" target="_blank" rel="noopener">Chat on WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="tagline"><b>PTE</b> — 30 Days • Fast Results</span>
+          <h2>PTE Full Preparation</h2>
+          <p>
+            1 month program. 20 sessions. 15 question-based sessions + 5 typing speed skill sessions.
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="pte.html">Learn More</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20admit%20in%20PTE%20(30%20Days).%20Please%20guide%20me.%20(Source%3A%20home_pte_card)" target="_blank" rel="noopener">Admit on WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="tagline"><b>Study Abroad</b> — Guidance First</span>
+          <h2>Study Abroad & Consultation</h2>
+          <p>
+            Get clear guidance on country, intake, documents, and next steps — then we proceed with your best plan.
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="studyabroad.html">Learn More</a>
+            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20study%20abroad%20guidance.%20(Source%3A%20home_abroad_card)" target="_blank" rel="noopener">Talk on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer" aria-label="Footer">
+      <div>
+        <h3>Contact & Location</h3>
+        <p>
+          <strong>Address:</strong> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
+          <br />
+          <strong>IELTS/PTE Helpline:</strong> 01611611139
+          <br />
+          <strong>Study Abroad/Visa Processing:</strong> 01608881545
+        </p>
+
+        <div class="footer-links">
+          <a class="iconbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22s7-4.5 7-12a7 7 0 1 0-14 0c0 7.5 7 12 7 12z" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 13.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </span>
+            Open Map
+          </a>
+
+          <a class="iconbtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_footer)" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 12a8 8 0 0 1-12.4 6.7L4 20l1.4-3.4A8 8 0 1 1 20 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M9 8.8c.2-.6.5-.6.9-.6h.7c.2 0 .5 0 .6.4l.7 1.7c.1.3.1.6-.1.8l-.4.4c-.2.2-.2.5 0 .7.4.7 1.1 1.4 1.8 1.8.2.1.5.1.7-.1l.4-.4c.2-.2.5-.2.8-.1l1.7.7c.4.1.4.4.4.6v.7c0 .4 0 .7-.6.9-.6.2-1.7.4-3.6-.5-1.9-.9-3.7-2.7-4.6-4.6-.9-1.9-.7-3-.5-3.6z" fill="currentColor"/>
+              </svg>
+            </span>
+            WhatsApp
+          </a>
+        </div>
+
+        <div class="smallprint">© 2026 myLizOn.com | LizOn Education</div>
+      </div>
+
+      <div>
+        <h3>Social Media</h3>
+        <p>
+          Follow our updates, results, and student guidance content.
+        </p>
+
+        <div class="footer-links" style="margin-top:10px;">
+          <a class="iconbtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.5 22v-8h2.7l.4-3H13.5V9.2c0-.9.3-1.5 1.5-1.5H16.7V5.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V11H7.5v3H10v8h3.5z"/>
+              </svg>
+            </span>
+            Facebook
+          </a>
+
+          <a class="iconbtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12c0 1.6.1 3.2.4 4.8a3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1c.3-1.6.4-3.2.4-4.8s-.1-3.2-.4-4.8z"/>
+                <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="#06140f"/>
+              </svg>
+            </span>
+            YouTube
+          </a>
+
+          <a class="iconbtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.5 6.8A2.1 2.1 0 1 1 6.5 2.6a2.1 2.1 0 0 1 0 4.2zM4.7 21.4h3.6V9H4.7v12.4zM9.9 9h3.4v1.7h.1c.5-1 1.8-2 3.7-2 3.9 0 4.6 2.5 4.6 5.8v6.9h-3.6v-6.1c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3v6.2H9.9V9z"/>
+              </svg>
+            </span>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a class="floatwa" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20home_float)" target="_blank" rel="noopener">
+    <span class="dot"></span>
+    Need guidance? <b>Chat on WhatsApp</b>
+  </a>
+
+  <script>
+    // Extra safety: close menu on load + close after clicking any drawer link
+    (function(){
+      const t = document.getElementById('menuToggle');
+      if (t) t.checked = false;
+
+      const drawer = document.querySelector('.mobile-drawer');
+      if (drawer && t){
+        drawer.addEventListener('click', function(e){
+          const a = e.target.closest('a');
+          if (a) t.checked = false;
+        });
+      }
+    })();
+
+    // Featured accordion toggle (button + header both work)
+    (function(){
+      const acc = document.getElementById('learnMorePanel');
+      const head = document.getElementById('accHead');
+      const btn = document.getElementById('toggleLearnMore');
+
+      function toggle(){
+        if(!acc) return;
+        const open = acc.classList.toggle('open');
+        if(head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if(btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+        // optional: if opened, scroll a bit so user sees content instantly
+        if(open){
+          setTimeout(() => {
+            acc.scrollIntoView({behavior:'smooth', block:'start'});
+          }, 60);
+        }
+      }
+
+      if(head) head.addEventListener('click', toggle);
+      if(btn) btn.addEventListener('click', toggle);
+    })();
+  </script>
 
 </body>
 </html>

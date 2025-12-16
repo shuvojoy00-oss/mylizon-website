@@ -770,6 +770,54 @@
       .floatwa{ font-size:13px; padding:10px 12px; }
     }
 
+    /* ===== SCROLL ARROWS (ALWAYS VISIBLE) ===== */
+    .scrollNav{
+      position:fixed;
+      right:14px;
+      bottom:78px; /* sits above WhatsApp pill */
+      z-index:61;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      pointer-events:auto;
+    }
+    .scrollBtn{
+      width:40px;
+      height:40px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.8);
+      background: rgba(6,20,15,.82);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft);
+      color: var(--text);
+      font-weight:1000;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:.18s ease;
+      user-select:none;
+    }
+    html[data-theme="light"] .scrollBtn{
+      background: rgba(255,255,255,.86);
+      color: var(--text);
+    }
+    .scrollBtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(215,178,74,.55);
+    }
+    .scrollBtn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none;
+    }
+    .scrollBtn:focus{
+      outline:none;
+      box-shadow: 0 0 0 4px var(--focus), var(--soft);
+    }
+
     /* Video modal (watch inside site) */
     .modal{
       position:fixed;
@@ -834,6 +882,8 @@
       .btn{ width:100%; }
       .cta-row{ gap:10px; }
       .themeBtn{ padding:10px 10px; }
+      .scrollNav{ right:12px; bottom:74px; }
+      .scrollBtn{ width:38px; height:38px; }
     }
   </style>
 </head>
@@ -1223,7 +1273,7 @@
       </div>
     </section>
 
-    <!-- REVIEWS (rewritten clean on-site versions) -->
+    <!-- REVIEWS -->
     <section id="reviews">
       <div class="section-title">Explore Others’ Success <small>Real student voices (cleaned, not fake)</small></div>
 
@@ -1284,7 +1334,7 @@
     </section>
 
     <!-- FOOTER -->
-    <section class="footer" aria-label="Footer">
+    <section class="footer" aria-label="Footer" id="bottom">
       <div>
         <h3>Contact & Location</h3>
         <p>
@@ -1364,6 +1414,12 @@
     Need guidance? <b>Chat on WhatsApp</b>
   </a>
 
+  <!-- Scroll buttons -->
+  <div class="scrollNav" aria-label="Page scroll controls">
+    <button class="scrollBtn" id="scrollUp" type="button" aria-label="Scroll to top">↑</button>
+    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll to bottom">↓</button>
+  </div>
+
   <!-- Video Modal -->
   <div class="modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Video player">
     <div class="modalCard">
@@ -1408,12 +1464,10 @@
         root.setAttribute('data-theme', next);
         localStorage.setItem('lizon_theme', next);
         if (themeText) themeText.textContent = (next === 'light') ? 'Light' : 'Dark';
-        // keep theme-color pleasant on mobile
         const meta = document.querySelector('meta[name="theme-color"]');
         if(meta) meta.setAttribute('content', next === 'light' ? '#eaf6f0' : '#0b2a1f');
       }
 
-      // Force default dark unless user already chose
       const saved = localStorage.getItem('lizon_theme');
       if (saved === 'light' || saved === 'dark') setTheme(saved);
       else setTheme('dark');
@@ -1448,7 +1502,6 @@
           if (!isOpen){
             panel.classList.add('open');
             btn.setAttribute('aria-expanded','true');
-            // smooth scroll to panel
             panel.scrollIntoView({behavior:'smooth', block:'start'});
           }
         });
@@ -1464,7 +1517,6 @@
         if (!modal || !frame) return;
         modal.classList.add('open');
         modal.setAttribute('aria-hidden','false');
-        // autoplay inside modal
         const join = src.includes('?') ? '&' : '?';
         frame.src = src + join + 'autoplay=1';
         if (title) title.textContent = label || 'Watch';
@@ -1496,6 +1548,42 @@
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeModal();
       });
+
+      // ===== SCROLL ARROWS =====
+      const up = document.getElementById('scrollUp');
+      const down = document.getElementById('scrollDown');
+
+      function atTop(){
+        return (window.scrollY || document.documentElement.scrollTop || 0) <= 2;
+      }
+      function atBottom(){
+        const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        const docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        const winH = window.innerHeight || document.documentElement.clientHeight;
+        return (scrollY + winH) >= (docH - 2);
+      }
+
+      function refreshScrollButtons(){
+        if (up) up.disabled = atTop();
+        if (down) down.disabled = atBottom();
+      }
+
+      if (up){
+        up.addEventListener('click', () => {
+          document.getElementById('top')?.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      }
+
+      if (down){
+        down.addEventListener('click', () => {
+          // smooth scroll to very bottom
+          window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+        });
+      }
+
+      window.addEventListener('scroll', refreshScrollButtons, {passive:true});
+      window.addEventListener('resize', refreshScrollButtons);
+      refreshScrollButtons();
 
     })();
   </script>

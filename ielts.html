@@ -31,6 +31,12 @@
     --topbar-bg-scrolled: rgba(7,27,22,.55);
 
     --danger: rgba(255,90,90,.80);
+
+    /* Module accent colors */
+    --c-listening: rgba(120, 210, 255, .95);
+    --c-reading: rgba(170, 255, 190, .95);
+    --c-writing: rgba(255, 190, 120, .95);
+    --c-speaking: rgba(255, 160, 210, .95);
   }
 
   .theme-light{
@@ -55,6 +61,11 @@
 
     --topbar-bg: rgba(255,255,255,.90);
     --topbar-bg-scrolled: rgba(255,255,255,.62);
+
+    --c-listening: rgba(0, 120, 190, .95);
+    --c-reading: rgba(0, 140, 60, .95);
+    --c-writing: rgba(200, 110, 0, .95);
+    --c-speaking: rgba(170, 0, 110, .95);
   }
 
   *{ box-sizing:border-box; }
@@ -69,7 +80,7 @@
   a{ color:inherit; }
   .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
 
-  /* ===== TOPBAR (ALWAYS STICKY) ===== */
+  /* ===== TOPBAR ===== */
   .topbar{
     position: sticky;
     top: 0;
@@ -256,6 +267,80 @@
     font-weight:900;
   }
 
+  /* ===== SIDEBAR MENU (desktop + small floating on mobile) ===== */
+  .side-nav{
+    position:fixed;
+    left:14px;
+    top:92px;
+    z-index: 9500;
+    width: 210px;
+    background: var(--card-grad);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:12px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+  }
+  .side-title{
+    margin:0 0 10px;
+    font-size:12px;
+    color: var(--muted);
+    letter-spacing:.2px;
+    font-weight:950;
+  }
+  .side-links{ display:flex; flex-direction:column; gap:8px; }
+  .side-links a{
+    text-decoration:none;
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    border-radius:12px;
+    padding:10px 10px;
+    font-weight:950;
+    color: var(--text);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+  .side-links a:hover{ border-color: var(--border2); }
+  .side-mini{
+    font-size:12px;
+    color: var(--muted);
+    font-weight:900;
+  }
+  .side-badge{
+    font-size:11px;
+    padding:4px 8px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    color: var(--muted);
+    white-space:nowrap;
+  }
+
+  .side-toggle{
+    display:none;
+    position:fixed;
+    left:14px;
+    bottom:78px;
+    z-index: 9600;
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background: var(--panel);
+    color: var(--text);
+    display:grid;
+    place-items:center;
+    box-shadow: var(--shadow);
+    cursor:pointer;
+    font-size:18px;
+    font-weight:950;
+  }
+
+  /* When sidebar hidden (mobile), this class is used */
+  .side-hidden{ display:none !important; }
+
   /* ===== MAIN LAYOUT ===== */
   header{ padding: 18px 0 10px; }
   .hero-card{
@@ -337,6 +422,23 @@
     display:flex; align-items:center; gap:8px; padding:12px; border:1px solid var(--border);
     border-radius:14px; background:var(--mini-bg); margin-top:8px;
   }
+
+  /* ===== module links (colored + underline) ===== */
+  .module-link{
+    font-weight:950;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+    border-radius:8px;
+    padding:2px 6px;
+    margin: 0 2px;
+    display:inline-block;
+  }
+  .m-listening{ color: var(--c-listening); background: rgba(120,210,255,.08); border:1px solid rgba(120,210,255,.22); }
+  .m-reading{ color: var(--c-reading); background: rgba(170,255,190,.08); border:1px solid rgba(170,255,190,.22); }
+  .m-writing{ color: var(--c-writing); background: rgba(255,190,120,.08); border:1px solid rgba(255,190,120,.22); }
+  .m-speaking{ color: var(--c-speaking); background: rgba(255,160,210,.08); border:1px solid rgba(255,160,210,.22); }
+  .module-link:hover{ filter: brightness(1.08); border-color: var(--border2); }
 
   /* Pricing */
   .price-row{
@@ -456,7 +558,7 @@
     border-radius:999px;
     border:1px solid rgba(255,90,90,.35);
     background: rgba(255,90,90,.10);
-    font-size:12px;
+    font-size (>;)12px;
     font-weight:950;
     margin-top:10px;
   }
@@ -480,6 +582,10 @@
   }
 
   /* ===== RESPONSIVE FIX ===== */
+  @media (max-width: 1100px){
+    .side-nav{ display:none; }
+    .side-toggle{ display:grid; }
+  }
   @media (max-width: 860px){
     .desktop-nav{ display:none; }
     .menu-btn{ display:flex; }
@@ -494,6 +600,27 @@
 </head>
 
 <body>
+
+  <!-- Sidebar (desktop) -->
+  <aside class="side-nav" id="sideNav" aria-label="Sidebar navigation">
+    <p class="side-title">Quick Navigate</p>
+    <div class="side-links">
+      <a href="#zero"><span>ZERO</span><span class="side-badge">Level 1</span></a>
+      <a href="#hope"><span>HOPE</span><span class="side-badge">Level 2</span></a>
+      <a href="#stepup"><span>STEP-UP</span><span class="side-badge">Level 3</span></a>
+      <a href="#desperate"><span>DESPERATE</span><span class="side-badge">Level 4</span></a>
+      <a href="#skills"><span>Modules</span><span class="side-mini">Practice</span></a>
+      <a href="#pricing"><span>Pricing</span><span class="side-mini">Locked</span></a>
+    </div>
+    <div style="margin-top:10px;">
+      <a class="btn-tiny" style="display:block;text-align:center;"
+         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
+         target="_blank" rel="noopener">Talk with LizOn</a>
+    </div>
+  </aside>
+
+  <!-- Sidebar toggle (mobile/tablet) -->
+  <div class="side-toggle" id="sideToggle" title="Open menu" aria-label="Open menu">≡</div>
 
   <!-- Topbar -->
   <div class="topbar" id="topbar">
@@ -549,13 +676,18 @@
       <a href="#hope">HOPE</a>
       <a href="#stepup">STEP-UP</a>
       <a href="#desperate">DESPERATE</a>
-      <a href="#skills" class="full">Modules (Reading/Listening/Writing/Speaking)</a>
+      <a href="#skills" class="full">Modules (Practice)</a>
       <a href="#pricing" class="full">Pricing</a>
+
+      <a class="full" href="ielts-listening.html">Practice: Listening</a>
+      <a class="full" href="ielts-reading.html">Practice: Reading</a>
+      <a class="full" href="ielts-writing.html">Practice: Writing</a>
+      <a class="full" href="ielts-speaking.html">Practice: Speaking</a>
     </div>
 
     <div style="margin-top:12px;">
       <a class="btn-tiny" style="display:block;text-align:center;"
-         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
+         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
          target="_blank" rel="noopener">Talk with LizOn</a>
     </div>
   </div>
@@ -573,10 +705,18 @@
 
         <div class="cta-row">
           <a class="btn btn-primary"
-             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
+             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
              target="_blank" rel="noopener">Talk with LizOn</a>
           <a class="btn btn-ghost" href="#pricing">Choose with an Expert</a>
           <span class="muted">✅ Live Classes • ✅ Mentorship • ✅ Evaluation Focus • ✅ Transparent Pricing</span>
+        </div>
+
+        <div class="cta-row" style="margin-top:10px;">
+          <span class="muted">Practice modules:</span>
+          <a class="module-link m-listening" href="ielts-listening.html">Listening</a>
+          <a class="module-link m-reading" href="ielts-reading.html">Reading</a>
+          <a class="module-link m-writing" href="ielts-writing.html">Writing</a>
+          <a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a>
         </div>
       </div>
     </div>
@@ -594,7 +734,7 @@
 
       <div class="cta-row">
         <a class="btn btn-primary"
-           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20ZERO%20e%20admission%20nite%20chai.%20Details%20diben%3F"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20ZERO%20e%20admission%20nite%20chai.%20Details%20diben%3F"
            target="_blank" rel="noopener">Admission (ZERO)</a>
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
@@ -606,9 +746,9 @@
             <li>Kothay theke shuru korbo bujhi na</li>
             <li>Grammar e confusion & fear</li>
             <li>Speaking e idea ashe na / confidence nai</li>
-            <li>Reading e translate chara bujhi na</li>
-            <li>Listening e subtitles chara answer dhorte pari na</li>
-            <li>Writing e structure + idea generation weak</li>
+            <li><a class="module-link m-reading" href="ielts-reading.html">Reading</a> e translate chara bujhi na</li>
+            <li><a class="module-link m-listening" href="ielts-listening.html">Listening</a> e subtitles chara answer dhorte pari na</li>
+            <li><a class="module-link m-writing" href="ielts-writing.html">Writing</a> e structure + idea generation weak</li>
           </ul>
         </div>
 
@@ -616,9 +756,9 @@
           <h3>Aim of ZERO</h3>
           <ul class="list">
             <li>English foundation clean (grammar + sentence)</li>
-            <li>Speaking er basic confidence + pronunciation</li>
-            <li>Reading/Listening e understanding system build</li>
-            <li>Writing e basic structure + idea practice</li>
+            <li><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a> er basic confidence + pronunciation</li>
+            <li><a class="module-link m-reading" href="ielts-reading.html">Reading</a>/<a class="module-link m-listening" href="ielts-listening.html">Listening</a> e understanding system build</li>
+            <li><a class="module-link m-writing" href="ielts-writing.html">Writing</a> e basic structure + idea practice</li>
           </ul>
           <p class="note">Target: confusion remove, ekta follow-kora routine set.</p>
         </div>
@@ -634,6 +774,8 @@
         <div class="cta-row">
           <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20ZERO%20please." target="_blank" rel="noopener">Admit Now</a>
           <a class="btn-tiny" href="#pricing">See Price</a>
+          <a class="btn-tiny" href="ielts-speaking.html">Practice Speaking</a>
+          <a class="btn-tiny" href="ielts-writing.html">Practice Writing</a>
         </div>
       </div>
 
@@ -647,13 +789,15 @@
       <p class="badge">Level 2</p>
       <h2 class="section-title">IELTS HOPE — Your Reset Level</h2>
       <p class="muted" style="max-width:920px;">
-        HOPE is for students jader base ase, kintu score atke thake. Reading slow, listening miss hoy,
-        writing e control nai, speaking e smooth idea flow nai — HOPE fixes the blockers.
+        HOPE is for students jader base ase, kintu score atke thake. <a class="module-link m-reading" href="ielts-reading.html">Reading</a> slow,
+        <a class="module-link m-listening" href="ielts-listening.html">Listening</a> miss hoy,
+        <a class="module-link m-writing" href="ielts-writing.html">Writing</a> e control nai,
+        <a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a> e smooth idea flow nai — HOPE fixes the blockers.
       </p>
 
       <div class="cta-row">
         <a class="btn btn-primary"
-           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%20HOPE%20niye%20details%20chai."
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20HOPE%20niye%20details%20chai."
            target="_blank" rel="noopener">Admission (HOPE)</a>
         <a class="btn btn-ghost" href="#pricing">See Pricing</a>
       </div>
@@ -691,19 +835,26 @@
         <div class="card">
           <h3>Benefited modules</h3>
           <ul class="list">
-            <li>Listening</li>
-            <li>Reading</li>
-            <li>Speaking</li>
-            <li>Writing</li>
+            <li><a class="module-link m-listening" href="ielts-listening.html">Listening</a></li>
+            <li><a class="module-link m-reading" href="ielts-reading.html">Reading</a></li>
+            <li><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a></li>
+            <li><a class="module-link m-writing" href="ielts-writing.html">Writing</a></li>
           </ul>
 
           <h3 style="margin-top:14px;">Aim of HOPE</h3>
           <ul class="list">
-            <li>Reading speed + understanding build</li>
-            <li>Listening e answer catching improve</li>
-            <li>Writing e basic control + structure</li>
-            <li>Speaking e idea flow + confidence</li>
+            <li><a class="module-link m-reading" href="ielts-reading.html">Reading</a> speed + understanding build</li>
+            <li><a class="module-link m-listening" href="ielts-listening.html">Listening</a> e answer catching improve</li>
+            <li><a class="module-link m-writing" href="ielts-writing.html">Writing</a> e basic control + structure</li>
+            <li><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a> e idea flow + confidence</li>
           </ul>
+
+          <div class="cta-row">
+            <a class="btn-tiny" href="ielts-reading.html">Practice Reading</a>
+            <a class="btn-tiny" href="ielts-listening.html">Practice Listening</a>
+            <a class="btn-tiny" href="ielts-writing.html">Practice Writing</a>
+            <a class="btn-tiny" href="ielts-speaking.html">Practice Speaking</a>
+          </div>
         </div>
       </div>
 
@@ -727,46 +878,82 @@
       </div>
 
       <div class="grid-2" style="margin-top:14px;">
+        <!-- ✅ ADDED: This course comes with (Step-up) -->
+        <div class="card">
+          <h3>This course comes with</h3>
+
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6l7 4-7 4-7-4 7-4z"/><path d="M5 10v6l7 4 7-4v-6"/></svg>
+            <b>Live Classes</b> • Band 8+ instructors
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 22a6.5 6.5 0 0 1 13 0"/></svg>
+            <b>Mentorship</b> • By Shuvo Sarker Joy
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg>
+            <b>Private Discord Channel</b> • Practice + updates
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+            <b>Documentation</b> • Guidelines
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7-6.5-4.5L5 20l2-7L2 9h7z"/></svg>
+            <b>Scholarship</b> • Preparation support
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v10H4z"/><path d="M8 18h8"/></svg>
+            <b>Abroad Job</b> • Personalized plan & preparation
+          </div>
+          <div class="note">Also included: great points & guidance for abroad job opportunity.</div>
+        </div>
+
         <div class="card">
           <h3>Skilled covered</h3>
           <ul class="list">
-            <li><b>Listening:</b> Part 1 → Part 4</li>
-            <li><b>Reading:</b> True/False/NG, Yes/No/NG, Fill in the Gaps (all types)</li>
-            <li><b>Writing Task 1:</b> Overall + comparison sentence making</li>
-            <li><b>Writing Task 2:</b> main idea find out, what to cover, body segmentation, topic sentence</li>
-            <li><b>Speaking:</b> topic-based presentation (100 seconds — cue card handling)</li>
+            <li><b><a class="module-link m-listening" href="ielts-listening.html">Listening</a>:</b> Part 1 → Part 4</li>
+            <li><b><a class="module-link m-reading" href="ielts-reading.html">Reading</a>:</b> True/False/NG, Yes/No/NG, Fill in the Gaps (all types)</li>
+            <li><b><a class="module-link m-writing" href="ielts-writing.html">Writing Task 1</a>:</b> Overall + comparison sentence making</li>
+            <li><b><a class="module-link m-writing" href="ielts-writing.html">Writing Task 2</a>:</b> main idea find out, what to cover, body segmentation, topic sentence</li>
+            <li><b><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a>:</b> topic-based presentation (100 seconds — cue card handling)</li>
           </ul>
 
           <div class="note">
             Focus: band 6 cross korar jonne essential question type mastery + real practice.
           </div>
-        </div>
 
-        <div class="card">
-          <h3>Benefited modules</h3>
+          <h3 style="margin-top:14px;">Benefited modules</h3>
           <ul class="list">
-            <li>Listening</li>
-            <li>Reading</li>
-            <li>Speaking</li>
-            <li>Writing</li>
+            <li><a class="module-link m-listening" href="ielts-listening.html">Listening</a></li>
+            <li><a class="module-link m-reading" href="ielts-reading.html">Reading</a></li>
+            <li><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a></li>
+            <li><a class="module-link m-writing" href="ielts-writing.html">Writing</a></li>
           </ul>
 
           <h3 style="margin-top:14px;">Aim of STEP-UP</h3>
           <ul class="list">
-            <li>Learn important question types (Listening + Reading)</li>
-            <li>Build right structure for writing</li>
-            <li>Fix speaking capability (100 seconds control)</li>
+            <li>Learn important question types (<a class="module-link m-listening" href="ielts-listening.html">Listening</a> + <a class="module-link m-reading" href="ielts-reading.html">Reading</a>)</li>
+            <li>Build right structure for <a class="module-link m-writing" href="ielts-writing.html">Writing</a></li>
+            <li>Fix <a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a> capability (100 seconds control)</li>
             <li>Accuracy boost + band 6+ stability</li>
           </ul>
+
+          <div class="cta-row">
+            <a class="btn-tiny" href="ielts-listening.html">Practice Listening</a>
+            <a class="btn-tiny" href="ielts-reading.html">Practice Reading</a>
+            <a class="btn-tiny" href="ielts-writing.html">Practice Writing</a>
+            <a class="btn-tiny" href="ielts-speaking.html">Practice Speaking</a>
+          </div>
         </div>
       </div>
 
       <div class="highlight" style="margin-top:14px;">
         <h3 style="margin:0 0 6px;">After STEP-UP, who will you become?</h3>
         <div class="grid-3" style="margin-top:10px;">
-          <div class="mini-card"><p class="mini-title">No panic in Listening</p><p class="mini-text">Part 1–4 e confidence build hoy.</p></div>
-          <div class="mini-card"><p class="mini-title">Write with clean structure</p><p class="mini-text">Task 1/2 e “plan → write” clear hoy.</p></div>
-          <div class="mini-card"><p class="mini-title">Speak smoothly (100s)</p><p class="mini-text">Cue card handle + idea flow improve.</p></div>
+          <div class="mini-card"><p class="mini-title">No panic in <a class="module-link m-listening" href="ielts-listening.html">Listening</a></p><p class="mini-text">Part 1–4 e confidence build hoy.</p></div>
+          <div class="mini-card"><p class="mini-title">Write with clean structure</p><p class="mini-text"><a class="module-link m-writing" href="ielts-writing.html">Task 1/2</a> e “plan → write” clear hoy.</p></div>
+          <div class="mini-card"><p class="mini-title">Speak smoothly (100s)</p><p class="mini-text"><a class="module-link m-speaking" href="ielts-speaking.html">Cue card</a> handle + idea flow improve.</p></div>
         </div>
         <div class="cta-row">
           <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20me%20to%20IELTS%20STEP-UP" target="_blank" rel="noopener">Admit Now</a>
@@ -778,8 +965,8 @@
         <h3>Who should take STEP-UP?</h3>
         <ul class="list">
           <li>Band 6 er upor sure na (stuck feel hoy)</li>
-          <li>Accuracy problems in important question types</li>
-          <li>Speaking/Writing e idea generate korte problem</li>
+          <li>Accuracy problems in important question types (<a class="module-link m-listening" href="ielts-listening.html">Listening</a>/<a class="module-link m-reading" href="ielts-reading.html">Reading</a>)</li>
+          <li>Idea generate problems in <a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a> & <a class="module-link m-writing" href="ielts-writing.html">Writing</a></li>
           <li>Serious bhabe 6.5–7+ e move korte chan</li>
         </ul>
       </div>
@@ -804,28 +991,60 @@
       </div>
 
       <div class="grid-2" style="margin-top:14px;">
+        <!-- ✅ ADDED: This course comes with (Desperate) -->
+        <div class="card">
+          <h3>This course comes with</h3>
+
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6l7 4-7 4-7-4 7-4z"/><path d="M5 10v6l7 4 7-4v-6"/></svg>
+            <b>Live Classes</b> • Band 8+ instructors
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 22a6.5 6.5 0 0 1 13 0"/></svg>
+            <b>Mentorship</b> • By Shuvo Sarker Joy
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg>
+            <b>Private Discord Channel</b> • Practice + updates
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7-6.5-4.5L5 20l2-7L2 9h7z"/></svg>
+            <b>Scholarship</b> • Approval + preparation support
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v10H4z"/><path d="M8 18h8"/></svg>
+            <b>Abroad Job</b> • Approval + personalized plan
+          </div>
+          <div class="item">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+            <b>Secret Suggestions</b> • 1-on-1 guidance moments
+          </div>
+
+          <div class="note">
+            This is your “pressure cooker” stage: weakness detect → fix → test → evaluate.
+          </div>
+        </div>
+
         <div class="card">
           <h3>Skilled covered</h3>
           <ul class="list">
-            <li><b>Listening:</b> Part 1–4, MCQ, Maps, Matching</li>
-            <li><b>Reading:</b> Passage 1–3, all common question types</li>
-            <li><b>Writing:</b> Task 1 graph + comparison, Task 2 (all types)</li>
-            <li><b>Speaking:</b> Part 1–3 (real exam handling)</li>
+            <li><b><a class="module-link m-listening" href="ielts-listening.html">Listening</a>:</b> Part 1–4, MCQ, Maps, Matching</li>
+            <li><b><a class="module-link m-reading" href="ielts-reading.html">Reading</a>:</b> Passage 1–3, all common question types</li>
+            <li><b><a class="module-link m-writing" href="ielts-writing.html">Writing</a>:</b> Task 1 graph + comparison, Task 2 (all types)</li>
+            <li><b><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a>:</b> Part 1–3 (real exam handling)</li>
             <li><b>Evaluation:</b> Mock + speaking evaluation + writing evaluation</li>
           </ul>
 
           <div class="note">
             Purpose: exam er age “weakness detect → fix → test” loop.
           </div>
-        </div>
 
-        <div class="card">
-          <h3>Benefited modules</h3>
+          <h3 style="margin-top:14px;">Benefited modules</h3>
           <ul class="list">
-            <li>Listening</li>
-            <li>Reading</li>
-            <li>Writing</li>
-            <li>Speaking</li>
+            <li><a class="module-link m-listening" href="ielts-listening.html">Listening</a></li>
+            <li><a class="module-link m-reading" href="ielts-reading.html">Reading</a></li>
+            <li><a class="module-link m-writing" href="ielts-writing.html">Writing</a></li>
+            <li><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a></li>
           </ul>
 
           <h3 style="margin-top:14px;">Aim of DESPERATE</h3>
@@ -835,6 +1054,13 @@
             <li>Fix repeated mistakes quickly</li>
             <li>Exam-ready confidence build</li>
           </ul>
+
+          <div class="cta-row">
+            <a class="btn-tiny" href="ielts-listening.html">Practice Listening</a>
+            <a class="btn-tiny" href="ielts-reading.html">Practice Reading</a>
+            <a class="btn-tiny" href="ielts-writing.html">Practice Writing</a>
+            <a class="btn-tiny" href="ielts-speaking.html">Practice Speaking</a>
+          </div>
         </div>
       </div>
 
@@ -865,91 +1091,45 @@
     </div>
   </section>
 
-  <!-- Computer Skills Course (NEW) -->
+  <!-- Modules Hub -->
   <section id="skills">
     <div class="container">
-      <p class="badge">Bonus Course</p>
-      <h2 class="section-title">Computer Skills for IELTS & PTE</h2>
+      <p class="badge">Featured</p>
+      <h2 class="section-title">Practice Modules (Exam-like workflow)</h2>
       <p class="muted" style="max-width:920px;">
-        Computer-based exam e speed er jonne “English skill” enough na — keyboard + cursor control o lagbe.
-        Ei course ta fully practical, live sessions.
+        Bangladesh e student der main fear: “Computer-based exam e ami slow hoye jabo.”
+        LizOn e module-wise practice thakbe so you can build speed + control.
       </p>
 
-      <div class="cta-row">
-        <span class="btn btn-ghost" style="cursor:default;">Price: <b>2450/-</b></span>
-        <a class="btn btn-primary" href="https://wa.me/8801611611139?text=Computer%20Skills%20for%20IELTS%20%26%20PTE%20course%20details%20chai." target="_blank" rel="noopener">Get Details</a>
-      </div>
-
-      <!-- ✅ SEO + Student Navigation: Module Practice Hub -->
       <div class="highlight" style="margin-top:14px;">
-        <h3 style="margin:0 0 6px;">Module Practice Hub (Exam-like practice)</h3>
-        <p class="muted" style="margin:0; max-width:920px;">
-          Students der main fear hocche: “Practice kori, but exam er moto feel hoy na.”
-          Ei gula module-wise pages — so students can practice with clarity and confidence.
-        </p>
-
+        <h3 style="margin:0 0 6px;">Start module practice</h3>
         <div class="grid-2" style="margin-top:12px;">
-          <a class="card" style="text-decoration:none;" href="ielts-reading.html">
-            <h3 style="margin:0 0 6px;">IELTS Reading</h3>
-            <p class="muted" style="margin:0;">Speed, scanning, traps — stop translating, start scoring.</p>
+          <a class="card" style="text-decoration:none;" href="ielts-listening.html">
+            <h3 style="margin:0 0 6px;"><span class="module-link m-listening" style="padding:0;border:none;background:none;">IELTS Listening</span></h3>
+            <p class="muted" style="margin:0;">Prediction, focus, traps — don’t miss answers under pressure.</p>
           </a>
 
-          <a class="card" style="text-decoration:none;" href="ielts-listening.html">
-            <h3 style="margin:0 0 6px;">IELTS Listening</h3>
-            <p class="muted" style="margin:0;">Accents, focus, prediction — don’t miss answers under pressure.</p>
+          <a class="card" style="text-decoration:none;" href="ielts-reading.html">
+            <h3 style="margin:0 0 6px;"><span class="module-link m-reading" style="padding:0;border:none;background:none;">IELTS Reading</span></h3>
+            <p class="muted" style="margin:0;">Speed, scanning — stop translating, start scoring.</p>
           </a>
 
           <a class="card" style="text-decoration:none;" href="ielts-writing.html">
-            <h3 style="margin:0 0 6px;">IELTS Writing</h3>
+            <h3 style="margin:0 0 6px;"><span class="module-link m-writing" style="padding:0;border:none;background:none;">IELTS Writing</span></h3>
             <p class="muted" style="margin:0;">Ideas + structure + grammar control — not template addiction.</p>
           </a>
 
           <a class="card" style="text-decoration:none;" href="ielts-speaking.html">
-            <h3 style="margin:0 0 6px;">IELTS Speaking</h3>
+            <h3 style="margin:0 0 6px;"><span class="module-link m-speaking" style="padding:0;border:none;background:none;">IELTS Speaking</span></h3>
             <p class="muted" style="margin:0;">Idea flow, fluency, confidence — speak with control.</p>
           </a>
         </div>
 
         <div class="cta-row">
-          <a class="btn-tiny" href="ielts-reading.html">Start Reading</a>
           <a class="btn-tiny" href="ielts-listening.html">Start Listening</a>
+          <a class="btn-tiny" href="ielts-reading.html">Start Reading</a>
           <a class="btn-tiny" href="ielts-writing.html">Start Writing</a>
           <a class="btn-tiny" href="ielts-speaking.html">Start Speaking</a>
-        </div>
-
-        <p class="note" style="margin-top:10px;">
-          SEO benefit: Google understands you have separate “topic clusters” for each module. Student benefit: navigation feels like a system.
-        </p>
-      </div>
-
-      <div class="grid-2" style="margin-top:14px;">
-        <div class="card">
-          <h3>Class plan</h3>
-          <ul class="list">
-            <li><b>5 Classes</b> — Practical & Live sessions</li>
-            <li><b>Class records</b> will be provided</li>
-            <li><b>Prime goal:</b> Keyboard, typing speed, mouse & cursor smoothness</li>
-            <li><b>Extras:</b> Sites & software to practice</li>
-            <li><b>Mini & Full tests included</b></li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>Module based speed improvement</h3>
-          <ul class="list">
-            <li>Reading: speed + highlight + navigation efficiency</li>
-            <li>Listening: note-taking + quick selection habits</li>
-            <li>Writing: typing rhythm + correction speed</li>
-            <li>Speaking: setup + timing discipline</li>
-          </ul>
-
-          <div class="highlight" style="margin-top:14px;">
-            <h3 style="margin:0 0 6px;">Organized by: DetxGaming</h3>
-            <p class="muted" style="margin:0;">How Detx Speed Up (link)</p>
-            <div class="cta-row">
-              <a class="btn-tiny" href="https://www.facebook.com/share/1SYoSCy31f/" target="_blank" rel="noopener">Open Link</a>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -1143,6 +1323,12 @@
     a.addEventListener('click', closeIt);
   });
 
+  /* Sidebar toggle uses the same drawer (clean + no extra UI pain) */
+  const sideToggle = document.getElementById('sideToggle');
+  if(sideToggle){
+    sideToggle.addEventListener('click', openDrawer);
+  }
+
   /* Scroll buttons */
   document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1154,14 +1340,10 @@
   /* Logo fallback if path wrong */
   const logoImg = document.getElementById('logoImg');
   logoImg.addEventListener('error', ()=>{
-    // try common alternative spelling
     logoImg.src = 'assets/logo-dark.png';
   });
 
-  /* ===== Popup logic: show multiple times while scrolling =====
-     - Shows at ~25%, ~55%, ~85% scroll
-     - Cooldown prevents spam (90 seconds)
-  */
+  /* ===== Popup logic: show multiple times while scrolling ===== */
   const popupWrap = document.getElementById('popupWrap');
   const popupClose = document.getElementById('popupClose');
   const popupBack = document.getElementById('popupBack');
@@ -1187,7 +1369,7 @@
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && popupWrap.classList.contains('show')) hidePopup(); });
 
   function canShowAgain(){
-    const cooldownMs = 90 * 1000; // 90 seconds
+    const cooldownMs = 90 * 1000;
     return (Date.now() - lastClosedAt) > cooldownMs;
   }
 
@@ -1197,7 +1379,7 @@
     const scrollHeight = doc.scrollHeight - doc.clientHeight;
     if(scrollHeight <= 0) return;
 
-    const p = scrollTop / scrollHeight; // 0..1
+    const p = scrollTop / scrollHeight;
     const milestones = [
       { key:'p25', at:0.25 },
       { key:'p55', at:0.55 },

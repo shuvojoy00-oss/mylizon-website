@@ -1179,7 +1179,7 @@
 
     <div class="mobile-drawer">
       <div class="drawer-inner">
-        <a href="#" id="askMobileOpen"><strong>AskLizOn</strong> — Ask anything (IELTS/PTE/Study Abroad)</a>
+        <a href="#" id="askMobileOpen"><strong>AskLizOn</strong> — Choose the right course</a>
         <a href="ielts.html#levels"><strong>IELTS</strong> — Explore Levels</a>
         <a href="pte.html"><strong>PTE</strong> — 30 Days Plan</a>
         <a href="studyabroad.html"><strong>Study Abroad</strong> — Consultation & Visa Guidance</a>
@@ -1666,7 +1666,7 @@
   <button class="askFab" id="askFab" type="button" aria-label="Open AskLizOn">
     <span class="askDot" aria-hidden="true"></span>
     Ask<b>LizOn</b>
-    <span class="askBadge">IELTS • PTE • Study Abroad</span>
+    <span class="askBadge">Course Selector</span>
   </button>
 
   <div class="askOverlay" id="askOverlay" aria-hidden="true"></div>
@@ -1676,25 +1676,23 @@
         <img class="askLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
         <div style="min-width:0;">
           <b>AskLizOn</b>
-          <small>English / বাংলা / Banglish — ask anything</small>
+          <small>2–3 questions → course suggestion</small>
         </div>
       </div>
       <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn">Close</button>
     </div>
 
-    <div class="askQuick" aria-label="Quick topics">
-      <button class="askPill" type="button" data-ask="ielts">IELTS</button>
-      <button class="askPill" type="button" data-ask="pte">PTE</button>
-      <button class="askPill" type="button" data-ask="abroad">Study Abroad</button>
-      <button class="askPill" type="button" data-ask="computer">Computer-based fear</button>
-      <button class="askPill" type="button" data-ask="price">Pricing</button>
-      <button class="askPill" type="button" data-ask="talk">Talk to counselor</button>
+    <div class="askQuick" aria-label="Quick start">
+      <button class="askPill" type="button" data-ask="ielts">Choose IELTS Course</button>
+      <button class="askPill" type="button" data-ask="pte">Choose PTE Course</button>
+      <button class="askPill" type="button" data-ask="abroad">Study Abroad Guidance</button>
+      <button class="askPill" type="button" data-ask="reset">Reset</button>
     </div>
 
     <div class="askBody" id="askBody" aria-label="Chat messages"></div>
 
     <div class="askFoot">
-      <input class="askInput" id="askInput" type="text" placeholder="Type here... (English / বাংলা / Banglish)" autocomplete="off" />
+      <input class="askInput" id="askInput" type="text" placeholder="Type short answer… (English / বাংলা / Banglish)" autocomplete="off" />
       <button class="askSend" id="askSend" type="button">Send</button>
     </div>
   </aside>
@@ -1862,7 +1860,7 @@
       refreshScrollButtons();
 
       // =====================================
-      // AskLizOn (SMART v2 — no looping, typo-fix, stateful)
+      // AskLizOn — Course Selector (2–3 Q)
       // =====================================
       const askFab = document.getElementById('askFab');
       const askOverlay = document.getElementById('askOverlay');
@@ -1877,17 +1875,12 @@
       const askMobileOpen = document.getElementById('askMobileOpen');
 
       const state = {
-        topic: null,   // ielts | pte | abroad | computer
-        level: null,   // zero | hope | stepup | desperate
-        skill: null,   // listening | reading | writing | speaking
-        task: null,    // mcq | map | form | matching | tfng | headings | task1 | task2 | cue
-        target: null,
-        exam: null,
-        lastUser: "",
-        lastBot: ""
+        mode: "idle",            // idle | ielts_q1 | ielts_q2 | ielts_done | pte_done | abroad_done
+        program: null,           // ielts | pte | abroad
+        ielts_profile: null,     // a | b | c | d
+        timeline: null,          // soon | mid | later
+        suggestion: null         // ZERO | HOPE | STEP-UP | DESPERATE | PTE | STUDY_ABROAD
       };
-
-      function isBanglaText(s){ return /[\u0980-\u09FF]/.test(s || ""); }
 
       function normalize(s){
         return (s || "")
@@ -1897,135 +1890,7 @@
           .trim();
       }
 
-      function levenshtein(a,b){
-        a = a || ""; b = b || "";
-        const m = a.length, n = b.length;
-        if (!m) return n;
-        if (!n) return m;
-        const dp = Array.from({length:m+1}, ()=> new Array(n+1).fill(0));
-        for(let i=0;i<=m;i++) dp[i][0]=i;
-        for(let j=0;j<=n;j++) dp[0][j]=j;
-        for(let i=1;i<=m;i++){
-          for(let j=1;j<=n;j++){
-            const cost = a[i-1]===b[j-1] ? 0 : 1;
-            dp[i][j] = Math.min(
-              dp[i-1][j]+1,
-              dp[i][j-1]+1,
-              dp[i-1][j-1]+cost
-            );
-          }
-        }
-        return dp[m][n];
-      }
-
-      const DICT = {
-        topic: {
-          ielts: ["ielts","ielst","ieles","ieltsu","ielts ","ielt"],
-          pte: ["pte","pet","p t e","pt e","pte ","ptee"],
-          abroad: ["abroad","studyabroad","study abroad","visa","university","scholarship","scholar"],
-          computer: ["computer","cbt","computerbased","computer based","typing","keyboard","mouse","cursor"]
-        },
-        level: {
-          zero: ["zero","jero","0","beginner","start","starting","new"],
-          hope: ["hope","hop","base","stuck","reset"],
-          stepup: ["stepup","step up","step-up","6","six","beyond","intermediate"],
-          desperate: ["desperate","last","final","exam near","repeat","repeater","revision"]
-        },
-        skill: {
-          listening: ["listening","listning","lisening","listen","shunar","shunte","shona","sonar"],
-          reading: ["reading","reding","readin","read","porashuna","pore","pora","reading "],
-          writing: ["writing","writting","writng","write","task1","task 1","task2","task 2","essay"],
-          speaking: ["speaking","speak","spking","pronun","pronunciation","fluency","kotha","bolte","boli"]
-        },
-        task: {
-          mcq: ["mcq","multiple choice","m c q","mcqs","mcq s"],
-          map: ["map","maps","direction","plan","location"],
-          form: ["form","form fill","formfill","fill form","table","note completion","gap fill","gapfill","spelling"],
-          matching: ["matching","match","match heading","matchings"],
-          tfng: ["tfng","t f ng","true false not given","true/false/not given"],
-          headings: ["headings","heading","match headings","title matching"],
-          task1: ["task1","task 1","graph","chart","process","map writing"],
-          task2: ["task2","task 2","essay","opinion essay","advantage disadvantage"],
-          cue: ["cue","cue card","part 2","part2","long turn"]
-        }
-      };
-
-      function bestMatch(word, keysObj){
-        let bestKey = null;
-        let bestScore = 999;
-        for (const key of Object.keys(keysObj)){
-          for (const v of keysObj[key]){
-            const w = v.replace(/\s+/g,'');
-            const x = (word||"").replace(/\s+/g,'');
-            if (!w || !x) continue;
-            const d = levenshtein(x, w);
-            if (d < bestScore){
-              bestScore = d;
-              bestKey = key;
-            }
-          }
-        }
-        return {key: bestKey, score: bestScore};
-      }
-
-      function correctText(input){
-        const raw = input || "";
-        const s = normalize(raw);
-        if (!s) return {text: raw.trim(), corrected: raw.trim(), changed:false, hint:""};
-
-        const tokens = s.split(" ");
-        const fixed = [];
-        let changed = false;
-
-        for (let tok of tokens){
-          if (!tok) continue;
-
-          // keep numbers as is
-          if (/^\d+$/.test(tok)){ fixed.push(tok); continue; }
-
-          // attempt correction against known buckets
-          const candidates = [
-            bestMatch(tok, DICT.topic),
-            bestMatch(tok, DICT.level),
-            bestMatch(tok, DICT.skill),
-            bestMatch(tok, DICT.task),
-          ];
-
-          candidates.sort((a,b)=>a.score-b.score);
-          const best = candidates[0];
-
-          // only auto-fix if it is very close (0-1) or short token with distance 2
-          if (best && best.key && (best.score <= 1 || (tok.length <= 5 && best.score <= 2))){
-            // map back to canonical word
-            // choose representative form per category priority
-            let canonical = null;
-
-            // find category where this best key exists
-            if (DICT.topic[best.key]) canonical = best.key;
-            else if (DICT.level[best.key]) canonical = best.key;
-            else if (DICT.skill[best.key]) canonical = best.key;
-            else if (DICT.task[best.key]) canonical = best.key;
-
-            if (canonical && canonical !== tok){
-              changed = true;
-              fixed.push(canonical);
-              continue;
-            }
-          }
-
-          fixed.push(tok);
-        }
-
-        const corrected = fixed.join(" ").trim();
-        return {
-          text: raw.trim(),
-          corrected,
-          changed,
-          hint: changed ? `Did you mean: <b>${corrected}</b>?` : ""
-        };
-      }
-
-      function pushMsg(who, text, extraLinks){
+      function pushMsg(who, html, links){
         const row = document.createElement('div');
         row.className = 'askMsg';
 
@@ -2037,13 +1902,13 @@
         bubble.className = 'askBubble' + (who === 'me' ? ' me' : '');
 
         const p = document.createElement('p');
-        p.innerHTML = text;
+        p.innerHTML = html;
         bubble.appendChild(p);
 
-        if (extraLinks && extraLinks.length){
+        if (links && links.length){
           const wrap = document.createElement('div');
           wrap.className = 'askSuggest';
-          extraLinks.forEach(l => {
+          links.forEach(l => {
             const a = document.createElement('a');
             a.className = 'askLink';
             a.href = l.href;
@@ -2061,9 +1926,36 @@
         row.appendChild(bubble);
         askBody.appendChild(row);
         askBody.scrollTop = askBody.scrollHeight;
+      }
 
-        if (who === 'bot') state.lastBot = text;
-        if (who === 'me') state.lastUser = text;
+      function waLink(text){
+        const base = "https://wa.me/8801611611139?text=";
+        return base + encodeURIComponent(text);
+      }
+
+      function resetAsk(){
+        state.mode = "idle";
+        state.program = null;
+        state.ielts_profile = null;
+        state.timeline = null;
+        state.suggestion = null;
+        if (askBody) askBody.innerHTML = "";
+        seed();
+      }
+
+      function seed(){
+        pushMsg('bot',
+          `Assalamu Alaikum! Ami <b>AskLizOn</b> — 2–3 ta question kore apnar jonno <b>right course</b> suggest korbo.`,
+          [
+            {label:"Choose IELTS Course", href:"#", external:false},
+            {label:"Choose PTE Course", href:"#", external:false},
+            {label:"Study Abroad Guidance", href:"#", external:false}
+          ]
+        );
+        pushMsg('bot',
+          `Start kori. Apnar focus ta konta?<div class="mut">Type: IELTS / PTE / Abroad  (ba quick button)</div>`,
+          []
+        );
       }
 
       function openAsk(){
@@ -2074,20 +1966,8 @@
 
         if (!askBody.dataset.seeded){
           askBody.dataset.seeded = "1";
-          pushMsg('bot',
-            `Assalamu Alaikum! Ami <b>AskLizOn</b> — IELTS / PTE / Study Abroad niye help korbo.<div class="mut">English, বাংলা, Banglish — jekono vabe likhen. Prothome bolen: apnar focus ta konta?</div>`,
-            [
-              {label:"IELTS Levels", href:"ielts.html#levels"},
-              {label:"PTE Program", href:"pte.html"},
-              {label:"Study Abroad", href:"studyabroad.html"}
-            ]
-          );
-          pushMsg('bot',
-            `Quick check: apnar <b>exam kobe</b> (approx) and <b>target</b> ki? (Band / score / country)`,
-            []
-          );
+          seed();
         }
-
         setTimeout(()=> askInput?.focus(), 50);
       }
 
@@ -2109,295 +1989,189 @@
         if (e.key === 'Escape' && askPanel.classList.contains('open')) closeAsk();
       });
 
-      function extractSignals(correctedText){
-        const s = normalize(correctedText);
-
-        // topic
-        for (const k of Object.keys(DICT.topic)){
-          if (DICT.topic[k].some(v => s.includes(normalize(v)))) state.topic = k;
-        }
-
-        // level
-        for (const k of Object.keys(DICT.level)){
-          if (DICT.level[k].some(v => s.includes(normalize(v)))) state.level = k;
-        }
-
-        // skill
-        for (const k of Object.keys(DICT.skill)){
-          if (DICT.skill[k].some(v => s.includes(normalize(v)))) state.skill = k;
-        }
-
-        // task
-        for (const k of Object.keys(DICT.task)){
-          if (DICT.task[k].some(v => s.includes(normalize(v)))) state.task = k;
-        }
-
-        // special: if user says just "task 1/2" treat as writing + task
-        if (state.task === 'task1' || state.task === 'task2') state.skill = 'writing';
+      function askIELTSQ1(){
+        state.program = "ielts";
+        state.mode = "ielts_q1";
+        pushMsg('bot',
+          `IELTS selected ✅ Q1/2: Apnar current situation konta?<div class="mut">Reply: A / B / C / D</div>`,
+          [
+            {label:"A: Ami IELTS start kori nai / basic weak", href:"#"},
+            {label:"B: Practice kori, kintu score atke (5–5.5)", href:"#"},
+            {label:"C: Basic thik, target 6.5–7 (need upgrade)", href:"#"},
+            {label:"D: Exam khub close / repeat / last moment", href:"#"}
+          ]
+        );
       }
 
-      function needsNextQuestion(){
-        // decide the “next missing piece” based on what we have
-        if (!state.topic) return 'topic';
-        if (state.topic === 'ielts'){
-          if (!state.level) return 'level';
-          if (!state.skill) return 'skill';
-          // skill chosen; now task is optional but helpful for listening/reading/writing
-          if ((state.skill === 'listening' || state.skill === 'reading' || state.skill === 'writing') && !state.task) return 'task';
-          return null;
-        }
-        if (state.topic === 'pte'){
-          // PTE: ask exam/target
-          return 'pte_meta';
-        }
-        if (state.topic === 'abroad'){
-          return 'abroad_meta';
-        }
-        if (state.topic === 'computer'){
-          return 'computer_meta';
-        }
-        return null;
+      function askIELTSQ2(){
+        state.mode = "ielts_q2";
+        pushMsg('bot',
+          `Q2/2: Exam koto din por? (approx)<div class="mut">Reply: 1 / 2 / 3</div>`,
+          [
+            {label:"1: 0–30 days", href:"#"},
+            {label:"2: 1–3 months", href:"#"},
+            {label:"3: 3+ months", href:"#"}
+          ]
+        );
       }
 
-      function linksForTopic(){
-        const links = [];
-        if (state.topic === 'ielts') links.push({label:"Check IELTS Level", href:"ielts.html#levels"});
-        if (state.topic === 'pte') links.push({label:"Open PTE Program", href:"pte.html"});
-        if (state.topic === 'abroad') links.push({label:"Open Study Abroad", href:"studyabroad.html"});
-        links.push({label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20AskLizOn%20theke%20guidance%20nitesi.%20Please%20help%20me.%20(Source%3A%20AskLizOn)", external:true});
-        return links;
-      }
+      function decideIELTS(){
+        // timeline nudge: if exam very soon => DESPERATE unless total beginner
+        let sug = null;
 
-      function answerSmart(){
-        // Give useful response based on collected state, without repeating same prompt.
-        if (!state.topic){
-          return {
-            text: `Bujhlam. Prothome just ekta word den: <b>IELTS</b> / <b>PTE</b> / <b>Study Abroad</b>.<div class="mut">Example: “ielts”</div>`,
-            links: [
-              {label:"IELTS Levels", href:"ielts.html#levels"},
-              {label:"PTE Program", href:"pte.html"},
-              {label:"Study Abroad", href:"studyabroad.html"}
-            ]
-          };
+        const prof = state.ielts_profile; // a/b/c/d
+        const tl = state.timeline; // soon/mid/later
+
+        if (prof === "d") sug = "DESPERATE";
+        else if (tl === "soon"){
+          if (prof === "a") sug = "ZERO";
+          else sug = "DESPERATE";
+        } else {
+          if (prof === "a") sug = "ZERO";
+          if (prof === "b") sug = "HOPE";
+          if (prof === "c") sug = "STEP-UP";
         }
 
-        if (state.topic === 'ielts'){
-          const missing = needsNextQuestion();
+        // safe fallback
+        if (!sug) sug = "HOPE";
+        state.suggestion = sug;
+        state.mode = "ielts_done";
 
-          if (missing === 'level'){
-            return {
-              text: `IELTS selected ✅ Now apnar current stage ta ki?<div class="mut">1) ZERO  2) HOPE  3) STEP-UP  4) DESPERATE</div>`,
-              links: [{label:"Check IELTS Level", href:"ielts.html#levels"}]
-            };
-          }
-
-          if (missing === 'skill'){
-            return {
-              text: `Level <b>${state.level.toUpperCase()}</b> noted ✅ Ekhon kon module-e problem?<div class="mut">listening / reading / writing / speaking</div>`,
-              links: [{label:"IELTS Levels", href:"ielts.html#levels"}]
-            };
-          }
-
-          if (missing === 'task'){
-            let hint = "MCQ / map / form fill / matching?";
-            if (state.skill === 'reading') hint = "T/F/NG / headings / matching / gaps?";
-            if (state.skill === 'writing') hint = "task 1 / task 2?";
-            return {
-              text: `<b>${state.skill.toUpperCase()}</b> noted ✅ Kon question type?<div class="mut">${hint}</div>`,
-              links: [{label:"IELTS Levels", href:"ielts.html#levels"}]
-            };
-          }
-
-          // we have enough to give a real answer
-          if (state.skill === 'listening'){
-            if (state.task === 'mcq'){
-              return {
-                text:
-                  `Listening <b>MCQ</b> e main 3ta trap: <b>synonym</b>, <b>late switch</b> (speaker last moment change kore), ar <b>option bait</b> (nice-sounding wrong option).<div class="mut">Rule: 1st play te “meaning” dhoren, word na. Option gula ke 1-2 keyword-e compress kore rakhen. Answer decide korar shathe shathe click—kintu last sentence shuntei hobe.</div>`,
-                links: [
-                  {label:"Practice: Listening", href:"ielts-listening.html"},
-                  {label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Listening%20MCQ%20niye%20help%20chai.%20(Source%3A%20AskLizOn_listening_mcq)", external:true}
-                ]
-              };
-            }
-            if (state.task === 'map'){
-              return {
-                text:
-                  `Listening <b>Map</b> e jite gele 2ta jinish: <b>orientation</b> + <b>landmark prediction</b>.<div class="mut">Start e North/entrance identify koren. Then possible answer spots ke mentally label den (A/B/C). Audio te “turn left/right, opposite, next to, between” shunlei pencil/eye move korben.</div>`,
-                links: [
-                  {label:"Practice: Listening", href:"ielts-listening.html"},
-                  {label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Listening%20map%20niye%20help%20chai.%20(Source%3A%20AskLizOn_listening_map)", external:true}
-                ]
-              };
-            }
-            if (state.task === 'form'){
-              return {
-                text:
-                  `Listening <b>Form Fill / Gap Fill</b> e 3ta jinish: <b>spelling</b>, <b>plural</b>, <b>number format</b>.<div class="mut">Rule: word limit check. Proper noun hole capital. Number hole 15/fifteen ekta consistent format. Answer shonar shathe shathe type, tarpor next word shunar age ekbar confirm.</div>`,
-                links: [
-                  {label:"Practice: Listening", href:"ielts-listening.html"},
-                  {label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Listening%20form%20fill%20niye%20help%20chai.%20(Source%3A%20AskLizOn_listening_form)", external:true}
-                ]
-              };
-            }
-            return {
-              text:
-                `Listening e score atkay usually 3 jonno: <b>prediction miss</b>, <b>spelling</b>, <b>attention drop</b>.<div class="mut">Kon type ta beshi hoy: MCQ / map / form fill / matching?</div>`,
-              links: [
-                {label:"Practice: Listening", href:"ielts-listening.html"},
-                {label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Listening%20niye%20help%20chai.%20(Source%3A%20AskLizOn_listening)", external:true}
-              ]
-            };
-          }
-
-          if (state.skill === 'reading'){
-            if (state.task === 'tfng'){
-              return {
-                text:
-                  `Reading <b>T/F/NG</b> e “NG” mane passage-e info nai. Trap: passage e similar word thakleo meaning na thakle NG.<div class="mut">Rule: statement er 2ta key point ber koren. Passage e both point match na hole—NG/False decide.</div>`,
-                links: [{label:"Practice: Reading", href:"ielts-reading.html"}]
-              };
-            }
-            if (state.task === 'headings'){
-              return {
-                text:
-                  `Reading <b>Headings</b> e paragraph er first/last line trap. Main idea usually 2-4 line e hidden thake.<div class="mut">Rule: paragraph e “problem/solution/contrast/cause-effect” pattern khojen.</div>`,
-                links: [{label:"Practice: Reading", href:"ielts-reading.html"}]
-              };
-            }
-            return {
-              text:
-                `Reading e control ashe question-type onujayi. Apni kon type-e stuck?<div class="mut">T/F/NG / headings / matching / gaps</div>`,
-              links: [{label:"Practice: Reading", href:"ielts-reading.html"}]
-            };
-          }
-
-          if (state.skill === 'writing'){
-            if (state.task === 'task1'){
-              return {
-                text:
-                  `Writing <b>Task 1</b> e band baray “overview” diye. Data describe na kore trend explain koren.<div class="mut">Rule: 1) Intro 2) Overview 3) Body-1 4) Body-2. Overview-e 2ta main trend must.</div>`,
-                links: [
-                  {label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Task%201%20niye%20help%20chai.%20(Source%3A%20AskLizOn_task1)", external:true}
-                ]
-              };
-            }
-            if (state.task === 'task2'){
-              return {
-                text:
-                  `Writing <b>Task 2</b> e band baray 2ta jinish: <b>clear position</b> + <b>controlled structure</b>.<div class="mut">Rule: intro te 1 line opinion. Body-te 2ta main idea, prottek e 1 example. Conclusion short.</div>`,
-                links: [
-                  {label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Task%202%20niye%20help%20chai.%20(Source%3A%20AskLizOn_task2)", external:true}
-                ]
-              };
-            }
-            return {
-              text:
-                `Writing e apnar kon part? <b>Task 1</b> na <b>Task 2</b>?<div class="mut">Just type: task 1 / task 2</div>`,
-              links: linksForTopic()
-            };
-          }
-
-          if (state.skill === 'speaking'){
-            if (state.task === 'cue'){
-              return {
-                text:
-                  `Speaking <b>Part 2 (Cue Card)</b> e jite gele structure fix: <b>Past → Details → Feeling → Result</b>.<div class="mut">Rule: 1 minute plan-e 4 bullet. Start with “I’d like to talk about…” then keep moving—silence is the enemy.</div>`,
-                links: linksForTopic()
-              };
-            }
-            return {
-              text:
-                `Speaking e improvement hoy 3 step e: <b>idea</b> → <b>structure</b> → <b>delivery</b>.<div class="mut">Apnar boro problem konta: idea ashe na / jam hoy / pronunciation?</div>`,
-              links: linksForTopic()
-            };
-          }
-
-          // fallback (shouldn't happen)
-          return {
-            text: `Bujhlam ✅ Ekhon apnar module ta bolen: listening / reading / writing / speaking`,
-            links: linksForTopic()
-          };
-        }
-
-        if (state.topic === 'pte'){
-          return {
-            text: `PTE selected ✅ Apnar <b>exam date</b> kobe and <b>target score</b> koto?<div class="mut">PTE te fastest win = question-type mastery + typing speed.</div>`,
-            links: [
-              {label:"Open PTE Program", href:"pte.html"},
-              {label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20PTE%20niye%20help%20chai.%20(Source%3A%20AskLizOn_pte)", external:true}
-            ]
-          };
-        }
-
-        if (state.topic === 'abroad'){
-          return {
-            text: `Study Abroad selected ✅ Apni kon <b>country</b> niye vabchen (UK/Canada/Australia/Europe) and intake kobe?<div class="mut">Profile + budget + timeline clear korlei next step clean hoy.</div>`,
-            links: [
-              {label:"Open Study Abroad", href:"studyabroad.html"},
-              {label:"Talk to Counselor", href:"https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20Study%20Abroad%20guidance%20chai.%20(Source%3A%20AskLizOn_abroad)", external:true}
-            ]
-          };
-        }
-
-        if (state.topic === 'computer'){
-          return {
-            text: `Computer-based fear selected ✅ Apnar main fear konta?<div class="mut">typing speed / mouse control / reading navigation / listening click speed / writing speed</div>`,
-            links: [
-              {label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Computer-based%20exam%20niye%20fear%20ase.%20Please%20guide%20me.%20(Source%3A%20AskLizOn_cbt)", external:true}
-            ]
-          };
-        }
-
-        return {
-          text: `Bujhlam. Apnar focus ta bolen: IELTS / PTE / Study Abroad`,
-          links: linksForTopic()
+        const map = {
+          "ZERO": {href:"ielts.html#zero", title:"IELTS ZERO"},
+          "HOPE": {href:"ielts.html#hope", title:"IELTS HOPE"},
+          "STEP-UP": {href:"ielts.html#stepup", title:"IELTS STEP-UP"},
+          "DESPERATE": {href:"ielts.html#desperate", title:"IELTS DESPERATE"}
         };
+
+        const pick = map[sug];
+        const msg = `Suggested ✅ <b>${pick.title}</b><div class="mut">Want confirmation? Message counselor with this suggestion.</div>`;
+
+        const waText =
+          `Assalamu Alaikum LizOn Education. AskLizOn suggested: ${pick.title}. ` +
+          `My situation: ${prof?.toUpperCase() || "N/A"}, timeline: ${tl || "N/A"}. ` +
+          `(Source: AskLizOn_course_selector)`;
+
+        pushMsg('bot', msg, [
+          {label:"Open Course Details", href: pick.href},
+          {label:"Talk on WhatsApp (Confirm)", href: waLink(waText), external:true},
+          {label:"Reset", href:"#"}
+        ]);
       }
 
       function handleUserText(rawText){
         const raw = (rawText || "").trim();
         if (!raw) return;
 
-        // display user message as typed
         pushMsg('me', raw);
 
-        // correct typos for internal routing
-        const corr = correctText(raw);
-        extractSignals(corr.corrected);
+        const s = normalize(raw);
 
-        // show "did you mean" only when it changes meaningfully (and not every time)
-        if (corr.changed){
-          pushMsg('bot', `<div class="mut">${corr.hint}</div>`, []);
+        // reset keywords
+        if (s === "reset" || s === "start over" || s === "restart"){
+          resetAsk();
+          return;
         }
 
-        // direct actions
-        const s = normalize(corr.corrected);
-        if (s.includes("pricing") || s.includes("price") || s.includes("fee") || s.includes("taka") || s.includes("koto")){
+        // program selection from idle
+        if (state.mode === "idle"){
+          if (s.includes("ielts") || s === "i"){
+            askIELTSQ1();
+            return;
+          }
+          if (s.includes("pte") || s === "p"){
+            state.program = "pte";
+            state.mode = "pte_done";
+            state.suggestion = "PTE";
+            pushMsg('bot',
+              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">If exam date is soon, message counselor now.</div>`,
+              [
+                {label:"Open PTE Program", href:"pte.html"},
+                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+          if (s.includes("abroad") || s.includes("study abroad") || s.includes("visa") || s.includes("university")){
+            state.program = "abroad";
+            state.mode = "abroad_done";
+            state.suggestion = "STUDY_ABROAD";
+            pushMsg('bot',
+              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Counselor will match country + intake + profile.</div>`,
+              [
+                {label:"Open Study Abroad", href:"studyabroad.html"},
+                {label:"Talk to Counselor (WhatsApp)", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+
+          // if unclear
           pushMsg('bot',
-            `Pricing niye fastest: apnar path select koren.<div class="mut">IELTS: ZERO/HOPE/STEP-UP/DESPERATE. PTE: 30 days. Abroad: counselor handles.</div>`,
-            [
-              {label:"See IELTS Levels", href:"ielts.html#levels"},
-              {label:"Talk on WhatsApp", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Pricing%20+%20level%20selection%20niye%20help%20chai.%20(Source%3A%20AskLizOn_pricing)", external:true}
-            ]
+            `Just choose one:<div class="mut">IELTS / PTE / Abroad</div>`,
+            []
           );
           return;
         }
 
-        if (s.includes("talk") || s.includes("counselor") || s.includes("counsellor") || s.includes("helpline")){
-          pushMsg('bot',
-            `Counselor er sathe kotha bollei fastest solution.<div class="mut">IELTS/PTE: 01611611139 • Study Abroad: 01608881545</div>`,
-            [
-              {label:"Talk IELTS/PTE", href:"https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20counselor%20er%20sathe%20kotha%20bolte%20chai.%20(Source%3A%20AskLizOn_talk_ielts)", external:true},
-              {label:"Talk Study Abroad", href:"https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20Ami%20study%20abroad%20counselor%20er%20sathe%20kotha%20bolte%20chai.%20(Source%3A%20AskLizOn_talk_abroad)", external:true}
-            ]
-          );
+        // IELTS Q1
+        if (state.mode === "ielts_q1"){
+          // accept A/B/C/D or descriptive
+          if (s === "a" || s.includes("start") || s.includes("basic") || s.includes("beginner") || s.includes("zero")){
+            state.ielts_profile = "a";
+            askIELTSQ2();
+            return;
+          }
+          if (s === "b" || s.includes("stuck") || s.includes("atke") || s.includes("5") || s.includes("5.5")){
+            state.ielts_profile = "b";
+            askIELTSQ2();
+            return;
+          }
+          if (s === "c" || s.includes("6") || s.includes("6.5") || s.includes("7") || s.includes("upgrade") || s.includes("improve")){
+            state.ielts_profile = "c";
+            askIELTSQ2();
+            return;
+          }
+          if (s === "d" || s.includes("close") || s.includes("soon") || s.includes("repeat") || s.includes("last") || s.includes("urgent")){
+            state.ielts_profile = "d";
+            askIELTSQ2();
+            return;
+          }
+
+          pushMsg('bot', `Reply with <b>A / B / C / D</b> (just one letter).`, []);
           return;
         }
 
-        // main smart response (stateful)
-        const rep = answerSmart();
-        pushMsg('bot', rep.text, rep.links);
+        // IELTS Q2
+        if (state.mode === "ielts_q2"){
+          if (s === "1" || s.includes("0") || s.includes("30") || s.includes("week") || s.includes("days")){
+            state.timeline = "soon";
+            decideIELTS();
+            return;
+          }
+          if (s === "2" || s.includes("1") || s.includes("2") || s.includes("3") || s.includes("month")){
+            state.timeline = "mid";
+            decideIELTS();
+            return;
+          }
+          if (s === "3" || s.includes("later") || s.includes("3+") || s.includes("after")){
+            state.timeline = "later";
+            decideIELTS();
+            return;
+          }
+
+          pushMsg('bot', `Reply with <b>1 / 2 / 3</b>.`, []);
+          return;
+        }
+
+        // after done states: allow "reset"
+        if (state.mode.endsWith("_done")){
+          if (s.includes("reset")) resetAsk();
+          else pushMsg('bot', `Type <b>reset</b> to start again.`, []);
+          return;
+        }
       }
 
       function sendAsk(){
@@ -2413,15 +2187,46 @@
         });
       }
 
+      // Quick pills
       document.querySelectorAll('.askPill[data-ask]').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
+        btn.addEventListener('click', (e)=>{
           const k = btn.getAttribute('data-ask');
-          if (k === 'ielts') handleUserText('IELTS');
-          else if (k === 'pte') handleUserText('PTE');
-          else if (k === 'abroad') handleUserText('Study Abroad');
-          else if (k === 'computer') handleUserText('Computer-based exam fear');
-          else if (k === 'price') handleUserText('Pricing');
-          else if (k === 'talk') handleUserText('Talk to counselor');
+          if (k === "reset"){ resetAsk(); return; }
+          if (k === "ielts"){
+            pushMsg('me', 'IELTS');
+            askIELTSQ1();
+            return;
+          }
+          if (k === "pte"){
+            pushMsg('me', 'PTE');
+            state.program = "pte";
+            state.mode = "pte_done";
+            state.suggestion = "PTE";
+            pushMsg('bot',
+              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">Message counselor with your exam date.</div>`,
+              [
+                {label:"Open PTE Program", href:"pte.html"},
+                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+          if (k === "abroad"){
+            pushMsg('me', 'Study Abroad');
+            state.program = "abroad";
+            state.mode = "abroad_done";
+            state.suggestion = "STUDY_ABROAD";
+            pushMsg('bot',
+              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Message counselor with country + intake.</div>`,
+              [
+                {label:"Open Study Abroad", href:"studyabroad.html"},
+                {label:"Talk to Counselor (WhatsApp)", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
         });
       });
 
@@ -2430,3 +2235,4 @@
 
 </body>
 </html>
+```0

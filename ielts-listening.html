@@ -13,148 +13,62 @@
 
   <style>
     :root{
-      --bg1:#06140f;
-      --bg2:#0b2a1f;
-      --card:#0c2019cc;
-      --text:#e9fff6;
-      --muted:#b7d7cb;
-      --accent:#1dd3a7;
-      --border: rgba(255,255,255,.10);
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius:18px;
-      --max:1100px;
+      --bg1:#06140f; --bg2:#0b2a1f; --card:#0c2019cc; --text:#e9fff6; --muted:#b7d7cb;
+      --accent:#1dd3a7; --border: rgba(255,255,255,.10); --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:18px; --max:1100px;
     }
-
     html[data-theme="light"]{
-      --bg1:#f3fbf8;
-      --bg2:#e7f6f0;
-      --card: rgba(255,255,255,.78);
-      --text:#052018;
-      --muted:#2c5a4b;
-      --accent:#0aa37f;
-      --border: rgba(0,0,0,.10);
-      --shadow: 0 18px 60px rgba(0,0,0,.12);
+      --bg1:#f3fbf8; --bg2:#e7f6f0; --card: rgba(255,255,255,.78); --text:#052018;
+      --muted:#2c5a4b; --accent:#0aa37f; --border: rgba(0,0,0,.10); --shadow: 0 18px 60px rgba(0,0,0,.12);
     }
-
     *{ box-sizing:border-box; }
     body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background: radial-gradient(900px 600px at 20% 0%, rgba(29,211,167,.14), transparent 55%),
                   linear-gradient(180deg, var(--bg1), var(--bg2));
-      color:var(--text);
-      line-height:1.55;
+      color:var(--text); line-height:1.55;
     }
     a{ color:inherit; text-decoration:none; }
     .wrap{ max-width:var(--max); margin:0 auto; padding:18px; }
 
-    /* Header NOT sticky */
-    header{
-      position: static;
-      background: rgba(6,20,15,.62);
-      border-bottom:1px solid var(--border);
-    }
+    header{ position:static; background: rgba(6,20,15,.62); border-bottom:1px solid var(--border); }
     html[data-theme="light"] header{ background: rgba(243,251,248,.75); }
 
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px;
-      padding:14px 18px;
-      max-width:var(--max);
-      margin:0 auto;
-    }
-
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800;
-      letter-spacing:.2px;
-      min-width: 200px;
-    }
-    .brand img{
-      width:44px; height:44px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.12);
-      object-fit: cover;
-    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 18px; max-width:var(--max); margin:0 auto; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; min-width:200px; }
+    .brand img{ width:44px; height:44px; border-radius:14px; border:1px solid var(--border); background: rgba(0,0,0,.12); object-fit:cover; }
     .brandTitle{ line-height:1; font-size:16px; }
     .brandSub{ line-height:1.1; font-size:12px; color:var(--muted); margin-top:3px; }
 
-    .nav-right{
-      display:flex; align-items:center; gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .pill{
-      padding:9px 12px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      color:var(--muted);
-      background: rgba(6,20,15,.18);
-      transition:.2s ease;
-      font-weight:700;
-      font-size:13px;
-    }
+    .nav-right{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .pill{ padding:9px 12px; border:1px solid var(--border); border-radius:999px; color:var(--muted);
+      background: rgba(6,20,15,.18); transition:.2s ease; font-weight:700; font-size:13px; }
     html[data-theme="light"] .pill{ background: rgba(255,255,255,.55); }
     .pill:hover{ transform: translateY(-1px); border-color: rgba(29,211,167,.45); color:var(--text); }
 
-    .themeToggle{
-      display:flex; align-items:center; gap:10px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(6,20,15,.18);
-      color:var(--muted);
-      font-weight:800;
-      font-size:13px;
-    }
+    .themeToggle{ display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:999px;
+      border:1px solid var(--border); background: rgba(6,20,15,.18); color:var(--muted); font-weight:800; font-size:13px; }
     html[data-theme="light"] .themeToggle{ background: rgba(255,255,255,.55); }
-    .themeDot{
-      width:18px; height:18px; border-radius:999px;
-      border:2px solid rgba(255,215,130,.55);
-      background: rgba(0,0,0,.22);
-    }
+    .themeDot{ width:18px; height:18px; border-radius:999px; border:2px solid rgba(255,215,130,.55); background: rgba(0,0,0,.22); }
     html[data-theme="light"] .themeDot{ background: rgba(255,215,130,.45); }
 
-    .card{
-      background: linear-gradient(180deg, rgba(12,32,25,.78), rgba(12,32,25,.55));
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-    }
+    .card{ background: linear-gradient(180deg, rgba(12,32,25,.78), rgba(12,32,25,.55));
+      border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
     html[data-theme="light"] .card{ background: rgba(255,255,255,.78); }
 
     .hero{ padding:28px 0 10px; }
     .heroBox{ padding:22px; display:grid; gap:14px; }
-
-    h1{
-      margin:0;
-      font-size: clamp(26px, 3.8vw, 40px);
-      line-height:1.15;
-      letter-spacing:-.3px;
-    }
+    h1{ margin:0; font-size: clamp(26px, 3.8vw, 40px); line-height:1.15; letter-spacing:-.3px; }
     .sub{ color:var(--muted); font-size:16px; max-width:72ch; }
     .trust{ color:rgba(233,255,246,.78); font-size:13px; }
     html[data-theme="light"] .trust{ color: rgba(5,32,24,.70); }
 
     .btnrow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:11px 14px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(6,20,15,.28);
-      color:var(--text);
-      font-weight:800;
-      transition:.18s ease;
-    }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; padding:11px 14px; border-radius:14px;
+      border:1px solid var(--border); background: rgba(6,20,15,.28); color:var(--text); font-weight:800; transition:.18s ease; }
     html[data-theme="light"] .btn{ background: rgba(255,255,255,.60); }
     .btn:hover{ transform: translateY(-1px); border-color: rgba(29,211,167,.55); }
-    .btn.primary{
-      background: rgba(29,211,167,.16);
-      border-color: rgba(29,211,167,.45);
-    }
+    .btn.primary{ background: rgba(29,211,167,.16); border-color: rgba(29,211,167,.45); }
 
     main{ padding: 14px 0 32px; }
     section{ margin-top:14px; }
@@ -162,147 +76,76 @@
     h2{ margin:0 0 10px; font-size:20px; }
     p{ margin:0 0 10px; color:rgba(233,255,246,.90); }
     html[data-theme="light"] p{ color: rgba(5,32,24,.86); }
-
     ul{ margin:10px 0 0 18px; color:rgba(233,255,246,.86); }
     html[data-theme="light"] ul{ color: rgba(5,32,24,.80); }
     li{ margin:6px 0; }
 
-    .grid{
-      display:grid; gap:12px;
-      grid-template-columns: repeat(12, 1fr);
-    }
+    .grid{ display:grid; gap:12px; grid-template-columns: repeat(12, 1fr); }
     .col6{ grid-column: span 6; }
-    .mini{
-      padding:14px;
-      border-radius:16px;
-      border:1px solid var(--border);
-      background: rgba(6,20,15,.22);
-    }
+    .mini{ padding:14px; border-radius:16px; border:1px solid var(--border); background: rgba(6,20,15,.22); }
     html[data-theme="light"] .mini{ background: rgba(255,255,255,.55); }
     .mini h3{ margin:0 0 6px; font-size:16px; }
     .mini p{ margin:0; color:rgba(233,255,246,.82); font-size:14px; }
     html[data-theme="light"] .mini p{ color: rgba(5,32,24,.78); }
 
-    /* AskLizOn - Listening */
-    .askBox{ padding:18px; }
-    .askHead{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:12px; flex-wrap:wrap;
-    }
-    .askTitle{ margin:0; font-size:20px; }
-    .askSub{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:14px;
-      max-width:75ch;
-    }
-    .askPills{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:12px;
-    }
-    .askBtn{
-      cursor:pointer;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(6,20,15,.18);
-      color:var(--text);
-      font-weight:800;
-      font-size:13px;
-      transition:.18s ease;
-      text-align:left;
-    }
-    html[data-theme="light"] .askBtn{ background: rgba(255,255,255,.55); }
-    .askBtn:hover{ transform: translateY(-1px); border-color: rgba(29,211,167,.55); }
-    .askResult{
-      margin-top:14px;
-      border-radius:16px;
-      border:1px solid var(--border);
-      background: rgba(6,20,15,.18);
-      padding:14px;
-      display:none;
-    }
-    html[data-theme="light"] .askResult{ background: rgba(255,255,255,.55); }
-    .askHook{ margin:0 0 6px; font-weight:900; }
-    .askDiag{ margin:0 0 10px; color:rgba(233,255,246,.86); }
-    html[data-theme="light"] .askDiag{ color: rgba(5,32,24,.86); }
+    /* CONTENT ANCHORS */
+    #why-hard,#what-works,#how-lizon,#skills-practice,#course-fit{ scroll-margin-top: 80px; }
 
-    /* Footer card */
-    .footerCard{
-      margin-top:18px;
-      border:1px solid var(--border);
-      border-radius:22px;
-      overflow:hidden;
-    }
+    /* FOOTER */
+    .footerCard{ margin-top:18px; border:1px solid var(--border); border-radius:22px; overflow:hidden; }
     .footerInner{ padding:18px; }
     .footerTitle{ font-size:18px; font-weight:900; margin:0 0 10px; }
     .footerText{ color:rgba(233,255,246,.80); margin:0 0 8px; }
     html[data-theme="light"] .footerText{ color: rgba(5,32,24,.80); }
     .footerBtns{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
-    .footerSmall{
-      color:rgba(233,255,246,.70);
-      font-size:13px;
-      padding:14px 18px;
-      border-top:1px solid var(--border);
-    }
+    .footerSmall{ color:rgba(233,255,246,.70); font-size:13px; padding:14px 18px; border-top:1px solid var(--border); }
     html[data-theme="light"] .footerSmall{ color: rgba(5,32,24,.70); }
 
-    /* Floating scroll buttons */
-    .scrollBtns{
-      position:fixed;
-      right:14px;
-      bottom:92px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      z-index:80;
-    }
-    .sbtn{
-      width:46px; height:46px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(6,20,15,.42);
-      color:var(--text);
-      font-weight:900;
-      display:flex; align-items:center; justify-content:center;
-      box-shadow: 0 12px 24px rgba(0,0,0,.25);
-    }
+    /* SCROLL BUTTONS */
+    .scrollBtns{ position:fixed; right:14px; bottom:92px; display:flex; flex-direction:column; gap:10px; z-index:80; }
+    .sbtn{ width:46px; height:46px; border-radius:14px; border:1px solid var(--border);
+      background: rgba(6,20,15,.42); color:var(--text); font-weight:900; display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 12px 24px rgba(0,0,0,.25); }
     html[data-theme="light"] .sbtn{ background: rgba(255,255,255,.72); }
 
-    /* Bottom WhatsApp bar */
+    /* BOTTOM WHATSAPP BAR */
     .bottomBar{
-      position:fixed;
-      left:12px; right:12px;
-      bottom:12px;
-      z-index:85;
-      border-radius:22px;
-      border:1px solid var(--border);
-      background: rgba(6,20,15,.62);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 18px 50px rgba(0,0,0,.35);
-      padding:12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+      position:fixed; left:12px; right:12px; bottom:12px; z-index:85; border-radius:22px;
+      border:1px solid var(--border); background: rgba(6,20,15,.62); backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35); padding:12px; display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
     html[data-theme="light"] .bottomBar{ background: rgba(243,251,248,.82); }
-
-    .badge{
-      display:flex; align-items:center; gap:10px;
-      color:var(--muted);
-      font-weight:800;
-    }
-    .greenDot{
-      width:10px; height:10px; border-radius:999px;
-      background: #19d38a;
-      box-shadow: 0 0 18px rgba(25,211,138,.55);
-    }
-
-    /* Prevent overlap by bottom bar */
+    .badge{ display:flex; align-items:center; gap:10px; color:var(--muted); font-weight:800; }
+    .greenDot{ width:10px; height:10px; border-radius:999px; background:#19d38a; box-shadow:0 0 18px rgba(25,211,138,.55); }
     .pagePad{ padding-bottom: 140px; }
+
+    /* ASK LIZON – FLOATING CHAT */
+    .askFab{
+      position:fixed; left:14px; bottom:88px; z-index:90;
+      width:54px; height:54px; border-radius:16px; border:1px solid var(--border);
+      background: rgba(29,211,167,.22); display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 14px 30px rgba(0,0,0,.35); cursor:pointer; font-weight:900;
+    }
+    .askPanel{
+      position:fixed; left:14px; bottom:150px; z-index:91; width:min(360px, calc(100vw - 28px));
+      border:1px solid var(--border); border-radius:18px; background: linear-gradient(180deg, rgba(12,32,25,.92), rgba(12,32,25,.82));
+      box-shadow: var(--shadow); display:none; overflow:hidden;
+    }
+    html[data-theme="light"] .askPanel{ background: rgba(255,255,255,.92); }
+    .askHead{ padding:12px 14px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .askTitle{ font-weight:900; }
+    .askClose{ cursor:pointer; opacity:.8; }
+    .askBody{ padding:12px 14px; display:grid; gap:10px; }
+    .msg{ padding:10px 12px; border-radius:14px; border:1px solid var(--border); background: rgba(6,20,15,.22); }
+    html[data-theme="light"] .msg{ background: rgba(255,255,255,.65); }
+    .msg.bot{ font-weight:700; }
+    .choices{ display:flex; flex-wrap:wrap; gap:8px; }
+    .choice{
+      padding:8px 10px; border-radius:999px; border:1px solid var(--border);
+      background: rgba(6,20,15,.18); cursor:pointer; font-weight:800; font-size:13px;
+    }
+    html[data-theme="light"] .choice{ background: rgba(255,255,255,.65); }
+    .jump{ display:flex; gap:8px; flex-wrap:wrap; }
 
     @media (max-width:860px){
       .col6{ grid-column: span 12; }
@@ -315,342 +158,156 @@
 
 <body>
 
-  <!-- HEADER (NOT sticky) -->
-  <header>
-    <div class="nav">
-      <a class="brand" href="index.html" aria-label="Go to home">
-        <img src="assets/logo-dark.png" alt="LizOn Education logo" />
-        <div>
-          <div class="brandTitle">LizOn Education</div>
-          <div class="brandSub">IELTS Journey</div>
-        </div>
-      </a>
-
-      <div class="nav-right">
-        <button class="themeToggle" id="themeToggle" type="button" aria-label="Toggle theme">
-          <span id="themeLabel">Dark</span>
-          <span class="themeDot" aria-hidden="true"></span>
-        </button>
-
-        <a class="pill" href="ielts.html">IELTS Courses</a>
-        <a class="pill" href="pte.html">PTE Courses</a>
-        <a class="pill" href="studyabroad.html">Study Abroad</a>
+<header>
+  <div class="nav">
+    <a class="brand" href="index.html" aria-label="Go to home">
+      <img src="assets/logo-dark.png" alt="LizOn Education logo" />
+      <div>
+        <div class="brandTitle">LizOn Education</div>
+        <div class="brandSub">IELTS Journey</div>
       </div>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <div class="wrap hero">
-    <div class="card heroBox">
-      <h1>IELTS Listening is not about hearing every word.</h1>
-      <div class="sub">
-        Most students miss answers because they lose focus, get confused by accents,
-        or fall for traps—even when they understand the topic.
-      </div>
-      <div class="trust">Built by LizOn Education • Designed for Real Band Improvement</div>
-
-      <div class="btnrow">
-        <a class="btn primary" href="ielts.html#levels">Explore LizOn IELTS Courses</a>
-        <a class="btn" href="ielts.html#helpmechoose">Help Me Choose</a>
-        <a class="btn" href="#asklizon-listening">AskLizOn – Listening</a>
-      </div>
+    </a>
+    <div class="nav-right">
+      <button class="themeToggle" id="themeToggle" type="button"><span id="themeLabel">Dark</span><span class="themeDot"></span></button>
+      <a class="pill" href="ielts.html">IELTS Courses</a>
+      <a class="pill" href="pte.html">PTE Courses</a>
+      <a class="pill" href="studyabroad.html">Study Abroad</a>
     </div>
   </div>
+</header>
 
-  <!-- AskLizOn - Listening -->
-  <div class="wrap" style="padding-top:0;">
-    <section class="card askBox" id="asklizon-listening">
-      <div class="askHead">
-        <div>
-          <h2 class="askTitle">AskLizOn – Listening</h2>
-          <p class="askSub">Choose your real problem. You’ll get the correct fix + jump to the exact section (no scrolling pain).</p>
-        </div>
-        <div class="trust" style="margin:0;">Quick Diagnostic • Student-first</div>
-      </div>
-
-      <div class="askPills" aria-label="Listening problems">
-        <button class="askBtn" type="button" data-problem="p4miss">“Part 4 e shob shuni, but answer miss hoy.”</button>
-        <button class="askBtn" type="button" data-problem="panic">“Ekta miss korlei pore shob miss hoy.”</button>
-        <button class="askBtn" type="button" data-problem="accent">“Accent bujhte gele focus chole jay.”</button>
-        <button class="askBtn" type="button" data-problem="spelling">“Spelling/number/date e marks jai.”</button>
-        <button class="askBtn" type="button" data-problem="traps">“Traps / correction e confuse hoy.”</button>
-        <button class="askBtn" type="button" data-problem="system">“Practice kori, kintu score stable na.”</button>
-      </div>
-
-      <div class="askResult" id="askResult">
-        <p class="askHook" id="askHook">—</p>
-        <p class="askDiag" id="askDiag">—</p>
-        <div class="btnrow" style="margin-top:10px;">
-          <a class="btn primary" id="askJump" href="#why-hard">Jump to Fix</a>
-          <a class="btn" href="ielts-roadmap.html">See Roadmap</a>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- CONTENT -->
-  <main class="wrap pagePad">
-
-    <section class="card sec" id="why-hard">
-      <h2>Why IELTS Listening feels hard (even after practice)</h2>
-      <p>
-        Many students can understand English videos with subtitles — but struggle in IELTS Listening.
-        Why? Because IELTS doesn’t test “understanding”. It tests <b>attention + prediction + accuracy</b>.
-      </p>
-      <ul>
-        <li>Accent shock (British/Australian variations)</li>
-        <li>Losing the next answer while thinking about the previous one</li>
-        <li>Spelling mistakes and number/date confusion</li>
-        <li>Traps: corrections, paraphrases, and distractor words</li>
-      </ul>
-    </section>
-
-    <section class="card sec" id="what-works">
-      <h2>What actually improves Listening scores</h2>
-      <p>
-        High scorers don’t “try to understand everything”. They stay calm and work like a system.
-      </p>
-      <ul>
-        <li>Read ahead fast and predict what’s coming</li>
-        <li>Underline keywords and listen for paraphrases</li>
-        <li>Accept that you’ll miss words — but never miss the answer</li>
-        <li>Train spelling, maps, names, numbers, and signposting</li>
-      </ul>
-    </section>
-
-    <section class="card sec" id="how-lizon">
-      <h2>How LizOn trains Listening (not just past papers)</h2>
-      <p>
-        LizOn Listening training focuses on skill-building first, then real exam pressure.
-        Students learn how answers are hidden using paraphrase, corrections, and trap patterns.
-      </p>
-      <p>
-        We fix mistakes by category: spelling leakage, number confusion, map direction errors,
-        and prediction failure — then we test again.
-      </p>
-    </section>
-
-    <!-- Featured Skills + Computer-Based readiness (supporting, not dominating) -->
-    <section class="card sec" id="skills-practice">
-      <h2>Skills Practice: build Listening confidence before the real exam</h2>
-      <p>
-        Students don’t only need “tips”. They need a place to practice skills repeatedly —
-        so the real exam feels familiar, not scary.
-      </p>
-
-      <div class="grid" style="margin-top:12px">
-        <div class="mini col6">
-          <h3>What students gain from Skills Practice</h3>
-          <ul>
-            <li>Better focus under time pressure</li>
-            <li>Comfort with accents + paraphrase</li>
-            <li>Spelling and number accuracy</li>
-            <li>Confidence for computer-based flow</li>
-          </ul>
-        </div>
-
-        <div class="mini col6">
-          <h3>Explore Skills Practice Area</h3>
-          <p>
-            Practice your weak points module-wise and build exam control.
-          </p>
-          <div class="btnrow" style="margin-top:10px">
-            <a class="btn primary" href="https://www.mylizon.com/ielts.html#skills">Explore Skills Practice</a>
-            <a class="btn" href="ielts.html#helpmechoose">Talk with an Expert</a>
-          </div>
-        </div>
-      </div>
-
-      <p style="margin-top:12px; color:var(--muted);">
-        Bonus: computer-based readiness becomes automatic when you practice like the real exam.
-      </p>
-    </section>
-
-    <section class="card sec" id="course-fit">
-      <h2>Which LizOn course solves your Listening problem?</h2>
-
-      <div class="grid">
-        <div class="mini col6">
-          <h3>If you miss answers because Listening feels “too fast”</h3>
-          <p>Start with <b>IELTS ZERO</b> — build listening basics and confidence.</p>
-          <div class="btnrow" style="margin-top:10px">
-            <a class="btn" href="ielts.html#zero">Go to ZERO</a>
-          </div>
-        </div>
-
-        <div class="mini col6">
-          <h3>If you lose focus and fall for traps</h3>
-          <p>Choose <b>IELTS HOPE</b> — accuracy, prediction, and trap control.</p>
-          <div class="btnrow" style="margin-top:10px">
-            <a class="btn" href="ielts.html#hope">Go to HOPE</a>
-          </div>
-        </div>
-
-        <div class="mini col6">
-          <h3>If you are stuck around Band 6–6.5</h3>
-          <p>Go for <b>IELTS STEP-UP</b> — high-level strategies + consistent performance.</p>
-          <div class="btnrow" style="margin-top:10px">
-            <a class="btn" href="ielts.html#stepup">Go to STEP-UP</a>
-          </div>
-        </div>
-
-        <div class="mini col6">
-          <h3>If this is your final attempt</h3>
-          <p>Take <b>IELTS DESPERATE</b> — full calibration with testing & evaluation.</p>
-          <div class="btnrow" style="margin-top:10px">
-            <a class="btn" href="ielts.html#desperate">Go to DESPERATE</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER (Card Style) -->
-    <div class="card footerCard">
-      <div class="footerInner">
-        <div class="footerTitle">Options</div>
-        <div class="footerBtns" style="margin-top:8px">
-          <a class="pill" href="ielts.html">IELTS Courses</a>
-          <a class="pill" href="pte.html">PTE Courses</a>
-          <a class="pill" href="studyabroad.html">Study Abroad</a>
-        </div>
-
-        <div style="height:16px"></div>
-
-        <div class="footerTitle">Contact & Location</div>
-
-        <p class="footerText">
-          <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
-        </p>
-        <p class="footerText">
-          <b>IELTS/PTE Helpline:</b> 01611611139<br/>
-          <b>Study Abroad/Visa Processing:</b> 01608881545
-        </p>
-
-        <div class="footerBtns">
-          <a class="pill" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-          <a class="pill" href="https://wa.me/8801611611139" target="_blank" rel="noopener">WhatsApp</a>
-        </div>
-
-        <div style="height:16px"></div>
-
-        <div class="footerTitle">Social Media</div>
-        <p class="footerText">Follow our updates, results, and guidance content.</p>
-
-        <div class="footerBtns">
-          <a class="pill" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-          <a class="pill" href="#" target="_blank" rel="noopener">YouTube</a>
-          <a class="pill" href="#" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-      </div>
-
-      <div class="footerSmall">© <span id="yr"></span> myLizOn.com | LizOn Education</div>
+<div class="wrap hero">
+  <div class="card heroBox">
+    <h1>IELTS Listening is not about hearing every word.</h1>
+    <div class="sub">Most students miss answers because they lose focus, get confused by accents, or fall for traps—even when they understand the topic.</div>
+    <div class="trust">Built by LizOn Education • Designed for Real Band Improvement</div>
+    <div class="btnrow">
+      <a class="btn primary" href="ielts.html#levels">Explore LizOn IELTS Courses</a>
+      <a class="btn" href="ielts.html#helpmechoose">Help Me Choose</a>
     </div>
-
-  </main>
-
-  <!-- Scroll Buttons -->
-  <div class="scrollBtns" aria-label="Scroll controls">
-    <button class="sbtn" id="goTop" type="button" aria-label="Scroll to top">↑</button>
-    <button class="sbtn" id="goBottom" type="button" aria-label="Scroll to bottom">↓</button>
   </div>
+</div>
 
-  <!-- Bottom WhatsApp Bar -->
-  <div class="bottomBar">
-    <div class="badge">
-      <span class="greenDot"></span>
-      <span>Need guidance?</span>
+<main class="wrap pagePad">
+
+  <section class="card sec" id="why-hard">
+    <h2>Why IELTS Listening feels hard (even after practice)</h2>
+    <p>IELTS doesn’t test “understanding”. It tests <b>attention + prediction + accuracy</b>.</p>
+    <ul>
+      <li>Accent shock</li>
+      <li>Losing the next answer while thinking about the previous one</li>
+      <li>Spelling and number/date confusion</li>
+      <li>Corrections and paraphrase traps</li>
+    </ul>
+  </section>
+
+  <section class="card sec" id="what-works">
+    <h2>What actually improves Listening scores</h2>
+    <ul>
+      <li>Predict before audio</li>
+      <li>Track keywords, not meaning</li>
+      <li>Recover instantly after a miss</li>
+      <li>Spelling discipline</li>
+    </ul>
+  </section>
+
+  <section class="card sec" id="how-lizon">
+    <h2>How LizOn trains Listening</h2>
+    <p>Skill-building first, then pressure. Fix by category, re-test, stabilize.</p>
+  </section>
+
+  <section class="card sec" id="skills-practice">
+    <h2>Skills Practice</h2>
+    <div class="grid">
+      <div class="mini col6"><h3>Gains</h3><ul><li>Focus</li><li>Accent comfort</li><li>Accuracy</li></ul></div>
+      <div class="mini col6"><h3>Explore</h3><p>Module-wise practice.</p><div class="btnrow"><a class="btn primary" href="https://www.mylizon.com/ielts.html#skills">Explore</a></div></div>
     </div>
-    <a class="btn primary" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Chat on WhatsApp</a>
+  </section>
+
+  <section class="card sec" id="course-fit">
+    <h2>Which course fits you?</h2>
+    <div class="grid">
+      <div class="mini col6"><h3>Too fast?</h3><p><b>ZERO</b></p></div>
+      <div class="mini col6"><h3>Trap issues?</h3><p><b>HOPE</b></p></div>
+      <div class="mini col6"><h3>Stuck 6–6.5?</h3><p><b>STEP-UP</b></p></div>
+      <div class="mini col6"><h3>Final attempt?</h3><p><b>DESPERATE</b></p></div>
+    </div>
+  </section>
+
+  <div class="card footerCard">
+    <div class="footerInner">
+      <div class="footerTitle">Contact</div>
+      <p class="footerText"><b>Address:</b> 51, Budhha Mandir Basabo, Dhaka 1214</p>
+      <p class="footerText"><b>IELTS/PTE:</b> 01611611139 • <b>Visa:</b> 01608881545</p>
+      <div class="footerBtns">
+        <a class="pill" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank">Open Map</a>
+        <a class="pill" href="https://wa.me/8801611611139" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+    <div class="footerSmall">© <span id="yr"></span> myLizOn.com | LizOn Education</div>
   </div>
 
-  <script>
-    // Year
-    document.getElementById("yr").textContent = new Date().getFullYear();
+</main>
 
-    // Theme toggle with memory
-    const root = document.documentElement;
-    const btn = document.getElementById("themeToggle");
-    const label = document.getElementById("themeLabel");
+<div class="scrollBtns">
+  <button class="sbtn" id="goTop">↑</button>
+  <button class="sbtn" id="goBottom">↓</button>
+</div>
 
-    function applyTheme(t){
-      root.setAttribute("data-theme", t);
-      label.textContent = (t === "light") ? "Light" : "Dark";
-      localStorage.setItem("lizon_theme", t);
-    }
+<div class="bottomBar">
+  <div class="badge"><span class="greenDot"></span><span>Need guidance?</span></div>
+  <a class="btn primary" href="https://wa.me/8801611611139" target="_blank">Chat on WhatsApp</a>
+</div>
 
-    const saved = localStorage.getItem("lizon_theme");
-    applyTheme(saved || root.getAttribute("data-theme") || "dark");
+<!-- ASK LIZON FLOATING CHAT -->
+<div class="askFab" id="askFab">Ask</div>
+<div class="askPanel" id="askPanel">
+  <div class="askHead">
+    <div class="askTitle">AskLizOn – Listening</div>
+    <div class="askClose" id="askClose">✕</div>
+  </div>
+  <div class="askBody" id="askBody">
+    <div class="msg bot">Kon problem hocche? Choose one.</div>
+    <div class="choices">
+      <div class="choice" data-k="p4">Part 4 shuni, miss hoy</div>
+      <div class="choice" data-k="panic">Ekta miss → shob miss</div>
+      <div class="choice" data-k="accent">Accent e focus jay</div>
+      <div class="choice" data-k="spell">Spelling e marks jai</div>
+      <div class="choice" data-k="trap">Trap e pore jai</div>
+      <div class="choice" data-k="system">Practice kori, stable na</div>
+    </div>
+  </div>
+</div>
 
-    btn.addEventListener("click", () => {
-      const current = root.getAttribute("data-theme");
-      applyTheme(current === "dark" ? "light" : "dark");
-    });
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
 
-    // Scroll buttons
-    document.getElementById("goTop").addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-    document.getElementById("goBottom").addEventListener("click", () => {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    });
+  const root=document.documentElement, btn=document.getElementById("themeToggle"), label=document.getElementById("themeLabel");
+  function applyTheme(t){ root.setAttribute("data-theme",t); label.textContent=(t==="light")?"Light":"Dark"; localStorage.setItem("lizon_theme",t);}
+  applyTheme(localStorage.getItem("lizon_theme")||"dark");
+  btn.onclick=()=>applyTheme(root.getAttribute("data-theme")==="dark"?"light":"dark");
 
-    // AskLizOn – Listening logic
-    const askBox = document.getElementById("askResult");
-    const askHook = document.getElementById("askHook");
-    const askDiag  = document.getElementById("askDiag");
-    const askJump = document.getElementById("askJump");
+  document.getElementById("goTop").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById("goBottom").onclick=()=>window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
 
-    const askMap = {
-      p4miss: {
-        hook: "You’re listening… but not catching answers.",
-        diag: "Part 4 e issue usually ‘prediction + tracking’ — understanding na. You need a system, not more tests.",
-        target: "#what-works"
-      },
-      panic: {
-        hook: "This is a recovery problem, not a listening problem.",
-        diag: "Ekta miss korlei freeze hole next 2–3 ta answer automatically chole jay. Train ‘skip + reset’ behaviour.",
-        target: "#why-hard"
-      },
-      accent: {
-        hook: "Accent bujhte giye focus lose hocche — normal.",
-        diag: "Accent shock kombe when you stop chasing meaning and start tracking keywords + paraphrase.",
-        target: "#what-works"
-      },
-      spelling: {
-        hook: "You earned the answer, then lost it on paper.",
-        diag: "Spelling/number/date leakage is free-mark loss. Fix it by category and re-test.",
-        target: "#how-lizon"
-      },
-      traps: {
-        hook: "IELTS is full of corrections. Your brain needs trap-control.",
-        diag: "Traps মানে audio deliberately changes/adjusts info. You must listen for ‘correction moments’.",
-        target: "#why-hard"
-      },
-      system: {
-        hook: "Random practice gives random scores.",
-        diag: "Stable score ashe when you train: prediction → focus → trap-control → accuracy, then test again.",
-        target: "#skills-practice"
-      }
-    };
+  const fab=document.getElementById("askFab"), panel=document.getElementById("askPanel"), close=document.getElementById("askClose"), body=document.getElementById("askBody");
+  fab.onclick=()=>panel.style.display="block"; close.onclick=()=>panel.style.display="none";
 
-    document.querySelectorAll(".askBtn").forEach(btnEl => {
-      btnEl.addEventListener("click", () => {
-        const key = btnEl.getAttribute("data-problem");
-        const item = askMap[key];
-        if(!item) return;
-
-        askHook.textContent = item.hook;
-        askDiag.textContent = item.diag;
-        askJump.setAttribute("href", item.target);
-
-        askBox.style.display = "block";
-
-        // Smooth scroll so result is visible
-        const top = document.getElementById("asklizon-listening").getBoundingClientRect().top + window.scrollY - 12;
-        window.scrollTo({ top, behavior: "smooth" });
-      });
-    });
-  </script>
+  const map={
+    p4:{h:"Listening ache, capture nai.",t:"#what-works"},
+    panic:{h:"Recovery problem.",t:"#why-hard"},
+    accent:{h:"Meaning chase korchen.",t:"#what-works"},
+    spell:{h:"Free marks loss.",t:"#how-lizon"},
+    trap:{h:"Correction miss hocche.",t:"#why-hard"},
+    system:{h:"Random practice.",t:"#skills-practice"}
+  };
+  document.querySelectorAll(".choice").forEach(c=>c.onclick=()=>{
+    const k=c.dataset.k, m=map[k];
+    body.innerHTML+=`<div class="msg bot"><b>${m.h}</b></div>
+      <div class="jump"><a class="btn primary" href="${m.t}">Show me the fix</a></div>`;
+    body.scrollTop=body.scrollHeight;
+  });
+</script>
 
 </body>
 </html>

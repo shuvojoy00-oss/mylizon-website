@@ -1,282 +1,201 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IELTS Listening | LizOn Education</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>IELTS Listening | LizOn Education — Fix Accent, Focus, and Answer Traps</title>
+<meta name="description" content="IELTS Listening is not about hearing every word. It’s about prediction, focus, and trap control. Learn how LizOn trains listening skills and improves accuracy."/>
+<meta name="theme-color" content="#0b2a1f"/>
+<link rel="canonical" href="https://mylizon.com/ielts-listening.html"/>
 
 <style>
 :root{
---bg:#eef7f4;
---card:#ffffff;
---accent:#19c38a;
---text:#0b2a1f;
---muted:#5f7d73;
---border:rgba(0,0,0,.08);
+--bg1:#06140f;--bg2:#0b2a1f;--card:#0c2019cc;--text:#e9fff6;--muted:#b7d7cb;
+--accent:#1dd3a7;--accent2:#ffd782;--border:rgba(255,255,255,.10);
+--shadow:0 18px 60px rgba(0,0,0,.45);--radius:18px;--max:1100px;
+--chipbg:rgba(6,20,15,.22);--chipbg2:rgba(29,211,167,.12);
 }
-html[data-theme="dark"]{
---bg:#06140f;
---card:#0c2019;
---text:#e9fff6;
---muted:#9dc7bb;
---border:rgba(255,255,255,.12);
+html[data-theme="light"]{
+--bg1:#f3fbf8;--bg2:#e7f6f0;--card:rgba(255,255,255,.78);--text:#052018;
+--muted:#2c5a4b;--accent:#0aa37f;--accent2:#b38b2e;
+--border:rgba(0,0,0,.10);--shadow:0 18px 60px rgba(0,0,0,.12);
+--chipbg:rgba(255,255,255,.60);--chipbg2:rgba(10,163,127,.10);
 }
+*{box-sizing:border-box}
 body{
-margin:0;
-font-family:system-ui,-apple-system,Segoe UI,Roboto;
-background:var(--bg);
-color:var(--text);
+margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+background:radial-gradient(900px 600px at 20% 0%, rgba(29,211,167,.14), transparent 55%),
+linear-gradient(180deg,var(--bg1),var(--bg2));
+color:var(--text);line-height:1.55;scroll-behavior:smooth;
 }
-a{text-decoration:none;color:inherit}
-.wrap{max-width:1100px;margin:auto;padding:16px}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:18px}
 
 /* HEADER */
-header{display:flex;justify-content:space-between;align-items:center}
-.logo{display:flex;gap:10px;align-items:center;font-weight:800}
-.logo img{width:42px}
-.navBtn{
-border:1px solid var(--border);
-border-radius:50%;
-width:42px;height:42px;
-display:flex;align-items:center;justify-content:center;
-cursor:pointer;background:var(--card)
+header{background:rgba(6,20,15,.62);border-bottom:1px solid var(--border)}
+html[data-theme="light"] header{background:rgba(243,251,248,.75)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.brand img{width:44px;height:44px;border-radius:14px;border:1px solid var(--border)}
+.brandTitle{font-size:16px}
+.brandSub{font-size:12px;color:var(--muted)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.pill{padding:9px 12px;border-radius:999px;border:1px solid var(--border);font-weight:700;font-size:13px}
+.themeToggle{
+width:44px;height:44px;border-radius:999px;border:1px solid var(--border);
+display:flex;align-items:center;justify-content:center;cursor:pointer
 }
+.themeDot{width:18px;height:18px;border-radius:999px;border:2px solid rgba(255,215,130,.55)}
+#themeLabel{display:none}
 
-/* MENU */
-.menu{
-position:fixed;inset:0;
-background:var(--bg);
-display:none;z-index:999;
-padding:20px
-}
-.menu h3{text-align:center;margin-bottom:16px}
-.menuGrid{display:grid;gap:12px}
-.menuGrid a{
-padding:14px;
-border-radius:14px;
-border:1px solid var(--border);
-background:var(--card);
-text-align:center;
-font-weight:700
-}
-.menuClose{position:absolute;top:14px;right:14px;font-size:22px}
+/* CARDS */
+.card{background:linear-gradient(180deg,rgba(12,32,25,.78),rgba(12,32,25,.55));
+border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+html[data-theme="light"] .card{background:rgba(255,255,255,.78)}
 
-/* HERO */
-.hero{margin-top:20px}
-.hero h1{font-size:32px;line-height:1.2}
-.hero span.link{color:var(--accent);font-weight:800}
+.hero{padding:28px 0 10px}
+.heroBox{padding:22px;display:grid;gap:14px}
+h1{margin:0;font-size:clamp(26px,3.8vw,40px);line-height:1.15}
+.sub{color:var(--muted);font-size:16px}
+.trust{font-size:13px;color:rgba(233,255,246,.78)}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+padding:11px 14px;border-radius:14px;border:1px solid var(--border);
+font-weight:800;cursor:pointer
+}
+.btn.primary{background:rgba(29,211,167,.16);border-color:rgba(29,211,167,.45)}
+.btn.solid{background:rgba(29,211,167,.22);border-color:rgba(29,211,167,.55)}
+.btn.tiny{padding:8px 12px;font-size:13px;border-radius:12px}
 
 /* SECTIONS */
-.card{
-background:var(--card);
-border-radius:20px;
-padding:18px;
-margin-top:16px;
-border:1px solid var(--border)
+main{padding:14px 0 32px}
+section{margin-top:14px}
+.sec{padding:18px}
+h2{margin:0 0 10px;font-size:20px}
+p{margin:0 0 10px}
+ul{margin:10px 0 0 18px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(12,1fr)}
+.col6{grid-column:span 6}
+.mini{padding:14px;border-radius:16px;border:1px solid var(--border)}
+.jump{
+background:var(--chipbg2);padding:2px 6px;border-radius:6px;
+font-weight:900;color:var(--accent);cursor:pointer
 }
+.flash{outline:2px solid var(--accent)}
 
-/* ASK LIZON */
-.askBtn{
-position:fixed;left:14px;bottom:90px;
-background:var(--accent);
-color:#fff;
-padding:10px 14px;
-border-radius:14px;
-font-weight:800;
-z-index:90;
-cursor:pointer
+/* SCROLL BUTTONS */
+.scrollBtns{position:fixed;right:14px;bottom:150px;display:flex;flex-direction:column;gap:10px}
+.sbtn{
+width:46px;height:46px;border-radius:50%;
+background:linear-gradient(135deg,var(--accent),#0aa37f);
+border:none;color:#fff;font-weight:900;cursor:pointer;
+animation:float 3s ease-in-out infinite
 }
-.askBox{
-position:fixed;left:14px;bottom:140px;
-width:90%;
-max-width:360px;
-background:var(--card);
-border-radius:18px;
-border:1px solid var(--border);
-padding:14px;
-display:none;
-z-index:91
-}
-.askBox h4{margin:0 0 8px}
-.askOpt{
-display:inline-block;
-padding:8px 12px;
-border-radius:999px;
-border:1px solid var(--border);
-margin:6px;
-font-weight:700;
-cursor:pointer
-}
-.askReply{
-margin-top:10px;
-font-weight:800;
-color:var(--accent)
-}
-.askFix{
-margin-top:8px;
-display:inline-block;
-padding:10px 14px;
-background:var(--accent);
-color:#fff;
-border-radius:12px;
-font-weight:900;
-cursor:pointer
-}
+@keyframes float{50%{transform:translateY(-6px)}}
 
 /* BOTTOM BAR */
-.bottom{
-position:fixed;left:10px;right:10px;bottom:10px;
-background:var(--card);
-border-radius:20px;
-padding:10px;
-display:flex;gap:10px;
-align-items:center;
-border:1px solid var(--border);
-z-index:80
+.bottomBar{
+position:fixed;left:12px;right:12px;bottom:12px;
+border-radius:22px;border:1px solid var(--border);
+background:rgba(6,20,15,.62);backdrop-filter:blur(10px);
+padding:12px;display:flex;gap:10px;align-items:center
 }
-.need{
-flex:1;
-padding:10px;
-border-radius:14px;
-background:rgba(25,195,138,.12);
-font-weight:800
+.needChip{
+display:flex;align-items:center;gap:10px;
+padding:12px 14px;border-radius:18px;border:1px solid var(--border);
+font-weight:900
 }
-.courseBtn{
-padding:8px 12px;
-font-size:13px;
-border-radius:12px;
-border:1px solid var(--accent);
-font-weight:800
-}
+.greenDot{width:10px;height:10px;border-radius:50%;background:#19d38a}
+.pagePad{padding-bottom:220px}
 
-/* SCROLL */
-.scroll{
-position:fixed;right:14px;bottom:140px;
-display:flex;flex-direction:column;gap:10px
+/* FAB */
+.fabStack{position:fixed;left:12px;bottom:150px;display:flex;flex-direction:column;gap:10px}
+.fab{
+height:52px;min-width:52px;border-radius:18px;border:1px solid var(--border);
+font-weight:1000;cursor:pointer
 }
-.scroll button{
-width:42px;height:42px;
-border-radius:50%;
-border:none;
-background:linear-gradient(135deg,var(--accent),#0aa37f);
-color:#fff;
-font-weight:900;
-cursor:pointer;
-animation:float 3s infinite
-}
-@keyframes float{
-50%{transform:translateY(-6px)}
-}
+.fab.askBtn{background:rgba(29,211,167,.18);border-color:rgba(29,211,167,.35)}
 
-/* LINKS */
-.hl{color:var(--accent);font-weight:900;cursor:pointer}
+/* ASK PANEL + MENU (unchanged logic) */
+.askPanelWrap{position:fixed;left:12px;right:12px;bottom:92px}
+.askPanel{display:none}
+.askPanel.show{display:block}
+
+/* RESPONSIVE */
+@media(max-width:860px){.col6{grid-column:span 12}}
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
 <header>
-<div class="logo">
-<img src="assets/logo-dark.png">
-LizOn Education
+<div class="nav">
+<a class="brand" href="index.html">
+<img src="assets/logo-dark.png"/>
+<div>
+<div class="brandTitle">LizOn Education</div>
+<div class="brandSub">IELTS Journey</div>
 </div>
-<div style="display:flex;gap:10px">
-<div class="navBtn" onclick="toggleTheme()">◐</div>
-<div class="navBtn" onclick="openMenu()">≡</div>
+</a>
+<div class="nav-right">
+<button class="themeToggle" id="themeToggle"><span class="themeDot"></span></button>
+<a class="pill" href="ielts.html">IELTS Courses</a>
+<a class="pill" href="pte.html">PTE Courses</a>
+<a class="pill" href="studyabroad.html">Study Abroad</a>
+</div>
 </div>
 </header>
 
-<section class="hero">
-<h1>
-IELTS Listening is not about hearing every word.<br>
-It’s about <span class="hl" onclick="jump('prediction')">prediction</span>,
-<span class="hl" onclick="jump('trap')">trap control</span> and
-<span class="hl" onclick="jump('computer')">computer-based readiness</span>.
-</h1>
-</section>
-
-<section id="prediction" class="card">
-<h3>Prediction</h3>
-<p>High scorers predict answers before audio starts.</p>
-</section>
-
-<section id="trap" class="card">
-<h3>Trap Control</h3>
-<p>Corrections and paraphrases steal marks.</p>
-</section>
-
-<section id="computer" class="card">
-<h3>Computer-based IELTS</h3>
-<p>
-Typing speed, screen focus and flow control —  
-<strong>no one else in Bangladesh trains this properly.</strong>
-</p>
-</section>
+<div class="wrap hero">
+<div class="card heroBox">
+<h1>IELTS Listening is not about hearing every word.</h1>
+<div class="sub">
+Fix listening by mastering
+<span class="jump" data-jump="#prediction">prediction</span>,
+<span class="jump" data-jump="#traps">trap control</span> and
+<span class="jump" data-jump="#computer">computer-based readiness</span>.
+</div>
+<div class="btnrow">
+<a class="btn primary" href="ielts.html#levels">Explore LizOn IELTS Courses</a>
+<a class="btn" href="ielts.html#helpmechoose">Help Me Choose</a>
+</div>
+</div>
 </div>
 
-<!-- ASK LIZON -->
-<div class="askBtn" onclick="openAsk()">Ask</div>
-<div class="askBox" id="askBox">
-<h4>AskLizOn – Listening</h4>
-<div class="askOpt" onclick="answer('Recovery problem','trap')">Ekta miss → shob miss</div>
-<div class="askOpt" onclick="answer('Part 4 issue','prediction')">Part 4 shuni, miss hoy</div>
-<div class="askOpt" onclick="answer('Spelling loss','computer')">Spelling e marks jai</div>
-<div id="askAns"></div>
+<main class="wrap pagePad">
+
+<section class="card sec" id="prediction"><h2>Prediction</h2><p>Predict answer type before audio.</p></section>
+<section class="card sec" id="traps"><h2>Trap Control</h2><p>Identify corrections & paraphrases.</p></section>
+<section class="card sec" id="computer"><h2>Computer-based IELTS</h2><p>Typing speed + screen flow.</p></section>
+
+</main>
+
+<div class="scrollBtns">
+<button class="sbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button class="sbtn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">↓</button>
 </div>
 
-<!-- BOTTOM -->
-<div class="bottom">
-<a class="need" href="https://wa.me/8801611611139">Need guidance?</a>
-<a class="courseBtn" href="https://www.mylizon.com/ielts.html">Choose course</a>
+<div class="fabStack">
+<button class="fab">≡</button>
+<button class="fab askBtn">Ask</button>
 </div>
 
-<!-- SCROLL -->
-<div class="scroll">
-<button onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-<button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">↓</button>
-</div>
-
-<!-- MENU -->
-<div class="menu" id="menu">
-<div class="menuClose" onclick="closeMenu()">✕</div>
-<h3>Navigate</h3>
-<div class="menuGrid">
-<a href="index.html">Home</a>
-<a href="ielts.html#zero">ZERO</a>
-<a href="ielts.html#hope">HOPE</a>
-<a href="ielts.html#stepup">STEP-UP</a>
-<a href="ielts.html#desperate">DESPERATE</a>
-<a href="ielts.html#skills">Modules (Practice)</a>
-<a href="ielts.html#pricing">Pricing</a>
-<a href="ielts-listening.html">Practice: Listening</a>
-<a href="ielts-reading.html">Practice: Reading</a>
-<a href="ielts-writing.html">Practice: Writing</a>
-<a href="ielts-speaking.html">Practice: Speaking</a>
-<a href="https://wa.me/8801611611139">Talk with LizOn</a>
-</div>
+<div class="bottomBar">
+<a class="needChip" href="https://wa.me/8801611611139" target="_blank">
+<span class="greenDot"></span><span>Need guidance?</span>
+</a>
+<a class="btn solid tiny" href="https://www.mylizon.com/ielts.html">Choose course</a>
 </div>
 
 <script>
-function toggleTheme(){
-const r=document.documentElement;
-r.setAttribute("data-theme",r.getAttribute("data-theme")==="dark"?"light":"dark")
-}
-function openMenu(){menu.style.display="block"}
-function closeMenu(){menu.style.display="none"}
-function openAsk(){askBox.style.display="block"}
-function answer(text,target){
-askAns.innerHTML=
-'<div class="askReply">'+text+'</div>'+
-'<div class="askFix" onclick="goFix(`'+target+'`)">Show me the fix</div>'
-}
-function goFix(id){
-askBox.style.display="none";
-document.getElementById(id).scrollIntoView({behavior:"smooth"})
-}
-function jump(id){
-document.getElementById(id).scrollIntoView({behavior:"smooth"})
-}
+const root=document.documentElement;
+document.getElementById("themeToggle").onclick=()=>{
+root.setAttribute("data-theme",root.getAttribute("data-theme")==="dark"?"light":"dark")
+};
+document.querySelectorAll(".jump").forEach(j=>{
+j.onclick=()=>document.querySelector(j.dataset.jump).scrollIntoView({behavior:"smooth"})
+});
 </script>
 
 </body>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>IELTS Listening | LizOn Education — Fix Accent, Focus, and Answer Traps</title>
-  <meta name="description" content="IELTS Listening is not about hearing every word. It’s about prediction, focus, and trap control. Learn how LizOn trains listening skills and improves accuracy." />
+  <meta name="description" content="IELTS Listening is not about hearing every word. It’s about prediction, focus, trap control, and computer-based readiness. Learn how LizOn trains listening for real improvement." />
   <meta name="theme-color" content="#0b2a1f" />
 
   <link rel="canonical" href="https://mylizon.com/ielts-listening.html" />
@@ -24,8 +24,7 @@
       --radius:18px;
       --max:1100px;
 
-      /* layout helpers */
-      --bottomBarH: 78px; /* approximate WhatsApp bar height */
+      --bottomBarH: 78px;
       --safeGap: 12px;
     }
 
@@ -48,8 +47,21 @@
                   linear-gradient(180deg, var(--bg1), var(--bg2));
       color:var(--text);
       line-height:1.55;
+      overflow-x:hidden;
     }
     a{ color:inherit; text-decoration:none; }
+
+    /* Custom scrollbar – subtle, premium */
+    *::-webkit-scrollbar{ width:10px; height:10px; }
+    *::-webkit-scrollbar-track{ background: rgba(255,255,255,.04); border-radius:999px; }
+    *::-webkit-scrollbar-thumb{
+      background: linear-gradient(180deg, rgba(29,211,167,.55), rgba(29,211,167,.18));
+      border-radius:999px;
+      border:2px solid rgba(0,0,0,0);
+      background-clip: padding-box;
+    }
+    html[data-theme="light"] *::-webkit-scrollbar-track{ background: rgba(0,0,0,.05); }
+
     .wrap{ max-width:var(--max); margin:0 auto; padding:18px; }
 
     /* Header NOT sticky */
@@ -139,7 +151,7 @@
       line-height:1.15;
       letter-spacing:-.3px;
     }
-    .sub{ color:var(--muted); font-size:16px; max-width:72ch; }
+    .sub{ color:var(--muted); font-size:16px; max-width:76ch; }
     .trust{ color:rgba(233,255,246,.78); font-size:13px; }
     html[data-theme="light"] .trust{ color: rgba(5,32,24,.70); }
 
@@ -166,7 +178,7 @@
     section{ margin-top:14px; }
     .sec{ padding:18px; }
     h2{ margin:0 0 10px; font-size:20px; }
-    p{ margin:0 0 10px; color:rgba(233,255,246,.90); }
+    p{ margin:0 0 10px; color:rgba(233,255,246,.92); }
     html[data-theme="light"] p{ color: rgba(5,32,24,.86); }
 
     ul{ margin:10px 0 0 18px; color:rgba(233,255,246,.86); }
@@ -186,8 +198,22 @@
     }
     html[data-theme="light"] .mini{ background: rgba(255,255,255,.55); }
     .mini h3{ margin:0 0 6px; font-size:16px; }
-    .mini p{ margin:0; color:rgba(233,255,246,.82); font-size:14px; }
+    .mini p{ margin:0; color:rgba(233,255,246,.84); font-size:14px; }
     html[data-theme="light"] .mini p{ color: rgba(5,32,24,.78); }
+
+    /* Inline jump links inside paragraph */
+    .jumpLink{
+      color: var(--text);
+      font-weight:900;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(29,211,167,.55);
+      cursor:pointer;
+    }
+    .jumpLink:hover{
+      text-decoration-color: rgba(29,211,167,.85);
+    }
 
     /* Footer card */
     .footerCard{
@@ -209,7 +235,7 @@
     }
     html[data-theme="light"] .footerSmall{ color: rgba(5,32,24,.70); }
 
-    /* Floating scroll buttons */
+    /* Floating scroll buttons (right side) */
     .scrollBtns{
       position:fixed;
       right:14px;
@@ -232,7 +258,28 @@
     }
     html[data-theme="light"] .sbtn{ background: rgba(255,255,255,.72); }
 
-    /* Bottom WhatsApp bar */
+    /* PROGRESS BAR (Top) */
+    .progressWrap{
+      position:fixed;
+      top:0; left:0; right:0;
+      height:4px;
+      z-index:120;
+      background: rgba(255,255,255,.05);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    html[data-theme="light"] .progressWrap{
+      background: rgba(0,0,0,.06);
+      border-bottom:1px solid rgba(0,0,0,.06);
+    }
+    .progressBar{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(29,211,167,.25), rgba(29,211,167,.95));
+      box-shadow: 0 0 18px rgba(29,211,167,.45);
+      border-radius:999px;
+    }
+
+    /* Bottom Choose Course Bar (your request) */
     .bottomBar{
       position:fixed;
       left:12px; right:12px;
@@ -254,16 +301,81 @@
     .badge{
       display:flex; align-items:center; gap:10px;
       color:var(--muted);
-      font-weight:800;
+      font-weight:900;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
     }
+    html[data-theme="light"] .badge{ background: rgba(0,0,0,.04); }
     .greenDot{
       width:10px; height:10px; border-radius:999px;
       background: #19d38a;
       box-shadow: 0 0 18px rgba(25,211,138,.55);
     }
 
-    /* Prevent overlap by bottom bar */
-    .pagePad{ padding-bottom: 140px; }
+    .pagePad{ padding-bottom: 150px; }
+
+    /* ===== Left-side visible menu bar (creative + user friendly) ===== */
+    .leftDock{
+      position:fixed;
+      left:12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index:90;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:10px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.45);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 45px rgba(0,0,0,.28);
+    }
+    html[data-theme="light"] .leftDock{ background: rgba(255,255,255,.72); }
+
+    .dockBtn{
+      width:46px; height:46px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      font-weight:950;
+      color:var(--text);
+      position:relative;
+      transition:.16s ease;
+      user-select:none;
+    }
+    html[data-theme="light"] .dockBtn{ background: rgba(0,0,0,.03); color: var(--text); }
+    .dockBtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(29,211,167,.50);
+    }
+    .dockHint{
+      position:absolute;
+      left:56px;
+      white-space:nowrap;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.75);
+      color: rgba(233,255,246,.92);
+      font-weight:900;
+      font-size:13px;
+      opacity:0;
+      transform: translateX(-6px);
+      pointer-events:none;
+      transition: .16s ease;
+    }
+    html[data-theme="light"] .dockHint{ background: rgba(255,255,255,.92); color: rgba(5,32,24,.92); }
+    .dockBtn:hover .dockHint{
+      opacity:1;
+      transform: translateX(0);
+    }
 
     /* ===== AskLizOn – Listening (Floating Chatbot) ===== */
     .askFab{
@@ -290,7 +402,7 @@
       flex:0 0 auto;
     }
     .askLabel{
-      font-weight:900;
+      font-weight:950;
       letter-spacing:.2px;
       font-size:14px;
     }
@@ -305,15 +417,10 @@
       border:1px solid var(--border);
       box-shadow: var(--shadow);
       overflow:hidden;
-
-      /* stronger color contrast */
       background: linear-gradient(180deg, rgba(6,20,15,.92), rgba(11,42,31,.92));
     }
-    html[data-theme="light"] .askPanel{
-      background: rgba(255,255,255,.92);
-    }
+    html[data-theme="light"] .askPanel{ background: rgba(255,255,255,.92); }
 
-    /* Animated open/close */
     .askPanel.hidden{
       pointer-events:none;
       opacity:0;
@@ -361,7 +468,7 @@
       border-radius:16px;
       padding:12px 12px;
       background: rgba(255,255,255,.06);
-      font-weight:900;
+      font-weight:950;
       font-size:18px;
     }
     html[data-theme="light"] .askBubble{ background: rgba(0,0,0,.03); }
@@ -376,7 +483,7 @@
       border-radius:999px;
       padding:10px 12px;
       background: rgba(255,255,255,.04);
-      font-weight:850;
+      font-weight:900;
       cursor:pointer;
       transition:.15s ease;
       white-space:nowrap;
@@ -387,7 +494,7 @@
       border-color: rgba(29,211,167,.45);
     }
     .askChip.active{
-      border-color: rgba(29,211,167,.55);
+      border-color: rgba(29,211,167,.65);
       background: rgba(29,211,167,.12);
     }
 
@@ -406,11 +513,10 @@
     .askDiag{
       margin:0;
       color: rgba(233,255,246,.85);
-      font-weight:650;
+      font-weight:700;
     }
     html[data-theme="light"] .askDiag{ color: rgba(5,32,24,.80); }
 
-    /* Show me the fix as a real BUTTON (full width) */
     .askFixBtn{
       width:100%;
       border-radius:16px;
@@ -430,16 +536,11 @@
       transform: translateY(-1px);
       border-color: rgba(29,211,167,.75);
     }
-    .askArrow{
-      font-weight:900;
-      opacity:.9;
-    }
 
-    /* small helper text */
     .askMini{
       color: var(--muted);
       font-size:13px;
-      font-weight:750;
+      font-weight:800;
       margin-top:-6px;
     }
 
@@ -451,13 +552,29 @@
       .nav-right{ gap:8px; }
       .askBubble{ font-size:17px; }
       .askFixBtn{ font-size:17px; }
+      .leftDock{ top:auto; bottom: calc(var(--bottomBarH) + 98px); transform:none; }
+      .dockHint{ display:none; } /* keep clean on mobile */
+    }
+
+    @media (max-width:480px){
+      .leftDock{
+        left:10px;
+        padding:8px;
+        border-radius:16px;
+      }
+      .dockBtn{ width:44px; height:44px; border-radius:14px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER (NOT sticky) -->
+  <!-- Top Progress -->
+  <div class="progressWrap" aria-hidden="true">
+    <div class="progressBar" id="progressBar"></div>
+  </div>
+
+  <!-- HEADER -->
   <header>
     <div class="nav">
       <a class="brand" href="index.html" aria-label="Go to home">
@@ -482,19 +599,51 @@
   </header>
 
   <!-- HERO -->
-  <div class="wrap hero">
+  <div class="wrap hero" id="top">
     <div class="card heroBox">
       <h1>IELTS Listening is not about hearing every word.</h1>
       <div class="sub">
         Most students miss answers because they lose focus, get confused by accents,
         or fall for traps—even when they understand the topic.
+        Fixing Listening means building <span class="jumpLink" data-jump="#prediction">prediction</span>,
+        <span class="jumpLink" data-jump="#trap-control">trap control</span>, and
+        <span class="jumpLink" data-jump="#computer-based">computer-based readiness</span>.
       </div>
       <div class="trust">Built by LizOn Education • Designed for Real Band Improvement</div>
 
       <div class="btnrow">
         <a class="btn primary" href="ielts.html#levels">Explore LizOn IELTS Courses</a>
         <a class="btn" href="ielts.html#helpmechoose">Help Me Choose</a>
+        <a class="btn" href="#askliz-on">AskLizOn – Listening</a>
       </div>
+    </div>
+  </div>
+
+  <!-- Left Dock Menu -->
+  <div class="leftDock" aria-label="Quick menu">
+    <div class="dockBtn" data-jump="#why-hard" aria-label="Why hard">
+      W
+      <span class="dockHint">Why Listening feels hard</span>
+    </div>
+    <div class="dockBtn" data-jump="#what-works" aria-label="What works">
+      ✓
+      <span class="dockHint">What actually works</span>
+    </div>
+    <div class="dockBtn" data-jump="#computer-based" aria-label="Computer based assistance">
+      PC
+      <span class="dockHint">Computer-based assistance</span>
+    </div>
+    <div class="dockBtn" data-jump="#skills-practice" aria-label="Skills practice">
+      S
+      <span class="dockHint">Skills practice</span>
+    </div>
+    <div class="dockBtn" data-jump="#course-fit" aria-label="Choose course">
+      C
+      <span class="dockHint">Choose the right course</span>
+    </div>
+    <div class="dockBtn" data-jump="#top" aria-label="Top">
+      ↑
+      <span class="dockHint">Back to top</span>
     </div>
   </div>
 
@@ -505,7 +654,9 @@
       <h2>Why IELTS Listening feels hard (even after practice)</h2>
       <p>
         Many students can understand English videos with subtitles — but struggle in IELTS Listening.
-        Why? Because IELTS doesn’t test “understanding”. It tests <b>attention + prediction + accuracy</b>.
+        Because IELTS doesn’t test “understanding”. It tests <b>attention + prediction + accuracy</b>.
+        Most mistakes happen from <span class="jumpLink" data-jump="#recovery">recovery failure</span> and
+        <span class="jumpLink" data-jump="#trap-control">trap moments</span>.
       </p>
       <ul>
         <li>Accent shock (British/Australian variations)</li>
@@ -518,21 +669,22 @@
     <section class="card sec" id="what-works">
       <h2>What actually improves Listening scores</h2>
       <p>
-        High scorers don’t “try to understand everything”. They stay calm and work like a system.
+        High scorers don’t “try to understand everything”. They work like a system:
+        <b id="prediction">read-ahead + prediction</b>, keyword tracking, and calm accuracy.
       </p>
       <ul>
-        <li>Read ahead fast and predict what’s coming</li>
-        <li>Underline keywords and listen for paraphrases</li>
-        <li>Accept that you’ll miss words — but never miss the answer</li>
-        <li>Train spelling, maps, names, numbers, and signposting</li>
+        <li><b>Prediction:</b> Read ahead fast and guess what’s coming</li>
+        <li><b>Keywords:</b> underline and listen for paraphrase</li>
+        <li><b id="recovery">Recovery:</b> miss holeo “panic” na — next answer catch immediately</li>
+        <li><b id="trap-control">Trap control:</b> corrections, changes, distractors</li>
       </ul>
     </section>
 
     <section class="card sec" id="how-lizon">
       <h2>How LizOn trains Listening (not just past papers)</h2>
       <p>
-        LizOn Listening training focuses on skill-building first, then real exam pressure.
-        Students learn how answers are hidden using paraphrase, corrections, and trap patterns.
+        LizOn training is skill-first, then exam pressure.
+        Students learn how answers are hidden through paraphrase, corrections, and trap patterns.
       </p>
       <p>
         We fix mistakes by category: spelling leakage, number confusion, map direction errors,
@@ -540,11 +692,44 @@
       </p>
     </section>
 
-    <!-- Featured Skills + Computer-Based readiness (supporting, not dominating) -->
+    <!-- Computer-based assistance section (your USP request) -->
+    <section class="card sec" id="computer-based">
+      <h2>Computer-Based Listening Assistance (Bangladesh e ei level e keu kore na)</h2>
+      <p>
+        Most students fail not because they don’t know English —
+        but because computer-based flow e <b>typing + switching attention + speed</b> manage korte pare na.
+      </p>
+      <div class="grid" style="margin-top:12px">
+        <div class="mini col6">
+          <h3>What we train (Computer-based)</h3>
+          <ul>
+            <li>Fast read-ahead under timer</li>
+            <li>Spelling discipline for names/numbers</li>
+            <li>Map/diagram handling without confusion</li>
+            <li>Recovery after a miss (no freezing)</li>
+          </ul>
+        </div>
+        <div class="mini col6">
+          <h3>Result</h3>
+          <p>
+            Exam day e “new feel” thake na.
+            You’ve already practiced the same pressure + flow, so score becomes stable.
+          </p>
+          <div class="btnrow" style="margin-top:10px">
+            <a class="btn primary" href="ielts.html#skills">Explore Skills Practice</a>
+            <a class="btn" href="ielts.html#helpmechoose">Talk with an Expert</a>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:12px; color:var(--muted); font-weight:800;">
+        Focus: computer-based readiness is a skill — not luck.
+      </p>
+    </section>
+
     <section class="card sec" id="skills-practice">
       <h2>Skills Practice: build Listening confidence before the real exam</h2>
       <p>
-        Students don’t only need “tips”. They need a place to practice skills repeatedly —
+        Students don’t only need “tips”. They need module-wise practice —
         so the real exam feels familiar, not scary.
       </p>
 
@@ -561,9 +746,7 @@
 
         <div class="mini col6">
           <h3>Explore Skills Practice Area</h3>
-          <p>
-            Practice your weak points module-wise and build exam control.
-          </p>
+          <p>Practice your weak points module-wise and build exam control.</p>
           <div class="btnrow" style="margin-top:10px">
             <a class="btn primary" href="https://www.mylizon.com/ielts.html#skills">Explore Skills Practice</a>
             <a class="btn" href="ielts.html#helpmechoose">Talk with an Expert</a>
@@ -614,7 +797,16 @@
       </div>
     </section>
 
-    <!-- FOOTER (Card Style) -->
+    <!-- AskLizOn anchor -->
+    <section class="card sec" id="askliz-on">
+      <h2>AskLizOn – Listening</h2>
+      <p>
+        Tap the <b>Ask</b> button (bottom-left). Choose your exact Listening problem,
+        then hit <b>Show me the fix</b> to jump to the right section instantly.
+      </p>
+    </section>
+
+    <!-- FOOTER -->
     <div class="card footerCard">
       <div class="footerInner">
         <div class="footerTitle">Options</div>
@@ -664,16 +856,18 @@
     <button class="sbtn" id="goBottom" type="button" aria-label="Scroll to bottom">↓</button>
   </div>
 
-  <!-- Bottom WhatsApp Bar -->
+  <!-- Bottom Bar: Need guidance + Choose Course -->
   <div class="bottomBar">
     <div class="badge">
       <span class="greenDot"></span>
       <span>Need guidance?</span>
     </div>
-    <a class="btn primary" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a class="btn primary" href="https://www.mylizon.com/ielts.html" target="_blank" rel="noopener">
+      Choose The Right Course
+    </a>
   </div>
 
-  <!-- AskLizOn – Listening (Floating Button + Chat Panel) -->
+  <!-- AskLizOn Floating Button + Panel -->
   <div class="askFab" id="askFab" aria-label="Open AskLizOn Listening">
     <span class="askDot" aria-hidden="true"></span>
     <span class="askLabel">Ask</span>
@@ -687,7 +881,7 @@
 
     <div class="askBody" id="askBody">
       <div class="askBubble">Kon problem hocche? Choose one.</div>
-      <div class="askMini">You can switch problems anytime. No refresh needed.</div>
+      <div class="askMini">Choose again anytime. No refresh needed.</div>
 
       <div class="askChoices" id="askChoices">
         <div class="askChip" data-key="p4">Part 4 shuni, miss hoy</div>
@@ -698,17 +892,19 @@
         <div class="askChip" data-key="system">Practice kori, stable na</div>
       </div>
 
-      <!-- Dynamic answer area (REPLACES, not APPENDS) -->
       <div class="askAnswer" id="askAnswer" style="display:none;">
         <p class="askHook" id="askHook">—</p>
         <p class="askDiag" id="askDiag">—</p>
       </div>
 
-      <!-- Fix button (full width) -->
       <button class="askFixBtn" id="askFixBtn" type="button" style="display:none;">
         <span>Show me the fix</span>
-        <span class="askArrow">→</span>
+        <span style="font-weight:950; opacity:.9;">→</span>
       </button>
+
+      <div class="askMini" style="margin-top:-2px;">
+        Need a human? Tap WhatsApp from footer anytime.
+      </div>
     </div>
   </div>
 
@@ -734,6 +930,21 @@
       applyTheme(current === "dark" ? "light" : "dark");
     });
 
+    // Smooth jump helper
+    function smoothJump(sel){
+      const el = document.querySelector(sel);
+      if(el){
+        el.scrollIntoView({ behavior:"smooth", block:"start" });
+      } else {
+        window.location.hash = sel;
+      }
+    }
+
+    // Inline jump links
+    document.querySelectorAll("[data-jump]").forEach(btn => {
+      btn.addEventListener("click", () => smoothJump(btn.getAttribute("data-jump")));
+    });
+
     // Scroll buttons
     document.getElementById("goTop").addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -742,7 +953,19 @@
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     });
 
-    // ===== AskLizOn – Listening Logic (Fixed) =====
+    // Progress bar
+    const progressBar = document.getElementById("progressBar");
+    function updateProgress(){
+      const doc = document.documentElement;
+      const scrollTop = window.scrollY || doc.scrollTop;
+      const scrollHeight = doc.scrollHeight - doc.clientHeight;
+      const p = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      progressBar.style.width = p.toFixed(2) + "%";
+    }
+    window.addEventListener("scroll", updateProgress, { passive:true });
+    updateProgress();
+
+    // ===== AskLizOn Logic (fixed: reset + close + re-choose) =====
     const askFab = document.getElementById("askFab");
     const askPanel = document.getElementById("askPanel");
     const askClose = document.getElementById("askClose");
@@ -753,38 +976,38 @@
     const askDiag = document.getElementById("askDiag");
     const askFixBtn = document.getElementById("askFixBtn");
 
-    let currentTarget = "#why-hard"; // default
+    let currentTarget = "#why-hard";
 
     const data = {
       p4: {
         hook: "You’re listening… but not capturing answers.",
-        diag: "Part 4 usually fails because of prediction + tracking. Meaning bujhte gele focus chole jay — system lagbe.",
+        diag: "Part 4 usually fails because prediction + tracking weak. Meaning chase korle focus chole jay — system lagbe.",
         target: "#what-works"
       },
       panic: {
         hook: "This is a recovery problem.",
-        diag: "Ekta miss korlei freeze hole next answers chole jay. Skill is: skip + reset + catch next.",
-        target: "#why-hard"
+        diag: "Ekta miss korlei freeze hole next answers chole jay. Skill: skip + reset + catch next.",
+        target: "#recovery"
       },
       accent: {
         hook: "Accent shock is normal — but you’re chasing meaning.",
         diag: "High scorers track keywords + paraphrase. Meaning chase korle attention drain hoy.",
-        target: "#what-works"
+        target: "#prediction"
       },
       spelling: {
         hook: "Free marks loss.",
-        diag: "You earned the answer but lost it on spelling/number/date. Fix by category, re-test, lock accuracy.",
+        diag: "Answer thik chilo, but spelling/number/date e kete gelo. Category-wise fix + re-test lagbe.",
         target: "#how-lizon"
       },
       trap: {
         hook: "Trap = correction moment missed.",
-        diag: "IELTS audio changes info intentionally (corrections). You must listen for ‘change points’.",
-        target: "#why-hard"
+        diag: "IELTS audio changes info intentionally. ‘Change points’ detect korte hobe.",
+        target: "#trap-control"
       },
       system: {
         hook: "Random practice gives random score.",
-        diag: "Stable score comes from a loop: prediction → focus → trap control → accuracy → test again.",
-        target: "#skills-practice"
+        diag: "Stable score comes from a loop: prediction → focus → trap control → accuracy → test again + computer-based flow.",
+        target: "#computer-based"
       }
     };
 
@@ -794,7 +1017,6 @@
     }
 
     function closeAsk(){
-      // small close animation
       askPanel.classList.remove("visible");
       askPanel.classList.add("hidden");
     }
@@ -807,18 +1029,12 @@
     }
 
     askFab.addEventListener("click", () => {
-      if (askPanel.classList.contains("visible")) {
-        closeAsk();
-      } else {
-        openAsk();
-      }
+      if (askPanel.classList.contains("visible")) closeAsk();
+      else openAsk();
     });
 
-    askClose.addEventListener("click", () => {
-      closeAsk();
-    });
+    askClose.addEventListener("click", () => closeAsk());
 
-    // IMPORTANT FIX: replace answer instead of appending (so user can choose again)
     askChips.forEach(chip => {
       chip.addEventListener("click", () => {
         const key = chip.getAttribute("data-key");
@@ -837,29 +1053,21 @@
       });
     });
 
-    // Show me the fix -> scroll + auto close + reset (your requested behavior)
     askFixBtn.addEventListener("click", () => {
-      const el = document.querySelector(currentTarget);
-      if(el){
-        el.scrollIntoView({ behavior:"smooth", block:"start" });
-      } else {
-        window.location.hash = currentTarget;
-      }
+      smoothJump(currentTarget);
 
-      // close + reset after a tiny delay so the click feels clean
+      // close + reset with small animation timing
       setTimeout(() => {
         closeAsk();
         setTimeout(() => resetAsk(), 180);
       }, 250);
     });
 
-    // optional: click outside to close (mobile-friendly)
+    // click outside to close
     document.addEventListener("click", (e) => {
       if (!askPanel.classList.contains("visible")) return;
       const inside = askPanel.contains(e.target) || askFab.contains(e.target);
-      if (!inside) {
-        closeAsk();
-      }
+      if (!inside) closeAsk();
     });
   </script>
 

@@ -183,6 +183,52 @@
     .mini p{ margin:0; color:rgba(233,255,246,.82); font-size:14px; }
     html[data-theme="light"] .mini p{ color: rgba(5,32,24,.78); }
 
+    /* AskLizOn - Listening */
+    .askBox{ padding:18px; }
+    .askHead{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+    }
+    .askTitle{ margin:0; font-size:20px; }
+    .askSub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      max-width:75ch;
+    }
+    .askPills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+    .askBtn{
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.18);
+      color:var(--text);
+      font-weight:800;
+      font-size:13px;
+      transition:.18s ease;
+      text-align:left;
+    }
+    html[data-theme="light"] .askBtn{ background: rgba(255,255,255,.55); }
+    .askBtn:hover{ transform: translateY(-1px); border-color: rgba(29,211,167,.55); }
+    .askResult{
+      margin-top:14px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.18);
+      padding:14px;
+      display:none;
+    }
+    html[data-theme="light"] .askResult{ background: rgba(255,255,255,.55); }
+    .askHook{ margin:0 0 6px; font-weight:900; }
+    .askDiag{ margin:0 0 10px; color:rgba(233,255,246,.86); }
+    html[data-theme="light"] .askDiag{ color: rgba(5,32,24,.86); }
+
     /* Footer card */
     .footerCard{
       margin-top:18px;
@@ -306,14 +352,46 @@
       <div class="btnrow">
         <a class="btn primary" href="ielts.html#levels">Explore LizOn IELTS Courses</a>
         <a class="btn" href="ielts.html#helpmechoose">Help Me Choose</a>
+        <a class="btn" href="#asklizon-listening">AskLizOn – Listening</a>
       </div>
     </div>
+  </div>
+
+  <!-- AskLizOn - Listening -->
+  <div class="wrap" style="padding-top:0;">
+    <section class="card askBox" id="asklizon-listening">
+      <div class="askHead">
+        <div>
+          <h2 class="askTitle">AskLizOn – Listening</h2>
+          <p class="askSub">Choose your real problem. You’ll get the correct fix + jump to the exact section (no scrolling pain).</p>
+        </div>
+        <div class="trust" style="margin:0;">Quick Diagnostic • Student-first</div>
+      </div>
+
+      <div class="askPills" aria-label="Listening problems">
+        <button class="askBtn" type="button" data-problem="p4miss">“Part 4 e shob shuni, but answer miss hoy.”</button>
+        <button class="askBtn" type="button" data-problem="panic">“Ekta miss korlei pore shob miss hoy.”</button>
+        <button class="askBtn" type="button" data-problem="accent">“Accent bujhte gele focus chole jay.”</button>
+        <button class="askBtn" type="button" data-problem="spelling">“Spelling/number/date e marks jai.”</button>
+        <button class="askBtn" type="button" data-problem="traps">“Traps / correction e confuse hoy.”</button>
+        <button class="askBtn" type="button" data-problem="system">“Practice kori, kintu score stable na.”</button>
+      </div>
+
+      <div class="askResult" id="askResult">
+        <p class="askHook" id="askHook">—</p>
+        <p class="askDiag" id="askDiag">—</p>
+        <div class="btnrow" style="margin-top:10px;">
+          <a class="btn primary" id="askJump" href="#why-hard">Jump to Fix</a>
+          <a class="btn" href="ielts-roadmap.html">See Roadmap</a>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- CONTENT -->
   <main class="wrap pagePad">
 
-    <section class="card sec">
+    <section class="card sec" id="why-hard">
       <h2>Why IELTS Listening feels hard (even after practice)</h2>
       <p>
         Many students can understand English videos with subtitles — but struggle in IELTS Listening.
@@ -327,7 +405,7 @@
       </ul>
     </section>
 
-    <section class="card sec">
+    <section class="card sec" id="what-works">
       <h2>What actually improves Listening scores</h2>
       <p>
         High scorers don’t “try to understand everything”. They stay calm and work like a system.
@@ -340,7 +418,7 @@
       </ul>
     </section>
 
-    <section class="card sec">
+    <section class="card sec" id="how-lizon">
       <h2>How LizOn trains Listening (not just past papers)</h2>
       <p>
         LizOn Listening training focuses on skill-building first, then real exam pressure.
@@ -388,7 +466,7 @@
       </p>
     </section>
 
-    <section class="card sec">
+    <section class="card sec" id="course-fit">
       <h2>Which LizOn course solves your Listening problem?</h2>
 
       <div class="grid">
@@ -514,6 +592,63 @@
     });
     document.getElementById("goBottom").addEventListener("click", () => {
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    });
+
+    // AskLizOn – Listening logic
+    const askBox = document.getElementById("askResult");
+    const askHook = document.getElementById("askHook");
+    const askDiag  = document.getElementById("askDiag");
+    const askJump = document.getElementById("askJump");
+
+    const askMap = {
+      p4miss: {
+        hook: "You’re listening… but not catching answers.",
+        diag: "Part 4 e issue usually ‘prediction + tracking’ — understanding na. You need a system, not more tests.",
+        target: "#what-works"
+      },
+      panic: {
+        hook: "This is a recovery problem, not a listening problem.",
+        diag: "Ekta miss korlei freeze hole next 2–3 ta answer automatically chole jay. Train ‘skip + reset’ behaviour.",
+        target: "#why-hard"
+      },
+      accent: {
+        hook: "Accent bujhte giye focus lose hocche — normal.",
+        diag: "Accent shock kombe when you stop chasing meaning and start tracking keywords + paraphrase.",
+        target: "#what-works"
+      },
+      spelling: {
+        hook: "You earned the answer, then lost it on paper.",
+        diag: "Spelling/number/date leakage is free-mark loss. Fix it by category and re-test.",
+        target: "#how-lizon"
+      },
+      traps: {
+        hook: "IELTS is full of corrections. Your brain needs trap-control.",
+        diag: "Traps মানে audio deliberately changes/adjusts info. You must listen for ‘correction moments’.",
+        target: "#why-hard"
+      },
+      system: {
+        hook: "Random practice gives random scores.",
+        diag: "Stable score ashe when you train: prediction → focus → trap-control → accuracy, then test again.",
+        target: "#skills-practice"
+      }
+    };
+
+    document.querySelectorAll(".askBtn").forEach(btnEl => {
+      btnEl.addEventListener("click", () => {
+        const key = btnEl.getAttribute("data-problem");
+        const item = askMap[key];
+        if(!item) return;
+
+        askHook.textContent = item.hook;
+        askDiag.textContent = item.diag;
+        askJump.setAttribute("href", item.target);
+
+        askBox.style.display = "block";
+
+        // Smooth scroll so result is visible
+        const top = document.getElementById("asklizon-listening").getBoundingClientRect().top + window.scrollY - 12;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
     });
   </script>
 

@@ -75,7 +75,7 @@
     .alert{
       position: sticky;
       top: 0;
-      z-index: 80;
+      z-index: 90;
       background: linear-gradient(135deg, rgba(215,184,106,.20), rgba(18,163,106,.14));
       border-bottom: 1px solid var(--line);
       backdrop-filter: blur(10px);
@@ -124,8 +124,8 @@
     /* Header */
     .topbar{
       position: sticky;
-      top: 56px; /* stays below alert */
-      z-index: 70;
+      top: 56px; /* below alert */
+      z-index: 80;
       backdrop-filter: blur(10px);
       background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.48));
       border-bottom: 1px solid var(--line);
@@ -168,7 +168,7 @@
     .actions{
       display:flex; align-items:center; gap:10px;
       justify-content:flex-end;
-      min-width: 240px;
+      min-width: 260px;
     }
     .btn{
       padding: 10px 12px;
@@ -190,29 +190,40 @@
       color: white;
       border-color: rgba(255,255,255,.14);
     }
-    .btn.ghost{
-      background: transparent;
-    }
-
-    .hamburger{
-      width: 46px; height: 46px;
-      border-radius: 16px;
+    .btn.ghost{ background: transparent; }
+    .menuBtn{
+      padding: 10px 12px;
+      border-radius: 999px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.55);
       cursor:pointer;
+      transition:.18s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      font-weight: 900;
+      font-family: var(--fontH);
+      font-size: 13.5px;
+      user-select:none;
+      min-width: 92px;
+      justify-content:center;
     }
-    [data-theme="dark"] .hamburger{ background: rgba(255,255,255,.04); }
-    .hamburger span{
-      display:block;
-      width: 18px; height: 2px;
+    [data-theme="dark"] .menuBtn{ background: rgba(255,255,255,.04); }
+    .menuBtn:hover{ transform: translateY(-1px); box-shadow: var(--shadow2); }
+    .menuIcon{
+      width: 18px; height: 18px; position: relative; display:inline-block;
+    }
+    .menuIcon:before, .menuIcon:after, .menuIcon i{
+      content:"";
+      position:absolute; left:0; right:0;
+      height:2px; border-radius:999px;
       background: var(--text);
-      margin: 6px auto;
-      border-radius: 999px;
       opacity:.9;
     }
+    .menuIcon:before{ top:2px; }
+    .menuIcon i{ top:8px; }
+    .menuIcon:after{ top:14px; }
 
-    /* Main cards */
-    .page{ padding: 18px 0 96px; } /* bottom bar space */
+    /* Main */
+    .page{ padding: 18px 0 110px; } /* bottom bar space */
     .grid{
       display:grid;
       grid-template-columns: 1.1fr .9fr;
@@ -241,7 +252,7 @@
       padding: 8px 12px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.55);
+      background: rgba(0,0,0,.02);
       font-weight: 800;
       font-family: var(--fontH);
       font-size: 13px;
@@ -276,7 +287,7 @@
       padding: 12px 14px;
       border-radius: 16px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.55);
+      background: rgba(0,0,0,.02);
       font-family: var(--fontH);
       font-weight: 800;
     }
@@ -305,7 +316,7 @@
       border: 1px solid rgba(18,163,106,.28);
       background:
         radial-gradient(600px 220px at 12% 0%, rgba(18,163,106,.18), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.44));
+        linear-gradient(180deg, rgba(0,0,0,.01), rgba(0,0,0,.00));
     }
     [data-theme="dark"] .demoSpot{
       background:
@@ -341,7 +352,50 @@
       display:flex; flex-wrap:wrap; gap: 10px;
     }
 
-    /* Ask panel */
+    /* Join link box */
+    .joinBox{
+      margin-top: 12px;
+      border-radius: 18px;
+      border: 1px dashed rgba(15,90,61,.35);
+      background: rgba(18,163,106,.08);
+      padding: 12px;
+    }
+    [data-theme="dark"] .joinBox{
+      border-color: rgba(18,163,106,.32);
+      background: rgba(18,163,106,.10);
+    }
+    .joinBox b{
+      font-family: var(--fontH);
+      display:block;
+      margin-bottom: 6px;
+    }
+    .joinRow{
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.35;
+    }
+    .joinRow code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      padding: 6px 8px;
+      border-radius: 12px;
+      background: rgba(0,0,0,.04);
+      border: 1px solid var(--line);
+      color: var(--text);
+      overflow-wrap:anywhere;
+    }
+    [data-theme="dark"] .joinRow code{
+      background: rgba(0,0,0,.18);
+    }
+    .joinActions{
+      display:flex; flex-wrap:wrap; gap: 10px;
+      margin-top: 10px;
+    }
+
+    /* AskLizOn auto answer */
     .askTitle{
       margin: 0;
       font-family: var(--fontH);
@@ -361,15 +415,33 @@
       padding: 9px 10px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.55);
+      background: rgba(0,0,0,.02);
       cursor:pointer;
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 900;
       font-family: var(--fontH);
     }
     [data-theme="dark"] .chip{ background: rgba(255,255,255,.04); }
     .chip:hover{ transform: translateY(-1px); box-shadow: var(--shadow2); }
 
+    .askAnswer{
+      margin-top: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(215,184,106,.25);
+      background: rgba(215,184,106,.10);
+      padding: 12px;
+    }
+    .askAnswer b{
+      font-family: var(--fontH);
+      display:block;
+      margin-bottom: 6px;
+    }
+    .askAnswer p{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13.5px;
+    }
     .askBox{
       display:flex; gap: 10px;
       margin-top: 10px;
@@ -379,87 +451,46 @@
       padding: 12px 12px;
       border-radius: 16px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.62);
+      background: rgba(0,0,0,.02);
       color: var(--text);
       outline:none;
       font-size: 14px;
     }
     [data-theme="dark"] .askBox input{ background: rgba(0,0,0,.12); }
 
-    /* Footer card style */
-    .footerCard{
-      margin-top: 14px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow2);
-      padding: 16px;
-    }
-    .footerGrid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 12px;
-      align-items:start;
-    }
-    @media(max-width: 980px){
-      .footerGrid{ grid-template-columns:1fr; }
-    }
-    .footerCard h3{
-      margin:0;
-      font-family: var(--fontH);
-      font-size: 16px;
-    }
-    .footerCard p{
-      margin: 10px 0 0;
-      color: var(--muted);
-      line-height: 1.45;
-      font-size: 13.5px;
-    }
-    .footerBtns{
-      display:flex; flex-wrap:wrap; gap: 10px;
-      justify-content:flex-end;
-    }
-    @media(max-width:980px){ .footerBtns{ justify-content:flex-start; } }
-    .socialRow{
-      margin-top: 10px;
-      display:flex; gap: 10px; flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    @media(max-width:980px){ .socialRow{ justify-content:flex-start; } }
-
-    /* Floating Ask button */
-    .askFab{
+    /* Creative scroll buttons */
+    .scrollBtns{
       position: fixed;
-      left: 14px;
+      right: 14px;
       bottom: 86px;
-      z-index: 85;
-      display:inline-flex;
-      align-items:center;
+      z-index: 95;
+      display:flex;
+      flex-direction: column;
       gap: 10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(215,184,106,.25);
-      background: rgba(215,184,106,.12);
+    }
+    .scrollBtn{
+      width: 46px; height: 46px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.70);
       box-shadow: var(--shadow2);
       cursor:pointer;
-      user-select:none;
-      font-family: var(--fontH);
+      transition:.18s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       font-weight: 900;
+      font-family: var(--fontH);
     }
-    .askDot{
-      width: 10px; height: 10px;
-      border-radius: 999px;
-      background: var(--gold);
-      box-shadow: 0 0 0 4px rgba(215,184,106,.18);
-    }
-    .askFab span{ color: var(--muted); font-weight: 900; }
-    .askFab b{ color: var(--text); }
+    [data-theme="dark"] .scrollBtn{ background: rgba(255,255,255,.05); }
+    .scrollBtn:hover{ transform: translateY(-1px); }
+    .scrollBtn small{ display:block; font-size: 18px; }
 
-    /* Bottom guidance bar */
+    /* Bottom bar */
     .bottomBar{
       position: fixed;
       left: 0; right: 0; bottom: 0;
-      z-index: 90;
+      z-index: 100;
       padding: 10px 12px;
       background: linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,.92));
       border-top: 1px solid var(--line);
@@ -497,7 +528,7 @@
       position: fixed; inset:0;
       background: rgba(0,0,0,.35);
       backdrop-filter: blur(8px);
-      z-index: 120;
+      z-index: 140;
       display:none;
       align-items:flex-end;
     }
@@ -521,10 +552,7 @@
       gap: 10px;
       padding: 6px 4px 10px;
     }
-    .sheetTop b{
-      font-family: var(--fontH);
-      font-size: 14px;
-    }
+    .sheetTop b{ font-family: var(--fontH); font-size: 14px; }
     .sheetClose{
       width: 44px; height: 44px;
       border-radius: 16px;
@@ -557,9 +585,7 @@
       70%{ box-shadow: 0 0 0 14px rgba(18,163,106,0); }
       100%{ box-shadow: 0 0 0 0 rgba(18,163,106,0); }
     }
-    .pulse{
-      animation: pulseGlow 1.8s ease-out infinite;
-    }
+    .pulse{ animation: pulseGlow 1.8s ease-out infinite; }
   </style>
 </head>
 
@@ -571,10 +597,10 @@
       <div class="alertRow">
         <div class="alertLeft">
           <div class="badge pulse">DEMO • TOMORROW • 9 PM</div>
-          <div class="alertTitle">Computer Based — “The Most Accurate Method to get IELTS Score”</div>
+          <div class="alertTitle">Computer Based — “The Most Accurate Method To Get IELTS Score”</div>
           <div class="alertSub" id="demoCountdownTop">Starts in: --</div>
         </div>
-        <a class="btn primary" id="demoTopBtn" href="#" target="_blank" rel="noopener">Get demo link</a>
+        <a class="btn primary" id="joinNowTop" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join now</a>
       </div>
     </div>
   </div>
@@ -593,8 +619,9 @@
 
         <div class="actions">
           <button class="btn ghost" id="themeToggle" type="button" title="Toggle Theme">Light</button>
-          <button class="hamburger" id="menuBtn" aria-label="Open Menu" type="button">
-            <span></span><span></span><span></span>
+          <button class="menuBtn" id="menuBtn" type="button" aria-label="Open menu">
+            <span class="menuIcon" aria-hidden="true"><i></i></span>
+            Menu
           </button>
         </div>
       </div>
@@ -606,7 +633,7 @@
     <div class="wrap">
 
       <div class="grid">
-        <!-- LEFT: Upcoming + Demo highlight -->
+        <!-- LEFT -->
         <section class="card">
           <div class="cardPad">
 
@@ -634,6 +661,7 @@
               <div class="tick">✅ <div><b>N2F takes care of everything</b></div></div>
             </div>
 
+            <!-- DEMO SPOT -->
             <div class="demoSpot card" style="margin-top:14px;">
               <div class="cardPad">
                 <div class="demoHead">
@@ -641,7 +669,7 @@
                     <div class="badge pulse" style="margin-bottom:8px;">DEMO • TOMORROW • 9 PM</div>
                     <h2>Computer Based Demo Class</h2>
                     <div class="askSub" style="margin:6px 0 0;">
-                      Topic: <b>“The Most Accurate Method to get IELTS Score”</b><br/>
+                      Topic: <b>“The Most Accurate Method To Get IELTS Score”</b><br/>
                       Most students get it wrong — and that costs bands.
                     </div>
                   </div>
@@ -651,14 +679,39 @@
                   </div>
                 </div>
 
+                <div class="joinBox">
+                  <b>Joining Link Details</b>
+                  <div class="joinRow">
+                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">@Hasif(Parsonal_LizOn)</b></div>
+                    <div>An IELTS Session to Accurate Your Scoring Method</div>
+                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">Class Topic:</b> <span style="color:var(--text); font-weight:800;">The Most Accurate Method To Get IELTS Score</span></div>
+                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">Time:</b> ২৪ই ডিসেম্বর, বুধবার, রাত ৯ টায়।</div>
+                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">Joining Link:</b></div>
+                    <code id="meetLink">https://meet.google.com/bfk-eeax-sbi</code>
+                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">Meeting ID:</b></div>
+                    <code id="meetId">bfk-eeax-sbi</code>
+                    <div style="margin-top:6px; color:var(--text); font-weight:800;">
+                      Do the full class and get a chance of a huge discount
+                    </div>
+                    <div style="margin-top:2px;">By then Start Learning from <b style="color:var(--text);">MyLizOn.com</b></div>
+                  </div>
+
+                  <div class="joinActions">
+                    <a class="btn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join now</a>
+                    <button class="btn" id="copyMeetLink" type="button">Copy link</button>
+                    <button class="btn" id="copyMeetId" type="button">Copy ID</button>
+                  </div>
+                </div>
+
                 <div class="demoBtns">
-                  <a class="btn primary" id="demoBtnMain" href="#" target="_blank" rel="noopener">Get demo link</a>
+                  <a class="btn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join now</a>
                   <a class="btn" id="admitBtn" href="#" target="_blank" rel="noopener">Check availability</a>
                   <a class="btn" href="ielts.html">Learn more</a>
                 </div>
 
                 <p class="askSub" style="margin:10px 0 0;">
-                  Brutal truth: You don’t need more “tips”. You need the right method + the right level. Demo te dekhai dibo exactly kibhabe.
+                  Brutal truth: You don’t need more “tips”. You need the right method + the right level.
+                  Demo te dekhai dibo exactly kibhabe.
                 </p>
               </div>
             </div>
@@ -666,91 +719,97 @@
           </div>
         </section>
 
-        <!-- RIGHT: AskLizOn (tap questions + send) -->
+        <!-- RIGHT: AskLizOn (auto answer + send) -->
         <aside class="card" id="askPanel">
           <div class="cardPad">
             <h3 class="askTitle">Ask LizOn</h3>
-            <p class="askSub">Tap a question — it will go to the right place instantly. Or type your own in Banglish.</p>
+            <p class="askSub">Tap a question — it will answer automatically. Then you can send to counselor if needed.</p>
 
             <div class="chips">
-              <button class="chip" type="button" data-q="Demo class er link chai.">Demo link chai</button>
-              <button class="chip" type="button" data-q="Amar level/band koto? ZERO/HOPE konটা better?">Level check</button>
-              <button class="chip" type="button" data-q="Computer-based e typing slow. Ki plan nibo?">Typing slow</button>
-              <button class="chip" type="button" data-q="Band 6+ er fastest routine ta den.">Band 6+ plan</button>
-              <button class="chip" type="button" data-q="Fee & schedule details dorkar.">Fee & schedule</button>
-              <button class="chip" type="button" data-q="Ami confused: mock dibo naki class e join korbo?">Mock or class</button>
+              <button class="chip" type="button" data-q="Demo link chai" data-key="demo">Demo link chai</button>
+              <button class="chip" type="button" data-q="Level check" data-key="level">Level check</button>
+              <button class="chip" type="button" data-q="Typing slow" data-key="typing">Typing slow</button>
+              <button class="chip" type="button" data-q="Band 6+ plan" data-key="band">Band 6+ plan</button>
+              <button class="chip" type="button" data-q="Fee & schedule" data-key="fee">Fee & schedule</button>
+              <button class="chip" type="button" data-q="Mock or class" data-key="mock">Mock or class</button>
+            </div>
+
+            <div class="askAnswer" id="askAnswer" style="display:none;">
+              <b id="ansTitle">Answer</b>
+              <p id="ansText">—</p>
             </div>
 
             <div class="askBox">
-              <input id="askInput" type="text" placeholder="Example: 'Exam 20 din por. Amar speaking atke jay. Ki korbo?'" />
+              <input id="askInput" type="text" placeholder="Type your own question in Banglish..." />
               <button class="btn primary" id="askSend" type="button">Send</button>
             </div>
 
             <p class="askSub" style="margin:10px 0 0;">
-              Note: Message e automatically page name + “Demo tomorrow 9 PM” tag jabe, so counselor instantly bujhte parbe.
+              Tip: Answer instantly dekhun. Jodi lagbe, Send e tap kore counselor ke pathan.
             </p>
           </div>
         </aside>
       </div>
 
-      <!-- FOOTER (Card style like your screenshot) -->
-      <div class="footerCard">
-        <div class="footerGrid">
-          <div>
-            <h3>Contact & Location</h3>
-            <p>
-              <span style="color:var(--gold); font-weight:900; font-family:var(--fontH);">Address:</span>
-              51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
-              <span style="color:var(--gold); font-weight:900; font-family:var(--fontH);">IELTS/PTE Helpline:</span>
-              <a href="tel:+8801611611139" style="text-decoration:underline;">01611611139</a><br/>
-              <span style="color:var(--gold); font-weight:900; font-family:var(--fontH);">Study Abroad/Visa Processing:</span>
-              <a href="tel:+8801608881545" style="text-decoration:underline;">01608881545</a>
-            </p>
-          </div>
-
-          <div>
-            <div class="footerBtns">
-              <a class="btn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-              <a class="btn primary" id="footerChat" href="#" target="_blank" rel="noopener">Chat now</a>
+      <!-- FOOTER -->
+      <div class="card" style="margin-top:14px;">
+        <div class="cardPad">
+          <div class="infoRow" style="justify-content:space-between; align-items:flex-start;">
+            <div style="max-width: 65ch;">
+              <h3 style="margin:0; font-family:var(--fontH); font-size:16px;">Contact & Location</h3>
+              <p style="margin:10px 0 0; color:var(--muted); line-height:1.45; font-size:13.5px;">
+                <span style="color:var(--gold); font-weight:900; font-family:var(--fontH);">Address:</span>
+                51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
+                <span style="color:var(--gold); font-weight:900; font-family:var(--fontH);">IELTS/PTE Helpline:</span>
+                <a href="tel:+8801611611139" style="text-decoration:underline;">01611611139</a><br/>
+                <span style="color:var(--gold); font-weight:900; font-family:var(--fontH);">Study Abroad/Visa Processing:</span>
+                <a href="tel:+8801608881545" style="text-decoration:underline;">01608881545</a>
+              </p>
             </div>
 
-            <div style="margin-top:14px;">
-              <h3 style="margin:0; font-family:var(--fontH); font-size:16px;">Social Media</h3>
-              <p style="margin:8px 0 0; color:var(--muted); font-size:13.5px;">
-                Follow our updates, results, and guidance content.
-              </p>
+            <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
+              <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+                <a class="btn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+                <a class="btn primary" id="footerChat" href="#" target="_blank" rel="noopener">Chat now</a>
+              </div>
 
-              <div class="socialRow">
-                <a class="btn" href="#" title="Facebook">Facebook</a>
-                <a class="btn" href="#" title="YouTube">YouTube</a>
-                <a class="btn" href="#" title="LinkedIn">LinkedIn</a>
+              <div style="width:100%; max-width: 420px;">
+                <h3 style="margin:0; font-family:var(--fontH); font-size:16px;">Social Media</h3>
+                <p style="margin:8px 0 0; color:var(--muted); font-size:13.5px;">
+                  Follow our updates, results, and guidance content.
+                </p>
+                <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+                  <a class="btn" href="#" title="Facebook">Facebook</a>
+                  <a class="btn" href="#" title="YouTube">YouTube</a>
+                  <a class="btn" href="#" title="LinkedIn">LinkedIn</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <p style="margin:14px 0 0; color:var(--muted); font-size:12.5px;">
-          © 2025 MyLizOn.com | LizOn Education
-        </p>
+          <p style="margin:14px 0 0; color:var(--muted); font-size:12.5px;">
+            © 2025 MyLizOn.com | LizOn Education
+          </p>
+        </div>
       </div>
 
     </div>
   </main>
 
-  <!-- Floating Ask button (opens the Ask panel + scrolls) -->
-  <button class="askFab" id="askFab" type="button" aria-label="Ask LizOn">
-    <span class="askDot" aria-hidden="true"></span>
-    <b>Ask</b> <span>LizOn</span>
-  </button>
+  <!-- Creative scroll buttons -->
+  <div class="scrollBtns" aria-label="Scroll Controls">
+    <button class="scrollBtn" id="scrollUp" type="button" aria-label="Scroll up"><small>↑</small></button>
+    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll down"><small>↓</small></button>
+  </div>
 
-  <!-- Bottom guidance bar (Demo override) -->
+  <!-- Bottom bar (Demo override) -->
   <div class="bottomBar" role="region" aria-label="Guidance Bar">
     <div class="bottomInner">
       <div class="bottomTxt">
-        <b id="bottomTitle">Need guidance?</b>
-        <span id="bottomSub">Chat now — tell us your current level + deadline.</span>
+        <b id="bottomTitle">Demo tomorrow — 9 PM</b>
+        <span id="bottomSub">Tap to join. Then ask your question inside Ask LizOn.</span>
       </div>
-      <a class="btn primary" id="bottomCta" href="#" target="_blank" rel="noopener">Chat now</a>
+      <a class="btn primary" id="bottomCta" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join now</a>
     </div>
   </div>
 
@@ -764,9 +823,13 @@
       <div class="sheetGrid">
         <a class="sheetLink" href="index.html"><b>Home</b><span>Back to main</span></a>
         <a class="sheetLink" href="ielts.html"><b>IELTS</b><span>Courses + path</span></a>
+        <a class="sheetLink" href="ielts-listening.html"><b>Listening</b><span>Skill page</span></a>
+        <a class="sheetLink" href="ielts-speaking.html"><b>Speaking</b><span>Skill page</span></a>
+        <a class="sheetLink" href="ielts-reading.html"><b>Reading</b><span>Skill page</span></a>
+        <a class="sheetLink" href="ielts-writing.html"><b>Writing</b><span>Skill page</span></a>
+        <a class="sheetLink" href="#askPanel"><b>Ask LizOn</b><span>Auto answers</span></a>
         <a class="sheetLink" href="ielts-computer-based.html"><b>Computer-Based</b><span>Typing + speed</span></a>
         <a class="sheetLink" href="ielts-faq-bangladesh.html"><b>FAQ (BD)</b><span>Real confusion</span></a>
-        <a class="sheetLink" href="#askPanel"><b>Ask</b><span>Tap questions</span></a>
         <button class="sheetLink" id="sheetTheme" type="button" style="text-align:left;">
           <b>Toggle Mode</b><span>Light / Dark</span>
         </button>
@@ -775,57 +838,34 @@
   </div>
 
   <script>
-    // ====== CONFIG (Edit only these if needed) ======
+    // ====== CONFIG ======
     const PHONE_E164 = "8801608881545"; // 01608881545
-    // Set demo date/time in Bangladesh time (Asia/Dhaka)
-    // NOTE: Use 24-hour time below
-    const DEMO_START_ISO = "2025-12-24T21:00:00+06:00"; // 24th, 9 PM
-    const DEMO_TITLE = "Computer Based Demo Class";
-    const DEMO_TOPIC = "The Most Accurate Method to get IELTS Score";
-    const STARTS_TEXT = "Class Starts 26 December";
+    const MEET_LINK = "https://meet.google.com/bfk-eeax-sbi";
+    const MEET_ID = "bfk-eeax-sbi";
 
-    // Default chat message template
+    // Demo date/time in BD time (Asia/Dhaka)
+    const DEMO_START_ISO = "2025-12-24T21:00:00+06:00";
+
+    // WhatsApp routing message
     const BASE_MSG =
       "Assalamu alaikum. Ami upcoming batch page theke message dicchi. " +
       "Amar current level/band: __. Target: __. Deadline: __. " +
       "Amar main problem: __.";
-
-    const DEMO_MSG =
-      "Assalamu alaikum. Demo class er link chai. " +
-      "Demo: 24th • 9 PM. Topic: " + DEMO_TOPIC + ". " +
-      "Amar current level/band: __. Target: __.";
-
     const WHATSAPP_URL = (msg) =>
       "https://wa.me/" + PHONE_E164 + "?text=" + encodeURIComponent(msg);
 
-    // ====== Wire CTAs (no 'WhatsApp' word in buttons) ======
-    const bindChatLinks = () => {
-      const chatLinks = [
-        { id: "demoTopBtn", msg: DEMO_MSG },
-        { id: "demoBtnMain", msg: DEMO_MSG },
-        { id: "admitBtn", msg: "Assalamu alaikum. Upcoming batch e seat/check availability korte chai. " + BASE_MSG },
-        { id: "footerChat", msg: BASE_MSG },
-        { id: "bottomCta", msg: BASE_MSG }
-      ];
-      chatLinks.forEach(x => {
-        const el = document.getElementById(x.id);
-        if (el) el.href = WHATSAPP_URL(x.msg);
-      });
-    };
-    bindChatLinks();
+    // Bind chat buttons (no 'WhatsApp' word in labels)
+    const admitBtn = document.getElementById("admitBtn");
+    const footerChat = document.getElementById("footerChat");
+    if (admitBtn) admitBtn.href = WHATSAPP_URL("Assalamu alaikum. Upcoming batch e seat/check availability korte chai. " + BASE_MSG);
+    if (footerChat) footerChat.href = WHATSAPP_URL(BASE_MSG);
 
-    // ====== Demo highlight logic (tomorrow emphasis + countdown) ======
+    // Countdown (top + card)
     const demoAlert = document.getElementById("demoAlert");
     const demoCountdownTop = document.getElementById("demoCountdownTop");
     const demoCountdown = document.getElementById("demoCountdown");
-    const bottomTitle = document.getElementById("bottomTitle");
-    const bottomSub = document.getElementById("bottomSub");
-    const bottomCta = document.getElementById("bottomCta");
-
-    const toMs = (iso) => new Date(iso).getTime();
 
     const pad2 = (n) => String(n).padStart(2, "0");
-
     const formatCountdown = (ms) => {
       if (ms <= 0) return "Starting now";
       const totalSec = Math.floor(ms / 1000);
@@ -846,65 +886,126 @@
       const start = new Date(DEMO_START_ISO);
       const msLeft = start.getTime() - now.getTime();
 
-      // Demo is "highlight mode" if today is the day before demo OR same day and before start
       const tomorrow = new Date(now);
       tomorrow.setDate(now.getDate() + 1);
 
       const highlight =
         (isSameDay(start, tomorrow)) ||
-        (isSameDay(start, now) && msLeft > -6 * 60 * 60 * 1000); // keep a few hours after start
+        (isSameDay(start, now) && msLeft > -6 * 60 * 60 * 1000);
 
       if (highlight) {
         demoAlert.style.display = "block";
         demoCountdownTop.textContent = "Starts in: " + formatCountdown(msLeft);
         demoCountdown.textContent = formatCountdown(msLeft);
-
-        // Bottom bar override (demo first)
-        bottomTitle.textContent = "Demo tomorrow — 9 PM";
-        bottomSub.textContent = "Tap to get the link. Then tell us your current level.";
-        bottomCta.textContent = "Get demo link";
-        bottomCta.href = WHATSAPP_URL(DEMO_MSG);
       } else {
         demoAlert.style.display = "none";
-        // Normal bottom bar
-        bottomTitle.textContent = "Need guidance?";
-        bottomSub.textContent = "Chat now — tell us your current level + deadline.";
-        bottomCta.textContent = "Chat now";
-        bottomCta.href = WHATSAPP_URL(BASE_MSG);
       }
     };
-
     updateDemoUI();
     setInterval(updateDemoUI, 1000);
 
-    // ====== Ask chips + send routing ======
+    // Copy buttons
+    const copyText = async (text) => {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); } catch {}
+        document.body.removeChild(ta);
+        return true;
+      }
+    };
+
+    document.getElementById("copyMeetLink").addEventListener("click", async () => {
+      await copyText(MEET_LINK);
+      alert("Link copied ✅");
+    });
+    document.getElementById("copyMeetId").addEventListener("click", async () => {
+      await copyText(MEET_ID);
+      alert("Meeting ID copied ✅");
+    });
+
+    // AskLizOn auto answers
+    const answers = {
+      demo: {
+        title: "Demo link",
+        text:
+          "Join link: " + MEET_LINK + " | Meeting ID: " + MEET_ID +
+          ". Class: 24 Dec (Wed), 9 PM. Full class করলে huge discount er chance."
+      },
+      level: {
+        title: "Level check (fast)",
+        text:
+          "Apnar current band / level janen? Na janle: 1) Speaking e fluency kemon, 2) Reading e 3 passage time e hoy kina, 3) Writing task 2 structure paren kina. Egula বললে counselor instantly ZERO/HOPE choose kore দিবে."
+      },
+      typing: {
+        title: "Typing slow",
+        text:
+          "Computer-based e typing slow hole: 10 min daily typing + 1 mock/week. Main trick: templates + auto-correct off + shortcut practice. Demo te method dekhano হবে."
+      },
+      band: {
+        title: "Band 6+ plan",
+        text:
+          "Band 6+ er fastest route: skill-wise plan. Reading: timing system, Listening: part 3-4 focus, Writing: structure first, Speaking: opinion practice. Apnar exam date বললে exact routine set hoy."
+      },
+      fee: {
+        title: "Fee & schedule",
+        text:
+          "Upcoming batch starts 26 Dec. Fee/course path (ZERO→HOPE→STEP-UP→DESPERATE) counselor explain kore দিবে. ‘Check availability’ e tap kore details niye nin."
+      },
+      mock: {
+        title: "Mock or class?",
+        text:
+          "Mock shudhu score dekhay. Class apnar skill build kore. Jodi base weak hoy—class first. Jodi already stable band hoy—evaluation/mock cycle. Apnar current band bollei decision clear."
+      }
+    };
+
+    const askAnswer = document.getElementById("askAnswer");
+    const ansTitle = document.getElementById("ansTitle");
+    const ansText = document.getElementById("ansText");
     const askInput = document.getElementById("askInput");
+
     document.querySelectorAll(".chip").forEach(btn => {
       btn.addEventListener("click", () => {
-        askInput.value = btn.getAttribute("data-q") || "";
-        askInput.focus();
+        const key = btn.getAttribute("data-key");
+        const q = btn.getAttribute("data-q") || "";
+        askInput.value = q;
+
+        const a = answers[key];
+        if (a) {
+          askAnswer.style.display = "block";
+          ansTitle.textContent = a.title;
+          ansText.textContent = a.text;
+          // scroll the answer into view nicely
+          setTimeout(() => askAnswer.scrollIntoView({behavior:"smooth", block:"nearest"}), 50);
+        }
       });
     });
 
+    // Send (to counselor) — sends what user typed + current answer summary (if visible)
     document.getElementById("askSend").addEventListener("click", () => {
       const q = (askInput.value || "").trim();
+      const extra = (askAnswer.style.display !== "none")
+        ? (" | Auto-answer: " + ansTitle.textContent + " — " + ansText.textContent)
+        : "";
       const msg = q
-        ? ("Assalamu alaikum. Ami upcoming batch page theke question dicchi: " + q +
-           " | Demo tomorrow 9 PM. " +
-           "Amar current level/band: __. Target: __. Deadline: __.")
+        ? ("Assalamu alaikum. Ami upcoming batch page theke question dicchi: " + q + extra +
+           " | Amar current band/level: __ | Target: __ | Deadline: __")
         : BASE_MSG;
-
       window.open(WHATSAPP_URL(msg), "_blank");
     });
 
-    // ====== Floating Ask button behavior ======
-    document.getElementById("askFab").addEventListener("click", () => {
-      const el = document.getElementById("askPanel");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      setTimeout(() => askInput.focus(), 450);
-    });
+    // Creative scroll buttons
+    const scrollByAmount = (dy) => window.scrollBy({ top: dy, left: 0, behavior: "smooth" });
+    document.getElementById("scrollUp").addEventListener("click", () => scrollByAmount(-560));
+    document.getElementById("scrollDown").addEventListener("click", () => scrollByAmount(560));
 
-    // ====== Theme toggle ======
+    // Theme toggle
     const themeToggle = document.getElementById("themeToggle");
     const applyTheme = (t) => {
       document.documentElement.setAttribute("data-theme", t);
@@ -920,12 +1021,10 @@
       applyTheme(cur === "light" ? "dark" : "light");
     });
 
-    // ====== Menu sheet ======
+    // Menu sheet
     const overlay = document.getElementById("sheetOverlay");
     const menuBtn = document.getElementById("menuBtn");
     const sheetClose = document.getElementById("sheetClose");
-    constf = () => {};
-
     const openSheet = () => { overlay.style.display = "flex"; overlay.setAttribute("aria-hidden", "false"); };
     const closeSheet = () => { overlay.style.display = "none"; overlay.setAttribute("aria-hidden", "true"); };
 
@@ -938,7 +1037,7 @@
       applyTheme(cur === "light" ? "dark" : "light");
     });
 
-    // Smooth anchor close sheet
+    // Smooth anchors close sheet
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener("click", (e) => {
         const href = a.getAttribute("href");

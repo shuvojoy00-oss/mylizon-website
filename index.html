@@ -27,14 +27,15 @@
 
       --shadow2: 0 18px 60px rgba(0,0,0,.45);
 
-      /* Panels */
-      --panel-bg: rgba(6,20,15,.86);
-      --panel-card: rgba(12,32,25,.92);
-      --panel-bd: rgba(29,74,58,.75);
-      --panel-bubble: rgba(255,255,255,.05);
-      --panel-bubble2: rgba(215,178,74,.10);
+      /* AskLizOn */
+      --ask-bg: rgba(6,20,15,.86);
+      --ask-panel: rgba(12,32,25,.92);
+      --ask-bd: rgba(29,74,58,.75);
+      --ask-bubble: rgba(255,255,255,.05);
+      --ask-bubble2: rgba(215,178,74,.10);
 
-      --glass: rgba(6,20,15,.82);
+      /* overlays */
+      --overlay: rgba(0,0,0,.55);
     }
 
     html[data-theme="light"]{
@@ -45,18 +46,21 @@
       --line: rgba(9,64,45,.18);
       --text:#0b1b14;
       --muted:#355247;
+
       --chipBg: rgba(255,255,255,.78);
       --chipBd: rgba(9,64,45,.18);
+
       --soft: 0 14px 40px rgba(6,20,15,.10);
       --shadow2: 0 18px 60px rgba(6,20,15,.10);
 
-      --panel-bg: rgba(255,255,255,.86);
-      --panel-card: rgba(255,255,255,.94);
-      --panel-bd: rgba(9,64,45,.18);
-      --panel-bubble: rgba(9,64,45,.06);
-      --panel-bubble2: rgba(215,178,74,.18);
+      /* AskLizOn */
+      --ask-bg: rgba(255,255,255,.86);
+      --ask-panel: rgba(255,255,255,.94);
+      --ask-bd: rgba(9,64,45,.18);
+      --ask-bubble: rgba(9,64,45,.06);
+      --ask-bubble2: rgba(215,178,74,.18);
 
-      --glass: rgba(255,255,255,.86);
+      --overlay: rgba(0,0,0,.35);
     }
 
     *{box-sizing:border-box}
@@ -73,10 +77,12 @@
     }
     a{color:inherit; text-decoration:none}
 
-    .container{max-width:1100px; margin:0 auto; padding:22px 18px 112px}
-    @media (max-width:520px){ .container{padding:18px 14px 128px} }
+    .container{max-width:1100px; margin:0 auto; padding:22px 18px 120px}
+    @media (max-width:520px){ .container{padding:18px 14px 140px} }
 
-    /* Topbar */
+    /* =======================
+       Topbar
+    ======================= */
     .topbar{
       position:sticky; top:0;
       backdrop-filter: blur(14px);
@@ -88,6 +94,7 @@
       background: linear-gradient(180deg, rgba(245,251,248,.88), rgba(245,251,248,.62));
       border-bottom:1px solid var(--line);
     }
+
     .topbar-inner{
       max-width:1100px; margin:0 auto; padding:14px 18px;
       display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -96,7 +103,7 @@
     .brand{
       display:flex; align-items:center; gap:10px;
       font-weight:900; letter-spacing:.2px;
-      min-width: 0;
+      min-width:0;
     }
     .brand-logo{
       width:38px; height:38px;
@@ -112,7 +119,6 @@
       display:block;
       font-weight:700;
       color:var(--muted);
-      letter-spacing:.2px;
       margin-top:2px;
       white-space:nowrap;
       overflow:hidden;
@@ -120,48 +126,43 @@
       max-width: 58vw;
     }
 
-    .rightTools{display:flex; align-items:center; gap:10px;}
+    .rightTools{ display:flex; align-items:center; gap:10px; }
+
     .nav{
-      display:flex; align-items:center; gap:8px;
+      display:flex; align-items:center; gap:10px;
     }
     .nav a{
-      padding:9px 10px;
+      padding:10px 12px;
       border:1px solid rgba(29,74,58,.7);
       background: var(--chipBg);
       border-radius:999px;
       color:var(--text);
-      font-weight:850;
-      font-size:12.5px;
+      font-weight:800;
+      font-size:13px;
       transition:.18s ease;
       white-space:nowrap;
     }
     .nav a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
     .askNavBtn{
       border-color: rgba(215,178,74,.35) !important;
       box-shadow: 0 0 0 3px rgba(215,178,74,.10);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
-
-    /* Super tiny theme icon toggle (no words) */
-    .themeMini{
-      width:40px; height:40px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.8);
-      background: var(--chipBg);
-      backdrop-filter: blur(14px);
-      display:grid; place-items:center;
-      cursor:pointer;
-      transition:.18s ease;
-      box-shadow: 0 10px 26px rgba(0,0,0,.10);
-      user-select:none;
+    .miniLogo{
+      width:16px; height:16px;
+      border-radius:6px;
+      padding:2px;
+      border:1px solid rgba(29,74,58,.55);
+      background: rgba(255,255,255,.04);
     }
-    .themeMini:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .themeMini svg{ width:18px; height:18px; }
+    html[data-theme="light"] .miniLogo{ background: rgba(255,255,255,.75); }
 
-    @media (max-width: 920px){
-      .nav{ display:none; }
-    }
-
-    /* Buttons */
+    /* =======================
+       Hero + cards
+    ======================= */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       padding:12px 16px;
@@ -173,6 +174,7 @@
       cursor:pointer;
       transition:.18s ease;
       text-align:center;
+      user-select:none;
     }
     .btn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
     .btn.primary{
@@ -187,7 +189,6 @@
     }
     html[data-theme="light"] .btn.ghost{ background: rgba(255,255,255,.55); }
 
-    /* Hero */
     .hero{ padding:22px 0 10px; }
     .hero-card{
       border-radius: var(--radius);
@@ -217,12 +218,17 @@
       border:1px solid rgba(29,74,58,.75);
       background: var(--chipBg);
       color: var(--muted);
-      font-weight:900;
+      font-weight:850;
       font-size:12px;
     }
     .chip b{ color: var(--gold); }
 
-    .seg{ display:flex; gap:8px; flex-wrap:wrap; margin: 10px 0 14px; }
+    .seg{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin: 10px 0 14px;
+    }
     .seg a{
       padding:10px 12px;
       border-radius:999px;
@@ -249,9 +255,16 @@
       line-height:1.6;
       max-width:780px;
     }
-    .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
 
-    .miniProgramRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    .cta-row{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    .miniProgramRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
     .miniProgram{
       padding:10px 12px;
       border-radius:999px;
@@ -275,7 +288,6 @@
     }
     .section-title small{ color: var(--muted); font-weight:750; }
 
-    /* Grid cards */
     .grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -309,61 +321,126 @@
       color: var(--muted);
     }
     .tagline b{ color: var(--gold); }
-    .card h2{ margin:0; font-size:18px; font-weight:950; letter-spacing:.2px; }
-    .card p{ margin:0; color: var(--muted); line-height:1.6; font-size:13px; }
-    .card .actions{ margin-top:auto; display:flex; gap:10px; flex-wrap:wrap; }
+    .card h2{
+      margin:0;
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .card p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.6;
+      font-size:13px;
+    }
+    .card .actions{
+      margin-top:auto;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
     .card .actions .btn{ width:100%; }
 
-    /* Featured (Upcoming) */
+    /* =======================
+       Upcoming / Featured (make it OUTSTANDING)
+    ======================= */
     .featured{
       margin-top:14px;
       border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.72), rgba(10,26,20,.52));
-      box-shadow: var(--shadow2);
+      border:1px solid rgba(215,178,74,.35);
+      background:
+        radial-gradient(800px 380px at 15% 10%, rgba(215,178,74,.20), transparent 55%),
+        radial-gradient(800px 380px at 85% 15%, rgba(72,255,191,.12), transparent 55%),
+        linear-gradient(180deg, rgba(12,32,25,.78), rgba(10,26,20,.56));
+      box-shadow: 0 26px 90px rgba(0,0,0,.45);
       overflow:hidden;
       position:relative;
     }
     html[data-theme="light"] .featured{
-      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.76));
+      background:
+        radial-gradient(800px 380px at 15% 10%, rgba(215,178,74,.22), transparent 55%),
+        radial-gradient(800px 380px at 85% 15%, rgba(72,255,191,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.80));
+      box-shadow: 0 22px 70px rgba(6,20,15,.14);
     }
     .featuredTop{
-      padding:18px 18px 14px;
-      display:grid; gap:10px;
+      padding:18px 18px 16px;
+      display:grid;
+      gap:10px;
       position:relative;
     }
     .featuredTop:before{
       content:"";
-      position:absolute; inset:-120px auto auto -140px;
-      width:420px; height:420px;
-      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.16), transparent 62%);
+      position:absolute; inset:-160px auto auto -160px;
+      width:520px; height:520px;
+      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.22), transparent 62%);
       pointer-events:none;
     }
-    .featuredKicker{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:relative; }
+    .featuredKicker{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      position:relative;
+    }
     .kickerPill{
       display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px;
+      padding:9px 11px;
       border-radius:999px;
-      border:1px solid rgba(29,74,58,.75);
-      background: var(--chipBg);
+      border:1px solid rgba(215,178,74,.35);
+      background: rgba(215,178,74,.10);
       font-weight:950;
       font-size:12px;
-      color: var(--muted);
+      color: var(--text);
       position:relative;
     }
     .kickerPill b{ color: var(--gold); }
-    .featuredTitle{ font-size:22px; font-weight:990; letter-spacing:-.2px; margin:0; position:relative; }
+
+    .upcomingLink{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:9px 11px;
+      border-radius:999px;
+      border:1px solid rgba(215,178,74,.55);
+      background: linear-gradient(180deg, rgba(215,178,74,.22), rgba(215,178,74,.10));
+      font-weight:990;
+      font-size:12px;
+      box-shadow: 0 0 0 3px rgba(215,178,74,.10);
+      transition:.18s ease;
+    }
+    .upcomingLink:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.75); }
+    .pulseDot{
+      width:10px; height:10px; border-radius:999px;
+      background:#2cffb2;
+      box-shadow: 0 0 0 0 rgba(44,255,178,.32);
+      animation: pulse 1.4s infinite;
+      flex:0 0 auto;
+    }
+    @keyframes pulse{
+      0%{ box-shadow: 0 0 0 0 rgba(44,255,178,.32); }
+      70%{ box-shadow: 0 0 0 10px rgba(44,255,178,0); }
+      100%{ box-shadow: 0 0 0 0 rgba(44,255,178,0); }
+    }
+
+    .featuredTitle{
+      font-size:22px;
+      font-weight:1000;
+      letter-spacing:-.2px;
+      margin:0;
+      position:relative;
+    }
     .featuredSub{
       margin:0;
       color: var(--muted);
-      font-weight:800;
+      font-weight:850;
       font-size:13px;
       line-height:1.55;
       max-width: 920px;
       position:relative;
     }
 
-    .featuredRow{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; position:relative; margin-top:4px; }
+    .featuredRow{
+      display:flex; gap:12px; flex-wrap:wrap;
+      align-items:center;
+      position:relative;
+      margin-top:4px;
+    }
 
     .datePill{
       display:inline-flex; align-items:center; gap:10px;
@@ -374,10 +451,14 @@
       font-weight:950;
     }
     html[data-theme="light"] .datePill{ background: rgba(255,255,255,.55); }
-    .datePill .date{ font-size:14px; font-weight:990; }
+    .datePill .date{ font-size:14px; font-weight:1000; }
     .datePill .icon{ width:18px; height:18px; display:inline-block; }
 
-    .highlightPills{ display:flex; gap:10px; flex-wrap:wrap; position:relative; margin-top:2px; }
+    .highlightPills{
+      display:flex; gap:10px; flex-wrap:wrap;
+      position:relative;
+      margin-top:2px;
+    }
     .hiPill{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 10px;
@@ -393,10 +474,12 @@
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:10px;
-      margin-top:8px;
+      margin-top:10px;
       position:relative;
     }
-    @media (max-width:520px){ .featuredActions{ grid-template-columns:1fr; } }
+    @media (max-width:520px){
+      .featuredActions{ grid-template-columns:1fr; }
+    }
 
     .accBtn{
       width:100%;
@@ -404,7 +487,7 @@
       border-radius:16px;
       border:1px solid rgba(29,74,58,.75);
       background: rgba(10,26,20,.35);
-      font-weight:990;
+      font-weight:1000;
       display:flex; align-items:center; justify-content:center;
       gap:10px;
       cursor:pointer;
@@ -420,7 +503,6 @@
       border-color: rgba(215,178,74,.85);
       box-shadow: 0 18px 60px rgba(215,178,74,.12);
     }
-    .accBtn.ghost{ background: transparent; }
 
     .accPanel{
       margin-top:10px;
@@ -438,6 +520,7 @@
     }
     @media (max-width:920px){ .featurePoints{ grid-template-columns:1fr 1fr; } }
     @media (max-width:520px){ .featurePoints{ grid-template-columns:1fr; } }
+
     .point{
       border-radius:18px;
       border:1px solid rgba(29,74,58,.65);
@@ -448,14 +531,9 @@
       align-items:flex-start;
     }
     html[data-theme="light"] .point{ background: rgba(255,255,255,.55); }
-    .pointIcon{
-      width:22px; height:22px;
-      flex:0 0 auto;
-      opacity:.95;
-      color: var(--gold);
-    }
+    .pointIcon{ width:22px; height:22px; flex:0 0 auto; opacity:.95; color: var(--gold); }
     .point b{ display:block; margin-bottom:3px; }
-    .point span{ color: var(--muted); font-weight:750; font-size:12.5px; line-height:1.45; }
+    .point span{ color: var(--muted); font-weight:800; font-size:12.5px; line-height:1.45; }
 
     .planGrid{
       display:grid;
@@ -465,6 +543,7 @@
     }
     @media (max-width:920px){ .planGrid{ grid-template-columns:1fr 1fr; } }
     @media (max-width:520px){ .planGrid{ grid-template-columns:1fr; } }
+
     .monthCard{
       border-radius:18px;
       border:1px solid rgba(29,74,58,.65);
@@ -474,22 +553,24 @@
       gap:10px;
     }
     html[data-theme="light"] .monthCard{ background: rgba(255,255,255,.55); }
-    .monthCard h4{ margin:0; font-size:14px; font-weight:990; letter-spacing:.1px; }
-    .monthCard p{ margin:0; color: var(--muted); font-weight:800; font-size:12.5px; line-height:1.45; }
+    .monthCard h4{ margin:0; font-size:14px; font-weight:1000; }
+    .monthCard p{ margin:0; color: var(--muted); font-weight:850; font-size:12.5px; line-height:1.45; }
     .monthCard a{
       display:inline-flex; align-items:center; justify-content:center;
       padding:10px 12px;
       border-radius:999px;
       border:1px solid rgba(215,178,74,.32);
       background: rgba(215,178,74,.10);
-      font-weight:990;
+      font-weight:1000;
       white-space:nowrap;
       transition:.18s ease;
       text-align:center;
     }
     .monthCard a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
 
-    /* Learn free (no popups) */
+    /* =======================
+       Learn for free (NO popups) — inline expand
+    ======================= */
     .learnGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -497,38 +578,61 @@
       margin-top:10px;
     }
     @media (max-width:920px){ .learnGrid{ grid-template-columns:1fr; } }
-    .learnItem{
+
+    details.learnItem{
       border-radius: var(--radius);
       border:1px solid rgba(29,74,58,.7);
       background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
       box-shadow: var(--soft);
       padding:14px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
       overflow:hidden;
     }
-    html[data-theme="light"] .learnItem{
+    html[data-theme="light"] details.learnItem{
       background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.76));
     }
-    .learnItem b{ font-weight:990; }
-    .learnItem span{ color: var(--muted); font-weight:800; font-size:12.5px; }
-    .watchLink{
+    details.learnItem summary{
+      list-style:none;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      user-select:none;
+    }
+    details.learnItem summary::-webkit-details-marker{ display:none; }
+    .learnLeft b{ font-weight:1000; }
+    .learnLeft span{ color: var(--muted); font-weight:850; font-size:12.5px; }
+    .learnCtl{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
       padding:10px 12px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.75);
       background: var(--chipBg);
-      font-weight:990;
-      cursor:pointer;
+      font-weight:1000;
+      white-space:nowrap;
       transition:.18s ease;
       flex:0 0 auto;
-      white-space:nowrap;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
     }
-    .watchLink:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .watchLink svg{ width:16px; height:16px; }
+    .learnCtl:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .learnFrame{
+      margin-top:12px;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(29,74,58,.55);
+      background:#000;
+      aspect-ratio: 16 / 9;
+    }
+    .learnFrame iframe{
+      width:100%;
+      height:100%;
+      border:0;
+    }
 
-    /* Reviews */
+    /* =======================
+       Reviews
+    ======================= */
     .reviewGrid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -558,12 +662,14 @@
     .review .meta{
       display:flex; align-items:center; justify-content:space-between; gap:10px;
       color: var(--muted);
-      font-weight:800;
+      font-weight:850;
       font-size:12.5px;
     }
     .stars{ color: var(--gold); letter-spacing:1px; }
 
-    /* Footer (premium + all links) */
+    /* =======================
+       Footer — with ALL options + links
+    ======================= */
     .footer{
       margin-top:18px;
       padding:18px;
@@ -572,7 +678,7 @@
       background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
       box-shadow: var(--soft);
       display:grid;
-      grid-template-columns: 1.05fr .95fr;
+      grid-template-columns: 1.15fr .85fr;
       gap:16px;
       align-items:start;
       overflow:hidden;
@@ -600,43 +706,37 @@
     .iconbtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
     .icon{ width:16px; height:16px; display:inline-block; }
 
-    .quickLinks{
+    .siteMap{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:8px 10px;
+      gap:10px;
       margin-top:10px;
     }
-    .qLink{
-      padding:10px 10px;
+    @media (max-width:520px){ .siteMap{ grid-template-columns:1fr; } }
+    .siteMap a{
+      padding:10px 12px;
       border-radius:14px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(10,26,20,.28);
       font-weight:900;
-      font-size:12.5px;
+      font-size:13px;
       transition:.18s ease;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .qLink:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .qLink b{ color: var(--gold); }
+    html[data-theme="light"] .siteMap a{ background: rgba(255,255,255,.55); }
+    .siteMap a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
 
-    .footerBar{
+    .smallprint{
       margin-top:12px;
-      padding:10px 12px;
-      border-radius:16px;
-      border:1px solid rgba(29,74,58,.65);
-      background: rgba(10,26,20,.22);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
+      font-size:12px;
+      color: rgba(183,201,194,.75);
     }
-    html[data-theme="light"] .footerBar{ background: rgba(255,255,255,.55); }
-    .footerBar small{ color: var(--muted); font-weight:850; }
 
-    /* Floating WhatsApp (right) */
+    /* =======================
+       Floating bars + controls
+    ======================= */
     .floatwa{
       position:fixed;
       right:14px; bottom:14px;
@@ -645,12 +745,13 @@
       padding:12px 14px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.8);
-      background: var(--glass);
+      background: rgba(6,20,15,.82);
       backdrop-filter: blur(14px);
       box-shadow: var(--soft);
       font-weight:950;
       max-width: calc(100vw - 28px);
     }
+    html[data-theme="light"] .floatwa{ background: rgba(255,255,255,.86); }
     .dot{
       width:10px; height:10px; border-radius:999px;
       background:#2cffb2;
@@ -658,8 +759,11 @@
       flex:0 0 auto;
     }
     .floatwa b{ color: var(--gold); }
+    @media (max-width:420px){
+      .floatwa{ font-size:13px; padding:10px 12px; }
+    }
 
-    /* Modern scroll controls (2 buttons) */
+    /* Modern scroll buttons */
     .scrollNav{
       position:fixed;
       right:14px;
@@ -670,91 +774,124 @@
       gap:8px;
       align-items:center;
       justify-content:center;
+      pointer-events:auto;
     }
     .scrollBtn{
       width:42px;
       height:42px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.80);
-      background: var(--glass);
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(6,20,15,.78);
       backdrop-filter: blur(14px);
-      box-shadow: 0 14px 38px rgba(0,0,0,.18);
+      box-shadow: var(--soft);
       color: var(--text);
       cursor:pointer;
-      display:grid;
-      place-items:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       transition:.18s ease;
       user-select:none;
     }
-    .scrollBtn svg{ width:18px; height:18px; }
+    html[data-theme="light"] .scrollBtn{
+      background: rgba(255,255,255,.86);
+      color: var(--text);
+    }
     .scrollBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .scrollBtn:disabled{ opacity:.40; cursor:not-allowed; transform:none; }
+    .scrollBtn:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
+    .scrollBtn:focus{ outline:none; box-shadow: 0 0 0 4px var(--focus), var(--soft); }
 
-    /* Bottom-left floating controls: Menu + AskLizOn + Theme */
-    .leftDock{
+    /* Tiny theme toggle (icons only) */
+    .themeTiny{
+      position:fixed;
+      right:14px;
+      bottom:128px;
+      z-index:62;
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(215,178,74,.35);
+      background: rgba(6,20,15,.78);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition:.18s ease;
+      user-select:none;
+    }
+    html[data-theme="light"] .themeTiny{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(9,64,45,.18);
+    }
+    .themeTiny:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .themeTiny svg{ width:18px; height:18px; }
+
+    /* AskLizOn FAB (logo tiny + AskLizOn) */
+    .askFab{
       position:fixed;
       left:14px;
       bottom:14px;
       z-index:62;
       display:flex;
-      flex-direction:column;
-      gap:10px;
-      align-items:flex-start;
-      max-width: calc(100vw - 28px);
-    }
-
-    .dockBtn{
-      display:inline-flex;
       align-items:center;
       gap:10px;
       padding:12px 14px;
       border-radius:999px;
-      border:1px solid rgba(29,74,58,.8);
-      background: var(--glass);
+      border:1px solid rgba(215,178,74,.40);
+      background: var(--ask-bg);
       backdrop-filter: blur(14px);
       box-shadow: var(--soft);
       font-weight:1000;
       cursor:pointer;
       user-select:none;
-      white-space:nowrap;
+      max-width: calc(100vw - 28px);
     }
-    .dockBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .dockIcon{
+    .askFab:hover{ transform: translateY(-1px); }
+    .askFabLogo{
       width:18px; height:18px;
-      display:inline-block;
-      opacity:.95;
+      border-radius:7px;
+      padding:2px;
+      border:1px solid rgba(29,74,58,.55);
+      background: rgba(255,255,255,.04);
+      flex:0 0 auto;
     }
-    .dockBtn b{ color: var(--gold); }
-    .dockTiny{
-      font-size:12px;
-      color: var(--muted);
-      font-weight:900;
+    html[data-theme="light"] .askFabLogo{ background: rgba(255,255,255,.75); }
+    .askFab b{ color: var(--gold); }
+    .askBadge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid rgba(29,74,58,.65);
+      border:1px solid rgba(29,74,58,.55);
       background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-weight:950;
+      font-size:12px;
+      white-space:nowrap;
     }
-    html[data-theme="light"] .dockTiny{ background: rgba(255,255,255,.65); }
+    html[data-theme="light"] .askBadge{ background: rgba(255,255,255,.65); }
 
-    /* Unified Overlay + Panel (for Menu and AskLizOn) */
+    /* Unified overlay */
     .overlay{
       position:fixed;
       inset:0;
-      background: rgba(0,0,0,.55);
+      background: var(--overlay);
       display:none;
       z-index:1200;
     }
     .overlay.open{ display:block; }
 
-    .panel{
+    /* Ask panel */
+    .askPanel{
       position:fixed;
+      top:12px;
       left:12px;
       bottom:12px;
       width:min(420px, calc(100vw - 24px));
-      max-height: calc(100vh - 24px);
       border-radius: 18px;
-      border:1px solid var(--panel-bd);
-      background: var(--panel-card);
+      border:1px solid var(--ask-bd);
+      background: var(--ask-panel);
       box-shadow: var(--shadow2);
       z-index:1201;
       transform: translateX(-110%);
@@ -763,9 +900,9 @@
       flex-direction:column;
       overflow:hidden;
     }
-    .panel.open{ transform: translateX(0); }
+    .askPanel.open{ transform: translateX(0); }
 
-    .panelHead{
+    .askHead{
       padding:12px 12px;
       display:flex;
       align-items:center;
@@ -774,17 +911,17 @@
       border-bottom:1px solid rgba(29,74,58,.55);
       background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00));
     }
-    html[data-theme="light"] .panelHead{
+    html[data-theme="light"] .askHead{
       background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
       border-bottom:1px solid var(--line);
     }
-    .panelTitle{
+    .askTitle{
       display:flex;
       align-items:center;
       gap:10px;
       min-width:0;
     }
-    .panelLogo{
+    .askLogo{
       width:34px; height:34px;
       border-radius:12px;
       padding:6px;
@@ -792,14 +929,13 @@
       border:1px solid var(--chipBd);
       flex:0 0 auto;
     }
-    .panelTitle b{
+    .askTitle b{
       font-weight:1000;
-      letter-spacing:.2px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .panelTitle small{
+    .askTitle small{
       display:block;
       color: var(--muted);
       font-weight:850;
@@ -808,9 +944,9 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 260px;
+      max-width: 240px;
     }
-    .panelClose{
+    .askClose{
       padding:10px 12px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.7);
@@ -821,7 +957,38 @@
       white-space:nowrap;
     }
 
-    .panelBody{
+    .askQuick{
+      padding:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      border-bottom:1px solid rgba(29,74,58,.45);
+      background: rgba(255,255,255,.02);
+    }
+    html[data-theme="light"] .askQuick{
+      background: rgba(255,255,255,.78);
+      border-bottom:1px solid var(--line);
+    }
+    .askPill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.65);
+      background: var(--chipBg);
+      font-weight:990;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+      transition:.18s ease;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+    .askPill:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    .askBody{
       padding:12px;
       display:flex;
       flex-direction:column;
@@ -830,53 +997,8 @@
       flex:1 1 auto;
     }
 
-    /* Menu panel content */
-    .menuGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    @media (max-width:420px){ .menuGrid{ grid-template-columns:1fr; } }
-
-    .menuItem{
-      padding:12px 12px;
-      border-radius:16px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:1000;
-      transition:.18s ease;
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      min-height: 74px;
-    }
-    .menuItem:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .menuItem small{ color: var(--muted); font-weight:850; line-height:1.35; }
-
-    .menuPills{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      padding-top:2px;
-    }
-    .pillTiny{
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.65);
-      background: rgba(255,255,255,.03);
-      font-weight:950;
-      font-size:12.5px;
-      transition:.18s ease;
-      white-space:nowrap;
-      cursor:pointer;
-      user-select:none;
-    }
-    html[data-theme="light"] .pillTiny{ background: rgba(255,255,255,.65); }
-    .pillTiny:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    /* AskLizOn (tap-only) */
-    .msgRow{ display:flex; gap:10px; align-items:flex-start; }
-    .avatar{
+    .askMsg{ display:flex; gap:10px; align-items:flex-start; }
+    .askAvatar{
       width:30px; height:30px;
       border-radius:12px;
       border:1px solid rgba(29,74,58,.55);
@@ -887,42 +1009,25 @@
       flex:0 0 auto;
       color: var(--gold);
     }
-    html[data-theme="light"] .avatar{ background: rgba(255,255,255,.75); }
-
-    .bubble{
+    html[data-theme="light"] .askAvatar{ background: rgba(255,255,255,.75); }
+    .askBubble{
       border-radius:16px;
       border:1px solid rgba(29,74,58,.55);
-      background: var(--panel-bubble);
+      background: var(--ask-bubble);
       padding:12px;
       box-shadow: 0 10px 30px rgba(0,0,0,.12);
       max-width: 100%;
     }
-    .bubble.me{
-      background: var(--panel-bubble2);
+    .askBubble.me{
+      background: var(--ask-bubble2);
       border-color: rgba(215,178,74,.35);
     }
-    .bubble p{
-      margin:0;
-      color: var(--text);
-      font-weight:850;
-      line-height:1.55;
-      font-size:13.5px;
-    }
-    .bubble .mut{
-      color: var(--muted);
-      font-weight:800;
-      font-size:12.5px;
-      margin-top:6px;
-      line-height:1.45;
-    }
+    .askBubble b{ color: var(--gold); }
+    .askBubble p{ margin:0; color: var(--text); font-weight:850; line-height:1.55; font-size:13.5px; }
+    .askBubble .mut{ color: var(--muted); font-weight:800; font-size:12.5px; margin-top:6px; }
 
-    .choices{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-    .choiceBtn{
+    .askSuggest{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+    .askLink{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -935,12 +1040,136 @@
       cursor:pointer;
       white-space:nowrap;
       transition:.18s ease;
+    }
+    .askLink:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    .askFoot{
+      padding:12px;
+      border-top:1px solid rgba(29,74,58,.55);
+      background: rgba(255,255,255,.02);
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    html[data-theme="light"] .askFoot{
+      background: rgba(255,255,255,.86);
+      border-top:1px solid var(--line);
+    }
+    .askInput{
+      flex:1 1 auto;
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(0,0,0,.08);
+      color: var(--text);
+      font-weight:850;
+      outline:none;
+    }
+    html[data-theme="light"] .askInput{
+      background: rgba(255,255,255,.75);
+      color: var(--text);
+    }
+    .askSend{
+      flex:0 0 auto;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(215,178,74,.45);
+      background: linear-gradient(180deg, var(--gold), var(--gold2));
+      color:#142015;
+      font-weight:1000;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+
+    /* Bottom-left hamburger (icon only) — works on mobile + laptop */
+    .menuFab{
+      position:fixed;
+      left:14px;
+      bottom:66px;
+      z-index:63;
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.78);
+      background: rgba(6,20,15,.82);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition:.18s ease;
       user-select:none;
     }
-    .choiceBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .choiceBtn.primary{
-      border-color: rgba(215,178,74,.35);
-      box-shadow: 0 0 0 3px rgba(215,178,74,.10);
+    html[data-theme="light"] .menuFab{ background: rgba(255,255,255,.86); }
+    .menuFab:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .menuFab svg{ width:18px; height:18px; }
+
+    /* Drawer sheet */
+    .sheet{
+      position:fixed;
+      left:12px;
+      bottom:12px;
+      width:min(420px, calc(100vw - 24px));
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.75);
+      background: linear-gradient(180deg, rgba(12,32,25,.94), rgba(10,26,20,.90));
+      box-shadow: var(--shadow2);
+      z-index:1201;
+      transform: translateY(130%);
+      transition: transform .22s ease;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .sheet{
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
+      border:1px solid rgba(9,64,45,.18);
+    }
+    .sheet.open{ transform: translateY(0); }
+    .sheetHead{
+      padding:12px 12px;
+      border-bottom:1px solid rgba(29,74,58,.55);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .sheetHead b{ font-weight:1000; }
+    .sheetClose{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      font-weight:1000;
+      cursor:pointer;
+    }
+    .sheetBody{
+      padding:12px;
+      display:grid;
+      gap:10px;
+    }
+    .sheetBody a{
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .sheetBody a strong{ color: var(--gold); }
+    .sheetRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      padding-top:4px;
+    }
+    .sheetRow a{
+      border-radius:999px;
+      padding:10px 12px;
+      width:auto;
     }
 
     /* Responsive */
@@ -948,6 +1177,7 @@
       h1{ font-size:34px; }
       .grid{ grid-template-columns: 1fr; }
       .footer{ grid-template-columns: 1fr; }
+      .nav{ display:none; } /* we use the floating menu sheet instead */
     }
     @media (max-width: 520px){
       .hero-card{ padding:18px; }
@@ -955,10 +1185,11 @@
       .btn{ width:100%; }
       .cta-row{ gap:10px; }
       .scrollNav{ right:12px; bottom:74px; }
-      .scrollBtn{ width:40px; height:40px; }
-      .leftDock{ left:12px; bottom:66px; }
-      .dockBtn{ padding:11px 13px; }
-      .dockTiny{ display:none; }
+      .scrollBtn{ width:40px; height:40px; border-radius:14px; }
+      .themeTiny{ right:12px; bottom:122px; width:40px; height:40px; border-radius:14px; }
+      .askFab{ left:12px; bottom:14px; }
+      .askFab .askBadge{ display:none; }
+      .menuFab{ left:12px; bottom:66px; width:42px; height:42px; }
     }
   </style>
 </head>
@@ -977,21 +1208,16 @@
 
       <div class="rightTools">
         <nav class="nav" aria-label="Primary">
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
           <a href="ielts.html#levels">IELTS</a>
           <a href="pte.html">PTE</a>
           <a href="studyabroad.html">Study Abroad</a>
-          <a href="#" class="askNavBtn" id="openAskTop">AskLizOn</a>
-          <a href="upcoming.html"><b style="color:var(--gold)">Upcoming</b></a>
+          <a href="Upcoming.html" style="border-color:rgba(215,178,74,.55); box-shadow:0 0 0 3px rgba(215,178,74,.10);">Upcoming</a>
+          <a href="about.html">About</a>
+          <a href="#" class="askNavBtn" id="askNavOpen">
+            <img class="miniLogo" src="assets/logo-dark.png" alt="" aria-hidden="true" />
+            AskLizOn
+          </a>
         </nav>
-
-        <button class="themeMini" id="themeMini" type="button" aria-label="Toggle theme">
-          <!-- icon swapped via JS -->
-          <svg id="themeIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>
-        </button>
       </div>
     </div>
   </div>
@@ -1009,26 +1235,26 @@
           <a href="ielts.html#levels">IELTS</a>
           <a href="pte.html">PTE</a>
           <a href="studyabroad.html">Study Abroad</a>
-          <a href="upcoming.html" style="border-color:rgba(215,178,74,.35);">Upcoming</a>
-          <a href="#" id="openAskHero" style="border-color:rgba(215,178,74,.35);">AskLizOn</a>
+          <a href="Upcoming.html" style="border-color:rgba(215,178,74,.55);">Upcoming</a>
+          <a href="#" id="askHeroOpen" style="border-color:rgba(215,178,74,.35);">AskLizOn</a>
         </div>
 
         <h1 class="heroTitleGold">MAKE YOUR FAMILY PROUD</h1>
         <p class="sub">
-          LizOn prepares you in the best strategic and skilled way — in Bangladesh and abroad.
-          Confused what to do? Tap AskLizOn, get the right direction.
+          LizOn prepares you with structure + evaluation — no random practice, no confusion.
+          Confused what to do? Tap AskLizOn and choose the right plan.
         </p>
 
         <div class="cta-row">
           <a class="btn primary" href="ielts.html#levels">Check IELTS Level</a>
-          <a class="btn" href="about.html">About LizOn</a>
+          <a class="btn" href="Upcoming.html" style="border-color:rgba(215,178,74,.55);">Upcoming (Join)</a>
+          <a class="btn ghost" href="about.html">About LizOn</a>
         </div>
 
         <div class="miniProgramRow" aria-label="Programs">
           <a class="miniProgram" href="ielts.html#levels">IELTS Programs</a>
           <a class="miniProgram" href="pte.html">PTE Program</a>
           <a class="miniProgram" href="studyabroad.html">Study Abroad</a>
-          <a class="miniProgram" href="upcoming.html">Upcoming</a>
         </div>
       </div>
     </section>
@@ -1038,7 +1264,10 @@
         <div class="featuredTop">
           <div class="featuredKicker">
             <span class="kickerPill">Upcoming Batch — <b>IELTS Complete Preparation</b></span>
-            <span class="kickerPill"><b>Early Bird:</b> Full N2F Access</span>
+            <a class="upcomingLink" href="Upcoming.html" aria-label="Open Upcoming page">
+              <span class="pulseDot" aria-hidden="true"></span>
+              <span><b>Open</b> Upcoming</span>
+            </a>
           </div>
 
           <p class="featuredTitle">Basic theke IELTS Complete Preparation ✍️</p>
@@ -1058,21 +1287,20 @@
                 </svg>
               </span>
               <div>
-                <div style="font-weight:990;">Class Starts</div>
+                <div style="font-weight:1000;">Class Starts</div>
                 <div class="date">26 December</div>
               </div>
             </div>
 
             <div class="highlightPills">
-              <span class="hiPill">✅ Highlight: Upcoming</span>
-              <span class="hiPill">✅ N2F takes care of everything</span>
+              <span class="hiPill">✅ Level Test + Proper Placement</span>
+              <span class="hiPill">✅ Evaluation + Mock</span>
+              <span class="hiPill">✅ Support Till Exam Day</span>
             </div>
           </div>
 
           <div class="featuredActions">
-            <a class="accBtn primary" href="upcoming.html">
-              Open Upcoming Details
-            </a>
+            <a class="accBtn primary" href="Upcoming.html">Go to Upcoming (Join Details)</a>
 
             <button class="accBtn" type="button" data-acc="learnMorePanel" aria-expanded="false">
               Learn More
@@ -1082,8 +1310,8 @@
               N2F (What’s Included?)
             </button>
 
-            <a class="accBtn ghost" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20confirm%20seat%20for%20the%20upcoming%20batch%20(26%20December).%20(Source%3A%20home_featured)" target="_blank" rel="noopener">
-              Confirm Seat
+            <a class="accBtn ghost" href="studyabroad.html" title="Learn about N2F / full support">
+              N2F Info (Study Abroad)
             </a>
           </div>
         </div>
@@ -1097,7 +1325,7 @@
                 </svg>
               </span>
               <div>
-                <b>Level Test + Proper Placement</b>
+                <b>Level Test + Placement</b>
                 <span>First few classes er por test diye level-e divide kora hoy.</span>
               </div>
             </div>
@@ -1136,7 +1364,7 @@
               </span>
               <div>
                 <b>Early Bird N2F Access</b>
-                <span>LizOn takes care of everything—study abroad assist included.</span>
+                <span>Study abroad assist included (N2F).</span>
               </div>
             </div>
           </div>
@@ -1212,7 +1440,7 @@
           </div>
 
           <div class="cta-row" style="margin-top:12px;">
-            <a class="btn primary" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20N2F%20support%20(Study%20Abroad%20+%20Visa%20+%20After%20Visa).%20Please%20guide%20me.%20(Source%3A%20home_n2f)" target="_blank" rel="noopener">
+            <a class="btn primary" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20N2F%20support%20(Study%20Abroad%20+%20Visa%20+%20After%20Visa).%20Please%20guide%20me.%20(Source%3A%20featured_n2f)" target="_blank" rel="noopener">
               Talk With An Expert Counselor
             </a>
             <a class="btn" href="studyabroad.html">Learn Study Abroad</a>
@@ -1229,195 +1457,166 @@
         <div class="card">
           <span class="tagline"><b>IELTS</b> — ZERO • HOPE • STEP-UP • DESPERATE</span>
           <h2>IELTS Preparation</h2>
-          <p>
-            We place you correctly and train with structure + evaluation — no random practice, no confusion.
-          </p>
+          <p>We place you correctly and train with structure + evaluation — no random practice, no confusion.</p>
           <div class="actions">
             <a class="btn primary" href="ielts.html#levels">Learn More</a>
-            <button class="btn" type="button" id="openAskCardIELTS">AskLizOn</button>
+            <a class="btn" href="#" id="askCardOpen1">Tap AskLizOn</a>
           </div>
         </div>
 
         <div class="card">
           <span class="tagline"><b>PTE</b> — 30 Days • Fast Results</span>
           <h2>PTE Full Preparation</h2>
-          <p>
-            1 month program. 20 sessions. 15 question-based sessions + 5 typing speed skill sessions.
-          </p>
+          <p>1 month program. 20 sessions. 15 question-based + 5 typing speed skill sessions.</p>
           <div class="actions">
             <a class="btn primary" href="pte.html">Learn More</a>
-            <button class="btn" type="button" id="openAskCardPTE">AskLizOn</button>
+            <a class="btn" href="#" id="askCardOpen2">Tap AskLizOn</a>
           </div>
         </div>
 
         <div class="card">
           <span class="tagline"><b>Study Abroad</b> — Guidance First</span>
           <h2>Study Abroad & Consultation</h2>
-          <p>
-            Country, intake, documents, IELTS/PTE plan — then we move with the best strategy for your profile.
-          </p>
+          <p>Country, intake, documents, IELTS/PTE plan — then we move with the best strategy for your profile.</p>
           <div class="actions">
             <a class="btn primary" href="studyabroad.html">Learn More</a>
-            <button class="btn" type="button" id="openAskCardAbroad">AskLizOn</button>
+            <a class="btn" href="#" id="askCardOpen3">Tap AskLizOn</a>
           </div>
         </div>
       </div>
     </section>
 
     <section id="learnfree">
-      <div class="section-title">Learn for Free <small>Open video (no popups)</small></div>
+      <div class="section-title">Learn for Free <small>Tap a card → video opens inside (no popups)</small></div>
 
       <div class="learnGrid">
-        <div class="learnItem">
-          <div>
-            <b>Reading</b><br><span>How to start from zero</span>
+        <details class="learnItem">
+          <summary>
+            <div class="learnLeft">
+              <b>Reading</b><br><span>How to start from zero</span>
+            </div>
+            <span class="learnCtl">Open</span>
+          </summary>
+          <div class="learnFrame">
+            <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/iqr6_h49fYM" title="Reading" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <a class="watchLink" href="https://www.youtube.com/watch?v=iqr6_h49fYM" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
-            </svg>
-            Watch
-          </a>
-        </div>
+        </details>
 
-        <div class="learnItem">
-          <div>
-            <b>Speaking</b><br><span>Basics to confident speaking</span>
+        <details class="learnItem">
+          <summary>
+            <div class="learnLeft">
+              <b>Speaking</b><br><span>Basics to confident speaking</span>
+            </div>
+            <span class="learnCtl">Open</span>
+          </summary>
+          <div class="learnFrame">
+            <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/67ZBZt1sFtM" title="Speaking" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <a class="watchLink" href="https://www.youtube.com/watch?v=67ZBZt1sFtM" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
-            </svg>
-            Watch
-          </a>
-        </div>
+        </details>
 
-        <div class="learnItem">
-          <div>
-            <b>Writing Task 1</b><br><span>Core structure & mistakes</span>
+        <details class="learnItem">
+          <summary>
+            <div class="learnLeft">
+              <b>Writing Task 1</b><br><span>Core structure & mistakes</span>
+            </div>
+            <span class="learnCtl">Open</span>
+          </summary>
+          <div class="learnFrame">
+            <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/smOEtZfUW9o" title="Writing Task 1" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <a class="watchLink" href="https://www.youtube.com/watch?v=smOEtZfUW9o" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
-            </svg>
-            Watch
-          </a>
-        </div>
+        </details>
 
-        <div class="learnItem">
-          <div>
-            <b>Writing Task 2</b><br><span>Idea + structure + clarity</span>
+        <details class="learnItem">
+          <summary>
+            <div class="learnLeft">
+              <b>Writing Task 2</b><br><span>Idea + structure + clarity</span>
+            </div>
+            <span class="learnCtl">Open</span>
+          </summary>
+          <div class="learnFrame">
+            <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/ZnTX486sd_o" title="Writing Task 2" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <a class="watchLink" href="https://www.youtube.com/watch?v=ZnTX486sd_o" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
-            </svg>
-            Watch
-          </a>
-        </div>
+        </details>
 
-        <div class="learnItem">
-          <div>
-            <b>Listening</b><br><span>Accuracy & control</span>
+        <details class="learnItem">
+          <summary>
+            <div class="learnLeft">
+              <b>Listening</b><br><span>Accuracy & control</span>
+            </div>
+            <span class="learnCtl">Open</span>
+          </summary>
+          <div class="learnFrame">
+            <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/9VnHJfJgztE" title="Listening" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <a class="watchLink" href="https://www.youtube.com/watch?v=9VnHJfJgztE" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
-            </svg>
-            Watch
-          </a>
-        </div>
+        </details>
 
-        <div class="learnItem">
-          <div>
-            <b>Ultimate Basic Guideline</b><br><span>Complete basic direction</span>
+        <details class="learnItem">
+          <summary>
+            <div class="learnLeft">
+              <b>Ultimate Basic Guideline</b><br><span>Complete basic direction</span>
+            </div>
+            <span class="learnCtl">Open</span>
+          </summary>
+          <div class="learnFrame">
+            <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/BkfKx16N4q8" title="Ultimate Basic Guideline" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <a class="watchLink" href="https://www.youtube.com/watch?v=BkfKx16N4q8" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
-            </svg>
-            Watch
-          </a>
-        </div>
+        </details>
 
-        <div class="learnItem" style="grid-column: 1 / -1;">
-          <div>
-            <b>Server ey Apni Jevabe Porben</b><br><span>How to study inside our system</span>
+        <details class="learnItem" style="grid-column: 1 / -1;">
+          <summary>
+            <div class="learnLeft">
+              <b>Server ey Apni Jevabe Porben</b><br><span>How to study inside our system</span>
+            </div>
+            <span class="learnCtl">Open</span>
+          </summary>
+          <div class="learnFrame">
+            <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/sGD0w0IlZVc" title="How to study inside our system" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <a class="watchLink" href="https://www.youtube.com/watch?v=sGD0w0IlZVc" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
-            </svg>
-            Watch
-          </a>
-        </div>
+        </details>
       </div>
 
       <p class="sub" style="margin-top:14px;">
-        If you’re not serious, don’t waste your time. If you are — LizOn will guide you properly.
+        If you’re not serious, don’t waste your time. If you are — we’ll guide you properly.
       </p>
-
-      <div class="cta-row">
-        <a class="btn primary" href="#" id="openAskLearnFree">AskLizOn</a>
-        <a class="btn" href="ielts.html#levels">Check IELTS Level</a>
-      </div>
     </section>
 
     <section id="reviews">
-      <div class="section-title">Explore Others’ Success <small>Student voice (Bangladesh)</small></div>
+      <div class="section-title">Explore Others’ Success <small>Real student voices</small></div>
 
       <div class="reviewGrid">
         <div class="review">
           <p>“Ato din pore mone hocche English basic ta finally bujhtesi. Class routine ta follow kora easy, and teachers genuinely care.”</p>
-          <div class="meta">
-            <span>Rakib Hasan</span>
-            <span class="stars">★★★★★</span>
-          </div>
+          <div class="meta"><span>Ariful Islam</span><span class="stars">★★★★★</span></div>
         </div>
 
         <div class="review">
-          <p>“Onek coaching center-e porashona korechi, kintu ekhane teacher gula onek bhalo vabe poray. Structured and clear.”</p>
-          <div class="meta">
-            <span>Nusrat Jahan</span>
-            <span class="stars">★★★★★</span>
-          </div>
+          <p>“Onek jaygay porashona korechi, kintu ekhane routine + correction duto-i clear. Confusion komse.”</p>
+          <div class="meta"><span>Prince Nirob</span><span class="stars">★★★★★</span></div>
         </div>
 
         <div class="review">
-          <p>“Teacher der support conference-base er moto. Reading + Listening duta tei improvement feel korlam.”</p>
-          <div class="meta">
-            <span>Tahmid Rahman</span>
-            <span class="stars">★★★★★</span>
-          </div>
+          <p>“Reading + Listening duta tei improvement feel korlam. Teacher ra just ‘practice’ bole chere dey na.”</p>
+          <div class="meta"><span>Sakib Hasan</span><span class="stars">★★★★★</span></div>
         </div>
 
         <div class="review">
           <p>“Speaking practice sessions + guidance boosted my confidence a lot. Environment tao comfortable.”</p>
-          <div class="meta">
-            <span>Sanjida Islam</span>
-            <span class="stars">★★★★★</span>
-          </div>
+          <div class="meta"><span>Sohan Islam</span><span class="stars">★★★★★</span></div>
         </div>
 
         <div class="review">
           <p>“Classes easy to follow, teachers explain with clarity. Honestly, I felt my English improving step by step.”</p>
-          <div class="meta">
-            <span>Mehedi Hasan</span>
-            <span class="stars">★★★★★</span>
-          </div>
+          <div class="meta"><span>Nayeen Ahmed</span><span class="stars">★★★★★</span></div>
         </div>
 
         <div class="review">
-          <p>“Interactive class + well-structured routine. I attended spoken English & IELTS — both were worth it.”</p>
-          <div class="meta">
-            <span>Faria Ahmed</span>
-            <span class="stars">★★★★★</span>
-          </div>
+          <p>“Structured plan er karone off-track hoy nai. Writing er correction gula onek help korse.”</p>
+          <div class="meta"><span>Mahin Uddin</span><span class="stars">★★★★★</span></div>
         </div>
       </div>
 
       <div class="cta-row" style="margin-top:12px;">
-        <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20properly.%20Please%20guide%20me.%20(Source%3A%20home_reviews)" target="_blank" rel="noopener">Start on WhatsApp</a>
+        <a class="btn primary" href="#" id="askReviewsOpen">Tap AskLizOn</a>
         <a class="btn" href="https://www.facebook.com/lizoneducation/reviews" target="_blank" rel="noopener">See Facebook Reviews</a>
       </div>
     </section>
@@ -1455,197 +1654,140 @@
           </a>
         </div>
 
-        <div class="footerBar">
-          <a class="qLink" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20footer_bar)" target="_blank" rel="noopener">
-            Need guidance? <b>Chat</b>
-          </a>
-          <small>© <span id="year"></span> myLizOn.com | LizOn Education</small>
-        </div>
+        <div class="smallprint">© <span id="year"></span> myLizOn.com | LizOn Education</div>
       </div>
 
       <div>
-        <h3>Quick Links (All)</h3>
-        <p>Everything important in one place.</p>
+        <h3>All Pages</h3>
+        <p>Everything in one place (tap).</p>
 
-        <div class="quickLinks" aria-label="All links">
-          <a class="qLink" href="index.html">Home</a>
-          <a class="qLink" href="about.html">About</a>
-          <a class="qLink" href="upcoming.html"><b>Upcoming</b></a>
-          <a class="qLink" href="ielts.html#levels">IELTS (Levels)</a>
-          <a class="qLink" href="ielts-speaking.html">IELTS Speaking</a>
-          <a class="qLink" href="ielts-listening.html">IELTS Listening</a>
-          <a class="qLink" href="ielts-reading.html">IELTS Reading</a>
-          <a class="qLink" href="ielts-writing.html">IELTS Writing</a>
-          <a class="qLink" href="ielts-grammar.html">IELTS Grammar</a>
-          <a class="qLink" href="ielts-computer-based.html">Computer IELTS</a>
-          <a class="qLink" href="ielts-faq-bangladesh.html">IELTS FAQ (BD)</a>
-          <a class="qLink" href="pte.html">PTE</a>
-          <a class="qLink" href="studyabroad.html">Study Abroad</a>
+        <div class="siteMap" aria-label="Site map links">
+          <a href="Upcoming.html"><strong>Upcoming</strong> — Join details</a>
+          <a href="about.html"><strong>About</strong> — LizOn story</a>
+          <a href="ielts.html#levels"><strong>IELTS</strong> — Levels</a>
+          <a href="pte.html"><strong>PTE</strong> — Program</a>
+          <a href="studyabroad.html"><strong>Study Abroad</strong> — N2F</a>
+          <a href="ielts-grammar.html"><strong>IELTS Grammar</strong></a>
+          <a href="ielts-listening.html"><strong>IELTS Listening</strong></a>
+          <a href="ielts-reading.html"><strong>IELTS Reading</strong></a>
+          <a href="ielts-speaking.html"><strong>IELTS Speaking</strong></a>
+          <a href="ielts-writing.html"><strong>IELTS Writing</strong></a>
+          <a href="ielts-computer-based.html"><strong>Computer IELTS</strong></a>
+          <a href="ielts-faq-bangladesh.html"><strong>IELTS FAQ (BD)</strong></a>
         </div>
 
-        <div class="footer-links" style="margin-top:12px;">
-          <a class="iconbtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">
-            <span class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.5 22v-8h2.7l.4-3H13.5V9.2c0-.9.3-1.5 1.5-1.5H16.7V5.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V11H7.5v3H10v8h3.5z"/>
-              </svg>
-            </span>
-            Facebook
-          </a>
-
-          <a class="iconbtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">
-            <span class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12c0 1.6.1 3.2.4 4.8a3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1c.3-1.6.4-3.2.4-4.8s-.1-3.2-.4-4.8z"/>
-                <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor" opacity=".22"/>
-              </svg>
-            </span>
-            YouTube
-          </a>
-
-          <a class="iconbtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">
-            <span class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.5 6.8A2.1 2.1 0 1 1 6.5 2.6a2.1 2.1 0 0 1 0 4.2zM4.7 21.4h3.6V9H4.7v12.4zM9.9 9h3.4v1.7h.1c.5-1 1.8-2 3.7-2 3.9 0 4.6 2.5 4.6 5.8v6.9h-3.6v-6.1c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3v6.2H9.9V9z"/>
-              </svg>
-            </span>
-            LinkedIn
-          </a>
+        <div class="footer-links" style="margin-top:10px;">
+          <a class="iconbtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+          <a class="iconbtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
+          <a class="iconbtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- Right-bottom WhatsApp bar -->
+  <!-- Floating WhatsApp bar -->
   <a class="floatwa" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20home_float)" target="_blank" rel="noopener">
     <span class="dot" aria-hidden="true"></span>
     Need guidance? <b>Chat on WhatsApp</b>
   </a>
 
-  <!-- Bottom-left dock: Menu + AskLizOn (tap-only) -->
-  <div class="leftDock" aria-label="Left dock controls">
-    <button class="dockBtn" id="openMenuDock" type="button" aria-label="Open menu">
-      <span class="dockIcon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </span>
-      Menu
-      <span class="dockTiny">All Pages</span>
-    </button>
+  <!-- Tiny theme toggle (icons only) -->
+  <button class="themeTiny" id="themeTiny" type="button" aria-label="Toggle theme">
+    <span id="themeIcon" aria-hidden="true"></span>
+  </button>
 
-    <button class="dockBtn" id="openAskDock" type="button" aria-label="Open AskLizOn">
-      <span class="dockIcon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 12a8 8 0 0 1-12.4 6.7L4 20l1.4-3.4A8 8 0 1 1 20 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M9.6 14.2c.3.6 1 .9 2.4.9 1.8 0 2.9-.7 2.9-1.9 0-1.1-.8-1.6-2.4-1.9l-1.2-.2c-1.3-.2-1.8-.6-1.8-1.3 0-.9.8-1.5 2.1-1.5 1 0 1.7.3 2.1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </span>
-      Ask<b>LizOn</b>
-      <span class="dockTiny">Tap only</span>
-    </button>
-  </div>
+  <!-- Bottom-left floating hamburger (icon only) -->
+  <button class="menuFab" id="menuFab" type="button" aria-label="Open navigation">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M4 7h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
 
-  <!-- Scroll controls -->
-  <div class="scrollNav" aria-label="Page scroll controls">
-    <button class="scrollBtn" id="scrollUp" type="button" aria-label="Scroll to top">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7 14l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll to bottom">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </div>
+  <!-- AskLizOn FAB -->
+  <button class="askFab" id="askFab" type="button" aria-label="Open AskLizOn">
+    <img class="askFabLogo" src="assets/logo-dark.png" alt="" aria-hidden="true" />
+    Ask<b>LizOn</b>
+    <span class="askBadge">Course Selector</span>
+  </button>
 
   <!-- Shared overlay -->
   <div class="overlay" id="overlay" aria-hidden="true"></div>
 
-  <!-- Menu Panel -->
-  <aside class="panel" id="menuPanel" aria-label="Menu Panel" role="dialog" aria-modal="true">
-    <div class="panelHead">
-      <div class="panelTitle">
-        <img class="panelLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
-        <div style="min-width:0;">
-          <b>Menu</b>
-          <small>All important pages (tiny + clean)</small>
-        </div>
-      </div>
-      <button class="panelClose" id="closeMenu" type="button">Close</button>
+  <!-- Menu sheet -->
+  <aside class="sheet" id="menuSheet" role="dialog" aria-modal="true" aria-label="Navigation">
+    <div class="sheetHead">
+      <b>Navigate</b>
+      <button class="sheetClose" id="menuClose" type="button" aria-label="Close navigation">Close</button>
     </div>
+    <div class="sheetBody">
+      <a href="Upcoming.html"><strong>Upcoming</strong><span>→</span></a>
+      <a href="ielts.html#levels"><strong>IELTS</strong><span>→</span></a>
+      <a href="pte.html"><strong>PTE</strong><span>→</span></a>
+      <a href="studyabroad.html"><strong>Study Abroad</strong><span>→</span></a>
+      <a href="about.html"><strong>About</strong><span>→</span></a>
+      <a href="#" id="askMenuOpen"><strong>AskLizOn</strong><span>→</span></a>
 
-    <div class="panelBody">
-      <div class="menuGrid" aria-label="Menu grid">
-        <a class="menuItem" href="upcoming.html">
-          <span><b style="color:var(--gold)">Upcoming</b></span>
-          <small>Batch + notices</small>
-        </a>
-        <a class="menuItem" href="about.html">
-          <span>About</span>
-          <small>Who we are</small>
-        </a>
-
-        <a class="menuItem" href="ielts.html#levels">
-          <span>IELTS</span>
-          <small>Levels + pricing</small>
-        </a>
-        <a class="menuItem" href="pte.html">
-          <span>PTE</span>
-          <small>30 days plan</small>
-        </a>
-
-        <a class="menuItem" href="studyabroad.html">
-          <span>Study Abroad</span>
-          <small>N2F guidance</small>
-        </a>
-        <a class="menuItem" href="index.html">
-          <span>Home</span>
-          <small>Back to start</small>
-        </a>
+      <div class="sheetRow" aria-label="Quick links">
+        <a href="ielts-grammar.html">Grammar</a>
+        <a href="ielts-listening.html">Listening</a>
+        <a href="ielts-reading.html">Reading</a>
+        <a href="ielts-speaking.html">Speaking</a>
+        <a href="ielts-writing.html">Writing</a>
+        <a href="ielts-computer-based.html">Computer</a>
+        <a href="ielts-faq-bangladesh.html">FAQ (BD)</a>
       </div>
 
-      <div class="section-title" style="margin:14px 0 8px;">
-        IELTS Skill Pages <small>tap to open</small>
-      </div>
-      <div class="menuPills">
-        <a class="pillTiny" href="ielts-speaking.html">Speaking</a>
-        <a class="pillTiny" href="ielts-listening.html">Listening</a>
-        <a class="pillTiny" href="ielts-reading.html">Reading</a>
-        <a class="pillTiny" href="ielts-writing.html">Writing</a>
-        <a class="pillTiny" href="ielts-grammar.html">Grammar</a>
-        <a class="pillTiny" href="ielts-computer-based.html">Computer IELTS</a>
-        <a class="pillTiny" href="ielts-faq-bangladesh.html">FAQ (BD)</a>
-      </div>
-
-      <div class="section-title" style="margin:14px 0 8px;">
-        Quick Actions <small>direct</small>
-      </div>
-      <div class="menuPills">
-        <a class="pillTiny" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-        <a class="pillTiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20menu_panel)" target="_blank" rel="noopener">WhatsApp</a>
-        <a class="pillTiny" href="#" id="openAskFromMenu">AskLizOn</a>
+      <div class="sheetRow">
+        <a href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Map</a>
+        <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_sheet)" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
   </aside>
 
-  <!-- AskLizOn Panel (Tap only, no typing) -->
-  <aside class="panel" id="askPanel" aria-label="AskLizOn Panel" role="dialog" aria-modal="true">
-    <div class="panelHead">
-      <div class="panelTitle">
-        <img class="panelLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+  <!-- AskLizOn Panel -->
+  <aside class="askPanel" id="askPanel" aria-label="AskLizOn Panel" role="dialog" aria-modal="true">
+    <div class="askHead">
+      <div class="askTitle">
+        <img class="askLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
         <div style="min-width:0;">
           <b>AskLizOn</b>
-          <small>Tap → get the right course + combo</small>
+          <small>2–3 questions → course suggestion</small>
         </div>
       </div>
-      <button class="panelClose" id="closeAsk" type="button">Close</button>
+      <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn">Close</button>
     </div>
 
-    <div class="panelBody" id="askBody" aria-label="AskLizOn chat"></div>
+    <div class="askQuick" aria-label="Quick start">
+      <button class="askPill" type="button" data-ask="ielts">Choose IELTS Course</button>
+      <button class="askPill" type="button" data-ask="pte">Choose PTE Course</button>
+      <button class="askPill" type="button" data-ask="abroad">Study Abroad Guidance</button>
+      <button class="askPill" type="button" data-ask="reset">Reset</button>
+    </div>
+
+    <div class="askBody" id="askBody" aria-label="Chat messages"></div>
+
+    <div class="askFoot">
+      <input class="askInput" id="askInput" type="text" placeholder="Type short answer… (English / বাংলা / Banglish)" autocomplete="off" />
+      <button class="askSend" id="askSend" type="button">Send</button>
+    </div>
   </aside>
+
+  <!-- Scroll controls -->
+  <div class="scrollNav" aria-label="Page scroll controls">
+    <button class="scrollBtn" id="scrollUp" type="button" aria-label="Scroll to top">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 5l-7 7h4v7h6v-7h4l-7-7z" fill="currentColor" opacity=".9"/>
+      </svg>
+    </button>
+    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll to bottom">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 19l7-7h-4V5H9v7H5l7 7z" fill="currentColor" opacity=".9"/>
+      </svg>
+    </button>
+  </div>
 
   <script>
     (function(){
@@ -1653,45 +1795,51 @@
       const y = document.getElementById('year');
       if (y) y.textContent = new Date().getFullYear();
 
-      // Theme (icon only)
+      // Theme (default dark)
       const root = document.documentElement;
-      const themeMini = document.getElementById('themeMini');
+      const themeTiny = document.getElementById('themeTiny');
       const themeIcon = document.getElementById('themeIcon');
 
-      const ICON_MOON = `
-        <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-      `;
-      const ICON_SUN = `
-        <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" stroke="currentColor" stroke-width="2"/>
-        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      `;
+      function iconSun(){
+        return `
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>`;
+      }
+      function iconMoon(){
+        return `
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 13.2A7.7 7.7 0 0 1 10.8 3a7.6 7.6 0 1 0 10.2 10.2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>`;
+      }
 
       function setTheme(next){
         root.setAttribute('data-theme', next);
         localStorage.setItem('lizon_theme', next);
         const meta = document.querySelector('meta[name="theme-color"]');
         if(meta) meta.setAttribute('content', next === 'light' ? '#eaf6f0' : '#0b2a1f');
-        if (themeIcon){
-          themeIcon.innerHTML = (next === 'light') ? ICON_SUN : ICON_MOON;
-        }
+        if (themeIcon) themeIcon.innerHTML = (next === 'light') ? iconSun() : iconMoon();
       }
-      const saved = localStorage.getItem('lizon_theme');
-      setTheme((saved === 'light' || saved === 'dark') ? saved : 'dark');
 
-      if (themeMini){
-        themeMini.addEventListener('click', () => {
-          const cur = root.getAttribute('data-theme') || 'dark';
-          setTheme(cur === 'dark' ? 'light' : 'dark');
+      const saved = localStorage.getItem('lizon_theme');
+      if (saved === 'light' || saved === 'dark') setTheme(saved);
+      else setTheme('dark'); // default dark
+
+      if (themeTiny){
+        themeTiny.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme') || 'dark';
+          setTheme(current === 'dark' ? 'light' : 'dark');
         });
       }
 
-      // Accordions in featured (no popups)
+      // Accordions in featured
       const accButtons = document.querySelectorAll('[data-acc]');
       const panels = {
         learnMorePanel: document.getElementById('learnMorePanel'),
         n2fPanel: document.getElementById('n2fPanel')
       };
-      function closeAll(){
+      function closeAllAcc(){
         Object.values(panels).forEach(p => p && p.classList.remove('open'));
         accButtons.forEach(b => b.setAttribute('aria-expanded','false'));
       }
@@ -1701,7 +1849,7 @@
           const panel = panels[id];
           if (!panel) return;
           const isOpen = panel.classList.contains('open');
-          closeAll();
+          closeAllAcc();
           if (!isOpen){
             panel.classList.add('open');
             btn.setAttribute('aria-expanded','true');
@@ -1739,334 +1887,370 @@
       window.addEventListener('resize', refreshScrollButtons);
       refreshScrollButtons();
 
-      // Panels: Menu + AskLizOn (click to open, click outside to close)
+      // Shared overlay + open/close helpers (overlay click closes)
       const overlay = document.getElementById('overlay');
-      const menuPanel = document.getElementById('menuPanel');
+      const menuSheet = document.getElementById('menuSheet');
+      const menuFab = document.getElementById('menuFab');
+      const menuClose = document.getElementById('menuClose');
+
       const askPanel = document.getElementById('askPanel');
+      const askFab = document.getElementById('askFab');
+      const askClose = document.getElementById('askClose');
 
-      const openMenuDock = document.getElementById('openMenuDock');
-      const closeMenu = document.getElementById('closeMenu');
-
-      const openAskDock = document.getElementById('openAskDock');
-      const closeAsk = document.getElementById('closeAsk');
-
-      const openAskTop = document.getElementById('openAskTop');
-      const openAskHero = document.getElementById('openAskHero');
-      const openAskFromMenu = document.getElementById('openAskFromMenu');
-
-      const openAskCardIELTS = document.getElementById('openAskCardIELTS');
-      const openAskCardPTE = document.getElementById('openAskCardPTE');
-      const openAskCardAbroad = document.getElementById('openAskCardAbroad');
-      const openAskLearnFree = document.getElementById('openAskLearnFree');
-
-      function closeAllPanels(){
-        menuPanel?.classList.remove('open');
+      function closeAll(){
+        menuSheet?.classList.remove('open');
         askPanel?.classList.remove('open');
         overlay?.classList.remove('open');
-        overlay?.setAttribute('aria-hidden', 'true');
+        overlay?.setAttribute('aria-hidden','true');
       }
-      function openPanel(which){
-        closeAllPanels();
+
+      function openMenu(){
+        closeAll();
         overlay?.classList.add('open');
-        overlay?.setAttribute('aria-hidden', 'false');
-        if (which === 'menu') menuPanel?.classList.add('open');
-        if (which === 'ask') askPanel?.classList.add('open');
+        overlay?.setAttribute('aria-hidden','false');
+        menuSheet?.classList.add('open');
       }
-
-      if (openMenuDock) openMenuDock.addEventListener('click', ()=> openPanel('menu'));
-      if (closeMenu) closeMenu.addEventListener('click', closeAllPanels);
-
       function openAsk(){
-        openPanel('ask');
+        closeAll();
+        overlay?.classList.add('open');
+        overlay?.setAttribute('aria-hidden','false');
+        askPanel?.classList.add('open');
+
         // seed once
-        if (!askState.seeded){
-          seedAsk();
-          askState.seeded = true;
+        const askBody = document.getElementById('askBody');
+        if (askBody && !askBody.dataset.seeded){
+          askBody.dataset.seeded = "1";
+          seed();
         }
+        setTimeout(()=> document.getElementById('askInput')?.focus(), 60);
       }
 
-      if (openAskDock) openAskDock.addEventListener('click', openAsk);
-      if (closeAsk) closeAsk.addEventListener('click', closeAllPanels);
+      if (menuFab) menuFab.addEventListener('click', openMenu);
+      if (menuClose) menuClose.addEventListener('click', closeAll);
 
-      if (openAskTop) openAskTop.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
-      if (openAskHero) openAskHero.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
-      if (openAskFromMenu) openAskFromMenu.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+      if (overlay) overlay.addEventListener('click', closeAll);
 
-      if (openAskCardIELTS) openAskCardIELTS.addEventListener('click', openAsk);
-      if (openAskCardPTE) openAskCardPTE.addEventListener('click', openAsk);
-      if (openAskCardAbroad) openAskCardAbroad.addEventListener('click', openAsk);
-      if (openAskLearnFree) openAskLearnFree.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
-
-      if (overlay){
-        overlay.addEventListener('click', closeAllPanels);
-      }
-      document.addEventListener('keydown', (e)=>{
-        if (e.key === 'Escape') closeAllPanels();
+      // close when clicking any link in sheet
+      menuSheet?.addEventListener('click', (e)=>{
+        const a = e.target.closest('a');
+        if (a && a.getAttribute('href') !== '#') closeAll();
       });
 
-      // ==========================
-      // AskLizOn (TAP ONLY)
-      // ==========================
+      // open ask from various places
+      document.getElementById('askNavOpen')?.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+      document.getElementById('askHeroOpen')?.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+      document.getElementById('askMenuOpen')?.addEventListener('click', (e)=>{ e.preventDefault(); closeAll(); openAsk(); });
+
+      document.getElementById('askCardOpen1')?.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+      document.getElementById('askCardOpen2')?.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+      document.getElementById('askCardOpen3')?.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+      document.getElementById('askReviewsOpen')?.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+
+      if (askFab) askFab.addEventListener('click', openAsk);
+      if (askClose) askClose.addEventListener('click', closeAll);
+
+      document.addEventListener('keydown', (e)=>{
+        if (e.key === 'Escape') closeAll();
+      });
+
+      // =====================================
+      // AskLizOn — Course Selector (2–3 Q)
+      // =====================================
       const askBody = document.getElementById('askBody');
+      const askInput = document.getElementById('askInput');
+      const askSend = document.getElementById('askSend');
 
-      const askState = {
-        seeded: false,
-        step: "start", // start | program | ielts_q1 | ielts_q2 | ielts_combo | done
-        program: null, // ielts | pte | abroad
-        ielts_profile: null, // a b c d
-        timeline: null, // soon mid later
-        suggestion: null, // ZERO HOPE STEP-UP DESPERATE PTE ABROAD
+      const state = {
+        mode: "idle",            // idle | ielts_q1 | ielts_q2 | ielts_done | pte_done | abroad_done
+        program: null,           // ielts | pte | abroad
+        ielts_profile: null,     // a | b | c | d
+        timeline: null,          // soon | mid | later
+        suggestion: null
       };
 
-      const PRICES = {
-        ZERO: 4200,
-        HOPE: 5500,
-        "STEP-UP": 6200,
-        DESPERATE: 7500
-      };
-      const COMBOS = [
-        {key:"2", label:"2 Courses", off:"30% off", examples:[
-          {name:"ZERO + HOPE", price:6790},
-          {name:"HOPE + STEP-UP", price:8190},
-          {name:"STEP-UP + DESPERATE", price:9590},
-        ]},
-        {key:"3", label:"3 Courses", off:"40% off", examples:[
-          {name:"ZERO + HOPE + STEP-UP", price:9540},
-          {name:"HOPE + STEP-UP + DESPERATE", price:11520},
-        ]},
-        {key:"4", label:"N2F (All 4)", off:"50% off (Best Value)", examples:[
-          {name:"ZERO + HOPE + STEP-UP + DESPERATE", price:12700},
-        ]},
-      ];
-      const SESSIONS = {
-        ZERO: "12 Sessions • 1 Month",
-        HOPE: "16 Sessions • 1 Month",
-        "STEP-UP": "16 Sessions • 1 Month",
-        DESPERATE: "28 Sessions • 1 Month"
-      };
-
-      function waLink(text, number){
-        const base = (number === 'abroad')
-          ? "https://wa.me/8801608881545?text="
-          : "https://wa.me/8801611611139?text=";
-        return base + encodeURIComponent(text);
+      function normalize(s){
+        return (s || "")
+          .toLowerCase()
+          .replace(/[^\p{L}\p{N}\s]/gu, " ")
+          .replace(/\s+/g, " ")
+          .trim();
       }
 
-      function clearAsk(){
-        if (askBody) askBody.innerHTML = "";
-      }
-
-      function row(who, html, choices){
-        const wrap = document.createElement('div');
-        wrap.className = 'msgRow';
+      function pushMsg(who, html, links){
+        const row = document.createElement('div');
+        row.className = 'askMsg';
 
         const av = document.createElement('div');
-        av.className = 'avatar';
+        av.className = 'askAvatar';
         av.textContent = (who === 'me') ? 'You' : 'LZ';
 
-        const bub = document.createElement('div');
-        bub.className = 'bubble' + (who === 'me' ? ' me' : '');
+        const bubble = document.createElement('div');
+        bubble.className = 'askBubble' + (who === 'me' ? ' me' : '');
 
         const p = document.createElement('p');
         p.innerHTML = html;
-        bub.appendChild(p);
+        bubble.appendChild(p);
 
-        if (choices && choices.length){
-          const c = document.createElement('div');
-          c.className = 'choices';
-          choices.forEach(ch => {
-            const b = document.createElement('button');
-            b.type = "button";
-            b.className = 'choiceBtn' + (ch.primary ? ' primary' : '');
-            b.textContent = ch.label;
-            b.addEventListener('click', ()=> ch.onClick());
-            c.appendChild(b);
+        if (links && links.length){
+          const wrap = document.createElement('div');
+          wrap.className = 'askSuggest';
+          links.forEach(l => {
+            const a = document.createElement('a');
+            a.className = 'askLink';
+            a.href = l.href;
+            a.textContent = l.label;
+            if (l.external){
+              a.target = "_blank";
+              a.rel = "noopener";
+            }
+            wrap.appendChild(a);
           });
-          bub.appendChild(c);
+          bubble.appendChild(wrap);
         }
 
-        wrap.appendChild(av);
-        wrap.appendChild(bub);
-        askBody.appendChild(wrap);
+        row.appendChild(av);
+        row.appendChild(bubble);
+        askBody.appendChild(row);
         askBody.scrollTop = askBody.scrollHeight;
       }
 
-      function seedAsk(){
-        askState.step = "program";
-        askState.program = null;
-        askState.ielts_profile = null;
-        askState.timeline = null;
-        askState.suggestion = null;
+      function waLink(text){
+        const base = "https://wa.me/8801611611139?text=";
+        return base + encodeURIComponent(text);
+      }
 
-        clearAsk();
+      function resetAsk(){
+        state.mode = "idle";
+        state.program = null;
+        state.ielts_profile = null;
+        state.timeline = null;
+        state.suggestion = null;
+        if (askBody) askBody.innerHTML = "";
+        seed();
+      }
 
-        row('bot',
-          `Assalamu Alaikum! Ami <b>AskLizOn</b> — apnar problem bujhe <b>right course + combo</b> recommend korbo.<div class="mut">Typing lagbe na — shudhu tap.</div>`,
+      function seed(){
+        pushMsg('bot',
+          `Assalamu Alaikum! Ami <b>AskLizOn</b> — 2–3 ta question kore apnar jonno <b>right course</b> suggest korbo.`,
           [
-            {label:"IELTS", primary:true, onClick: ()=> pickProgram('ielts')},
-            {label:"PTE", onClick: ()=> pickProgram('pte')},
-            {label:"Study Abroad", onClick: ()=> pickProgram('abroad')},
-            {label:"Reset", onClick: seedAsk}
+            {label:"Choose IELTS Course", href:"#", external:false},
+            {label:"Choose PTE Course", href:"#", external:false},
+            {label:"Study Abroad Guidance", href:"#", external:false}
+          ]
+        );
+        pushMsg('bot',
+          `Start kori. Apnar focus ta konta?<div class="mut">Type: IELTS / PTE / Abroad (ba quick button)</div>`,
+          []
+        );
+      }
+
+      function askIELTSQ1(){
+        state.program = "ielts";
+        state.mode = "ielts_q1";
+        pushMsg('bot',
+          `IELTS selected ✅ Q1/2: Apnar current situation konta?<div class="mut">Reply: A / B / C / D</div>`,
+          [
+            {label:"A: Start kori nai / basic weak", href:"#"},
+            {label:"B: Stuck (5–5.5)", href:"#"},
+            {label:"C: Upgrade (6.5–7)", href:"#"},
+            {label:"D: Exam close / repeat / urgent", href:"#"}
           ]
         );
       }
 
-      function pickProgram(p){
-        askState.program = p;
-        row('me', p === 'ielts' ? "IELTS" : (p === 'pte' ? "PTE" : "Study Abroad"));
-
-        if (p === 'ielts'){
-          askIELTS_Q1();
-          return;
-        }
-
-        if (p === 'pte'){
-          askState.step = "done";
-          row('bot',
-            `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">If apnar exam date close hoy, ajkei counselor ke message den.</div>`,
-            [
-              {label:"Open PTE Page", primary:true, onClick: ()=> window.location.href="pte.html"},
-              {label:"WhatsApp (Confirm)", onClick: ()=> window.open(waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_home)", "ielts"), "_blank")},
-              {label:"Reset", onClick: seedAsk}
-            ]
-          );
-          return;
-        }
-
-        if (p === 'abroad'){
-          askState.step = "done";
-          row('bot',
-            `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Country + intake + profile match kore counselor clear plan dibe.</div>`,
-            [
-              {label:"Open Study Abroad", primary:true, onClick: ()=> window.location.href="studyabroad.html"},
-              {label:"WhatsApp Counselor", onClick: ()=> window.open(waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_home)", "abroad"), "_blank")},
-              {label:"Reset", onClick: seedAsk}
-            ]
-          );
-        }
-      }
-
-      function askIELTS_Q1(){
-        askState.step = "ielts_q1";
-        row('bot',
-          `Q1/2: Apnar current situation konta?<div class="mut">Tap the closest one.</div>`,
+      function askIELTSQ2(){
+        state.mode = "ielts_q2";
+        pushMsg('bot',
+          `Q2/2: Exam koto din por? (approx)<div class="mut">Reply: 1 / 2 / 3</div>`,
           [
-            {label:"A: Start kori nai / basic weak", primary:true, onClick: ()=> setIELTSProfile('a')},
-            {label:"B: Practice kori, kintu 5–5.5 e atke", onClick: ()=> setIELTSProfile('b')},
-            {label:"C: Basic thik, target 6.5–7 (upgrade)", onClick: ()=> setIELTSProfile('c')},
-            {label:"D: Exam khub close / repeat / urgent", onClick: ()=> setIELTSProfile('d')},
+            {label:"1: 0–30 days", href:"#"},
+            {label:"2: 1–3 months", href:"#"},
+            {label:"3: 3+ months", href:"#"}
           ]
         );
-      }
-
-      function setIELTSProfile(p){
-        askState.ielts_profile = p;
-        row('me', (p==='a'?'A':'') + (p==='b'?'B':'') + (p==='c'?'C':'') + (p==='d'?'D':''));
-        askIELTS_Q2();
-      }
-
-      function askIELTS_Q2(){
-        askState.step = "ielts_q2";
-        row('bot',
-          `Q2/2: Exam koto din por? (approx)<div class="mut">Tap one.</div>`,
-          [
-            {label:"0–30 days", primary:true, onClick: ()=> setTimeline('soon')},
-            {label:"1–3 months", onClick: ()=> setTimeline('mid')},
-            {label:"3+ months", onClick: ()=> setTimeline('later')},
-          ]
-        );
-      }
-
-      function setTimeline(tl){
-        askState.timeline = tl;
-        row('me', tl === 'soon' ? "0–30 days" : (tl==='mid' ? "1–3 months" : "3+ months"));
-        decideIELTS();
       }
 
       function decideIELTS(){
-        const prof = askState.ielts_profile;
-        const tl = askState.timeline;
+        let sug = null;
+        const prof = state.ielts_profile; // a/b/c/d
+        const tl = state.timeline; // soon/mid/later
 
-        let sug = "HOPE";
         if (prof === "d") sug = "DESPERATE";
         else if (tl === "soon"){
-          sug = (prof === "a") ? "ZERO" : "DESPERATE";
+          if (prof === "a") sug = "ZERO";
+          else sug = "DESPERATE";
         } else {
           if (prof === "a") sug = "ZERO";
           if (prof === "b") sug = "HOPE";
           if (prof === "c") sug = "STEP-UP";
         }
+        if (!sug) sug = "HOPE";
 
-        askState.suggestion = sug;
-        askState.step = "ielts_combo";
+        state.suggestion = sug;
+        state.mode = "ielts_done";
 
-        const title = sug === "STEP-UP" ? "IELTS STEP-UP" : ("IELTS " + sug);
-        const price = PRICES[sug] || "";
-        const sessions = SESSIONS[sug] || "1 Month";
+        const map = {
+          "ZERO": {href:"ielts.html#zero", title:"IELTS ZERO"},
+          "HOPE": {href:"ielts.html#hope", title:"IELTS HOPE"},
+          "STEP-UP": {href:"ielts.html#stepup", title:"IELTS STEP-UP"},
+          "DESPERATE": {href:"ielts.html#desperate", title:"IELTS DESPERATE"}
+        };
+        const pick = map[sug];
 
-        row('bot',
-          `Suggested ✅ <b>${title}</b>
-           <div class="mut">Price: <b style="color:var(--gold)">৳${price}</b> • ${sessions}</div>
-           <div class="mut">Ekhon combo decide kori—jeta apnar target e fastest help dibe.</div>`,
+        const waText =
+          `Assalamu Alaikum LizOn Education. AskLizOn suggested: ${pick.title}. ` +
+          `My situation: ${prof?.toUpperCase() || "N/A"}, timeline: ${tl || "N/A"}. ` +
+          `(Source: AskLizOn_course_selector_home)`;
+
+        pushMsg('bot',
+          `Suggested ✅ <b>${pick.title}</b><div class="mut">Want confirmation? Message counselor with this suggestion.</div>`,
           [
-            {label:"Single Course", primary:true, onClick: ()=> showSingle(title)},
-            {label:"2 Courses (Best next)", onClick: ()=> showCombo('2', title)},
-            {label:"3 Courses", onClick: ()=> showCombo('3', title)},
-            {label:"N2F (All 4) Best Value", onClick: ()=> showCombo('4', title)},
+            {label:"Open Course Details", href: pick.href},
+            {label:"Talk on WhatsApp (Confirm)", href: waLink(waText), external:true},
+            {label:"Reset", href:"#"}
           ]
         );
       }
 
-      function showSingle(title){
-        row('me', "Single Course");
-        row('bot',
-          `Recommended: <b>${title}</b>
-           <div class="mut">Apni jodi ekhon ekta course-e focus korte chan, eta best start. Exam close hole “DESPERATE” more effective.</div>`,
-          [
-            {label:"Open Course Details", primary:true, onClick: ()=> window.location.href="ielts.html#levels"},
-            {label:"WhatsApp (Confirm)", onClick: ()=> window.open(waLink(
-              `Assalamu Alaikum LizOn Education. AskLizOn suggested: ${title}. I want Single Course. (Source: AskLizOn_home)`, "ielts"
-            ), "_blank")},
-            {label:"Reset", onClick: seedAsk}
-          ]
-        );
+      function handleUserText(rawText){
+        const raw = (rawText || "").trim();
+        if (!raw) return;
+
+        pushMsg('me', raw);
+        const s = normalize(raw);
+
+        if (s === "reset" || s === "start over" || s === "restart"){
+          resetAsk();
+          return;
+        }
+
+        if (state.mode === "idle"){
+          if (s.includes("ielts") || s === "i"){ askIELTSQ1(); return; }
+          if (s.includes("pte") || s === "p"){
+            state.program = "pte";
+            state.mode = "pte_done";
+            state.suggestion = "PTE";
+            pushMsg('bot',
+              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">Message counselor with your exam date.</div>`,
+              [
+                {label:"Open PTE Program", href:"pte.html"},
+                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector_home)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+          if (s.includes("abroad") || s.includes("study abroad") || s.includes("visa") || s.includes("university")){
+            state.program = "abroad";
+            state.mode = "abroad_done";
+            state.suggestion = "STUDY_ABROAD";
+            pushMsg('bot',
+              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Counselor will match country + intake + profile.</div>`,
+              [
+                {label:"Open Study Abroad", href:"studyabroad.html"},
+                {label:"Talk to Counselor", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector_home)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+
+          pushMsg('bot', `Just choose one:<div class="mut">IELTS / PTE / Abroad</div>`, []);
+          return;
+        }
+
+        if (state.mode === "ielts_q1"){
+          if (s === "a" || s.includes("basic") || s.includes("beginner") || s.includes("zero")){
+            state.ielts_profile = "a"; askIELTSQ2(); return;
+          }
+          if (s === "b" || s.includes("stuck") || s.includes("atke") || s.includes("5") || s.includes("5.5")){
+            state.ielts_profile = "b"; askIELTSQ2(); return;
+          }
+          if (s === "c" || s.includes("6") || s.includes("6.5") || s.includes("7") || s.includes("upgrade")){
+            state.ielts_profile = "c"; askIELTSQ2(); return;
+          }
+          if (s === "d" || s.includes("close") || s.includes("repeat") || s.includes("urgent")){
+            state.ielts_profile = "d"; askIELTSQ2(); return;
+          }
+          pushMsg('bot', `Reply with <b>A / B / C / D</b> (just one letter).`, []);
+          return;
+        }
+
+        if (state.mode === "ielts_q2"){
+          if (s === "1" || s.includes("30") || s.includes("week") || s.includes("days")){
+            state.timeline = "soon"; decideIELTS(); return;
+          }
+          if (s === "2" || s.includes("month")){
+            state.timeline = "mid"; decideIELTS(); return;
+          }
+          if (s === "3" || s.includes("3+") || s.includes("later") || s.includes("after")){
+            state.timeline = "later"; decideIELTS(); return;
+          }
+          pushMsg('bot', `Reply with <b>1 / 2 / 3</b>.`, []);
+          return;
+        }
+
+        if (state.mode.endsWith("_done")){
+          if (s.includes("reset")) resetAsk();
+          else pushMsg('bot', `Type <b>reset</b> to start again.`, []);
+          return;
+        }
       }
 
-      function showCombo(key, title){
-        const block = COMBOS.find(x => x.key === key);
-        row('me', key === '4' ? "N2F (All 4)" : (key + " Courses"));
+      function sendAsk(){
+        const val = askInput?.value || "";
+        askInput.value = "";
+        handleUserText(val);
+      }
 
-        let lines = "";
-        block.examples.forEach(ex => {
-          lines += `• <b>${ex.name}</b> — <b style="color:var(--gold)">৳${ex.price}</b><br/>`;
+      if (askSend) askSend.addEventListener('click', sendAsk);
+      if (askInput){
+        askInput.addEventListener('keydown', (e)=>{
+          if (e.key === 'Enter') sendAsk();
         });
-
-        const extra =
-          (key === '2')
-          ? "Duita course nিলে clear upgrade path hoy. Perfect for 1–3 months timeline."
-          : (key === '3')
-            ? "3 course মানে consistency + evaluation. যারা 6.5–7 target করে, often best."
-            : "N2F মানে BEST VALUE. Full 4-level journey + full guidance. যারা serious, তাদের জন্য smoothest path.";
-
-        row('bot',
-          `<b>${block.label}</b> — <b style="color:var(--gold)">${block.off}</b>
-           <div class="mut" style="margin-top:6px;">${lines}</div>
-           <div class="mut">${extra}</div>`,
-          [
-            {label:"Open Pricing (IELTS)", primary:true, onClick: ()=> window.location.href="ielts.html#pricing"},
-            {label:"WhatsApp (Confirm Combo)", onClick: ()=> window.open(waLink(
-              `Assalamu Alaikum LizOn Education. AskLizOn suggested: ${title}. I want ${block.label}. Please confirm exact combo for my case. (Source: AskLizOn_home)`, "ielts"
-            ), "_blank")},
-            {label:"Reset", onClick: seedAsk}
-          ]
-        );
       }
 
-      // Make AskLizOn easy to reset when panel opened multiple times
-      // (Optional) keep as is; user can tap reset.
+      // Quick pills (tap)
+      document.querySelectorAll('.askPill[data-ask]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const k = btn.getAttribute('data-ask');
+          if (k === "reset"){ resetAsk(); return; }
+          if (k === "ielts"){ pushMsg('me', 'IELTS'); askIELTSQ1(); return; }
+          if (k === "pte"){
+            pushMsg('me', 'PTE');
+            state.program = "pte";
+            state.mode = "pte_done";
+            state.suggestion = "PTE";
+            pushMsg('bot',
+              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">Message counselor with your exam date.</div>`,
+              [
+                {label:"Open PTE Program", href:"pte.html"},
+                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector_home)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+          if (k === "abroad"){
+            pushMsg('me', 'Study Abroad');
+            state.program = "abroad";
+            state.mode = "abroad_done";
+            state.suggestion = "STUDY_ABROAD";
+            pushMsg('bot',
+              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Message counselor with country + intake.</div>`,
+              [
+                {label:"Open Study Abroad", href:"studyabroad.html"},
+                {label:"Talk to Counselor", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector_home)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+        });
+      });
+
     })();
   </script>
 
 </body>
 </html>
-```0

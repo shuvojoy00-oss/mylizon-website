@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About | LizOn Education</title>
+  <meta name="description" content="About LizOn Education — Founded in 2019. 2100+ students served. Students from 30+ countries. IELTS • PTE • Study Abroad." />
+
+  <style>
+    :root{
+      /* Brand core (Dark Green) */
+      --bg:#071b16;
+      --grad1: radial-gradient(1000px 700px at 20% 0%, rgba(35,140,110,.18), transparent 55%);
+      --grad2: radial-gradient(900px 700px at 80% 30%, rgba(255,190,100,.08), transparent 55%);
+      --panel:#0b241e;
+      --panel2:#0e2c25;
+
+      --text:#e9f3ef;
+      --muted:rgba(233,243,239,.78);
+      --border:rgba(233,243,239,.14);
+      --border2:rgba(233,243,239,.22);
+
+      --chip-bg: rgba(255,255,255,.03);
+      --card-grad: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      --mini-bg: rgba(255,255,255,.02);
+      --highlight-grad: linear-gradient(180deg, rgba(35,140,110,.16), rgba(255,190,100,.06));
+
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+
+      --gold: rgba(255,190,100,.55);
+      --gold-strong: rgba(255,190,100,.80);
+      --goldbg: rgba(255,190,100,.10);
+
+      --topbar-bg: rgba(7,27,22,.88);
+      --topbar-bg-scrolled: rgba(7,27,22,.55);
+
+      --ok: rgba(145, 255, 195, .95);
+      --warn: rgba(255, 190, 100, .92);
+    }
+
+    .theme-light{
+      --bg:#eef6f3;
+      --grad1: radial-gradient(1100px 800px at 10% -10%, rgba(12,123,89,.10), transparent 60%);
+      --grad2: radial-gradient(1000px 800px at 100% 0%, rgba(255,190,100,.10), transparent 60%);
+      --panel:#ffffff;
+      --panel2:#ffffff;
+
+      --text:#0b201a;
+      --muted:rgba(11,32,26,.70);
+      --border:rgba(11,32,26,.12);
+      --border2:rgba(11,32,26,.22);
+
+      --chip-bg:#ffffff;
+      --card-grad: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.98));
+      --mini-bg:#f5faf7;
+      --highlight-grad: linear-gradient(180deg, rgba(255,230,180,.38), rgba(12,123,89,.08));
+
+      --shadow: 0 8px 24px rgba(8,25,20,.08);
+
+      --gold: rgba(165,127,50,.55);
+      --gold-strong: rgba(165,127,50,.80);
+      --goldbg: #f3ebd7;
+
+      --topbar-bg: rgba(255,255,255,.90);
+      --topbar-bg-scrolled: rgba(255,255,255,.62);
+
+      --ok: rgba(0, 140, 60, .95);
+      --warn: rgba(200, 110, 0, .95);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--grad1), var(--grad2), var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{ color:inherit; }
+    .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
+
+    /* ===== TOPBAR ===== */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      isolation: isolate;
+      backdrop-filter: blur(12px);
+      background: var(--topbar-bg);
+      border-bottom:1px solid var(--border);
+      transition: background .2s ease, box-shadow .2s ease;
+    }
+    .topbar.scrolled{
+      background: var(--topbar-bg-scrolled);
+      box-shadow: 0 10px 25px rgba(0,0,0,.12);
+    }
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 10px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 0;
+    }
+    .logo-link{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      min-width: 0;
+    }
+    .logo-img{
+      width:44px; height:44px;
+      border-radius:12px;
+      object-fit:contain;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.15;
+      min-width:0;
+    }
+    .brand-text b{
+      font-size:18px;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 230px;
+    }
+    .brand-text span{
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 230px;
+    }
+
+    .chip{
+      padding:8px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      text-decoration:none;
+      font-size:12px;
+      color:var(--muted);
+      background: var(--chip-bg);
+      white-space:nowrap;
+    }
+    .chip:hover{ border-color:var(--border2); color:var(--text); }
+
+    .right-controls{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
+    }
+    .desktop-nav{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+
+    /* ===== HERO / SECTIONS ===== */
+    header{ padding: 18px 0 10px; }
+    section{ padding: 18px 0; }
+    .hero-card{
+      background: var(--card-grad);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+      border: 1px solid var(--border);
+      background: var(--chip-bg);
+    }
+    h1{ margin:10px 0 6px; font-size:30px; line-height:1.18; }
+    .lead{ margin:0; color:var(--muted); max-width:900px; }
+
+    .section-title{ margin:10px 0 8px; font-size:22px; line-height:1.25; }
+    .muted{ color:var(--muted); }
+    .rule{ height:1px; background: var(--border); margin:18px 0; }
+
+    .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .grid-3{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+
+    .card{
+      background: var(--card-grad);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .card h3{ margin:0 0 8px; font-size:16px; }
+    .list{ margin:10px 0 0; padding-left:18px; }
+
+    .mini-card{
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background:var(--mini-bg);
+    }
+    .mini-title{ margin:0 0 6px; font-weight:950; font-size:13px; }
+    .mini-text{ margin:0; color:var(--muted); font-size:13px; }
+
+    .highlight{
+      background: var(--highlight-grad);
+      border: 1px solid rgba(255,190,100,.20);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:12px 16px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:950;
+      border:1px solid transparent;
+      white-space:nowrap;
+    }
+    .btn-primary{
+      background: var(--goldbg);
+      border-color: var(--gold);
+    }
+    .btn-ghost{
+      background: transparent;
+      border-color: var(--border);
+      color: var(--muted);
+    }
+    .btn-tiny{
+      padding:8px 10px;
+      font-weight:950;
+      border-radius:10px;
+      font-size:12px;
+      background: rgba(255,255,255,.02);
+      border:1px solid var(--border);
+      color:var(--text);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .cta-row{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      font-size:12px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .dot{
+      width:8px; height:8px;
+      border-radius:50%;
+      background: var(--ok);
+      box-shadow: 0 0 0 3px rgba(145,255,195,.10);
+    }
+
+    .metric{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: var(--mini-bg);
+    }
+    .metric b{ font-size:20px; letter-spacing:.2px; }
+    .metric span{ color:var(--muted); font-size:12px; display:block; margin-top:2px; }
+
+    /* Timeline */
+    .timeline{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+    .t-item{
+      display:flex;
+      gap:10px;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(255,255,255,.02);
+    }
+    .t-bullet{
+      width:12px; height:12px;
+      border-radius:50%;
+      background: var(--warn);
+      box-shadow: 0 0 0 4px rgba(255,190,100,.10);
+      margin-top:4px;
+      flex: 0 0 auto;
+    }
+    .t-title{ margin:0; font-weight:950; }
+    .t-text{ margin:4px 0 0; color: var(--muted); font-size:13px; }
+
+    /* ===== Drawer (Menu Sheet) ===== */
+    .backdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.45);
+      display:none;
+      z-index: 9998;
+    }
+    .backdrop.open{ display:block; }
+
+    .drawer{
+      position:fixed;
+      left:12px; right:12px;
+      bottom:12px;
+      max-height: calc(100vh - 24px);
+      overflow:auto;
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      padding:14px;
+      display:none;
+      z-index: 10000;
+      transform: translateY(6px);
+    }
+    .drawer.open{ display:block; }
+    .drawer-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .drawer h3{
+      margin:0;
+      font-size:13px;
+      color: var(--muted);
+      letter-spacing:.2px;
+      font-weight:950;
+    }
+    .xbtn{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:950;
+      flex:0 0 auto;
+    }
+    .drawer-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .drawer a{
+      display:block;
+      padding:11px 10px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      text-decoration:none;
+      color: var(--text);
+      font-weight:900;
+      text-align:center;
+      font-size:12px; /* tiny options = more space */
+    }
+    .drawer a:hover{ border-color: var(--border2); }
+    .drawer .full{ grid-column: 1 / -1; }
+
+    /* ===== Footer ===== */
+    footer{
+      padding: 10px 0 110px;
+      border-top: 1px solid var(--border);
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .footer-card{
+      background: var(--card-grad);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+      box-shadow: var(--shadow);
+    }
+    .footer-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+    .footer-buttons{ display:flex; gap:10px; flex-wrap:wrap; }
+    .socials{ display:flex; gap:10px; flex-wrap:wrap; }
+
+    /* Sticky WhatsApp bar */
+    .sticky-wa{
+      position:fixed; left:0; right:0; bottom:12px; z-index:2200;
+      display:flex; justify-content:center; pointer-events:none;
+    }
+    .sticky-wa .bar{
+      pointer-events:auto;
+      display:flex; align-items:center; gap:10px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding:10px 14px;
+      border-radius:999px;
+      box-shadow: var(--shadow);
+    }
+    .bar .green-dot{
+      width:10px; height:10px;
+      border-radius:50%;
+      background:#00d26a;
+      box-shadow: 0 0 0 4px rgba(0,210,106,.12);
+    }
+
+    /* ===== Floating controls ===== */
+    .fab-left{
+      position:fixed;
+      left:14px;
+      bottom:78px;
+      z-index:2300;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .fab-right{
+      position:fixed;
+      right:14px;
+      bottom:78px;
+      z-index:2300;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:flex-end;
+    }
+
+    .fab-btn{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      display:grid; place-items:center;
+      box-shadow: var(--shadow);
+      cursor:pointer; user-select:none;
+    }
+
+    /* Modern scroll buttons (no “old ages”) */
+    .fab-scroll{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      color: var(--text);
+      display:grid;
+      place-items:center;
+      box-shadow: var(--shadow);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .fab-scroll:hover{ transform: translateY(-1px); filter: brightness(1.08); }
+
+    /* Theme icon button (tiny icons only) */
+    .fab-theme{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      user-select:none;
+    }
+    .ico{ width:18px; height:18px; display:block; }
+    .hidden{ display:none !important; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 920px){
+      .grid-2{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+      h1{ font-size:24px; }
+      .desktop-nav{ display:none; }
+      .brand-text b, .brand-text span{ max-width: 190px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Topbar -->
+  <div class="topbar" id="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand">
+          <a class="logo-link" href="index.html" title="Go to Home" aria-label="Go to Home">
+            <img class="logo-img" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+            <div class="brand-text">
+              <b>LizOn Education</b>
+              <span>About • Our Story</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="right-controls">
+          <!-- Desktop nav (simple, clean) -->
+          <div class="desktop-nav" aria-label="Top navigation">
+            <a class="chip" href="index.html">Home</a>
+            <a class="chip" href="ielts.html">IELTS</a>
+            <a class="chip" href="pte.html">PTE</a>
+            <a class="chip" href="studyabroad.html">Study Abroad</a>
+            <a class="chip" href="about.html" style="border-color:var(--border2); color:var(--text);">About</a>
+          </div>
+
+          <a class="chip"
+             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20LizOn%20niye%20details%20and%20guidance%20chai."
+             target="_blank" rel="noopener">Helpline</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header>
+    <div class="container">
+      <div class="hero-card">
+        <span class="badge">Designed for Desired Score</span>
+        <h1>MAKE YOUR FAMILY PROUD — but with a real plan.</h1>
+        <p class="lead">
+          LizOn Education started in 2019 with one simple mission:
+          students der confusion remove kore, step-by-step direction diya score build kora.
+          No random practice. No false hope. Just clean strategy + evaluation.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary"
+             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20IELTS%2FPTE%20niye%20guidance%20chai.%20Amar%20current%20level%20bujhte%20help%20korben%3F"
+             target="_blank" rel="noopener">Talk on WhatsApp</a>
+          <a class="btn btn-ghost" href="ielts.html">Explore IELTS Levels</a>
+          <a class="btn btn-ghost" href="studyabroad.html">Study Abroad Guidance</a>
+        </div>
+
+        <div class="cta-row" style="margin-top:10px;">
+          <span class="pill"><span class="dot"></span> Online + Offline (Dhaka)</span>
+          <span class="pill"><span class="dot"></span> Mentorship + Evaluation Focus</span>
+          <span class="pill"><span class="dot"></span> Clear Pricing (No clutter)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- QUICK STATS -->
+  <section id="stats">
+    <div class="container">
+      <h2 class="section-title">Quick Facts</h2>
+      <p class="muted" style="max-width:900px;">
+        Numbers don’t prove everything — but they do show consistency.
+      </p>
+
+      <div class="grid-3" style="margin-top:12px;">
+        <div class="metric">
+          <div>
+            <b>2019</b>
+            <span>Founded</span>
+          </div>
+          <span class="badge">Start of the system</span>
+        </div>
+        <div class="metric">
+          <div>
+            <b>2100+</b>
+            <span>Students Served</span>
+          </div>
+          <span class="badge">Guided properly</span>
+        </div>
+        <div class="metric">
+          <div>
+            <b>30+</b>
+            <span>Countries</span>
+          </div>
+          <span class="badge">Global footprint</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <h3>Our students are now in</h3>
+        <p class="muted" style="margin:0;">
+          USA • Australia • UK • Canada • Denmark — and many more.
+        </p>
+        <p class="muted" style="margin:10px 0 0; font-size:13px;">
+          (We keep it honest: results vary by effort + timeline + consistency.)
+        </p>
+      </div>
+
+      <div class="rule"></div>
+    </div>
+  </section>
+
+  <!-- WHAT MAKES LIZON DIFFERENT -->
+  <section id="difference">
+    <div class="container">
+      <h2 class="section-title">What makes LizOn different?</h2>
+
+      <div class="grid-2" style="margin-top:12px;">
+        <div class="card">
+          <h3>We don’t sell “hope”. We sell a process.</h3>
+          <ul class="list">
+            <li>Correct placement by level (no “one size fits all”).</li>
+            <li>Clear routine + direction (students can actually follow).</li>
+            <li>Evaluation loop: weakness detect → fix → test → improve.</li>
+            <li>Real guidance till exam day (not “good luck bro”).</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>We build skills, not dependency.</h3>
+          <ul class="list">
+            <li>Reading: stop translating → start understanding.</li>
+            <li>Listening: answer catching under pressure.</li>
+            <li>Writing: idea + structure + accuracy (not template addiction).</li>
+            <li>Speaking: idea flow + confidence + control.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight" style="margin-top:14px;">
+        <h3 style="margin:0 0 6px;">If you’re serious — we’ll guide you properly.</h3>
+        <p class="muted" style="margin:0; max-width:900px;">
+          If you’re not serious, don’t waste your time. If you are — we’ll help you choose the right path fast.
+        </p>
+        <div class="cta-row">
+          <a class="btn-tiny" href="ielts.html">Check IELTS Levels</a>
+          <a class="btn-tiny" href="pte.html">Explore PTE Plan</a>
+          <a class="btn-tiny" href="studyabroad.html">Study Abroad</a>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <div class="container">
+      <h2 class="section-title">How LizOn grew (simple timeline)</h2>
+      <p class="muted" style="max-width:900px;">
+        Growth happened because the system worked — not because we screamed louder.
+      </p>
+
+      <div class="timeline">
+        <div class="t-item">
+          <div class="t-bullet"></div>
+          <div>
+            <p class="t-title">2019 — Started with structure</p>
+            <p class="t-text">Focus: foundation + real feedback. Students needed clarity more than motivation.</p>
+          </div>
+        </div>
+
+        <div class="t-item">
+          <div class="t-bullet"></div>
+          <div>
+            <p class="t-title">2020–2022 — Online system gets stronger</p>
+            <p class="t-text">Routine + evaluation + guidance loop became the core identity.</p>
+          </div>
+        </div>
+
+        <div class="t-item">
+          <div class="t-bullet"></div>
+          <div>
+            <p class="t-title">2023–Now — Offline campus + wider reach</p>
+            <p class="t-text">Dhaka campus support added. Students from 30+ countries are connected with LizOn.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+    </div>
+  </section>
+
+  <!-- WHERE TO START -->
+  <section id="start">
+    <div class="container">
+      <h2 class="section-title">Where should you start?</h2>
+      <p class="muted" style="max-width:900px;">
+        Most students waste months because they start from the wrong level.
+        Start right = progress faster.
+      </p>
+
+      <div class="grid-2" style="margin-top:12px;">
+        <a class="card" href="ielts.html" style="text-decoration:none;">
+          <h3 style="margin:0 0 8px;">IELTS Journey (ZERO → HOPE → STEP-UP → DESPERATE)</h3>
+          <p class="muted" style="margin:0;">Clear levels, clean direction, transparent pricing.</p>
+          <div class="cta-row">
+            <span class="btn-tiny">Explore</span>
+            <span class="btn-tiny">Choose properly</span>
+          </div>
+        </a>
+
+        <a class="card" href="pte.html" style="text-decoration:none;">
+          <h3 style="margin:0 0 8px;">PTE Full Preparation (30 days)</h3>
+          <p class="muted" style="margin:0;">Fast plan. Clean routine. Skill + speed.</p>
+          <div class="cta-row">
+            <span class="btn-tiny">Explore</span>
+            <span class="btn-tiny">Get plan</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="highlight" style="margin-top:14px;">
+        <h3 style="margin:0 0 6px;">Need guidance?</h3>
+        <p class="muted" style="margin:0; max-width:900px;">
+          Tap 2 minutes, get direction. You don’t need a long call to start correctly.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary"
+             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20confused.%20Amar%20current%20level%20bujhe%20recommendation%20diben%3F"
+             target="_blank" rel="noopener">Chat on WhatsApp</a>
+          <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-card">
+
+        <h3 style="margin:0 0 8px;">Options</h3>
+        <div class="footer-links">
+          <a class="btn btn-ghost" href="index.html">Home</a>
+          <a class="btn btn-ghost" href="ielts.html">IELTS Courses</a>
+          <a class="btn btn-ghost" href="pte.html">PTE Courses</a>
+          <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
+          <a class="btn btn-ghost" href="about.html">About</a>
+          <a class="btn btn-ghost" href="upcoming.html">Upcoming</a>
+        </div>
+
+        <h3 style="margin:14px 0 8px;">IELTS Practice Pages</h3>
+        <div class="footer-links">
+          <a class="btn btn-ghost" href="ielts-listening.html">Listening</a>
+          <a class="btn btn-ghost" href="ielts-reading.html">Reading</a>
+          <a class="btn btn-ghost" href="ielts-writing.html">Writing</a>
+          <a class="btn btn-ghost" href="ielts-speaking.html">Speaking</a>
+          <a class="btn btn-ghost" href="ielts-grammar.html">Grammar</a>
+          <a class="btn btn-ghost" href="ielts-computer-based.html">Computer Based</a>
+          <a class="btn btn-ghost" href="ielts-faq-bangladesh.html">FAQ Bangladesh</a>
+        </div>
+
+        <h3 style="margin:14px 0 8px;">Contact & Location</h3>
+        <p style="margin:0 0 10px;">
+          <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
+          <b>IELTS/PTE Helpline:</b> 01611611139<br/>
+          <b>Study Abroad/Visa Processing:</b> 01608881545
+        </p>
+
+        <div class="footer-buttons">
+          <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+          <a class="btn btn-primary"
+             href="https://wa.me/8801611611139?text=Need%20guidance%20about%20IELTS%2C%20PTE%20or%20Study%20Abroad"
+             target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+
+        <h3 style="margin:14px 0 8px;">Social Media</h3>
+        <p class="muted" style="margin:0 0 10px;">Follow our updates, results, and guidance content.</p>
+        <div class="socials">
+          <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+          <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+
+        <p class="muted" style="margin:14px 0 0;">© 2025 myLizOn.com | LizOn Education</p>
+      </div>
+    </div>
+
+    <div class="sticky-wa" aria-label="Sticky guidance bar">
+      <div class="bar">
+        <span class="green-dot"></span>
+        <span>Need guidance?</span>
+        <a class="btn-tiny"
+           href="https://wa.me/8801611611139?text=Hi%2C%20need%20guidance%20for%20IELTS%2FPTE%20journey."
+           target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bottom-left Hamburger FAB -->
+  <div class="fab-left" aria-label="Menu controls">
+    <button class="fab-btn" id="menuFab" type="button" aria-label="Open menu" title="Menu">
+      <!-- hamburger icon -->
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Bottom-right Theme icon + Scroll buttons -->
+  <div class="fab-right" aria-label="Quick actions">
+    <button class="fab-theme" id="themeFab" type="button" aria-label="Toggle theme" title="Toggle theme">
+      <!-- Sun / Moon icons (toggle) -->
+      <svg class="ico" id="sunIco" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+      <svg class="ico hidden" id="moonIco" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8Z"/>
+      </svg>
+    </button>
+
+    <button class="fab-scroll" id="scrollTopBtn" type="button" aria-label="Scroll to top" title="Top">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M12 19V5"/>
+        <path d="M6 11l6-6 6 6"/>
+      </svg>
+    </button>
+
+    <button class="fab-scroll" id="scrollBottomBtn" type="button" aria-label="Scroll to bottom" title="Bottom">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M12 5v14"/>
+        <path d="M6 13l6 6 6-6"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Bottom-sheet Drawer -->
+  <div class="backdrop" id="backdrop"></div>
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Site navigation menu">
+    <div class="drawer-top">
+      <h3>Navigate</h3>
+      <button class="xbtn" id="closeDrawer" type="button" aria-label="Close menu">✕</button>
+    </div>
+
+    <div class="drawer-grid">
+      <a href="index.html" class="full">Home</a>
+      <a href="ielts.html">IELTS</a>
+      <a href="pte.html">PTE</a>
+      <a href="studyabroad.html">Study Abroad</a>
+      <a href="about.html">About</a>
+      <a href="upcoming.html" class="full">Upcoming</a>
+
+      <a href="ielts-listening.html" class="full">Practice: Listening</a>
+      <a href="ielts-reading.html" class="full">Practice: Reading</a>
+      <a href="ielts-writing.html" class="full">Practice: Writing</a>
+      <a href="ielts-speaking.html" class="full">Practice: Speaking</a>
+
+      <a href="ielts-grammar.html">Grammar</a>
+      <a href="ielts-computer-based.html">Computer Based</a>
+      <a href="ielts-faq-bangladesh.html" class="full">FAQ Bangladesh</a>
+
+      <a class="full"
+         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20guidance%20chai."
+         target="_blank" rel="noopener">Talk on WhatsApp</a>
+      <a class="full" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+    </div>
+  </div>
+
+  <script>
+    const body = document.body;
+    const topbar = document.getElementById('topbar');
+
+    // ===== Topbar scroll effect
+    function handleTopbar(){
+      if(window.scrollY > 8) topbar.classList.add('scrolled');
+      else topbar.classList.remove('scrolled');
+    }
+    handleTopbar();
+    window.addEventListener('scroll', handleTopbar, {passive:true});
+
+    // ===== Logo fallback
+    const logoImg = document.getElementById('logoImg');
+    logoImg.addEventListener('error', ()=>{ logoImg.src = 'assets/logo-dark.png'; });
+
+    // ===== Drawer controls (works PC + phone)
+    const menuFab = document.getElementById('menuFab');
+    const drawer = document.getElementById('drawer');
+    const backdrop = document.getElementById('backdrop');
+    const closeDrawer = document.getElementById('closeDrawer');
+
+    function openDrawer(){
+      drawer.classList.add('open');
+      backdrop.classList.add('open');
+      // prevent background scroll jumpy
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeIt(){
+      drawer.classList.remove('open');
+      backdrop.classList.remove('open');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+
+    menuFab.addEventListener('click', (e)=>{ e.stopPropagation(); openDrawer(); });
+    closeDrawer.addEventListener('click', closeIt);
+    backdrop.addEventListener('click', closeIt);
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeIt(); });
+
+    // close drawer when clicking any link
+    drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeIt));
+
+    // ===== Scroll buttons
+    document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.getElementById('scrollBottomBtn').addEventListener('click', ()=>{
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+
+    // ===== Theme toggle (icons only)
+    const themeFab = document.getElementById('themeFab');
+    const sunIco = document.getElementById('sunIco');
+    const moonIco = document.getElementById('moonIco');
+
+    function applyTheme(mode){
+      if(mode === 'light'){
+        body.classList.add('theme-light');
+        sunIco.classList.add('hidden');
+        moonIco.classList.remove('hidden');
+      } else {
+        body.classList.remove('theme-light');
+        sunIco.classList.remove('hidden');
+        moonIco.classList.add('hidden');
+      }
+      localStorage.setItem('lizon-theme', mode);
+    }
+
+    const saved = localStorage.getItem('lizon-theme') || 'dark';
+    applyTheme(saved);
+
+    themeFab.addEventListener('click', ()=>{
+      const isLight = body.classList.contains('theme-light');
+      applyTheme(isLight ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

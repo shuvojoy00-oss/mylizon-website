@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Choose Your IELTS Level | LizOn Education — ZERO / HOPE / STEP-UP / DESPERATE</title>
+  <meta name="description" content="Not sure which IELTS level is for you? Use LizOn’s simple selection system to choose ZERO, HOPE, STEP-UP or DESPERATE based on your real problems and target band." />
+  <meta name="theme-color" content="#0b2a1f" />
+  <link rel="canonical" href="https://mylizon.com/ielts-choose-level.html" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    :root{
+      --bg1:#06140f;
+      --bg2:#0b2a1f;
+      --card:#0c2019cc;
+      --text:#e9fff6;
+      --muted:#b7d7cb;
+      --accent:#1dd3a7;
+      --accent2:#ffd782;
+      --border: rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --max:1100px;
+      --chipbg: rgba(6,20,15,.22);
+      --chipbg2: rgba(29,211,167,.12);
+      --danger: rgba(255,120,120,.20);
+    }
+
+    html[data-theme="light"]{
+      --bg1:#f3fbf8;
+      --bg2:#e7f6f0;
+      --card: rgba(255,255,255,.78);
+      --text:#052018;
+      --muted:#2c5a4b;
+      --accent:#0aa37f;
+      --accent2:#b38b2e;
+      --border: rgba(0,0,0,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.12);
+      --chipbg: rgba(255,255,255,.60);
+      --chipbg2: rgba(10,163,127,.10);
+      --danger: rgba(210,20,20,.10);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(900px 600px at 20% 0%, rgba(29,211,167,.14), transparent 55%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      color:var(--text);
+      line-height:1.55;
+      scroll-behavior: smooth;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:18px; }
+
+    header{
+      position: static;
+      background: rgba(6,20,15,.62);
+      border-bottom:1px solid var(--border);
+    }
+    html[data-theme="light"] header{ background: rgba(243,251,248,.75); }
+
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+      padding:14px 18px;
+      max-width:var(--max);
+      margin:0 auto;
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800;
+      letter-spacing:.2px;
+      min-width: 200px;
+    }
+    .brand img{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.12);
+      object-fit: cover;
+    }
+    .brandTitle{ line-height:1; font-size:16px; }
+    .brandSub{ line-height:1.1; font-size:12px; color:var(--muted); margin-top:3px; }
+
+    .nav-right{
+      display:flex; align-items:center; gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      padding:9px 12px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:var(--muted);
+      background: rgba(6,20,15,.18);
+      transition:.2s ease;
+      font-weight:700;
+      font-size:13px;
+    }
+    html[data-theme="light"] .pill{ background: rgba(255,255,255,.55); }
+    .pill:hover{ transform: translateY(-1px); border-color: rgba(29,211,167,.45); color:var(--text); }
+
+    .themeToggle{
+      display:flex; align-items:center; gap:10px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.18);
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      cursor:pointer;
+    }
+    html[data-theme="light"] .themeToggle{ background: rgba(255,255,255,.55); }
+    .themeDot{
+      width:18px; height:18px; border-radius:999px;
+      border:2px solid rgba(255,215,130,.55);
+      background: rgba(0,0,0,.22);
+    }
+    html[data-theme="light"] .themeDot{ background: rgba(255,215,130,.45); }
+
+    .card{
+      background: linear-gradient(180deg, rgba(12,32,25,.78), rgba(12,32,25,.55));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    html[data-theme="light"] .card{ background: rgba(255,255,255,.78); }
+
+    .hero{ padding:28px 0 10px; }
+    .heroBox{ padding:22px; display:grid; gap:14px; }
+
+    h1{
+      margin:0;
+      font-size: clamp(26px, 3.8vw, 40px);
+      line-height:1.15;
+      letter-spacing:-.3px;
+    }
+    .sub{ color:var(--muted); font-size:16px; max-width:78ch; }
+    .trust{ color:rgba(233,255,246,.78); font-size:13px; }
+    html[data-theme="light"] .trust{ color: rgba(5,32,24,.70); }
+
+    .btnrow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:11px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.28);
+      color:var(--text);
+      font-weight:800;
+      transition:.18s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    html[data-theme="light"] .btn{ background: rgba(255,255,255,.60); color:#052018; }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(29,211,167,.55); }
+    .btn.primary{
+      background: rgba(29,211,167,.16);
+      border-color: rgba(29,211,167,.45);
+    }
+    .btn.solid{
+      background: rgba(29,211,167,.22);
+      border-color: rgba(29,211,167,.55);
+      box-shadow: 0 14px 30px rgba(0,0,0,.18);
+    }
+    .btn.gold{
+      background: rgba(255,215,130,.18);
+      border-color: rgba(255,215,130,.45);
+      color: var(--text);
+    }
+    html[data-theme="light"] .btn.gold{
+      background: rgba(179,139,46,.16);
+      border-color: rgba(179,139,46,.40);
+      color: #052018;
+    }
+
+    main{ padding: 14px 0 32px; }
+    section{ margin-top:14px; }
+    .sec{ padding:18px; }
+    h2{ margin:0 0 10px; font-size:20px; }
+    p{ margin:0 0 10px; color:rgba(233,255,246,.90); }
+    html[data-theme="light"] p{ color: rgba(5,32,24,.86); }
+
+    ul{ margin:10px 0 0 18px; color:rgba(233,255,246,.86); }
+    html[data-theme="light"] ul{ color: rgba(5,32,24,.80); }
+    li{ margin:6px 0; }
+
+    .grid{
+      display:grid; gap:12px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .col6{ grid-column: span 6; }
+    .col4{ grid-column: span 4; }
+    .col8{ grid-column: span 8; }
+    .mini{
+      padding:14px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.22);
+    }
+    html[data-theme="light"] .mini{ background: rgba(255,255,255,.55); }
+    .mini h3{ margin:0 0 6px; font-size:16px; }
+    .mini p{ margin:0; color:rgba(233,255,246,.82); font-size:14px; }
+    html[data-theme="light"] .mini p{ color: rgba(5,32,24,.78); }
+
+    .jump{
+      color: var(--text);
+      border-bottom: 2px solid rgba(29,211,167,.55);
+      padding-bottom:2px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .jump:hover{ border-bottom-color: rgba(29,211,167,.95); }
+
+    .flash{
+      outline: 2px solid rgba(29,211,167,.55);
+      box-shadow: 0 0 0 6px rgba(29,211,167,.10);
+      transition: .25s ease;
+    }
+
+    /* Selector */
+    .selector{
+      display:grid;
+      gap:10px;
+      grid-template-columns: 1fr 1fr;
+      margin-top:12px;
+    }
+    .choice{
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.18);
+      cursor:pointer;
+      transition:.16s ease;
+      font-weight:1000;
+      text-align:left;
+    }
+    html[data-theme="light"] .choice{ background: rgba(255,255,255,.60); }
+    .choice:hover{ transform: translateY(-1px); border-color: rgba(29,211,167,.55); }
+    .choice small{
+      display:block;
+      margin-top:6px;
+      font-weight:800;
+      color: var(--muted);
+    }
+    .choice.active{
+      border-color: rgba(29,211,167,.70);
+      box-shadow: 0 0 0 4px rgba(29,211,167,.10);
+      background: var(--chipbg2);
+    }
+
+    .resultBox{
+      border-radius:18px;
+      border:1px solid rgba(29,211,167,.30);
+      background: rgba(29,211,167,.10);
+      padding:14px 14px;
+      margin-top:12px;
+      font-weight:900;
+    }
+
+    .badgeRow{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .badge{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.14);
+      font-weight:1000;
+      color: var(--muted);
+      font-size:13px;
+    }
+    html[data-theme="light"] .badge{ background: rgba(255,255,255,.55); }
+
+    .warn{
+      border:1px solid rgba(255,120,120,.25);
+      background: var(--danger);
+      border-radius:18px;
+      padding:14px;
+      font-weight:900;
+    }
+
+    /* Footer */
+    .footerCard{
+      margin-top:18px;
+      border:1px solid var(--border);
+      border-radius:22px;
+      overflow:hidden;
+    }
+    .footerInner{ padding:18px; }
+    .footerTitle{ font-size:18px; font-weight:900; margin:0 0 10px; }
+    .footerText{ color:rgba(233,255,246,.80); margin:0 0 8px; }
+    html[data-theme="light"] .footerText{ color: rgba(5,32,24,.80); }
+    .footerBtns{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    .footerSmall{
+      color:rgba(233,255,246,.70);
+      font-size:13px;
+      padding:14px 18px;
+      border-top:1px solid var(--border);
+    }
+    html[data-theme="light"] .footerSmall{ color: rgba(5,32,24,.70); }
+
+    /* Floating scroll buttons */
+    .scrollBtns{
+      position:fixed;
+      right:14px;
+      bottom:150px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:80;
+    }
+    .sbtn{
+      width:46px; height:46px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.42);
+      color:var(--text);
+      font-weight:900;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 12px 24px rgba(0,0,0,.25);
+      cursor:pointer;
+    }
+    html[data-theme="light"] .sbtn{ background: rgba(255,255,255,.72); }
+
+    /* Bottom guidance bar */
+    .bottomBar{
+      position:fixed;
+      left:12px; right:12px;
+      bottom:12px;
+      z-index:85;
+      border-radius:22px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.62);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      padding:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    html[data-theme="light"] .bottomBar{ background: rgba(243,251,248,.82); }
+
+    .needChip{
+      display:flex; align-items:center; gap:10px;
+      padding:12px 14px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: var(--chipbg);
+      color:var(--muted);
+      font-weight:900;
+      min-width: 160px;
+    }
+    .greenDot{
+      width:10px; height:10px; border-radius:999px;
+      background: #19d38a;
+      box-shadow: 0 0 18px rgba(25,211,138,.55);
+    }
+
+    .pagePad{ padding-bottom: 240px; }
+
+    /* FAB stack: Menu + Ask */
+    .fabStack{
+      position:fixed;
+      left:12px;
+      bottom:150px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:90;
+    }
+    .fab{
+      height:52px;
+      min-width:52px;
+      padding:0 14px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.25);
+      display:flex; align-items:center; justify-content:center;
+      color: var(--text);
+      font-weight:1000;
+      cursor:pointer;
+      user-select:none;
+    }
+    html[data-theme="light"] .fab{ background: rgba(255,255,255,.80); color:#052018; }
+    .fab .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: #19d38a;
+      box-shadow: 0 0 18px rgba(25,211,138,.55);
+      margin-right:10px;
+    }
+    .fab.askBtn{
+      background: rgba(29,211,167,.18);
+      border-color: rgba(29,211,167,.35);
+    }
+
+    /* Menu sheet */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+      z-index:120;
+      opacity:0;
+      pointer-events:none;
+      transition: .18s ease;
+    }
+    html[data-theme="light"] .overlay{ background: rgba(5,32,24,.12); }
+    .overlay.show{ opacity:1; pointer-events:auto; }
+
+    .sheet{
+      position:fixed;
+      left:12px; right:12px;
+      bottom:12px;
+      z-index:130;
+      transform: translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      transition: .20s ease;
+    }
+    .sheet.show{
+      transform: translateY(0);
+      opacity:1;
+      pointer-events:auto;
+    }
+    .sheetCard{
+      border-radius:24px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.78);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 22px 70px rgba(0,0,0,.40);
+      overflow:hidden;
+    }
+    html[data-theme="light"] .sheetCard{ background: rgba(255,255,255,.88); }
+
+    .sheetHead{
+      padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid var(--border);
+      color: var(--text);
+      font-weight:1000;
+    }
+    html[data-theme="light"] .sheetHead{ color:#052018; }
+
+    .sheetClose{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      font-weight:1000;
+      color: var(--text);
+    }
+    html[data-theme="light"] .sheetClose{ background: rgba(0,0,0,.04); color:#052018; }
+
+    .sheetBody{
+      padding:14px 14px 16px;
+      display:grid;
+      gap:10px;
+    }
+    .sheetRow2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .sheetItem{
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: var(--chipbg);
+      color: var(--text);
+      font-weight:1000;
+      text-align:center;
+      cursor:pointer;
+      transition:.16s ease;
+    }
+    html[data-theme="light"] .sheetItem{ color:#052018; }
+    .sheetItem:hover{
+      transform: translateY(-1px);
+      border-color: rgba(29,211,167,.45);
+    }
+
+    /* AskLizOn panel */
+    .askPanelWrap{
+      position:fixed;
+      left:12px; right:12px;
+      bottom:92px;
+      z-index:140;
+      pointer-events:none;
+    }
+    .askPanel{
+      max-width: 980px;
+      margin: 0 auto;
+      border-radius:24px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+      overflow:hidden;
+      transform: translateY(16px);
+      opacity:0;
+      pointer-events:none;
+      transition: .20s ease;
+      color: #062018;
+    }
+    html[data-theme="dark"] .askPanel{
+      background: rgba(12,32,25,.92);
+      color: var(--text);
+    }
+    .askPanel.show{
+      transform: translateY(0);
+      opacity:1;
+      pointer-events:auto;
+    }
+    .askHead{
+      padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    html[data-theme="dark"] .askHead{ border-bottom:1px solid var(--border); }
+
+    .askTitle{
+      font-weight:1100;
+      font-size:18px;
+      letter-spacing:-.2px;
+    }
+    .askX{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(0,0,0,.03);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      font-weight:1100;
+    }
+    html[data-theme="dark"] .askX{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+    }
+
+    .askBody{
+      padding:14px 14px 16px;
+      display:grid;
+      gap:12px;
+    }
+
+    .askPrompt{
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(0,0,0,.03);
+      font-weight:1000;
+      font-size:18px;
+    }
+    html[data-theme="dark"] .askPrompt{
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.18);
+    }
+
+    .askOptions{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .askOpt{
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.65);
+      font-weight:900;
+      cursor:pointer;
+      transition:.14s ease;
+      text-align:center;
+    }
+    html[data-theme="dark"] .askOpt{
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.14);
+      color: var(--text);
+    }
+    .askOpt:hover{
+      transform: translateY(-1px);
+      border-color: rgba(29,211,167,.55);
+    }
+    .askOpt.active{
+      border-color: rgba(29,211,167,.65);
+      box-shadow: 0 0 0 4px rgba(29,211,167,.10);
+      background: var(--chipbg2);
+    }
+
+    .askResponse{
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid rgba(29,211,167,.30);
+      background: rgba(29,211,167,.10);
+      color: #053326;
+      font-weight:1000;
+    }
+    html[data-theme="dark"] .askResponse{
+      color: rgba(233,255,246,.92);
+      border:1px solid rgba(29,211,167,.25);
+      background: rgba(29,211,167,.08);
+    }
+    .askResponse small{
+      display:block;
+      margin-top:6px;
+      color: rgba(5,32,24,.72);
+      font-weight:800;
+    }
+    html[data-theme="dark"] .askResponse small{
+      color: rgba(233,255,246,.72);
+    }
+
+    .askActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-start;
+    }
+
+    .hintLine{
+      color: rgba(5,32,24,.70);
+      font-weight:800;
+      font-size:13px;
+      margin-left:2px;
+    }
+    html[data-theme="dark"] .hintLine{
+      color: rgba(233,255,246,.70);
+    }
+
+    /* Tiny theme button */
+    .tinyTheme{
+      position:fixed;
+      right:14px;
+      bottom:92px;
+      z-index:95;
+      width:34px; height:34px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.42);
+      backdrop-filter: blur(10px);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      box-shadow: 0 12px 24px rgba(0,0,0,.22);
+      color: var(--text);
+      font-weight:1000;
+      font-size:12px;
+    }
+    html[data-theme="light"] .tinyTheme{ background: rgba(255,255,255,.78); color:#052018; }
+
+    @media (max-width:860px){
+      .col6{ grid-column: span 12; }
+      .col4{ grid-column: span 12; }
+      .col8{ grid-column: span 12; }
+      .selector{ grid-template-columns: 1fr; }
+      .nav{ padding:12px 14px; }
+      .brandTitle{ font-size:14px; }
+      .askOptions{ grid-template-columns: 1fr; }
+      .sheetRow2{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="nav">
+      <a class="brand" href="index.html" aria-label="Go to home">
+        <img src="assets/logo-dark.png" alt="LizOn Education logo" />
+        <div>
+          <div class="brandTitle">LizOn Education</div>
+          <div class="brandSub">IELTS Journey</div>
+        </div>
+      </a>
+
+      <div class="nav-right">
+        <button class="themeToggle" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span id="themeLabel">Dark</span>
+          <span class="themeDot" aria-hidden="true"></span>
+        </button>
+
+        <a class="pill" href="ielts.html">IELTS Courses</a>
+        <a class="pill" href="pte.html">PTE Courses</a>
+        <a class="pill" href="studyabroad.html">Study Abroad</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="wrap hero">
+    <div class="card heroBox">
+      <h1>How to choose your IELTS level (without guessing).</h1>
+
+      <div class="sub">
+        Most students choose course by “band dream”.
+        But real selection should be based on your <b>real problem</b>.
+        Choose by symptoms: freeze? grammar breaks? ideas end? band stuck?
+        This page will tell you exactly:
+        <span class="jump" data-jump="#selector">which one fits you</span>.
+      </div>
+
+      <div class="trust">Built by LizOn Education • Designed for Real Band Improvement</div>
+
+      <div class="btnrow">
+        <a class="btn primary" href="#selector">Choose My Level</a>
+        <a class="btn" href="ielts.html#pricing">See Pricing</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap pagePad">
+
+    <section class="card sec" id="truth">
+      <h2>The truth: wrong level = slow progress</h2>
+      <p>
+        Apni jodi higher level e jump den while foundation weak —
+        confidence break hobe, but result আসবে না.
+        আর jodi lower level e stuck thaken while you’re ready —
+        time waste.
+      </p>
+      <div class="grid" style="margin-top:12px">
+        <div class="mini col6">
+          <h3>Wrong level signs</h3>
+          <ul>
+            <li>Practice koren but improvement measurable na</li>
+            <li>Mock e “same mistakes” repeat hoy</li>
+            <li>Writing e structure thake na (Task 2 body venge jay)</li>
+            <li>Speaking e 10–15 sec por freeze hoy</li>
+          </ul>
+        </div>
+        <div class="mini col6">
+          <h3>Right level result</h3>
+          <ul>
+            <li>Week 1 thekei control feel hoy</li>
+            <li>Practice e “system” build hoy</li>
+            <li>Band jump gradual but stable</li>
+            <li>Exam day panic komে</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SELECTOR -->
+    <section class="card sec" id="selector">
+      <h2>Choose your level (1 click)</h2>
+      <p>
+        নিচের problem ta choose korun. Ami straight bolbo: which level fits you.
+      </p>
+
+      <div class="selector" id="selectorBtns">
+        <button class="choice" data-key="zero" type="button">
+          I feel weak basics / speaking confidence নাই
+          <small>Grammar breaks, pronunciation unsure, writing sentence control nai</small>
+        </button>
+
+        <button class="choice" data-key="hope" type="button">
+          I can speak/write, but ideas & accuracy unstable
+          <small>Reading/Listening question types confuse, writing plan venge jay</small>
+        </button>
+
+        <button class="choice" data-key="stepup" type="button">
+          Band 6–6.5 stuck (bar bar same place)
+          <small>Skill ache, but exam logic + control under pressure missing</small>
+        </button>
+
+        <button class="choice" data-key="desperate" type="button">
+          Final attempt / short time / must score now
+          <small>Maximum evaluation + real exam simulation + targeted fixes</small>
+        </button>
+      </div>
+
+      <div class="resultBox" id="resultBox">
+        Select one option above — then you’ll get the exact recommendation + next steps.
+      </div>
+
+      <div class="badgeRow" id="badges" style="display:none"></div>
+
+      <div class="btnrow" style="margin-top:12px">
+        <a class="btn solid" id="goLevelBtn" href="ielts.html#levels">Go to Level Details</a>
+        <a class="btn" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Talk with an Expert</a>
+      </div>
+    </section>
+
+    <section class="card sec" id="levelmap">
+      <h2>The simple level map (ZERO → HOPE → STEP-UP → DESPERATE)</h2>
+      <p>
+        This is not “4 random courses”. It’s a journey.
+        One fixes foundation. One fixes skill control. One breaks band stagnation.
+        One prepares final execution.
+      </p>
+
+      <div class="grid" style="margin-top:12px">
+        <div class="mini col6" id="zero">
+          <h3>IELTS ZERO</h3>
+          <p>For: basics weak, confidence low, grammar accuracy shaky.</p>
+          <ul>
+            <li>Speaking base + pronunciation control</li>
+            <li>Grammar foundation (accurate speaking/writing)</li>
+            <li>Start-from-zero routine (Bangladesh focused)</li>
+          </ul>
+          <div class="btnrow" style="margin-top:10px">
+            <a class="btn" href="ielts.html#zero">Learn ZERO</a>
+          </div>
+        </div>
+
+        <div class="mini col6" id="hope">
+          <h3>IELTS HOPE</h3>
+          <p>For: you can do tasks but accuracy + ideas unstable.</p>
+          <ul>
+            <li>Reading/Listening all question type strategy</li>
+            <li>Writing structure control (no collapse)</li>
+            <li>Speaking idea expansion (no memorization)</li>
+          </ul>
+          <div class="btnrow" style="margin-top:10px">
+            <a class="btn" href="ielts.html#hope">Learn HOPE</a>
+          </div>
+        </div>
+
+        <div class="mini col6" id="stepup">
+          <h3>IELTS STEP-UP</h3>
+          <p>For: band stuck 6–6.5, need real exam logic & stability.</p>
+          <ul>
+            <li>Control under pressure</li>
+            <li>Advanced band improvement system</li>
+            <li>Exam-style practice + corrections</li>
+          </ul>
+          <div class="btnrow" style="margin-top:10px">
+            <a class="btn" href="ielts.html#stepup">Learn STEP-UP</a>
+          </div>
+        </div>
+
+        <div class="mini col6" id="desperate">
+          <h3>IELTS DESPERATE</h3>
+          <p>For: final attempt, short time, maximum evaluation needed.</p>
+          <ul>
+            <li>Test + practice + evaluation heavy</li>
+            <li>Speaking + writing special focus days</li>
+            <li>Exam-day strategy & recovery training</li>
+          </ul>
+          <div class="btnrow" style="margin-top:10px">
+            <a class="btn" href="ielts.html#desperate">Learn DESPERATE</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card sec" id="warning">
+      <h2>Don’t do this (common Bangladesh mistakes)</h2>
+      <div class="warn">
+        <ul>
+          <li>“Band 7 chai তাই STEP-UP e jump” — but writing sentence control weak</li>
+          <li>“Speaking bhalo, grammar ignore” — then accuracy breaks mid answer</li>
+          <li>“Mock kom dibo” — then exam-day shock আসে</li>
+          <li>“YouTube e shob hobe” — but evaluation cycle nai</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="card footerCard" id="footer">
+      <div class="footerInner">
+
+        <div class="footerTitle">Quick Actions</div>
+        <div class="btnrow" style="margin-top:8px">
+          <a class="btn gold" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Start on WhatsApp</a>
+          <a class="btn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">See Facebook Reviews</a>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="footerTitle">Contact & Location</div>
+        <p class="footerText">
+          <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
+        </p>
+        <p class="footerText">
+          <b>IELTS/PTE Helpline:</b> 01611611139<br/>
+          <b>Study Abroad/Visa Processing:</b> 01608881545
+        </p>
+
+        <div class="footerBtns">
+          <a class="pill" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+          <a class="pill" href="https://wa.me/8801611611139" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="footerTitle">Social Media</div>
+        <p class="footerText">Follow our updates, results, and guidance content.</p>
+
+        <div class="footerBtns">
+          <a class="pill" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+          <a class="pill" href="#" target="_blank" rel="noopener">YouTube</a>
+          <a class="pill" href="#" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="footerSmall">© <span id="yr"></span> myLizOn.com | LizOn Education</div>
+    </div>
+
+  </main>
+
+  <!-- Scroll Buttons -->
+  <div class="scrollBtns" aria-label="Scroll controls">
+    <button class="sbtn" id="goTop" type="button" aria-label="Scroll to top">↑</button>
+    <button class="sbtn" id="goBottom" type="button" aria-label="Scroll to bottom">↓</button>
+  </div>
+
+  <!-- Bottom-left FAB stack: Menu + Ask -->
+  <div class="fabStack" aria-label="Quick actions">
+    <button class="fab" id="menuFab" type="button" aria-label="Open menu">≡</button>
+    <button class="fab askBtn" id="askFab" type="button" aria-label="Open AskLizOn">
+      <span class="dot" aria-hidden="true"></span><span>Ask</span>
+    </button>
+  </div>
+
+  <!-- Menu Overlay + Sheet -->
+  <div class="overlay" id="menuOverlay" aria-hidden="true"></div>
+  <div class="sheet" id="menuSheet" aria-hidden="true">
+    <div class="sheetCard">
+      <div class="sheetHead">
+        <div>Navigate</div>
+        <button class="sheetClose" id="menuClose" type="button" aria-label="Close menu">✕</button>
+      </div>
+
+      <div class="sheetBody">
+        <button class="sheetItem" data-nav="index.html">Home</button>
+
+        <div class="sheetRow2">
+          <button class="sheetItem" data-nav="ielts.html#zero">ZERO</button>
+          <button class="sheetItem" data-nav="ielts.html#hope">HOPE</button>
+        </div>
+
+        <div class="sheetRow2">
+          <button class="sheetItem" data-nav="ielts.html#stepup">STEP-UP</button>
+          <button class="sheetItem" data-nav="ielts.html#desperate">DESPERATE</button>
+        </div>
+
+        <button class="sheetItem" data-nav="ielts.html#skills">Modules (Practice)</button>
+        <button class="sheetItem" data-nav="ielts.html#pricing">Pricing</button>
+
+        <button class="sheetItem" data-nav="ielts-choose-level.html">Choose Level</button>
+        <button class="sheetItem" data-nav="ielts-computer-based.html">Computer-Based IELTS</button>
+
+        <button class="sheetItem" data-nav="https://wa.me/8801611611139">Talk with LizOn</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AskLizOn Panel -->
+  <div class="askPanelWrap" aria-live="polite">
+    <div class="askPanel" id="askPanel" aria-hidden="true">
+      <div class="askHead">
+        <div class="askTitle">AskLizOn – Choose Level</div>
+        <button class="askX" id="askClose" type="button" aria-label="Close AskLizOn">✕</button>
+      </div>
+
+      <div class="askBody">
+        <div class="askPrompt">Apnar main struggle konta?</div>
+
+        <div class="askOptions" id="askOptions">
+          <button class="askOpt" data-key="freeze">Speaking e freeze kori</button>
+          <button class="askOpt" data-key="grammar">Grammar break hoy</button>
+          <button class="askOpt" data-key="ideas">Ki bolbo bujhi na</button>
+          <button class="askOpt" data-key="writing">Writing structure venge jay</button>
+          <button class="askOpt" data-key="stuck">6–6.5 e stuck</button>
+          <button class="askOpt" data-key="urgent">Short time, must score now</button>
+        </div>
+
+        <div class="askResponse" id="askResponse">
+          Select one option above — then press <b>Show me the level</b>.
+          <small>We choose by symptoms, not ego.</small>
+        </div>
+
+        <div class="askActions">
+          <button class="btn solid" id="showFixBtn" type="button">Show me the level</button>
+          <span class="hintLine" id="askHint">You haven’t selected anything yet.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Guidance Bar -->
+  <div class="bottomBar" aria-label="Guidance bar">
+    <a class="needChip" href="https://wa.me/8801611611139" target="_blank" rel="noopener" aria-label="Need guidance? Chat on WhatsApp">
+      <span class="greenDot" aria-hidden="true"></span>
+      <span>Need guidance?</span>
+    </a>
+    <a class="btn solid" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Chat on WhatsApp</a>
+  </div>
+
+  <!-- Tiny Theme Toggle -->
+  <button class="tinyTheme" id="tinyTheme" type="button" aria-label="Toggle theme">☼</button>
+
+  <script>
+    // Year
+    document.getElementById("yr").textContent = new Date().getFullYear();
+
+    // Theme toggle with memory
+    const root = document.documentElement;
+    const btn = document.getElementById("themeToggle");
+    const label = document.getElementById("themeLabel");
+    const tinyTheme = document.getElementById("tinyTheme");
+
+    function applyTheme(t){
+      root.setAttribute("data-theme", t);
+      label.textContent = (t === "light") ? "Light" : "Dark";
+      localStorage.setItem("lizon_theme", t);
+      tinyTheme.textContent = (t === "light") ? "☾" : "☼";
+    }
+    const saved = localStorage.getItem("lizon_theme");
+    applyTheme(saved || root.getAttribute("data-theme") || "dark");
+
+    function toggleTheme(){
+      const current = root.getAttribute("data-theme");
+      applyTheme(current === "dark" ? "light" : "dark");
+    }
+    btn.addEventListener("click", toggleTheme);
+    tinyTheme.addEventListener("click", toggleTheme);
+
+    // Scroll buttons
+    document.getElementById("goTop").addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    document.getElementById("goBottom").addEventListener("click", () => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    });
+
+    // Helper: smooth jump + flash
+    function jumpTo(selector){
+      const el = document.querySelector(selector);
+      if(!el) return;
+      const y = el.getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({ top: y, behavior: "smooth" });
+
+      setTimeout(() => {
+        document.querySelectorAll(".flash").forEach(x => x.classList.remove("flash"));
+        el.classList.add("flash");
+        setTimeout(() => el.classList.remove("flash"), 1400);
+      }, 350);
+    }
+
+    document.querySelectorAll(".jump").forEach(a => {
+      a.addEventListener("click", () => jumpTo(a.getAttribute("data-jump")));
+    });
+
+    // MENU SHEET
+    const menuFab = document.getElementById("menuFab");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const menuSheet = document.getElementById("menuSheet");
+    const menuClose = document.getElementById("menuClose");
+
+    function openMenu(){
+      menuOverlay.classList.add("show");
+      menuSheet.classList.add("show");
+      menuOverlay.setAttribute("aria-hidden", "false");
+      menuSheet.setAttribute("aria-hidden", "false");
+    }
+    function closeMenu(){
+      menuOverlay.classList.remove("show");
+      menuSheet.classList.remove("show");
+      menuOverlay.setAttribute("aria-hidden", "true");
+      menuSheet.setAttribute("aria-hidden", "true");
+    }
+
+    menuFab.addEventListener("click", openMenu);
+    menuClose.addEventListener("click", closeMenu);
+    menuOverlay.addEventListener("click", closeMenu);
+
+    document.querySelectorAll("[data-nav]").forEach(b => {
+      b.addEventListener("click", () => {
+        const to = b.getAttribute("data-nav");
+        closeMenu();
+        setTimeout(() => { window.location.href = to; }, 120);
+      });
+    });
+
+    // Selector logic (main page)
+    const selectorBtns = document.getElementById("selectorBtns");
+    const resultBox = document.getElementById("resultBox");
+    const badges = document.getElementById("badges");
+    const goLevelBtn = document.getElementById("goLevelBtn");
+
+    const levelMap = {
+      zero: {
+        name: "IELTS ZERO",
+        anchor: "ielts.html#zero",
+        badges: ["Foundation", "Speaking base", "Grammar accuracy", "Confidence"],
+        text:
+          "✅ Recommended: IELTS ZERO.\n\nReason: Apnar basics weak / confidence low. First build accuracy + control. Otherwise higher level e gele frustration barbe, score stable hobe na."
+      },
+      hope: {
+        name: "IELTS HOPE",
+        anchor: "ielts.html#hope",
+        badges: ["Question types", "Idea expansion", "Structure control", "Skill routine"],
+        text:
+          "✅ Recommended: IELTS HOPE.\n\nReason: Apni tasks korte পারেন, but accuracy/ideas unstable. HOPE gives system: question types + writing structure + speaking expansion."
+      },
+      stepup: {
+        name: "IELTS STEP-UP",
+        anchor: "ielts.html#stepup",
+        badges: ["Band jump", "Exam logic", "Pressure control", "Advanced practice"],
+        text:
+          "✅ Recommended: IELTS STEP-UP.\n\nReason: Apni 6–6.5 e stuck. It’s not ‘more practice’ issue — it’s exam logic + control under pressure issue."
+      },
+      desperate: {
+        name: "IELTS DESPERATE",
+        anchor: "ielts.html#desperate",
+        badges: ["Final attempt", "Evaluation heavy", "Real exam simulation", "Targeted fixes"],
+        text:
+          "✅ Recommended: IELTS DESPERATE.\n\nReason: Time short / final attempt. You need maximum evaluation + exam strategy + rapid correction loops."
+      }
+    };
+
+    function setChoice(key){
+      selectorBtns.querySelectorAll(".choice").forEach(b => {
+        b.classList.toggle("active", b.getAttribute("data-key") === key);
+      });
+
+      const info = levelMap[key];
+      resultBox.textContent = info.text;
+
+      badges.style.display = "flex";
+      badges.innerHTML = info.badges.map(x => `<span class="badge">${x}</span>`).join("");
+
+      goLevelBtn.href = info.anchor;
+    }
+
+    selectorBtns.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if(!b) return;
+      setChoice(b.getAttribute("data-key"));
+    });
+
+    // AskLizOn PANEL
+    const askFab = document.getElementById("askFab");
+    const askPanel = document.getElementById("askPanel");
+    const askClose = document.getElementById("askClose");
+    const askOptions = document.getElementById("askOptions");
+    const askResponse = document.getElementById("askResponse");
+    const showFixBtn = document.getElementById("showFixBtn");
+    const askHint = document.getElementById("askHint");
+
+    const problemMap = {
+      freeze: { pick:"zero", title:"Speaking e freeze kori", msg:"Freeze মানে foundation + confidence broken. Start ZERO, then HOPE." },
+      grammar:{ pick:"zero", title:"Grammar break hoy", msg:"Grammar breaks under pressure? ZERO (accuracy) is non-negotiable." },
+      ideas:  { pick:"hope", title:"Ki bolbo bujhi na", msg:"Idea expansion weakness? HOPE fixes speaking ideas + writing planning." },
+      writing:{ pick:"hope", title:"Writing structure venge jay", msg:"Structure collapse means HOPE first. Then STEP-UP for band push." },
+      stuck:  { pick:"stepup", title:"6–6.5 e stuck", msg:"Stagnation? STEP-UP is built for pressure control + exam logic." },
+      urgent: { pick:"desperate", title:"Short time, must score now", msg:"Short deadline? DESPERATE (evaluation + targeted fixes) fits." }
+    };
+
+    let selectedKey = null;
+
+    function openAsk(){
+      askPanel.classList.add("show");
+      askPanel.setAttribute("aria-hidden", "false");
+    }
+    function closeAsk(){
+      askPanel.classList.remove("show");
+      askPanel.setAttribute("aria-hidden", "true");
+    }
+
+    function setAskSelected(key){
+      selectedKey = key;
+      askOptions.querySelectorAll(".askOpt").forEach(b => {
+        b.classList.toggle("active", b.getAttribute("data-key") === key);
+      });
+      const p = problemMap[key];
+      askResponse.innerHTML =
+        `<b>${p.title}</b><br/>${p.msg}<small>Press <b>Show me the level</b> to auto-select your course.</small>`;
+      askHint.textContent = `Selected: ${p.title}`;
+    }
+
+    askFab.addEventListener("click", () => {
+      closeMenu();
+      openAsk();
+    });
+    askClose.addEventListener("click", closeAsk);
+
+    askOptions.addEventListener("click", (e) => {
+      const b = e.target.closest(".askOpt");
+      if(!b) return;
+      setAskSelected(b.getAttribute("data-key"));
+    });
+
+    showFixBtn.addEventListener("click", () => {
+      if(!selectedKey){
+        askHint.textContent = "Select one problem first.";
+        askPanel.animate(
+          [{ transform:"translateY(0)" }, { transform:"translateY(6px)" }, { transform:"translateY(0)" }],
+          { duration: 220, easing:"ease-out" }
+        );
+        return;
+      }
+      const pick = problemMap[selectedKey].pick;
+      closeAsk();
+      setTimeout(() => {
+        jumpTo("#selector");
+        setChoice(pick);
+      }, 180);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape"){
+        closeAsk();
+        closeMenu();
+      }
+    });
+  </script>
+
+</body>
+</html>

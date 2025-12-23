@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LizOn Education — IELTS • PTE • Study Abroad</title>
-  <meta name="description" content="LizOn Education
-Teaching Excellence. Guiding Global Futures." />
+  <meta name="description" content="LizOn Education — Teaching Excellence. Guiding Global Futures." />
   <meta name="theme-color" content="#0b2a1f" />
 
   <style>
@@ -28,12 +27,14 @@ Teaching Excellence. Guiding Global Futures." />
 
       --shadow2: 0 18px 60px rgba(0,0,0,.45);
 
-      /* AskLizOn */
-      --ask-bg: rgba(6,20,15,.86);
-      --ask-panel: rgba(12,32,25,.92);
-      --ask-bd: rgba(29,74,58,.75);
-      --ask-bubble: rgba(255,255,255,.05);
-      --ask-bubble2: rgba(215,178,74,.10);
+      /* Panels */
+      --panel-bg: rgba(6,20,15,.86);
+      --panel-card: rgba(12,32,25,.92);
+      --panel-bd: rgba(29,74,58,.75);
+      --panel-bubble: rgba(255,255,255,.05);
+      --panel-bubble2: rgba(215,178,74,.10);
+
+      --glass: rgba(6,20,15,.82);
     }
 
     html[data-theme="light"]{
@@ -49,12 +50,13 @@ Teaching Excellence. Guiding Global Futures." />
       --soft: 0 14px 40px rgba(6,20,15,.10);
       --shadow2: 0 18px 60px rgba(6,20,15,.10);
 
-      /* AskLizOn */
-      --ask-bg: rgba(255,255,255,.86);
-      --ask-panel: rgba(255,255,255,.94);
-      --ask-bd: rgba(9,64,45,.18);
-      --ask-bubble: rgba(9,64,45,.06);
-      --ask-bubble2: rgba(215,178,74,.18);
+      --panel-bg: rgba(255,255,255,.86);
+      --panel-card: rgba(255,255,255,.94);
+      --panel-bd: rgba(9,64,45,.18);
+      --panel-bubble: rgba(9,64,45,.06);
+      --panel-bubble2: rgba(215,178,74,.18);
+
+      --glass: rgba(255,255,255,.86);
     }
 
     *{box-sizing:border-box}
@@ -69,11 +71,12 @@ Teaching Excellence. Guiding Global Futures." />
       min-height:100vh;
       overflow-x:hidden;
     }
-
     a{color:inherit; text-decoration:none}
-    .container{max-width:1100px; margin:0 auto; padding:22px 18px 96px}
-    @media (max-width:520px){ .container{padding:18px 14px 108px} }
 
+    .container{max-width:1100px; margin:0 auto; padding:22px 18px 112px}
+    @media (max-width:520px){ .container{padding:18px 14px 128px} }
+
+    /* Topbar */
     .topbar{
       position:sticky; top:0;
       backdrop-filter: blur(14px);
@@ -85,14 +88,6 @@ Teaching Excellence. Guiding Global Futures." />
       background: linear-gradient(180deg, rgba(245,251,248,.88), rgba(245,251,248,.62));
       border-bottom:1px solid var(--line);
     }
-
-    .menu-toggle{
-      position:absolute;
-      left:-9999px;
-      width:1px; height:1px;
-      opacity:0;
-    }
-
     .topbar-inner{
       max-width:1100px; margin:0 auto; padding:14px 18px;
       display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -100,7 +95,7 @@ Teaching Excellence. Guiding Global Futures." />
 
     .brand{
       display:flex; align-items:center; gap:10px;
-      font-weight:800; letter-spacing:.2px;
+      font-weight:900; letter-spacing:.2px;
       min-width: 0;
     }
     .brand-logo{
@@ -115,7 +110,7 @@ Teaching Excellence. Guiding Global Futures." />
     .brand .titleWrap{min-width:0}
     .brand small{
       display:block;
-      font-weight:650;
+      font-weight:700;
       color:var(--muted);
       letter-spacing:.2px;
       margin-top:2px;
@@ -125,121 +120,55 @@ Teaching Excellence. Guiding Global Futures." />
       max-width: 58vw;
     }
 
-    .rightTools{
-      display:flex; align-items:center; gap:10px;
-    }
-
-    .themeBtn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:900;
-      font-size:13px;
-      cursor:pointer;
-      user-select:none;
-      transition:.18s ease;
-      white-space:nowrap;
-    }
-    .themeBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .togglePill{
-      width:44px; height:24px;
-      border-radius:999px;
-      background: rgba(215,178,74,.18);
-      border:1px solid rgba(215,178,74,.35);
-      position:relative;
-      flex:0 0 auto;
-    }
-    .toggleDot{
-      width:18px; height:18px;
-      border-radius:999px;
-      background: var(--gold);
-      position:absolute; top:50%;
-      transform: translateY(-50%);
-      left:3px;
-      transition: left .18s ease;
-    }
-    html[data-theme="light"] .toggleDot{ left:23px; }
-
+    .rightTools{display:flex; align-items:center; gap:10px;}
     .nav{
-      display:flex; align-items:center; gap:10px;
+      display:flex; align-items:center; gap:8px;
     }
     .nav a{
-      padding:10px 12px;
+      padding:9px 10px;
       border:1px solid rgba(29,74,58,.7);
       background: var(--chipBg);
       border-radius:999px;
       color:var(--text);
-      font-weight:750;
-      font-size:13px;
+      font-weight:850;
+      font-size:12.5px;
       transition:.18s ease;
       white-space:nowrap;
     }
     .nav a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
     .askNavBtn{
       border-color: rgba(215,178,74,.35) !important;
       box-shadow: 0 0 0 3px rgba(215,178,74,.10);
     }
 
-    .hamburger{
-      display:none;
-      padding:10px 12px;
+    /* Super tiny theme icon toggle (no words) */
+    .themeMini{
+      width:40px; height:40px;
       border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
+      border:1px solid rgba(29,74,58,.8);
       background: var(--chipBg);
-      font-weight:850;
-      cursor:pointer;
-      user-select:none;
-      gap:8px;
-      align-items:center;
-      white-space:nowrap;
-    }
-    .hamburger span{opacity:.9}
-
-    .mobile-drawer{
-      display:none;
-      border-top:1px solid rgba(29,74,58,.55);
-      background: rgba(6,20,15,.88);
       backdrop-filter: blur(14px);
+      display:grid; place-items:center;
+      cursor:pointer;
+      transition:.18s ease;
+      box-shadow: 0 10px 26px rgba(0,0,0,.10);
+      user-select:none;
     }
-    html[data-theme="light"] .mobile-drawer{
-      background: rgba(245,251,248,.92);
-      border-top:1px solid var(--line);
-    }
-    #menuToggle:checked ~ .mobile-drawer{ display:block; }
+    .themeMini:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .themeMini svg{ width:18px; height:18px; }
 
-    .drawer-inner{
-      max-width:1100px; margin:0 auto;
-      padding:12px 18px 16px;
-      display:grid; gap:10px;
-    }
-    .drawer-inner a{
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:850;
-    }
-    .drawer-inner a strong{ color: var(--gold); }
-    .drawer-social{
-      display:flex; gap:10px; flex-wrap:wrap; padding-top:4px;
-    }
-    .drawer-social a{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      font-weight:850;
+    @media (max-width: 920px){
+      .nav{ display:none; }
     }
 
+    /* Buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       padding:12px 16px;
       border-radius:14px;
       border:1px solid rgba(29,74,58,.75);
       background: var(--chipBg);
-      font-weight:900;
+      font-weight:950;
       letter-spacing:.2px;
       cursor:pointer;
       transition:.18s ease;
@@ -256,10 +185,9 @@ Teaching Excellence. Guiding Global Futures." />
       background: transparent;
       border-color: rgba(29,74,58,.65);
     }
-    html[data-theme="light"] .btn.ghost{
-      background: rgba(255,255,255,.55);
-    }
+    html[data-theme="light"] .btn.ghost{ background: rgba(255,255,255,.55); }
 
+    /* Hero */
     .hero{ padding:22px 0 10px; }
     .hero-card{
       border-radius: var(--radius);
@@ -289,17 +217,12 @@ Teaching Excellence. Guiding Global Futures." />
       border:1px solid rgba(29,74,58,.75);
       background: var(--chipBg);
       color: var(--muted);
-      font-weight:850;
+      font-weight:900;
       font-size:12px;
     }
     .chip b{ color: var(--gold); }
 
-    .seg{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin: 10px 0 14px;
-    }
+    .seg{ display:flex; gap:8px; flex-wrap:wrap; margin: 10px 0 14px; }
     .seg a{
       padding:10px 12px;
       border-radius:999px;
@@ -326,16 +249,9 @@ Teaching Excellence. Guiding Global Futures." />
       line-height:1.6;
       max-width:780px;
     }
+    .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
 
-    .cta-row{
-      display:flex; gap:12px; flex-wrap:wrap;
-      margin-top:16px;
-    }
-
-    .miniProgramRow{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:12px;
-    }
+    .miniProgramRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
     .miniProgram{
       padding:10px 12px;
       border-radius:999px;
@@ -359,6 +275,7 @@ Teaching Excellence. Guiding Global Futures." />
     }
     .section-title small{ color: var(--muted); font-weight:750; }
 
+    /* Grid cards */
     .grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -392,24 +309,12 @@ Teaching Excellence. Guiding Global Futures." />
       color: var(--muted);
     }
     .tagline b{ color: var(--gold); }
-    .card h2{
-      margin:0;
-      font-size:18px;
-      font-weight:950;
-      letter-spacing:.2px;
-    }
-    .card p{
-      margin:0;
-      color: var(--muted);
-      line-height:1.6;
-      font-size:13px;
-    }
-    .card .actions{
-      margin-top:auto;
-      display:flex; gap:10px; flex-wrap:wrap;
-    }
+    .card h2{ margin:0; font-size:18px; font-weight:950; letter-spacing:.2px; }
+    .card p{ margin:0; color: var(--muted); line-height:1.6; font-size:13px; }
+    .card .actions{ margin-top:auto; display:flex; gap:10px; flex-wrap:wrap; }
     .card .actions .btn{ width:100%; }
 
+    /* Featured (Upcoming) */
     .featured{
       margin-top:14px;
       border-radius: var(--radius);
@@ -424,8 +329,7 @@ Teaching Excellence. Guiding Global Futures." />
     }
     .featuredTop{
       padding:18px 18px 14px;
-      display:grid;
-      gap:10px;
+      display:grid; gap:10px;
       position:relative;
     }
     .featuredTop:before{
@@ -435,10 +339,7 @@ Teaching Excellence. Guiding Global Futures." />
       background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.16), transparent 62%);
       pointer-events:none;
     }
-    .featuredKicker{
-      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-      position:relative;
-    }
+    .featuredKicker{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:relative; }
     .kickerPill{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 10px;
@@ -451,14 +352,7 @@ Teaching Excellence. Guiding Global Futures." />
       position:relative;
     }
     .kickerPill b{ color: var(--gold); }
-
-    .featuredTitle{
-      font-size:22px;
-      font-weight:990;
-      letter-spacing:-.2px;
-      margin:0;
-      position:relative;
-    }
+    .featuredTitle{ font-size:22px; font-weight:990; letter-spacing:-.2px; margin:0; position:relative; }
     .featuredSub{
       margin:0;
       color: var(--muted);
@@ -469,12 +363,7 @@ Teaching Excellence. Guiding Global Futures." />
       position:relative;
     }
 
-    .featuredRow{
-      display:flex; gap:12px; flex-wrap:wrap;
-      align-items:center;
-      position:relative;
-      margin-top:4px;
-    }
+    .featuredRow{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; position:relative; margin-top:4px; }
 
     .datePill{
       display:inline-flex; align-items:center; gap:10px;
@@ -485,19 +374,10 @@ Teaching Excellence. Guiding Global Futures." />
       font-weight:950;
     }
     html[data-theme="light"] .datePill{ background: rgba(255,255,255,.55); }
-    .datePill .date{
-      font-size:14px;
-      font-weight:990;
-    }
-    .datePill .icon{
-      width:18px; height:18px; display:inline-block;
-    }
+    .datePill .date{ font-size:14px; font-weight:990; }
+    .datePill .icon{ width:18px; height:18px; display:inline-block; }
 
-    .highlightPills{
-      display:flex; gap:10px; flex-wrap:wrap;
-      position:relative;
-      margin-top:2px;
-    }
+    .highlightPills{ display:flex; gap:10px; flex-wrap:wrap; position:relative; margin-top:2px; }
     .hiPill{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 10px;
@@ -508,7 +388,6 @@ Teaching Excellence. Guiding Global Futures." />
       font-size:12px;
       color: var(--text);
     }
-    html[data-theme="light"] .hiPill{ color: var(--text); }
 
     .featuredActions{
       display:grid;
@@ -517,9 +396,7 @@ Teaching Excellence. Guiding Global Futures." />
       margin-top:8px;
       position:relative;
     }
-    @media (max-width:520px){
-      .featuredActions{ grid-template-columns:1fr; }
-    }
+    @media (max-width:520px){ .featuredActions{ grid-template-columns:1fr; } }
 
     .accBtn{
       width:100%;
@@ -543,6 +420,7 @@ Teaching Excellence. Guiding Global Futures." />
       border-color: rgba(215,178,74,.85);
       box-shadow: 0 18px 60px rgba(215,178,74,.12);
     }
+    .accBtn.ghost{ background: transparent; }
 
     .accPanel{
       margin-top:10px;
@@ -558,12 +436,8 @@ Teaching Excellence. Guiding Global Futures." />
       gap:10px;
       margin-top:12px;
     }
-    @media (max-width:920px){
-      .featurePoints{ grid-template-columns:1fr 1fr; }
-    }
-    @media (max-width:520px){
-      .featurePoints{ grid-template-columns:1fr; }
-    }
+    @media (max-width:920px){ .featurePoints{ grid-template-columns:1fr 1fr; } }
+    @media (max-width:520px){ .featurePoints{ grid-template-columns:1fr; } }
     .point{
       border-radius:18px;
       border:1px solid rgba(29,74,58,.65);
@@ -589,12 +463,8 @@ Teaching Excellence. Guiding Global Futures." />
       gap:10px;
       margin-top:12px;
     }
-    @media (max-width:920px){
-      .planGrid{ grid-template-columns:1fr 1fr; }
-    }
-    @media (max-width:520px){
-      .planGrid{ grid-template-columns:1fr; }
-    }
+    @media (max-width:920px){ .planGrid{ grid-template-columns:1fr 1fr; } }
+    @media (max-width:520px){ .planGrid{ grid-template-columns:1fr; } }
     .monthCard{
       border-radius:18px;
       border:1px solid rgba(29,74,58,.65);
@@ -604,19 +474,8 @@ Teaching Excellence. Guiding Global Futures." />
       gap:10px;
     }
     html[data-theme="light"] .monthCard{ background: rgba(255,255,255,.55); }
-    .monthCard h4{
-      margin:0;
-      font-size:14px;
-      font-weight:990;
-      letter-spacing:.1px;
-    }
-    .monthCard p{
-      margin:0;
-      color: var(--muted);
-      font-weight:800;
-      font-size:12.5px;
-      line-height:1.45;
-    }
+    .monthCard h4{ margin:0; font-size:14px; font-weight:990; letter-spacing:.1px; }
+    .monthCard p{ margin:0; color: var(--muted); font-weight:800; font-size:12.5px; line-height:1.45; }
     .monthCard a{
       display:inline-flex; align-items:center; justify-content:center;
       padding:10px 12px;
@@ -630,6 +489,7 @@ Teaching Excellence. Guiding Global Futures." />
     }
     .monthCard a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
 
+    /* Learn free (no popups) */
     .learnGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -651,8 +511,7 @@ Teaching Excellence. Guiding Global Futures." />
     }
     .learnItem b{ font-weight:990; }
     .learnItem span{ color: var(--muted); font-weight:800; font-size:12.5px; }
-
-    .watchBtn{
+    .watchLink{
       padding:10px 12px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.75);
@@ -662,9 +521,14 @@ Teaching Excellence. Guiding Global Futures." />
       transition:.18s ease;
       flex:0 0 auto;
       white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
-    .watchBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .watchLink:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .watchLink svg{ width:16px; height:16px; }
 
+    /* Reviews */
     .reviewGrid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -699,6 +563,7 @@ Teaching Excellence. Guiding Global Futures." />
     }
     .stars{ color: var(--gold); letter-spacing:1px; }
 
+    /* Footer (premium + all links) */
     .footer{
       margin-top:18px;
       padding:18px;
@@ -707,7 +572,7 @@ Teaching Excellence. Guiding Global Futures." />
       background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
       box-shadow: var(--soft);
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns: 1.05fr .95fr;
       gap:16px;
       align-items:start;
       overflow:hidden;
@@ -734,12 +599,44 @@ Teaching Excellence. Guiding Global Futures." />
     }
     .iconbtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
     .icon{ width:16px; height:16px; display:inline-block; }
-    .smallprint{
-      margin-top:12px;
-      font-size:12px;
-      color: rgba(183,201,194,.75);
-    }
 
+    .quickLinks{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:8px 10px;
+      margin-top:10px;
+    }
+    .qLink{
+      padding:10px 10px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      font-weight:900;
+      font-size:12.5px;
+      transition:.18s ease;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .qLink:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .qLink b{ color: var(--gold); }
+
+    .footerBar{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(10,26,20,.22);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    html[data-theme="light"] .footerBar{ background: rgba(255,255,255,.55); }
+    .footerBar small{ color: var(--muted); font-weight:850; }
+
+    /* Floating WhatsApp (right) */
     .floatwa{
       position:fixed;
       right:14px; bottom:14px;
@@ -748,14 +645,11 @@ Teaching Excellence. Guiding Global Futures." />
       padding:12px 14px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.8);
-      background: rgba(6,20,15,.82);
+      background: var(--glass);
       backdrop-filter: blur(14px);
       box-shadow: var(--soft);
       font-weight:950;
       max-width: calc(100vw - 28px);
-    }
-    html[data-theme="light"] .floatwa{
-      background: rgba(255,255,255,.86);
     }
     .dot{
       width:10px; height:10px; border-radius:999px;
@@ -764,10 +658,8 @@ Teaching Excellence. Guiding Global Futures." />
       flex:0 0 auto;
     }
     .floatwa b{ color: var(--gold); }
-    @media (max-width:420px){
-      .floatwa{ font-size:13px; padding:10px 12px; }
-    }
 
+    /* Modern scroll controls (2 buttons) */
     .scrollNav{
       position:fixed;
       right:14px;
@@ -778,152 +670,91 @@ Teaching Excellence. Guiding Global Futures." />
       gap:8px;
       align-items:center;
       justify-content:center;
-      pointer-events:auto;
     }
     .scrollBtn{
-      width:40px;
-      height:40px;
+      width:42px;
+      height:42px;
       border-radius:999px;
-      border:1px solid rgba(29,74,58,.8);
-      background: rgba(6,20,15,.82);
+      border:1px solid rgba(29,74,58,.80);
+      background: var(--glass);
       backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
+      box-shadow: 0 14px 38px rgba(0,0,0,.18);
       color: var(--text);
-      font-weight:1000;
       cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display:grid;
+      place-items:center;
       transition:.18s ease;
       user-select:none;
     }
-    html[data-theme="light"] .scrollBtn{
-      background: rgba(255,255,255,.86);
-      color: var(--text);
-    }
-    .scrollBtn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(215,178,74,.55);
-    }
-    .scrollBtn:disabled{
-      opacity:.45;
-      cursor:not-allowed;
-      transform:none;
-    }
-    .scrollBtn:focus{
-      outline:none;
-      box-shadow: 0 0 0 4px var(--focus), var(--soft);
-    }
+    .scrollBtn svg{ width:18px; height:18px; }
+    .scrollBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .scrollBtn:disabled{ opacity:.40; cursor:not-allowed; transform:none; }
 
-    .modal{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.62);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:16px;
-      z-index:999;
-    }
-    .modal.open{ display:flex; }
-    .modalCard{
-      width:min(920px, 100%);
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(12,32,25,.92), rgba(10,26,20,.86));
-      box-shadow: 0 22px 70px rgba(0,0,0,.55);
-      overflow:hidden;
-    }
-    html[data-theme="light"] .modalCard{
-      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-      border:1px solid rgba(9,64,45,.18);
-      box-shadow: 0 22px 70px rgba(6,20,15,.18);
-    }
-    .modalHead{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      padding:12px 14px;
-      border-bottom:1px solid rgba(29,74,58,.55);
-    }
-    .modalHead b{ font-weight:990; }
-    .closeBtn{
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:990;
-      cursor:pointer;
-    }
-    .frameWrap{
-      aspect-ratio: 16 / 9;
-      width:100%;
-      background:#000;
-    }
-    .frameWrap iframe{
-      width:100%;
-      height:100%;
-      border:0;
-    }
-
-    .askFab{
+    /* Bottom-left floating controls: Menu + AskLizOn + Theme */
+    .leftDock{
       position:fixed;
       left:14px;
       bottom:14px;
       z-index:62;
       display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:flex-start;
+      max-width: calc(100vw - 28px);
+    }
+
+    .dockBtn{
+      display:inline-flex;
       align-items:center;
       gap:10px;
       padding:12px 14px;
       border-radius:999px;
-      border:1px solid rgba(215,178,74,.40);
-      background: var(--ask-bg);
+      border:1px solid rgba(29,74,58,.8);
+      background: var(--glass);
       backdrop-filter: blur(14px);
       box-shadow: var(--soft);
       font-weight:1000;
       cursor:pointer;
       user-select:none;
-      max-width: calc(100vw - 28px);
-    }
-    .askFab:hover{ transform: translateY(-1px); }
-    .askDot{
-      width:10px; height:10px; border-radius:999px;
-      background: var(--gold);
-      box-shadow: 0 0 0 3px rgba(215,178,74,.14);
-      flex:0 0 auto;
-    }
-    .askFab b{ color: var(--gold); }
-    .askBadge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.55);
-      background: rgba(255,255,255,.03);
-      color: var(--muted);
-      font-weight:950;
-      font-size:12px;
       white-space:nowrap;
     }
-    html[data-theme="light"] .askBadge{ background: rgba(255,255,255,.65); }
+    .dockBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .dockIcon{
+      width:18px; height:18px;
+      display:inline-block;
+      opacity:.95;
+    }
+    .dockBtn b{ color: var(--gold); }
+    .dockTiny{
+      font-size:12px;
+      color: var(--muted);
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(255,255,255,.03);
+    }
+    html[data-theme="light"] .dockTiny{ background: rgba(255,255,255,.65); }
 
-    .askOverlay{
+    /* Unified Overlay + Panel (for Menu and AskLizOn) */
+    .overlay{
       position:fixed;
       inset:0;
       background: rgba(0,0,0,.55);
       display:none;
       z-index:1200;
     }
-    .askOverlay.open{ display:block; }
+    .overlay.open{ display:block; }
 
-    .askPanel{
+    .panel{
       position:fixed;
-      top:12px;
       left:12px;
       bottom:12px;
       width:min(420px, calc(100vw - 24px));
+      max-height: calc(100vh - 24px);
       border-radius: 18px;
-      border:1px solid var(--ask-bd);
-      background: var(--ask-panel);
+      border:1px solid var(--panel-bd);
+      background: var(--panel-card);
       box-shadow: var(--shadow2);
       z-index:1201;
       transform: translateX(-110%);
@@ -932,9 +763,9 @@ Teaching Excellence. Guiding Global Futures." />
       flex-direction:column;
       overflow:hidden;
     }
-    .askPanel.open{ transform: translateX(0); }
+    .panel.open{ transform: translateX(0); }
 
-    .askHead{
+    .panelHead{
       padding:12px 12px;
       display:flex;
       align-items:center;
@@ -943,17 +774,17 @@ Teaching Excellence. Guiding Global Futures." />
       border-bottom:1px solid rgba(29,74,58,.55);
       background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00));
     }
-    html[data-theme="light"] .askHead{
+    html[data-theme="light"] .panelHead{
       background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
       border-bottom:1px solid var(--line);
     }
-    .askTitle{
+    .panelTitle{
       display:flex;
       align-items:center;
       gap:10px;
       min-width:0;
     }
-    .askLogo{
+    .panelLogo{
       width:34px; height:34px;
       border-radius:12px;
       padding:6px;
@@ -961,14 +792,14 @@ Teaching Excellence. Guiding Global Futures." />
       border:1px solid var(--chipBd);
       flex:0 0 auto;
     }
-    .askTitle b{
+    .panelTitle b{
       font-weight:1000;
       letter-spacing:.2px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .askTitle small{
+    .panelTitle small{
       display:block;
       color: var(--muted);
       font-weight:850;
@@ -977,9 +808,9 @@ Teaching Excellence. Guiding Global Futures." />
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 240px;
+      max-width: 260px;
     }
-    .askClose{
+    .panelClose{
       padding:10px 12px;
       border-radius:999px;
       border:1px solid rgba(29,74,58,.7);
@@ -990,38 +821,7 @@ Teaching Excellence. Guiding Global Futures." />
       white-space:nowrap;
     }
 
-    .askQuick{
-      padding:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      border-bottom:1px solid rgba(29,74,58,.45);
-      background: rgba(255,255,255,.02);
-    }
-    html[data-theme="light"] .askQuick{
-      background: rgba(255,255,255,.78);
-      border-bottom:1px solid var(--line);
-    }
-    .askPill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.65);
-      background: var(--chipBg);
-      font-weight:990;
-      font-size:13px;
-      cursor:pointer;
-      user-select:none;
-      transition:.18s ease;
-      white-space:nowrap;
-      flex:0 0 auto;
-    }
-    .askPill:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    .askBody{
+    .panelBody{
       padding:12px;
       display:flex;
       flex-direction:column;
@@ -1030,12 +830,53 @@ Teaching Excellence. Guiding Global Futures." />
       flex:1 1 auto;
     }
 
-    .askMsg{
-      display:flex;
+    /* Menu panel content */
+    .menuGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
       gap:10px;
-      align-items:flex-start;
     }
-    .askAvatar{
+    @media (max-width:420px){ .menuGrid{ grid-template-columns:1fr; } }
+
+    .menuItem{
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      font-weight:1000;
+      transition:.18s ease;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-height: 74px;
+    }
+    .menuItem:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .menuItem small{ color: var(--muted); font-weight:850; line-height:1.35; }
+
+    .menuPills{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      padding-top:2px;
+    }
+    .pillTiny{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(255,255,255,.03);
+      font-weight:950;
+      font-size:12.5px;
+      transition:.18s ease;
+      white-space:nowrap;
+      cursor:pointer;
+      user-select:none;
+    }
+    html[data-theme="light"] .pillTiny{ background: rgba(255,255,255,.65); }
+    .pillTiny:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    /* AskLizOn (tap-only) */
+    .msgRow{ display:flex; gap:10px; align-items:flex-start; }
+    .avatar{
       width:30px; height:30px;
       border-radius:12px;
       border:1px solid rgba(29,74,58,.55);
@@ -1046,30 +887,42 @@ Teaching Excellence. Guiding Global Futures." />
       flex:0 0 auto;
       color: var(--gold);
     }
-    html[data-theme="light"] .askAvatar{ background: rgba(255,255,255,.75); }
-    .askBubble{
+    html[data-theme="light"] .avatar{ background: rgba(255,255,255,.75); }
+
+    .bubble{
       border-radius:16px;
       border:1px solid rgba(29,74,58,.55);
-      background: var(--ask-bubble);
+      background: var(--panel-bubble);
       padding:12px;
       box-shadow: 0 10px 30px rgba(0,0,0,.12);
       max-width: 100%;
     }
-    .askBubble.me{
-      background: var(--ask-bubble2);
+    .bubble.me{
+      background: var(--panel-bubble2);
       border-color: rgba(215,178,74,.35);
     }
-    .askBubble b{ color: var(--gold); }
-    .askBubble p{ margin:0; color: var(--text); font-weight:850; line-height:1.55; font-size:13.5px; }
-    .askBubble .mut{ color: var(--muted); font-weight:800; font-size:12.5px; margin-top:6px; }
+    .bubble p{
+      margin:0;
+      color: var(--text);
+      font-weight:850;
+      line-height:1.55;
+      font-size:13.5px;
+    }
+    .bubble .mut{
+      color: var(--muted);
+      font-weight:800;
+      font-size:12.5px;
+      margin-top:6px;
+      line-height:1.45;
+    }
 
-    .askSuggest{
+    .choices{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
       margin-top:10px;
     }
-    .askLink{
+    .choiceBtn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -1082,66 +935,30 @@ Teaching Excellence. Guiding Global Futures." />
       cursor:pointer;
       white-space:nowrap;
       transition:.18s ease;
-    }
-    .askLink:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    .askFoot{
-      padding:12px;
-      border-top:1px solid rgba(29,74,58,.55);
-      background: rgba(255,255,255,.02);
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-    html[data-theme="light"] .askFoot{
-      background: rgba(255,255,255,.86);
-      border-top:1px solid var(--line);
-    }
-    .askInput{
-      flex:1 1 auto;
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.65);
-      background: rgba(0,0,0,.08);
-      color: var(--text);
-      font-weight:850;
-      outline:none;
-    }
-    html[data-theme="light"] .askInput{
-      background: rgba(255,255,255,.75);
-      color: var(--text);
-    }
-    .askSend{
-      flex:0 0 auto;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(215,178,74,.45);
-      background: linear-gradient(180deg, var(--gold), var(--gold2));
-      color:#142015;
-      font-weight:1000;
-      cursor:pointer;
       user-select:none;
-      white-space:nowrap;
+    }
+    .choiceBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .choiceBtn.primary{
+      border-color: rgba(215,178,74,.35);
+      box-shadow: 0 0 0 3px rgba(215,178,74,.10);
     }
 
+    /* Responsive */
     @media (max-width: 920px){
       h1{ font-size:34px; }
       .grid{ grid-template-columns: 1fr; }
       .footer{ grid-template-columns: 1fr; }
-      .nav{ display:none; }
-      .hamburger{ display:inline-flex; }
     }
     @media (max-width: 520px){
       .hero-card{ padding:18px; }
       h1{ font-size:30px; }
       .btn{ width:100%; }
       .cta-row{ gap:10px; }
-      .themeBtn{ padding:10px 10px; }
       .scrollNav{ right:12px; bottom:74px; }
-      .scrollBtn{ width:38px; height:38px; }
-      .askFab{ left:12px; bottom:66px; }
-      .askFab .askBadge{ display:none; }
+      .scrollBtn{ width:40px; height:40px; }
+      .leftDock{ left:12px; bottom:66px; }
+      .dockBtn{ padding:11px 13px; }
+      .dockTiny{ display:none; }
     }
   </style>
 </head>
@@ -1149,8 +966,6 @@ Teaching Excellence. Guiding Global Futures." />
 <body>
 
   <div class="topbar">
-    <input class="menu-toggle" type="checkbox" id="menuToggle" autocomplete="off" />
-
     <div class="topbar-inner">
       <a class="brand" href="index.html" aria-label="LizOn Education Home">
         <img class="brand-logo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
@@ -1162,36 +977,21 @@ Teaching Excellence. Guiding Global Futures." />
 
       <div class="rightTools">
         <nav class="nav" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
           <a href="ielts.html#levels">IELTS</a>
           <a href="pte.html">PTE</a>
           <a href="studyabroad.html">Study Abroad</a>
-          <a href="#" class="askNavBtn" id="askNavOpen">AskLizOn</a>
-          <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20home_menu)" target="_blank" rel="noopener">WhatsApp Helpline</a>
+          <a href="#" class="askNavBtn" id="openAskTop">AskLizOn</a>
+          <a href="upcoming.html"><b style="color:var(--gold)">Upcoming</b></a>
         </nav>
 
-        <button class="themeBtn" id="themeBtn" type="button" aria-label="Toggle theme">
-          <span id="themeText">Dark</span>
-          <span class="togglePill" aria-hidden="true"><span class="toggleDot"></span></span>
+        <button class="themeMini" id="themeMini" type="button" aria-label="Toggle theme">
+          <!-- icon swapped via JS -->
+          <svg id="themeIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
         </button>
-
-        <label class="hamburger" for="menuToggle">☰ <span>Menu</span></label>
-      </div>
-    </div>
-
-    <div class="mobile-drawer">
-      <div class="drawer-inner">
-        <a href="#" id="askMobileOpen"><strong>AskLizOn</strong> — Choose the right course</a>
-        <a href="ielts.html#levels"><strong>IELTS</strong> — Explore Levels</a>
-        <a href="pte.html"><strong>PTE</strong> — 30 Days Plan</a>
-        <a href="studyabroad.html"><strong>Study Abroad</strong> — Consultation & Visa Guidance</a>
-        <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20talk%20to%20a%20counselor.%20(Source%3A%20home_mobile_menu)" target="_blank" rel="noopener">WhatsApp Helpline</a>
-        <a href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Location on Map</a>
-
-        <div class="drawer-social">
-          <a href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-          <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
-          <a href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
       </div>
     </div>
   </div>
@@ -1209,24 +1009,26 @@ Teaching Excellence. Guiding Global Futures." />
           <a href="ielts.html#levels">IELTS</a>
           <a href="pte.html">PTE</a>
           <a href="studyabroad.html">Study Abroad</a>
-          <a href="#" id="askHeroOpen" style="border-color:rgba(215,178,74,.35);">AskLizOn</a>
+          <a href="upcoming.html" style="border-color:rgba(215,178,74,.35);">Upcoming</a>
+          <a href="#" id="openAskHero" style="border-color:rgba(215,178,74,.35);">AskLizOn</a>
         </div>
 
         <h1 class="heroTitleGold">MAKE YOUR FAMILY PROUD</h1>
         <p class="sub">
           LizOn prepares you in the best strategic and skilled way — in Bangladesh and abroad.
-          Confused what to do? Let’s talk.
+          Confused what to do? Tap AskLizOn, get the right direction.
         </p>
 
         <div class="cta-row">
           <a class="btn primary" href="ielts.html#levels">Check IELTS Level</a>
-          <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20am%20confused%20and%20need%20guidance%20right%20now.%20(Source%3A%20home_hero)" target="_blank" rel="noopener">Talk on WhatsApp</a>
+          <a class="btn" href="about.html">About LizOn</a>
         </div>
 
         <div class="miniProgramRow" aria-label="Programs">
           <a class="miniProgram" href="ielts.html#levels">IELTS Programs</a>
           <a class="miniProgram" href="pte.html">PTE Program</a>
           <a class="miniProgram" href="studyabroad.html">Study Abroad</a>
+          <a class="miniProgram" href="upcoming.html">Upcoming</a>
         </div>
       </div>
     </section>
@@ -1262,14 +1064,14 @@ Teaching Excellence. Guiding Global Futures." />
             </div>
 
             <div class="highlightPills">
-              <span class="hiPill">✅ Make Your Family Proud</span>
+              <span class="hiPill">✅ Highlight: Upcoming</span>
               <span class="hiPill">✅ N2F takes care of everything</span>
             </div>
           </div>
 
           <div class="featuredActions">
-            <a class="accBtn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20check%20availability%20for%20the%20upcoming%20batch%20(26%20December).%20Please%20confirm%20seat.%20(Source%3A%20featured_check_availability)" target="_blank" rel="noopener">
-              Check Availability (WhatsApp)
+            <a class="accBtn primary" href="upcoming.html">
+              Open Upcoming Details
             </a>
 
             <button class="accBtn" type="button" data-acc="learnMorePanel" aria-expanded="false">
@@ -1280,8 +1082,8 @@ Teaching Excellence. Guiding Global Futures." />
               N2F (What’s Included?)
             </button>
 
-            <a class="accBtn ghost" href="studyabroad.html" title="Learn about N2F / full support">
-              N2F Info (Study Abroad)
+            <a class="accBtn ghost" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20confirm%20seat%20for%20the%20upcoming%20batch%20(26%20December).%20(Source%3A%20home_featured)" target="_blank" rel="noopener">
+              Confirm Seat
             </a>
           </div>
         </div>
@@ -1410,8 +1212,8 @@ Teaching Excellence. Guiding Global Futures." />
           </div>
 
           <div class="cta-row" style="margin-top:12px;">
-            <a class="btn primary" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20N2F%20support%20(Study%20Abroad%20+%20Visa%20+%20After%20Visa).%20Please%20guide%20me.%20(Source%3A%20featured_n2f)" target="_blank" rel="noopener">
-              Talk With An Expert Counselor (WhatsApp)
+            <a class="btn primary" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20N2F%20support%20(Study%20Abroad%20+%20Visa%20+%20After%20Visa).%20Please%20guide%20me.%20(Source%3A%20home_n2f)" target="_blank" rel="noopener">
+              Talk With An Expert Counselor
             </a>
             <a class="btn" href="studyabroad.html">Learn Study Abroad</a>
           </div>
@@ -1421,7 +1223,7 @@ Teaching Excellence. Guiding Global Futures." />
     </section>
 
     <section id="programs">
-      <div class="section-title">Programs <small>Pick a path. Or message first.</small></div>
+      <div class="section-title">Programs <small>Pick a path. Or tap AskLizOn.</small></div>
 
       <div class="grid">
         <div class="card">
@@ -1432,7 +1234,7 @@ Teaching Excellence. Guiding Global Futures." />
           </p>
           <div class="actions">
             <a class="btn primary" href="ielts.html#levels">Learn More</a>
-            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20IELTS.%20Please%20suggest%20the%20right%20level.%20(Source%3A%20home_ielts_card)" target="_blank" rel="noopener">Chat on WhatsApp</a>
+            <button class="btn" type="button" id="openAskCardIELTS">AskLizOn</button>
           </div>
         </div>
 
@@ -1444,7 +1246,7 @@ Teaching Excellence. Guiding Global Futures." />
           </p>
           <div class="actions">
             <a class="btn primary" href="pte.html">Learn More</a>
-            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20admit%20in%20PTE%20(30%20Days).%20Please%20guide%20me.%20(Source%3A%20home_pte_card)" target="_blank" rel="noopener">Admit on WhatsApp</a>
+            <button class="btn" type="button" id="openAskCardPTE">AskLizOn</button>
           </div>
         </div>
 
@@ -1456,84 +1258,119 @@ Teaching Excellence. Guiding Global Futures." />
           </p>
           <div class="actions">
             <a class="btn primary" href="studyabroad.html">Learn More</a>
-            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20study%20abroad%20guidance.%20(Source%3A%20home_abroad_card)" target="_blank" rel="noopener">Talk on WhatsApp</a>
+            <button class="btn" type="button" id="openAskCardAbroad">AskLizOn</button>
           </div>
         </div>
       </div>
     </section>
 
     <section id="learnfree">
-      <div class="section-title">Learn for Free <small>Watch inside this site (no distraction)</small></div>
+      <div class="section-title">Learn for Free <small>Open video (no popups)</small></div>
 
       <div class="learnGrid">
         <div class="learnItem">
           <div>
             <b>Reading</b><br><span>How to start from zero</span>
           </div>
-          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/iqr6_h49fYM">Watch</button>
+          <a class="watchLink" href="https://www.youtube.com/watch?v=iqr6_h49fYM" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
+            </svg>
+            Watch
+          </a>
         </div>
 
         <div class="learnItem">
           <div>
             <b>Speaking</b><br><span>Basics to confident speaking</span>
           </div>
-          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/67ZBZt1sFtM">Watch</button>
+          <a class="watchLink" href="https://www.youtube.com/watch?v=67ZBZt1sFtM" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
+            </svg>
+            Watch
+          </a>
         </div>
 
         <div class="learnItem">
           <div>
             <b>Writing Task 1</b><br><span>Core structure & mistakes</span>
           </div>
-          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/smOEtZfUW9o">Watch</button>
+          <a class="watchLink" href="https://www.youtube.com/watch?v=smOEtZfUW9o" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
+            </svg>
+            Watch
+          </a>
         </div>
 
         <div class="learnItem">
           <div>
             <b>Writing Task 2</b><br><span>Idea + structure + clarity</span>
           </div>
-          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/ZnTX486sd_o">Watch</button>
+          <a class="watchLink" href="https://www.youtube.com/watch?v=ZnTX486sd_o" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
+            </svg>
+            Watch
+          </a>
         </div>
 
         <div class="learnItem">
           <div>
             <b>Listening</b><br><span>Accuracy & control</span>
           </div>
-          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/9VnHJfJgztE">Watch</button>
+          <a class="watchLink" href="https://www.youtube.com/watch?v=9VnHJfJgztE" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
+            </svg>
+            Watch
+          </a>
         </div>
 
         <div class="learnItem">
           <div>
             <b>Ultimate Basic Guideline</b><br><span>Complete basic direction</span>
           </div>
-          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/BkfKx16N4q8">Watch</button>
+          <a class="watchLink" href="https://www.youtube.com/watch?v=BkfKx16N4q8" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
+            </svg>
+            Watch
+          </a>
         </div>
 
         <div class="learnItem" style="grid-column: 1 / -1;">
           <div>
             <b>Server ey Apni Jevabe Porben</b><br><span>How to study inside our system</span>
           </div>
-          <button class="watchBtn" type="button" data-video="https://www.youtube-nocookie.com/embed/sGD0w0IlZVc">Watch</button>
+          <a class="watchLink" href="https://www.youtube.com/watch?v=sGD0w0IlZVc" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 15.5v-7l6 3.5-6 3.5z" fill="currentColor"/>
+            </svg>
+            Watch
+          </a>
         </div>
       </div>
 
       <p class="sub" style="margin-top:14px;">
-        If you’re not serious, don’t waste your time. If you are — we’ll guide you properly.
+        If you’re not serious, don’t waste your time. If you are — LizOn will guide you properly.
       </p>
 
       <div class="cta-row">
-        <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20watched%20the%20free%20lessons.%20Now%20I%20want%20a%20proper%20plan.%20(Source%3A%20learnfree)" target="_blank" rel="noopener">Talk on WhatsApp</a>
+        <a class="btn primary" href="#" id="openAskLearnFree">AskLizOn</a>
         <a class="btn" href="ielts.html#levels">Check IELTS Level</a>
       </div>
     </section>
 
     <section id="reviews">
-      <div class="section-title">Explore Others’ Success <small>Real student voices (cleaned, not fake)</small></div>
+      <div class="section-title">Explore Others’ Success <small>Student voice (Bangladesh)</small></div>
 
       <div class="reviewGrid">
         <div class="review">
           <p>“Ato din pore mone hocche English basic ta finally bujhtesi. Class routine ta follow kora easy, and teachers genuinely care.”</p>
           <div class="meta">
-            <span>Muhammad Ariful Islam</span>
+            <span>Rakib Hasan</span>
             <span class="stars">★★★★★</span>
           </div>
         </div>
@@ -1541,7 +1378,7 @@ Teaching Excellence. Guiding Global Futures." />
         <div class="review">
           <p>“Onek coaching center-e porashona korechi, kintu ekhane teacher gula onek bhalo vabe poray. Structured and clear.”</p>
           <div class="meta">
-            <span>Nhk Prince Nirob</span>
+            <span>Nusrat Jahan</span>
             <span class="stars">★★★★★</span>
           </div>
         </div>
@@ -1549,15 +1386,15 @@ Teaching Excellence. Guiding Global Futures." />
         <div class="review">
           <p>“Teacher der support conference-base er moto. Reading + Listening duta tei improvement feel korlam.”</p>
           <div class="meta">
-            <span>Il-Ewr Sakib</span>
+            <span>Tahmid Rahman</span>
             <span class="stars">★★★★★</span>
           </div>
         </div>
 
         <div class="review">
-          <p>“Ami really impressed. Speaking practice sessions + guidance boosted my confidence a lot. Environment tao comfortable.”</p>
+          <p>“Speaking practice sessions + guidance boosted my confidence a lot. Environment tao comfortable.”</p>
           <div class="meta">
-            <span>Sohan Islam</span>
+            <span>Sanjida Islam</span>
             <span class="stars">★★★★★</span>
           </div>
         </div>
@@ -1565,7 +1402,7 @@ Teaching Excellence. Guiding Global Futures." />
         <div class="review">
           <p>“Classes easy to follow, teachers explain with clarity. Honestly, I felt my English improving step by step.”</p>
           <div class="meta">
-            <span>Nayeen Ahmed</span>
+            <span>Mehedi Hasan</span>
             <span class="stars">★★★★★</span>
           </div>
         </div>
@@ -1573,14 +1410,14 @@ Teaching Excellence. Guiding Global Futures." />
         <div class="review">
           <p>“Interactive class + well-structured routine. I attended spoken English & IELTS — both were worth it.”</p>
           <div class="meta">
-            <span>Justin Long</span>
+            <span>Faria Ahmed</span>
             <span class="stars">★★★★★</span>
           </div>
         </div>
       </div>
 
       <div class="cta-row" style="margin-top:12px;">
-        <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20saw%20the%20reviews.%20I%20want%20to%20start%20properly.%20Please%20guide%20me.%20(Source%3A%20reviews)" target="_blank" rel="noopener">Start on WhatsApp</a>
+        <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20properly.%20Please%20guide%20me.%20(Source%3A%20home_reviews)" target="_blank" rel="noopener">Start on WhatsApp</a>
         <a class="btn" href="https://www.facebook.com/lizoneducation/reviews" target="_blank" rel="noopener">See Facebook Reviews</a>
       </div>
     </section>
@@ -1618,14 +1455,35 @@ Teaching Excellence. Guiding Global Futures." />
           </a>
         </div>
 
-        <div class="smallprint">© <span id="year"></span> myLizOn.com | LizOn Education</div>
+        <div class="footerBar">
+          <a class="qLink" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20footer_bar)" target="_blank" rel="noopener">
+            Need guidance? <b>Chat</b>
+          </a>
+          <small>© <span id="year"></span> myLizOn.com | LizOn Education</small>
+        </div>
       </div>
 
       <div>
-        <h3>Social Media</h3>
-        <p>Follow our updates, results, and guidance content.</p>
+        <h3>Quick Links (All)</h3>
+        <p>Everything important in one place.</p>
 
-        <div class="footer-links" style="margin-top:10px;">
+        <div class="quickLinks" aria-label="All links">
+          <a class="qLink" href="index.html">Home</a>
+          <a class="qLink" href="about.html">About</a>
+          <a class="qLink" href="upcoming.html"><b>Upcoming</b></a>
+          <a class="qLink" href="ielts.html#levels">IELTS (Levels)</a>
+          <a class="qLink" href="ielts-speaking.html">IELTS Speaking</a>
+          <a class="qLink" href="ielts-listening.html">IELTS Listening</a>
+          <a class="qLink" href="ielts-reading.html">IELTS Reading</a>
+          <a class="qLink" href="ielts-writing.html">IELTS Writing</a>
+          <a class="qLink" href="ielts-grammar.html">IELTS Grammar</a>
+          <a class="qLink" href="ielts-computer-based.html">Computer IELTS</a>
+          <a class="qLink" href="ielts-faq-bangladesh.html">IELTS FAQ (BD)</a>
+          <a class="qLink" href="pte.html">PTE</a>
+          <a class="qLink" href="studyabroad.html">Study Abroad</a>
+        </div>
+
+        <div class="footer-links" style="margin-top:12px;">
           <a class="iconbtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">
             <span class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1659,122 +1517,189 @@ Teaching Excellence. Guiding Global Futures." />
 
   </main>
 
+  <!-- Right-bottom WhatsApp bar -->
   <a class="floatwa" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20home_float)" target="_blank" rel="noopener">
     <span class="dot" aria-hidden="true"></span>
     Need guidance? <b>Chat on WhatsApp</b>
   </a>
 
-  <button class="askFab" id="askFab" type="button" aria-label="Open AskLizOn">
-    <span class="askDot" aria-hidden="true"></span>
-    Ask<b>LizOn</b>
-    <span class="askBadge">Course Selector</span>
-  </button>
+  <!-- Bottom-left dock: Menu + AskLizOn (tap-only) -->
+  <div class="leftDock" aria-label="Left dock controls">
+    <button class="dockBtn" id="openMenuDock" type="button" aria-label="Open menu">
+      <span class="dockIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      Menu
+      <span class="dockTiny">All Pages</span>
+    </button>
 
-  <div class="askOverlay" id="askOverlay" aria-hidden="true"></div>
-  <aside class="askPanel" id="askPanel" aria-label="AskLizOn Panel" role="dialog" aria-modal="true">
-    <div class="askHead">
-      <div class="askTitle">
-        <img class="askLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+    <button class="dockBtn" id="openAskDock" type="button" aria-label="Open AskLizOn">
+      <span class="dockIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 12a8 8 0 0 1-12.4 6.7L4 20l1.4-3.4A8 8 0 1 1 20 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9.6 14.2c.3.6 1 .9 2.4.9 1.8 0 2.9-.7 2.9-1.9 0-1.1-.8-1.6-2.4-1.9l-1.2-.2c-1.3-.2-1.8-.6-1.8-1.3 0-.9.8-1.5 2.1-1.5 1 0 1.7.3 2.1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      Ask<b>LizOn</b>
+      <span class="dockTiny">Tap only</span>
+    </button>
+  </div>
+
+  <!-- Scroll controls -->
+  <div class="scrollNav" aria-label="Page scroll controls">
+    <button class="scrollBtn" id="scrollUp" type="button" aria-label="Scroll to top">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 14l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll to bottom">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Shared overlay -->
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+
+  <!-- Menu Panel -->
+  <aside class="panel" id="menuPanel" aria-label="Menu Panel" role="dialog" aria-modal="true">
+    <div class="panelHead">
+      <div class="panelTitle">
+        <img class="panelLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
         <div style="min-width:0;">
-          <b>AskLizOn</b>
-          <small>2–3 questions → course suggestion</small>
+          <b>Menu</b>
+          <small>All important pages (tiny + clean)</small>
         </div>
       </div>
-      <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn">Close</button>
+      <button class="panelClose" id="closeMenu" type="button">Close</button>
     </div>
 
-    <div class="askQuick" aria-label="Quick start">
-      <button class="askPill" type="button" data-ask="ielts">Choose IELTS Course</button>
-      <button class="askPill" type="button" data-ask="pte">Choose PTE Course</button>
-      <button class="askPill" type="button" data-ask="abroad">Study Abroad Guidance</button>
-      <button class="askPill" type="button" data-ask="reset">Reset</button>
-    </div>
+    <div class="panelBody">
+      <div class="menuGrid" aria-label="Menu grid">
+        <a class="menuItem" href="upcoming.html">
+          <span><b style="color:var(--gold)">Upcoming</b></span>
+          <small>Batch + notices</small>
+        </a>
+        <a class="menuItem" href="about.html">
+          <span>About</span>
+          <small>Who we are</small>
+        </a>
 
-    <div class="askBody" id="askBody" aria-label="Chat messages"></div>
+        <a class="menuItem" href="ielts.html#levels">
+          <span>IELTS</span>
+          <small>Levels + pricing</small>
+        </a>
+        <a class="menuItem" href="pte.html">
+          <span>PTE</span>
+          <small>30 days plan</small>
+        </a>
 
-    <div class="askFoot">
-      <input class="askInput" id="askInput" type="text" placeholder="Type short answer… (English / বাংলা / Banglish)" autocomplete="off" />
-      <button class="askSend" id="askSend" type="button">Send</button>
+        <a class="menuItem" href="studyabroad.html">
+          <span>Study Abroad</span>
+          <small>N2F guidance</small>
+        </a>
+        <a class="menuItem" href="index.html">
+          <span>Home</span>
+          <small>Back to start</small>
+        </a>
+      </div>
+
+      <div class="section-title" style="margin:14px 0 8px;">
+        IELTS Skill Pages <small>tap to open</small>
+      </div>
+      <div class="menuPills">
+        <a class="pillTiny" href="ielts-speaking.html">Speaking</a>
+        <a class="pillTiny" href="ielts-listening.html">Listening</a>
+        <a class="pillTiny" href="ielts-reading.html">Reading</a>
+        <a class="pillTiny" href="ielts-writing.html">Writing</a>
+        <a class="pillTiny" href="ielts-grammar.html">Grammar</a>
+        <a class="pillTiny" href="ielts-computer-based.html">Computer IELTS</a>
+        <a class="pillTiny" href="ielts-faq-bangladesh.html">FAQ (BD)</a>
+      </div>
+
+      <div class="section-title" style="margin:14px 0 8px;">
+        Quick Actions <small>direct</small>
+      </div>
+      <div class="menuPills">
+        <a class="pillTiny" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+        <a class="pillTiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20menu_panel)" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="pillTiny" href="#" id="openAskFromMenu">AskLizOn</a>
+      </div>
     </div>
   </aside>
 
-  <div class="scrollNav" aria-label="Page scroll controls">
-    <button class="scrollBtn" id="scrollUp" type="button" aria-label="Scroll to top">↑</button>
-    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll to bottom">↓</button>
-  </div>
-
-  <div class="modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Video player">
-    <div class="modalCard">
-      <div class="modalHead">
-        <b id="videoTitle">Watch</b>
-        <button class="closeBtn" type="button" id="closeModal">Close</button>
+  <!-- AskLizOn Panel (Tap only, no typing) -->
+  <aside class="panel" id="askPanel" aria-label="AskLizOn Panel" role="dialog" aria-modal="true">
+    <div class="panelHead">
+      <div class="panelTitle">
+        <img class="panelLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+        <div style="min-width:0;">
+          <b>AskLizOn</b>
+          <small>Tap → get the right course + combo</small>
+        </div>
       </div>
-      <div class="frameWrap">
-        <iframe id="videoFrame"
-          src=""
-          title="YouTube video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen></iframe>
-      </div>
+      <button class="panelClose" id="closeAsk" type="button">Close</button>
     </div>
-  </div>
+
+    <div class="panelBody" id="askBody" aria-label="AskLizOn chat"></div>
+  </aside>
 
   <script>
     (function(){
-      const t = document.getElementById('menuToggle');
-      if (t) t.checked = false;
-
-      const drawer = document.querySelector('.mobile-drawer');
-      if (drawer && t){
-        drawer.addEventListener('click', function(e){
-          const a = e.target.closest('a');
-          if (a) t.checked = false;
-        });
-      }
-
+      // Year
       const y = document.getElementById('year');
       if (y) y.textContent = new Date().getFullYear();
 
+      // Theme (icon only)
       const root = document.documentElement;
-      const themeBtn = document.getElementById('themeBtn');
-      const themeText = document.getElementById('themeText');
+      const themeMini = document.getElementById('themeMini');
+      const themeIcon = document.getElementById('themeIcon');
+
+      const ICON_MOON = `
+        <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      `;
+      const ICON_SUN = `
+        <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      `;
 
       function setTheme(next){
         root.setAttribute('data-theme', next);
         localStorage.setItem('lizon_theme', next);
-        if (themeText) themeText.textContent = (next === 'light') ? 'Light' : 'Dark';
         const meta = document.querySelector('meta[name="theme-color"]');
         if(meta) meta.setAttribute('content', next === 'light' ? '#eaf6f0' : '#0b2a1f');
+        if (themeIcon){
+          themeIcon.innerHTML = (next === 'light') ? ICON_SUN : ICON_MOON;
+        }
       }
-
       const saved = localStorage.getItem('lizon_theme');
-      if (saved === 'light' || saved === 'dark') setTheme(saved);
-      else setTheme('dark');
+      setTheme((saved === 'light' || saved === 'dark') ? saved : 'dark');
 
-      if (themeBtn){
-        themeBtn.addEventListener('click', () => {
-          const current = root.getAttribute('data-theme') || 'dark';
-          setTheme(current === 'dark' ? 'light' : 'dark');
+      if (themeMini){
+        themeMini.addEventListener('click', () => {
+          const cur = root.getAttribute('data-theme') || 'dark';
+          setTheme(cur === 'dark' ? 'light' : 'dark');
         });
       }
 
+      // Accordions in featured (no popups)
       const accButtons = document.querySelectorAll('[data-acc]');
       const panels = {
         learnMorePanel: document.getElementById('learnMorePanel'),
         n2fPanel: document.getElementById('n2fPanel')
       };
-
       function closeAll(){
         Object.values(panels).forEach(p => p && p.classList.remove('open'));
         accButtons.forEach(b => b.setAttribute('aria-expanded','false'));
       }
-
       accButtons.forEach(btn => {
         btn.addEventListener('click', () => {
           const id = btn.getAttribute('data-acc');
           const panel = panels[id];
           if (!panel) return;
-
           const isOpen = panel.classList.contains('open');
           closeAll();
           if (!isOpen){
@@ -1785,452 +1710,360 @@ Teaching Excellence. Guiding Global Futures." />
         });
       });
 
-      const modal = document.getElementById('videoModal');
-      const frame = document.getElementById('videoFrame');
-      const close = document.getElementById('closeModal');
-      const title = document.getElementById('videoTitle');
-
-      function openModal(src, label){
-        if (!modal || !frame) return;
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden','false');
-        const join = src.includes('?') ? '&' : '?';
-        frame.src = src + join + 'autoplay=1';
-        if (title) title.textContent = label || 'Watch';
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeModal(){
-        if (!modal || !frame) return;
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden','true');
-        frame.src = '';
-        document.body.style.overflow = '';
-      }
-
-      document.querySelectorAll('.watchBtn[data-video]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const src = btn.getAttribute('data-video');
-          const label = btn.closest('.learnItem')?.querySelector('b')?.textContent || 'Watch';
-          openModal(src, label);
-        });
-      });
-
-      if (close) close.addEventListener('click', closeModal);
-      if (modal){
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) closeModal();
-        });
-      }
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
-      });
-
+      // Scroll buttons
       const up = document.getElementById('scrollUp');
       const down = document.getElementById('scrollDown');
 
-      function atTop(){
-        return (window.scrollY || document.documentElement.scrollTop || 0) <= 2;
-      }
+      function atTop(){ return (window.scrollY || document.documentElement.scrollTop || 0) <= 2; }
       function atBottom(){
         const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
         const docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
         const winH = window.innerHeight || document.documentElement.clientHeight;
         return (scrollY + winH) >= (docH - 2);
       }
-
       function refreshScrollButtons(){
         if (up) up.disabled = atTop();
         if (down) down.disabled = atBottom();
       }
-
       if (up){
         up.addEventListener('click', () => {
           document.getElementById('top')?.scrollIntoView({behavior:'smooth', block:'start'});
         });
       }
-
       if (down){
         down.addEventListener('click', () => {
           window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
         });
       }
-
       window.addEventListener('scroll', refreshScrollButtons, {passive:true});
       window.addEventListener('resize', refreshScrollButtons);
       refreshScrollButtons();
 
-      // =====================================
-      // AskLizOn — Course Selector (2–3 Q)
-      // =====================================
-      const askFab = document.getElementById('askFab');
-      const askOverlay = document.getElementById('askOverlay');
+      // Panels: Menu + AskLizOn (click to open, click outside to close)
+      const overlay = document.getElementById('overlay');
+      const menuPanel = document.getElementById('menuPanel');
       const askPanel = document.getElementById('askPanel');
-      const askClose = document.getElementById('askClose');
+
+      const openMenuDock = document.getElementById('openMenuDock');
+      const closeMenu = document.getElementById('closeMenu');
+
+      const openAskDock = document.getElementById('openAskDock');
+      const closeAsk = document.getElementById('closeAsk');
+
+      const openAskTop = document.getElementById('openAskTop');
+      const openAskHero = document.getElementById('openAskHero');
+      const openAskFromMenu = document.getElementById('openAskFromMenu');
+
+      const openAskCardIELTS = document.getElementById('openAskCardIELTS');
+      const openAskCardPTE = document.getElementById('openAskCardPTE');
+      const openAskCardAbroad = document.getElementById('openAskCardAbroad');
+      const openAskLearnFree = document.getElementById('openAskLearnFree');
+
+      function closeAllPanels(){
+        menuPanel?.classList.remove('open');
+        askPanel?.classList.remove('open');
+        overlay?.classList.remove('open');
+        overlay?.setAttribute('aria-hidden', 'true');
+      }
+      function openPanel(which){
+        closeAllPanels();
+        overlay?.classList.add('open');
+        overlay?.setAttribute('aria-hidden', 'false');
+        if (which === 'menu') menuPanel?.classList.add('open');
+        if (which === 'ask') askPanel?.classList.add('open');
+      }
+
+      if (openMenuDock) openMenuDock.addEventListener('click', ()=> openPanel('menu'));
+      if (closeMenu) closeMenu.addEventListener('click', closeAllPanels);
+
+      function openAsk(){
+        openPanel('ask');
+        // seed once
+        if (!askState.seeded){
+          seedAsk();
+          askState.seeded = true;
+        }
+      }
+
+      if (openAskDock) openAskDock.addEventListener('click', openAsk);
+      if (closeAsk) closeAsk.addEventListener('click', closeAllPanels);
+
+      if (openAskTop) openAskTop.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+      if (openAskHero) openAskHero.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+      if (openAskFromMenu) openAskFromMenu.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+
+      if (openAskCardIELTS) openAskCardIELTS.addEventListener('click', openAsk);
+      if (openAskCardPTE) openAskCardPTE.addEventListener('click', openAsk);
+      if (openAskCardAbroad) openAskCardAbroad.addEventListener('click', openAsk);
+      if (openAskLearnFree) openAskLearnFree.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+
+      if (overlay){
+        overlay.addEventListener('click', closeAllPanels);
+      }
+      document.addEventListener('keydown', (e)=>{
+        if (e.key === 'Escape') closeAllPanels();
+      });
+
+      // ==========================
+      // AskLizOn (TAP ONLY)
+      // ==========================
       const askBody = document.getElementById('askBody');
-      const askInput = document.getElementById('askInput');
-      const askSend = document.getElementById('askSend');
 
-      const askNavOpen = document.getElementById('askNavOpen');
-      const askHeroOpen = document.getElementById('askHeroOpen');
-      const askMobileOpen = document.getElementById('askMobileOpen');
-
-      const state = {
-        mode: "idle",            // idle | ielts_q1 | ielts_q2 | ielts_done | pte_done | abroad_done
-        program: null,           // ielts | pte | abroad
-        ielts_profile: null,     // a | b | c | d
-        timeline: null,          // soon | mid | later
-        suggestion: null         // ZERO | HOPE | STEP-UP | DESPERATE | PTE | STUDY_ABROAD
+      const askState = {
+        seeded: false,
+        step: "start", // start | program | ielts_q1 | ielts_q2 | ielts_combo | done
+        program: null, // ielts | pte | abroad
+        ielts_profile: null, // a b c d
+        timeline: null, // soon mid later
+        suggestion: null, // ZERO HOPE STEP-UP DESPERATE PTE ABROAD
       };
 
-      function normalize(s){
-        return (s || "")
-          .toLowerCase()
-          .replace(/[^\p{L}\p{N}\s]/gu, " ")
-          .replace(/\s+/g, " ")
-          .trim();
-      }
+      const PRICES = {
+        ZERO: 4200,
+        HOPE: 5500,
+        "STEP-UP": 6200,
+        DESPERATE: 7500
+      };
+      const COMBOS = [
+        {key:"2", label:"2 Courses", off:"30% off", examples:[
+          {name:"ZERO + HOPE", price:6790},
+          {name:"HOPE + STEP-UP", price:8190},
+          {name:"STEP-UP + DESPERATE", price:9590},
+        ]},
+        {key:"3", label:"3 Courses", off:"40% off", examples:[
+          {name:"ZERO + HOPE + STEP-UP", price:9540},
+          {name:"HOPE + STEP-UP + DESPERATE", price:11520},
+        ]},
+        {key:"4", label:"N2F (All 4)", off:"50% off (Best Value)", examples:[
+          {name:"ZERO + HOPE + STEP-UP + DESPERATE", price:12700},
+        ]},
+      ];
+      const SESSIONS = {
+        ZERO: "12 Sessions • 1 Month",
+        HOPE: "16 Sessions • 1 Month",
+        "STEP-UP": "16 Sessions • 1 Month",
+        DESPERATE: "28 Sessions • 1 Month"
+      };
 
-      function pushMsg(who, html, links){
-        const row = document.createElement('div');
-        row.className = 'askMsg';
-
-        const av = document.createElement('div');
-        av.className = 'askAvatar';
-        av.textContent = (who === 'me') ? 'You' : 'LZ';
-
-        const bubble = document.createElement('div');
-        bubble.className = 'askBubble' + (who === 'me' ? ' me' : '');
-
-        const p = document.createElement('p');
-        p.innerHTML = html;
-        bubble.appendChild(p);
-
-        if (links && links.length){
-          const wrap = document.createElement('div');
-          wrap.className = 'askSuggest';
-          links.forEach(l => {
-            const a = document.createElement('a');
-            a.className = 'askLink';
-            a.href = l.href;
-            a.textContent = l.label;
-            if (l.external){
-              a.target = "_blank";
-              a.rel = "noopener";
-            }
-            wrap.appendChild(a);
-          });
-          bubble.appendChild(wrap);
-        }
-
-        row.appendChild(av);
-        row.appendChild(bubble);
-        askBody.appendChild(row);
-        askBody.scrollTop = askBody.scrollHeight;
-      }
-
-      function waLink(text){
-        const base = "https://wa.me/8801611611139?text=";
+      function waLink(text, number){
+        const base = (number === 'abroad')
+          ? "https://wa.me/8801608881545?text="
+          : "https://wa.me/8801611611139?text=";
         return base + encodeURIComponent(text);
       }
 
-      function resetAsk(){
-        state.mode = "idle";
-        state.program = null;
-        state.ielts_profile = null;
-        state.timeline = null;
-        state.suggestion = null;
+      function clearAsk(){
         if (askBody) askBody.innerHTML = "";
-        seed();
       }
 
-      function seed(){
-        pushMsg('bot',
-          `Assalamu Alaikum! Ami <b>AskLizOn</b> — 2–3 ta question kore apnar jonno <b>right course</b> suggest korbo.`,
-          [
-            {label:"Choose IELTS Course", href:"#", external:false},
-            {label:"Choose PTE Course", href:"#", external:false},
-            {label:"Study Abroad Guidance", href:"#", external:false}
-          ]
-        );
-        pushMsg('bot',
-          `Start kori. Apnar focus ta konta?<div class="mut">Type: IELTS / PTE / Abroad  (ba quick button)</div>`,
-          []
-        );
-      }
+      function row(who, html, choices){
+        const wrap = document.createElement('div');
+        wrap.className = 'msgRow';
 
-      function openAsk(){
-        askOverlay.classList.add('open');
-        askOverlay.setAttribute('aria-hidden','false');
-        askPanel.classList.add('open');
-        if (t) t.checked = false;
+        const av = document.createElement('div');
+        av.className = 'avatar';
+        av.textContent = (who === 'me') ? 'You' : 'LZ';
 
-        if (!askBody.dataset.seeded){
-          askBody.dataset.seeded = "1";
-          seed();
+        const bub = document.createElement('div');
+        bub.className = 'bubble' + (who === 'me' ? ' me' : '');
+
+        const p = document.createElement('p');
+        p.innerHTML = html;
+        bub.appendChild(p);
+
+        if (choices && choices.length){
+          const c = document.createElement('div');
+          c.className = 'choices';
+          choices.forEach(ch => {
+            const b = document.createElement('button');
+            b.type = "button";
+            b.className = 'choiceBtn' + (ch.primary ? ' primary' : '');
+            b.textContent = ch.label;
+            b.addEventListener('click', ()=> ch.onClick());
+            c.appendChild(b);
+          });
+          bub.appendChild(c);
         }
-        setTimeout(()=> askInput?.focus(), 50);
+
+        wrap.appendChild(av);
+        wrap.appendChild(bub);
+        askBody.appendChild(wrap);
+        askBody.scrollTop = askBody.scrollHeight;
       }
 
-      function closeAsk(){
-        askOverlay.classList.remove('open');
-        askOverlay.setAttribute('aria-hidden','true');
-        askPanel.classList.remove('open');
-      }
+      function seedAsk(){
+        askState.step = "program";
+        askState.program = null;
+        askState.ielts_profile = null;
+        askState.timeline = null;
+        askState.suggestion = null;
 
-      if (askFab) askFab.addEventListener('click', openAsk);
-      if (askOverlay) askOverlay.addEventListener('click', closeAsk);
-      if (askClose) askClose.addEventListener('click', closeAsk);
+        clearAsk();
 
-      if (askNavOpen) askNavOpen.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
-      if (askHeroOpen) askHeroOpen.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
-      if (askMobileOpen) askMobileOpen.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
-
-      document.addEventListener('keydown', (e)=>{
-        if (e.key === 'Escape' && askPanel.classList.contains('open')) closeAsk();
-      });
-
-      function askIELTSQ1(){
-        state.program = "ielts";
-        state.mode = "ielts_q1";
-        pushMsg('bot',
-          `IELTS selected ✅ Q1/2: Apnar current situation konta?<div class="mut">Reply: A / B / C / D</div>`,
+        row('bot',
+          `Assalamu Alaikum! Ami <b>AskLizOn</b> — apnar problem bujhe <b>right course + combo</b> recommend korbo.<div class="mut">Typing lagbe na — shudhu tap.</div>`,
           [
-            {label:"A: Ami IELTS start kori nai / basic weak", href:"#"},
-            {label:"B: Practice kori, kintu score atke (5–5.5)", href:"#"},
-            {label:"C: Basic thik, target 6.5–7 (need upgrade)", href:"#"},
-            {label:"D: Exam khub close / repeat / last moment", href:"#"}
+            {label:"IELTS", primary:true, onClick: ()=> pickProgram('ielts')},
+            {label:"PTE", onClick: ()=> pickProgram('pte')},
+            {label:"Study Abroad", onClick: ()=> pickProgram('abroad')},
+            {label:"Reset", onClick: seedAsk}
           ]
         );
       }
 
-      function askIELTSQ2(){
-        state.mode = "ielts_q2";
-        pushMsg('bot',
-          `Q2/2: Exam koto din por? (approx)<div class="mut">Reply: 1 / 2 / 3</div>`,
+      function pickProgram(p){
+        askState.program = p;
+        row('me', p === 'ielts' ? "IELTS" : (p === 'pte' ? "PTE" : "Study Abroad"));
+
+        if (p === 'ielts'){
+          askIELTS_Q1();
+          return;
+        }
+
+        if (p === 'pte'){
+          askState.step = "done";
+          row('bot',
+            `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">If apnar exam date close hoy, ajkei counselor ke message den.</div>`,
+            [
+              {label:"Open PTE Page", primary:true, onClick: ()=> window.location.href="pte.html"},
+              {label:"WhatsApp (Confirm)", onClick: ()=> window.open(waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_home)", "ielts"), "_blank")},
+              {label:"Reset", onClick: seedAsk}
+            ]
+          );
+          return;
+        }
+
+        if (p === 'abroad'){
+          askState.step = "done";
+          row('bot',
+            `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Country + intake + profile match kore counselor clear plan dibe.</div>`,
+            [
+              {label:"Open Study Abroad", primary:true, onClick: ()=> window.location.href="studyabroad.html"},
+              {label:"WhatsApp Counselor", onClick: ()=> window.open(waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_home)", "abroad"), "_blank")},
+              {label:"Reset", onClick: seedAsk}
+            ]
+          );
+        }
+      }
+
+      function askIELTS_Q1(){
+        askState.step = "ielts_q1";
+        row('bot',
+          `Q1/2: Apnar current situation konta?<div class="mut">Tap the closest one.</div>`,
           [
-            {label:"1: 0–30 days", href:"#"},
-            {label:"2: 1–3 months", href:"#"},
-            {label:"3: 3+ months", href:"#"}
+            {label:"A: Start kori nai / basic weak", primary:true, onClick: ()=> setIELTSProfile('a')},
+            {label:"B: Practice kori, kintu 5–5.5 e atke", onClick: ()=> setIELTSProfile('b')},
+            {label:"C: Basic thik, target 6.5–7 (upgrade)", onClick: ()=> setIELTSProfile('c')},
+            {label:"D: Exam khub close / repeat / urgent", onClick: ()=> setIELTSProfile('d')},
           ]
         );
+      }
+
+      function setIELTSProfile(p){
+        askState.ielts_profile = p;
+        row('me', (p==='a'?'A':'') + (p==='b'?'B':'') + (p==='c'?'C':'') + (p==='d'?'D':''));
+        askIELTS_Q2();
+      }
+
+      function askIELTS_Q2(){
+        askState.step = "ielts_q2";
+        row('bot',
+          `Q2/2: Exam koto din por? (approx)<div class="mut">Tap one.</div>`,
+          [
+            {label:"0–30 days", primary:true, onClick: ()=> setTimeline('soon')},
+            {label:"1–3 months", onClick: ()=> setTimeline('mid')},
+            {label:"3+ months", onClick: ()=> setTimeline('later')},
+          ]
+        );
+      }
+
+      function setTimeline(tl){
+        askState.timeline = tl;
+        row('me', tl === 'soon' ? "0–30 days" : (tl==='mid' ? "1–3 months" : "3+ months"));
+        decideIELTS();
       }
 
       function decideIELTS(){
-        // timeline nudge: if exam very soon => DESPERATE unless total beginner
-        let sug = null;
+        const prof = askState.ielts_profile;
+        const tl = askState.timeline;
 
-        const prof = state.ielts_profile; // a/b/c/d
-        const tl = state.timeline; // soon/mid/later
-
+        let sug = "HOPE";
         if (prof === "d") sug = "DESPERATE";
         else if (tl === "soon"){
-          if (prof === "a") sug = "ZERO";
-          else sug = "DESPERATE";
+          sug = (prof === "a") ? "ZERO" : "DESPERATE";
         } else {
           if (prof === "a") sug = "ZERO";
           if (prof === "b") sug = "HOPE";
           if (prof === "c") sug = "STEP-UP";
         }
 
-        // safe fallback
-        if (!sug) sug = "HOPE";
-        state.suggestion = sug;
-        state.mode = "ielts_done";
+        askState.suggestion = sug;
+        askState.step = "ielts_combo";
 
-        const map = {
-          "ZERO": {href:"ielts.html#zero", title:"IELTS ZERO"},
-          "HOPE": {href:"ielts.html#hope", title:"IELTS HOPE"},
-          "STEP-UP": {href:"ielts.html#stepup", title:"IELTS STEP-UP"},
-          "DESPERATE": {href:"ielts.html#desperate", title:"IELTS DESPERATE"}
-        };
+        const title = sug === "STEP-UP" ? "IELTS STEP-UP" : ("IELTS " + sug);
+        const price = PRICES[sug] || "";
+        const sessions = SESSIONS[sug] || "1 Month";
 
-        const pick = map[sug];
-        const msg = `Suggested ✅ <b>${pick.title}</b><div class="mut">Want confirmation? Message counselor with this suggestion.</div>`;
-
-        const waText =
-          `Assalamu Alaikum LizOn Education. AskLizOn suggested: ${pick.title}. ` +
-          `My situation: ${prof?.toUpperCase() || "N/A"}, timeline: ${tl || "N/A"}. ` +
-          `(Source: AskLizOn_course_selector)`;
-
-        pushMsg('bot', msg, [
-          {label:"Open Course Details", href: pick.href},
-          {label:"Talk on WhatsApp (Confirm)", href: waLink(waText), external:true},
-          {label:"Reset", href:"#"}
-        ]);
+        row('bot',
+          `Suggested ✅ <b>${title}</b>
+           <div class="mut">Price: <b style="color:var(--gold)">৳${price}</b> • ${sessions}</div>
+           <div class="mut">Ekhon combo decide kori—jeta apnar target e fastest help dibe.</div>`,
+          [
+            {label:"Single Course", primary:true, onClick: ()=> showSingle(title)},
+            {label:"2 Courses (Best next)", onClick: ()=> showCombo('2', title)},
+            {label:"3 Courses", onClick: ()=> showCombo('3', title)},
+            {label:"N2F (All 4) Best Value", onClick: ()=> showCombo('4', title)},
+          ]
+        );
       }
 
-      function handleUserText(rawText){
-        const raw = (rawText || "").trim();
-        if (!raw) return;
-
-        pushMsg('me', raw);
-
-        const s = normalize(raw);
-
-        // reset keywords
-        if (s === "reset" || s === "start over" || s === "restart"){
-          resetAsk();
-          return;
-        }
-
-        // program selection from idle
-        if (state.mode === "idle"){
-          if (s.includes("ielts") || s === "i"){
-            askIELTSQ1();
-            return;
-          }
-          if (s.includes("pte") || s === "p"){
-            state.program = "pte";
-            state.mode = "pte_done";
-            state.suggestion = "PTE";
-            pushMsg('bot',
-              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">If exam date is soon, message counselor now.</div>`,
-              [
-                {label:"Open PTE Program", href:"pte.html"},
-                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector)"), external:true},
-                {label:"Reset", href:"#"}
-              ]
-            );
-            return;
-          }
-          if (s.includes("abroad") || s.includes("study abroad") || s.includes("visa") || s.includes("university")){
-            state.program = "abroad";
-            state.mode = "abroad_done";
-            state.suggestion = "STUDY_ABROAD";
-            pushMsg('bot',
-              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Counselor will match country + intake + profile.</div>`,
-              [
-                {label:"Open Study Abroad", href:"studyabroad.html"},
-                {label:"Talk to Counselor (WhatsApp)", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector)"), external:true},
-                {label:"Reset", href:"#"}
-              ]
-            );
-            return;
-          }
-
-          // if unclear
-          pushMsg('bot',
-            `Just choose one:<div class="mut">IELTS / PTE / Abroad</div>`,
-            []
-          );
-          return;
-        }
-
-        // IELTS Q1
-        if (state.mode === "ielts_q1"){
-          // accept A/B/C/D or descriptive
-          if (s === "a" || s.includes("start") || s.includes("basic") || s.includes("beginner") || s.includes("zero")){
-            state.ielts_profile = "a";
-            askIELTSQ2();
-            return;
-          }
-          if (s === "b" || s.includes("stuck") || s.includes("atke") || s.includes("5") || s.includes("5.5")){
-            state.ielts_profile = "b";
-            askIELTSQ2();
-            return;
-          }
-          if (s === "c" || s.includes("6") || s.includes("6.5") || s.includes("7") || s.includes("upgrade") || s.includes("improve")){
-            state.ielts_profile = "c";
-            askIELTSQ2();
-            return;
-          }
-          if (s === "d" || s.includes("close") || s.includes("soon") || s.includes("repeat") || s.includes("last") || s.includes("urgent")){
-            state.ielts_profile = "d";
-            askIELTSQ2();
-            return;
-          }
-
-          pushMsg('bot', `Reply with <b>A / B / C / D</b> (just one letter).`, []);
-          return;
-        }
-
-        // IELTS Q2
-        if (state.mode === "ielts_q2"){
-          if (s === "1" || s.includes("0") || s.includes("30") || s.includes("week") || s.includes("days")){
-            state.timeline = "soon";
-            decideIELTS();
-            return;
-          }
-          if (s === "2" || s.includes("1") || s.includes("2") || s.includes("3") || s.includes("month")){
-            state.timeline = "mid";
-            decideIELTS();
-            return;
-          }
-          if (s === "3" || s.includes("later") || s.includes("3+") || s.includes("after")){
-            state.timeline = "later";
-            decideIELTS();
-            return;
-          }
-
-          pushMsg('bot', `Reply with <b>1 / 2 / 3</b>.`, []);
-          return;
-        }
-
-        // after done states: allow "reset"
-        if (state.mode.endsWith("_done")){
-          if (s.includes("reset")) resetAsk();
-          else pushMsg('bot', `Type <b>reset</b> to start again.`, []);
-          return;
-        }
+      function showSingle(title){
+        row('me', "Single Course");
+        row('bot',
+          `Recommended: <b>${title}</b>
+           <div class="mut">Apni jodi ekhon ekta course-e focus korte chan, eta best start. Exam close hole “DESPERATE” more effective.</div>`,
+          [
+            {label:"Open Course Details", primary:true, onClick: ()=> window.location.href="ielts.html#levels"},
+            {label:"WhatsApp (Confirm)", onClick: ()=> window.open(waLink(
+              `Assalamu Alaikum LizOn Education. AskLizOn suggested: ${title}. I want Single Course. (Source: AskLizOn_home)`, "ielts"
+            ), "_blank")},
+            {label:"Reset", onClick: seedAsk}
+          ]
+        );
       }
 
-      function sendAsk(){
-        const val = askInput?.value || "";
-        askInput.value = "";
-        handleUserText(val);
-      }
+      function showCombo(key, title){
+        const block = COMBOS.find(x => x.key === key);
+        row('me', key === '4' ? "N2F (All 4)" : (key + " Courses"));
 
-      if (askSend) askSend.addEventListener('click', sendAsk);
-      if (askInput){
-        askInput.addEventListener('keydown', (e)=>{
-          if (e.key === 'Enter') sendAsk();
+        let lines = "";
+        block.examples.forEach(ex => {
+          lines += `• <b>${ex.name}</b> — <b style="color:var(--gold)">৳${ex.price}</b><br/>`;
         });
+
+        const extra =
+          (key === '2')
+          ? "Duita course nিলে clear upgrade path hoy. Perfect for 1–3 months timeline."
+          : (key === '3')
+            ? "3 course মানে consistency + evaluation. যারা 6.5–7 target করে, often best."
+            : "N2F মানে BEST VALUE. Full 4-level journey + full guidance. যারা serious, তাদের জন্য smoothest path.";
+
+        row('bot',
+          `<b>${block.label}</b> — <b style="color:var(--gold)">${block.off}</b>
+           <div class="mut" style="margin-top:6px;">${lines}</div>
+           <div class="mut">${extra}</div>`,
+          [
+            {label:"Open Pricing (IELTS)", primary:true, onClick: ()=> window.location.href="ielts.html#pricing"},
+            {label:"WhatsApp (Confirm Combo)", onClick: ()=> window.open(waLink(
+              `Assalamu Alaikum LizOn Education. AskLizOn suggested: ${title}. I want ${block.label}. Please confirm exact combo for my case. (Source: AskLizOn_home)`, "ielts"
+            ), "_blank")},
+            {label:"Reset", onClick: seedAsk}
+          ]
+        );
       }
 
-      // Quick pills
-      document.querySelectorAll('.askPill[data-ask]').forEach(btn=>{
-        btn.addEventListener('click', (e)=>{
-          const k = btn.getAttribute('data-ask');
-          if (k === "reset"){ resetAsk(); return; }
-          if (k === "ielts"){
-            pushMsg('me', 'IELTS');
-            askIELTSQ1();
-            return;
-          }
-          if (k === "pte"){
-            pushMsg('me', 'PTE');
-            state.program = "pte";
-            state.mode = "pte_done";
-            state.suggestion = "PTE";
-            pushMsg('bot',
-              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">Message counselor with your exam date.</div>`,
-              [
-                {label:"Open PTE Program", href:"pte.html"},
-                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector)"), external:true},
-                {label:"Reset", href:"#"}
-              ]
-            );
-            return;
-          }
-          if (k === "abroad"){
-            pushMsg('me', 'Study Abroad');
-            state.program = "abroad";
-            state.mode = "abroad_done";
-            state.suggestion = "STUDY_ABROAD";
-            pushMsg('bot',
-              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Message counselor with country + intake.</div>`,
-              [
-                {label:"Open Study Abroad", href:"studyabroad.html"},
-                {label:"Talk to Counselor (WhatsApp)", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector)"), external:true},
-                {label:"Reset", href:"#"}
-              ]
-            );
-            return;
-          }
-        });
-      });
-
+      // Make AskLizOn easy to reset when panel opened multiple times
+      // (Optional) keep as is; user can tap reset.
     })();
   </script>
 

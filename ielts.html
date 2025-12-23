@@ -25,8 +25,6 @@
     --gold: rgba(255,190,100,.55);
     --gold-strong: rgba(255,190,100,.80);
     --goldbg: rgba(255,190,100,.10);
-    --success: #9ee6b8;
-    --danger: rgba(255,90,90,.80);
 
     --topbar-bg: rgba(7,27,22,.88);
     --topbar-bg-scrolled: rgba(7,27,22,.55);
@@ -38,7 +36,6 @@
 
     --radius-xl: 20px;
     --radius-lg: 16px;
-    --radius-md: 12px;
   }
 
   .theme-light{
@@ -59,7 +56,6 @@
     --gold: rgba(165,127,50,.55);
     --gold-strong: rgba(165,127,50,.80);
     --goldbg: #f3ebd7;
-    --success: #0d9a55;
 
     --topbar-bg: rgba(255,255,255,.90);
     --topbar-bg-scrolled: rgba(255,255,255,.62);
@@ -104,7 +100,6 @@
     gap:12px;
     padding: 10px 0;
   }
-
   .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
   .logo-link{
     display:flex; align-items:center; gap:10px;
@@ -122,15 +117,14 @@
   .brand-text b{
     font-size:18px; letter-spacing:.2px;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    max-width: 180px;
+    max-width: 200px;
   }
   .brand-text span{
     font-size:12px; color:var(--muted);
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    max-width: 180px;
+    max-width: 240px;
   }
 
-  /* Tiny chip menu (more space) */
   .chip{
     padding:6px 10px;
     border:1px solid var(--border);
@@ -143,7 +137,6 @@
   }
   .chip:hover{ border-color:var(--border2); color:var(--text); }
 
-  .right-controls{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
   .desktop-nav{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
 
   /* ===== DRAWER ===== */
@@ -193,7 +186,6 @@
     cursor:pointer;
     font-weight:900;
   }
-
   .drawer-grid{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -212,7 +204,6 @@
   }
   .drawer a:hover{ border-color: var(--border2); }
   .drawer .full{ grid-column: 1 / -1; }
-
   .drawer-sub{
     margin:12px 0 8px;
     font-size:12px;
@@ -241,7 +232,6 @@
   }
   h1{ margin:10px 0 6px; font-size:28px; line-height:1.2; }
   .lead{ margin:0; color:var(--muted); max-width:900px; }
-
   section{ padding: 20px 0; }
   .section-title{ margin:10px 0 8px; font-size:22px; line-height:1.25; }
   .muted{ color:var(--muted); }
@@ -286,15 +276,8 @@
     white-space:nowrap;
     user-select:none;
   }
-  .btn-primary{
-    background: var(--goldbg);
-    border-color: var(--gold);
-  }
-  .btn-ghost{
-    background: transparent;
-    border-color: var(--border);
-    color: var(--muted);
-  }
+  .btn-primary{ background: var(--goldbg); border-color: var(--gold); }
+  .btn-ghost{ background: transparent; border-color: var(--border); color: var(--muted); }
   .btn:hover{ filter: brightness(1.03); }
   .btn-tiny{
     padding:9px 11px;
@@ -308,7 +291,6 @@
     cursor:pointer;
   }
   .btn-tiny:hover{ border-color: var(--border2); }
-
   .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 
   /* Module links */
@@ -486,12 +468,8 @@
     padding: 14px;
     animation: sheetIn .14s ease-out forwards;
   }
-  .ask-top{
-    display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-  }
-  .ask-title{
-    display:flex; align-items:center; gap:10px;
-  }
+  .ask-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .ask-title{ display:flex; align-items:center; gap:10px; }
   .ask-badge{
     width:38px; height:38px;
     border-radius:14px;
@@ -510,11 +488,7 @@
     letter-spacing:.2px;
     margin-bottom:8px;
   }
-  .opt-grid{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:10px;
-  }
+  .opt-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
   .opt{
     border:1px solid var(--border);
     background: rgba(255,255,255,.02);
@@ -541,62 +515,40 @@
   .res-title{ font-weight:950; font-size:16px; margin:0; }
   .res-meta{ color: var(--muted); font-size:13px; margin-top:4px; }
   .res-price{ font-weight:950; font-size:16px; white-space:nowrap; }
-  .why{
-    margin-top:10px;
-    color: var(--text);
-    font-size:13px;
-    line-height:1.55;
-  }
-  .why b{ color: var(--text); }
+  .why{ margin-top:10px; color: var(--text); font-size:13px; line-height:1.55; }
   .ask-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center; }
 
-  /* ===== FLOATING CONTROLS ===== */
-  .fab-col{
-    position:fixed; right:14px; bottom:120px; z-index:2300;
-    display:flex; flex-direction:column; gap:10px;
+  /* ===== FLOATING CONTROLS (modern) ===== */
+  /* Modern scroll: pill group, not “old school circles” */
+  .scroll-dock{
+    position:fixed;
+    right:14px;
+    bottom:120px;
+    z-index:2300;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    padding:10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
   }
-  .fab{
-    width:48px; height:48px;
-    border-radius:18px;
+  .sbtn{
+    width:44px; height:44px;
+    border-radius:16px;
     border:1px solid var(--border);
     background: var(--panel);
     color: var(--text);
-    box-shadow: var(--shadow);
     display:grid; place-items:center;
     cursor:pointer; user-select:none;
-    backdrop-filter: blur(10px);
+    transition: transform .12s ease, border-color .12s ease, filter .12s ease;
   }
-  .fab svg{ width:20px; height:20px; }
-  .fab:hover{ border-color: var(--border2); filter: brightness(1.03); }
+  .sbtn:hover{ border-color: var(--border2); filter: brightness(1.03); transform: translateY(-1px); }
+  .sbtn svg{ width:20px; height:20px; }
 
-  /* Bottom-right theme toggle */
-  .theme-fab{
-    position:fixed; right:14px; bottom:54px; z-index:2400;
-    border:1px solid var(--border);
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    border-radius: 999px;
-    padding:10px 12px;
-    display:flex; align-items:center; gap:10px;
-    backdrop-filter: blur(10px);
-  }
-  .theme-fab b{ font-size:13px; }
-  .switch{
-    width:58px; height:30px; border-radius:999px;
-    background: var(--panel2);
-    border:1px solid var(--border);
-    position:relative;
-  }
-  .knob{
-    position:absolute; top:2px; left:2px;
-    width:26px; height:26px; border-radius:50%;
-    background: var(--goldbg);
-    border:1px solid var(--gold);
-    transition: left .2s ease;
-  }
-  .theme-light .knob{ left:30px; border-color: var(--gold-strong); }
-
-  /* Bottom-left hamburger */
+  /* Bottom-left hamburger: ALWAYS visible now */
   .hamb-fab{
     position:fixed; left:14px; bottom:54px; z-index:2400;
     width:54px; height:54px;
@@ -604,10 +556,11 @@
     border:1px solid var(--border);
     background: var(--panel);
     box-shadow: var(--shadow);
-    display:none;
-    place-items:center;
+    display:grid; place-items:center;
     cursor:pointer;
     backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
   .hamb-fab svg{ width:22px; height:22px; }
 
@@ -623,10 +576,31 @@
     cursor:pointer;
     backdrop-filter: blur(10px);
     user-select:none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
   .ask-dot{ width:12px; height:12px; border-radius:50%; background: rgba(255,190,100,.85); }
   .ask-pill b{ font-size:13px; }
   .ask-pill span{ font-size:12px; color: var(--muted); }
+
+  /* Theme toggle bottom-right: icon only, tiny */
+  .theme-fab{
+    position:fixed; right:14px; bottom:54px; z-index:2400;
+    border:1px solid var(--border);
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    border-radius: 18px;
+    width:52px; height:52px;
+    display:grid; place-items:center;
+    cursor:pointer;
+    backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .theme-fab svg{ width:18px; height:18px; }
+  .icon-sun{ display:none; }
+  .theme-light .icon-sun{ display:block; }
+  .theme-light .icon-moon{ display:none; }
 
   /* Bottom guidance bar */
   .sticky-bar{
@@ -675,9 +649,7 @@
     color: var(--text);
     font-weight:950;
   }
-  .footer-links{
-    display:flex; gap:10px; flex-wrap:wrap;
-  }
+  .footer-links{ display:flex; gap:10px; flex-wrap:wrap; }
   .footer-links a{ text-decoration:none; }
   .socials{ display:flex; gap:10px; flex-wrap:wrap; }
   .footer-small{ font-size:13px; color: var(--muted); }
@@ -689,11 +661,6 @@
     .price-grid{ grid-template-columns: 1fr; }
     h1{ font-size:24px; }
     .footer-columns{ grid-template-columns: 1fr; }
-  }
-  @media (max-width: 860px){
-    .desktop-nav{ display:none; }
-    .hamb-fab{ display:grid; }
-    .brand-text b, .brand-text span{ max-width: 170px; }
   }
   @media (max-width: 520px){
     .rt-row{ grid-template-columns: 86px 1fr 1fr 1fr; }
@@ -719,18 +686,12 @@
         </a>
       </div>
 
-      <div class="right-controls">
-        <nav class="desktop-nav" aria-label="Top navigation">
-          <a class="chip" href="index.html">Home</a>
-          <a class="chip" href="#zero">ZERO</a>
-          <a class="chip" href="#hope">HOPE</a>
-          <a class="chip" href="#stepup">STEP-UP</a>
-          <a class="chip" href="#desperate">DESPERATE</a>
-          <a class="chip" href="#pricing">Pricing</a>
-          <a class="chip" href="#modules">Modules</a>
-          <a class="chip" href="#footer">Footer</a>
-        </nav>
-      </div>
+      <nav class="desktop-nav" aria-label="Top navigation">
+        <a class="chip" href="index.html">Home</a>
+        <a class="chip" href="about.html">About</a>
+        <a class="chip" href="#pricing">Pricing</a>
+        <a class="chip" href="#modules">Modules</a>
+      </nav>
     </div>
   </div>
 </div>
@@ -746,6 +707,7 @@
   <div class="drawer-sub">Core</div>
   <div class="drawer-grid">
     <a class="full" href="index.html">Home</a>
+    <a class="full" href="about.html">About</a>
     <a href="#zero">ZERO</a>
     <a href="#hope">HOPE</a>
     <a href="#stepup">STEP-UP</a>
@@ -802,7 +764,7 @@
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
            target="_blank" rel="noopener">Talk with LizOn</a>
         <button class="btn btn-ghost" id="openAskFromHero" type="button">Help Me Choose</button>
-        <span class="muted">✅ Live Classes • ✅ Mentorship • ✅ Evaluation Focus • ✅ Transparent Pricing</span>
+        <a class="btn btn-ghost" href="about.html">About</a>
       </div>
 
       <div class="cta-row" style="margin-top:10px;">
@@ -865,20 +827,6 @@
       </div>
     </div>
 
-    <div class="highlight" style="margin-top:14px;">
-      <h3 style="margin:0 0 6px;">After ZERO, who will you become?</h3>
-      <div class="grid-3" style="margin-top:10px;">
-        <div class="mini-card"><p class="mini-title">Stable Start</p><p class="mini-text">Apni “start point” niye sure thakben.</p></div>
-        <div class="mini-card"><p class="mini-title">Grammar Control</p><p class="mini-text">Sentence banano easy lagbe.</p></div>
-        <div class="mini-card"><p class="mini-title">Next Step Clear</p><p class="mini-text">HOPE e jaben kina—proper guidance paben.</p></div>
-      </div>
-      <div class="cta-row">
-        <button class="btn-tiny" data-open-ask type="button">Help Me Choose</button>
-        <a class="btn-tiny" href="#pricing">Pricing + Combos</a>
-        <button class="btn-tiny" data-open-routine="zero" type="button">See Routine</button>
-      </div>
-    </div>
-
     <div class="rule"></div>
   </div>
 </section>
@@ -889,10 +837,8 @@
     <p class="badge">Level 2</p>
     <h2 class="section-title">IELTS HOPE — Your Reset Level</h2>
     <p class="muted" style="max-width:920px;">
-      Base ase, kintu score atke thake. <a class="module-link m-reading" href="ielts-reading.html">Reading</a> slow,
-      <a class="module-link m-listening" href="ielts-listening.html">Listening</a> miss hoy,
-      <a class="module-link m-writing" href="ielts-writing.html">Writing</a> control nai,
-      <a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a> e smooth idea flow nai — HOPE fixes the blockers.
+      Base ase, kintu score atke thake. Reading slow,
+      Listening miss hoy, Writing control nai, Speaking e smooth idea flow nai — HOPE fixes the blockers.
     </p>
 
     <div class="meta-row">
@@ -909,52 +855,6 @@
       <button class="btn btn-ghost" data-open-routine="hope" type="button">See Routine</button>
     </div>
 
-    <div class="grid-2" style="margin-top:14px;">
-      <div class="card">
-        <h3>This course comes with</h3>
-
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6l7 4-7 4-7-4 7-4z"/><path d="M5 10v6l7 4 7-4v-6"/></svg>
-          <b>Live Classes</b> • Band 8+ instructors
-        </div>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 22a6.5 6.5 0 0 1 13 0"/></svg>
-          <b>Mentorship</b> • By Shuvo Sarker Joy
-        </div>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg>
-          <b>Private Discord</b> • Practice + updates
-        </div>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
-          <b>Documentation</b> • Guidelines
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Aim of HOPE</h3>
-        <ul class="list">
-          <li><a class="module-link m-reading" href="ielts-reading.html">Reading</a> speed + understanding build</li>
-          <li><a class="module-link m-listening" href="ielts-listening.html">Listening</a> answer catching improve</li>
-          <li><a class="module-link m-writing" href="ielts-writing.html">Writing</a> structure + control</li>
-          <li><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a> idea flow + confidence</li>
-        </ul>
-
-        <div class="cta-row">
-          <a class="btn-tiny" href="ielts-reading.html">Practice Reading</a>
-          <a class="btn-tiny" href="ielts-listening.html">Practice Listening</a>
-          <a class="btn-tiny" href="ielts-writing.html">Practice Writing</a>
-          <a class="btn-tiny" href="ielts-speaking.html">Practice Speaking</a>
-        </div>
-
-        <div class="cta-row" style="margin-top:10px;">
-          <button class="btn-tiny" data-open-ask type="button">Help Me Choose</button>
-          <a class="btn-tiny" href="#pricing">Pricing + Combos</a>
-          <button class="btn-tiny" data-open-routine="hope" type="button">See Routine</button>
-        </div>
-      </div>
-    </div>
-
     <div class="rule"></div>
   </div>
 </section>
@@ -965,8 +865,7 @@
     <p class="badge">Level 3</p>
     <h2 class="section-title">IELTS STEP-UP — Go Beyond 6.0</h2>
     <p class="muted" style="max-width:920px;">
-      Jara serious bhabe band 6 cross kore 6.5–7+ e move korte chan — STEP-UP e focus:
-      important question types, structure, accuracy, and real improvement.
+      Jara serious bhabe band 6 cross kore 6.5–7+ e move korte chan — STEP-UP e focus: accuracy, control, and real improvement.
     </p>
 
     <div class="meta-row">
@@ -983,62 +882,6 @@
       <button class="btn btn-ghost" data-open-routine="stepup" type="button">See Routine</button>
     </div>
 
-    <div class="grid-2" style="margin-top:14px;">
-      <div class="card">
-        <h3>This course comes with</h3>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6l7 4-7 4-7-4 7-4z"/><path d="M5 10v6l7 4 7-4v-6"/></svg>
-          <b>Live Classes</b> • Band 8+ instructors
-        </div>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 22a6.5 6.5 0 0 1 13 0"/></svg>
-          <b>Mentorship</b> • By Shuvo Sarker Joy
-        </div>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg>
-          <b>Private Discord</b> • Practice + updates
-        </div>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
-          <b>Documentation</b> • Guidelines
-        </div>
-        <p class="note">Focus: band 6 cross korar jonne essential mastery + real practice.</p>
-      </div>
-
-      <div class="card">
-        <h3>Skill coverage</h3>
-        <ul class="list">
-          <li><b><a class="module-link m-listening" href="ielts-listening.html">Listening</a>:</b> Part 1 → Part 4</li>
-          <li><b><a class="module-link m-reading" href="ielts-reading.html">Reading</a>:</b> TFNG, YNNG, Gap fill (types)</li>
-          <li><b><a class="module-link m-writing" href="ielts-writing.html">Writing</a>:</b> Task 1 + Task 2 structure</li>
-          <li><b><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a>:</b> 100-second cue card control</li>
-        </ul>
-
-        <h3 style="margin-top:14px;">Aim of STEP-UP</h3>
-        <ul class="list">
-          <li>Important question types mastery</li>
-          <li>Writing structure + accuracy</li>
-          <li>Speaking control (idea flow)</li>
-          <li>Band 6+ stability → 6.5–7+</li>
-        </ul>
-
-        <div class="cta-row">
-          <button class="btn-tiny" data-open-ask type="button">Help Me Choose</button>
-          <a class="btn-tiny" href="#pricing">Pricing + Combos</a>
-          <button class="btn-tiny" data-open-routine="stepup" type="button">See Routine</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="highlight" style="margin-top:14px;">
-      <h3 style="margin:0 0 6px;">After STEP-UP, who will you become?</h3>
-      <div class="grid-3" style="margin-top:10px;">
-        <div class="mini-card"><p class="mini-title">No panic in <a class="module-link m-listening" href="ielts-listening.html">Listening</a></p><p class="mini-text">Part 1–4 e confidence build hoy.</p></div>
-        <div class="mini-card"><p class="mini-title">Write with clean structure</p><p class="mini-text"><a class="module-link m-writing" href="ielts-writing.html">Task 1/2</a> e “plan → write” clear hoy.</p></div>
-        <div class="mini-card"><p class="mini-title">Speak smoothly</p><p class="mini-text"><a class="module-link m-speaking" href="ielts-speaking.html">Cue card</a> handle + idea flow improve.</p></div>
-      </div>
-    </div>
-
     <div class="rule"></div>
   </div>
 </section>
@@ -1049,8 +892,7 @@
     <p class="badge">Level 4</p>
     <h2 class="section-title">IELTS DESPERATE — Fast. Final. Evaluation Focused</h2>
     <p class="muted" style="max-width:920px;">
-      Exam near, or repeat koreo desired score pay nai — ekhane focus:
-      weakness detect → fix → test → evaluate. “Pressure cooker” stage for fast final results.
+      Exam near, or repeat koreo desired score pay nai — focus: weakness detect → fix → test → evaluate.
     </p>
 
     <div class="meta-row">
@@ -1065,54 +907,6 @@
          target="_blank" rel="noopener">Admit Now</a>
       <a class="btn btn-ghost" href="#pricing">See Price</a>
       <button class="btn btn-ghost" data-open-routine="desperate" type="button">See Routine</button>
-    </div>
-
-    <div class="grid-2" style="margin-top:14px;">
-      <div class="card">
-        <h3>This course comes with</h3>
-
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6l7 4-7 4-7-4 7-4z"/><path d="M5 10v6l7 4 7-4v-6"/></svg>
-          <b>Live Classes</b> • Band 8+ instructors
-        </div>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 22a6.5 6.5 0 0 1 13 0"/></svg>
-          <b>Mentorship</b> • By Shuvo Sarker Joy
-        </div>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg>
-          <b>Private Discord</b> • Practice + updates
-        </div>
-        <div class="item">
-          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
-          <b>Evaluation Loop</b> • Mock + speaking + writing evaluation
-        </div>
-
-        <div class="note">This is your fast correction plan: weakness detect → fix → test → evaluate.</div>
-      </div>
-
-      <div class="card">
-        <h3>Skill coverage</h3>
-        <ul class="list">
-          <li><b><a class="module-link m-listening" href="ielts-listening.html">Listening</a>:</b> Part 1–4, MCQ, Maps, Matching</li>
-          <li><b><a class="module-link m-reading" href="ielts-reading.html">Reading</a>:</b> Passage 1–3, common types</li>
-          <li><b><a class="module-link m-writing" href="ielts-writing.html">Writing</a>:</b> Task 1 + Task 2 (all types)</li>
-          <li><b><a class="module-link m-speaking" href="ielts-speaking.html">Speaking</a>:</b> Part 1–3 (real exam handling)</li>
-        </ul>
-
-        <h3 style="margin-top:14px;">Aim of DESPERATE</h3>
-        <ul class="list">
-          <li>Test you properly (real pressure)</li>
-          <li>Fix repeated mistakes quickly</li>
-          <li>Build exam-ready confidence</li>
-        </ul>
-
-        <div class="cta-row">
-          <button class="btn-tiny" data-open-ask type="button">Help Me Choose</button>
-          <a class="btn-tiny" href="#pricing">Pricing + Combos</a>
-          <button class="btn-tiny" data-open-routine="desperate" type="button">See Routine</button>
-        </div>
-      </div>
     </div>
 
     <div class="rule"></div>
@@ -1131,13 +925,9 @@
           <div class="price-top">
             <div>
               <p class="price-name">IELTS ZERO</p>
-              <div class="price-tag">English Starts Here • 1 month • 12 sessions</div>
+              <div class="price-tag">1 month • 12 sessions</div>
             </div>
             <div class="price-value">4,200</div>
-          </div>
-          <div class="price-actions">
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20IELTS%20ZERO" target="_blank" rel="noopener">Admit Now</a>
-            <button class="btn-tiny" data-open-routine="zero" type="button">See Routine</button>
           </div>
         </div>
 
@@ -1145,13 +935,9 @@
           <div class="price-top">
             <div>
               <p class="price-name">IELTS HOPE</p>
-              <div class="price-tag">Your Reset Level • 1 month • 16 sessions</div>
+              <div class="price-tag">1 month • 16 sessions</div>
             </div>
             <div class="price-value">5,500</div>
-          </div>
-          <div class="price-actions">
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20IELTS%20HOPE" target="_blank" rel="noopener">Admit Now</a>
-            <button class="btn-tiny" data-open-routine="hope" type="button">See Routine</button>
           </div>
         </div>
 
@@ -1159,13 +945,9 @@
           <div class="price-top">
             <div>
               <p class="price-name">IELTS STEP-UP</p>
-              <div class="price-tag">Go Beyond 6.0 • 1 month • 16 sessions</div>
+              <div class="price-tag">1 month • 16 sessions</div>
             </div>
             <div class="price-value">6,200</div>
-          </div>
-          <div class="price-actions">
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20IELTS%20STEP-UP" target="_blank" rel="noopener">Admit Now</a>
-            <button class="btn-tiny" data-open-routine="stepup" type="button">See Routine</button>
           </div>
         </div>
 
@@ -1173,116 +955,32 @@
           <div class="price-top">
             <div>
               <p class="price-name">IELTS DESPERATE</p>
-              <div class="price-tag">Fast final evaluation • 1 month • 28 sessions</div>
+              <div class="price-tag">1 month • 28 sessions</div>
             </div>
             <div class="price-value">7,500</div>
-          </div>
-          <div class="price-actions">
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=Admit%20to%20IELTS%20DESPERATE" target="_blank" rel="noopener">Admit Now</a>
-            <button class="btn-tiny" data-open-routine="desperate" type="button">See Routine</button>
           </div>
         </div>
       </div>
 
       <div class="rule"></div>
 
-      <h3 style="margin:0 0 8px;">Combos (discount applied)</h3>
-      <p class="muted" style="margin:0 0 10px;">AskLizOn can suggest the best combo based on your problem + time.</p>
-
+      <h3 style="margin:0 0 8px;">Combos</h3>
       <div class="price-grid" aria-label="Combo pricing">
-        <div class="price-card">
-          <div class="price-top">
-            <div>
-              <p class="price-name">ZERO + HOPE</p>
-              <div class="price-tag">Foundation + Reset</div>
-            </div>
-            <div class="price-value">6,790</div>
-          </div>
-          <div class="price-actions">
-            <button class="btn-tiny" data-open-ask type="button">Check if this fits</button>
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=ZERO%2BHOPE%20combo%20details%20chai" target="_blank" rel="noopener">Talk</a>
-          </div>
-        </div>
-
-        <div class="price-card">
-          <div class="price-top">
-            <div>
-              <p class="price-name">HOPE + STEP-UP</p>
-              <div class="price-tag">Reset + Band jump</div>
-            </div>
-            <div class="price-value">8,190</div>
-          </div>
-          <div class="price-actions">
-            <button class="btn-tiny" data-open-ask type="button">Check if this fits</button>
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=HOPE%2BSTEP-UP%20combo%20details%20chai" target="_blank" rel="noopener">Talk</a>
-          </div>
-        </div>
-
-        <div class="price-card">
-          <div class="price-top">
-            <div>
-              <p class="price-name">STEP-UP + DESPERATE</p>
-              <div class="price-tag">Band jump + Near exam</div>
-            </div>
-            <div class="price-value">9,590</div>
-          </div>
-          <div class="price-actions">
-            <button class="btn-tiny" data-open-ask type="button">Check if this fits</button>
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=STEP-UP%2BDESPERATE%20combo%20details%20chai" target="_blank" rel="noopener">Talk</a>
-          </div>
-        </div>
-
-        <div class="price-card">
-          <div class="price-top">
-            <div>
-              <p class="price-name">ZERO + HOPE + STEP-UP</p>
-              <div class="price-tag">Build → Reset → Band jump</div>
-            </div>
-            <div class="price-value">9,540</div>
-          </div>
-          <div class="price-actions">
-            <button class="btn-tiny" data-open-ask type="button">Check if this fits</button>
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=ZERO%2BHOPE%2BSTEP-UP%20combo%20details%20chai" target="_blank" rel="noopener">Talk</a>
-          </div>
-        </div>
-
-        <div class="price-card">
-          <div class="price-top">
-            <div>
-              <p class="price-name">HOPE + STEP-UP + DESPERATE</p>
-              <div class="price-tag">Reset → Band jump → Final evaluation</div>
-            </div>
-            <div class="price-value">11,520</div>
-          </div>
-          <div class="price-actions">
-            <button class="btn-tiny" data-open-ask type="button">Check if this fits</button>
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=HOPE%2BSTEP-UP%2BDESPERATE%20combo%20details%20chai" target="_blank" rel="noopener">Talk</a>
-          </div>
-        </div>
-
-        <div class="price-card combo-card">
-          <div class="price-top">
-            <div>
-              <span class="best-badge">BEST VALUE • N2F</span>
-              <p class="price-name" style="margin-top:8px;">N2F — Now to Fly (All 4)</p>
-              <div class="price-tag">ZERO + HOPE + STEP-UP + DESPERATE</div>
-            </div>
-            <div class="price-value">12,700</div>
-          </div>
-          <div class="price-actions">
-            <button class="btn-tiny" data-open-ask type="button">Check if N2F fits</button>
-            <a class="btn-tiny" href="https://wa.me/8801611611139?text=N2F%20(All%204)%20details%20chai" target="_blank" rel="noopener">Talk</a>
-          </div>
-        </div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">ZERO + HOPE</p><div class="price-tag">Foundation + Reset</div></div><div class="price-value">6,790</div></div></div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">HOPE + STEP-UP</p><div class="price-tag">Reset + Band jump</div></div><div class="price-value">8,190</div></div></div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">STEP-UP + DESPERATE</p><div class="price-tag">Band jump + Near exam</div></div><div class="price-value">9,590</div></div></div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">ZERO + HOPE + STEP-UP</p><div class="price-tag">Build → Reset → Band jump</div></div><div class="price-value">9,540</div></div></div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">HOPE + STEP-UP + DESPERATE</p><div class="price-tag">Reset → Band jump → Final eval</div></div><div class="price-value">11,520</div></div></div>
+        <div class="price-card combo-card"><div class="price-top"><div><span class="best-badge">BEST VALUE • N2F</span><p class="price-name" style="margin-top:8px;">N2F — Now to Fly (All 4)</p><div class="price-tag">ZERO + HOPE + STEP-UP + DESPERATE</div></div><div class="price-value">12,700</div></div></div>
       </div>
 
       <div class="highlight" style="margin-top:14px;">
         <span class="badge">Not sure?</span>
         <h3 style="margin:10px 0 6px;">Use AskLizOn selector</h3>
-        <p class="muted" style="margin:0;">Tap-only questions. No typing. Combo price shown with reasons.</p>
+        <p class="muted" style="margin:0;">Tap-only questions. Recommendation shows price + combo.</p>
         <div class="cta-row">
           <button class="btn btn-primary" data-open-ask type="button">Open AskLizOn</button>
-          <button class="btn btn-ghost" data-open-routine="all" type="button">See Routine</button>
+          <a class="btn btn-ghost" href="about.html">About</a>
         </div>
       </div>
 
@@ -1294,41 +992,13 @@
 <section id="modules">
   <div class="container">
     <p class="badge">Practice</p>
-    <h2 class="section-title">Practice Modules (Exam-like workflow)</h2>
-    <p class="muted" style="max-width:920px;">
-      “Computer-based exam e ami slow hoye jabo” — ei fear normal.
-      Module-wise practice diye speed + control build hoy.
-    </p>
-
+    <h2 class="section-title">Practice Modules</h2>
     <div class="highlight" style="margin-top:14px;">
-      <h3 style="margin:0 0 6px;">Start module practice</h3>
       <div class="grid-2" style="margin-top:12px;">
-        <a class="card" style="text-decoration:none;" href="ielts-listening.html">
-          <h3 style="margin:0 0 6px;"><span class="module-link m-listening" style="padding:0;border:none;background:none;">IELTS Listening</span></h3>
-          <p class="muted" style="margin:0;">Prediction, focus, traps — don’t miss answers under pressure.</p>
-        </a>
-
-        <a class="card" style="text-decoration:none;" href="ielts-reading.html">
-          <h3 style="margin:0 0 6px;"><span class="module-link m-reading" style="padding:0;border:none;background:none;">IELTS Reading</span></h3>
-          <p class="muted" style="margin:0;">Speed, scanning — stop translating, start scoring.</p>
-        </a>
-
-        <a class="card" style="text-decoration:none;" href="ielts-writing.html">
-          <h3 style="margin:0 0 6px;"><span class="module-link m-writing" style="padding:0;border:none;background:none;">IELTS Writing</span></h3>
-          <p class="muted" style="margin:0;">Ideas + structure + grammar control — not template addiction.</p>
-        </a>
-
-        <a class="card" style="text-decoration:none;" href="ielts-speaking.html">
-          <h3 style="margin:0 0 6px;"><span class="module-link m-speaking" style="padding:0;border:none;background:none;">IELTS Speaking</span></h3>
-          <p class="muted" style="margin:0;">Idea flow, fluency, confidence — speak with control.</p>
-        </a>
-      </div>
-
-      <div class="cta-row">
-        <a class="btn-tiny" href="ielts-listening.html">Start Listening</a>
-        <a class="btn-tiny" href="ielts-reading.html">Start Reading</a>
-        <a class="btn-tiny" href="ielts-writing.html">Start Writing</a>
-        <a class="btn-tiny" href="ielts-speaking.html">Start Speaking</a>
+        <a class="card" style="text-decoration:none;" href="ielts-listening.html"><h3 style="margin:0 0 6px;">IELTS Listening</h3><p class="muted" style="margin:0;">Prediction, focus, traps.</p></a>
+        <a class="card" style="text-decoration:none;" href="ielts-reading.html"><h3 style="margin:0 0 6px;">IELTS Reading</h3><p class="muted" style="margin:0;">Speed, scanning — stop translating.</p></a>
+        <a class="card" style="text-decoration:none;" href="ielts-writing.html"><h3 style="margin:0 0 6px;">IELTS Writing</h3><p class="muted" style="margin:0;">Ideas + structure + control.</p></a>
+        <a class="card" style="text-decoration:none;" href="ielts-speaking.html"><h3 style="margin:0 0 6px;">IELTS Speaking</h3><p class="muted" style="margin:0;">Flow + confidence + control.</p></a>
       </div>
     </div>
   </div>
@@ -1341,10 +1011,11 @@
 
       <h3 class="footer-title">All Options</h3>
       <div class="footer-links" style="margin-bottom:10px;">
+        <a class="btn btn-ghost" href="index.html">Home</a>
+        <a class="btn btn-ghost" href="about.html">About</a>
         <a class="btn btn-ghost" href="ielts.html">IELTS Journey</a>
         <a class="btn btn-ghost" href="pte.html">PTE</a>
         <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
-        <a class="btn btn-ghost" href="index.html">Home</a>
       </div>
 
       <div class="footer-columns">
@@ -1405,28 +1076,29 @@
          href="https://wa.me/8801611611139?text=Hi%2C%20need%20guidance%20for%20IELTS%20Journey."
          target="_blank" rel="noopener">Chat Now</a>
       <button class="btn-tiny" data-open-ask type="button">Help Me Choose</button>
+      <a class="btn-tiny" href="about.html">About</a>
     </div>
   </div>
 </footer>
 
-<!-- FLOATING: Scroll buttons -->
-<div class="fab-col" aria-label="Scroll controls">
-  <button class="fab" id="scrollTopBtn" type="button" title="Scroll to top" aria-label="Scroll to top">
+<!-- Modern Scroll Dock -->
+<div class="scroll-dock" aria-label="Scroll controls">
+  <button class="sbtn" id="scrollTopBtn" type="button" title="Top" aria-label="Scroll to top">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M6 11l6-6 6 6"/></svg>
   </button>
-  <button class="fab" id="scrollBottomBtn" type="button" title="Scroll to bottom" aria-label="Scroll to bottom">
+  <button class="sbtn" id="scrollBottomBtn" type="button" title="Bottom" aria-label="Scroll to bottom">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M6 13l6 6 6-6"/></svg>
   </button>
 </div>
 
-<!-- FLOATING: Bottom-left hamburger -->
+<!-- Bottom-left hamburger (ALWAYS visible) -->
 <button class="hamb-fab" id="hambFab" type="button" aria-label="Open menu" title="Menu">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
   </svg>
 </button>
 
-<!-- FLOATING: AskLizOn pill -->
+<!-- AskLizOn pill -->
 <div class="ask-pill" id="askPill" role="button" tabindex="0" aria-label="Open AskLizOn">
   <span class="ask-dot"></span>
   <div>
@@ -1435,20 +1107,27 @@
   </div>
 </div>
 
-<!-- FLOATING: Theme toggle bottom-right -->
-<div class="theme-fab" id="themeFab" role="button" tabindex="0" aria-label="Toggle theme">
-  <b id="themeLabel">Dark</b>
-  <div class="switch" aria-hidden="true"><div class="knob"></div></div>
+<!-- Theme toggle (icon only, tiny) -->
+<div class="theme-fab" id="themeFab" role="button" tabindex="0" aria-label="Toggle theme" title="Toggle theme">
+  <!-- moon for dark -->
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8Z"/>
+  </svg>
+  <!-- sun for light -->
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
 </div>
 
-<!-- ROUTINE MODAL -->
+<!-- ROUTINE MODAL (kept, even if you later remove) -->
 <div class="modal-wrap" id="routineWrap" aria-hidden="true">
   <div class="modal-back" id="routineBack"></div>
   <div class="modal" role="dialog" aria-modal="true" aria-label="Routine">
     <div class="modal-top">
       <div>
         <h4 id="routineTitle">Class Routine (Weekly)</h4>
-        <p id="routineHint">Tap “See Routine” from any course to highlight where it runs. Each course duration: 1 month.</p>
+        <p id="routineHint">Tap “See Routine” from any course to highlight. Each course duration: 1 month.</p>
       </div>
       <button class="modal-x" id="routineClose" aria-label="Close routine">✕</button>
     </div>
@@ -1505,15 +1184,14 @@
     </div>
 
     <div class="modal-actions">
-      <span class="badge">N2F compatible</span>
       <button class="btn-tiny" id="routineClear" type="button">Clear highlight</button>
-      <button class="btn-tiny" data-open-ask type="button">Use AskLizOn</button>
       <a class="btn-tiny" href="#pricing">Go Pricing</a>
+      <a class="btn-tiny" href="about.html">About</a>
     </div>
   </div>
 </div>
 
-<!-- ASK LIZON (TAP-ONLY SELECTOR) -->
+<!-- ASK LIZON (tap selector) - kept minimal here -->
 <div class="ask-wrap" id="askWrap" aria-hidden="true">
   <div class="modal-back" id="askBack"></div>
   <div class="ask" role="dialog" aria-modal="true" aria-label="AskLizOn selector">
@@ -1546,8 +1224,9 @@
 
       <div class="ask-actions">
         <a class="btn btn-primary" id="resCta" href="#" target="_blank" rel="noopener">Talk with LizOn</a>
-        <a class="btn btn-ghost" href="#pricing" id="resGoPricing">See Pricing + Combos</a>
+        <a class="btn btn-ghost" href="#pricing">See Pricing</a>
         <button class="btn btn-ghost" id="askRestart" type="button">Reset</button>
+        <a class="btn btn-ghost" href="about.html">About</a>
       </div>
     </div>
   </div>
@@ -1556,7 +1235,6 @@
 <script>
   /* ===== Theme toggle (persist) ===== */
   const body = document.body;
-  const themeLabel = document.getElementById('themeLabel');
   const topbar = document.getElementById('topbar');
   const logoImg = document.getElementById('logoImg');
 
@@ -1564,25 +1242,16 @@
     const isLight = mode === 'light';
     body.classList.toggle('theme-light', isLight);
     localStorage.setItem('lizon-theme', isLight ? 'light' : 'dark');
-    themeLabel.textContent = isLight ? 'Light' : 'Dark';
     logoImg.src = isLight ? 'assets/logo-light.png' : 'assets/logo-dark.png';
   }
-
-  const currentTheme = localStorage.getItem('lizon-theme') || 'dark';
-  setTheme(currentTheme);
+  setTheme(localStorage.getItem('lizon-theme') || 'dark');
 
   function toggleTheme(){
     const isLight = body.classList.contains('theme-light');
     setTheme(isLight ? 'dark' : 'light');
   }
-
   document.getElementById('themeFab').addEventListener('click', toggleTheme);
   document.getElementById('themeFab').addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') toggleTheme(); });
-
-  /* Logo fallback */
-  logoImg.addEventListener('error', ()=>{
-    logoImg.src = body.classList.contains('theme-light') ? 'assets/logo-dark.png' : 'assets/logo-dark.png';
-  });
 
   /* ===== Topbar scroll style ===== */
   function handleTopbar(){
@@ -1592,7 +1261,7 @@
   handleTopbar();
   window.addEventListener('scroll', handleTopbar, {passive:true});
 
-  /* ===== Drawer (Laptop bug fix: open only on click, close on outside) ===== */
+  /* ===== Drawer (works on phone + pc) ===== */
   const drawer = document.getElementById('drawer');
   const backdrop = document.getElementById('backdrop');
   const closeDrawer = document.getElementById('closeDrawer');
@@ -1601,16 +1270,34 @@
   function openDrawer(){
     drawer.classList.add('open');
     backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
   function closeDrawerFn(){
     drawer.classList.remove('open');
     backdrop.classList.remove('open');
+    document.body.style.overflow = '';
   }
-  hambFab.addEventListener('click', openDrawer);
+  function toggleDrawer(){
+    if(drawer.classList.contains('open')) closeDrawerFn();
+    else openDrawer();
+  }
+
+  hambFab.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleDrawer(); });
   closeDrawer.addEventListener('click', closeDrawerFn);
   backdrop.addEventListener('click', closeDrawerFn);
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDrawerFn(); });
+
+  // Close when clicking any link
   drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeDrawerFn));
+
+  // Esc close
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDrawerFn(); });
+
+  // Extra outside click safety (PC browsers)
+  document.addEventListener('click', (e)=>{
+    if(!drawer.classList.contains('open')) return;
+    const within = drawer.contains(e.target) || hambFab.contains(e.target);
+    if(!within) closeDrawerFn();
+  }, true);
 
   /* ===== Scroll buttons ===== */
   document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
@@ -1625,34 +1312,18 @@
   const routineBack = document.getElementById('routineBack');
   const routineClose = document.getElementById('routineClose');
   const routineClear = document.getElementById('routineClear');
-  const routineTitle = document.getElementById('routineTitle');
-  const routineHint = document.getElementById('routineHint');
   const allSlots = Array.from(document.querySelectorAll('.rt-slot'));
 
-  function clearRoutineHighlight(){
-    allSlots.forEach(s=> s.classList.remove('hl'));
-  }
+  function clearRoutineHighlight(){ allSlots.forEach(s=> s.classList.remove('hl')); }
   function highlightCourse(course){
     clearRoutineHighlight();
-    if(course === 'all') {
-      routineTitle.textContent = 'Class Routine (Weekly)';
-      routineHint.textContent = 'Weekly routine. Each course duration: 1 month. Tap “See Routine” from any course to highlight.';
-      return;
-    }
+    if(!course || course === 'all') return;
     allSlots.filter(s=> s.dataset.course === course).forEach(s=> s.classList.add('hl'));
-    const map = {
-      zero: 'Routine highlight: IELTS ZERO',
-      hope: 'Routine highlight: IELTS HOPE',
-      stepup: 'Routine highlight: IELTS STEP-UP',
-      desperate: 'Routine highlight: IELTS DESPERATE'
-    };
-    routineTitle.textContent = map[course] || 'Class Routine (Weekly)';
-    routineHint.textContent = 'Highlighted cells show class slots for this course.';
   }
   function openRoutine(course){
     routineWrap.classList.add('show');
     routineWrap.setAttribute('aria-hidden','false');
-    highlightCourse(course || 'all');
+    highlightCourse(course);
   }
   function closeRoutine(){
     routineWrap.classList.remove('show');
@@ -1665,12 +1336,10 @@
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && routineWrap.classList.contains('show')) closeRoutine(); });
 
   document.querySelectorAll('[data-open-routine]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      openRoutine(btn.getAttribute('data-open-routine'));
-    });
+    btn.addEventListener('click', ()=> openRoutine(btn.getAttribute('data-open-routine')));
   });
 
-  /* ===== AskLizOn selector ===== */
+  /* ===== AskLizOn (kept) ===== */
   const askWrap = document.getElementById('askWrap');
   const askBack = document.getElementById('askBack');
   const askClose = document.getElementById('askClose');
@@ -1698,13 +1367,12 @@
       "N2F (All 4)": 12700
     }
   };
-
   const state = { goal:null, pain:null, time:null };
 
   function openAsk(){
     askWrap.classList.add('show');
     askWrap.setAttribute('aria-hidden','false');
-    resetAsk(false);
+    resetAsk();
   }
   function closeAsk(){
     askWrap.classList.remove('show');
@@ -1716,17 +1384,15 @@
 
   askPill.addEventListener('click', openAsk);
   askPill.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openAsk(); });
-  openAskFromHero.addEventListener('click', openAsk);
+  if(openAskFromHero) openAskFromHero.addEventListener('click', openAsk);
   document.querySelectorAll('[data-open-ask]').forEach(b=> b.addEventListener('click', openAsk));
 
-  function resetAsk(render=true){
+  function resetAsk(){
     state.goal = null; state.pain = null; state.time = null;
     askResult.classList.remove('show');
-    if(render) renderStep1();
-    else renderStep1();
+    renderStep1();
   }
-
-  askRestart.addEventListener('click', ()=> resetAsk(true));
+  askRestart.addEventListener('click', resetAsk);
 
   function setOptions(options, onPick){
     optGrid.innerHTML = '';
@@ -1750,7 +1416,6 @@
       { title:'Exam near', desc:'Short time, evaluation + correction', value:'near' }
     ], (v)=>{ state.goal=v; renderStep2(); });
   }
-
   function renderStep2(){
     stepLabel.textContent = 'Step 2/3 — Biggest pain?';
     setOptions([
@@ -1760,118 +1425,64 @@
       { title:'Multiple problems', desc:'Everything mixed', value:'multi' }
     ], (v)=>{ state.pain=v; renderStep3(); });
   }
-
   function renderStep3(){
     stepLabel.textContent = 'Step 3/3 — Time situation?';
     setOptions([
-      { title:'Relaxed', desc:'Time ase, step-by-step build korte chai', value:'relaxed' },
-      { title:'1–2 months', desc:'Focus + speed, stable result', value:'12m' },
+      { title:'Relaxed', desc:'Step-by-step build', value:'relaxed' },
+      { title:'1–2 months', desc:'Focus + stability', value:'12m' },
       { title:'Urgent', desc:'Exam very near / repeat fail', value:'urgent' },
-      { title:'Not sure', desc:'Just suggest best fit', value:'ns' }
+      { title:'Not sure', desc:'Suggest best fit', value:'ns' }
     ], (v)=>{ state.time=v; showRecommendation(); });
   }
-
-  function money(n){
-    return (Number(n)||0).toLocaleString('en-US');
-  }
+  function money(n){ return (Number(n)||0).toLocaleString('en-US'); }
 
   function showRecommendation(){
-    // Decision logic (simple but counselor-like)
-    let rec = { type:'course', name:'IELTS HOPE', key:'hope', price: pricing.hope, combo:null, why:[] };
+    let rec = { type:'course', name:'IELTS HOPE', price: pricing.hope, why:[] };
 
-    // Base course selection by goal/time
-    if(state.goal === 'start') rec = { type:'course', name:'IELTS ZERO', key:'zero', price: pricing.zero, combo:null, why:[] };
-    if(state.goal === 'reset') rec = { type:'course', name:'IELTS HOPE', key:'hope', price: pricing.hope, combo:null, why:[] };
-    if(state.goal === 'jump') rec = { type:'course', name:'IELTS STEP-UP', key:'stepup', price: pricing.stepup, combo:null, why:[] };
-    if(state.goal === 'near') rec = { type:'course', name:'IELTS DESPERATE', key:'desperate', price: pricing.desperate, combo:null, why:[] };
+    if(state.goal === 'start') rec = { type:'course', name:'IELTS ZERO', price: pricing.zero, why:[] };
+    if(state.goal === 'reset') rec = { type:'course', name:'IELTS HOPE', price: pricing.hope, why:[] };
+    if(state.goal === 'jump') rec = { type:'course', name:'IELTS STEP-UP', price: pricing.stepup, why:[] };
+    if(state.goal === 'near') rec = { type:'course', name:'IELTS DESPERATE', price: pricing.desperate, why:[] };
 
-    // Combo suggestions
-    const wantsCombo = (state.pain === 'multi') || (state.goal === 'start' && (state.time === 'relaxed' || state.time === '12m')) || (state.goal === 'reset' && state.time !== 'urgent');
+    const wantsCombo = (state.pain === 'multi') || (state.goal === 'start' && (state.time === 'relaxed' || state.time === '12m'));
     if(wantsCombo){
-      if(state.goal === 'start'){
-        rec.type = 'combo';
-        rec.name = 'ZERO + HOPE';
-        rec.price = pricing.combos["ZERO + HOPE"];
-        rec.combo = 'ZERO + HOPE';
-      } else if(state.goal === 'reset'){
-        rec.type = 'combo';
-        rec.name = 'HOPE + STEP-UP';
-        rec.price = pricing.combos["HOPE + STEP-UP"];
-        rec.combo = 'HOPE + STEP-UP';
-      } else if(state.goal === 'jump' && (state.time === '12m' || state.time === 'relaxed')){
-        rec.type = 'combo';
-        rec.name = 'HOPE + STEP-UP';
-        rec.price = pricing.combos["HOPE + STEP-UP"];
-        rec.combo = 'HOPE + STEP-UP';
-      } else if(state.goal === 'near'){
-        rec.type = 'combo';
-        rec.name = 'STEP-UP + DESPERATE';
-        rec.price = pricing.combos["STEP-UP + DESPERATE"];
-        rec.combo = 'STEP-UP + DESPERATE';
-      }
+      if(state.goal === 'start'){ rec = { type:'combo', name:'ZERO + HOPE', price: pricing.combos["ZERO + HOPE"], why:[] }; }
+      else if(state.goal === 'reset' || state.goal === 'jump'){ rec = { type:'combo', name:'HOPE + STEP-UP', price: pricing.combos["HOPE + STEP-UP"], why:[] }; }
+      else if(state.goal === 'near'){ rec = { type:'combo', name:'STEP-UP + DESPERATE', price: pricing.combos["STEP-UP + DESPERATE"], why:[] }; }
+    }
+    if(state.pain === 'multi' && (state.time === 'relaxed' || state.time === '12m')){
+      rec = { type:'combo', name:'N2F (All 4)', price: pricing.combos["N2F (All 4)"], why:[] };
     }
 
-    // N2F upsell when multi + relaxed
-    if(state.pain === 'multi' && (state.time === 'relaxed' || state.time === '12m') ){
-      rec.type = 'combo';
-      rec.name = 'N2F (All 4)';
-      rec.price = pricing.combos["N2F (All 4)"];
-      rec.combo = 'N2F (All 4)';
-    }
-
-    // Build reasons (Banglish)
     const painMap = {
       grammar: 'Grammar + sentence accuracy fix korte hobe.',
       speaking: 'Speaking e idea flow + confidence build korte hobe.',
       writing: 'Writing e structure + idea control lagbe.',
-      multi: 'Multiple problem—one course e full solve hoy na, combo better.'
+      multi: 'Multiple problem—combo better.'
     };
     const timeMap = {
-      relaxed: 'Time ase—step-by-step build korle best output.',
-      '12m': '1–2 month e stable result lagbe—focus + routine maintain.',
-      urgent: 'Urgent—weakness detect + evaluate loop dorkar.',
-      ns: 'You need a clean starting plan—no confusion.'
+      relaxed: 'Time ase—step-by-step build best.',
+      '12m': '1–2 month e stable result—focus + routine.',
+      urgent: 'Urgent—evaluation + correction loop.',
+      ns: 'Clean starting plan dorkar.'
     };
 
-    rec.why.push(`<b>Apnar pain:</b> ${painMap[state.pain] || 'Problem detect kore plan dibo.'}`);
-    rec.why.push(`<b>Apnar time:</b> ${timeMap[state.time] || 'Time onujayi plan.'}`);
+    rec.why.push(`<b>Pain:</b> ${painMap[state.pain] || 'Problem detect kore plan.'}`);
+    rec.why.push(`<b>Time:</b> ${timeMap[state.time] || 'Time onujayi plan.'}`);
+    rec.why.push(rec.type==='combo'
+      ? `<b>Why combo:</b> ekta course e half-fix hobe. Combo e full build hoy.`
+      : `<b>Why course:</b> current stage er main blocker fix kore.`);
 
-    if(rec.type === 'course'){
-      rec.why.push(`<b>Why ${rec.name}:</b> eta apnar current stage er main blocker fix kore, then next level clear hoy.`);
-    } else {
-      rec.why.push(`<b>Why this combo:</b> ekta course e half-fix hobe. Combo e foundation + reset/band jump properly build hoy.`);
-    }
-
-    // Render
     askResult.classList.add('show');
-    resTitle.textContent = rec.type === 'combo' ? `Recommended combo: ${rec.name}` : `Recommended course: ${rec.name}`;
+    resTitle.textContent = (rec.type==='combo') ? `Recommended combo: ${rec.name}` : `Recommended course: ${rec.name}`;
     resMeta.textContent = 'Decision made from your taps — goal + pain + time.';
     resPrice.textContent = `Price: ${money(rec.price)}`;
     resWhy.innerHTML = rec.why.map(x=>`• ${x}`).join('<br/>');
 
-    const msg = encodeURIComponent(`Assalamu Alaikum, AskLizOn recommend korse: ${rec.name}. Price ${money(rec.price)}. Amar goal: ${state.goal}, pain: ${state.pain}, time: ${state.time}. Details + admission process bolben?`);
+    const msg = encodeURIComponent(`Assalamu Alaikum, AskLizOn recommend: ${rec.name}. Price ${money(rec.price)}. Goal:${state.goal}, Pain:${state.pain}, Time:${state.time}. Details + admission process bolben?`);
     resCta.href = `https://wa.me/8801611611139?text=${msg}`;
   }
-
-  /* ===== Global click: outside close for drawer on desktop too ===== */
-  // If user clicks the hamb button again, keep toggle behavior.
-  function isOpen(el){ return el.classList.contains('open'); }
-  hambFab.addEventListener('click', (e)=>{
-    // toggle
-    if(isOpen(drawer)) closeDrawerFn();
-    else openDrawer();
-    e.stopPropagation();
-  });
-
-  document.addEventListener('click', (e)=>{
-    // Close drawer when open and click outside (already backdrop covers, but on some browsers, click can pass)
-    if(isOpen(drawer)){
-      const within = drawer.contains(e.target) || hambFab.contains(e.target);
-      if(!within) closeDrawerFn();
-    }
-  }, true);
 </script>
 
 </body>
 </html>
-```0

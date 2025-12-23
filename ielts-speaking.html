@@ -9,17 +9,460 @@
   <meta name="theme-color" content="#0b2a1f" />
   <link rel="canonical" href="https://mylizon.com/ielts-speaking.html" />
 
+  <!-- keep it, but page works even if style.css fails -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- SAME CSS AS LISTENING (UNCHANGED) -->
-  <!-- Paste the SAME <style> block you used in ielts-listening.html here -->
+  <style>
+    :root{
+      --bg1:#06140f;
+      --bg2:#0b2a1f;
+      --card:#0c2019cc;
+      --text:#e9fff6;
+      --muted:#b7d7cb;
+      --accent:#1dd3a7;
+      --accent2:#ffd782;
+      --border: rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --max:1100px;
+      --chipbg: rgba(6,20,15,.22);
+      --chipbg2: rgba(29,211,167,.12);
+    }
+
+    html[data-theme="light"]{
+      --bg1:#f3fbf8;
+      --bg2:#e7f6f0;
+      --card: rgba(255,255,255,.78);
+      --text:#052018;
+      --muted:#2c5a4b;
+      --accent:#0aa37f;
+      --accent2:#b38b2e;
+      --border: rgba(0,0,0,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.12);
+      --chipbg: rgba(255,255,255,.60);
+      --chipbg2: rgba(10,163,127,.10);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(900px 600px at 20% 0%, rgba(29,211,167,.14), transparent 55%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      color:var(--text);
+      line-height:1.55;
+      scroll-behavior: smooth;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:18px; }
+
+    header{
+      position: static;
+      background: rgba(6,20,15,.62);
+      border-bottom:1px solid var(--border);
+    }
+    html[data-theme="light"] header{ background: rgba(243,251,248,.75); }
+
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+      padding:14px 18px;
+      max-width:var(--max);
+      margin:0 auto;
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800;
+      letter-spacing:.2px;
+      min-width: 200px;
+    }
+    .brand img{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.12);
+      object-fit: cover;
+      display:block;
+    }
+    .brandTitle{ line-height:1; font-size:16px; }
+    .brandSub{ line-height:1.1; font-size:12px; color:var(--muted); margin-top:3px; }
+
+    .nav-right{
+      display:flex; align-items:center; gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      padding:9px 12px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:var(--muted);
+      background: rgba(6,20,15,.18);
+      transition:.2s ease;
+      font-weight:700;
+      font-size:13px;
+    }
+    html[data-theme="light"] .pill{ background: rgba(255,255,255,.55); }
+    .pill:hover{ transform: translateY(-1px); border-color: rgba(29,211,167,.45); color:var(--text); }
+
+    .themeToggle{
+      display:flex; align-items:center; gap:10px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.18);
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      cursor:pointer;
+    }
+    html[data-theme="light"] .themeToggle{ background: rgba(255,255,255,.55); }
+    .themeDot{
+      width:18px; height:18px; border-radius:999px;
+      border:2px solid rgba(255,215,130,.55);
+      background: rgba(0,0,0,.22);
+    }
+    html[data-theme="light"] .themeDot{ background: rgba(255,215,130,.45); }
+
+    .card{
+      background: linear-gradient(180deg, rgba(12,32,25,.78), rgba(12,32,25,.55));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    html[data-theme="light"] .card{ background: rgba(255,255,255,.78); }
+
+    .hero{ padding:28px 0 10px; }
+    .heroBox{ padding:22px; display:grid; gap:14px; }
+
+    h1{
+      margin:0;
+      font-size: clamp(26px, 3.8vw, 40px);
+      line-height:1.15;
+      letter-spacing:-.3px;
+    }
+    .sub{ color:var(--muted); font-size:16px; max-width:72ch; }
+    .trust{ color:rgba(233,255,246,.78); font-size:13px; }
+    html[data-theme="light"] .trust{ color: rgba(5,32,24,.70); }
+
+    .btnrow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:11px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.28);
+      color:var(--text);
+      font-weight:800;
+      transition:.18s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    html[data-theme="light"] .btn{ background: rgba(255,255,255,.60); }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(29,211,167,.55); }
+    .btn.primary{
+      background: rgba(29,211,167,.16);
+      border-color: rgba(29,211,167,.45);
+    }
+    .btn.solid{
+      background: rgba(29,211,167,.22);
+      border-color: rgba(29,211,167,.55);
+      box-shadow: 0 14px 30px rgba(0,0,0,.18);
+    }
+
+    main{ padding: 14px 0 32px; }
+    section{ margin-top:14px; }
+    .sec{ padding:18px; }
+    h2{ margin:0 0 10px; font-size:20px; }
+    p{ margin:0 0 10px; color:rgba(233,255,246,.90); }
+    html[data-theme="light"] p{ color: rgba(5,32,24,.86); }
+
+    ul{ margin:10px 0 0 18px; color:rgba(233,255,246,.86); }
+    html[data-theme="light"] ul{ color: rgba(5,32,24,.80); }
+    li{ margin:6px 0; }
+
+    .grid{
+      display:grid; gap:12px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .col6{ grid-column: span 6; }
+    .mini{
+      padding:14px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.22);
+    }
+    html[data-theme="light"] .mini{ background: rgba(255,255,255,.55); }
+    .mini h3{ margin:0 0 6px; font-size:16px; }
+    .mini p{ margin:0; color:rgba(233,255,246,.82); font-size:14px; }
+    html[data-theme="light"] .mini p{ color: rgba(5,32,24,.78); }
+
+    .jump{
+      color: var(--text);
+      border-bottom: 2px solid rgba(29,211,167,.55);
+      padding-bottom:2px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .jump:hover{ border-bottom-color: rgba(29,211,167,.95); }
+
+    .flash{
+      position:relative;
+      outline: 2px solid rgba(29,211,167,.55);
+      box-shadow: 0 0 0 6px rgba(29,211,167,.10);
+      transition: .25s ease;
+    }
+
+    /* Prevent overlap by fixed UI */
+    .pagePad{ padding-bottom: 240px; }
+
+    /* Bottom guidance bar */
+    .bottomBar{
+      position:fixed;
+      left:12px; right:12px;
+      bottom:12px;
+      z-index:85;
+      border-radius:22px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.62);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      padding:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    html[data-theme="light"] .bottomBar{ background: rgba(243,251,248,.82); }
+
+    .needChip{
+      display:flex; align-items:center; gap:10px;
+      padding:12px 14px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: var(--chipbg);
+      color:var(--muted);
+      font-weight:900;
+      min-width: 150px;
+      cursor:pointer;
+    }
+    .greenDot{
+      width:10px; height:10px; border-radius:999px;
+      background: #19d38a;
+      box-shadow: 0 0 18px rgba(25,211,138,.55);
+      flex: 0 0 auto;
+    }
+
+    /* Bottom-left FAB stack */
+    .fabStack{
+      position:fixed;
+      left:12px;
+      bottom:150px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:90;
+    }
+    .fab{
+      height:52px;
+      min-width:52px;
+      padding:0 14px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.25);
+      display:flex; align-items:center; justify-content:center;
+      color: var(--text);
+      font-weight:1000;
+      cursor:pointer;
+      user-select:none;
+    }
+    html[data-theme="light"] .fab{ background: rgba(255,255,255,.80); }
+    .fab .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: #19d38a;
+      box-shadow: 0 0 18px rgba(25,211,138,.55);
+      margin-right:10px;
+    }
+    .fab.askBtn{
+      background: rgba(29,211,167,.18);
+      border-color: rgba(29,211,167,.35);
+    }
+
+    /* AskLizOn panel */
+    .askPanelWrap{
+      position:fixed;
+      left:12px; right:12px;
+      bottom:92px;
+      z-index:140;
+      pointer-events:none;
+    }
+    .askPanel{
+      max-width: 980px;
+      margin: 0 auto;
+      border-radius:24px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+      overflow:hidden;
+      transform: translateY(16px);
+      opacity:0;
+      pointer-events:none;
+      transition: .20s ease;
+      color: #062018;
+    }
+    html[data-theme="dark"] .askPanel{
+      background: rgba(12,32,25,.92);
+      color: var(--text);
+    }
+    .askPanel.show{
+      transform: translateY(0);
+      opacity:1;
+      pointer-events:auto;
+    }
+    .askHead{
+      padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    html[data-theme="dark"] .askHead{ border-bottom:1px solid var(--border); }
+    .askTitle{
+      font-weight:1100;
+      font-size:18px;
+      letter-spacing:-.2px;
+    }
+    .askX{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(0,0,0,.03);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      font-weight:1100;
+    }
+    html[data-theme="dark"] .askX{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+    }
+    .askBody{
+      padding:14px 14px 16px;
+      display:grid;
+      gap:12px;
+    }
+    .askPrompt{
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(0,0,0,.03);
+      font-weight:1000;
+      font-size:18px;
+    }
+    html[data-theme="dark"] .askPrompt{
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.18);
+    }
+    .askOptions{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .askOpt{
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.65);
+      font-weight:900;
+      cursor:pointer;
+      transition:.14s ease;
+      text-align:center;
+    }
+    html[data-theme="dark"] .askOpt{
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.14);
+      color: var(--text);
+    }
+    .askOpt:hover{
+      transform: translateY(-1px);
+      border-color: rgba(29,211,167,.55);
+    }
+    .askOpt.active{
+      border-color: rgba(29,211,167,.65);
+      box-shadow: 0 0 0 4px rgba(29,211,167,.10);
+      background: var(--chipbg2);
+    }
+    .askResponse{
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid rgba(29,211,167,.30);
+      background: rgba(29,211,167,.10);
+      color: #053326;
+      font-weight:1000;
+    }
+    html[data-theme="dark"] .askResponse{
+      color: rgba(233,255,246,.92);
+      border:1px solid rgba(29,211,167,.25);
+      background: rgba(29,211,167,.08);
+    }
+    .askActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-start;
+    }
+    .hintLine{
+      color: rgba(5,32,24,.70);
+      font-weight:800;
+      font-size:13px;
+      margin-left:2px;
+    }
+    html[data-theme="dark"] .hintLine{
+      color: rgba(233,255,246,.70);
+    }
+
+    /* Tiny bottom-right theme toggle (your request) */
+    .miniTheme{
+      position:fixed;
+      right:14px;
+      bottom:86px; /* above bottom bar */
+      z-index:200;
+      width:34px; height:34px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(6,20,15,.55);
+      backdrop-filter: blur(10px);
+      color: var(--text);
+      font-weight:1000;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      opacity:.65;
+    }
+    html[data-theme="light"] .miniTheme{ background: rgba(255,255,255,.80); color: var(--text); }
+    .miniTheme:hover{ opacity:1; transform: translateY(-1px); border-color: rgba(29,211,167,.55); }
+
+    @media (max-width:860px){
+      .col6{ grid-column: span 12; }
+      .nav{ padding:12px 14px; }
+      .brandTitle{ font-size:14px; }
+      .nav-right{ gap:8px; }
+      .askOptions{ grid-template-columns: 1fr 1fr; }
+      .needChip{ min-width: 130px; padding:12px 12px; }
+    }
+    @media (max-width:420px){
+      .askOptions{ grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
   <div class="nav">
-    <a class="brand" href="index.html">
+    <a class="brand" href="index.html" aria-label="Go to home">
       <img src="assets/logo-dark.png" alt="LizOn Education logo" />
       <div>
         <div class="brandTitle">LizOn Education</div>
@@ -28,10 +471,11 @@
     </a>
 
     <div class="nav-right">
-      <button class="themeToggle" id="themeToggle">
+      <button class="themeToggle" id="themeToggle" type="button" aria-label="Toggle theme">
         <span id="themeLabel">Dark</span>
-        <span class="themeDot"></span>
+        <span class="themeDot" aria-hidden="true"></span>
       </button>
+
       <a class="pill" href="ielts.html">IELTS Courses</a>
       <a class="pill" href="pte.html">PTE Courses</a>
       <a class="pill" href="studyabroad.html">Study Abroad</a>
@@ -65,142 +509,152 @@
 
 <main class="wrap pagePad">
 
-<section class="card sec" id="why">
-  <h2>Why IELTS Speaking feels scary (even after practice)</h2>
-  <p>
-    Many Bangladeshi students can speak English — but still get stuck at Band 6–6.5.
-    The problem is not vocabulary. It’s <b>control under pressure</b>.
-  </p>
-  <ul>
-    <li><span class="jump" data-jump="#fluency">Fluency breaks</span> after 10–15 seconds</li>
-    <li><span class="jump" data-jump="#ideas">Ideas run out</span> in Part 2 & 3</li>
-    <li><span class="jump" data-jump="#examiner">Examiner logic misunderstood</span></li>
-    <li><span class="jump" data-jump="#confidence">Confidence drop</span> after one bad answer</li>
-  </ul>
-</section>
+  <section class="card sec" id="why">
+    <h2>Why IELTS Speaking feels scary (even after practice)</h2>
+    <p>
+      Many Bangladeshi students can speak English — but still get stuck at Band 6–6.5.
+      The problem is not vocabulary. It’s <b>control under pressure</b>.
+    </p>
+    <ul>
+      <li><span class="jump" data-jump="#fluency">Fluency breaks</span> after 10–15 seconds</li>
+      <li><span class="jump" data-jump="#ideas">Ideas run out</span> in Part 2 & 3</li>
+      <li><span class="jump" data-jump="#examiner">Examiner logic misunderstood</span></li>
+      <li><span class="jump" data-jump="#confidence">Confidence drop</span> after one bad answer</li>
+    </ul>
+  </section>
 
-<section class="card sec" id="fluency">
-  <h2>Fluency: speaking without freezing</h2>
-  <p>
-    Fluency does NOT mean fast talking.
-    It means <b>continuous, controlled speech</b> — even with simple language.
-  </p>
-  <ul>
-    <li>Pausing naturally instead of stopping</li>
-    <li>Using fillers correctly (not “uhh… uhh…”)</li>
-    <li>Recovering smoothly when stuck</li>
-  </ul>
-</section>
+  <section class="card sec" id="fluency">
+    <h2>Fluency: speaking without freezing</h2>
+    <p>
+      Fluency does NOT mean fast talking.
+      It means <b>continuous, controlled speech</b> — even with simple language.
+    </p>
+    <ul>
+      <li>Pausing naturally instead of stopping</li>
+      <li>Using fillers correctly (not “uhh… uhh…”)</li>
+      <li>Recovering smoothly when stuck</li>
+    </ul>
+  </section>
 
-<section class="card sec" id="ideas">
-  <h2>Idea generation: “Ki bolbo bujhi na” problem</h2>
-  <p>
-    IELTS does not test intelligence or knowledge.
-    It tests how you <b>expand small ideas</b>.
-  </p>
-  <ul>
-    <li>1 idea → example → reason → feeling</li>
-    <li>No memorized answers</li>
-    <li>Personal + general mix</li>
-  </ul>
-</section>
+  <section class="card sec" id="ideas">
+    <h2>Idea generation: “Ki bolbo bujhi na” problem</h2>
+    <p>
+      IELTS does not test intelligence or knowledge.
+      It tests how you <b>expand small ideas</b>.
+    </p>
+    <ul>
+      <li>1 idea → example → reason → feeling</li>
+      <li>No memorized answers</li>
+      <li>Personal + general mix</li>
+    </ul>
+  </section>
 
-<section class="card sec" id="examiner">
-  <h2>Examiner logic: how marks are actually given</h2>
-  <p>
-    Examiners don’t count mistakes.
-    They judge patterns across 4 criteria.
-  </p>
-  <ul>
-    <li>Fluency & coherence</li>
-    <li>Lexical resource (range, not difficulty)</li>
-    <li>Grammar control (accuracy under pressure)</li>
-    <li>Pronunciation (clarity, not accent)</li>
-  </ul>
-</section>
+  <section class="card sec" id="examiner">
+    <h2>Examiner logic: how marks are actually given</h2>
+    <p>
+      Examiners don’t count mistakes.
+      They judge patterns across 4 criteria.
+    </p>
+    <ul>
+      <li>Fluency & coherence</li>
+      <li>Lexical resource (range, not difficulty)</li>
+      <li>Grammar control (accuracy under pressure)</li>
+      <li>Pronunciation (clarity, not accent)</li>
+    </ul>
+  </section>
 
-<section class="card sec" id="confidence">
-  <h2>Confidence recovery: one bad answer doesn’t kill your band</h2>
-  <p>
-    Many students panic after one weak answer.
-    Examiners reset judgement every part.
-  </p>
-  <ul>
-    <li>Part 1 warm-up ≠ final score</li>
-    <li>Part 2 structure matters more than story</li>
-    <li>Part 3 logic > vocabulary</li>
-  </ul>
-</section>
+  <section class="card sec" id="confidence">
+    <h2>Confidence recovery: one bad answer doesn’t kill your band</h2>
+    <p>
+      Many students panic after one weak answer.
+      Examiners reset judgement every part.
+    </p>
+    <ul>
+      <li>Part 1 warm-up ≠ final score</li>
+      <li>Part 2 structure matters more than story</li>
+      <li>Part 3 logic > vocabulary</li>
+    </ul>
+  </section>
 
-<section class="card sec" id="computer">
-  <h2>Real test-day speaking behavior (what others ignore)</h2>
-  <p>
-    Speaking room pressure, body language,
-    eye contact, and recovery speed matter.
-  </p>
-  <div class="grid">
-    <div class="mini col6">
-      <h3>What we train</h3>
-      <ul>
-        <li>Thinking while speaking</li>
-        <li>Recovering mid-sentence</li>
-        <li>Natural expansion techniques</li>
-      </ul>
-    </div>
-    <div class="mini col6">
-      <h3>Practice like exam</h3>
-      <p>No memorization. No fake confidence.</p>
-      <div class="btnrow">
-        <a class="btn primary" href="ielts.html#skills">Explore Speaking Practice</a>
-        <a class="btn" href="ielts.html#helpmechoose">Talk with an Expert</a>
+  <section class="card sec" id="computer">
+    <h2>Real test-day speaking behavior (what others ignore)</h2>
+    <p>
+      Speaking room pressure, body language,
+      eye contact, and recovery speed matter.
+    </p>
+    <div class="grid" style="margin-top:12px">
+      <div class="mini col6">
+        <h3>What we train</h3>
+        <ul>
+          <li>Thinking while speaking</li>
+          <li>Recovering mid-sentence</li>
+          <li>Natural expansion techniques</li>
+        </ul>
+      </div>
+      <div class="mini col6">
+        <h3>Practice like exam</h3>
+        <p>No memorization. No fake confidence.</p>
+        <div class="btnrow" style="margin-top:10px">
+          <a class="btn primary" href="ielts.html#skills">Explore Speaking Practice</a>
+          <a class="btn" href="ielts.html#helpmechoose">Talk with an Expert</a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+    <p style="margin-top:12px; color:var(--muted); font-weight:800;">
+      Speaking improve hoy “structure + recovery” diye — vocabulary diye na.
+    </p>
+  </section>
 
-<section class="card sec" id="coursefit">
-  <h2>Which LizOn course fixes your Speaking?</h2>
-  <div class="grid">
-    <div class="mini col6">
-      <h3>Afraid to speak / basic fluency issue</h3>
-      <p>Start with <b>IELTS ZERO</b>.</p>
-      <a class="btn" href="ielts.html#zero">Go to ZERO</a>
-    </div>
+  <section class="card sec" id="coursefit">
+    <h2>Which LizOn course fixes your Speaking?</h2>
+    <div class="grid">
+      <div class="mini col6">
+        <h3>Afraid to speak / basic fluency issue</h3>
+        <p>Start with <b>IELTS ZERO</b>.</p>
+        <a class="btn" href="ielts.html#zero">Go to ZERO</a>
+      </div>
 
-    <div class="mini col6">
-      <h3>Ideas end too fast</h3>
-      <p>Choose <b>IELTS HOPE</b>.</p>
-      <a class="btn" href="ielts.html#hope">Go to HOPE</a>
-    </div>
+      <div class="mini col6">
+        <h3>Ideas end too fast</h3>
+        <p>Choose <b>IELTS HOPE</b>.</p>
+        <a class="btn" href="ielts.html#hope">Go to HOPE</a>
+      </div>
 
-    <div class="mini col6">
-      <h3>Band stuck at 6–6.5</h3>
-      <p><b>IELTS STEP-UP</b>.</p>
-      <a class="btn" href="ielts.html#stepup">Go to STEP-UP</a>
-    </div>
+      <div class="mini col6">
+        <h3>Band stuck at 6–6.5</h3>
+        <p><b>IELTS STEP-UP</b>.</p>
+        <a class="btn" href="ielts.html#stepup">Go to STEP-UP</a>
+      </div>
 
-    <div class="mini col6">
-      <h3>Final attempt</h3>
-      <p><b>IELTS DESPERATE</b>.</p>
-      <a class="btn" href="ielts.html#desperate">Go to DESPERATE</a>
+      <div class="mini col6">
+        <h3>Final attempt</h3>
+        <p><b>IELTS DESPERATE</b>.</p>
+        <a class="btn" href="ielts.html#desperate">Go to DESPERATE</a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
 </main>
 
-<!-- AskLizOn – Speaking -->
-<div class="askPanelWrap">
-  <div class="askPanel" id="askPanel">
+<!-- Bottom-left FAB: Ask -->
+<div class="fabStack" aria-label="Quick actions">
+  <button class="fab askBtn" id="askFab" type="button" aria-label="Open AskLizOn">
+    <span class="dot" aria-hidden="true"></span><span>Ask</span>
+  </button>
+</div>
+
+<!-- AskLizOn Panel -->
+<div class="askPanelWrap" aria-live="polite">
+  <div class="askPanel" id="askPanel" aria-hidden="true">
     <div class="askHead">
       <div class="askTitle">AskLizOn – Speaking</div>
-      <button class="askX" id="askClose">✕</button>
+      <button class="askX" id="askClose" type="button" aria-label="Close AskLizOn">✕</button>
     </div>
 
     <div class="askBody">
-      <div class="askPrompt">Kon problem hocche?</div>
+      <div class="askPrompt">Kon problem hocche? Choose one.</div>
 
-      <div class="askOptions">
+      <div class="askOptions" id="askOptions">
         <button class="askOpt" data-key="freeze">Speaking e freeze kori</button>
         <button class="askOpt" data-key="ideas">Ki bolbo bujhi na</button>
         <button class="askOpt" data-key="part2">Part 2 time fill korte pari na</button>
@@ -210,28 +664,174 @@
       </div>
 
       <div class="askResponse" id="askResponse">
-        Ekta select korun — then <b>Show me the fix</b>.
+        Select one option above — then press <b>Show me the fix</b>.
+        <small>Tip: Choose again anytime. No refresh needed.</small>
       </div>
 
       <div class="askActions">
-        <button class="btn solid" id="showFixBtn">Show me the fix</button>
+        <button class="btn solid" id="showFixBtn" type="button">Show me the fix</button>
+        <span class="hintLine" id="askHint">You haven’t selected anything yet.</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Bottom Bar -->
-<div class="bottomBar">
-  <div class="needChip">
-    <span class="greenDot"></span>
+<!-- Bottom Guidance Bar -->
+<div class="bottomBar" aria-label="Guidance bar">
+  <div class="needChip" id="needHelpChip" role="button" tabindex="0" aria-label="Chat on WhatsApp">
+    <span class="greenDot" aria-hidden="true"></span>
     <span>Need guidance?</span>
   </div>
-  <a class="btn solid" href="https://wa.me/8801611611139">WhatsApp</a>
+  <a class="btn solid" href="https://wa.me/8801611611139" target="_blank" rel="noopener">Chat Now</a>
 </div>
 
+<!-- Tiny bottom-right theme button -->
+<button class="miniTheme" id="miniTheme" type="button" aria-label="Toggle theme">☾</button>
+
 <script>
-/* Reuse SAME JS from Listening page */
-/* Only change problemMap for Speaking */
+  // Theme toggle with memory
+  const root = document.documentElement;
+  const bigToggle = document.getElementById("themeToggle");
+  const miniToggle = document.getElementById("miniTheme");
+  const label = document.getElementById("themeLabel");
+
+  function applyTheme(t){
+    root.setAttribute("data-theme", t);
+    label.textContent = (t === "light") ? "Light" : "Dark";
+    // tiny icon swap
+    miniToggle.textContent = (t === "light") ? "☀" : "☾";
+    localStorage.setItem("lizon_theme", t);
+  }
+  const saved = localStorage.getItem("lizon_theme");
+  applyTheme(saved || root.getAttribute("data-theme") || "dark");
+
+  function flipTheme(){
+    const current = root.getAttribute("data-theme");
+    applyTheme(current === "dark" ? "light" : "dark");
+  }
+
+  bigToggle.addEventListener("click", flipTheme);
+  miniToggle.addEventListener("click", flipTheme);
+
+  // Need guidance chip -> WhatsApp
+  const wa = "https://wa.me/8801611611139";
+  const chip = document.getElementById("needHelpChip");
+  chip.addEventListener("click", () => window.open(wa, "_blank", "noopener"));
+  chip.addEventListener("keydown", (e) => {
+    if(e.key === "Enter" || e.key === " ") window.open(wa, "_blank", "noopener");
+  });
+
+  // Helper: smooth jump + flash
+  function jumpTo(selector){
+    const el = document.querySelector(selector);
+    if(!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top: y, behavior: "smooth" });
+
+    setTimeout(() => {
+      document.querySelectorAll(".flash").forEach(x => x.classList.remove("flash"));
+      el.classList.add("flash");
+      setTimeout(() => el.classList.remove("flash"), 1400);
+    }, 350);
+  }
+
+  document.querySelectorAll(".jump").forEach(a => {
+    a.addEventListener("click", () => jumpTo(a.getAttribute("data-jump")));
+  });
+
+  // AskLizOn
+  const askFab = document.getElementById("askFab");
+  const askPanel = document.getElementById("askPanel");
+  const askClose = document.getElementById("askClose");
+  const askOptions = document.getElementById("askOptions");
+  const askResponse = document.getElementById("askResponse");
+  const showFixBtn = document.getElementById("showFixBtn");
+  const askHint = document.getElementById("askHint");
+
+  const problemMap = {
+    freeze: {
+      title: "Speaking e freeze kori",
+      reply: "Freeze mane idea flow + control bhange. Fix: short structure (Point → Example → Reason → Feeling) + natural filler + pause control.",
+      jump: "#fluency"
+    },
+    ideas: {
+      title: "Ki bolbo bujhi na",
+      reply: "IELTS idea khuje na—expand korte hoy. One small idea niye 3-4 layer banan: example + reason + result.",
+      jump: "#ideas"
+    },
+    part2: {
+      title: "Part 2 time fill korte pari na",
+      reply: "Part 2 time fill = structure game. 4 bullet use koren: Past → Present → Detail → Opinion. Story na, flow lagbe.",
+      jump: "#ideas"
+    },
+    confidence: {
+      title: "Confidence drop hoy",
+      reply: "Ekta bad answer band kill kore na. Recovery skill thakle next part e examiner er impression reset hoy.",
+      jump: "#confidence"
+    },
+    band: {
+      title: "6–6.5 e stuck",
+      reply: "Stuck mane pattern same: ideas shallow + fluency breaks + examiner criteria miss. Fix is control + coherence + range (not fancy words).",
+      jump: "#examiner"
+    },
+    accent: {
+      title: "Accent niye tension",
+      reply: "Accent score dey na. Clarity + stress + rhythm matters. Slow and clean delivery beats ‘British acting’.",
+      jump: "#examiner"
+    }
+  };
+
+  let selectedKey = null;
+
+  function openAsk(){
+    askPanel.classList.add("show");
+    askPanel.setAttribute("aria-hidden", "false");
+  }
+  function closeAsk(){
+    askPanel.classList.remove("show");
+    askPanel.setAttribute("aria-hidden", "true");
+  }
+
+  function setSelected(key){
+    selectedKey = key;
+    askOptions.querySelectorAll(".askOpt").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-key") === key);
+    });
+
+    const p = problemMap[key];
+    askResponse.innerHTML =
+      `<b>${p.title}</b><br/>${p.reply}<small>Press <b>Show me the fix</b> to jump to the exact section.</small>`;
+    askHint.textContent = `Selected: ${p.title}`;
+  }
+
+  askFab.addEventListener("click", openAsk);
+  askClose.addEventListener("click", closeAsk);
+
+  askOptions.addEventListener("click", (e) => {
+    const btn = e.target.closest(".askOpt");
+    if(!btn) return;
+    setSelected(btn.getAttribute("data-key"));
+  });
+
+  showFixBtn.addEventListener("click", () => {
+    if(!selectedKey){
+      askHint.textContent = "Select one problem first.";
+      askPanel.animate(
+        [{ transform:"translateY(0)" }, { transform:"translateY(6px)" }, { transform:"translateY(0)" }],
+        { duration: 220, easing:"ease-out" }
+      );
+      return;
+    }
+    const target = problemMap[selectedKey].jump;
+    closeAsk();
+    setTimeout(() => jumpTo(target), 180);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape"){
+      closeAsk();
+    }
+  });
 </script>
 
 </body>

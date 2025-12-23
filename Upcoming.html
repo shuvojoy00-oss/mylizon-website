@@ -1,1054 +1,2006 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming | LizOn Education</title>
+  <meta name="description" content="Upcoming live sessions, demo classes, and next batches — LizOn Education." />
   <meta name="theme-color" content="#0b2a1f" />
-  <title>Upcoming Batch | LizOn Education — MyLizOn.com</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg0:#f4fbf7;
-      --bg1:#eaf6f0;
-      --bg2:#dff2ea;
+      --bg1:#06140f;
+      --bg2:#0b2a1f;
+      --card:#0c2019cc;
+      --card2:#0a1a1480;
+      --line:#1d4a3a;
+      --text:#e9f3ef;
+      --muted:#b7c9c2;
 
-      --text:#0b1a13;
-      --muted:#355a4a;
+      --gold:#d7b24a;
+      --gold2:#b8922f;
 
-      --card:#ffffff;
-      --card2:#ffffff;
+      --soft: 0 12px 40px rgba(0,0,0,.35);
+      --shadow2: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 22px;
 
-      --line: rgba(0,0,0,.12);
-      --shadow: 0 14px 40px rgba(0,0,0,.10);
-      --shadow2: 0 10px 28px rgba(0,0,0,.08);
+      --chipBg: rgba(10,26,20,.55);
+      --chipBd: rgba(29,74,58,.75);
+      --focus: rgba(215,178,74,.55);
 
-      --brand:#0f5a3d;      /* Dark Green */
-      --brand2:#12a36a;
-      --gold:#d7b86a;
+      --ask-bg: rgba(6,20,15,.86);
+      --ask-panel: rgba(12,32,25,.92);
+      --ask-bd: rgba(29,74,58,.75);
+      --ask-bubble: rgba(255,255,255,.05);
+      --ask-bubble2: rgba(215,178,74,.10);
 
-      --radius:18px;
-      --radius2:22px;
-
-      --max: 1100px;
-      --fontH: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      --fontB: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --overlay: rgba(0,0,0,.55);
     }
 
-    [data-theme="dark"]{
-      --bg0:#071a13;
-      --bg1:#0b2a1f;
-      --bg2:#0f3a2a;
+    html[data-theme="light"]{
+      --bg1:#f5fbf8;
+      --bg2:#eaf6f0;
+      --card: rgba(255,255,255,.88);
+      --card2: rgba(255,255,255,.72);
+      --line: rgba(9,64,45,.18);
+      --text:#0b1b14;
+      --muted:#355247;
 
-      --text:#eaf6f0;
-      --muted:#b7d2c6;
+      --chipBg: rgba(255,255,255,.78);
+      --chipBd: rgba(9,64,45,.18);
 
-      --card:#0c241b;
-      --card2:#0e2b20;
+      --soft: 0 14px 40px rgba(6,20,15,.10);
+      --shadow2: 0 18px 60px rgba(6,20,15,.10);
 
-      --line: rgba(255,255,255,.10);
-      --shadow: 0 14px 40px rgba(0,0,0,.35);
-      --shadow2: 0 10px 28px rgba(0,0,0,.28);
+      --ask-bg: rgba(255,255,255,.86);
+      --ask-panel: rgba(255,255,255,.94);
+      --ask-bd: rgba(9,64,45,.18);
+      --ask-bubble: rgba(9,64,45,.06);
+      --ask-bubble2: rgba(215,178,74,.18);
+
+      --overlay: rgba(0,0,0,.35);
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: var(--fontB);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(900px 500px at 10% 0%, rgba(18,163,106,.14), transparent 55%),
-        radial-gradient(900px 500px at 90% 10%, rgba(215,184,106,.12), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 45%, var(--bg0));
+        radial-gradient(1100px 700px at 20% 0%, rgba(215,178,74,.10), transparent 60%),
+        radial-gradient(1100px 700px at 80% 0%, rgba(72,255,191,.07), transparent 55%),
+        linear-gradient(180deg, var(--bg2), var(--bg1));
+      min-height:100vh;
       overflow-x:hidden;
     }
+    a{color:inherit; text-decoration:none}
 
-    a{ color: inherit; text-decoration:none; }
-    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 18px; }
+    .container{max-width:1100px; margin:0 auto; padding:22px 18px 140px}
+    @media (max-width:520px){ .container{padding:18px 14px 160px} }
 
-    /* Top alert */
-    .alert{
-      position: sticky;
-      top: 0;
-      z-index: 90;
-      background: linear-gradient(135deg, rgba(215,184,106,.20), rgba(18,163,106,.14));
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(10px);
+    /* =======================
+       Topbar
+    ======================= */
+    .topbar{
+      position:sticky; top:0;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(6,20,15,.88), rgba(6,20,15,.58));
+      border-bottom:1px solid rgba(29,74,58,.6);
+      z-index:50;
     }
-    .alertRow{
+    html[data-theme="light"] .topbar{
+      background: linear-gradient(180deg, rgba(245,251,248,.88), rgba(245,251,248,.62));
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      max-width:1100px; margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900; letter-spacing:.2px;
+      min-width:0;
+    }
+    .brand-logo{
+      width:38px; height:38px;
+      border-radius:12px;
+      padding:6px;
+      background: var(--chipBg);
+      border:1px solid var(--chipBd);
+      box-shadow: 0 0 0 3px rgba(215,178,74,.10);
+      flex:0 0 auto;
+    }
+    .brand .titleWrap{min-width:0}
+    .brand small{
+      display:block;
+      font-weight:750;
+      color:var(--muted);
+      margin-top:2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 60vw;
+    }
+
+    /* =======================
+       Buttons / chips
+    ======================= */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.75);
+      background: var(--chipBg);
+      font-weight:950;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition:.18s ease;
+      text-align:center;
+      user-select:none;
+      gap:10px;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .btn.primary{
+      background: linear-gradient(180deg, var(--gold), var(--gold2));
+      color:#142015;
+      border-color: rgba(215,178,74,.85);
+      box-shadow: 0 18px 60px rgba(215,178,74,.12);
+    }
+    .btn.ghost{
+      background: transparent;
+      border-color: rgba(29,74,58,.65);
+    }
+    html[data-theme="light"] .btn.ghost{ background: rgba(255,255,255,.55); }
+
+    .chipRow{ display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 0; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: var(--chipBg);
+      color: var(--muted);
+      font-weight:900;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .chip b{ color: var(--gold); }
+    .icon{ width:16px; height:16px; display:inline-block; }
+
+    /* =======================
+       Page Header / Hero
+    ======================= */
+    .hero{
+      padding:18px 0 10px;
+      display:grid;
+      gap:14px;
+    }
+
+    .heroCard{
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      background: linear-gradient(180deg, rgba(12,32,25,.72), rgba(10,26,20,.52));
+      box-shadow: var(--soft);
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .heroCard{
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
+    }
+    .heroCard:before{
+      content:"";
+      position:absolute; inset:-120px auto auto -120px;
+      width:520px; height:520px;
+      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.18), transparent 62%);
+      pointer-events:none;
+    }
+    .heroTitle{
+      margin:8px 0 8px;
+      font-size:36px;
+      line-height:1.05;
+      letter-spacing:-.6px;
+    }
+    @media (max-width:520px){ .heroTitle{ font-size:30px; } }
+    .heroTitle span{ color: var(--gold); }
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size:15.5px;
+      line-height:1.65;
+      max-width: 860px;
+      position:relative;
+    }
+    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; position:relative; }
+    @media (max-width:520px){ .ctaRow .btn{ width:100%; } }
+
+    /* =======================
+       Featured (OUTSTANDING)
+    ======================= */
+    .featured{
+      border-radius: var(--radius);
+      border:1px solid rgba(215,178,74,.45);
+      background:
+        radial-gradient(900px 420px at 12% 12%, rgba(215,178,74,.22), transparent 55%),
+        radial-gradient(900px 420px at 88% 12%, rgba(72,255,191,.12), transparent 55%),
+        linear-gradient(180deg, rgba(12,32,25,.84), rgba(10,26,20,.58));
+      box-shadow: 0 26px 90px rgba(0,0,0,.45);
+      overflow:hidden;
+      position:relative;
+    }
+    html[data-theme="light"] .featured{
+      background:
+        radial-gradient(900px 420px at 12% 12%, rgba(215,178,74,.22), transparent 55%),
+        radial-gradient(900px 420px at 88% 12%, rgba(72,255,191,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,255,255,.80));
+      box-shadow: 0 22px 70px rgba(6,20,15,.14);
+    }
+    .featuredTop{
+      padding:18px 18px 16px;
+      display:grid;
+      gap:10px;
+      position:relative;
+    }
+    .featuredTop:after{
+      content:"";
+      position:absolute; inset:-160px -160px auto auto;
+      width:520px; height:520px;
+      background: radial-gradient(circle at 30% 30%, rgba(72,255,191,.12), transparent 62%);
+      pointer-events:none;
+    }
+    .kickerRow{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:relative; }
+    .kickerPill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 11px;
+      border-radius:999px;
+      border:1px solid rgba(215,178,74,.40);
+      background: rgba(215,178,74,.12);
+      font-weight:1000;
+      font-size:12px;
+      color: var(--text);
+      position:relative;
+    }
+    .kickerPill b{ color: var(--gold); }
+    .pulseDot{
+      width:10px; height:10px; border-radius:999px;
+      background:#2cffb2;
+      box-shadow: 0 0 0 0 rgba(44,255,178,.32);
+      animation: pulse 1.4s infinite;
+      flex:0 0 auto;
+    }
+    @keyframes pulse{
+      0%{ box-shadow: 0 0 0 0 rgba(44,255,178,.32); }
+      70%{ box-shadow: 0 0 0 10px rgba(44,255,178,0); }
+      100%{ box-shadow: 0 0 0 0 rgba(44,255,178,0); }
+    }
+
+    .featuredTitle{
+      margin:0;
+      font-size:22px;
+      font-weight:1000;
+      letter-spacing:-.2px;
+      position:relative;
+    }
+    .featuredSub{
+      margin:0;
+      color: var(--muted);
+      font-weight:850;
+      font-size:13.5px;
+      line-height:1.6;
+      max-width: 950px;
+      position:relative;
+    }
+
+    .metaGrid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:12px;
+      margin-top:10px;
+      position:relative;
+    }
+    @media (max-width:920px){ .metaGrid{ grid-template-columns:1fr; } }
+
+    .metaCard{
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(10,26,20,.28);
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+    html[data-theme="light"] .metaCard{ background: rgba(255,255,255,.58); }
+    .metaCard h3{ margin:0; font-size:14px; font-weight:1000; }
+    .metaCard p{ margin:0; color: var(--muted); font-weight:850; font-size:13px; line-height:1.55; }
+
+    .metaLine{
+      display:flex; align-items:flex-start; gap:10px;
+      padding:10px 10px;
+      border-radius:14px;
+      border:1px dashed rgba(29,74,58,.55);
+      background: rgba(255,255,255,.02);
+    }
+    html[data-theme="light"] .metaLine{ background: rgba(255,255,255,.72); }
+    .metaLine b{ display:block; margin-bottom:2px; }
+    .metaLine span{ color: var(--muted); font-weight:850; font-size:12.8px; line-height:1.45; }
+
+    .bigJoin{
+      display:grid;
+      gap:10px;
+    }
+    .joinBtn{
+      width:100%;
+      padding:14px 14px;
+      border-radius:16px;
+      border:1px solid rgba(215,178,74,.60);
+      background: linear-gradient(180deg, rgba(215,178,74,.24), rgba(215,178,74,.12));
+      font-weight:1000;
+      display:flex; align-items:center; justify-content:center;
+      gap:10px;
+      cursor:pointer;
+      transition:.18s ease;
+      user-select:none;
+      text-align:center;
+    }
+    .joinBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.82); }
+    .joinBtn.primary{
+      background: linear-gradient(180deg, var(--gold), var(--gold2));
+      color:#142015;
+      border-color: rgba(215,178,74,.85);
+      box-shadow: 0 18px 60px rgba(215,178,74,.12);
+    }
+
+    .accPanel{
+      margin-top:10px;
+      border-top:1px solid rgba(29,74,58,.55);
+      padding:14px 18px 18px;
+      display:none;
+    }
+    .accPanel.open{ display:block; }
+
+    .featurePoints{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width:920px){ .featurePoints{ grid-template-columns:1fr 1fr; } }
+    @media (max-width:520px){ .featurePoints{ grid-template-columns:1fr; } }
+    .point{
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(10,26,20,.24);
+      padding:12px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      min-height: 88px;
+    }
+    html[data-theme="light"] .point{ background: rgba(255,255,255,.58); }
+    .pointIcon{ width:22px; height:22px; flex:0 0 auto; color: var(--gold); opacity:.95; }
+    .point b{ display:block; margin-bottom:3px; }
+    .point span{ color: var(--muted); font-weight:850; font-size:12.8px; line-height:1.45; }
+
+    /* =======================
+       Sections
+    ======================= */
+    .sectionTitle{
+      margin:20px 0 10px;
+      font-size:16px;
+      letter-spacing:.2px;
+      font-weight:1000;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+    }
+    .sectionTitle small{ color: var(--muted); font-weight:800; }
+
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width:920px){ .grid3{ grid-template-columns:1fr; } }
+
+    .card{
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
+      box-shadow: var(--soft);
+      padding:16px;
+      display:grid;
+      gap:10px;
+    }
+    html[data-theme="light"] .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.75);
+      background: var(--chipBg);
+      font-weight:950;
+      font-size:12px;
+      color: var(--muted);
+    }
+    .tag b{ color: var(--gold); }
+    .card h4{ margin:0; font-size:15px; font-weight:1000; }
+    .card p{ margin:0; color: var(--muted); font-weight:850; font-size:13px; line-height:1.55; }
+    .card .row{ display:flex; gap:10px; flex-wrap:wrap; }
+    .card .row .btn{ width:100%; }
+
+    /* =======================
+       Timeline
+    ======================= */
+    .timeline{
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
+      box-shadow: var(--soft);
+      padding:16px;
+      display:grid;
+      gap:12px;
+    }
+    html[data-theme="light"] .timeline{
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
+    }
+    .step{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.55);
+      background: rgba(255,255,255,.02);
+    }
+    html[data-theme="light"] .step{ background: rgba(255,255,255,.72); }
+    .stepNum{
+      width:34px; height:34px;
+      border-radius:14px;
+      border:1px solid rgba(215,178,74,.40);
+      background: rgba(215,178,74,.10);
+      display:grid;
+      place-items:center;
+      font-weight:1000;
+      color: var(--gold);
+      flex:0 0 auto;
+    }
+    .step b{ display:block; margin-bottom:3px; }
+    .step span{ color: var(--muted); font-weight:850; font-size:13px; line-height:1.5; }
+
+    /* =======================
+       Footer (same style as index)
+    ======================= */
+    .footer{
+      margin-top:18px;
+      padding:18px;
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
+      box-shadow: var(--soft);
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:16px;
+      align-items:start;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .footer{
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.76));
+    }
+    .footer h3{ margin:0 0 8px; font-size:14px; font-weight:1000; }
+    .footer p{ margin:0; color: var(--muted); line-height:1.6; font-size:13px; }
+    .footer p strong{ color: var(--gold); }
+
+    .footer-links{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;
+    }
+    .iconbtn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      font-weight:900; font-size:13px;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+    .iconbtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    .siteMap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media (max-width:520px){ .siteMap{ grid-template-columns:1fr; } }
+    .siteMap a{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(10,26,20,.28);
+      font-weight:900;
+      font-size:13px;
+      transition:.18s ease;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    html[data-theme="light"] .siteMap a{ background: rgba(255,255,255,.58); }
+    .siteMap a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    .smallprint{
+      margin-top:12px;
+      font-size:12px;
+      color: rgba(183,201,194,.75);
+    }
+
+    /* =======================
+       Floating Bars + Controls
+    ======================= */
+    .floatwa{
+      position:fixed;
+      right:14px; bottom:14px;
+      z-index:60;
+      display:flex; align-items:center; gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.8);
+      background: rgba(6,20,15,.82);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft);
+      font-weight:950;
+      max-width: calc(100vw - 28px);
+    }
+    html[data-theme="light"] .floatwa{ background: rgba(255,255,255,.86); }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:#2cffb2;
+      box-shadow: 0 0 0 3px rgba(44,255,178,.15);
+      flex:0 0 auto;
+    }
+    .floatwa b{ color: var(--gold); }
+    @media (max-width:420px){
+      .floatwa{ font-size:13px; padding:10px 12px; }
+    }
+
+    .scrollNav{
+      position:fixed;
+      right:14px;
+      bottom:78px;
+      z-index:61;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      pointer-events:auto;
+    }
+    .scrollBtn{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(6,20,15,.78);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft);
+      color: var(--text);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:.18s ease;
+      user-select:none;
+    }
+    html[data-theme="light"] .scrollBtn{ background: rgba(255,255,255,.86); }
+    .scrollBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .scrollBtn:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
+    .scrollBtn:focus{ outline:none; box-shadow: 0 0 0 4px var(--focus), var(--soft); }
+
+    .themeTiny{
+      position:fixed;
+      right:14px;
+      bottom:128px;
+      z-index:62;
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(215,178,74,.35);
+      background: rgba(6,20,15,.78);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition:.18s ease;
+      user-select:none;
+    }
+    html[data-theme="light"] .themeTiny{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(9,64,45,.18);
+    }
+    .themeTiny:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .themeTiny svg{ width:18px; height:18px; }
+
+    .askFab{
+      position:fixed;
+      left:14px;
+      bottom:14px;
+      z-index:62;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid rgba(215,178,74,.40);
+      background: var(--ask-bg);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft);
+      font-weight:1000;
+      cursor:pointer;
+      user-select:none;
+      max-width: calc(100vw - 28px);
+    }
+    .askFab:hover{ transform: translateY(-1px); }
+    .askFabLogo{
+      width:18px; height:18px;
+      border-radius:7px;
+      padding:2px;
+      border:1px solid rgba(29,74,58,.55);
+      background: rgba(255,255,255,.04);
+      flex:0 0 auto;
+    }
+    html[data-theme="light"] .askFabLogo{ background: rgba(255,255,255,.75); }
+    .askFab b{ color: var(--gold); }
+    .askBadge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.55);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-weight:950;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    html[data-theme="light"] .askBadge{ background: rgba(255,255,255,.70); }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background: var(--overlay);
+      display:none;
+      z-index:1200;
+    }
+    .overlay.open{ display:block; }
+
+    /* Ask panel */
+    .askPanel{
+      position:fixed;
+      top:12px;
+      left:12px;
+      bottom:12px;
+      width:min(420px, calc(100vw - 24px));
+      border-radius: 18px;
+      border:1px solid var(--ask-bd);
+      background: var(--ask-panel);
+      box-shadow: var(--shadow2);
+      z-index:1201;
+      transform: translateX(-110%);
+      transition: transform .22s ease;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .askPanel.open{ transform: translateX(0); }
+
+    .askHead{
+      padding:12px 12px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      padding: 10px 0;
+      border-bottom:1px solid rgba(29,74,58,.55);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00));
     }
-    .alertLeft{
-      display:flex; flex-direction:column; gap:2px;
-      min-width:0;
+    html[data-theme="light"] .askHead{
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
+      border-bottom:1px solid var(--line);
     }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(215,184,106,.35);
-      background: rgba(215,184,106,.12);
-      color: var(--gold);
-      font-weight: 800;
-      font-family: var(--fontH);
-      font-size: 12.5px;
-      width: fit-content;
-    }
-    .alertTitle{
-      font-family: var(--fontH);
-      font-weight: 800;
-      letter-spacing: .2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .alertSub{
-      color: var(--muted);
-      font-size: 12.5px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    /* Header */
-    .topbar{
-      position: sticky;
-      top: 56px; /* below alert */
-      z-index: 80;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.48));
-      border-bottom: 1px solid var(--line);
-    }
-    [data-theme="dark"] .topbar{
-      background: linear-gradient(180deg, rgba(7,26,19,.88), rgba(7,26,19,.62));
-    }
-    .topRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 12px 0;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      min-width: 220px;
-    }
-    .logoMark{
-      width: 40px; height: 40px;
-      border-radius: 14px;
-      background:
-        radial-gradient(18px 18px at 30% 30%, rgba(215,184,106,.55), transparent 60%),
-        linear-gradient(135deg, var(--brand2), var(--brand));
-      box-shadow: 0 10px 25px rgba(0,0,0,.18);
-      border: 1px solid rgba(255,255,255,.18);
-    }
-    .brandText b{
-      font-family: var(--fontH);
-      display:block;
-      line-height: 1.05;
-    }
-    .brandText span{
-      display:block;
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 12.5px;
-    }
-
-    .actions{
-      display:flex; align-items:center; gap:10px;
-      justify-content:flex-end;
-      min-width: 260px;
-    }
-    .btn{
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.55);
-      cursor:pointer;
-      transition:.18s ease;
-      display:inline-flex; align-items:center; gap:10px;
-      font-weight: 800;
-      font-family: var(--fontH);
-      font-size: 13.5px;
-      user-select:none;
-    }
-    [data-theme="dark"] .btn{ background: rgba(255,255,255,.04); }
-    .btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow2); }
-    .btn.primary{
-      background: linear-gradient(135deg, var(--brand2), var(--brand));
-      color: white;
-      border-color: rgba(255,255,255,.14);
-    }
-    .btn.ghost{ background: transparent; }
-    .menuBtn{
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.55);
-      cursor:pointer;
-      transition:.18s ease;
-      display:inline-flex; align-items:center; gap:10px;
-      font-weight: 900;
-      font-family: var(--fontH);
-      font-size: 13.5px;
-      user-select:none;
-      min-width: 92px;
-      justify-content:center;
-    }
-    [data-theme="dark"] .menuBtn{ background: rgba(255,255,255,.04); }
-    .menuBtn:hover{ transform: translateY(-1px); box-shadow: var(--shadow2); }
-    .menuIcon{
-      width: 18px; height: 18px; position: relative; display:inline-block;
-    }
-    .menuIcon:before, .menuIcon:after, .menuIcon i{
-      content:"";
-      position:absolute; left:0; right:0;
-      height:2px; border-radius:999px;
-      background: var(--text);
-      opacity:.9;
-    }
-    .menuIcon:before{ top:2px; }
-    .menuIcon i{ top:8px; }
-    .menuIcon:after{ top:14px; }
-
-    /* Main */
-    .page{ padding: 18px 0 110px; } /* bottom bar space */
-    .grid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 14px;
-      align-items: start;
-      margin-top: 14px;
-    }
-    @media (max-width: 980px){
-      .grid{ grid-template-columns: 1fr; }
-      .actions{ min-width:auto; }
-    }
-
-    .card{
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-    }
-    .cardPad{ padding: 16px; }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 10px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.02);
-      font-weight: 800;
-      font-family: var(--fontH);
-      font-size: 13px;
-      color: var(--muted);
-    }
-    [data-theme="dark"] .pill{ background: rgba(255,255,255,.04); }
-    .pill b{ color: var(--gold); }
-
-    h1{
-      margin: 12px 0 8px;
-      font-family: var(--fontH);
-      font-size: clamp(26px, 3.4vw, 38px);
-      line-height: 1.06;
-      letter-spacing: .2px;
-    }
-    .sub{
-      margin: 0 0 14px;
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 15.5px;
-      max-width: 62ch;
-    }
-
-    .infoRow{
-      display:flex; flex-wrap:wrap; gap: 10px;
-      margin-top: 8px;
-    }
-    .infoChip{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.02);
-      font-family: var(--fontH);
-      font-weight: 800;
-    }
-    [data-theme="dark"] .infoChip{ background: rgba(255,255,255,.04); }
-    .infoChip small{
-      display:block;
-      font-family: var(--fontB);
-      font-weight: 600;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .ticks{ margin-top: 14px; display:flex; flex-direction:column; gap:10px; }
-    .tick{
-      display:flex; align-items:flex-start; gap: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(215,184,106,.25);
-      background: rgba(215,184,106,.10);
-      color: var(--text);
-    }
-    .tick b{ font-family: var(--fontH); }
-
-    /* Demo spotlight */
-    .demoSpot{
-      border: 1px solid rgba(18,163,106,.28);
-      background:
-        radial-gradient(600px 220px at 12% 0%, rgba(18,163,106,.18), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.01), rgba(0,0,0,.00));
-    }
-    [data-theme="dark"] .demoSpot{
-      background:
-        radial-gradient(600px 220px at 12% 0%, rgba(18,163,106,.18), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-    }
-    .demoHead{
-      display:flex; align-items:flex-start; justify-content:space-between;
-      gap: 10px;
-    }
-    .demoHead h2{
-      margin:0;
-      font-family: var(--fontH);
-      font-size: 18px;
-      letter-spacing:.2px;
-    }
-    .count{
-      text-align:right;
-      font-family: var(--fontH);
-      font-weight: 900;
-      color: var(--brand);
-    }
-    [data-theme="dark"] .count{ color: var(--brand2); }
-    .count small{
-      display:block;
-      font-family: var(--fontB);
-      font-weight: 700;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-    .demoBtns{
-      margin-top: 12px;
-      display:flex; flex-wrap:wrap; gap: 10px;
-    }
-
-    /* Join link box */
-    .joinBox{
-      margin-top: 12px;
-      border-radius: 18px;
-      border: 1px dashed rgba(15,90,61,.35);
-      background: rgba(18,163,106,.08);
-      padding: 12px;
-    }
-    [data-theme="dark"] .joinBox{
-      border-color: rgba(18,163,106,.32);
-      background: rgba(18,163,106,.10);
-    }
-    .joinBox b{
-      font-family: var(--fontH);
-      display:block;
-      margin-bottom: 6px;
-    }
-    .joinRow{
-      display:flex;
-      flex-direction: column;
-      gap: 6px;
-      color: var(--muted);
-      font-size: 13.5px;
-      line-height: 1.35;
-    }
-    .joinRow code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 12.5px;
-      padding: 6px 8px;
-      border-radius: 12px;
-      background: rgba(0,0,0,.04);
-      border: 1px solid var(--line);
-      color: var(--text);
-      overflow-wrap:anywhere;
-    }
-    [data-theme="dark"] .joinRow code{
-      background: rgba(0,0,0,.18);
-    }
-    .joinActions{
-      display:flex; flex-wrap:wrap; gap: 10px;
-      margin-top: 10px;
-    }
-
-    /* AskLizOn auto answer */
     .askTitle{
-      margin: 0;
-      font-family: var(--fontH);
-      font-size: 15px;
-      letter-spacing:.2px;
-    }
-    .askSub{
-      margin: 6px 0 10px;
-      color: var(--muted);
-      line-height: 1.45;
-      font-size: 13.5px;
-    }
-    .chips{
-      display:flex; flex-wrap:wrap; gap: 8px;
-    }
-    .chip{
-      padding: 9px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.02);
-      cursor:pointer;
-      font-size: 13px;
-      font-weight: 900;
-      font-family: var(--fontH);
-    }
-    [data-theme="dark"] .chip{ background: rgba(255,255,255,.04); }
-    .chip:hover{ transform: translateY(-1px); box-shadow: var(--shadow2); }
-
-    .askAnswer{
-      margin-top: 12px;
-      border-radius: 18px;
-      border: 1px solid rgba(215,184,106,.25);
-      background: rgba(215,184,106,.10);
-      padding: 12px;
-    }
-    .askAnswer b{
-      font-family: var(--fontH);
-      display:block;
-      margin-bottom: 6px;
-    }
-    .askAnswer p{
-      margin:0;
-      color: var(--muted);
-      line-height: 1.45;
-      font-size: 13.5px;
-    }
-    .askBox{
-      display:flex; gap: 10px;
-      margin-top: 10px;
-    }
-    .askBox input{
-      flex:1;
-      padding: 12px 12px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.02);
-      color: var(--text);
-      outline:none;
-      font-size: 14px;
-    }
-    [data-theme="dark"] .askBox input{ background: rgba(0,0,0,.12); }
-
-    /* Creative scroll buttons */
-    .scrollBtns{
-      position: fixed;
-      right: 14px;
-      bottom: 86px;
-      z-index: 95;
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .scrollBtn{
-      width: 46px; height: 46px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.70);
-      box-shadow: var(--shadow2);
-      cursor:pointer;
-      transition:.18s ease;
       display:flex;
       align-items:center;
-      justify-content:center;
-      font-weight: 900;
-      font-family: var(--fontH);
+      gap:10px;
+      min-width:0;
     }
-    [data-theme="dark"] .scrollBtn{ background: rgba(255,255,255,.05); }
-    .scrollBtn:hover{ transform: translateY(-1px); }
-    .scrollBtn small{ display:block; font-size: 18px; }
+    .askLogo{
+      width:34px; height:34px;
+      border-radius:12px;
+      padding:6px;
+      background: var(--chipBg);
+      border:1px solid var(--chipBd);
+      flex:0 0 auto;
+    }
+    .askTitle b{
+      font-weight:1000;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .askTitle small{
+      display:block;
+      color: var(--muted);
+      font-weight:850;
+      font-size:12px;
+      margin-top:2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 240px;
+    }
+    .askClose{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      font-weight:1000;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
 
-    /* Bottom bar */
-    .bottomBar{
-      position: fixed;
-      left: 0; right: 0; bottom: 0;
-      z-index: 100;
-      padding: 10px 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,.92));
-      border-top: 1px solid var(--line);
-      backdrop-filter: blur(10px);
+    .askQuick{
+      padding:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      border-bottom:1px solid rgba(29,74,58,.45);
+      background: rgba(255,255,255,.02);
     }
-    [data-theme="dark"] .bottomBar{
-      background: linear-gradient(180deg, rgba(7,26,19,.35), rgba(7,26,19,.92));
+    html[data-theme="light"] .askQuick{
+      background: rgba(255,255,255,.78);
+      border-bottom:1px solid var(--line);
     }
-    .bottomInner{
-      max-width: var(--max);
-      margin: 0 auto;
+    .askPill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.65);
+      background: var(--chipBg);
+      font-weight:990;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+      transition:.18s ease;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+    .askPill:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    .askBody{
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      overflow:auto;
+      flex:1 1 auto;
+    }
+
+    .askMsg{ display:flex; gap:10px; align-items:flex-start; }
+    .askAvatar{
+      width:30px; height:30px;
+      border-radius:12px;
+      border:1px solid rgba(29,74,58,.55);
+      background: rgba(255,255,255,.03);
+      display:grid;
+      place-items:center;
+      font-weight:1000;
+      flex:0 0 auto;
+      color: var(--gold);
+    }
+    html[data-theme="light"] .askAvatar{ background: rgba(255,255,255,.75); }
+    .askBubble{
+      border-radius:16px;
+      border:1px solid rgba(29,74,58,.55);
+      background: var(--ask-bubble);
+      padding:12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      max-width: 100%;
+    }
+    .askBubble.me{
+      background: var(--ask-bubble2);
+      border-color: rgba(215,178,74,.35);
+    }
+    .askBubble b{ color: var(--gold); }
+    .askBubble p{ margin:0; color: var(--text); font-weight:850; line-height:1.55; font-size:13.5px; }
+    .askBubble .mut{ color: var(--muted); font-weight:800; font-size:12.5px; margin-top:6px; }
+
+    .askSuggest{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+    .askLink{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.65);
+      background: var(--chipBg);
+      font-weight:990;
+      font-size:13px;
+      cursor:pointer;
+      white-space:nowrap;
+      transition:.18s ease;
+    }
+    .askLink:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
+    .askFoot{
+      padding:12px;
+      border-top:1px solid rgba(29,74,58,.55);
+      background: rgba(255,255,255,.02);
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    html[data-theme="light"] .askFoot{
+      background: rgba(255,255,255,.86);
+      border-top:1px solid var(--line);
+    }
+    .askInput{
+      flex:1 1 auto;
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.65);
+      background: rgba(0,0,0,.08);
+      color: var(--text);
+      font-weight:850;
+      outline:none;
+    }
+    html[data-theme="light"] .askInput{
+      background: rgba(255,255,255,.75);
+      color: var(--text);
+    }
+    .askSend{
+      flex:0 0 auto;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(215,178,74,.45);
+      background: linear-gradient(180deg, var(--gold), var(--gold2));
+      color:#142015;
+      font-weight:1000;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+
+    /* Bottom-left hamburger (icon only) */
+    .menuFab{
+      position:fixed;
+      left:14px;
+      bottom:66px;
+      z-index:63;
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.78);
+      background: rgba(6,20,15,.82);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition:.18s ease;
+      user-select:none;
+    }
+    html[data-theme="light"] .menuFab{ background: rgba(255,255,255,.86); }
+    .menuFab:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .menuFab svg{ width:18px; height:18px; }
+
+    /* Drawer sheet */
+    .sheet{
+      position:fixed;
+      left:12px;
+      bottom:12px;
+      width:min(420px, calc(100vw - 24px));
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.75);
+      background: linear-gradient(180deg, rgba(12,32,25,.94), rgba(10,26,20,.90));
+      box-shadow: var(--shadow2);
+      z-index:1201;
+      transform: translateY(130%);
+      transition: transform .22s ease;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .sheet{
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
+      border:1px solid rgba(9,64,45,.18);
+    }
+    .sheet.open{ transform: translateY(0); }
+    .sheetHead{
+      padding:12px 12px;
+      border-bottom:1px solid rgba(29,74,58,.55);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 12px;
-      padding: 0 6px;
+      gap:10px;
     }
-    .bottomTxt{
-      display:flex; flex-direction:column; gap: 2px;
-      min-width:0;
-    }
-    .bottomTxt b{
-      font-family: var(--fontH);
-      font-size: 14px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .bottomTxt span{
-      color: var(--muted);
-      font-size: 12.5px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-
-    /* Menu sheet */
-    .sheetOverlay{
-      position: fixed; inset:0;
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(8px);
-      z-index: 140;
-      display:none;
-      align-items:flex-end;
-    }
-    .sheet{
-      width: 100%;
-      border-top-left-radius: 26px;
-      border-top-right-radius: 26px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(244,251,247,.98));
-      box-shadow: 0 -18px 50px rgba(0,0,0,.22);
-      padding: 12px 12px 14px;
-      max-height: 85vh;
-      overflow:auto;
-    }
-    [data-theme="dark"] .sheet{
-      background: linear-gradient(180deg, rgba(15,58,42,.92), rgba(7,26,19,.98));
-      box-shadow: 0 -18px 50px rgba(0,0,0,.45);
-    }
-    .sheetTop{
-      display:flex; align-items:center; justify-content:space-between;
-      gap: 10px;
-      padding: 6px 4px 10px;
-    }
-    .sheetTop b{ font-family: var(--fontH); font-size: 14px; }
+    .sheetHead b{ font-weight:1000; }
     .sheetClose{
-      width: 44px; height: 44px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.02);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      font-weight:1000;
       cursor:pointer;
-      font-weight: 900;
     }
-    [data-theme="dark"] .sheetClose{ background: rgba(255,255,255,.04); color: var(--text); }
-    .sheetGrid{
+    .sheetBody{
+      padding:12px;
       display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 0 2px;
+      gap:10px;
     }
-    .sheetLink{
-      padding: 12px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.02);
-      display:flex; flex-direction:column; gap: 5px;
+    .sheetBody a{
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(29,74,58,.7);
+      background: var(--chipBg);
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
     }
-    [data-theme="dark"] .sheetLink{ background: rgba(255,255,255,.04); }
-    .sheetLink b{ font-family: var(--fontH); font-size: 13.5px; }
-    .sheetLink span{ color: var(--muted); font-size: 12.5px; line-height: 1.3; }
+    .sheetBody a strong{ color: var(--gold); }
+    .sheetRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      padding-top:4px;
+    }
+    .sheetRow a{
+      border-radius:999px;
+      padding:10px 12px;
+      width:auto;
+    }
 
-    /* tiny pulse for demo */
-    @keyframes pulseGlow{
-      0%{ box-shadow: 0 0 0 0 rgba(18,163,106,.18); }
-      70%{ box-shadow: 0 0 0 14px rgba(18,163,106,0); }
-      100%{ box-shadow: 0 0 0 0 rgba(18,163,106,0); }
+    @media (max-width:520px){
+      .menuFab{ left:12px; bottom:66px; width:42px; height:42px; }
+      .askFab{ left:12px; bottom:14px; }
+      .askFab .askBadge{ display:none; }
+      .scrollNav{ right:12px; bottom:74px; }
+      .scrollBtn{ width:40px; height:40px; border-radius:14px; }
+      .themeTiny{ right:12px; bottom:122px; width:40px; height:40px; border-radius:14px; }
     }
-    .pulse{ animation: pulseGlow 1.8s ease-out infinite; }
   </style>
 </head>
 
 <body>
-
-  <!-- DEMO ALERT (Top) -->
-  <div class="alert" id="demoAlert" style="display:none;">
-    <div class="wrap">
-      <div class="alertRow">
-        <div class="alertLeft">
-          <div class="badge pulse">DEMO • TOMORROW • 9 PM</div>
-          <div class="alertTitle">Computer Based — “The Most Accurate Method To Get IELTS Score”</div>
-          <div class="alertSub" id="demoCountdownTop">Starts in: --</div>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="LizOn Education Home">
+        <img class="brand-logo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+        <div class="titleWrap">
+          LizOn Education
+          <small>Upcoming Sessions & Next Batches</small>
         </div>
-        <a class="btn primary" id="joinNowTop" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join now</a>
-      </div>
+      </a>
+
+      <!-- (No visible top nav on purpose; we use the icon-only sheet) -->
     </div>
   </div>
 
-  <!-- HEADER -->
-  <header class="topbar">
-    <div class="wrap">
-      <div class="topRow">
-        <a class="brand" href="index.html" aria-label="Home">
-          <div class="logoMark" aria-hidden="true"></div>
-          <div class="brandText">
-            <b>LizOn Education</b>
-            <span>IELTS • PTE • Study Abroad</span>
-          </div>
-        </a>
+  <main class="container" id="top">
 
-        <div class="actions">
-          <button class="btn ghost" id="themeToggle" type="button" title="Toggle Theme">Light</button>
-          <button class="menuBtn" id="menuBtn" type="button" aria-label="Open menu">
-            <span class="menuIcon" aria-hidden="true"><i></i></span>
-            Menu
-          </button>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="heroCard">
+        <div class="chipRow">
+          <span class="chip"><b>Default Dark</b> • Light mode toggle available</span>
+          <span class="chip">Everything here is <b>Join-ready</b></span>
+          <span class="chip">Tap <b>AskLizOn</b> if confused</span>
+        </div>
+
+        <h1 class="heroTitle">Upcoming that actually <span>moves your score</span></h1>
+        <p class="sub">
+          Not “random motivation classes”. Real sessions with structure: what to do, how to do, and how to measure improvement.
+          Join live, get direction, then start learning from <b style="color:var(--gold)">MyLizOn.com</b>.
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="#featured">
+            <span class="pulseDot" aria-hidden="true"></span>
+            Featured Session (Join Now)
+          </a>
+          <a class="btn" href="#nextBatch">
+            Next Batch Plan
+          </a>
+          <a class="btn ghost" href="ielts.html#levels">
+            Check IELTS Level
+          </a>
         </div>
       </div>
-    </div>
-  </header>
 
-  <!-- MAIN -->
-  <main class="page">
-    <div class="wrap">
+      <!-- FEATURED (OUTSTANDING) -->
+      <div class="featured" id="featured" aria-label="Featured live session">
+        <div class="featuredTop">
+          <div class="kickerRow">
+            <span class="kickerPill"><span class="pulseDot" aria-hidden="true"></span> Live Session — <b>Highlighted</b></span>
+            <span class="kickerPill">Google Meet • Free</span>
+            <span class="kickerPill">Limited-time <b>Huge Discount</b> chance</span>
+          </div>
 
-      <div class="grid">
-        <!-- LEFT -->
-        <section class="card">
-          <div class="cardPad">
+          <h2 class="featuredTitle">An IELTS Session to Accurate Your Scoring Method</h2>
+          <p class="featuredSub">
+            Topic: <b style="color:var(--gold)">The Most Accurate Method To Get IELTS Score</b><br/>
+            Many students “feel” they are at 6.0 but the scoring rules say otherwise. This session fixes that confusion.
+          </p>
 
-            <div class="infoRow">
-              <div class="pill"><b>Upcoming Batch</b> — IELTS Complete Preparation</div>
-              <div class="pill"><b>Early Bird</b> — Full N2F Access</div>
-            </div>
+          <div class="metaGrid">
+            <div class="metaCard">
+              <h3>Session Details</h3>
 
-            <h1>Basic theke IELTS Complete Preparation ✍️</h1>
-            <p class="sub">
-              IELTS ZERO to Advanced — Online & Night Batch. Placement by level test + guided training until you take the exam.
-            </p>
-
-            <div class="infoRow">
-              <div class="infoChip">
-                📅 <div>
-                  <div>Class Starts</div>
-                  <small>26 December</small>
+              <div class="metaLine">
+                <span class="icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 2v3M17 2v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M3.5 9h17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M5 5h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                </span>
+                <div>
+                  <b>Date</b>
+                  <span>24 December • Wednesday</span>
                 </div>
+              </div>
+
+              <div class="metaLine">
+                <span class="icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                </span>
+                <div>
+                  <b>Time</b>
+                  <span>9:00 PM (BDT)</span>
+                </div>
+              </div>
+
+              <div class="metaLine">
+                <span class="icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4h16v16H4V4z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <div>
+                  <b>Meeting ID</b>
+                  <span>bfk-eeax-sbi</span>
+                </div>
+              </div>
+
+              <div class="metaLine">
+                <span class="icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 11l19-8-8 19-2-8-9-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <div>
+                  <b>Join Link</b>
+                  <span style="word-break:break-all;">https://meet.google.com/bfk-eeax-sbi</span>
+                </div>
+              </div>
+
+              <div class="chipRow" style="margin-top:10px;">
+                <span class="chip">Join → learn the method → <b>huge discount</b> chance</span>
+                <span class="chip">Start Learning from <b>MyLizOn.com</b></span>
               </div>
             </div>
 
-            <div class="ticks">
-              <div class="tick">✅ <div><b>Make Your Family Proud</b></div></div>
-              <div class="tick">✅ <div><b>N2F takes care of everything</b></div></div>
-            </div>
+            <div class="metaCard bigJoin">
+              <h3>Join Now</h3>
+              <p>
+                One click join. If Meet doesn’t open, copy link. If you want guidance first, WhatsApp is open.
+              </p>
 
-            <!-- DEMO SPOT -->
-            <div class="demoSpot card" style="margin-top:14px;">
-              <div class="cardPad">
-                <div class="demoHead">
-                  <div>
-                    <div class="badge pulse" style="margin-bottom:8px;">DEMO • TOMORROW • 9 PM</div>
-                    <h2>Computer Based Demo Class</h2>
-                    <div class="askSub" style="margin:6px 0 0;">
-                      Topic: <b>“The Most Accurate Method To Get IELTS Score”</b><br/>
-                      Most students get it wrong — and that costs bands.
-                    </div>
-                  </div>
-                  <div class="count">
-                    <div id="demoCountdown">--</div>
-                    <small>time left</small>
-                  </div>
-                </div>
+              <a class="joinBtn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">
+                Join Live on Google Meet
+              </a>
 
-                <div class="joinBox">
-                  <b>Joining Link Details</b>
-                  <div class="joinRow">
-                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">@Hasif(Parsonal_LizOn)</b></div>
-                    <div>An IELTS Session to Accurate Your Scoring Method</div>
-                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">Class Topic:</b> <span style="color:var(--text); font-weight:800;">The Most Accurate Method To Get IELTS Score</span></div>
-                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">Time:</b> ২৪ই ডিসেম্বর, বুধবার, রাত ৯ টায়।</div>
-                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">Joining Link:</b></div>
-                    <code id="meetLink">https://meet.google.com/bfk-eeax-sbi</code>
-                    <div><b style="margin:0; font-family:var(--fontB); color:var(--muted); font-weight:700;">Meeting ID:</b></div>
-                    <code id="meetId">bfk-eeax-sbi</code>
-                    <div style="margin-top:6px; color:var(--text); font-weight:800;">
-                      Do the full class and get a chance of a huge discount
-                    </div>
-                    <div style="margin-top:2px;">By then Start Learning from <b style="color:var(--text);">MyLizOn.com</b></div>
-                  </div>
+              <button class="joinBtn" type="button" id="copyJoin">
+                Copy Join Link
+              </button>
 
-                  <div class="joinActions">
-                    <a class="btn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join now</a>
-                    <button class="btn" id="copyMeetLink" type="button">Copy link</button>
-                    <button class="btn" id="copyMeetId" type="button">Copy ID</button>
-                  </div>
-                </div>
+              <a class="joinBtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20join%20the%20live%20session%20today%20(Scoring%20Method).%20Please%20guide%20me.%20(Source%3A%20Upcoming_featured)" target="_blank" rel="noopener">
+                Talk with LizOn (WhatsApp)
+              </a>
 
-                <div class="demoBtns">
-                  <a class="btn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join now</a>
-                  <a class="btn" id="admitBtn" href="#" target="_blank" rel="noopener">Check availability</a>
-                  <a class="btn" href="ielts.html">Learn more</a>
-                </div>
+              <button class="joinBtn" type="button" data-acc="agendaPanel" aria-expanded="false">
+                What will happen inside?
+              </button>
 
-                <p class="askSub" style="margin:10px 0 0;">
-                  Brutal truth: You don’t need more “tips”. You need the right method + the right level.
-                  Demo te dekhai dibo exactly kibhabe.
-                </p>
-              </div>
-            </div>
+              <button class="joinBtn" type="button" data-acc="whoPanel" aria-expanded="false">
+                Who should join?
+              </button>
 
-          </div>
-        </section>
-
-        <!-- RIGHT: AskLizOn (auto answer + send) -->
-        <aside class="card" id="askPanel">
-          <div class="cardPad">
-            <h3 class="askTitle">Ask LizOn</h3>
-            <p class="askSub">Tap a question — it will answer automatically. Then you can send to counselor if needed.</p>
-
-            <div class="chips">
-              <button class="chip" type="button" data-q="Demo link chai" data-key="demo">Demo link chai</button>
-              <button class="chip" type="button" data-q="Level check" data-key="level">Level check</button>
-              <button class="chip" type="button" data-q="Typing slow" data-key="typing">Typing slow</button>
-              <button class="chip" type="button" data-q="Band 6+ plan" data-key="band">Band 6+ plan</button>
-              <button class="chip" type="button" data-q="Fee & schedule" data-key="fee">Fee & schedule</button>
-              <button class="chip" type="button" data-q="Mock or class" data-key="mock">Mock or class</button>
-            </div>
-
-            <div class="askAnswer" id="askAnswer" style="display:none;">
-              <b id="ansTitle">Answer</b>
-              <p id="ansText">—</p>
-            </div>
-
-            <div class="askBox">
-              <input id="askInput" type="text" placeholder="Type your own question in Banglish..." />
-              <button class="btn primary" id="askSend" type="button">Send</button>
-            </div>
-
-            <p class="askSub" style="margin:10px 0 0;">
-              Tip: Answer instantly dekhun. Jodi lagbe, Send e tap kore counselor ke pathan.
-            </p>
-          </div>
-        </aside>
-      </div>
-
-      <!-- FOOTER -->
-      <div class="card" style="margin-top:14px;">
-        <div class="cardPad">
-          <div class="infoRow" style="justify-content:space-between; align-items:flex-start;">
-            <div style="max-width: 65ch;">
-              <h3 style="margin:0; font-family:var(--fontH); font-size:16px;">Contact & Location</h3>
-              <p style="margin:10px 0 0; color:var(--muted); line-height:1.45; font-size:13.5px;">
-                <span style="color:var(--gold); font-weight:900; font-family:var(--fontH);">Address:</span>
-                51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
-                <span style="color:var(--gold); font-weight:900; font-family:var(--fontH);">IELTS/PTE Helpline:</span>
-                <a href="tel:+8801611611139" style="text-decoration:underline;">01611611139</a><br/>
-                <span style="color:var(--gold); font-weight:900; font-family:var(--fontH);">Study Abroad/Visa Processing:</span>
-                <a href="tel:+8801608881545" style="text-decoration:underline;">01608881545</a>
+              <p style="margin:0; color:var(--muted); font-weight:850; font-size:12.5px; line-height:1.5;">
+                Joining Link details: <b style="color:var(--gold)">@ Hasif(Parsonal_LizOn)</b>
               </p>
             </div>
+          </div>
+        </div>
 
-            <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
-              <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-                <a class="btn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-                <a class="btn primary" id="footerChat" href="#" target="_blank" rel="noopener">Chat now</a>
+        <div class="accPanel" id="agendaPanel">
+          <div class="sectionTitle" style="margin:0 0 10px;">Agenda <small>(short, sharp, practical)</small></div>
+          <div class="featurePoints">
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <b>Score Reality Check</b>
+                <span>Band descriptor kibhabe kaj kore — myths crush.</span>
               </div>
-
-              <div style="width:100%; max-width: 420px;">
-                <h3 style="margin:0; font-family:var(--fontH); font-size:16px;">Social Media</h3>
-                <p style="margin:8px 0 0; color:var(--muted); font-size:13.5px;">
-                  Follow our updates, results, and guidance content.
-                </p>
-                <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-                  <a class="btn" href="#" title="Facebook">Facebook</a>
-                  <a class="btn" href="#" title="YouTube">YouTube</a>
-                  <a class="btn" href="#" title="LinkedIn">LinkedIn</a>
-                </div>
+            </div>
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </span>
+              <div>
+                <b>Timing Strategy</b>
+                <span>Preparation timeline set kora — wasted weeks stop.</span>
+              </div>
+            </div>
+            <div class="point">
+              <span class="pointIcon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 4h16v16H4V4z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M7 8h10M7 12h10M7 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <div>
+                <b>Your Next Steps</b>
+                <span>Level choose + routine choose — ZERO/HOPE/STEP-UP/DESPERATE.</span>
               </div>
             </div>
           </div>
 
-          <p style="margin:14px 0 0; color:var(--muted); font-size:12.5px;">
-            © 2025 MyLizOn.com | LizOn Education
+          <div class="chipRow" style="margin-top:12px;">
+            <span class="chip">No drama • <b>only method</b></span>
+            <span class="chip">Result = consistent routine + evaluation</span>
+          </div>
+        </div>
+
+        <div class="accPanel" id="whoPanel">
+          <div class="sectionTitle" style="margin:0 0 10px;">Who should join? <small>(if any of these hit you)</small></div>
+
+          <div class="timeline">
+            <div class="step">
+              <div class="stepNum">1</div>
+              <div>
+                <b>You guess your band</b>
+                <span>“Mone hocche 6” — but mock e 5.5. This session fixes the measuring method.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="stepNum">2</div>
+              <div>
+                <b>You practice randomly</b>
+                <span>One day reading, next day speaking, then break. Result: nothing sticks.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="stepNum">3</div>
+              <div>
+                <b>You want a real plan</b>
+                <span>Level-based routine + evaluation. Not “tips”, not “motivation”.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ctaRow" style="margin-top:12px;">
+            <a class="btn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join Live</a>
+            <a class="btn" href="ielts.html#levels">See IELTS Levels</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- NEXT BATCH -->
+    <section id="nextBatch">
+      <div class="sectionTitle">Next Batch Plan <small>Not sure? AskLizOn can choose for you</small></div>
+
+      <div class="grid3">
+        <div class="card">
+          <span class="tag"><b>IELTS ZERO</b> — Foundation start</span>
+          <h4>For absolute beginners</h4>
+          <p>
+            Speaking basic + pronunciation + grammar foundation + accurate writing.
+            If you’re delaying, ZERO breaks the excuse and builds the base.
           </p>
+          <div class="row">
+            <a class="btn primary" href="ielts.html#zero">Course Details</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20with%20IELTS%20ZERO.%20Please%20guide%20me.%20(Source%3A%20Upcoming_zero)" target="_blank" rel="noopener">Admit Now</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="tag"><b>IELTS HOPE</b> — Build consistency</span>
+          <h4>For stuck students (5–5.5)</h4>
+          <p>
+            Reading speed + listening control + free-hand writing + speaking opinion system.
+            HOPE is where score starts moving.
+          </p>
+          <div class="row">
+            <a class="btn primary" href="ielts.html#hope">Course Details</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20am%20stuck%20around%205-5.5.%20I%20want%20IELTS%20HOPE.%20Please%20guide%20me.%20(Source%3A%20Upcoming_hope)" target="_blank" rel="noopener">Admit Now</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="tag"><b>IELTS STEP-UP</b> — Upgrade to 6.5+</span>
+          <h4>For band jump (6 → 7)</h4>
+          <p>
+            Strategy + high-accuracy practice + feedback loop.
+            STEP-UP is for people who already started — now they want score.
+          </p>
+          <div class="row">
+            <a class="btn primary" href="ielts.html#stepup">Course Details</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20IELTS%20STEP-UP%20(6.5+%20target).%20Please%20guide%20me.%20(Source%3A%20Upcoming_stepup)" target="_blank" rel="noopener">Admit Now</a>
+          </div>
         </div>
       </div>
 
-    </div>
+      <div class="sectionTitle" style="margin-top:16px;">Urgent / Close Exam <small>fast correction + evaluation</small></div>
+
+      <div class="grid3">
+        <div class="card">
+          <span class="tag"><b>IELTS DESPERATE</b> — Exam close</span>
+          <h4>Last moment rescue plan</h4>
+          <p>
+            Test, practice & evaluation focus. Two days speaking + two days writing.
+            Maximum correction before exam.
+          </p>
+          <div class="row">
+            <a class="btn primary" href="ielts.html#desperate">Course Details</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20My%20exam%20is%20close.%20I%20need%20IELTS%20DESPERATE.%20Please%20guide%20me.%20(Source%3A%20Upcoming_desperate)" target="_blank" rel="noopener">Admit Now</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="tag"><b>N2F</b> — Now to Fly</span>
+          <h4>All-in-one: IELTS + Abroad</h4>
+          <p>
+            Country + intake + documents + visa support.
+            Best value for serious students going abroad.
+          </p>
+          <div class="row">
+            <a class="btn primary" href="studyabroad.html">N2F Details</a>
+            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20N2F%20support%20(Study%20Abroad%20+%20Visa).%20Please%20guide%20me.%20(Source%3A%20Upcoming_n2f)" target="_blank" rel="noopener">Talk to Counselor</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="tag"><b>Free</b> — Learn inside system</span>
+          <h4>Start today</h4>
+          <p>
+            After live session, don’t stop. Start learning properly from <b style="color:var(--gold)">MyLizOn.com</b>.
+          </p>
+          <div class="row">
+            <a class="btn primary" href="index.html#learnfree">Watch Free Lessons</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20learning%20from%20MyLizOn.com.%20Please%20guide%20me.%20(Source%3A%20Upcoming_mylizon)" target="_blank" rel="noopener">Guidance</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW TO JOIN / RULES -->
+    <section id="how">
+      <div class="sectionTitle">How to Join Smoothly <small>avoid last-minute panic</small></div>
+
+      <div class="timeline">
+        <div class="step">
+          <div class="stepNum">1</div>
+          <div>
+            <b>Join 5 minutes early</b>
+            <span>Mic + internet check. Late join korle first part miss hoy.</span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="stepNum">2</div>
+          <div>
+            <b>Keep note open</b>
+            <span>Scoring rules / do’s / don’ts — write down. Then follow the routine.</span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="stepNum">3</div>
+          <div>
+            <b>After session — choose your level</b>
+            <span>ZERO/HOPE/STEP-UP/DESPERATE. Confused? Tap AskLizOn and it will suggest.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ctaRow" style="margin-top:12px;">
+        <a class="btn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join Live Now</a>
+        <button class="btn" type="button" id="openAskInline">AskLizOn (Choose for me)</button>
+        <button class="btn ghost" type="button" id="copyID">Copy Meeting ID</button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <section class="footer" aria-label="Footer" id="bottom">
+      <div>
+        <h3>Contact & Location</h3>
+        <p>
+          <strong>Address:</strong> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
+          <br />
+          <strong>IELTS/PTE Helpline:</strong> 01611611139
+          <br />
+          <strong>Study Abroad/Visa Processing:</strong> 01608881545
+        </p>
+
+        <div class="footer-links">
+          <a class="iconbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22s7-4.5 7-12a7 7 0 1 0-14 0c0 7.5 7 12 7 12z" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 13.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </span>
+            Open Map
+          </a>
+
+          <a class="iconbtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20about%20upcoming%20session%20and%20batch.%20(Source%3A%20Upcoming_footer)" target="_blank" rel="noopener">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 12a8 8 0 0 1-12.4 6.7L4 20l1.4-3.4A8 8 0 1 1 20 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M9 8.8c.2-.6.5-.6.9-.6h.7c.2 0 .5 0 .6.4l.7 1.7c.1.3.1.6-.1.8l-.4.4c-.2.2-.2.5 0 .7.4.7 1.1 1.4 1.8 1.8.2.1.5.1.7-.1l.4-.4c.2-.2.5-.2.8-.1l1.7.7c.4.1.4.4.4.6v.7c0 .4 0 .7-.6.9-.6.2-1.7.4-3.6-.5-1.9-.9-3.7-2.7-4.6-4.6-.9-1.9-.7-3-.5-3.6z" fill="currentColor"/>
+              </svg>
+            </span>
+            WhatsApp
+          </a>
+        </div>
+
+        <div class="smallprint">© <span id="year"></span> myLizOn.com | LizOn Education</div>
+      </div>
+
+      <div>
+        <h3>All Pages</h3>
+        <p>Jump anywhere (tap).</p>
+
+        <div class="siteMap" aria-label="Site map links">
+          <a href="index.html"><strong>Home</strong> — Overview</a>
+          <a href="ielts.html#levels"><strong>IELTS</strong> — Levels</a>
+          <a href="pte.html"><strong>PTE</strong> — Program</a>
+          <a href="studyabroad.html"><strong>Study Abroad</strong> — N2F</a>
+          <a href="about.html"><strong>About</strong> — LizOn story</a>
+          <a href="ielts-grammar.html"><strong>IELTS Grammar</strong></a>
+          <a href="ielts-listening.html"><strong>IELTS Listening</strong></a>
+          <a href="ielts-reading.html"><strong>IELTS Reading</strong></a>
+          <a href="ielts-speaking.html"><strong>IELTS Speaking</strong></a>
+          <a href="ielts-writing.html"><strong>IELTS Writing</strong></a>
+          <a href="ielts-computer-based.html"><strong>Computer IELTS</strong></a>
+          <a href="ielts-faq-bangladesh.html"><strong>IELTS FAQ (BD)</strong></a>
+        </div>
+
+        <div class="footer-links" style="margin-top:10px;">
+          <a class="iconbtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+          <a class="iconbtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
+          <a class="iconbtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Creative scroll buttons -->
-  <div class="scrollBtns" aria-label="Scroll Controls">
-    <button class="scrollBtn" id="scrollUp" type="button" aria-label="Scroll up"><small>↑</small></button>
-    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll down"><small>↓</small></button>
-  </div>
+  <!-- Floating WhatsApp bar -->
+  <a class="floatwa" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now%20about%20Upcoming.%20(Source%3A%20Upcoming_float)" target="_blank" rel="noopener">
+    <span class="dot" aria-hidden="true"></span>
+    Need guidance? <b>Chat on WhatsApp</b>
+  </a>
 
-  <!-- Bottom bar (Demo override) -->
-  <div class="bottomBar" role="region" aria-label="Guidance Bar">
-    <div class="bottomInner">
-      <div class="bottomTxt">
-        <b id="bottomTitle">Demo tomorrow — 9 PM</b>
-        <span id="bottomSub">Tap to join. Then ask your question inside Ask LizOn.</span>
-      </div>
-      <a class="btn primary" id="bottomCta" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join now</a>
-    </div>
-  </div>
+  <!-- Tiny theme toggle (icons only) -->
+  <button class="themeTiny" id="themeTiny" type="button" aria-label="Toggle theme">
+    <span id="themeIcon" aria-hidden="true"></span>
+  </button>
 
-  <!-- Mobile Menu Sheet -->
-  <div class="sheetOverlay" id="sheetOverlay" aria-hidden="true">
-    <div class="sheet" role="dialog" aria-label="Menu">
-      <div class="sheetTop">
-        <b>Menu</b>
-        <button class="sheetClose" id="sheetClose" type="button" aria-label="Close">✕</button>
+  <!-- Bottom-left floating hamburger (icon only) -->
+  <button class="menuFab" id="menuFab" type="button" aria-label="Open navigation">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M4 7h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <!-- AskLizOn FAB (tiny logo + AskLizOn) -->
+  <button class="askFab" id="askFab" type="button" aria-label="Open AskLizOn">
+    <img class="askFabLogo" src="assets/logo-dark.png" alt="" aria-hidden="true" />
+    Ask<b>LizOn</b>
+    <span class="askBadge">Course Selector</span>
+  </button>
+
+  <!-- Shared overlay -->
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+
+  <!-- Menu sheet -->
+  <aside class="sheet" id="menuSheet" role="dialog" aria-modal="true" aria-label="Navigation">
+    <div class="sheetHead">
+      <b>Navigate</b>
+      <button class="sheetClose" id="menuClose" type="button" aria-label="Close navigation">Close</button>
+    </div>
+    <div class="sheetBody">
+      <a href="index.html"><strong>Home</strong><span>→</span></a>
+      <a href="Upcoming.html"><strong>Upcoming</strong><span>→</span></a>
+      <a href="ielts.html#levels"><strong>IELTS</strong><span>→</span></a>
+      <a href="pte.html"><strong>PTE</strong><span>→</span></a>
+      <a href="studyabroad.html"><strong>Study Abroad</strong><span>→</span></a>
+      <a href="about.html"><strong>About</strong><span>→</span></a>
+      <a href="#" id="askMenuOpen"><strong>AskLizOn</strong><span>→</span></a>
+
+      <div class="sheetRow" aria-label="Quick links">
+        <a href="ielts-grammar.html">Grammar</a>
+        <a href="ielts-listening.html">Listening</a>
+        <a href="ielts-reading.html">Reading</a>
+        <a href="ielts-speaking.html">Speaking</a>
+        <a href="ielts-writing.html">Writing</a>
+        <a href="ielts-computer-based.html">Computer</a>
+        <a href="ielts-faq-bangladesh.html">FAQ (BD)</a>
       </div>
-      <div class="sheetGrid">
-        <a class="sheetLink" href="index.html"><b>Home</b><span>Back to main</span></a>
-        <a class="sheetLink" href="ielts.html"><b>IELTS</b><span>Courses + path</span></a>
-        <a class="sheetLink" href="ielts-listening.html"><b>Listening</b><span>Skill page</span></a>
-        <a class="sheetLink" href="ielts-speaking.html"><b>Speaking</b><span>Skill page</span></a>
-        <a class="sheetLink" href="ielts-reading.html"><b>Reading</b><span>Skill page</span></a>
-        <a class="sheetLink" href="ielts-writing.html"><b>Writing</b><span>Skill page</span></a>
-        <a class="sheetLink" href="#askPanel"><b>Ask LizOn</b><span>Auto answers</span></a>
-        <a class="sheetLink" href="ielts-computer-based.html"><b>Computer-Based</b><span>Typing + speed</span></a>
-        <a class="sheetLink" href="ielts-faq-bangladesh.html"><b>FAQ (BD)</b><span>Real confusion</span></a>
-        <button class="sheetLink" id="sheetTheme" type="button" style="text-align:left;">
-          <b>Toggle Mode</b><span>Light / Dark</span>
-        </button>
+
+      <div class="sheetRow">
+        <a href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Map</a>
+        <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20about%20Upcoming.%20(Source%3A%20Upcoming_sheet)" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
+  </aside>
+
+  <!-- AskLizOn Panel -->
+  <aside class="askPanel" id="askPanel" aria-label="AskLizOn Panel" role="dialog" aria-modal="true">
+    <div class="askHead">
+      <div class="askTitle">
+        <img class="askLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+        <div style="min-width:0;">
+          <b>AskLizOn</b>
+          <small>2–3 questions → course suggestion</small>
+        </div>
+      </div>
+      <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn">Close</button>
+    </div>
+
+    <div class="askQuick" aria-label="Quick start">
+      <button class="askPill" type="button" data-ask="ielts">Choose IELTS Course</button>
+      <button class="askPill" type="button" data-ask="pte">Choose PTE Course</button>
+      <button class="askPill" type="button" data-ask="abroad">Study Abroad Guidance</button>
+      <button class="askPill" type="button" data-ask="reset">Reset</button>
+    </div>
+
+    <div class="askBody" id="askBody" aria-label="Chat messages"></div>
+
+    <div class="askFoot">
+      <input class="askInput" id="askInput" type="text" placeholder="Type short answer… (English / বাংলা / Banglish)" autocomplete="off" />
+      <button class="askSend" id="askSend" type="button">Send</button>
+    </div>
+  </aside>
+
+  <!-- Scroll controls -->
+  <div class="scrollNav" aria-label="Page scroll controls">
+    <button class="scrollBtn" id="scrollUp" type="button" aria-label="Scroll to top">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 5l-7 7h4v7h6v-7h4l-7-7z" fill="currentColor" opacity=".9"/>
+      </svg>
+    </button>
+    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll to bottom">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 19l7-7h-4V5H9v7H5l7 7z" fill="currentColor" opacity=".9"/>
+      </svg>
+    </button>
   </div>
 
   <script>
-    // ====== CONFIG ======
-    const PHONE_E164 = "8801608881545"; // 01608881545
-    const MEET_LINK = "https://meet.google.com/bfk-eeax-sbi";
-    const MEET_ID = "bfk-eeax-sbi";
+    (function(){
+      // Year
+      const y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
 
-    // Demo date/time in BD time (Asia/Dhaka)
-    const DEMO_START_ISO = "2025-12-24T21:00:00+06:00";
+      // Theme (default dark)
+      const root = document.documentElement;
+      const themeTiny = document.getElementById('themeTiny');
+      const themeIcon = document.getElementById('themeIcon');
 
-    // WhatsApp routing message
-    const BASE_MSG =
-      "Assalamu alaikum. Ami upcoming batch page theke message dicchi. " +
-      "Amar current level/band: __. Target: __. Deadline: __. " +
-      "Amar main problem: __.";
-    const WHATSAPP_URL = (msg) =>
-      "https://wa.me/" + PHONE_E164 + "?text=" + encodeURIComponent(msg);
-
-    // Bind chat buttons (no 'WhatsApp' word in labels)
-    const admitBtn = document.getElementById("admitBtn");
-    const footerChat = document.getElementById("footerChat");
-    if (admitBtn) admitBtn.href = WHATSAPP_URL("Assalamu alaikum. Upcoming batch e seat/check availability korte chai. " + BASE_MSG);
-    if (footerChat) footerChat.href = WHATSAPP_URL(BASE_MSG);
-
-    // Countdown (top + card)
-    const demoAlert = document.getElementById("demoAlert");
-    const demoCountdownTop = document.getElementById("demoCountdownTop");
-    const demoCountdown = document.getElementById("demoCountdown");
-
-    const pad2 = (n) => String(n).padStart(2, "0");
-    const formatCountdown = (ms) => {
-      if (ms <= 0) return "Starting now";
-      const totalSec = Math.floor(ms / 1000);
-      const d = Math.floor(totalSec / 86400);
-      const h = Math.floor((totalSec % 86400) / 3600);
-      const m = Math.floor((totalSec % 3600) / 60);
-      if (d > 0) return `${d}d ${pad2(h)}h ${pad2(m)}m`;
-      return `${pad2(h)}h ${pad2(m)}m`;
-    };
-
-    const isSameDay = (a, b) =>
-      a.getFullYear() === b.getFullYear() &&
-      a.getMonth() === b.getMonth() &&
-      a.getDate() === b.getDate();
-
-    const updateDemoUI = () => {
-      const now = new Date();
-      const start = new Date(DEMO_START_ISO);
-      const msLeft = start.getTime() - now.getTime();
-
-      const tomorrow = new Date(now);
-      tomorrow.setDate(now.getDate() + 1);
-
-      const highlight =
-        (isSameDay(start, tomorrow)) ||
-        (isSameDay(start, now) && msLeft > -6 * 60 * 60 * 1000);
-
-      if (highlight) {
-        demoAlert.style.display = "block";
-        demoCountdownTop.textContent = "Starts in: " + formatCountdown(msLeft);
-        demoCountdown.textContent = formatCountdown(msLeft);
-      } else {
-        demoAlert.style.display = "none";
+      function iconSun(){
+        return `
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>`;
       }
-    };
-    updateDemoUI();
-    setInterval(updateDemoUI, 1000);
-
-    // Copy buttons
-    const copyText = async (text) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        return true;
-      } catch {
-        // fallback
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand("copy"); } catch {}
-        document.body.removeChild(ta);
-        return true;
+      function iconMoon(){
+        return `
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 13.2A7.7 7.7 0 0 1 10.8 3a7.6 7.6 0 1 0 10.2 10.2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>`;
       }
-    };
 
-    document.getElementById("copyMeetLink").addEventListener("click", async () => {
-      await copyText(MEET_LINK);
-      alert("Link copied ✅");
-    });
-    document.getElementById("copyMeetId").addEventListener("click", async () => {
-      await copyText(MEET_ID);
-      alert("Meeting ID copied ✅");
-    });
-
-    // AskLizOn auto answers
-    const answers = {
-      demo: {
-        title: "Demo link",
-        text:
-          "Join link: " + MEET_LINK + " | Meeting ID: " + MEET_ID +
-          ". Class: 24 Dec (Wed), 9 PM. Full class করলে huge discount er chance."
-      },
-      level: {
-        title: "Level check (fast)",
-        text:
-          "Apnar current band / level janen? Na janle: 1) Speaking e fluency kemon, 2) Reading e 3 passage time e hoy kina, 3) Writing task 2 structure paren kina. Egula বললে counselor instantly ZERO/HOPE choose kore দিবে."
-      },
-      typing: {
-        title: "Typing slow",
-        text:
-          "Computer-based e typing slow hole: 10 min daily typing + 1 mock/week. Main trick: templates + auto-correct off + shortcut practice. Demo te method dekhano হবে."
-      },
-      band: {
-        title: "Band 6+ plan",
-        text:
-          "Band 6+ er fastest route: skill-wise plan. Reading: timing system, Listening: part 3-4 focus, Writing: structure first, Speaking: opinion practice. Apnar exam date বললে exact routine set hoy."
-      },
-      fee: {
-        title: "Fee & schedule",
-        text:
-          "Upcoming batch starts 26 Dec. Fee/course path (ZERO→HOPE→STEP-UP→DESPERATE) counselor explain kore দিবে. ‘Check availability’ e tap kore details niye nin."
-      },
-      mock: {
-        title: "Mock or class?",
-        text:
-          "Mock shudhu score dekhay. Class apnar skill build kore. Jodi base weak hoy—class first. Jodi already stable band hoy—evaluation/mock cycle. Apnar current band bollei decision clear."
+      function setTheme(next){
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('lizon_theme', next);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if(meta) meta.setAttribute('content', next === 'light' ? '#eaf6f0' : '#0b2a1f');
+        if (themeIcon) themeIcon.innerHTML = (next === 'light') ? iconSun() : iconMoon();
       }
-    };
 
-    const askAnswer = document.getElementById("askAnswer");
-    const ansTitle = document.getElementById("ansTitle");
-    const ansText = document.getElementById("ansText");
-    const askInput = document.getElementById("askInput");
+      const saved = localStorage.getItem('lizon_theme');
+      if (saved === 'light' || saved === 'dark') setTheme(saved);
+      else setTheme('dark'); // default dark
 
-    document.querySelectorAll(".chip").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const key = btn.getAttribute("data-key");
-        const q = btn.getAttribute("data-q") || "";
-        askInput.value = q;
+      if (themeTiny){
+        themeTiny.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme') || 'dark';
+          setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+      }
 
-        const a = answers[key];
-        if (a) {
-          askAnswer.style.display = "block";
-          ansTitle.textContent = a.title;
-          ansText.textContent = a.text;
-          // scroll the answer into view nicely
-          setTimeout(() => askAnswer.scrollIntoView({behavior:"smooth", block:"nearest"}), 50);
-        }
+      // Featured accordion
+      const accButtons = document.querySelectorAll('[data-acc]');
+      const panels = {
+        agendaPanel: document.getElementById('agendaPanel'),
+        whoPanel: document.getElementById('whoPanel')
+      };
+      function closeAllAcc(){
+        Object.values(panels).forEach(p => p && p.classList.remove('open'));
+        accButtons.forEach(b => b.setAttribute('aria-expanded','false'));
+      }
+      accButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-acc');
+          const panel = panels[id];
+          if (!panel) return;
+          const isOpen = panel.classList.contains('open');
+          closeAllAcc();
+          if (!isOpen){
+            panel.classList.add('open');
+            btn.setAttribute('aria-expanded','true');
+            panel.scrollIntoView({behavior:'smooth', block:'start'});
+          }
+        });
       });
-    });
 
-    // Send (to counselor) — sends what user typed + current answer summary (if visible)
-    document.getElementById("askSend").addEventListener("click", () => {
-      const q = (askInput.value || "").trim();
-      const extra = (askAnswer.style.display !== "none")
-        ? (" | Auto-answer: " + ansTitle.textContent + " — " + ansText.textContent)
-        : "";
-      const msg = q
-        ? ("Assalamu alaikum. Ami upcoming batch page theke question dicchi: " + q + extra +
-           " | Amar current band/level: __ | Target: __ | Deadline: __")
-        : BASE_MSG;
-      window.open(WHATSAPP_URL(msg), "_blank");
-    });
+      // Scroll buttons
+      const up = document.getElementById('scrollUp');
+      const down = document.getElementById('scrollDown');
 
-    // Creative scroll buttons
-    const scrollByAmount = (dy) => window.scrollBy({ top: dy, left: 0, behavior: "smooth" });
-    document.getElementById("scrollUp").addEventListener("click", () => scrollByAmount(-560));
-    document.getElementById("scrollDown").addEventListener("click", () => scrollByAmount(560));
+      function atTop(){ return (window.scrollY || document.documentElement.scrollTop || 0) <= 2; }
+      function atBottom(){
+        const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        const docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        const winH = window.innerHeight || document.documentElement.clientHeight;
+        return (scrollY + winH) >= (docH - 2);
+      }
+      function refreshScrollButtons(){
+        if (up) up.disabled = atTop();
+        if (down) down.disabled = atBottom();
+      }
+      if (up){
+        up.addEventListener('click', () => {
+          document.getElementById('top')?.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      }
+      if (down){
+        down.addEventListener('click', () => {
+          window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+        });
+      }
+      window.addEventListener('scroll', refreshScrollButtons, {passive:true});
+      window.addEventListener('resize', refreshScrollButtons);
+      refreshScrollButtons();
 
-    // Theme toggle
-    const themeToggle = document.getElementById("themeToggle");
-    const applyTheme = (t) => {
-      document.documentElement.setAttribute("data-theme", t);
-      themeToggle.textContent = (t === "dark") ? "Dark" : "Light";
-      localStorage.setItem("mylizon_theme", t);
-    };
-    const saved = localStorage.getItem("mylizon_theme");
-    if (saved === "dark" || saved === "light") applyTheme(saved);
-    else applyTheme(document.documentElement.getAttribute("data-theme") || "light");
+      // Shared overlay + open/close helpers
+      const overlay = document.getElementById('overlay');
+      const menuSheet = document.getElementById('menuSheet');
+      const menuFab = document.getElementById('menuFab');
+      const menuClose = document.getElementById('menuClose');
 
-    themeToggle.addEventListener("click", () => {
-      const cur = document.documentElement.getAttribute("data-theme") || "light";
-      applyTheme(cur === "light" ? "dark" : "light");
-    });
+      const askPanel = document.getElementById('askPanel');
+      const askFab = document.getElementById('askFab');
+      const askClose = document.getElementById('askClose');
 
-    // Menu sheet
-    const overlay = document.getElementById("sheetOverlay");
-    const menuBtn = document.getElementById("menuBtn");
-    const sheetClose = document.getElementById("sheetClose");
-    const openSheet = () => { overlay.style.display = "flex"; overlay.setAttribute("aria-hidden", "false"); };
-    const closeSheet = () => { overlay.style.display = "none"; overlay.setAttribute("aria-hidden", "true"); };
+      function closeAll(){
+        menuSheet?.classList.remove('open');
+        askPanel?.classList.remove('open');
+        overlay?.classList.remove('open');
+        overlay?.setAttribute('aria-hidden','true');
+      }
 
-    menuBtn.addEventListener("click", openSheet);
-    sheetClose.addEventListener("click", closeSheet);
-    overlay.addEventListener("click", (e) => { if (e.target === overlay) closeSheet(); });
+      function openMenu(){
+        closeAll();
+        overlay?.classList.add('open');
+        overlay?.setAttribute('aria-hidden','false');
+        menuSheet?.classList.add('open');
+      }
+      function openAsk(){
+        closeAll();
+        overlay?.classList.add('open');
+        overlay?.setAttribute('aria-hidden','false');
+        askPanel?.classList.add('open');
 
-    document.getElementById("sheetTheme").addEventListener("click", () => {
-      const cur = document.documentElement.getAttribute("data-theme") || "light";
-      applyTheme(cur === "light" ? "dark" : "light");
-    });
-
-    // Smooth anchors close sheet
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener("click", (e) => {
-        const href = a.getAttribute("href");
-        const el = document.querySelector(href);
-        if (el) {
-          e.preventDefault();
-          closeSheet();
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        const askBody = document.getElementById('askBody');
+        if (askBody && !askBody.dataset.seeded){
+          askBody.dataset.seeded = "1";
+          seed();
         }
+        setTimeout(()=> document.getElementById('askInput')?.focus(), 60);
+      }
+
+      if (menuFab) menuFab.addEventListener('click', openMenu);
+      if (menuClose) menuClose.addEventListener('click', closeAll);
+      if (overlay) overlay.addEventListener('click', closeAll);
+
+      menuSheet?.addEventListener('click', (e)=>{
+        const a = e.target.closest('a');
+        if (a && a.getAttribute('href') !== '#') closeAll();
       });
-    });
+
+      document.getElementById('askMenuOpen')?.addEventListener('click', (e)=>{ e.preventDefault(); closeAll(); openAsk(); });
+      document.getElementById('openAskInline')?.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+
+      if (askFab) askFab.addEventListener('click', openAsk);
+      if (askClose) askClose.addEventListener('click', closeAll);
+
+      document.addEventListener('keydown', (e)=>{
+        if (e.key === 'Escape') closeAll();
+      });
+
+      // Copy helpers
+      const joinLink = "https://meet.google.com/bfk-eeax-sbi";
+      const meetID = "bfk-eeax-sbi";
+
+      async function copyText(txt){
+        try{
+          await navigator.clipboard.writeText(txt);
+          return true;
+        }catch(e){
+          // fallback
+          const ta = document.createElement('textarea');
+          ta.value = txt;
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          try{ document.execCommand('copy'); }catch(_){}
+          document.body.removeChild(ta);
+          return true;
+        }
+      }
+
+      const copyJoin = document.getElementById('copyJoin');
+      if (copyJoin){
+        copyJoin.addEventListener('click', async ()=>{
+          const ok = await copyText(joinLink);
+          copyJoin.textContent = ok ? "Copied ✅" : "Copy Join Link";
+          setTimeout(()=> copyJoin.textContent = "Copy Join Link", 1200);
+        });
+      }
+
+      const copyID = document.getElementById('copyID');
+      if (copyID){
+        copyID.addEventListener('click', async ()=>{
+          const ok = await copyText(meetID);
+          copyID.textContent = ok ? "Meeting ID Copied ✅" : "Copy Meeting ID";
+          setTimeout(()=> copyID.textContent = "Copy Meeting ID", 1400);
+        });
+      }
+
+      // =====================================
+      // AskLizOn — Course Selector (2–3 Q)
+      // (Same logic as index.html, kept consistent)
+      // =====================================
+      const askBody = document.getElementById('askBody');
+      const askInput = document.getElementById('askInput');
+      const askSend = document.getElementById('askSend');
+
+      const state = {
+        mode: "idle",
+        program: null,
+        ielts_profile: null,
+        timeline: null,
+        suggestion: null
+      };
+
+      function normalize(s){
+        return (s || "")
+          .toLowerCase()
+          .replace(/[^\p{L}\p{N}\s]/gu, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function pushMsg(who, html, links){
+        const row = document.createElement('div');
+        row.className = 'askMsg';
+
+        const av = document.createElement('div');
+        av.className = 'askAvatar';
+        av.textContent = (who === 'me') ? 'You' : 'LZ';
+
+        const bubble = document.createElement('div');
+        bubble.className = 'askBubble' + (who === 'me' ? ' me' : '');
+
+        const p = document.createElement('p');
+        p.innerHTML = html;
+        bubble.appendChild(p);
+
+        if (links && links.length){
+          const wrap = document.createElement('div');
+          wrap.className = 'askSuggest';
+          links.forEach(l => {
+            const a = document.createElement('a');
+            a.className = 'askLink';
+            a.href = l.href;
+            a.textContent = l.label;
+            if (l.external){
+              a.target = "_blank";
+              a.rel = "noopener";
+            }
+            wrap.appendChild(a);
+          });
+          bubble.appendChild(wrap);
+        }
+
+        row.appendChild(av);
+        row.appendChild(bubble);
+        askBody.appendChild(row);
+        askBody.scrollTop = askBody.scrollHeight;
+      }
+
+      function waLink(text){
+        const base = "https://wa.me/8801611611139?text=";
+        return base + encodeURIComponent(text);
+      }
+
+      function resetAsk(){
+        state.mode = "idle";
+        state.program = null;
+        state.ielts_profile = null;
+        state.timeline = null;
+        state.suggestion = null;
+        if (askBody) askBody.innerHTML = "";
+        seed();
+      }
+
+      function seed(){
+        pushMsg('bot',
+          `Assalamu Alaikum! Ami <b>AskLizOn</b> — 2–3 ta question kore apnar jonno <b>right course</b> suggest korbo.`,
+          [
+            {label:"Choose IELTS Course", href:"#", external:false},
+            {label:"Choose PTE Course", href:"#", external:false},
+            {label:"Study Abroad Guidance", href:"#", external:false}
+          ]
+        );
+        pushMsg('bot',
+          `Start kori. Apnar focus ta konta?<div class="mut">Type: IELTS / PTE / Abroad (ba quick button)</div>`,
+          []
+        );
+      }
+
+      function askIELTSQ1(){
+        state.program = "ielts";
+        state.mode = "ielts_q1";
+        pushMsg('bot',
+          `IELTS selected ✅ Q1/2: Apnar current situation konta?<div class="mut">Reply: A / B / C / D</div>`,
+          [
+            {label:"A: Start kori nai / basic weak", href:"#"},
+            {label:"B: Stuck (5–5.5)", href:"#"},
+            {label:"C: Upgrade (6.5–7)", href:"#"},
+            {label:"D: Exam close / repeat / urgent", href:"#"}
+          ]
+        );
+      }
+
+      function askIELTSQ2(){
+        state.mode = "ielts_q2";
+        pushMsg('bot',
+          `Q2/2: Exam koto din por? (approx)<div class="mut">Reply: 1 / 2 / 3</div>`,
+          [
+            {label:"1: 0–30 days", href:"#"},
+            {label:"2: 1–3 months", href:"#"},
+            {label:"3: 3+ months", href:"#"}
+          ]
+        );
+      }
+
+      function decideIELTS(){
+        let sug = null;
+        const prof = state.ielts_profile;
+        const tl = state.timeline;
+
+        if (prof === "d") sug = "DESPERATE";
+        else if (tl === "soon"){
+          if (prof === "a") sug = "ZERO";
+          else sug = "DESPERATE";
+        } else {
+          if (prof === "a") sug = "ZERO";
+          if (prof === "b") sug = "HOPE";
+          if (prof === "c") sug = "STEP-UP";
+        }
+        if (!sug) sug = "HOPE";
+
+        state.suggestion = sug;
+        state.mode = "ielts_done";
+
+        const map = {
+          "ZERO": {href:"ielts.html#zero", title:"IELTS ZERO"},
+          "HOPE": {href:"ielts.html#hope", title:"IELTS HOPE"},
+          "STEP-UP": {href:"ielts.html#stepup", title:"IELTS STEP-UP"},
+          "DESPERATE": {href:"ielts.html#desperate", title:"IELTS DESPERATE"}
+        };
+        const pick = map[sug];
+
+        const waText =
+          `Assalamu Alaikum LizOn Education. AskLizOn suggested: ${pick.title}. ` +
+          `My situation: ${prof?.toUpperCase() || "N/A"}, timeline: ${tl || "N/A"}. ` +
+          `(Source: AskLizOn_course_selector_upcoming)`;
+
+        pushMsg('bot',
+          `Suggested ✅ <b>${pick.title}</b><div class="mut">Want confirmation? Message counselor with this suggestion.</div>`,
+          [
+            {label:"Open Course Details", href: pick.href},
+            {label:"Talk on WhatsApp (Confirm)", href: waLink(waText), external:true},
+            {label:"Reset", href:"#"}
+          ]
+        );
+      }
+
+      function handleUserText(rawText){
+        const raw = (rawText || "").trim();
+        if (!raw) return;
+
+        pushMsg('me', raw);
+        const s = normalize(raw);
+
+        if (s === "reset" || s === "start over" || s === "restart"){
+          resetAsk();
+          return;
+        }
+
+        if (state.mode === "idle"){
+          if (s.includes("ielts") || s === "i"){ askIELTSQ1(); return; }
+          if (s.includes("pte") || s === "p"){
+            state.program = "pte";
+            state.mode = "pte_done";
+            state.suggestion = "PTE";
+            pushMsg('bot',
+              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">Message counselor with your exam date.</div>`,
+              [
+                {label:"Open PTE Program", href:"pte.html"},
+                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector_upcoming)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+          if (s.includes("abroad") || s.includes("study abroad") || s.includes("visa") || s.includes("university")){
+            state.program = "abroad";
+            state.mode = "abroad_done";
+            state.suggestion = "STUDY_ABROAD";
+            pushMsg('bot',
+              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Counselor will match country + intake + profile.</div>`,
+              [
+                {label:"Open Study Abroad", href:"studyabroad.html"},
+                {label:"Talk to Counselor", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector_upcoming)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+
+          pushMsg('bot', `Just choose one:<div class="mut">IELTS / PTE / Abroad</div>`, []);
+          return;
+        }
+
+        if (state.mode === "ielts_q1"){
+          if (s === "a" || s.includes("basic") || s.includes("beginner") || s.includes("zero")){
+            state.ielts_profile = "a"; askIELTSQ2(); return;
+          }
+          if (s === "b" || s.includes("stuck") || s.includes("atke") || s.includes("5") || s.includes("5.5")){
+            state.ielts_profile = "b"; askIELTSQ2(); return;
+          }
+          if (s === "c" || s.includes("6") || s.includes("6.5") || s.includes("7") || s.includes("upgrade")){
+            state.ielts_profile = "c"; askIELTSQ2(); return;
+          }
+          if (s === "d" || s.includes("close") || s.includes("repeat") || s.includes("urgent")){
+            state.ielts_profile = "d"; askIELTSQ2(); return;
+          }
+          pushMsg('bot', `Reply with <b>A / B / C / D</b> (just one letter).`, []);
+          return;
+        }
+
+        if (state.mode === "ielts_q2"){
+          if (s === "1" || s.includes("30") || s.includes("week") || s.includes("days")){
+            state.timeline = "soon"; decideIELTS(); return;
+          }
+          if (s === "2" || s.includes("month")){
+            state.timeline = "mid"; decideIELTS(); return;
+          }
+          if (s === "3" || s.includes("3+") || s.includes("later") || s.includes("after")){
+            state.timeline = "later"; decideIELTS(); return;
+          }
+          pushMsg('bot', `Reply with <b>1 / 2 / 3</b>.`, []);
+          return;
+        }
+
+        if (state.mode.endsWith("_done")){
+          if (s.includes("reset")) resetAsk();
+          else pushMsg('bot', `Type <b>reset</b> to start again.`, []);
+          return;
+        }
+      }
+
+      function sendAsk(){
+        const val = askInput?.value || "";
+        askInput.value = "";
+        handleUserText(val);
+      }
+
+      if (askSend) askSend.addEventListener('click', sendAsk);
+      if (askInput){
+        askInput.addEventListener('keydown', (e)=>{
+          if (e.key === 'Enter') sendAsk();
+        });
+      }
+
+      document.querySelectorAll('.askPill[data-ask]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const k = btn.getAttribute('data-ask');
+          if (k === "reset"){ resetAsk(); return; }
+          if (k === "ielts"){ pushMsg('me', 'IELTS'); askIELTSQ1(); return; }
+          if (k === "pte"){
+            pushMsg('me', 'PTE');
+            state.program = "pte";
+            state.mode = "pte_done";
+            state.suggestion = "PTE";
+            pushMsg('bot',
+              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">Message counselor with your exam date.</div>`,
+              [
+                {label:"Open PTE Program", href:"pte.html"},
+                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector_upcoming)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+          if (k === "abroad"){
+            pushMsg('me', 'Study Abroad');
+            state.program = "abroad";
+            state.mode = "abroad_done";
+            state.suggestion = "STUDY_ABROAD";
+            pushMsg('bot',
+              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Message counselor with country + intake.</div>`,
+              [
+                {label:"Open Study Abroad", href:"studyabroad.html"},
+                {label:"Talk to Counselor", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector_upcoming)"), external:true},
+                {label:"Reset", href:"#"}
+              ]
+            );
+            return;
+          }
+        });
+      });
+
+    })();
   </script>
 </body>
 </html>

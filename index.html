@@ -85,8 +85,8 @@
     }
     a{color:inherit; text-decoration:none}
 
-    .container{max-width:1100px; margin:0 auto; padding:22px 18px 160px}
-    @media (max-width:520px){ .container{padding:18px 14px 180px} }
+    .container{max-width:1100px; margin:0 auto; padding:22px 18px 180px}
+    @media (max-width:520px){ .container{padding:18px 14px 200px} }
 
     /* =======================
        Topbar
@@ -153,7 +153,6 @@
     }
     .btn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
 
-    /* Primary always readable (no black text) */
     .btn.primary{
       background: linear-gradient(180deg, var(--gold), var(--gold2));
       color: var(--onGold);
@@ -239,7 +238,7 @@
       color: var(--muted);
       font-size:15.5px;
       line-height:1.65;
-      max-width: 880px;
+      max-width: 920px;
       position:relative;
     }
     .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; position:relative; }
@@ -316,6 +315,7 @@
     .stars{ display:inline-flex; gap:4px; align-items:center; }
     .stars svg{ width:16px; height:16px; fill: rgba(215,178,74,.92); }
     .who{ display:flex; gap:10px; align-items:center; font-weight:1000; }
+    .who small{display:block;color:var(--muted);font-weight:850;font-size:12px;margin-top:2px}
     .avatar{
       width:34px; height:34px;
       border-radius:14px;
@@ -437,6 +437,7 @@
     .barLeft{ display:flex; align-items:center; gap:10px; min-width:0; }
     .barRight{ color: var(--muted); font-weight:900; white-space:nowrap; }
 
+    /* Down scroll button */
     .scrollNav{
       position:fixed;
       right:14px;
@@ -467,13 +468,12 @@
     }
     html[data-theme="light"] .scrollBtn{ background: rgba(255,255,255,.88); }
     .scrollBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .scrollBtn:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
     .scrollBtn:focus{ outline:none; box-shadow: 0 0 0 4px var(--focus), var(--soft); }
 
     .themeTiny{
       position:fixed;
       right:14px;
-      bottom:180px; /* moved up so Up button fits */
+      bottom:180px;
       z-index:72;
       width:42px;
       height:42px;
@@ -487,6 +487,7 @@
       cursor:pointer;
       transition:.18s ease;
       user-select:none;
+      color: var(--text);
     }
     html[data-theme="light"] .themeTiny{
       background: rgba(255,255,255,.88);
@@ -495,7 +496,7 @@
     .themeTiny:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
     .themeTiny svg{ width:18px; height:18px; }
 
-    /* Separate UP button (requested) */
+    /* Up button */
     .upFab{
       position:fixed;
       right:14px;
@@ -832,7 +833,7 @@
         <h1 class="heroTitle">Start IELTS the <span>right way</span> — not the random way.</h1>
         <p class="sub">
           Most students fail because they don’t know what to practice, how to measure progress, and which level they actually belong to.
-          This homepage is built to guide you — pick a path, get help, and move forward.
+          This homepage is built to guide you — pick a path, get help, choose courses, or start learning today.
         </p>
 
         <div class="ctaRow">
@@ -842,95 +843,162 @@
             🔔 Upcoming - What’s New?
           </a>
 
-          <!-- Make IELTS level normal now -->
-          <a class="btn" href="ielts.html#levels">Choose IELTS Level</a>
-          <a class="btn" href="pte.html">PTE Program</a>
+          <a class="btn" href="#basicadvanced">Basic - Advanced (All Access)</a>
+          <a class="btn" href="#free">Watch Free Lessons</a>
           <a class="btn ghost" href="#learn">Start Learning</a>
         </div>
       </div>
     </section>
 
-    <!-- PATHS -->
-    <section id="learn">
-      <div class="sectionTitle">Pick your path <small>tap → go</small></div>
+    <!-- BASIC - ADVANCED (Most important) -->
+    <section id="basicadvanced">
+      <div class="sectionTitle">Basic - Advanced <small>All 4 courses access + N2F</small></div>
 
       <div class="grid3">
         <div class="card">
-          <span class="tag"><b>IELTS</b> — Level-based</span>
-          <h4>ZERO → HOPE → STEP-UP → DESPERATE</h4>
+          <span class="tag"><b>All Access</b> — 4 IELTS Levels</span>
+          <h4>ZERO + HOPE + STEP-UP + DESPERATE</h4>
           <p>
-            Start from your real level. Build foundation, then upgrade, then evaluation.
+            One full journey. Foundation → upgrade → evaluation. Built for students who want the complete path.
           </p>
           <div class="row">
-            <a class="btn primary" href="ielts.html#levels">Choose Level</a>
+            <a class="btn primary" href="ielts.html#levels">Choose IELTS Level</a>
             <a class="btn" href="ielts.html#pricing">See Pricing</a>
           </div>
         </div>
 
         <div class="card">
-          <span class="tag"><b>Practice</b> — Skill pages</span>
-          <h4>Listening • Reading • Writing • Speaking</h4>
+          <span class="tag"><b>N2F</b> — Now to Fly</span>
+          <h4>Study Abroad + Visa Support</h4>
           <p>
-            Structured templates + guidance. Stop guessing what to do next.
+            After IELTS, plan the next step properly — country, intake, documents, counselor support.
           </p>
           <div class="row">
-            <a class="btn primary" href="ielts-listening.html">IELTS Listening</a>
-            <a class="btn" href="ielts-speaking.html">IELTS Speaking</a>
+            <a class="btn primary" href="studyabroad.html">N2F Details</a>
+            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20Study%20Abroad%20guidance%20(N2F).%20Country%3A%20____%20Intake%3A%20____%20(Source%3A%20Home_basicadvanced_n2f)" target="_blank" rel="noopener">Talk to Counselor</a>
           </div>
         </div>
 
         <div class="card">
-          <span class="tag"><b>Study Abroad</b> — N2F</span>
-          <h4>Country • Intake • Visa • Docs</h4>
+          <span class="tag"><b>Guidance</b> — Start correct</span>
+          <h4>Not sure where you belong?</h4>
           <p>
-            Study abroad guidance with counselor support — plan smart, avoid mistakes.
+            Tap-only AskLizOn will guide you. Or talk with an expert directly. If you’re in Dhaka, visit the office.
           </p>
           <div class="row">
-            <a class="btn primary" href="studyabroad.html">Study Abroad</a>
-            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20study%20abroad%20guidance%20(N2F).%20Country%3A%20____%20Intake%3A%20____%20(Source%3A%20Home_studyabroad)" target="_blank" rel="noopener">Talk to Counselor</a>
+            <a class="btn primary" href="#ask" id="openAskFromSection">Open AskLizOn</a>
+            <a class="btn" href="#footer">Office & Map</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- QUICK LINKS -->
-    <section id="quick">
-      <div class="sectionTitle">Quick access <small>most visited</small></div>
+    <!-- FREE LESSONS (VIDEO/LESSON SECTION) -->
+    <section id="free">
+      <div class="sectionTitle">Free — Learn inside system <small>Start today</small></div>
 
       <div class="grid3">
         <div class="card">
-          <span class="tag"><b>Upcoming</b> — Live sessions</span>
-          <h4>Join what’s happening</h4>
+          <span class="tag"><b>Start today</b> — don’t stop</span>
+          <h4>After live session, start properly</h4>
           <p>
-            Demo classes, live sessions, and next batches — always updated in one place.
+            After live session, don’t stop. Start learning properly from <b style="color:var(--gold)">MyLizOn.com</b>.
           </p>
           <div class="row">
-            <a class="btn primary" href="Upcoming.html">🔔 Upcoming - What’s New?</a>
-            <a class="btn" href="ielts-faq-bangladesh.html">IELTS FAQ (BD)</a>
+            <a class="btn primary" href="#free-videos">Watch Free Lessons</a>
+            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20free%20learning%20guidance%20from%20MyLizOn.com%20(Source%3A%20Home_free_start)" target="_blank" rel="noopener">Guidance</a>
           </div>
         </div>
 
         <div class="card">
-          <span class="tag"><b>Computer IELTS</b> — New reality</span>
+          <span class="tag"><b>IELTS Skills</b> — pick one</span>
+          <h4>Start from a single skill</h4>
+          <p>
+            Listening / Reading / Writing / Speaking — start from one and build momentum.
+          </p>
+          <div class="row">
+            <a class="btn primary" href="ielts-listening.html">Listening</a>
+            <a class="btn" href="ielts-speaking.html">Speaking</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="tag"><b>Computer IELTS</b> — exam reality</span>
           <h4>Computer-based strategy</h4>
           <p>
             Timing, typing, navigation, and scoring approach — so you don’t panic on exam day.
           </p>
           <div class="row">
             <a class="btn primary" href="ielts-computer-based.html">Computer IELTS</a>
-            <a class="btn" href="ielts.html#levels">Choose Course</a>
+            <a class="btn" href="ielts-faq-bangladesh.html">FAQ (BD)</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTUAL VIDEO LESSONS SECTION -->
+      <div style="margin-top:12px" id="free-videos">
+        <div class="card">
+          <span class="tag"><b>Free Lessons</b> — video picks</span>
+          <h4>Watch & learn (replace links anytime)</h4>
+          <p>
+            These are starter lessons. You can replace the links later with your exact MyLizOn/YouTube lessons.
+          </p>
+
+          <div class="siteMap" style="margin-top:10px">
+            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>IELTS Basics</strong> — free video</a>
+            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Listening</strong> — free video</a>
+            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Reading</strong> — free video</a>
+            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Writing</strong> — free video</a>
+            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Speaking</strong> — free video</a>
+            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Computer IELTS</strong> — free video</a>
+          </div>
+
+          <div class="footer-links">
+            <a class="iconbtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">Open YouTube</a>
+            <a class="iconbtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20watched%20free%20lessons.%20Now%20help%20me%20choose%20my%20level.%20(Source%3A%20Home_free_videos)" target="_blank" rel="noopener">Help Me Choose</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- START LEARNING -->
+    <section id="learn">
+      <div class="sectionTitle">Start Learning <small>skill pages</small></div>
+
+      <div class="grid3">
+        <div class="card">
+          <span class="tag"><b>Listening</b> — all types</span>
+          <h4>IELTS Listening</h4>
+          <p>
+            All question types + correct approach + practice guidance.
+          </p>
+          <div class="row">
+            <a class="btn primary" href="ielts-listening.html">Open Listening</a>
+            <a class="btn" href="ielts.html#levels">Choose Level</a>
           </div>
         </div>
 
         <div class="card">
-          <span class="tag"><b>Guidance</b> — Talk to experts</span>
-          <h4>Course choice + next steps</h4>
+          <span class="tag"><b>Speaking</b> — confidence</span>
+          <h4>IELTS Speaking</h4>
           <p>
-            Not sure? Get direct guidance. If you are in Dhaka, you can also visit the office.
+            Structure, ideas, fluency — stop hesitating and start speaking properly.
           </p>
           <div class="row">
-            <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20for%20IELTS%20course%20selection.%20(Source%3A%20Home_guidance)" target="_blank" rel="noopener">Talk with LizOn</a>
-            <a class="btn" href="#footer">Office & Map</a>
+            <a class="btn primary" href="ielts-speaking.html">Open Speaking</a>
+            <a class="btn" href="ielts-writing.html">Open Writing</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="tag"><b>Reading</b> — speed</span>
+          <h4>IELTS Reading</h4>
+          <p>
+            Strategy for passages + question types + avoid translation trap.
+          </p>
+          <div class="row">
+            <a class="btn primary" href="ielts-reading.html">Open Reading</a>
+            <a class="btn" href="ielts-grammar.html">Open Grammar</a>
           </div>
         </div>
       </div>
@@ -938,7 +1006,7 @@
 
     <!-- REVIEWS -->
     <section id="reviews">
-      <div class="sectionTitle">Student words <small>real vibe</small></div>
+      <div class="sectionTitle">Student words <small>Bangladeshi names</small></div>
 
       <div class="grid3">
         <div class="review">
@@ -958,9 +1026,7 @@
               <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
             </div>
           </div>
-          <p>
-            “Before LizOn, ami random practice kortam. Ekhon level-based routine follow করি, progress clear.”
-          </p>
+          <p>“Before LizOn, ami random practice kortam. Ekhon level-based routine follow করি, progress clear.”</p>
         </div>
 
         <div class="review">
@@ -980,9 +1046,7 @@
               <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
             </div>
           </div>
-          <p>
-            “Teacher feedback + evaluation system ta game changer. Just ‘tips’ na — proper correction.”
-          </p>
+          <p>“Teacher feedback + evaluation system ta game changer. Just ‘tips’ na — proper correction.”</p>
         </div>
 
         <div class="review">
@@ -1002,9 +1066,7 @@
               <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
             </div>
           </div>
-          <p>
-            “Question types bujhe practice korar por anxiety komse. Now I know what I’m doing.”
-          </p>
+          <p>“Question types bujhe practice korar por anxiety komse. Now I know what I’m doing.”</p>
         </div>
       </div>
     </section>
@@ -1044,11 +1106,12 @@
 
         <div class="siteMap" aria-label="Site map links">
           <a href="Upcoming.html"><strong>Upcoming</strong> — What’s New?</a>
+          <a href="#basicadvanced"><strong>Basic - Advanced</strong> — All Access</a>
+          <a href="#free"><strong>Free Lessons</strong> — Videos</a>
           <a href="ielts.html#levels"><strong>IELTS</strong> — Levels</a>
           <a href="ielts.html#pricing"><strong>IELTS</strong> — Pricing</a>
           <a href="pte.html"><strong>PTE</strong> — Program</a>
           <a href="studyabroad.html"><strong>Study Abroad</strong> — N2F</a>
-          <a href="about.html"><strong>About</strong> — LizOn</a>
           <a href="ielts-grammar.html"><strong>IELTS Grammar</strong></a>
           <a href="ielts-listening.html"><strong>IELTS Listening</strong></a>
           <a href="ielts-reading.html"><strong>IELTS Reading</strong></a>
@@ -1056,6 +1119,7 @@
           <a href="ielts-writing.html"><strong>IELTS Writing</strong></a>
           <a href="ielts-computer-based.html"><strong>Computer IELTS</strong></a>
           <a href="ielts-faq-bangladesh.html"><strong>IELTS FAQ (BD)</strong></a>
+          <a href="about.html"><strong>About</strong> — LizOn</a>
         </div>
 
         <div class="footer-links" style="margin-top:10px;">
@@ -1079,7 +1143,7 @@
     </a>
   </div>
 
-  <!-- Up button (separate) -->
+  <!-- Up button -->
   <button class="upFab" id="upFab" type="button" aria-label="Scroll to top">
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M12 5l-7 7h4v7h6v-7h4l-7-7z" fill="currentColor" opacity=".9"/>
@@ -1109,7 +1173,7 @@
   <!-- Overlay -->
   <div class="overlay" id="overlay" aria-hidden="true"></div>
 
-  <!-- Navigation sheet (less congested) -->
+  <!-- Navigation sheet -->
   <aside class="sheet" id="navSheet" role="dialog" aria-modal="true" aria-label="Navigation">
     <div class="sheetHead">
       <b>Navigate</b>
@@ -1123,6 +1187,8 @@
       <div class="divider" aria-hidden="true"></div>
 
       <div class="sheetChips" aria-label="Core Links">
+        <a class="sheetChip" href="#basicadvanced"><span><strong>Basic - Advanced</strong></span><span>→</span></a>
+        <a class="sheetChip" href="#free"><span><strong>Free</strong> Lessons</span><span>→</span></a>
         <a class="sheetChip" href="ielts.html#levels"><span><strong>IELTS</strong> Levels</span><span>→</span></a>
         <a class="sheetChip" href="ielts.html#pricing"><span><strong>IELTS</strong> Pricing</span><span>→</span></a>
         <a class="sheetChip" href="pte.html"><span><strong>PTE</strong> Program</span><span>→</span></a>
@@ -1179,6 +1245,7 @@
         <div class="tapRow">
           <button class="tap primary" data-action="choose_course">Choose Course</button>
           <button class="tap" data-action="learn">Start Learning</button>
+          <button class="tap" data-action="free">Watch Free Lessons</button>
           <button class="tap" data-action="know">Know Things (FAQ)</button>
           <button class="tap" data-action="expert">Talk with Expert</button>
           <button class="tap" data-action="visit">Visit Office (Dhaka)</button>
@@ -1190,7 +1257,7 @@
     </div>
   </aside>
 
-  <!-- Scroll buttons (Down) -->
+  <!-- Scroll down button -->
   <div class="scrollNav" aria-label="Page scroll controls">
     <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll to bottom">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1277,6 +1344,8 @@
       const askClose = document.getElementById('askClose');
       const openAskFromNav = document.getElementById('openAskFromNav');
 
+      const openAskFromSection = document.getElementById('openAskFromSection');
+
       function closeAll(){
         navSheet?.classList.remove('open');
         askPanel?.classList.remove('open');
@@ -1302,6 +1371,7 @@
       if (askFab) askFab.addEventListener('click', openAsk);
       if (askClose) askClose.addEventListener('click', closeAll);
       if (openAskFromNav) openAskFromNav.addEventListener('click', openAsk);
+      if (openAskFromSection) openAskFromSection.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
 
       if (overlay) overlay.addEventListener('click', closeAll);
       document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeAll(); });
@@ -1375,7 +1445,8 @@
             "Tap what you need. If you get stuck, talk with an expert.",
             [
               {tag:'a', label:'🔔 Upcoming - What’s New?', href:'Upcoming.html', primary:true},
-              {tag:'a', label:'Choose IELTS Level', href:'ielts.html#levels'},
+              {tag:'a', label:'Basic - Advanced (All Access)', href:'#basicadvanced'},
+              {tag:'a', label:'Watch Free Lessons', href:'#free-videos'},
               {tag:'a', label:'Study Abroad (N2F)', href:'studyabroad.html'}
             ]
           )
@@ -1390,6 +1461,7 @@
             "Pick one and go to the right place.",
             [
               {tag:'a', label:'IELTS (Levels)', href:'ielts.html#levels', primary:true},
+              {tag:'a', label:'Basic - Advanced (All Access)', href:'#basicadvanced'},
               {tag:'a', label:'PTE Program', href:'pte.html'},
               {tag:'a', label:'Study Abroad (N2F)', href:'studyabroad.html'}
             ]
@@ -1401,7 +1473,7 @@
             "Need a human to confirm?",
             "Tap to WhatsApp with a ready message.",
             [
-              {tag:'a', label:'Talk with LizOn', href: waLink("Assalamu Alaikum LizOn Education. I want help choosing my course/level. My current level: ____. Exam date: ____. (Source: AskLizOn_home_choose_course)"), external:true, primary:true}
+              {tag:'a', label:'Talk with LizOn', href: waLink("Assalamu Alaikum LizOn Education. I want help choosing my course/level. Current level: ____. Exam date: ____. (Source: AskLizOn_home_choose_course)"), external:true, primary:true}
             ]
           )
         );
@@ -1430,6 +1502,20 @@
             [
               {tag:'a', label:'Computer IELTS', href:'ielts-computer-based.html', primary:true},
               {tag:'a', label:'IELTS FAQ (BD)', href:'ielts-faq-bangladesh.html'}
+            ]
+          )
+        );
+      }
+
+      function renderFree(){
+        clearDynamic();
+        askDynamic.appendChild(
+          block(
+            "Free Lessons",
+            "Tap to jump to the Free Lessons section.",
+            [
+              {tag:'a', label:'Watch Free Lessons', href:'#free-videos', primary:true},
+              {tag:'a', label:'Open YouTube', href:'https://www.youtube.com/@lizoneducation', external:true}
             ]
           )
         );
@@ -1518,21 +1604,37 @@
       }
 
       // Delegated taps inside AskLizOn panel
-      document.getElementById('askPanel')?.addEventListener('click', (e)=>{
+      askPanel?.addEventListener('click', (e)=>{
         const btn = e.target.closest('[data-action]');
         if (!btn) return;
         const action = btn.dataset.action;
 
         if (action === "choose_course") renderChooseCourse();
         else if (action === "learn") renderLearn();
+        else if (action === "free") renderFree();
         else if (action === "know") renderKnow();
         else if (action === "expert") renderExpert();
         else if (action === "visit") renderVisit();
         else if (action === "abroad") renderAbroad();
       });
 
+      // Smooth anchor scroll (so #free-videos works from ANY button)
+      document.addEventListener('click', (e)=>{
+        const a = e.target.closest('a[href^="#"]');
+        if(!a) return;
+        const href = a.getAttribute('href');
+        if(!href || href.length < 2) return;
+        const id = href.slice(1);
+        const target = document.getElementById(id);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+
       // Ensure AskLizOn opens clean
-      renderAskHome();
+      function renderAskHome(){ /* already defined above */ }
+      // (No redefinition needed)
 
     })();
   </script>

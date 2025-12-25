@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Upcoming | LizOn Education</title>
-  <meta name="description" content="Upcoming live sessions, demo classes, and next batches — LizOn Education." />
+  <meta name="description" content="Upcoming live sessions, demo classes, and next batches — Basic to Advanced IELTS journey by LizOn Education." />
   <meta name="theme-color" content="#0b2a1f" />
 
   <style>
@@ -22,1986 +22,1124 @@
 
       --soft: 0 12px 40px rgba(0,0,0,.35);
       --shadow2: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 22px;
 
-      --chipBg: rgba(10,26,20,.55);
-      --chipBd: rgba(29,74,58,.75);
-      --focus: rgba(215,178,74,.55);
+      --radius-xl: 20px;
+      --radius-lg: 16px;
 
-      --ask-bg: rgba(6,20,15,.86);
-      --ask-panel: rgba(12,32,25,.92);
-      --ask-bd: rgba(29,74,58,.75);
-      --ask-bubble: rgba(255,255,255,.05);
-      --ask-bubble2: rgba(215,178,74,.10);
+      --topbar-bg: rgba(6,20,15,.88);
+      --topbar-bg-scrolled: rgba(6,20,15,.55);
 
-      --overlay: rgba(0,0,0,.55);
+      --chip-bg: rgba(255,255,255,.03);
+      --chip-br: rgba(255,255,255,.14);
+      --chip-br2: rgba(255,255,255,.22);
+
+      --ok:#00d26a;
+      --warn:#ffbe64;
+      --info:#78d2ff;
+      --danger:#ff8aa2;
     }
 
-    html[data-theme="light"]{
-      --bg1:#f5fbf8;
-      --bg2:#eaf6f0;
-      --card: rgba(255,255,255,.88);
-      --card2: rgba(255,255,255,.72);
-      --line: rgba(9,64,45,.18);
-      --text:#0b1b14;
-      --muted:#355247;
+    .theme-light{
+      --bg1:#eef6f3;
+      --bg2:#eef6f3;
+      --card:#ffffff;
+      --card2:#ffffffcc;
+      --line:rgba(11,32,26,.14);
+      --text:#0b201a;
+      --muted:rgba(11,32,26,.72);
 
-      --chipBg: rgba(255,255,255,.78);
-      --chipBd: rgba(9,64,45,.18);
+      --gold: rgba(165,127,50,.60);
+      --gold2: rgba(165,127,50,.85);
 
-      --soft: 0 14px 40px rgba(6,20,15,.10);
-      --shadow2: 0 18px 60px rgba(6,20,15,.10);
+      --soft: 0 10px 28px rgba(8,25,20,.10);
+      --shadow2: 0 14px 48px rgba(8,25,20,.12);
 
-      --ask-bg: rgba(255,255,255,.86);
-      --ask-panel: rgba(255,255,255,.94);
-      --ask-bd: rgba(9,64,45,.18);
-      --ask-bubble: rgba(9,64,45,.06);
-      --ask-bubble2: rgba(215,178,74,.18);
+      --topbar-bg: rgba(255,255,255,.92);
+      --topbar-bg-scrolled: rgba(255,255,255,.62);
 
-      --overlay: rgba(0,0,0,.35);
+      --chip-bg:#ffffff;
+      --chip-br: rgba(11,32,26,.12);
+      --chip-br2: rgba(11,32,26,.22);
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; scroll-behavior:smooth; }
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(1100px 700px at 20% 0%, rgba(215,178,74,.10), transparent 60%),
-        radial-gradient(1100px 700px at 80% 0%, rgba(72,255,191,.07), transparent 55%),
-        linear-gradient(180deg, var(--bg2), var(--bg1));
-      min-height:100vh;
-      overflow-x:hidden;
+        radial-gradient(1100px 800px at 15% -10%, rgba(35,140,110,.20), transparent 60%),
+        radial-gradient(900px 700px at 85% 10%, rgba(215,178,74,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      line-height:1.55;
     }
-    a{color:inherit; text-decoration:none}
+    a{ color:inherit; }
+    .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
 
-    .container{max-width:1100px; margin:0 auto; padding:22px 18px 140px}
-    @media (max-width:520px){ .container{padding:18px 14px 160px} }
-
-    /* =======================
-       Topbar
-    ======================= */
+    /* ===== TOPBAR ===== */
     .topbar{
-      position:sticky; top:0;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(6,20,15,.88), rgba(6,20,15,.58));
-      border-bottom:1px solid rgba(29,74,58,.6);
-      z-index:50;
+      position:sticky; top:0; z-index:9999; isolation:isolate;
+      backdrop-filter: blur(12px);
+      background: var(--topbar-bg);
+      border-bottom: 1px solid var(--line);
+      transition: background .2s ease, box-shadow .2s ease;
     }
-    html[data-theme="light"] .topbar{
-      background: linear-gradient(180deg, rgba(245,251,248,.88), rgba(245,251,248,.62));
-      border-bottom:1px solid var(--line);
+    .topbar.scrolled{
+      background: var(--topbar-bg-scrolled);
+      box-shadow: 0 10px 25px rgba(0,0,0,.12);
     }
     .topbar-inner{
-      max-width:1100px; margin:0 auto; padding:14px 18px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding: 10px 0;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900; letter-spacing:.2px;
-      min-width:0;
+    .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+    .logo-link{ display:flex; align-items:center; gap:10px; text-decoration:none; min-width:0; }
+    .logo-img{
+      width:44px; height:44px; border-radius:14px;
+      object-fit:contain;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--chip-br);
+      box-shadow: var(--soft);
+      flex: 0 0 auto;
     }
-    .brand-logo{
-      width:38px; height:38px;
-      border-radius:12px;
-      padding:6px;
-      background: var(--chipBg);
-      border:1px solid var(--chipBd);
-      box-shadow: 0 0 0 3px rgba(215,178,74,.10);
-      flex:0 0 auto;
+    .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
+    .brand-text b{
+      font-size:18px; letter-spacing:.2px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width: 220px;
     }
-    .brand .titleWrap{min-width:0}
-    .brand small{
-      display:block;
-      font-weight:750;
-      color:var(--muted);
-      margin-top:2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 60vw;
+    .brand-text span{
+      font-size:12px; color: var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width: 260px;
     }
-
-    /* =======================
-       Buttons / chips
-    ======================= */
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 16px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.75);
-      background: var(--chipBg);
-      font-weight:950;
-      letter-spacing:.2px;
-      cursor:pointer;
-      transition:.18s ease;
-      text-align:center;
-      user-select:none;
-      gap:10px;
-    }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .btn.primary{
-      background: linear-gradient(180deg, var(--gold), var(--gold2));
-      color:#142015;
-      border-color: rgba(215,178,74,.85);
-      box-shadow: 0 18px 60px rgba(215,178,74,.12);
-    }
-    .btn.ghost{
-      background: transparent;
-      border-color: rgba(29,74,58,.65);
-    }
-    html[data-theme="light"] .btn.ghost{ background: rgba(255,255,255,.55); }
-
-    .chipRow{ display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 0; }
+    .desktop-nav{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
     .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px;
+      padding:6px 10px;
+      border:1px solid var(--chip-br);
       border-radius:999px;
-      border:1px solid rgba(29,74,58,.75);
-      background: var(--chipBg);
-      color: var(--muted);
-      font-weight:900;
+      text-decoration:none;
       font-size:12px;
+      color: var(--muted);
+      background: var(--chip-bg);
       white-space:nowrap;
-    }
-    .chip b{ color: var(--gold); }
-    .icon{ width:16px; height:16px; display:inline-block; }
-
-    /* =======================
-       Page Header / Hero
-    ======================= */
-    .hero{
-      padding:18px 0 10px;
-      display:grid;
-      gap:14px;
-    }
-
-    .heroCard{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.72), rgba(10,26,20,.52));
-      box-shadow: var(--soft);
-      padding:22px;
-      position:relative;
-      overflow:hidden;
-    }
-    html[data-theme="light"] .heroCard{
-      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
-    }
-    .heroCard:before{
-      content:"";
-      position:absolute; inset:-120px auto auto -120px;
-      width:520px; height:520px;
-      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.18), transparent 62%);
-      pointer-events:none;
-    }
-    .heroTitle{
-      margin:8px 0 8px;
-      font-size:36px;
-      line-height:1.05;
-      letter-spacing:-.6px;
-    }
-    @media (max-width:520px){ .heroTitle{ font-size:30px; } }
-    .heroTitle span{ color: var(--gold); }
-    .sub{
-      margin:0;
-      color: var(--muted);
-      font-size:15.5px;
-      line-height:1.65;
-      max-width: 860px;
-      position:relative;
-    }
-    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; position:relative; }
-    @media (max-width:520px){ .ctaRow .btn{ width:100%; } }
-
-    /* =======================
-       Featured (OUTSTANDING)
-    ======================= */
-    .featured{
-      border-radius: var(--radius);
-      border:1px solid rgba(215,178,74,.45);
-      background:
-        radial-gradient(900px 420px at 12% 12%, rgba(215,178,74,.22), transparent 55%),
-        radial-gradient(900px 420px at 88% 12%, rgba(72,255,191,.12), transparent 55%),
-        linear-gradient(180deg, rgba(12,32,25,.84), rgba(10,26,20,.58));
-      box-shadow: 0 26px 90px rgba(0,0,0,.45);
-      overflow:hidden;
-      position:relative;
-    }
-    html[data-theme="light"] .featured{
-      background:
-        radial-gradient(900px 420px at 12% 12%, rgba(215,178,74,.22), transparent 55%),
-        radial-gradient(900px 420px at 88% 12%, rgba(72,255,191,.10), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,255,255,.80));
-      box-shadow: 0 22px 70px rgba(6,20,15,.14);
-    }
-    .featuredTop{
-      padding:18px 18px 16px;
-      display:grid;
-      gap:10px;
-      position:relative;
-    }
-    .featuredTop:after{
-      content:"";
-      position:absolute; inset:-160px -160px auto auto;
-      width:520px; height:520px;
-      background: radial-gradient(circle at 30% 30%, rgba(72,255,191,.12), transparent 62%);
-      pointer-events:none;
-    }
-    .kickerRow{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:relative; }
-    .kickerPill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 11px;
-      border-radius:999px;
-      border:1px solid rgba(215,178,74,.40);
-      background: rgba(215,178,74,.12);
-      font-weight:1000;
-      font-size:12px;
-      color: var(--text);
-      position:relative;
-    }
-    .kickerPill b{ color: var(--gold); }
-    .pulseDot{
-      width:10px; height:10px; border-radius:999px;
-      background:#2cffb2;
-      box-shadow: 0 0 0 0 rgba(44,255,178,.32);
-      animation: pulse 1.4s infinite;
-      flex:0 0 auto;
-    }
-    @keyframes pulse{
-      0%{ box-shadow: 0 0 0 0 rgba(44,255,178,.32); }
-      70%{ box-shadow: 0 0 0 10px rgba(44,255,178,0); }
-      100%{ box-shadow: 0 0 0 0 rgba(44,255,178,0); }
-    }
-
-    .featuredTitle{
-      margin:0;
-      font-size:22px;
-      font-weight:1000;
-      letter-spacing:-.2px;
-      position:relative;
-    }
-    .featuredSub{
-      margin:0;
-      color: var(--muted);
-      font-weight:850;
-      font-size:13.5px;
-      line-height:1.6;
-      max-width: 950px;
-      position:relative;
-    }
-
-    .metaGrid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:12px;
-      margin-top:10px;
-      position:relative;
-    }
-    @media (max-width:920px){ .metaGrid{ grid-template-columns:1fr; } }
-
-    .metaCard{
-      border-radius:18px;
-      border:1px solid rgba(29,74,58,.65);
-      background: rgba(10,26,20,.28);
-      padding:14px;
-      display:grid;
-      gap:10px;
-    }
-    html[data-theme="light"] .metaCard{ background: rgba(255,255,255,.58); }
-    .metaCard h3{ margin:0; font-size:14px; font-weight:1000; }
-    .metaCard p{ margin:0; color: var(--muted); font-weight:850; font-size:13px; line-height:1.55; }
-
-    .metaLine{
-      display:flex; align-items:flex-start; gap:10px;
-      padding:10px 10px;
-      border-radius:14px;
-      border:1px dashed rgba(29,74,58,.55);
-      background: rgba(255,255,255,.02);
-    }
-    html[data-theme="light"] .metaLine{ background: rgba(255,255,255,.72); }
-    .metaLine b{ display:block; margin-bottom:2px; }
-    .metaLine span{ color: var(--muted); font-weight:850; font-size:12.8px; line-height:1.45; }
-
-    .bigJoin{
-      display:grid;
-      gap:10px;
-    }
-    .joinBtn{
-      width:100%;
-      padding:14px 14px;
-      border-radius:16px;
-      border:1px solid rgba(215,178,74,.60);
-      background: linear-gradient(180deg, rgba(215,178,74,.24), rgba(215,178,74,.12));
-      font-weight:1000;
-      display:flex; align-items:center; justify-content:center;
-      gap:10px;
-      cursor:pointer;
-      transition:.18s ease;
       user-select:none;
+    }
+    .chip:hover{ border-color:var(--chip-br2); color:var(--text); }
+
+    /* ===== DRAWER ===== */
+    .backdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.45);
+      display:none; z-index:9998;
+    }
+    .backdrop.open{ display:block; }
+    .drawer{
+      position:fixed;
+      left:12px; right:12px; bottom:12px;
+      max-height: calc(100vh - 24px);
+      overflow:auto;
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow2);
+      padding:14px;
+      display:none; z-index:10000;
+      backdrop-filter: blur(10px);
+      transform: translateY(8px);
+    }
+    .drawer.open{ display:block; animation: sheetIn .14s ease-out forwards; }
+    @keyframes sheetIn{ from{ opacity:0; transform: translateY(14px);} to{ opacity:1; transform: translateY(0);} }
+
+    .drawer-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
+    .drawer-top h3{
+      margin:0; font-size:13px; color: var(--muted);
+      letter-spacing:.2px; font-weight:900;
+    }
+    .xbtn{
+      border:1px solid var(--chip-br);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .drawer-sub{
+      margin:12px 0 8px;
+      font-size:12px; color: var(--muted);
+      font-weight:900; letter-spacing:.2px;
+    }
+    .drawer-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    .drawer a{
+      display:block;
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid var(--chip-br);
+      background: rgba(255,255,255,.02);
+      text-decoration:none;
+      color: var(--text);
+      font-weight:900;
       text-align:center;
     }
-    .joinBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.82); }
-    .joinBtn.primary{
-      background: linear-gradient(180deg, var(--gold), var(--gold2));
-      color:#142015;
-      border-color: rgba(215,178,74,.85);
-      box-shadow: 0 18px 60px rgba(215,178,74,.12);
-    }
+    .drawer a:hover{ border-color: var(--chip-br2); }
+    .drawer .full{ grid-column: 1 / -1; }
 
-    .accPanel{
-      margin-top:10px;
-      border-top:1px solid rgba(29,74,58,.55);
-      padding:14px 18px 18px;
-      display:none;
-    }
-    .accPanel.open{ display:block; }
-
-    .featurePoints{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-      margin-top:12px;
-    }
-    @media (max-width:920px){ .featurePoints{ grid-template-columns:1fr 1fr; } }
-    @media (max-width:520px){ .featurePoints{ grid-template-columns:1fr; } }
-    .point{
-      border-radius:18px;
-      border:1px solid rgba(29,74,58,.65);
-      background: rgba(10,26,20,.24);
-      padding:12px;
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      min-height: 88px;
-    }
-    html[data-theme="light"] .point{ background: rgba(255,255,255,.58); }
-    .pointIcon{ width:22px; height:22px; flex:0 0 auto; color: var(--gold); opacity:.95; }
-    .point b{ display:block; margin-bottom:3px; }
-    .point span{ color: var(--muted); font-weight:850; font-size:12.8px; line-height:1.45; }
-
-    /* =======================
-       Sections
-    ======================= */
-    .sectionTitle{
-      margin:20px 0 10px;
-      font-size:16px;
-      letter-spacing:.2px;
-      font-weight:1000;
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-    }
-    .sectionTitle small{ color: var(--muted); font-weight:800; }
-
-    .grid3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
-    @media (max-width:920px){ .grid3{ grid-template-columns:1fr; } }
-
-    .card{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
+    /* ===== MAIN ===== */
+    header{ padding: 18px 0 10px; }
+    section{ padding: 18px 0; }
+    .hero-card, .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 18px;
       box-shadow: var(--soft);
-      padding:16px;
-      display:grid;
-      gap:10px;
     }
-    html[data-theme="light"] .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
-    }
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      width:max-content;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.75);
-      background: var(--chipBg);
-      font-weight:950;
-      font-size:12px;
-      color: var(--muted);
-    }
-    .tag b{ color: var(--gold); }
-    .card h4{ margin:0; font-size:15px; font-weight:1000; }
-    .card p{ margin:0; color: var(--muted); font-weight:850; font-size:13px; line-height:1.55; }
-    .card .row{ display:flex; gap:10px; flex-wrap:wrap; }
-    .card .row .btn{ width:100%; }
-
-    /* =======================
-       Timeline
-    ======================= */
-    .timeline{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
-      box-shadow: var(--soft);
-      padding:16px;
-      display:grid;
-      gap:12px;
-    }
-    html[data-theme="light"] .timeline{
-      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
-    }
-    .step{
-      display:flex; gap:12px; align-items:flex-start;
-      padding:12px;
-      border-radius:18px;
-      border:1px solid rgba(29,74,58,.55);
-      background: rgba(255,255,255,.02);
-    }
-    html[data-theme="light"] .step{ background: rgba(255,255,255,.72); }
-    .stepNum{
-      width:34px; height:34px;
-      border-radius:14px;
-      border:1px solid rgba(215,178,74,.40);
-      background: rgba(215,178,74,.10);
-      display:grid;
-      place-items:center;
-      font-weight:1000;
-      color: var(--gold);
-      flex:0 0 auto;
-    }
-    .step b{ display:block; margin-bottom:3px; }
-    .step span{ color: var(--muted); font-weight:850; font-size:13px; line-height:1.5; }
-
-    /* =======================
-       Footer (same style as index)
-    ======================= */
-    .footer{
-      margin-top:18px;
-      padding:18px;
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
-      box-shadow: var(--soft);
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:16px;
-      align-items:start;
-      overflow:hidden;
-    }
-    html[data-theme="light"] .footer{
-      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.76));
-    }
-    .footer h3{ margin:0 0 8px; font-size:14px; font-weight:1000; }
-    .footer p{ margin:0; color: var(--muted); line-height:1.6; font-size:13px; }
-    .footer p strong{ color: var(--gold); }
-
-    .footer-links{
-      display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;
-    }
-    .iconbtn{
+    .badge{
       display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:900; font-size:13px;
-      transition:.18s ease;
-      white-space:nowrap;
-    }
-    .iconbtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    .siteMap{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    @media (max-width:520px){ .siteMap{ grid-template-columns:1fr; } }
-    .siteMap a{
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.65);
-      background: rgba(10,26,20,.28);
-      font-weight:900;
-      font-size:13px;
-      transition:.18s ease;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    html[data-theme="light"] .siteMap a{ background: rgba(255,255,255,.58); }
-    .siteMap a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    .smallprint{
-      margin-top:12px;
-      font-size:12px;
-      color: rgba(183,201,194,.75);
-    }
-
-    /* =======================
-       Floating Bars + Controls
-    ======================= */
-    .floatwa{
-      position:fixed;
-      right:14px; bottom:14px;
-      z-index:60;
-      display:flex; align-items:center; gap:10px;
-      padding:12px 14px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.8);
-      background: rgba(6,20,15,.82);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      font-weight:950;
-      max-width: calc(100vw - 28px);
-    }
-    html[data-theme="light"] .floatwa{ background: rgba(255,255,255,.86); }
-    .dot{
-      width:10px; height:10px; border-radius:999px;
-      background:#2cffb2;
-      box-shadow: 0 0 0 3px rgba(44,255,178,.15);
-      flex:0 0 auto;
-    }
-    .floatwa b{ color: var(--gold); }
-    @media (max-width:420px){
-      .floatwa{ font-size:13px; padding:10px 12px; }
-    }
-
-    .scrollNav{
-      position:fixed;
-      right:14px;
-      bottom:78px;
-      z-index:61;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      align-items:center;
-      justify-content:center;
-      pointer-events:auto;
-    }
-    .scrollBtn{
-      width:42px;
-      height:42px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.75);
-      background: rgba(6,20,15,.78);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      color: var(--text);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      transition:.18s ease;
-      user-select:none;
-    }
-    html[data-theme="light"] .scrollBtn{ background: rgba(255,255,255,.86); }
-    .scrollBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .scrollBtn:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
-    .scrollBtn:focus{ outline:none; box-shadow: 0 0 0 4px var(--focus), var(--soft); }
-
-    .themeTiny{
-      position:fixed;
-      right:14px;
-      bottom:128px;
-      z-index:62;
-      width:42px;
-      height:42px;
-      border-radius:14px;
-      border:1px solid rgba(215,178,74,.35);
-      background: rgba(6,20,15,.78);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      transition:.18s ease;
-      user-select:none;
-    }
-    html[data-theme="light"] .themeTiny{
-      background: rgba(255,255,255,.86);
-      border-color: rgba(9,64,45,.18);
-    }
-    .themeTiny:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .themeTiny svg{ width:18px; height:18px; }
-
-    .askFab{
-      position:fixed;
-      left:14px;
-      bottom:14px;
-      z-index:62;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:12px 14px;
-      border-radius:999px;
-      border:1px solid rgba(215,178,74,.40);
-      background: var(--ask-bg);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      font-weight:1000;
-      cursor:pointer;
-      user-select:none;
-      max-width: calc(100vw - 28px);
-    }
-    .askFab:hover{ transform: translateY(-1px); }
-    .askFabLogo{
-      width:18px; height:18px;
-      border-radius:7px;
-      padding:2px;
-      border:1px solid rgba(29,74,58,.55);
-      background: rgba(255,255,255,.04);
-      flex:0 0 auto;
-    }
-    html[data-theme="light"] .askFabLogo{ background: rgba(255,255,255,.75); }
-    .askFab b{ color: var(--gold); }
-    .askBadge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid rgba(29,74,58,.55);
-      background: rgba(255,255,255,.03);
-      color: var(--muted);
+      font-size:12px;
+      color:var(--muted);
+      border: 1px solid var(--chip-br);
+      background: var(--chip-bg);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--ok);
+    }
+    h1{ margin:10px 0 6px; font-size:28px; line-height:1.18; }
+    .lead{ margin:0; color:var(--muted); max-width:920px; }
+    .rule{ height:1px; background: var(--line); margin:18px 0; }
+
+    .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .grid-3{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+
+    .muted{ color:var(--muted); }
+    .title{ margin:0 0 8px; font-size:18px; line-height:1.25; }
+
+    .btn{
+      display:inline-block;
+      padding:12px 16px;
+      border-radius: 14px;
+      text-decoration:none;
       font-weight:950;
-      font-size:12px;
+      border:1px solid transparent;
       white-space:nowrap;
+      user-select:none;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      background: transparent;
+      color: var(--text);
     }
-    html[data-theme="light"] .askBadge{ background: rgba(255,255,255,.70); }
-
-    .overlay{
-      position:fixed;
-      inset:0;
-      background: var(--overlay);
-      display:none;
-      z-index:1200;
+    .btn-primary{
+      background: linear-gradient(180deg, rgba(215,178,74,.20), rgba(215,178,74,.10));
+      border-color: rgba(215,178,74,.55);
     }
-    .overlay.open{ display:block; }
-
-    /* Ask panel */
-    .askPanel{
-      position:fixed;
-      top:12px;
-      left:12px;
-      bottom:12px;
-      width:min(420px, calc(100vw - 24px));
-      border-radius: 18px;
-      border:1px solid var(--ask-bd);
-      background: var(--ask-panel);
-      box-shadow: var(--shadow2);
-      z-index:1201;
-      transform: translateX(-110%);
-      transition: transform .22s ease;
-      display:flex;
-      flex-direction:column;
-      overflow:hidden;
-    }
-    .askPanel.open{ transform: translateX(0); }
-
-    .askHead{
-      padding:12px 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      border-bottom:1px solid rgba(29,74,58,.55);
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00));
-    }
-    html[data-theme="light"] .askHead{
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
-      border-bottom:1px solid var(--line);
-    }
-    .askTitle{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-    .askLogo{
-      width:34px; height:34px;
-      border-radius:12px;
-      padding:6px;
-      background: var(--chipBg);
-      border:1px solid var(--chipBd);
-      flex:0 0 auto;
-    }
-    .askTitle b{
-      font-weight:1000;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .askTitle small{
-      display:block;
+    .btn-ghost{
+      background: rgba(255,255,255,.02);
+      border-color: var(--chip-br);
       color: var(--muted);
-      font-weight:850;
-      font-size:12px;
-      margin-top:2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 240px;
     }
-    .askClose{
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:1000;
-      cursor:pointer;
-      user-select:none;
-      white-space:nowrap;
-    }
-
-    .askQuick{
-      padding:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      border-bottom:1px solid rgba(29,74,58,.45);
-      background: rgba(255,255,255,.02);
-    }
-    html[data-theme="light"] .askQuick{
-      background: rgba(255,255,255,.78);
-      border-bottom:1px solid var(--line);
-    }
-    .askPill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.65);
-      background: var(--chipBg);
-      font-weight:990;
-      font-size:13px;
-      cursor:pointer;
-      user-select:none;
-      transition:.18s ease;
-      white-space:nowrap;
-      flex:0 0 auto;
-    }
-    .askPill:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    .askBody{
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      overflow:auto;
-      flex:1 1 auto;
-    }
-
-    .askMsg{ display:flex; gap:10px; align-items:flex-start; }
-    .askAvatar{
-      width:30px; height:30px;
+    .btn:hover{ filter: brightness(1.03); }
+    .btn-tiny{
+      padding:9px 11px;
+      font-weight:950;
       border-radius:12px;
-      border:1px solid rgba(29,74,58,.55);
-      background: rgba(255,255,255,.03);
-      display:grid;
-      place-items:center;
-      font-weight:1000;
-      flex:0 0 auto;
-      color: var(--gold);
-    }
-    html[data-theme="light"] .askAvatar{ background: rgba(255,255,255,.75); }
-    .askBubble{
-      border-radius:16px;
-      border:1px solid rgba(29,74,58,.55);
-      background: var(--ask-bubble);
-      padding:12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.12);
-      max-width: 100%;
-    }
-    .askBubble.me{
-      background: var(--ask-bubble2);
-      border-color: rgba(215,178,74,.35);
-    }
-    .askBubble b{ color: var(--gold); }
-    .askBubble p{ margin:0; color: var(--text); font-weight:850; line-height:1.55; font-size:13.5px; }
-    .askBubble .mut{ color: var(--muted); font-weight:800; font-size:12.5px; margin-top:6px; }
-
-    .askSuggest{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-    .askLink{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.65);
-      background: var(--chipBg);
-      font-weight:990;
-      font-size:13px;
-      cursor:pointer;
-      white-space:nowrap;
-      transition:.18s ease;
-    }
-    .askLink:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    .askFoot{
-      padding:12px;
-      border-top:1px solid rgba(29,74,58,.55);
+      font-size:12px;
       background: rgba(255,255,255,.02);
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-    html[data-theme="light"] .askFoot{
-      background: rgba(255,255,255,.86);
-      border-top:1px solid var(--line);
-    }
-    .askInput{
-      flex:1 1 auto;
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.65);
-      background: rgba(0,0,0,.08);
-      color: var(--text);
-      font-weight:850;
-      outline:none;
-    }
-    html[data-theme="light"] .askInput{
-      background: rgba(255,255,255,.75);
-      color: var(--text);
-    }
-    .askSend{
-      flex:0 0 auto;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(215,178,74,.45);
-      background: linear-gradient(180deg, var(--gold), var(--gold2));
-      color:#142015;
-      font-weight:1000;
+      border:1px solid var(--chip-br);
+      color:var(--text);
+      text-decoration:none;
       cursor:pointer;
-      user-select:none;
-      white-space:nowrap;
     }
+    .btn-tiny:hover{ border-color: var(--chip-br2); }
 
-    /* Bottom-left hamburger (icon only) */
-    .menuFab{
-      position:fixed;
-      left:14px;
-      bottom:66px;
-      z-index:63;
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.78);
-      background: rgba(6,20,15,.82);
-      backdrop-filter: blur(14px);
+    .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+
+    /* ===== UPCOMING CARDS ===== */
+    .event{
+      border:1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      padding: 16px;
       box-shadow: var(--soft);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      transition:.18s ease;
-      user-select:none;
-    }
-    html[data-theme="light"] .menuFab{ background: rgba(255,255,255,.86); }
-    .menuFab:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .menuFab svg{ width:18px; height:18px; }
-
-    /* Drawer sheet */
-    .sheet{
-      position:fixed;
-      left:12px;
-      bottom:12px;
-      width:min(420px, calc(100vw - 24px));
-      border-radius:18px;
-      border:1px solid rgba(29,74,58,.75);
-      background: linear-gradient(180deg, rgba(12,32,25,.94), rgba(10,26,20,.90));
-      box-shadow: var(--shadow2);
-      z-index:1201;
-      transform: translateY(130%);
-      transition: transform .22s ease;
+      position:relative;
       overflow:hidden;
     }
-    html[data-theme="light"] .sheet{
-      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-      border:1px solid rgba(9,64,45,.18);
+    .event:before{
+      content:"";
+      position:absolute; inset:-40px -60px auto auto;
+      width:220px; height:220px;
+      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.22), transparent 60%);
+      transform: rotate(15deg);
+      pointer-events:none;
     }
-    .sheet.open{ transform: translateY(0); }
-    .sheetHead{
-      padding:12px 12px;
-      border-bottom:1px solid rgba(29,74,58,.55);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+    .event-top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      position:relative;
     }
-    .sheetHead b{ font-weight:1000; }
-    .sheetClose{
-      padding:10px 12px;
+    .event h3{ margin:0; font-size:16px; }
+    .kicker{ margin:6px 0 0; color: var(--muted); font-size:13px; }
+    .pillrow{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; position:relative; }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
       border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:1000;
-      cursor:pointer;
-    }
-    .sheetBody{
-      padding:12px;
-      display:grid;
-      gap:10px;
-    }
-    .sheetBody a{
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
+      border:1px solid var(--chip-br);
+      background: rgba(255,255,255,.02);
+      color: var(--muted);
+      font-size:12px;
       font-weight:900;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
     }
-    .sheetBody a strong{ color: var(--gold); }
-    .sheetRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      padding-top:4px;
+    .pill strong{ color: var(--text); }
+
+    .event-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; position:relative; }
+
+    .tag-live{ border-color: rgba(120,210,255,.35); background: rgba(120,210,255,.08); }
+    .tag-demo{ border-color: rgba(255,190,100,.35); background: rgba(255,190,100,.10); }
+    .tag-batch{ border-color: rgba(0,210,106,.30); background: rgba(0,210,106,.08); }
+    .tag-urgent{ border-color: rgba(255,138,162,.30); background: rgba(255,138,162,.08); }
+
+    .mini{
+      border:1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.02);
+      padding: 14px;
     }
-    .sheetRow a{
+    .mini b{ display:block; font-size:13px; }
+    .mini p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
+
+    .list{ margin:10px 0 0; padding-left:18px; color: var(--muted); }
+    .list li{ margin:6px 0; }
+
+    /* ===== ASK PANEL (selector) ===== */
+    .ask-wrap{
+      position:fixed; inset:0;
+      display:none; align-items:flex-end; justify-content:center;
+      padding:16px; z-index:12060;
+    }
+    .ask-wrap.show{ display:flex; }
+    .modal-back{ position:absolute; inset:0; background: rgba(0,0,0,.50); }
+    .ask{
+      position:relative;
+      width:min(760px, 100%);
+      border-radius: var(--radius-xl);
+      border:1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow2);
+      padding: 14px;
+      animation: sheetIn .14s ease-out forwards;
+      backdrop-filter: blur(10px);
+    }
+    .ask-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+    .ask-title{ display:flex; align-items:center; gap:10px; }
+    .ask-badge{
+      width:38px; height:38px; border-radius:14px;
+      border:1px solid var(--chip-br);
+      background: rgba(255,255,255,.02);
+      display:grid; place-items:center;
+      font-weight:950;
+    }
+    .ask h4{ margin:0; font-size:16px; }
+    .ask p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
+    .modal-x{
+      border:1px solid var(--chip-br);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      border-radius:14px;
+      width:42px; height:42px;
+      display:grid; place-items:center;
+      cursor:pointer; font-weight:950;
+      flex:0 0 auto;
+    }
+    .step-label{
+      font-size:12px; color: var(--muted);
+      font-weight:900; letter-spacing:.2px;
+      margin: 12px 0 8px;
+    }
+    .opt-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    .opt{
+      border:1px solid var(--chip-br);
+      background: rgba(255,255,255,.02);
+      border-radius:18px;
+      padding:12px;
+      text-align:left;
+      cursor:pointer;
+      user-select:none;
+    }
+    .opt:hover{ border-color: var(--chip-br2); }
+    .opt b{ display:block; font-size:14px; margin-bottom:4px; }
+    .opt span{ display:block; color: var(--muted); font-size:12px; }
+
+    .ask-result{
+      margin-top:12px;
+      border:1px solid rgba(215,178,74,.30);
+      background: linear-gradient(180deg, rgba(215,178,74,.10), rgba(255,255,255,.01)), rgba(255,255,255,.01);
+      border-radius: var(--radius-xl);
+      padding: 14px;
+      display:none;
+    }
+    .ask-result.show{ display:block; }
+    .res-top{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; flex-wrap:wrap; }
+    .res-title{ font-weight:950; font-size:16px; margin:0; }
+    .res-meta{ color: var(--muted); font-size:13px; margin-top:4px; }
+    .res-price{ font-weight:950; font-size:16px; white-space:nowrap; }
+    .why{ margin-top:10px; color: var(--text); font-size:13px; line-height:1.55; }
+    .ask-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center; }
+
+    /* ===== FLOATING CONTROLS ===== */
+    .scroll-dock{
+      position:fixed; right:14px; bottom:120px; z-index:2300;
+      display:flex; flex-direction:column; gap:10px;
+      padding:10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--soft);
+    }
+    .sbtn{
+      width:44px; height:44px;
+      border-radius:16px;
+      border:1px solid var(--chip-br);
+      background: var(--card);
+      color: var(--text);
+      display:grid; place-items:center;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease, filter .12s ease;
+    }
+    .sbtn:hover{ border-color: var(--chip-br2); filter: brightness(1.03); transform: translateY(-1px); }
+    .sbtn svg{ width:20px; height:20px; }
+
+    .hamb-fab{
+      position:fixed; left:14px; bottom:54px; z-index:2400;
+      width:54px; height:54px; border-radius:20px;
+      border:1px solid var(--chip-br);
+      background: var(--card);
+      box-shadow: var(--soft);
+      display:grid; place-items:center;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .hamb-fab svg{ width:22px; height:22px; }
+
+    .ask-pill{
+      position:fixed; left:14px; bottom:116px; z-index:2400;
+      border:1px solid var(--chip-br);
+      background: var(--card);
+      box-shadow: var(--soft);
       border-radius:999px;
       padding:10px 12px;
-      width:auto;
+      display:flex; align-items:center; gap:10px;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
+    .ask-dot{ width:12px; height:12px; border-radius:50%; background: rgba(215,178,74,.85); }
+    .ask-pill b{ font-size:13px; }
+    .ask-pill span{ font-size:12px; color: var(--muted); }
 
-    @media (max-width:520px){
-      .menuFab{ left:12px; bottom:66px; width:42px; height:42px; }
-      .askFab{ left:12px; bottom:14px; }
-      .askFab .askBadge{ display:none; }
-      .scrollNav{ right:12px; bottom:74px; }
-      .scrollBtn{ width:40px; height:40px; border-radius:14px; }
-      .themeTiny{ right:12px; bottom:122px; width:40px; height:40px; border-radius:14px; }
+    .theme-fab{
+      position:fixed; right:14px; bottom:54px; z-index:2400;
+      border:1px solid var(--chip-br);
+      background: var(--card);
+      box-shadow: var(--soft);
+      border-radius:18px;
+      width:52px; height:52px;
+      display:grid; place-items:center;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .theme-fab svg{ width:18px; height:18px; }
+    .icon-sun{ display:none; }
+    .theme-light .icon-sun{ display:block; }
+    .theme-light .icon-moon{ display:none; }
+
+    /* ===== FOOTER + GUIDANCE BAR ===== */
+    footer{
+      padding: 10px 0 160px;
+      border-top: 1px solid var(--line);
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .footer-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding:16px;
+      box-shadow: var(--soft);
+    }
+    .footer-columns{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr .9fr;
+      gap:14px;
+      margin-top:12px;
+    }
+    .footer-title{ margin:0 0 8px; font-size:13px; color: var(--text); font-weight:950; }
+    .footer-links{ display:flex; gap:10px; flex-wrap:wrap; }
+    .footer-links a{ text-decoration:none; }
+    .socials{ display:flex; gap:10px; flex-wrap:wrap; }
+    .footer-small{ font-size:13px; color: var(--muted); }
+
+    .sticky-bar{
+      position:fixed; left:0; right:0; bottom:12px; z-index:2200;
+      display:flex; justify-content:center;
+      pointer-events:none;
+    }
+    .sticky-bar .bar{
+      pointer-events:auto;
+      display:flex; align-items:center; gap:10px;
+      border:1px solid var(--line);
+      background: var(--card);
+      padding:10px 14px;
+      border-radius:999px;
+      box-shadow: var(--soft);
+      backdrop-filter: blur(10px);
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .bar .dot{ width:10px; height:10px; border-radius:50%; background: var(--ok); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 920px){
+      .grid-2, .grid-3{ grid-template-columns: 1fr; }
+      h1{ font-size:24px; }
+      .footer-columns{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px){
+      .opt-grid{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <div class="topbar">
+
+<!-- TOPBAR -->
+<div class="topbar" id="topbar">
+  <div class="container">
     <div class="topbar-inner">
-      <a class="brand" href="index.html" aria-label="LizOn Education Home">
-        <img class="brand-logo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
-        <div class="titleWrap">
-          LizOn Education
-          <small>Upcoming Sessions & Next Batches</small>
-        </div>
-      </a>
+      <div class="brand">
+        <a class="logo-link" href="index.html" title="Go to Home" aria-label="Go to Home">
+          <img class="logo-img" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+          <div class="brand-text">
+            <b>LizOn Education</b>
+            <span>Upcoming — Basic to Advanced</span>
+          </div>
+        </a>
+      </div>
 
-      <!-- (No visible top nav on purpose; we use the icon-only sheet) -->
+      <nav class="desktop-nav" aria-label="Top navigation">
+        <a class="chip" href="index.html">Home</a>
+        <a class="chip" href="ielts.html">IELTS Journey</a>
+        <a class="chip" href="#upcoming">Upcoming</a>
+        <a class="chip" href="#next">Next Batch</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- DRAWER -->
+<div class="backdrop" id="backdrop"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="drawer-top">
+    <h3>Navigate</h3>
+    <button class="xbtn" id="closeDrawer" type="button" aria-label="Close">✕</button>
+  </div>
+
+  <div class="drawer-sub">Core</div>
+  <div class="drawer-grid">
+    <a class="full" href="index.html">Home</a>
+    <a class="full" href="about.html">About</a>
+    <a class="full" href="ielts.html">IELTS Journey</a>
+    <a class="full" href="#upcoming">Upcoming</a>
+    <a class="full" href="#next">Next Batch</a>
+  </div>
+
+  <div class="drawer-sub">IELTS Pages</div>
+  <div class="drawer-grid">
+    <a class="full" href="ielts-roadmap.html">IELTS Roadmap</a>
+    <a class="full" href="ielts-choose-level.html">Choose Level</a>
+    <a class="full" href="ielts-band-improvement.html">Band Improvement</a>
+    <a class="full" href="ielts-grammar.html">IELTS Grammar</a>
+    <a class="full" href="ielts-computer-based.html">Computer Based IELTS</a>
+    <a class="full" href="ielts-faq-bangladesh.html">IELTS FAQ (Bangladesh)</a>
+  </div>
+
+  <div class="drawer-sub">Practice</div>
+  <div class="drawer-grid">
+    <a class="full" href="ielts-listening.html">IELTS Listening</a>
+    <a class="full" href="ielts-reading.html">IELTS Reading</a>
+    <a class="full" href="ielts-writing.html">IELTS Writing</a>
+    <a class="full" href="ielts-speaking.html">IELTS Speaking</a>
+  </div>
+
+  <div class="drawer-sub">Other</div>
+  <div class="drawer-grid">
+    <a class="full" href="pte.html">PTE</a>
+    <a class="full" href="studyabroad.html">Study Abroad</a>
+  </div>
+
+  <div style="margin-top:12px;">
+    <a class="btn-tiny" style="display:block;text-align:center;"
+       href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20IELTS%20course%20niye%20admission%20nibo.%20Guidance%20den%3F"
+       target="_blank" rel="noopener">Talk with LizOn</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header>
+  <div class="container">
+    <div class="hero-card">
+      <span class="badge"><span class="dot"></span>Basic → Advanced (Fully Guided)</span>
+      <h1>They admit. We take care of everything.</h1>
+      <p class="lead">
+        Ei page ta shudhu <b>Basic–Advanced</b> journey niye. Apnar job: admit kora.
+        Amader job: routine, guidance, evaluation, practice — shob manage.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20IELTS%20course%20e%20admission%20nite%20chai.%20Amar%20level%20bujhe%20suggest%20korben%3F"
+           target="_blank" rel="noopener">Talk with LizOn</a>
+
+        <button class="btn btn-ghost" id="openAskFromHero" type="button">Help Me Choose</button>
+
+        <a class="btn btn-ghost" href="ielts.html">IELTS Journey</a>
+      </div>
+
+      <div class="rule"></div>
+
+      <div class="grid-3">
+        <div class="mini">
+          <b>Step 1: Admit</b>
+          <p>Level confirm + seat confirm.</p>
+        </div>
+        <div class="mini">
+          <b>Step 2: We guide</b>
+          <p>Routine + class + practice plan.</p>
+        </div>
+        <div class="mini">
+          <b>Step 3: We evaluate</b>
+          <p>Weakness detect → fix → repeat.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- UPCOMING -->
+<section id="upcoming">
+  <div class="container">
+    <div class="card">
+      <span class="badge"><span class="dot" style="background:var(--info)"></span>Upcoming</span>
+      <h2 class="title" style="margin-top:10px;">Live sessions + demo classes</h2>
+      <p class="muted" style="margin:0; max-width:920px;">
+        Demo/Live gula te ashle apni instantly bujben — <b>apnar problem kothay</b>, ar <b>next step</b> ki.
+        Admit korle, baki shob amra handle korbo.
+      </p>
+
+      <div class="rule"></div>
+
+      <div class="grid-2">
+        <!-- DEMO (Replace date/time/link as needed) -->
+        <div class="event" id="demo">
+          <div class="event-top">
+            <div>
+              <div class="pillrow" style="margin-top:0;">
+                <span class="pill tag-demo"><strong>DEMO</strong> • Basic → Advanced</span>
+                <span class="pill tag-urgent"><strong>Priority</strong> • Limited seats</span>
+              </div>
+              <h3 style="margin-top:10px;">Demo Class — “The Most Accurate Method to get IELTS Score”</h3>
+              <p class="kicker">
+                Real diagnostic + common mistakes. Ei demo te onek student finally bujhe,
+                “Ami keno atke asi.”
+              </p>
+            </div>
+            <div class="pillrow" style="justify-content:flex-end; margin-top:0;">
+              <span class="pill"><strong>Time</strong> 9:00 PM</span>
+              <span class="pill"><strong>Mode</strong> Google Meet</span>
+            </div>
+          </div>
+
+          <ul class="list">
+            <li>2-minute live diagnostic mistake (real student pattern)</li>
+            <li>Basic–Advanced journey: keno “random practice” kaj kore na</li>
+            <li>How we guide: routine + practice + evaluation loop</li>
+          </ul>
+
+          <div class="event-actions">
+            <a class="btn btn-primary"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20Basic%20to%20Advanced%20demo%20class%20e%20join%20korte%20chai.%20Joining%20details%20den%3F"
+               target="_blank" rel="noopener">Join Details</a>
+
+            <a class="btn btn-ghost"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20demo%20class%20er%20por%20admission%20niye%20guidance%20chai.%20Amar%20level%20check%20korben%3F"
+               target="_blank" rel="noopener">Admission Guidance</a>
+
+            <button class="btn btn-ghost" data-open-ask type="button">Help Me Choose</button>
+          </div>
+
+          <p class="muted" style="margin:12px 0 0;font-size:13px;">
+            Note: Date/time/link change hole ekhanei update korlei hobe (no daily posting headache).
+          </p>
+        </div>
+
+        <!-- LIVE SESSION / Q&A -->
+        <div class="event" id="live">
+          <div class="event-top">
+            <div>
+              <div class="pillrow" style="margin-top:0;">
+                <span class="pill tag-live"><strong>LIVE</strong> • Q&A</span>
+                <span class="pill"><strong>Focus</strong> Basic → Advanced</span>
+              </div>
+              <h3 style="margin-top:10px;">Live Guidance — “Admit korlei ki hobe?”</h3>
+              <p class="kicker">
+                People overthink. Ei session er goal simple: apnar confusion cut.
+                You admit — we take care of everything.
+              </p>
+            </div>
+            <div class="pillrow" style="justify-content:flex-end; margin-top:0;">
+              <span class="pill"><strong>Time</strong> 10:15 PM</span>
+              <span class="pill"><strong>Mode</strong> Online</span>
+            </div>
+          </div>
+
+          <ul class="list">
+            <li>“Which level for me?” — tap-based quick guidance</li>
+            <li>Routine + evaluation system (kivabe progress measurable)</li>
+            <li>What to do today (simple start checklist)</li>
+          </ul>
+
+          <div class="event-actions">
+            <a class="btn btn-primary"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Live%20Guidance%20session%20niye%20details%20den.%20Basic%20to%20Advanced%20admission%20plan%20chai."
+               target="_blank" rel="noopener">Get Details</a>
+
+            <a class="btn btn-ghost" href="#next">Next Batch Info</a>
+            <button class="btn btn-ghost" data-open-ask type="button">Help Me Choose</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <div class="grid-3">
+        <div class="mini">
+          <b>Admit & Orientation</b>
+          <p>Seat confirm → routine explain → practice path set.</p>
+        </div>
+        <div class="mini">
+          <b>Guided Practice</b>
+          <p>Daily/weekly target + module practice support.</p>
+        </div>
+        <div class="mini">
+          <b>Evaluation Loop</b>
+          <p>Test → feedback → correction → retest.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT BATCH -->
+<section id="next">
+  <div class="container">
+    <div class="card">
+      <span class="badge"><span class="dot" style="background:var(--warn)"></span>Next Batch</span>
+      <h2 class="title" style="margin-top:10px;">Basic → Advanced (batch admission)</h2>
+      <p class="muted" style="margin:0; max-width:920px;">
+        Batch er exact start date change hote pare. Tai ekhane amra “process” clear rakhi —
+        <b>admit korlei apnar plan locked</b>.
+      </p>
+
+      <div class="rule"></div>
+
+      <div class="grid-2">
+        <div class="mini">
+          <b>What you get (simple)</b>
+          <ul class="list" style="margin-top:10px;">
+            <li>Level selection support</li>
+            <li>Routine + class access</li>
+            <li>Practice direction (Listening/Reading/Writing/Speaking)</li>
+            <li>Evaluation + feedback</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <b>Fast admission (no drama)</b>
+          <ul class="list" style="margin-top:10px;">
+            <li>Name + phone + payment screenshot/txn id</li>
+            <li>We confirm seat</li>
+            <li>We send routine + next steps</li>
+          </ul>
+
+          <div class="cta-row" style="margin-top:12px;">
+            <a class="btn btn-primary"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20IELTS%20batch%20e%20admission%20nibo.%20Seat%20confirm%20korben%3F"
+               target="_blank" rel="noopener">Admit Now</a>
+
+            <button class="btn btn-ghost" data-open-ask type="button">Help Me Choose</button>
+          </div>
+
+          <p class="muted" style="margin:12px 0 0;font-size:13px;">
+            Helpline: 01611611139 (IELTS/PTE) • 01608881545 (Study Abroad)
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-card">
+
+      <h3 class="footer-title">All Options</h3>
+      <div class="footer-links" style="margin-bottom:10px;">
+        <a class="btn btn-ghost" href="index.html">Home</a>
+        <a class="btn btn-ghost" href="about.html">About</a>
+        <a class="btn btn-ghost" href="ielts.html">IELTS Journey</a>
+        <a class="btn btn-ghost" href="pte.html">PTE</a>
+        <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
+      </div>
+
+      <div class="footer-columns">
+        <div>
+          <h3 class="footer-title">IELTS Pages</h3>
+          <div class="footer-links">
+            <a class="btn-tiny" href="ielts-roadmap.html">Roadmap</a>
+            <a class="btn-tiny" href="ielts-choose-level.html">Choose Level</a>
+            <a class="btn-tiny" href="ielts-band-improvement.html">Band Improvement</a>
+            <a class="btn-tiny" href="ielts-grammar.html">Grammar</a>
+            <a class="btn-tiny" href="ielts-computer-based.html">Computer Based</a>
+            <a class="btn-tiny" href="ielts-faq-bangladesh.html">FAQ (BD)</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Practice</h3>
+          <div class="footer-links">
+            <a class="btn-tiny" href="ielts-listening.html">Listening</a>
+            <a class="btn-tiny" href="ielts-reading.html">Reading</a>
+            <a class="btn-tiny" href="ielts-writing.html">Writing</a>
+            <a class="btn-tiny" href="ielts-speaking.html">Speaking</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Contact & Location</h3>
+          <p class="footer-small" style="margin:0 0 10px;">
+            <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
+            <b>IELTS/PTE Helpline:</b> 01611611139<br/>
+            <b>Study Abroad/Visa Processing:</b> 01608881545
+          </p>
+          <div class="footer-links">
+            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+            <a class="btn btn-primary"
+               href="https://wa.me/8801611611139?text=Need%20guidance%20about%20Basic%20to%20Advanced%20IELTS%20course"
+               target="_blank" rel="noopener">Chat Now</a>
+          </div>
+
+          <h3 class="footer-title" style="margin-top:14px;">Social Media</h3>
+          <div class="socials">
+            <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+            <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted" style="margin:14px 0 0;">© 2025 myLizOn.com | LizOn Education</p>
     </div>
   </div>
 
-  <main class="container" id="top">
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="heroCard">
-        <div class="chipRow">
-          <span class="chip"><b>Default Dark</b> • Light mode toggle available</span>
-          <span class="chip">Everything here is <b>Join-ready</b></span>
-          <span class="chip">Tap <b>AskLizOn</b> if confused</span>
-        </div>
-
-        <h1 class="heroTitle">Upcoming that actually <span>moves your score</span></h1>
-        <p class="sub">
-          Not “random motivation classes”. Real sessions with structure: what to do, how to do, and how to measure improvement.
-          Join live, get direction, then start learning from <b style="color:var(--gold)">MyLizOn.com</b>.
-        </p>
-
-        <div class="ctaRow">
-          <a class="btn primary" href="#featured">
-            <span class="pulseDot" aria-hidden="true"></span>
-            Featured Session (Join Now)
-          </a>
-          <a class="btn" href="#nextBatch">
-            Next Batch Plan
-          </a>
-          <a class="btn ghost" href="ielts.html#levels">
-            Check IELTS Level
-          </a>
-        </div>
-      </div>
-
-      <!-- FEATURED (OUTSTANDING) -->
-      <div class="featured" id="featured" aria-label="Featured live session">
-        <div class="featuredTop">
-          <div class="kickerRow">
-            <span class="kickerPill"><span class="pulseDot" aria-hidden="true"></span> Live Session — <b>Highlighted</b></span>
-            <span class="kickerPill">Google Meet • Free</span>
-            <span class="kickerPill">Limited-time <b>Huge Discount</b> chance</span>
-          </div>
-
-          <h2 class="featuredTitle">An IELTS Session to Accurate Your Scoring Method</h2>
-          <p class="featuredSub">
-            Topic: <b style="color:var(--gold)">The Most Accurate Method To Get IELTS Score</b><br/>
-            Many students “feel” they are at 6.0 but the scoring rules say otherwise. This session fixes that confusion.
-          </p>
-
-          <div class="metaGrid">
-            <div class="metaCard">
-              <h3>Session Details</h3>
-
-              <div class="metaLine">
-                <span class="icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 2v3M17 2v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M3.5 9h17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M5 5h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="2"/>
-                  </svg>
-                </span>
-                <div>
-                  <b>Date</b>
-                  <span>24 December • Wednesday</span>
-                </div>
-              </div>
-
-              <div class="metaLine">
-                <span class="icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
-                  </svg>
-                </span>
-                <div>
-                  <b>Time</b>
-                  <span>9:00 PM (BDT)</span>
-                </div>
-              </div>
-
-              <div class="metaLine">
-                <span class="icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 4h16v16H4V4z" stroke="currentColor" stroke-width="2"/>
-                    <path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                </span>
-                <div>
-                  <b>Meeting ID</b>
-                  <span>bfk-eeax-sbi</span>
-                </div>
-              </div>
-
-              <div class="metaLine">
-                <span class="icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 11l19-8-8 19-2-8-9-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                <div>
-                  <b>Join Link</b>
-                  <span style="word-break:break-all;">https://meet.google.com/bfk-eeax-sbi</span>
-                </div>
-              </div>
-
-              <div class="chipRow" style="margin-top:10px;">
-                <span class="chip">Join → learn the method → <b>huge discount</b> chance</span>
-                <span class="chip">Start Learning from <b>MyLizOn.com</b></span>
-              </div>
-            </div>
-
-            <div class="metaCard bigJoin">
-              <h3>Join Now</h3>
-              <p>
-                One click join. If Meet doesn’t open, copy link. If you want guidance first, WhatsApp is open.
-              </p>
-
-              <a class="joinBtn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">
-                Join Live on Google Meet
-              </a>
-
-              <button class="joinBtn" type="button" id="copyJoin">
-                Copy Join Link
-              </button>
-
-              <a class="joinBtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20join%20the%20live%20session%20today%20(Scoring%20Method).%20Please%20guide%20me.%20(Source%3A%20Upcoming_featured)" target="_blank" rel="noopener">
-                Talk with LizOn (WhatsApp)
-              </a>
-
-              <button class="joinBtn" type="button" data-acc="agendaPanel" aria-expanded="false">
-                What will happen inside?
-              </button>
-
-              <button class="joinBtn" type="button" data-acc="whoPanel" aria-expanded="false">
-                Who should join?
-              </button>
-
-              <p style="margin:0; color:var(--muted); font-weight:850; font-size:12.5px; line-height:1.5;">
-                Joining Link details: <b style="color:var(--gold)">@ Hasif(Parsonal_LizOn)</b>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="accPanel" id="agendaPanel">
-          <div class="sectionTitle" style="margin:0 0 10px;">Agenda <small>(short, sharp, practical)</small></div>
-          <div class="featurePoints">
-            <div class="point">
-              <span class="pointIcon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div>
-                <b>Score Reality Check</b>
-                <span>Band descriptor kibhabe kaj kore — myths crush.</span>
-              </div>
-            </div>
-            <div class="point">
-              <span class="pointIcon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
-                </svg>
-              </span>
-              <div>
-                <b>Timing Strategy</b>
-                <span>Preparation timeline set kora — wasted weeks stop.</span>
-              </div>
-            </div>
-            <div class="point">
-              <span class="pointIcon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 4h16v16H4V4z" stroke="currentColor" stroke-width="2"/>
-                  <path d="M7 8h10M7 12h10M7 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </span>
-              <div>
-                <b>Your Next Steps</b>
-                <span>Level choose + routine choose — ZERO/HOPE/STEP-UP/DESPERATE.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="chipRow" style="margin-top:12px;">
-            <span class="chip">No drama • <b>only method</b></span>
-            <span class="chip">Result = consistent routine + evaluation</span>
-          </div>
-        </div>
-
-        <div class="accPanel" id="whoPanel">
-          <div class="sectionTitle" style="margin:0 0 10px;">Who should join? <small>(if any of these hit you)</small></div>
-
-          <div class="timeline">
-            <div class="step">
-              <div class="stepNum">1</div>
-              <div>
-                <b>You guess your band</b>
-                <span>“Mone hocche 6” — but mock e 5.5. This session fixes the measuring method.</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="stepNum">2</div>
-              <div>
-                <b>You practice randomly</b>
-                <span>One day reading, next day speaking, then break. Result: nothing sticks.</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="stepNum">3</div>
-              <div>
-                <b>You want a real plan</b>
-                <span>Level-based routine + evaluation. Not “tips”, not “motivation”.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="ctaRow" style="margin-top:12px;">
-            <a class="btn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join Live</a>
-            <a class="btn" href="ielts.html#levels">See IELTS Levels</a>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- NEXT BATCH -->
-    <section id="nextBatch">
-      <div class="sectionTitle">Next Batch Plan <small>Not sure? AskLizOn can choose for you</small></div>
-
-      <div class="grid3">
-        <div class="card">
-          <span class="tag"><b>IELTS ZERO</b> — Foundation start</span>
-          <h4>For absolute beginners</h4>
-          <p>
-            Speaking basic + pronunciation + grammar foundation + accurate writing.
-            If you’re delaying, ZERO breaks the excuse and builds the base.
-          </p>
-          <div class="row">
-            <a class="btn primary" href="ielts.html#zero">Course Details</a>
-            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20with%20IELTS%20ZERO.%20Please%20guide%20me.%20(Source%3A%20Upcoming_zero)" target="_blank" rel="noopener">Admit Now</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <span class="tag"><b>IELTS HOPE</b> — Build consistency</span>
-          <h4>For stuck students (5–5.5)</h4>
-          <p>
-            Reading speed + listening control + free-hand writing + speaking opinion system.
-            HOPE is where score starts moving.
-          </p>
-          <div class="row">
-            <a class="btn primary" href="ielts.html#hope">Course Details</a>
-            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20am%20stuck%20around%205-5.5.%20I%20want%20IELTS%20HOPE.%20Please%20guide%20me.%20(Source%3A%20Upcoming_hope)" target="_blank" rel="noopener">Admit Now</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <span class="tag"><b>IELTS STEP-UP</b> — Upgrade to 6.5+</span>
-          <h4>For band jump (6 → 7)</h4>
-          <p>
-            Strategy + high-accuracy practice + feedback loop.
-            STEP-UP is for people who already started — now they want score.
-          </p>
-          <div class="row">
-            <a class="btn primary" href="ielts.html#stepup">Course Details</a>
-            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20IELTS%20STEP-UP%20(6.5+%20target).%20Please%20guide%20me.%20(Source%3A%20Upcoming_stepup)" target="_blank" rel="noopener">Admit Now</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="sectionTitle" style="margin-top:16px;">Urgent / Close Exam <small>fast correction + evaluation</small></div>
-
-      <div class="grid3">
-        <div class="card">
-          <span class="tag"><b>IELTS DESPERATE</b> — Exam close</span>
-          <h4>Last moment rescue plan</h4>
-          <p>
-            Test, practice & evaluation focus. Two days speaking + two days writing.
-            Maximum correction before exam.
-          </p>
-          <div class="row">
-            <a class="btn primary" href="ielts.html#desperate">Course Details</a>
-            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20My%20exam%20is%20close.%20I%20need%20IELTS%20DESPERATE.%20Please%20guide%20me.%20(Source%3A%20Upcoming_desperate)" target="_blank" rel="noopener">Admit Now</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <span class="tag"><b>N2F</b> — Now to Fly</span>
-          <h4>All-in-one: IELTS + Abroad</h4>
-          <p>
-            Country + intake + documents + visa support.
-            Best value for serious students going abroad.
-          </p>
-          <div class="row">
-            <a class="btn primary" href="studyabroad.html">N2F Details</a>
-            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20N2F%20support%20(Study%20Abroad%20+%20Visa).%20Please%20guide%20me.%20(Source%3A%20Upcoming_n2f)" target="_blank" rel="noopener">Talk to Counselor</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <span class="tag"><b>Free</b> — Learn inside system</span>
-          <h4>Start today</h4>
-          <p>
-            After live session, don’t stop. Start learning properly from <b style="color:var(--gold)">MyLizOn.com</b>.
-          </p>
-          <div class="row">
-            <a class="btn primary" href="index.html#learnfree">Watch Free Lessons</a>
-            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20start%20learning%20from%20MyLizOn.com.%20Please%20guide%20me.%20(Source%3A%20Upcoming_mylizon)" target="_blank" rel="noopener">Guidance</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW TO JOIN / RULES -->
-    <section id="how">
-      <div class="sectionTitle">How to Join Smoothly <small>avoid last-minute panic</small></div>
-
-      <div class="timeline">
-        <div class="step">
-          <div class="stepNum">1</div>
-          <div>
-            <b>Join 5 minutes early</b>
-            <span>Mic + internet check. Late join korle first part miss hoy.</span>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="stepNum">2</div>
-          <div>
-            <b>Keep note open</b>
-            <span>Scoring rules / do’s / don’ts — write down. Then follow the routine.</span>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="stepNum">3</div>
-          <div>
-            <b>After session — choose your level</b>
-            <span>ZERO/HOPE/STEP-UP/DESPERATE. Confused? Tap AskLizOn and it will suggest.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="ctaRow" style="margin-top:12px;">
-        <a class="btn primary" href="https://meet.google.com/bfk-eeax-sbi" target="_blank" rel="noopener">Join Live Now</a>
-        <button class="btn" type="button" id="openAskInline">AskLizOn (Choose for me)</button>
-        <button class="btn ghost" type="button" id="copyID">Copy Meeting ID</button>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <section class="footer" aria-label="Footer" id="bottom">
-      <div>
-        <h3>Contact & Location</h3>
-        <p>
-          <strong>Address:</strong> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
-          <br />
-          <strong>IELTS/PTE Helpline:</strong> 01611611139
-          <br />
-          <strong>Study Abroad/Visa Processing:</strong> 01608881545
-        </p>
-
-        <div class="footer-links">
-          <a class="iconbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">
-            <span class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 22s7-4.5 7-12a7 7 0 1 0-14 0c0 7.5 7 12 7 12z" stroke="currentColor" stroke-width="2"/>
-                <path d="M12 13.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
-            Open Map
-          </a>
-
-          <a class="iconbtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20about%20upcoming%20session%20and%20batch.%20(Source%3A%20Upcoming_footer)" target="_blank" rel="noopener">
-            <span class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 12a8 8 0 0 1-12.4 6.7L4 20l1.4-3.4A8 8 0 1 1 20 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M9 8.8c.2-.6.5-.6.9-.6h.7c.2 0 .5 0 .6.4l.7 1.7c.1.3.1.6-.1.8l-.4.4c-.2.2-.2.5 0 .7.4.7 1.1 1.4 1.8 1.8.2.1.5.1.7-.1l.4-.4c.2-.2.5-.2.8-.1l1.7.7c.4.1.4.4.4.6v.7c0 .4 0 .7-.6.9-.6.2-1.7.4-3.6-.5-1.9-.9-3.7-2.7-4.6-4.6-.9-1.9-.7-3-.5-3.6z" fill="currentColor"/>
-              </svg>
-            </span>
-            WhatsApp
-          </a>
-        </div>
-
-        <div class="smallprint">© <span id="year"></span> myLizOn.com | LizOn Education</div>
-      </div>
-
-      <div>
-        <h3>All Pages</h3>
-        <p>Jump anywhere (tap).</p>
-
-        <div class="siteMap" aria-label="Site map links">
-          <a href="index.html"><strong>Home</strong> — Overview</a>
-          <a href="ielts.html#levels"><strong>IELTS</strong> — Levels</a>
-          <a href="pte.html"><strong>PTE</strong> — Program</a>
-          <a href="studyabroad.html"><strong>Study Abroad</strong> — N2F</a>
-          <a href="about.html"><strong>About</strong> — LizOn story</a>
-          <a href="ielts-grammar.html"><strong>IELTS Grammar</strong></a>
-          <a href="ielts-listening.html"><strong>IELTS Listening</strong></a>
-          <a href="ielts-reading.html"><strong>IELTS Reading</strong></a>
-          <a href="ielts-speaking.html"><strong>IELTS Speaking</strong></a>
-          <a href="ielts-writing.html"><strong>IELTS Writing</strong></a>
-          <a href="ielts-computer-based.html"><strong>Computer IELTS</strong></a>
-          <a href="ielts-faq-bangladesh.html"><strong>IELTS FAQ (BD)</strong></a>
-        </div>
-
-        <div class="footer-links" style="margin-top:10px;">
-          <a class="iconbtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-          <a class="iconbtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
-          <a class="iconbtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Floating WhatsApp bar -->
-  <a class="floatwa" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now%20about%20Upcoming.%20(Source%3A%20Upcoming_float)" target="_blank" rel="noopener">
-    <span class="dot" aria-hidden="true"></span>
-    Need guidance? <b>Chat on WhatsApp</b>
-  </a>
-
-  <!-- Tiny theme toggle (icons only) -->
-  <button class="themeTiny" id="themeTiny" type="button" aria-label="Toggle theme">
-    <span id="themeIcon" aria-hidden="true"></span>
-  </button>
-
-  <!-- Bottom-left floating hamburger (icon only) -->
-  <button class="menuFab" id="menuFab" type="button" aria-label="Open navigation">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M4 7h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
-
-  <!-- AskLizOn FAB (tiny logo + AskLizOn) -->
-  <button class="askFab" id="askFab" type="button" aria-label="Open AskLizOn">
-    <img class="askFabLogo" src="assets/logo-dark.png" alt="" aria-hidden="true" />
-    Ask<b>LizOn</b>
-    <span class="askBadge">Course Selector</span>
-  </button>
-
-  <!-- Shared overlay -->
-  <div class="overlay" id="overlay" aria-hidden="true"></div>
-
-  <!-- Menu sheet -->
-  <aside class="sheet" id="menuSheet" role="dialog" aria-modal="true" aria-label="Navigation">
-    <div class="sheetHead">
-      <b>Navigate</b>
-      <button class="sheetClose" id="menuClose" type="button" aria-label="Close navigation">Close</button>
+  <div class="sticky-bar" aria-label="Guidance bar">
+    <div class="bar">
+      <span class="dot"></span>
+      <span><b>Need guidance?</b></span>
+      <a class="btn-tiny"
+         href="https://wa.me/8801611611139?text=Hi%2C%20Basic%20to%20Advanced%20IELTS%20course%20niye%20guidance%20chai."
+         target="_blank" rel="noopener">Chat Now</a>
+      <button class="btn-tiny" data-open-ask type="button">Help Me Choose</button>
+      <a class="btn-tiny" href="about.html">About</a>
     </div>
-    <div class="sheetBody">
-      <a href="index.html"><strong>Home</strong><span>→</span></a>
-      <a href="Upcoming.html"><strong>Upcoming</strong><span>→</span></a>
-      <a href="ielts.html#levels"><strong>IELTS</strong><span>→</span></a>
-      <a href="pte.html"><strong>PTE</strong><span>→</span></a>
-      <a href="studyabroad.html"><strong>Study Abroad</strong><span>→</span></a>
-      <a href="about.html"><strong>About</strong><span>→</span></a>
-      <a href="#" id="askMenuOpen"><strong>AskLizOn</strong><span>→</span></a>
-
-      <div class="sheetRow" aria-label="Quick links">
-        <a href="ielts-grammar.html">Grammar</a>
-        <a href="ielts-listening.html">Listening</a>
-        <a href="ielts-reading.html">Reading</a>
-        <a href="ielts-speaking.html">Speaking</a>
-        <a href="ielts-writing.html">Writing</a>
-        <a href="ielts-computer-based.html">Computer</a>
-        <a href="ielts-faq-bangladesh.html">FAQ (BD)</a>
-      </div>
-
-      <div class="sheetRow">
-        <a href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Map</a>
-        <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20about%20Upcoming.%20(Source%3A%20Upcoming_sheet)" target="_blank" rel="noopener">WhatsApp</a>
-      </div>
-    </div>
-  </aside>
-
-  <!-- AskLizOn Panel -->
-  <aside class="askPanel" id="askPanel" aria-label="AskLizOn Panel" role="dialog" aria-modal="true">
-    <div class="askHead">
-      <div class="askTitle">
-        <img class="askLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
-        <div style="min-width:0;">
-          <b>AskLizOn</b>
-          <small>2–3 questions → course suggestion</small>
-        </div>
-      </div>
-      <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn">Close</button>
-    </div>
-
-    <div class="askQuick" aria-label="Quick start">
-      <button class="askPill" type="button" data-ask="ielts">Choose IELTS Course</button>
-      <button class="askPill" type="button" data-ask="pte">Choose PTE Course</button>
-      <button class="askPill" type="button" data-ask="abroad">Study Abroad Guidance</button>
-      <button class="askPill" type="button" data-ask="reset">Reset</button>
-    </div>
-
-    <div class="askBody" id="askBody" aria-label="Chat messages"></div>
-
-    <div class="askFoot">
-      <input class="askInput" id="askInput" type="text" placeholder="Type short answer… (English / বাংলা / Banglish)" autocomplete="off" />
-      <button class="askSend" id="askSend" type="button">Send</button>
-    </div>
-  </aside>
-
-  <!-- Scroll controls -->
-  <div class="scrollNav" aria-label="Page scroll controls">
-    <button class="scrollBtn" id="scrollUp" type="button" aria-label="Scroll to top">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M12 5l-7 7h4v7h6v-7h4l-7-7z" fill="currentColor" opacity=".9"/>
-      </svg>
-    </button>
-    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll to bottom">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M12 19l7-7h-4V5H9v7H5l7 7z" fill="currentColor" opacity=".9"/>
-      </svg>
-    </button>
   </div>
+</footer>
 
-  <script>
-    (function(){
-      // Year
-      const y = document.getElementById('year');
-      if (y) y.textContent = new Date().getFullYear();
+<!-- Modern Scroll Dock -->
+<div class="scroll-dock" aria-label="Scroll controls">
+  <button class="sbtn" id="scrollTopBtn" type="button" title="Top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M6 11l6-6 6 6"/></svg>
+  </button>
+  <button class="sbtn" id="scrollBottomBtn" type="button" title="Bottom" aria-label="Scroll to bottom">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M6 13l6 6 6-6"/></svg>
+  </button>
+</div>
 
-      // Theme (default dark)
-      const root = document.documentElement;
-      const themeTiny = document.getElementById('themeTiny');
-      const themeIcon = document.getElementById('themeIcon');
+<!-- Bottom-left hamburger -->
+<button class="hamb-fab" id="hambFab" type="button" aria-label="Open menu" title="Menu">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+  </svg>
+</button>
 
-      function iconSun(){
-        return `
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" stroke="currentColor" stroke-width="2"/>
-            <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>`;
-      }
-      function iconMoon(){
-        return `
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 13.2A7.7 7.7 0 0 1 10.8 3a7.6 7.6 0 1 0 10.2 10.2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>`;
-      }
+<!-- AskLizOn pill -->
+<div class="ask-pill" id="askPill" role="button" tabindex="0" aria-label="Open AskLizOn">
+  <span class="ask-dot"></span>
+  <div>
+    <b>AskLizOn</b>
+    <span style="display:block;margin-top:-2px;">Tap & decide</span>
+  </div>
+</div>
 
-      function setTheme(next){
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('lizon_theme', next);
-        const meta = document.querySelector('meta[name="theme-color"]');
-        if(meta) meta.setAttribute('content', next === 'light' ? '#eaf6f0' : '#0b2a1f');
-        if (themeIcon) themeIcon.innerHTML = (next === 'light') ? iconSun() : iconMoon();
-      }
+<!-- Theme toggle -->
+<div class="theme-fab" id="themeFab" role="button" tabindex="0" aria-label="Toggle theme" title="Toggle theme">
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8Z"/>
+  </svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+</div>
 
-      const saved = localStorage.getItem('lizon_theme');
-      if (saved === 'light' || saved === 'dark') setTheme(saved);
-      else setTheme('dark'); // default dark
+<!-- ASK LIZON (tap selector) -->
+<div class="ask-wrap" id="askWrap" aria-hidden="true">
+  <div class="modal-back" id="askBack"></div>
+  <div class="ask" role="dialog" aria-modal="true" aria-label="AskLizOn selector">
+    <div class="ask-top">
+      <div class="ask-title">
+        <div class="ask-badge">LZ</div>
+        <div>
+          <h4>AskLizOn — Basic → Advanced</h4>
+          <p>Tap-only. No typing. We’ll guide the next move.</p>
+        </div>
+      </div>
+      <button class="modal-x" id="askClose" aria-label="Close AskLizOn">✕</button>
+    </div>
 
-      if (themeTiny){
-        themeTiny.addEventListener('click', () => {
-          const current = root.getAttribute('data-theme') || 'dark';
-          setTheme(current === 'dark' ? 'light' : 'dark');
-        });
-      }
+    <div id="askSteps">
+      <div class="step-label" id="stepLabel">Step 1/2 — Your situation?</div>
+      <div class="opt-grid" id="optGrid"></div>
+    </div>
 
-      // Featured accordion
-      const accButtons = document.querySelectorAll('[data-acc]');
-      const panels = {
-        agendaPanel: document.getElementById('agendaPanel'),
-        whoPanel: document.getElementById('whoPanel')
-      };
-      function closeAllAcc(){
-        Object.values(panels).forEach(p => p && p.classList.remove('open'));
-        accButtons.forEach(b => b.setAttribute('aria-expanded','false'));
-      }
-      accButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-acc');
-          const panel = panels[id];
-          if (!panel) return;
-          const isOpen = panel.classList.contains('open');
-          closeAllAcc();
-          if (!isOpen){
-            panel.classList.add('open');
-            btn.setAttribute('aria-expanded','true');
-            panel.scrollIntoView({behavior:'smooth', block:'start'});
-          }
-        });
-      });
+    <div class="ask-result" id="askResult">
+      <div class="res-top">
+        <div>
+          <p class="res-title" id="resTitle">Recommendation</p>
+          <div class="res-meta" id="resMeta">Reasons will show here</div>
+        </div>
+        <div class="res-price" id="resPrice">—</div>
+      </div>
 
-      // Scroll buttons
-      const up = document.getElementById('scrollUp');
-      const down = document.getElementById('scrollDown');
+      <div class="why" id="resWhy"></div>
 
-      function atTop(){ return (window.scrollY || document.documentElement.scrollTop || 0) <= 2; }
-      function atBottom(){
-        const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-        const docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-        const winH = window.innerHeight || document.documentElement.clientHeight;
-        return (scrollY + winH) >= (docH - 2);
-      }
-      function refreshScrollButtons(){
-        if (up) up.disabled = atTop();
-        if (down) down.disabled = atBottom();
-      }
-      if (up){
-        up.addEventListener('click', () => {
-          document.getElementById('top')?.scrollIntoView({behavior:'smooth', block:'start'});
-        });
-      }
-      if (down){
-        down.addEventListener('click', () => {
-          window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-        });
-      }
-      window.addEventListener('scroll', refreshScrollButtons, {passive:true});
-      window.addEventListener('resize', refreshScrollButtons);
-      refreshScrollButtons();
+      <div class="ask-actions">
+        <a class="btn btn-primary" id="resCta" href="#" target="_blank" rel="noopener">Talk with LizOn</a>
+        <a class="btn btn-ghost" href="#next">Next Batch</a>
+        <button class="btn btn-ghost" id="askRestart" type="button">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-      // Shared overlay + open/close helpers
-      const overlay = document.getElementById('overlay');
-      const menuSheet = document.getElementById('menuSheet');
-      const menuFab = document.getElementById('menuFab');
-      const menuClose = document.getElementById('menuClose');
+<script>
+  /* ===== Theme toggle (persist) ===== */
+  const body = document.body;
+  const topbar = document.getElementById('topbar');
+  const logoImg = document.getElementById('logoImg');
 
-      const askPanel = document.getElementById('askPanel');
-      const askFab = document.getElementById('askFab');
-      const askClose = document.getElementById('askClose');
+  function setTheme(mode){
+    const isLight = mode === 'light';
+    body.classList.toggle('theme-light', isLight);
+    localStorage.setItem('lizon-theme', isLight ? 'light' : 'dark');
+    logoImg.src = isLight ? 'assets/logo-light.png' : 'assets/logo-dark.png';
+    document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
+  }
+  setTheme(localStorage.getItem('lizon-theme') || 'dark');
 
-      function closeAll(){
-        menuSheet?.classList.remove('open');
-        askPanel?.classList.remove('open');
-        overlay?.classList.remove('open');
-        overlay?.setAttribute('aria-hidden','true');
-      }
+  function toggleTheme(){
+    const isLight = body.classList.contains('theme-light');
+    setTheme(isLight ? 'dark' : 'light');
+  }
+  document.getElementById('themeFab').addEventListener('click', toggleTheme);
+  document.getElementById('themeFab').addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') toggleTheme(); });
 
-      function openMenu(){
-        closeAll();
-        overlay?.classList.add('open');
-        overlay?.setAttribute('aria-hidden','false');
-        menuSheet?.classList.add('open');
-      }
-      function openAsk(){
-        closeAll();
-        overlay?.classList.add('open');
-        overlay?.setAttribute('aria-hidden','false');
-        askPanel?.classList.add('open');
+  /* ===== Topbar scroll style ===== */
+  function handleTopbar(){
+    if(window.scrollY > 8) topbar.classList.add('scrolled');
+    else topbar.classList.remove('scrolled');
+  }
+  handleTopbar();
+  window.addEventListener('scroll', handleTopbar, {passive:true});
 
-        const askBody = document.getElementById('askBody');
-        if (askBody && !askBody.dataset.seeded){
-          askBody.dataset.seeded = "1";
-          seed();
-        }
-        setTimeout(()=> document.getElementById('askInput')?.focus(), 60);
-      }
+  /* ===== Drawer ===== */
+  const drawer = document.getElementById('drawer');
+  const backdrop = document.getElementById('backdrop');
+  const closeDrawer = document.getElementById('closeDrawer');
+  const hambFab = document.getElementById('hambFab');
 
-      if (menuFab) menuFab.addEventListener('click', openMenu);
-      if (menuClose) menuClose.addEventListener('click', closeAll);
-      if (overlay) overlay.addEventListener('click', closeAll);
+  function openDrawer(){
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawerFn(){
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function toggleDrawer(){
+    if(drawer.classList.contains('open')) closeDrawerFn();
+    else openDrawer();
+  }
 
-      menuSheet?.addEventListener('click', (e)=>{
-        const a = e.target.closest('a');
-        if (a && a.getAttribute('href') !== '#') closeAll();
-      });
+  hambFab.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleDrawer(); });
+  closeDrawer.addEventListener('click', closeDrawerFn);
+  backdrop.addEventListener('click', closeDrawerFn);
 
-      document.getElementById('askMenuOpen')?.addEventListener('click', (e)=>{ e.preventDefault(); closeAll(); openAsk(); });
-      document.getElementById('openAskInline')?.addEventListener('click', (e)=>{ e.preventDefault(); openAsk(); });
+  // Close drawer when clicking any link
+  drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeDrawerFn));
 
-      if (askFab) askFab.addEventListener('click', openAsk);
-      if (askClose) askClose.addEventListener('click', closeAll);
+  // ESC close drawer
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDrawerFn(); });
 
-      document.addEventListener('keydown', (e)=>{
-        if (e.key === 'Escape') closeAll();
-      });
+  // Outside click safety
+  document.addEventListener('click', (e)=>{
+    if(!drawer.classList.contains('open')) return;
+    const within = drawer.contains(e.target) || hambFab.contains(e.target);
+    if(!within) closeDrawerFn();
+  }, true);
 
-      // Copy helpers
-      const joinLink = "https://meet.google.com/bfk-eeax-sbi";
-      const meetID = "bfk-eeax-sbi";
+  /* ===== Scroll buttons ===== */
+  document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.getElementById('scrollBottomBtn').addEventListener('click', ()=>{
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+  });
 
-      async function copyText(txt){
-        try{
-          await navigator.clipboard.writeText(txt);
-          return true;
-        }catch(e){
-          // fallback
-          const ta = document.createElement('textarea');
-          ta.value = txt;
-          ta.style.position = 'fixed';
-          ta.style.left = '-9999px';
-          document.body.appendChild(ta);
-          ta.focus();
-          ta.select();
-          try{ document.execCommand('copy'); }catch(_){}
-          document.body.removeChild(ta);
-          return true;
-        }
-      }
+  /* ===== AskLizOn (Basic → Advanced) ===== */
+  const askWrap = document.getElementById('askWrap');
+  const askBack = document.getElementById('askBack');
+  const askClose = document.getElementById('askClose');
+  const askPill = document.getElementById('askPill');
+  const openAskFromHero = document.getElementById('openAskFromHero');
 
-      const copyJoin = document.getElementById('copyJoin');
-      if (copyJoin){
-        copyJoin.addEventListener('click', async ()=>{
-          const ok = await copyText(joinLink);
-          copyJoin.textContent = ok ? "Copied ✅" : "Copy Join Link";
-          setTimeout(()=> copyJoin.textContent = "Copy Join Link", 1200);
-        });
-      }
+  const stepLabel = document.getElementById('stepLabel');
+  const optGrid = document.getElementById('optGrid');
+  const askResult = document.getElementById('askResult');
+  const resTitle = document.getElementById('resTitle');
+  const resMeta = document.getElementById('resMeta');
+  const resPrice = document.getElementById('resPrice');
+  const resWhy = document.getElementById('resWhy');
+  const resCta = document.getElementById('resCta');
+  const askRestart = document.getElementById('askRestart');
 
-      const copyID = document.getElementById('copyID');
-      if (copyID){
-        copyID.addEventListener('click', async ()=>{
-          const ok = await copyText(meetID);
-          copyID.textContent = ok ? "Meeting ID Copied ✅" : "Copy Meeting ID";
-          setTimeout(()=> copyID.textContent = "Copy Meeting ID", 1400);
-        });
-      }
+  // Keep simple here: Upcoming page is not pricing page. We focus on “what to do next”.
+  const state = { situation:null, time:null };
 
-      // =====================================
-      // AskLizOn — Course Selector (2–3 Q)
-      // (Same logic as index.html, kept consistent)
-      // =====================================
-      const askBody = document.getElementById('askBody');
-      const askInput = document.getElementById('askInput');
-      const askSend = document.getElementById('askSend');
+  function openAsk(){
+    askWrap.classList.add('show');
+    askWrap.setAttribute('aria-hidden','false');
+    resetAsk();
+  }
+  function closeAsk(){
+    askWrap.classList.remove('show');
+    askWrap.setAttribute('aria-hidden','true');
+  }
 
-      const state = {
-        mode: "idle",
-        program: null,
-        ielts_profile: null,
-        timeline: null,
-        suggestion: null
-      };
+  askBack.addEventListener('click', closeAsk);
+  askClose.addEventListener('click', closeAsk);
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && askWrap.classList.contains('show')) closeAsk(); });
 
-      function normalize(s){
-        return (s || "")
-          .toLowerCase()
-          .replace(/[^\p{L}\p{N}\s]/gu, " ")
-          .replace(/\s+/g, " ")
-          .trim();
-      }
+  askPill.addEventListener('click', openAsk);
+  askPill.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openAsk(); });
+  if(openAskFromHero) openAskFromHero.addEventListener('click', openAsk);
 
-      function pushMsg(who, html, links){
-        const row = document.createElement('div');
-        row.className = 'askMsg';
+  document.querySelectorAll('[data-open-ask]').forEach(b=> b.addEventListener('click', openAsk));
 
-        const av = document.createElement('div');
-        av.className = 'askAvatar';
-        av.textContent = (who === 'me') ? 'You' : 'LZ';
+  function resetAsk(){
+    state.situation = null; state.time = null;
+    askResult.classList.remove('show');
+    renderStep1();
+  }
+  askRestart.addEventListener('click', resetAsk);
 
-        const bubble = document.createElement('div');
-        bubble.className = 'askBubble' + (who === 'me' ? ' me' : '');
+  function setOptions(options, onPick){
+    optGrid.innerHTML = '';
+    options.forEach(o=>{
+      const div = document.createElement('div');
+      div.className = 'opt';
+      div.tabIndex = 0;
+      div.innerHTML = `<b>${o.title}</b><span>${o.desc}</span>`;
+      div.addEventListener('click', ()=> onPick(o.value));
+      div.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') onPick(o.value); });
+      optGrid.appendChild(div);
+    });
+  }
 
-        const p = document.createElement('p');
-        p.innerHTML = html;
-        bubble.appendChild(p);
+  function renderStep1(){
+    stepLabel.textContent = 'Step 1/2 — Your situation?';
+    setOptions([
+      { title:'First time / confusion', desc:'Kothay theke shuru korbo bujhi na', value:'start' },
+      { title:'Base ase, progress hoy na', desc:'Score atke ase / stuck', value:'stuck' },
+      { title:'Multiple problem', desc:'Speaking + Writing + Grammar mixed', value:'multi' },
+      { title:'Exam close', desc:'Short time e guidance lagbe', value:'near' }
+    ], (v)=>{ state.situation=v; renderStep2(); });
+  }
 
-        if (links && links.length){
-          const wrap = document.createElement('div');
-          wrap.className = 'askSuggest';
-          links.forEach(l => {
-            const a = document.createElement('a');
-            a.className = 'askLink';
-            a.href = l.href;
-            a.textContent = l.label;
-            if (l.external){
-              a.target = "_blank";
-              a.rel = "noopener";
-            }
-            wrap.appendChild(a);
-          });
-          bubble.appendChild(wrap);
-        }
+  function renderStep2(){
+    stepLabel.textContent = 'Step 2/2 — Time situation?';
+    setOptions([
+      { title:'Relaxed', desc:'Step-by-step. Routine follow korte parbo', value:'relaxed' },
+      { title:'1–2 months', desc:'Short time but manageable', value:'12m' },
+      { title:'Urgent', desc:'Very near / repeated failures', value:'urgent' },
+      { title:'Not sure', desc:'Just guide me', value:'ns' }
+    ], (v)=>{ state.time=v; showRecommendation(); });
+  }
 
-        row.appendChild(av);
-        row.appendChild(bubble);
-        askBody.appendChild(row);
-        askBody.scrollTop = askBody.scrollHeight;
-      }
+  function showRecommendation(){
+    let headline = 'Join Upcoming Demo + Get Admission Guidance';
+    let why = [];
 
-      function waLink(text){
-        const base = "https://wa.me/8801611611139?text=";
-        return base + encodeURIComponent(text);
-      }
+    const situationMap = {
+      start: 'Apnar jonno first step: demo + level check → then admission.',
+      stuck: 'Apnar jonno: confusion cut + routine reset dorkar.',
+      multi: 'Multiple problem hole: guided plan chara time waste hoy.',
+      near: 'Exam close hole: guidance + quick routine lock.'
+    };
+    const timeMap = {
+      relaxed: 'Time ase — stable progress er jonno routine follow.',
+      '12m': '1–2 month — focus e thakle improvement visible hobe.',
+      urgent: 'Urgent — fast decision + guided steps needed.',
+      ns: 'No tension — amra question kore plan set kore dibo.'
+    };
 
-      function resetAsk(){
-        state.mode = "idle";
-        state.program = null;
-        state.ielts_profile = null;
-        state.timeline = null;
-        state.suggestion = null;
-        if (askBody) askBody.innerHTML = "";
-        seed();
-      }
+    why.push(`• <b>Situation:</b> ${situationMap[state.situation] || 'We will guide the next step.'}`);
+    why.push(`• <b>Time:</b> ${timeMap[state.time] || 'We will set a clear plan.'}`);
+    why.push('• <b>Next:</b> Admit + routine + evaluation — you just follow.');
 
-      function seed(){
-        pushMsg('bot',
-          `Assalamu Alaikum! Ami <b>AskLizOn</b> — 2–3 ta question kore apnar jonno <b>right course</b> suggest korbo.`,
-          [
-            {label:"Choose IELTS Course", href:"#", external:false},
-            {label:"Choose PTE Course", href:"#", external:false},
-            {label:"Study Abroad Guidance", href:"#", external:false}
-          ]
-        );
-        pushMsg('bot',
-          `Start kori. Apnar focus ta konta?<div class="mut">Type: IELTS / PTE / Abroad (ba quick button)</div>`,
-          []
-        );
-      }
+    askResult.classList.add('show');
+    resTitle.textContent = headline;
+    resMeta.textContent = 'Tap-based guidance — no typing.';
+    resPrice.textContent = 'Fast next step';
+    resWhy.innerHTML = why.join('<br/>');
 
-      function askIELTSQ1(){
-        state.program = "ielts";
-        state.mode = "ielts_q1";
-        pushMsg('bot',
-          `IELTS selected ✅ Q1/2: Apnar current situation konta?<div class="mut">Reply: A / B / C / D</div>`,
-          [
-            {label:"A: Start kori nai / basic weak", href:"#"},
-            {label:"B: Stuck (5–5.5)", href:"#"},
-            {label:"C: Upgrade (6.5–7)", href:"#"},
-            {label:"D: Exam close / repeat / urgent", href:"#"}
-          ]
-        );
-      }
+    const msg = encodeURIComponent(`Assalamu Alaikum, Upcoming page theke AskLizOn use korechi. Situation:${state.situation}, Time:${state.time}. Basic to Advanced admission niye guidance den + next steps bolben?`);
+    resCta.href = `https://wa.me/8801611611139?text=${msg}`;
+  }
+</script>
 
-      function askIELTSQ2(){
-        state.mode = "ielts_q2";
-        pushMsg('bot',
-          `Q2/2: Exam koto din por? (approx)<div class="mut">Reply: 1 / 2 / 3</div>`,
-          [
-            {label:"1: 0–30 days", href:"#"},
-            {label:"2: 1–3 months", href:"#"},
-            {label:"3: 3+ months", href:"#"}
-          ]
-        );
-      }
-
-      function decideIELTS(){
-        let sug = null;
-        const prof = state.ielts_profile;
-        const tl = state.timeline;
-
-        if (prof === "d") sug = "DESPERATE";
-        else if (tl === "soon"){
-          if (prof === "a") sug = "ZERO";
-          else sug = "DESPERATE";
-        } else {
-          if (prof === "a") sug = "ZERO";
-          if (prof === "b") sug = "HOPE";
-          if (prof === "c") sug = "STEP-UP";
-        }
-        if (!sug) sug = "HOPE";
-
-        state.suggestion = sug;
-        state.mode = "ielts_done";
-
-        const map = {
-          "ZERO": {href:"ielts.html#zero", title:"IELTS ZERO"},
-          "HOPE": {href:"ielts.html#hope", title:"IELTS HOPE"},
-          "STEP-UP": {href:"ielts.html#stepup", title:"IELTS STEP-UP"},
-          "DESPERATE": {href:"ielts.html#desperate", title:"IELTS DESPERATE"}
-        };
-        const pick = map[sug];
-
-        const waText =
-          `Assalamu Alaikum LizOn Education. AskLizOn suggested: ${pick.title}. ` +
-          `My situation: ${prof?.toUpperCase() || "N/A"}, timeline: ${tl || "N/A"}. ` +
-          `(Source: AskLizOn_course_selector_upcoming)`;
-
-        pushMsg('bot',
-          `Suggested ✅ <b>${pick.title}</b><div class="mut">Want confirmation? Message counselor with this suggestion.</div>`,
-          [
-            {label:"Open Course Details", href: pick.href},
-            {label:"Talk on WhatsApp (Confirm)", href: waLink(waText), external:true},
-            {label:"Reset", href:"#"}
-          ]
-        );
-      }
-
-      function handleUserText(rawText){
-        const raw = (rawText || "").trim();
-        if (!raw) return;
-
-        pushMsg('me', raw);
-        const s = normalize(raw);
-
-        if (s === "reset" || s === "start over" || s === "restart"){
-          resetAsk();
-          return;
-        }
-
-        if (state.mode === "idle"){
-          if (s.includes("ielts") || s === "i"){ askIELTSQ1(); return; }
-          if (s.includes("pte") || s === "p"){
-            state.program = "pte";
-            state.mode = "pte_done";
-            state.suggestion = "PTE";
-            pushMsg('bot',
-              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">Message counselor with your exam date.</div>`,
-              [
-                {label:"Open PTE Program", href:"pte.html"},
-                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector_upcoming)"), external:true},
-                {label:"Reset", href:"#"}
-              ]
-            );
-            return;
-          }
-          if (s.includes("abroad") || s.includes("study abroad") || s.includes("visa") || s.includes("university")){
-            state.program = "abroad";
-            state.mode = "abroad_done";
-            state.suggestion = "STUDY_ABROAD";
-            pushMsg('bot',
-              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Counselor will match country + intake + profile.</div>`,
-              [
-                {label:"Open Study Abroad", href:"studyabroad.html"},
-                {label:"Talk to Counselor", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector_upcoming)"), external:true},
-                {label:"Reset", href:"#"}
-              ]
-            );
-            return;
-          }
-
-          pushMsg('bot', `Just choose one:<div class="mut">IELTS / PTE / Abroad</div>`, []);
-          return;
-        }
-
-        if (state.mode === "ielts_q1"){
-          if (s === "a" || s.includes("basic") || s.includes("beginner") || s.includes("zero")){
-            state.ielts_profile = "a"; askIELTSQ2(); return;
-          }
-          if (s === "b" || s.includes("stuck") || s.includes("atke") || s.includes("5") || s.includes("5.5")){
-            state.ielts_profile = "b"; askIELTSQ2(); return;
-          }
-          if (s === "c" || s.includes("6") || s.includes("6.5") || s.includes("7") || s.includes("upgrade")){
-            state.ielts_profile = "c"; askIELTSQ2(); return;
-          }
-          if (s === "d" || s.includes("close") || s.includes("repeat") || s.includes("urgent")){
-            state.ielts_profile = "d"; askIELTSQ2(); return;
-          }
-          pushMsg('bot', `Reply with <b>A / B / C / D</b> (just one letter).`, []);
-          return;
-        }
-
-        if (state.mode === "ielts_q2"){
-          if (s === "1" || s.includes("30") || s.includes("week") || s.includes("days")){
-            state.timeline = "soon"; decideIELTS(); return;
-          }
-          if (s === "2" || s.includes("month")){
-            state.timeline = "mid"; decideIELTS(); return;
-          }
-          if (s === "3" || s.includes("3+") || s.includes("later") || s.includes("after")){
-            state.timeline = "later"; decideIELTS(); return;
-          }
-          pushMsg('bot', `Reply with <b>1 / 2 / 3</b>.`, []);
-          return;
-        }
-
-        if (state.mode.endsWith("_done")){
-          if (s.includes("reset")) resetAsk();
-          else pushMsg('bot', `Type <b>reset</b> to start again.`, []);
-          return;
-        }
-      }
-
-      function sendAsk(){
-        const val = askInput?.value || "";
-        askInput.value = "";
-        handleUserText(val);
-      }
-
-      if (askSend) askSend.addEventListener('click', sendAsk);
-      if (askInput){
-        askInput.addEventListener('keydown', (e)=>{
-          if (e.key === 'Enter') sendAsk();
-        });
-      }
-
-      document.querySelectorAll('.askPill[data-ask]').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          const k = btn.getAttribute('data-ask');
-          if (k === "reset"){ resetAsk(); return; }
-          if (k === "ielts"){ pushMsg('me', 'IELTS'); askIELTSQ1(); return; }
-          if (k === "pte"){
-            pushMsg('me', 'PTE');
-            state.program = "pte";
-            state.mode = "pte_done";
-            state.suggestion = "PTE";
-            pushMsg('bot',
-              `Suggested ✅ <b>PTE Full Preparation (30 Days)</b><div class="mut">Message counselor with your exam date.</div>`,
-              [
-                {label:"Open PTE Program", href:"pte.html"},
-                {label:"Talk on WhatsApp", href: waLink("Assalamu Alaikum LizOn Education. AskLizOn suggested: PTE Full Preparation (30 Days). My exam date: ____ . (Source: AskLizOn_course_selector_upcoming)"), external:true},
-                {label:"Reset", href:"#"}
-              ]
-            );
-            return;
-          }
-          if (k === "abroad"){
-            pushMsg('me', 'Study Abroad');
-            state.program = "abroad";
-            state.mode = "abroad_done";
-            state.suggestion = "STUDY_ABROAD";
-            pushMsg('bot',
-              `Suggested ✅ <b>Study Abroad Guidance / N2F</b><div class="mut">Message counselor with country + intake.</div>`,
-              [
-                {label:"Open Study Abroad", href:"studyabroad.html"},
-                {label:"Talk to Counselor", href:"https://wa.me/8801608881545?text=" + encodeURIComponent("Assalamu Alaikum LizOn Education. AskLizOn suggested: Study Abroad Guidance / N2F. Country: ____ Intake: ____ . (Source: AskLizOn_course_selector_upcoming)"), external:true},
-                {label:"Reset", href:"#"}
-              ]
-            );
-            return;
-          }
-        });
-      });
-
-    })();
-  </script>
 </body>
 </html>
 ```0

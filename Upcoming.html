@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Upcoming | LizOn Education</title>
-  <meta name="description" content="Upcoming live sessions, demo classes, and next batches — Basic to Advanced IELTS journey by LizOn Education." />
+  <meta name="description" content="Basic to Advanced IELTS batch starts 26th December 9 PM — Full access to ZERO, HOPE, STEP-UP, DESPERATE. Limited-time discount." />
   <meta name="theme-color" content="#0b2a1f" />
 
   <style>
@@ -37,6 +37,9 @@
       --warn:#ffbe64;
       --info:#78d2ff;
       --danger:#ff8aa2;
+      --hot:#ff6b6b;
+
+      --pulse: rgba(215,178,74,.22);
     }
 
     .theme-light{
@@ -60,6 +63,8 @@
       --chip-bg:#ffffff;
       --chip-br: rgba(11,32,26,.12);
       --chip-br2: rgba(11,32,26,.22);
+
+      --pulse: rgba(165,127,50,.18);
     }
 
     *{ box-sizing:border-box; }
@@ -194,6 +199,7 @@
       padding: 18px;
       box-shadow: var(--soft);
     }
+
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding:6px 10px;
@@ -210,12 +216,11 @@
     h1{ margin:10px 0 6px; font-size:28px; line-height:1.18; }
     .lead{ margin:0; color:var(--muted); max-width:920px; }
     .rule{ height:1px; background: var(--line); margin:18px 0; }
+    .muted{ color:var(--muted); }
+    .title{ margin:0 0 8px; font-size:18px; line-height:1.25; }
 
     .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .grid-3{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-
-    .muted{ color:var(--muted); }
-    .title{ margin:0 0 8px; font-size:18px; line-height:1.25; }
 
     .btn{
       display:inline-block;
@@ -233,8 +238,18 @@
       color: var(--text);
     }
     .btn-primary{
-      background: linear-gradient(180deg, rgba(215,178,74,.20), rgba(215,178,74,.10));
-      border-color: rgba(215,178,74,.55);
+      background: linear-gradient(180deg, rgba(215,178,74,.22), rgba(215,178,74,.10));
+      border-color: rgba(215,178,74,.60);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn-primary:after{
+      content:"";
+      position:absolute;
+      inset:-20px;
+      background: radial-gradient(circle at 20% 30%, rgba(255,255,255,.18), transparent 55%);
+      opacity:.55;
+      pointer-events:none;
     }
     .btn-ghost{
       background: rgba(255,255,255,.02);
@@ -257,31 +272,36 @@
 
     .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 
-    /* ===== UPCOMING CARDS ===== */
-    .event{
-      border:1px solid var(--line);
+    /* ===== BIG HIGHLIGHT CARD ===== */
+    .focus{
+      border:1px solid rgba(215,178,74,.30);
+      background:
+        radial-gradient(700px 320px at 20% 0%, var(--pulse), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border-radius: var(--radius-xl);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       padding: 16px;
       box-shadow: var(--soft);
       position:relative;
       overflow:hidden;
     }
-    .event:before{
+    .focus:before{
       content:"";
-      position:absolute; inset:-40px -60px auto auto;
-      width:220px; height:220px;
-      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.22), transparent 60%);
-      transform: rotate(15deg);
+      position:absolute;
+      right:-70px; top:-70px;
+      width:240px; height:240px;
+      background: radial-gradient(circle at 35% 35%, rgba(215,178,74,.22), transparent 62%);
+      transform: rotate(18deg);
       pointer-events:none;
     }
-    .event-top{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    .focus-top{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
       position:relative;
     }
-    .event h3{ margin:0; font-size:16px; }
-    .kicker{ margin:6px 0 0; color: var(--muted); font-size:13px; }
-    .pillrow{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; position:relative; }
+    .kpi{
+      display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;
+      position:relative;
+    }
     .pill{
       display:inline-flex; align-items:center; gap:8px;
       padding:7px 10px;
@@ -293,13 +313,16 @@
       font-weight:900;
     }
     .pill strong{ color: var(--text); }
-
-    .event-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; position:relative; }
-
-    .tag-live{ border-color: rgba(120,210,255,.35); background: rgba(120,210,255,.08); }
-    .tag-demo{ border-color: rgba(255,190,100,.35); background: rgba(255,190,100,.10); }
-    .tag-batch{ border-color: rgba(0,210,106,.30); background: rgba(0,210,106,.08); }
-    .tag-urgent{ border-color: rgba(255,138,162,.30); background: rgba(255,138,162,.08); }
+    .pill.hot{
+      border-color: rgba(255,107,107,.40);
+      background: rgba(255,107,107,.10);
+      color: var(--text);
+    }
+    .pill.gold{
+      border-color: rgba(215,178,74,.55);
+      background: rgba(215,178,74,.10);
+      color: var(--text);
+    }
 
     .mini{
       border:1px solid var(--line);
@@ -313,7 +336,17 @@
     .list{ margin:10px 0 0; padding-left:18px; color: var(--muted); }
     .list li{ margin:6px 0; }
 
-    /* ===== ASK PANEL (selector) ===== */
+    .warning{
+      margin-top:12px;
+      border:1px solid rgba(255,190,100,.28);
+      background: rgba(255,190,100,.08);
+      border-radius: 16px;
+      padding: 12px;
+      color: var(--text);
+    }
+    .warning b{ color: var(--text); }
+
+    /* ===== ASK PANEL (tap selector) ===== */
     .ask-wrap{
       position:fixed; inset:0;
       display:none; align-items:flex-end; justify-content:center;
@@ -539,8 +572,8 @@
       <nav class="desktop-nav" aria-label="Top navigation">
         <a class="chip" href="index.html">Home</a>
         <a class="chip" href="ielts.html">IELTS Journey</a>
-        <a class="chip" href="#upcoming">Upcoming</a>
-        <a class="chip" href="#next">Next Batch</a>
+        <a class="chip" href="#start">Batch Start</a>
+        <a class="chip" href="#access">Full Access</a>
       </nav>
     </div>
   </div>
@@ -559,18 +592,9 @@
     <a class="full" href="index.html">Home</a>
     <a class="full" href="about.html">About</a>
     <a class="full" href="ielts.html">IELTS Journey</a>
-    <a class="full" href="#upcoming">Upcoming</a>
-    <a class="full" href="#next">Next Batch</a>
-  </div>
-
-  <div class="drawer-sub">IELTS Pages</div>
-  <div class="drawer-grid">
-    <a class="full" href="ielts-roadmap.html">IELTS Roadmap</a>
-    <a class="full" href="ielts-choose-level.html">Choose Level</a>
-    <a class="full" href="ielts-band-improvement.html">Band Improvement</a>
-    <a class="full" href="ielts-grammar.html">IELTS Grammar</a>
-    <a class="full" href="ielts-computer-based.html">Computer Based IELTS</a>
-    <a class="full" href="ielts-faq-bangladesh.html">IELTS FAQ (Bangladesh)</a>
+    <a class="full" href="#start">Batch Start</a>
+    <a class="full" href="#access">Full Access</a>
+    <a class="full" href="#discount">Discount</a>
   </div>
 
   <div class="drawer-sub">Practice</div>
@@ -589,204 +613,144 @@
 
   <div style="margin-top:12px;">
     <a class="btn-tiny" style="display:block;text-align:center;"
-       href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20IELTS%20course%20niye%20admission%20nibo.%20Guidance%20den%3F"
+       href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20batch%20e%20admission%20nibo.%2050%25%20discount%20details%20den%3F"
        target="_blank" rel="noopener">Talk with LizOn</a>
   </div>
 </div>
 
 <!-- HERO -->
-<header>
+<header id="start">
   <div class="container">
-    <div class="hero-card">
-      <span class="badge"><span class="dot"></span>Basic → Advanced (Fully Guided)</span>
-      <h1>They admit. We take care of everything.</h1>
+    <div class="hero-card focus">
+      <span class="badge"><span class="dot"></span>Basic → Advanced (Batch Start)</span>
+      <h1>Class starts: <span style="color:var(--gold)">26th December</span> — <span style="color:var(--gold)">9 PM</span></h1>
       <p class="lead">
-        Ei page ta shudhu <b>Basic–Advanced</b> journey niye. Apnar job: admit kora.
-        Amader job: routine, guidance, evaluation, practice — shob manage.
+        Ei batch ta <b>Basic–Advanced</b> journey er jonno. Apni admit korben —
+        <b>we take care of everything</b>: routine, guidance, practice direction, evaluation.
       </p>
+
+      <div class="kpi">
+        <span class="pill gold"><strong>Full Access</strong> ZERO + HOPE + STEP-UP + DESPERATE</span>
+        <span class="pill hot"><strong>50% Discount</strong> Limited-time</span>
+        <span class="pill"><strong>Start time</strong> 9 PM</span>
+      </div>
 
       <div class="cta-row">
         <a class="btn btn-primary"
-           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20IELTS%20course%20e%20admission%20nite%20chai.%20Amar%20level%20bujhe%20suggest%20korben%3F"
-           target="_blank" rel="noopener">Talk with LizOn</a>
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20batch%20(26th%20Dec%209%20PM)%20e%20admission%20nibo.%2050%25%20discount%20available%3F%20Seat%20confirm%20korben%3F"
+           target="_blank" rel="noopener">Admit Now (Discount)</a>
+
+        <a class="btn btn-ghost" href="#details">See Details</a>
 
         <button class="btn btn-ghost" id="openAskFromHero" type="button">Help Me Choose</button>
-
-        <a class="btn btn-ghost" href="ielts.html">IELTS Journey</a>
       </div>
 
-      <div class="rule"></div>
-
-      <div class="grid-3">
-        <div class="mini">
-          <b>Step 1: Admit</b>
-          <p>Level confirm + seat confirm.</p>
-        </div>
-        <div class="mini">
-          <b>Step 2: We guide</b>
-          <p>Routine + class + practice plan.</p>
-        </div>
-        <div class="mini">
-          <b>Step 3: We evaluate</b>
-          <p>Weakness detect → fix → repeat.</p>
-        </div>
+      <div class="warning" id="discount">
+        <b>50% Discount:</b> Ei offer ta shobai pabe na — seats/criteria wise close hoy.
+        Jara “arek din pore” bole, ora usually miss kore. Today decision = seat locked.
       </div>
     </div>
   </div>
 </header>
 
-<!-- UPCOMING -->
-<section id="upcoming">
+<!-- DETAILS -->
+<section id="details">
   <div class="container">
     <div class="card">
-      <span class="badge"><span class="dot" style="background:var(--info)"></span>Upcoming</span>
-      <h2 class="title" style="margin-top:10px;">Live sessions + demo classes</h2>
+      <span class="badge"><span class="dot" style="background:var(--info)"></span>Basic → Advanced Details</span>
+      <h2 class="title" style="margin-top:10px;">One admission. Full access to all 4 levels.</h2>
       <p class="muted" style="margin:0; max-width:920px;">
-        Demo/Live gula te ashle apni instantly bujben — <b>apnar problem kothay</b>, ar <b>next step</b> ki.
-        Admit korle, baki shob amra handle korbo.
+        Ei program e apni <b>ZERO, HOPE, STEP-UP, DESPERATE</b> — shob level er access paben.
+        Mane: apnar current level jeta, shei level thekei start; pore progress hole next level unlock e jaben.
+        Confusion kom, direction clear.
       </p>
 
       <div class="rule"></div>
 
-      <div class="grid-2">
-        <!-- DEMO (Replace date/time/link as needed) -->
-        <div class="event" id="demo">
-          <div class="event-top">
-            <div>
-              <div class="pillrow" style="margin-top:0;">
-                <span class="pill tag-demo"><strong>DEMO</strong> • Basic → Advanced</span>
-                <span class="pill tag-urgent"><strong>Priority</strong> • Limited seats</span>
-              </div>
-              <h3 style="margin-top:10px;">Demo Class — “The Most Accurate Method to get IELTS Score”</h3>
-              <p class="kicker">
-                Real diagnostic + common mistakes. Ei demo te onek student finally bujhe,
-                “Ami keno atke asi.”
-              </p>
-            </div>
-            <div class="pillrow" style="justify-content:flex-end; margin-top:0;">
-              <span class="pill"><strong>Time</strong> 9:00 PM</span>
-              <span class="pill"><strong>Mode</strong> Google Meet</span>
-            </div>
-          </div>
-
-          <ul class="list">
-            <li>2-minute live diagnostic mistake (real student pattern)</li>
-            <li>Basic–Advanced journey: keno “random practice” kaj kore na</li>
-            <li>How we guide: routine + practice + evaluation loop</li>
-          </ul>
-
-          <div class="event-actions">
-            <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20Basic%20to%20Advanced%20demo%20class%20e%20join%20korte%20chai.%20Joining%20details%20den%3F"
-               target="_blank" rel="noopener">Join Details</a>
-
-            <a class="btn btn-ghost"
-               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20demo%20class%20er%20por%20admission%20niye%20guidance%20chai.%20Amar%20level%20check%20korben%3F"
-               target="_blank" rel="noopener">Admission Guidance</a>
-
-            <button class="btn btn-ghost" data-open-ask type="button">Help Me Choose</button>
-          </div>
-
-          <p class="muted" style="margin:12px 0 0;font-size:13px;">
-            Note: Date/time/link change hole ekhanei update korlei hobe (no daily posting headache).
-          </p>
+      <div class="grid-3" id="access">
+        <div class="mini">
+          <b>ZERO (Foundation)</b>
+          <p>Grammar base + speaking/writing start control.</p>
         </div>
-
-        <!-- LIVE SESSION / Q&A -->
-        <div class="event" id="live">
-          <div class="event-top">
-            <div>
-              <div class="pillrow" style="margin-top:0;">
-                <span class="pill tag-live"><strong>LIVE</strong> • Q&A</span>
-                <span class="pill"><strong>Focus</strong> Basic → Advanced</span>
-              </div>
-              <h3 style="margin-top:10px;">Live Guidance — “Admit korlei ki hobe?”</h3>
-              <p class="kicker">
-                People overthink. Ei session er goal simple: apnar confusion cut.
-                You admit — we take care of everything.
-              </p>
-            </div>
-            <div class="pillrow" style="justify-content:flex-end; margin-top:0;">
-              <span class="pill"><strong>Time</strong> 10:15 PM</span>
-              <span class="pill"><strong>Mode</strong> Online</span>
-            </div>
-          </div>
-
-          <ul class="list">
-            <li>“Which level for me?” — tap-based quick guidance</li>
-            <li>Routine + evaluation system (kivabe progress measurable)</li>
-            <li>What to do today (simple start checklist)</li>
-          </ul>
-
-          <div class="event-actions">
-            <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Live%20Guidance%20session%20niye%20details%20den.%20Basic%20to%20Advanced%20admission%20plan%20chai."
-               target="_blank" rel="noopener">Get Details</a>
-
-            <a class="btn btn-ghost" href="#next">Next Batch Info</a>
-            <button class="btn btn-ghost" data-open-ask type="button">Help Me Choose</button>
-          </div>
+        <div class="mini">
+          <b>HOPE (Reset)</b>
+          <p>Reading/Listening/Writing/Speaking — blockers fix.</p>
         </div>
+        <div class="mini">
+          <b>STEP-UP (Band Jump)</b>
+          <p>Accuracy + strategy + 6+ to 6.5–7+ move.</p>
+        </div>
+      </div>
+
+      <div class="mini" style="margin-top:12px;">
+        <b>DESPERATE (Final + Evaluation)</b>
+        <p>Exam near / repeat fail — weakness detect → fix → test → evaluate.</p>
       </div>
 
       <div class="rule"></div>
 
-      <div class="grid-3">
-        <div class="mini">
-          <b>Admit & Orientation</b>
-          <p>Seat confirm → routine explain → practice path set.</p>
-        </div>
-        <div class="mini">
-          <b>Guided Practice</b>
-          <p>Daily/weekly target + module practice support.</p>
-        </div>
-        <div class="mini">
-          <b>Evaluation Loop</b>
-          <p>Test → feedback → correction → retest.</p>
-        </div>
+      <h3 class="title">Why students miss this chance</h3>
+      <ul class="list">
+        <li>“Ami nijey practice korbo” bole 2–3 week loss hoy — then panic.</li>
+        <li>Routine thake na, tai improvement measurable hoy na.</li>
+        <li>Exam date ashle sudden “crash mode” e giye wrong plan follow kore.</li>
+      </ul>
+
+      <div class="warning">
+        <b>Real talk:</b> Admit na korle, apnar problem solve hoy na. Admit korle, apnar job shudhu follow kora.
+        We will guide you, push you, and evaluate you.
+      </div>
+
+      <div class="cta-row">
+        <a class="btn btn-primary"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20(Full%20Access%204%20Levels)%20e%20admission%20nibo.%20Seat%20lock%20korben.%2050%25%20discount%20details%20den."
+           target="_blank" rel="noopener">Admit Now</a>
+
+        <!-- Link to details page (change if your details page is different) -->
+        <a class="btn btn-ghost" href="ielts.html">Open IELTS Journey Details</a>
+
+        <button class="btn btn-ghost" data-open-ask type="button">Help Me Choose</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- NEXT BATCH -->
-<section id="next">
+<!-- QUICK PROCESS -->
+<section id="process">
   <div class="container">
     <div class="card">
-      <span class="badge"><span class="dot" style="background:var(--warn)"></span>Next Batch</span>
-      <h2 class="title" style="margin-top:10px;">Basic → Advanced (batch admission)</h2>
+      <span class="badge"><span class="dot" style="background:var(--warn)"></span>Fast Admission</span>
+      <h2 class="title" style="margin-top:10px;">Admit today, start 26th Dec (9 PM)</h2>
       <p class="muted" style="margin:0; max-width:920px;">
-        Batch er exact start date change hote pare. Tai ekhane amra “process” clear rakhi —
-        <b>admit korlei apnar plan locked</b>.
+        Seat confirm korte delay korle, offer/seat shift hoy. Today admission = peace.
       </p>
 
       <div class="rule"></div>
 
       <div class="grid-2">
         <div class="mini">
-          <b>What you get (simple)</b>
+          <b>You send</b>
           <ul class="list" style="margin-top:10px;">
-            <li>Level selection support</li>
-            <li>Routine + class access</li>
-            <li>Practice direction (Listening/Reading/Writing/Speaking)</li>
-            <li>Evaluation + feedback</li>
+            <li>Name + phone</li>
+            <li>Payment method + Txn ID / screenshot</li>
+            <li>“Basic–Advanced batch” mention</li>
           </ul>
         </div>
 
         <div class="mini">
-          <b>Fast admission (no drama)</b>
+          <b>We send back</b>
           <ul class="list" style="margin-top:10px;">
-            <li>Name + phone + payment screenshot/txn id</li>
-            <li>We confirm seat</li>
-            <li>We send routine + next steps</li>
+            <li>Seat confirmation</li>
+            <li>Routine + how to start properly</li>
+            <li>Next steps + support guidance</li>
           </ul>
 
           <div class="cta-row" style="margin-top:12px;">
             <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20IELTS%20batch%20e%20admission%20nibo.%20Seat%20confirm%20korben%3F"
-               target="_blank" rel="noopener">Admit Now</a>
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20Basic%20to%20Advanced%20batch%20(26th%20Dec%209%20PM)%20e%20admission%20confirm%20korte%20chai.%20Payment%20details%20kothay%20pathabo%3F"
+               target="_blank" rel="noopener">Start Admission</a>
 
-            <button class="btn btn-ghost" data-open-ask type="button">Help Me Choose</button>
+            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Visit Office</a>
           </div>
 
           <p class="muted" style="margin:12px 0 0;font-size:13px;">
@@ -845,7 +809,7 @@
           <div class="footer-links">
             <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
             <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=Need%20guidance%20about%20Basic%20to%20Advanced%20IELTS%20course"
+               href="https://wa.me/8801611611139?text=Need%20guidance%20about%20Basic%20to%20Advanced%20IELTS%20batch%20(26th%20Dec%209%20PM)%20+%2050%25%20discount"
                target="_blank" rel="noopener">Chat Now</a>
           </div>
 
@@ -867,10 +831,10 @@
       <span class="dot"></span>
       <span><b>Need guidance?</b></span>
       <a class="btn-tiny"
-         href="https://wa.me/8801611611139?text=Hi%2C%20Basic%20to%20Advanced%20IELTS%20course%20niye%20guidance%20chai."
+         href="https://wa.me/8801611611139?text=Hi%2C%20Basic%20to%20Advanced%20batch%20(26th%20Dec%209%20PM)%20niye%20guidance%20chai.%2050%25%20discount%20details%20den."
          target="_blank" rel="noopener">Chat Now</a>
       <button class="btn-tiny" data-open-ask type="button">Help Me Choose</button>
-      <a class="btn-tiny" href="about.html">About</a>
+      <a class="btn-tiny" href="ielts.html">Details</a>
     </div>
   </div>
 </footer>
@@ -945,7 +909,7 @@
 
       <div class="ask-actions">
         <a class="btn btn-primary" id="resCta" href="#" target="_blank" rel="noopener">Talk with LizOn</a>
-        <a class="btn btn-ghost" href="#next">Next Batch</a>
+        <a class="btn btn-ghost" href="#details">Details</a>
         <button class="btn btn-ghost" id="askRestart" type="button">Reset</button>
       </div>
     </div>
@@ -1006,14 +970,8 @@
   hambFab.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleDrawer(); });
   closeDrawer.addEventListener('click', closeDrawerFn);
   backdrop.addEventListener('click', closeDrawerFn);
-
-  // Close drawer when clicking any link
   drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeDrawerFn));
-
-  // ESC close drawer
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDrawerFn(); });
-
-  // Outside click safety
   document.addEventListener('click', (e)=>{
     if(!drawer.classList.contains('open')) return;
     const within = drawer.contains(e.target) || hambFab.contains(e.target);
@@ -1028,7 +986,7 @@
     window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
   });
 
-  /* ===== AskLizOn (Basic → Advanced) ===== */
+  /* ===== AskLizOn (tap selector) ===== */
   const askWrap = document.getElementById('askWrap');
   const askBack = document.getElementById('askBack');
   const askClose = document.getElementById('askClose');
@@ -1045,7 +1003,6 @@
   const resCta = document.getElementById('resCta');
   const askRestart = document.getElementById('askRestart');
 
-  // Keep simple here: Upcoming page is not pricing page. We focus on “what to do next”.
   const state = { situation:null, time:null };
 
   function openAsk(){
@@ -1065,7 +1022,6 @@
   askPill.addEventListener('click', openAsk);
   askPill.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openAsk(); });
   if(openAskFromHero) openAskFromHero.addEventListener('click', openAsk);
-
   document.querySelectorAll('[data-open-ask]').forEach(b=> b.addEventListener('click', openAsk));
 
   function resetAsk(){
@@ -1101,41 +1057,40 @@
   function renderStep2(){
     stepLabel.textContent = 'Step 2/2 — Time situation?';
     setOptions([
-      { title:'Relaxed', desc:'Step-by-step. Routine follow korte parbo', value:'relaxed' },
-      { title:'1–2 months', desc:'Short time but manageable', value:'12m' },
-      { title:'Urgent', desc:'Very near / repeated failures', value:'urgent' },
-      { title:'Not sure', desc:'Just guide me', value:'ns' }
+      { title:'Ready to start now', desc:'Seat lock korte chai', value:'now' },
+      { title:'Need discount info', desc:'50% discount criteria', value:'disc' },
+      { title:'Need level check', desc:'Amar level ta bujhte chai', value:'level' },
+      { title:'Just guide me', desc:'Ami confused, plan den', value:'guide' }
     ], (v)=>{ state.time=v; showRecommendation(); });
   }
 
   function showRecommendation(){
-    let headline = 'Join Upcoming Demo + Get Admission Guidance';
-    let why = [];
+    const why = [];
 
-    const situationMap = {
-      start: 'Apnar jonno first step: demo + level check → then admission.',
-      stuck: 'Apnar jonno: confusion cut + routine reset dorkar.',
-      multi: 'Multiple problem hole: guided plan chara time waste hoy.',
-      near: 'Exam close hole: guidance + quick routine lock.'
+    const sMap = {
+      start: 'First start hole, full access e step-by-step best.',
+      stuck: 'Stuck hole, guided routine chara time waste hoy.',
+      multi: 'Multiple problem e ekta plan + evaluation lagbei.',
+      near: 'Exam close hole, fast decision + strict guidance needed.'
     };
-    const timeMap = {
-      relaxed: 'Time ase — stable progress er jonno routine follow.',
-      '12m': '1–2 month — focus e thakle improvement visible hobe.',
-      urgent: 'Urgent — fast decision + guided steps needed.',
-      ns: 'No tension — amra question kore plan set kore dibo.'
+    const tMap = {
+      now: 'Seat lock korlei apnar plan fixed.',
+      disc: 'Discount criteria wise close hoy — early confirm best.',
+      level: 'Level check kore direct right starting point set kora hoy.',
+      guide: 'We will guide you from day 1.'
     };
 
-    why.push(`• <b>Situation:</b> ${situationMap[state.situation] || 'We will guide the next step.'}`);
-    why.push(`• <b>Time:</b> ${timeMap[state.time] || 'We will set a clear plan.'}`);
-    why.push('• <b>Next:</b> Admit + routine + evaluation — you just follow.');
+    why.push(`• <b>Reason:</b> ${sMap[state.situation] || 'We will guide.'}`);
+    why.push(`• <b>Next:</b> ${tMap[state.time] || 'We will guide.'}`);
+    why.push('• <b>Outcome:</b> Admit → routine → practice → evaluation. You just follow.');
 
     askResult.classList.add('show');
-    resTitle.textContent = headline;
+    resTitle.textContent = 'Next step: Admit (26th Dec, 9 PM) — Basic → Advanced';
     resMeta.textContent = 'Tap-based guidance — no typing.';
-    resPrice.textContent = 'Fast next step';
+    resPrice.textContent = '50% Discount';
     resWhy.innerHTML = why.join('<br/>');
 
-    const msg = encodeURIComponent(`Assalamu Alaikum, Upcoming page theke AskLizOn use korechi. Situation:${state.situation}, Time:${state.time}. Basic to Advanced admission niye guidance den + next steps bolben?`);
+    const msg = encodeURIComponent(`Assalamu Alaikum, Basic to Advanced batch (26th Dec 9 PM) e admission nibo. Situation:${state.situation}, Need:${state.time}. 50% discount details + seat confirm korben?`);
     resCta.href = `https://wa.me/8801611611139?text=${msg}`;
   }
 </script>

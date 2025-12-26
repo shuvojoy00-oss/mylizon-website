@@ -9,62 +9,81 @@
   <meta name="theme-color" content="#0b2a1f" />
 
   <style>
+    /* =============================
+       THEME TOKENS
+    ============================== */
     :root{
-      --bg:#071b16;
-      --grad1: radial-gradient(1100px 800px at 15% -10%, rgba(35,140,110,.18), transparent 60%);
-      --grad2: radial-gradient(1000px 800px at 100% 0%, rgba(255,190,100,.08), transparent 60%);
-      --panel:#0b241e;
-      --panel2:#0e2c25;
+      --bg:#061611;
       --text:#e9f3ef;
       --muted:rgba(233,243,239,.78);
       --muted2:rgba(233,243,239,.62);
       --border:rgba(233,243,239,.14);
       --border2:rgba(233,243,239,.22);
+
+      --panel:#0b241e;
+      --panel2:#0e2c25;
       --chip-bg: rgba(255,255,255,.03);
-      --card-grad: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+      --card-grad: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.018));
       --mini-bg: rgba(255,255,255,.02);
-      --highlight-grad: linear-gradient(180deg, rgba(35,140,110,.16), rgba(255,190,100,.06));
-      --shadow: 0 10px 30px rgba(0,0,0,.25);
 
-      --gold: rgba(255,190,100,.55);
-      --gold-strong: rgba(255,190,100,.82);
-      --goldbg: rgba(255,190,100,.10);
+      --shadow: 0 12px 34px rgba(0,0,0,.28);
 
-      --topbar-bg: rgba(7,27,22,.88);
-      --topbar-bg-scrolled: rgba(7,27,22,.55);
+      /* Brand-ish */
+      --green:#10b981;   /* emerald */
+      --green2:#22c55e;  /* green */
+      --gold:#fbbf24;    /* amber */
+      --gold2:#f59e0b;   /* amber deep */
+      --cyan:#22d3ee;
+      --violet:#a78bfa;
+      --pink:#fb7185;
+
+      /* Buttons */
+      --btn-primary-bg: linear-gradient(180deg, rgba(251,191,36,.30), rgba(245,158,11,.20));
+      --btn-primary-bd: rgba(251,191,36,.55);
+
+      --btn-secondary-bg: linear-gradient(180deg, rgba(34,211,238,.16), rgba(34,211,238,.08));
+      --btn-secondary-bd: rgba(34,211,238,.35);
+
+      --btn-whatsapp-bg: linear-gradient(180deg, rgba(34,197,94,.18), rgba(16,185,129,.10));
+      --btn-whatsapp-bd: rgba(34,197,94,.45);
+
+      --btn-ghost-bg: rgba(255,255,255,.02);
+      --btn-ghost-bd: rgba(233,243,239,.18);
 
       --radius-xl: 20px;
       --radius-lg: 16px;
 
-      --ok: rgba(0,210,106,.95);
-      --warn: rgba(255,190,100,.95);
-      --info: rgba(120, 210, 255, .95);
-      --pink: rgba(255, 160, 210, .95);
+      /* Page background art */
+      --gradA: radial-gradient(1100px 700px at 10% -10%, rgba(16,185,129,.18), transparent 60%);
+      --gradB: radial-gradient(900px 700px at 100% 0%, rgba(251,191,36,.12), transparent 60%);
+      --gradC: radial-gradient(900px 700px at 60% 90%, rgba(167,139,250,.10), transparent 60%);
+
+      --topbar-bg: rgba(6,22,17,.88);
+      --topbar-bg-scrolled: rgba(6,22,17,.55);
     }
 
     .theme-light{
       --bg:#eef6f3;
-      --grad1: radial-gradient(1100px 800px at 10% -10%, rgba(12,123,89,.10), transparent 60%);
-      --grad2: radial-gradient(1000px 800px at 100% 0%, rgba(255,190,100,.10), transparent 60%);
-      --panel:#ffffff;
-      --panel2:#ffffff;
       --text:#0b201a;
       --muted:rgba(11,32,26,.72);
       --muted2:rgba(11,32,26,.58);
       --border:rgba(11,32,26,.12);
       --border2:rgba(11,32,26,.22);
+
+      --panel:#ffffff;
+      --panel2:#ffffff;
       --chip-bg:#ffffff;
       --card-grad: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.985));
       --mini-bg:#f5faf7;
-      --highlight-grad: linear-gradient(180deg, rgba(255,230,180,.40), rgba(12,123,89,.08));
-      --shadow: 0 8px 24px rgba(8,25,20,.08);
 
-      --gold: rgba(165,127,50,.55);
-      --gold-strong: rgba(165,127,50,.85);
-      --goldbg: #f3ebd7;
+      --shadow: 0 10px 26px rgba(8,25,20,.10);
 
-      --topbar-bg: rgba(255,255,255,.90);
-      --topbar-bg-scrolled: rgba(255,255,255,.62);
+      --gradA: radial-gradient(1100px 700px at 10% -10%, rgba(16,185,129,.14), transparent 60%);
+      --gradB: radial-gradient(900px 700px at 100% 0%, rgba(251,191,36,.16), transparent 60%);
+      --gradC: radial-gradient(900px 700px at 60% 90%, rgba(167,139,250,.12), transparent 60%);
+
+      --topbar-bg: rgba(255,255,255,.92);
+      --topbar-bg-scrolled: rgba(255,255,255,.65);
     }
 
     *{ box-sizing:border-box; }
@@ -72,14 +91,16 @@
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--grad1), var(--grad2), var(--bg);
+      background: var(--gradA), var(--gradB), var(--gradC), var(--bg);
       color:var(--text);
       line-height:1.6;
     }
     a{ color:inherit; }
     .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
 
-    /* ===== TOPBAR ===== */
+    /* =============================
+       TOPBAR
+    ============================== */
     .topbar{
       position: sticky;
       top: 0;
@@ -135,10 +156,13 @@
       color:var(--muted);
       background: var(--chip-bg);
       white-space:nowrap;
+      transition: border-color .15s ease, transform .15s ease, color .15s ease;
     }
-    .chip:hover{ border-color:var(--border2); color:var(--text); }
+    .chip:hover{ border-color:var(--border2); color:var(--text); transform: translateY(-1px); }
 
-    /* ===== DRAWER ===== */
+    /* =============================
+       DRAWER
+    ============================== */
     .backdrop{
       position:fixed; inset:0;
       background: rgba(0,0,0,.45);
@@ -200,8 +224,9 @@
       color: var(--text);
       font-weight:900;
       text-align:center;
+      transition: transform .15s ease, border-color .15s ease, filter .15s ease;
     }
-    .drawer a:hover{ border-color: var(--border2); }
+    .drawer a:hover{ border-color: var(--border2); transform: translateY(-1px); filter: brightness(1.02); }
     .drawer .full{ grid-column: 1 / -1; }
     .drawer-sub{
       margin:12px 0 8px;
@@ -211,14 +236,29 @@
       letter-spacing:.2px;
     }
 
-    /* ===== MAIN ===== */
+    /* =============================
+       MAIN TYPO + CARDS
+    ============================== */
     header{ padding: 18px 0 10px; }
+    section{ padding: 20px 0; }
     .hero-card{
       background: var(--card-grad);
       border: 1px solid var(--border);
       border-radius: var(--radius-xl);
       padding: 18px;
       box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute; inset:-40% -30%;
+      background:
+        radial-gradient(450px 280px at 20% 20%, rgba(34,211,238,.14), transparent 65%),
+        radial-gradient(500px 340px at 80% 20%, rgba(251,191,36,.12), transparent 65%),
+        radial-gradient(520px 360px at 60% 85%, rgba(167,139,250,.12), transparent 65%);
+      pointer-events:none;
+      filter: blur(0px);
     }
     .badge{
       display:inline-flex;
@@ -231,13 +271,14 @@
       border: 1px solid var(--border);
       background: var(--chip-bg);
       font-weight:900;
+      position: relative;
+      z-index: 1;
     }
-    .badge-dot{ width:10px; height:10px; border-radius:50%; background: rgba(255,190,100,.85); }
-    h1{ margin:10px 0 6px; font-size:28px; line-height:1.2; }
-    .lead{ margin:0; color:var(--muted); max-width:980px; }
+    .badge-dot{ width:10px; height:10px; border-radius:50%; background: rgba(251,191,36,.85); }
+    h1{ margin:10px 0 6px; font-size:28px; line-height:1.2; position:relative; z-index:1; }
+    .lead{ margin:0; color:var(--muted); max-width:980px; position:relative; z-index:1; }
     .muted{ color:var(--muted); }
     .muted2{ color:var(--muted2); }
-    section{ padding: 20px 0; }
     .section-title{ margin:10px 0 8px; font-size:22px; line-height:1.25; }
     .rule{ height:1px; background: var(--border); margin:18px 0; }
 
@@ -259,17 +300,24 @@
       border-radius: 16px;
       padding: 12px;
       background:var(--mini-bg);
+      transition: transform .15s ease, border-color .15s ease;
     }
+    .mini-card:hover{ transform: translateY(-1px); border-color: var(--border2); }
     .mini-title{ margin:0 0 6px; font-weight:950; font-size:13px; }
     .mini-text{ margin:0; color:var(--muted); font-size:13px; }
 
     .highlight{
-      background: var(--highlight-grad);
-      border: 1px solid rgba(255,190,100,.20);
+      background:
+        linear-gradient(180deg, rgba(16,185,129,.08), rgba(255,255,255,.01)),
+        linear-gradient(180deg, rgba(251,191,36,.08), rgba(255,255,255,.01));
+      border: 1px solid rgba(251,191,36,.18);
       border-radius: var(--radius-xl);
       padding: 16px;
     }
 
+    /* =============================
+       BUTTON SYSTEM (colors!)
+    ============================== */
     .btn{
       display:inline-block;
       padding:12px 16px;
@@ -277,16 +325,34 @@
       text-decoration:none;
       font-weight:950;
       border:1px solid transparent;
-      white-space:nowrap;
       user-select:none;
       cursor:pointer;
       background: transparent;
       color: inherit;
+      transition: transform .15s ease, filter .15s ease, border-color .15s ease;
+      -webkit-tap-highlight-color: transparent;
     }
-    .btn-primary{ background: var(--goldbg); border-color: var(--gold); color: var(--text); }
-    .theme-light .btn-primary{ color: #0b201a; }
-    .btn-ghost{ background: transparent; border-color: var(--border); color: var(--muted); }
-    .btn:hover{ filter: brightness(1.03); }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+    .btn:active{ transform: translateY(0px); }
+
+    .btn-primary{
+      background: var(--btn-primary-bg);
+      border-color: var(--btn-primary-bd);
+    }
+    .btn-secondary{
+      background: var(--btn-secondary-bg);
+      border-color: var(--btn-secondary-bd);
+    }
+    .btn-whatsapp{
+      background: var(--btn-whatsapp-bg);
+      border-color: var(--btn-whatsapp-bd);
+    }
+    .btn-ghost{
+      background: var(--btn-ghost-bg);
+      border-color: var(--btn-ghost-bd);
+      color: var(--muted);
+    }
+
     .btn-tiny{
       padding:9px 11px;
       font-weight:950;
@@ -297,11 +363,14 @@
       color:var(--text);
       text-decoration:none;
       cursor:pointer;
+      transition: transform .15s ease, border-color .15s ease, filter .15s ease;
+      -webkit-tap-highlight-color: transparent;
     }
-    .btn-tiny:hover{ border-color: var(--border2); }
-    .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .btn-tiny:hover{ border-color: var(--border2); transform: translateY(-1px); filter: brightness(1.02); }
 
-    .meta-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+    .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; position:relative; z-index:1; }
+
+    .meta-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; position:relative; z-index:1; }
     .pill{
       display:inline-flex;
       gap:8px;
@@ -316,7 +385,9 @@
     }
     .pill strong{ color: var(--text); }
 
-    /* ===== VIDEO ===== */
+    /* =============================
+       VIDEO
+    ============================== */
     .video-wrap{
       border:1px solid var(--border);
       border-radius: var(--radius-xl);
@@ -342,13 +413,17 @@
       background: rgba(255,255,255,.02);
     }
 
-    /* ===== REVIEWS ===== */
+    /* =============================
+       REVIEWS
+    ============================== */
     .review{
       border:1px solid var(--border);
       background: rgba(255,255,255,.02);
       border-radius: 18px;
       padding: 14px;
+      transition: transform .15s ease, border-color .15s ease;
     }
+    .review:hover{ transform: translateY(-1px); border-color: var(--border2); }
     .review p{ margin:0; color: var(--text); }
     .who{
       margin-top:10px;
@@ -361,15 +436,17 @@
       font-size:12px;
     }
     .tag{
-      border:1px solid rgba(255,190,100,.28);
-      background: rgba(255,190,100,.10);
+      border:1px solid rgba(34,211,238,.30);
+      background: rgba(34,211,238,.10);
       padding:6px 10px;
       border-radius:999px;
       font-weight:950;
       color: var(--text);
     }
 
-    /* ===== PAYMENT ===== */
+    /* =============================
+       PAYMENT
+    ============================== */
     .pay-grid{
       display:grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -379,7 +456,10 @@
     .pay-card{
       border:1px solid var(--border);
       border-radius: var(--radius-xl);
-      background: var(--card-grad);
+      background:
+        radial-gradient(360px 220px at 80% 20%, rgba(34,197,94,.10), transparent 60%),
+        radial-gradient(360px 220px at 20% 80%, rgba(251,191,36,.10), transparent 60%),
+        var(--card-grad);
       padding: 14px;
       cursor:pointer;
       user-select:none;
@@ -391,8 +471,11 @@
 
     .pay-detail{
       margin-top:12px;
-      border:1px solid rgba(255,190,100,.22);
-      background: linear-gradient(180deg, rgba(255,190,100,.08), rgba(255,255,255,.01)), rgba(255,255,255,.01);
+      border:1px solid rgba(251,191,36,.20);
+      background:
+        radial-gradient(520px 260px at 20% 20%, rgba(34,211,238,.10), transparent 60%),
+        radial-gradient(520px 260px at 80% 70%, rgba(251,191,36,.10), transparent 60%),
+        rgba(255,255,255,.01);
       border-radius: var(--radius-xl);
       padding: 14px;
       display:none;
@@ -429,10 +512,14 @@
       font-weight:950;
       cursor:pointer;
       font-size:12px;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .15s ease, border-color .15s ease, filter .15s ease;
     }
-    .copy-btn:hover{ border-color: var(--border2); }
+    .copy-btn:hover{ border-color: var(--border2); transform: translateY(-1px); filter: brightness(1.02); }
 
-    /* ===== ASK LIZON SELECTOR ===== */
+    /* =============================
+       ASK LIZON (tap selector)
+    ============================== */
     .ask-wrap{
       position:fixed; inset:0;
       display:none;
@@ -481,6 +568,7 @@
       cursor:pointer;
       font-weight:950;
       flex:0 0 auto;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .ask-steps{ margin-top:12px; }
@@ -494,21 +582,28 @@
     .opt-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
     .opt{
       border:1px solid var(--border);
-      background: rgba(255,255,255,.02);
+      background:
+        radial-gradient(260px 180px at 70% 20%, rgba(167,139,250,.12), transparent 60%),
+        rgba(255,255,255,.02);
       border-radius:18px;
       padding:12px;
       text-align:left;
       cursor:pointer;
       user-select:none;
+      transition: transform .15s ease, border-color .15s ease, filter .15s ease;
+      -webkit-tap-highlight-color: transparent;
     }
-    .opt:hover{ border-color: var(--border2); }
+    .opt:hover{ border-color: var(--border2); transform: translateY(-1px); filter: brightness(1.02); }
     .opt b{ display:block; font-size:14px; margin-bottom:4px; }
     .opt span{ display:block; color: var(--muted); font-size:12px; font-weight:900; }
 
     .ask-result{
       margin-top:12px;
-      border:1px solid rgba(255,190,100,.22);
-      background: linear-gradient(180deg, rgba(255,190,100,.08), rgba(255,255,255,.01)), rgba(255,255,255,.01);
+      border:1px solid rgba(251,191,36,.20);
+      background:
+        radial-gradient(520px 260px at 20% 20%, rgba(34,197,94,.10), transparent 60%),
+        radial-gradient(520px 260px at 80% 70%, rgba(251,191,36,.10), transparent 60%),
+        rgba(255,255,255,.01);
       border-radius: var(--radius-xl);
       padding: 14px;
       display:none;
@@ -521,113 +616,11 @@
     .why{ margin-top:10px; color: var(--text); font-size:13px; line-height:1.55; }
     .ask-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center; }
 
-    /* ===== FLOATING CONTROLS ===== */
-    .scroll-dock{
-      position:fixed;
-      right:14px;
-      bottom:120px;
-      z-index:2300;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      padding:10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-    }
-    .sbtn{
-      width:44px; height:44px;
-      border-radius:16px;
-      border:1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
-      display:grid; place-items:center;
-      cursor:pointer; user-select:none;
-      transition: transform .12s ease, border-color .12s ease, filter .12s ease;
-    }
-    .sbtn:hover{ border-color: var(--border2); filter: brightness(1.03); transform: translateY(-1px); }
-    .sbtn svg{ width:20px; height:20px; }
-
-    .hamb-fab{
-      position:fixed; left:14px; bottom:54px; z-index:2400;
-      width:54px; height:54px;
-      border-radius:20px;
-      border:1px solid var(--border);
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      display:grid; place-items:center;
-      cursor:pointer;
-      backdrop-filter: blur(10px);
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-    .hamb-fab svg{ width:22px; height:22px; }
-
-    .ask-pill{
-      position:fixed; left:14px; bottom:116px; z-index:2400;
-      border:1px solid var(--border);
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      border-radius:999px;
-      padding:10px 12px;
-      display:flex; align-items:center; gap:10px;
-      cursor:pointer;
-      backdrop-filter: blur(10px);
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-    .ask-pill img{
-      width:18px; height:18px;
-      object-fit:contain;
-      opacity:.95;
-      border-radius: 6px;
-    }
-    .ask-pill b{ font-size:13px; }
-    .ask-pill span{ font-size:12px; color: var(--muted); }
-
-    .theme-fab{
-      position:fixed; right:14px; bottom:54px; z-index:2400;
-      border:1px solid var(--border);
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      border-radius: 18px;
-      width:52px; height:52px;
-      display:grid; place-items:center;
-      cursor:pointer;
-      backdrop-filter: blur(10px);
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-    .theme-fab svg{ width:18px; height:18px; }
-    .icon-sun{ display:none; }
-    .theme-light .icon-sun{ display:block; }
-    .theme-light .icon-moon{ display:none; }
-
-    .sticky-bar{
-      position:fixed; left:0; right:0; bottom:12px; z-index:2200;
-      display:flex; justify-content:center;
-      pointer-events:none;
-    }
-    .sticky-bar .bar{
-      pointer-events:auto;
-      display:flex; align-items:center; gap:10px;
-      border:1px solid var(--border);
-      background: var(--panel);
-      padding:10px 14px;
-      border-radius:999px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      flex-wrap:wrap;
-      justify-content:center;
-    }
-    .bar .dot{ width:10px; height:10px; border-radius:50%; background: #00d26a; }
-
-    /* ===== FOOTER ===== */
+    /* =============================
+       FOOTER
+    ============================== */
     footer{
-      padding: 10px 0 160px;
+      padding: 10px 0 200px; /* room for sticky bar */
       border-top: 1px solid var(--border);
       margin-top: 18px;
       color: var(--muted);
@@ -639,7 +632,20 @@
       border-radius: var(--radius-xl);
       padding:16px;
       box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
     }
+    .footer-card::before{
+      content:"";
+      position:absolute; inset:-40% -30%;
+      background:
+        radial-gradient(520px 280px at 25% 30%, rgba(34,197,94,.10), transparent 60%),
+        radial-gradient(520px 280px at 80% 55%, rgba(34,211,238,.10), transparent 60%),
+        radial-gradient(520px 280px at 60% 15%, rgba(251,191,36,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .footer-card > *{ position:relative; z-index:1; }
+
     .footer-columns{
       display:grid;
       grid-template-columns: 1.1fr .9fr .9fr;
@@ -657,7 +663,137 @@
     .socials{ display:flex; gap:10px; flex-wrap:wrap; }
     .footer-small{ font-size:13px; color: var(--muted); }
 
-    /* ===== RESPONSIVE ===== */
+    /* =============================
+       FLOATING UI: alignment fixed
+       - No overlap on mobile
+       - uses safe-area inset
+    ============================== */
+    .scroll-dock{
+      position:fixed;
+      right:14px;
+      z-index:2300;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+
+      /* important: keep above sticky bar */
+      bottom: calc(var(--sticky-h, 86px) + 18px + env(safe-area-inset-bottom, 0px));
+    }
+    .sbtn{
+      width:44px; height:44px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      display:grid; place-items:center;
+      cursor:pointer; user-select:none;
+      transition: transform .12s ease, border-color .12s ease, filter .12s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sbtn:hover{ border-color: var(--border2); filter: brightness(1.03); transform: translateY(-1px); }
+    .sbtn svg{ width:20px; height:20px; }
+
+    .hamb-fab{
+      position:fixed; left:14px;
+      z-index:2400;
+      width:54px; height:54px;
+      border-radius:20px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      display:grid; place-items:center;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+
+      /* align above sticky bar */
+      bottom: calc(var(--sticky-h, 86px) + 18px + env(safe-area-inset-bottom, 0px));
+    }
+    .hamb-fab svg{ width:22px; height:22px; }
+
+    .ask-pill{
+      position:fixed; left:14px;
+      z-index:2400;
+      border:1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      border-radius:999px;
+      padding:10px 12px;
+      display:flex; align-items:center; gap:10px;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+
+      /* sits above hamburger, still above sticky */
+      bottom: calc(var(--sticky-h, 86px) + 84px + env(safe-area-inset-bottom, 0px));
+    }
+    .ask-pill img{
+      width:18px; height:18px;
+      object-fit:contain;
+      opacity:.95;
+      border-radius: 6px;
+    }
+    .ask-pill b{ font-size:13px; }
+    .ask-pill span{ font-size:12px; color: var(--muted); }
+
+    .theme-fab{
+      position:fixed; right:14px;
+      z-index:2400;
+      border:1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+      width:52px; height:52px;
+      display:grid; place-items:center;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+
+      /* keep above sticky bar */
+      bottom: calc(var(--sticky-h, 86px) + 18px + env(safe-area-inset-bottom, 0px));
+    }
+    .theme-fab svg{ width:18px; height:18px; }
+    .icon-sun{ display:none; }
+    .theme-light .icon-sun{ display:block; }
+    .theme-light .icon-moon{ display:none; }
+
+    .sticky-bar{
+      position:fixed; left:0; right:0;
+      z-index:2200;
+      display:flex; justify-content:center;
+      pointer-events:none;
+
+      /* safe area */
+      bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    }
+    .sticky-bar .bar{
+      pointer-events:auto;
+      display:flex; align-items:center; gap:10px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding:10px 12px;
+      border-radius:999px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      flex-wrap:wrap;
+      justify-content:center;
+      max-width: min(980px, calc(100vw - 24px));
+    }
+    .bar .dot{ width:10px; height:10px; border-radius:50%; background: var(--green2); }
+
+    /* =============================
+       RESPONSIVE
+    ============================== */
     @media (max-width: 920px){
       .grid-2{ grid-template-columns: 1fr; }
       .grid-3{ grid-template-columns: 1fr; }
@@ -668,6 +804,13 @@
     @media (max-width: 520px){
       .opt-grid{ grid-template-columns: 1fr; }
       .brand-text b{ max-width: 180px; }
+      .desktop-nav{ gap:6px; }
+      .chip{ padding:6px 9px; }
+      .scroll-dock{ right:10px; padding:8px; }
+      .sbtn{ width:42px; height:42px; border-radius:15px; }
+      .hamb-fab{ left:10px; width:52px; height:52px; }
+      .ask-pill{ left:10px; }
+      .theme-fab{ right:10px; width:50px; height:50px; }
     }
   </style>
 </head>
@@ -747,7 +890,10 @@
     <div class="hero-card">
       <span class="badge"><span class="badge-dot"></span>Designed for Desired Score</span>
 
-      <h1>PTE in <span style="color:var(--gold-strong);">30 Days</span> — BD students der jonno <span style="color:var(--gold-strong);">clear plan</span>.</h1>
+      <h1>
+        PTE in <span style="color:var(--gold);">30 Days</span> — BD students der jonno
+        <span style="color:var(--cyan);">clear plan</span>.
+      </h1>
       <p class="lead">
         Australia (and now other countries) er short timeline e “random practice” kaaj kore na.
         LizOn PTE course built: <b>question-based execution + typing speed control + time discipline</b>.
@@ -763,11 +909,11 @@
 
       <div class="cta-row">
         <button class="btn btn-primary" data-open-ask type="button">AskLizOn — PTE</button>
-        <a class="btn btn-ghost" href="#watch">Watch a Class</a>
+        <a class="btn btn-secondary" href="#watch">Watch a Class</a>
         <a class="btn btn-ghost" href="#fee">See Fee</a>
-        <a class="btn btn-ghost"
+        <a class="btn btn-whatsapp"
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20e%20admission%20nite%20chai.%20Next%20batch%2015th%20January%20to%20kobe%20start%20hobe%3F"
-           target="_blank" rel="noopener">Talk with LizOn</a>
+           target="_blank" rel="noopener">Chat Now</a>
       </div>
 
       <div class="rule"></div>
@@ -903,7 +1049,6 @@
     <h2 class="section-title">Promo na — real class vibe dekhen</h2>
 
     <div class="video-wrap" style="margin-top:14px;">
-      <!-- YouTube embed -->
       <iframe
         class="video"
         src="https://www.youtube-nocookie.com/embed/-266DaxnGBc?rel=0&modestbranding=1&playsinline=1"
@@ -913,7 +1058,7 @@
 
       <div class="video-bar">
         <div class="muted" style="max-width:760px;">
-          Note: Jodi YouTube auto-dubbed audio show kore, player er settings theke <b>Audio track → Original</b> select korte hoy.
+          Note: Jodi YouTube auto-dubbed audio show kore, player settings theke <b>Audio track → Original</b> select korun.
         </div>
         <a class="btn-tiny" href="https://youtu.be/-266DaxnGBc?si=t8ynFZScm3VZjAFZ" target="_blank" rel="noopener">Open on YouTube</a>
       </div>
@@ -921,9 +1066,9 @@
 
     <div class="cta-row">
       <button class="btn btn-primary" data-open-ask type="button">AskLizOn — PTE</button>
-      <a class="btn btn-ghost"
-         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20video%20dekhlam.%20PTE%20course%20e%20admission%20niye%20guidance%20chai."
-         target="_blank" rel="noopener">Talk with LizOn</a>
+      <a class="btn btn-whatsapp"
+         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20video%20dekhlam.%20PTE%20course%20niye%20admission%20process%20+%20routine%20diben%3F"
+         target="_blank" rel="noopener">Chat Now</a>
     </div>
   </div>
 </section>
@@ -969,8 +1114,8 @@
     </div>
 
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://youtu.be/-266DaxnGBc?si=t8ynFZScm3VZjAFZ" target="_blank" rel="noopener">Watch a Class</a>
-      <button class="btn btn-ghost" data-open-ask type="button">Get Instant Guidance</button>
+      <a class="btn btn-secondary" href="https://youtu.be/-266DaxnGBc?si=t8ynFZScm3VZjAFZ" target="_blank" rel="noopener">Watch a Class</a>
+      <button class="btn btn-primary" data-open-ask type="button">Get Instant Guidance</button>
     </div>
   </div>
 </section>
@@ -997,9 +1142,9 @@
 
           <div class="cta-row">
             <button class="btn btn-primary" data-open-ask type="button">AskLizOn — PTE</button>
-            <a class="btn btn-ghost"
+            <a class="btn btn-whatsapp"
                href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20fee%209000%20dekhsi.%20Admission%20process%20+%20routine%20diben%3F"
-               target="_blank" rel="noopener">Talk with LizOn</a>
+               target="_blank" rel="noopener">Chat Now</a>
           </div>
 
           <p class="note">
@@ -1076,8 +1221,8 @@
       <div class="kv" id="payKv"></div>
 
       <div class="cta-row">
-        <a class="btn btn-primary" id="paySubmitBtn" href="#" target="_blank" rel="noopener">Submit Screenshot / Txn ID (WhatsApp)</a>
-        <button class="btn btn-ghost" id="payCopyAll" type="button">Copy details</button>
+        <a class="btn btn-whatsapp" id="paySubmitBtn" href="#" target="_blank" rel="noopener">Submit Screenshot / Txn ID</a>
+        <button class="btn btn-secondary" id="payCopyAll" type="button">Copy details</button>
       </div>
 
       <p class="note" id="payNote"></p>
@@ -1122,8 +1267,8 @@
             <b>Helpline:</b> 01611611139
           </p>
           <div class="footer-links">
-            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-            <a class="btn btn-primary"
+            <a class="btn btn-secondary" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+            <a class="btn btn-whatsapp"
                href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20niye%20guidance%20chai."
                target="_blank" rel="noopener">Chat Now</a>
           </div>
@@ -1149,7 +1294,7 @@
   </div>
 
   <div class="sticky-bar" aria-label="Guidance bar">
-    <div class="bar">
+    <div class="bar" id="stickyBarInner">
       <span class="dot"></span>
       <span><b>Need guidance?</b></span>
       <button class="btn-tiny" data-open-ask type="button">AskLizOn — PTE</button>
@@ -1161,7 +1306,7 @@
   </div>
 </footer>
 
-<!-- Modern Scroll Dock -->
+<!-- Scroll Dock -->
 <div class="scroll-dock" aria-label="Scroll controls">
   <button class="sbtn" id="scrollTopBtn" type="button" title="Top" aria-label="Scroll to top">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M6 11l6-6 6 6"/></svg>
@@ -1171,7 +1316,7 @@
   </button>
 </div>
 
-<!-- Bottom-left hamburger (ALWAYS visible) -->
+<!-- Hamburger -->
 <button class="hamb-fab" id="hambFab" type="button" aria-label="Open navigation">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
@@ -1198,7 +1343,7 @@
   </svg>
 </div>
 
-<!-- ASK LIZON (tap selector) -->
+<!-- ASK LIZON MODAL -->
 <div class="ask-wrap" id="askWrap" aria-hidden="true">
   <div class="modal-back" id="askBack"></div>
   <div class="ask" role="dialog" aria-modal="true" aria-label="AskLizOn PTE selector">
@@ -1230,16 +1375,25 @@
       <div class="why" id="resWhy"></div>
 
       <div class="ask-actions">
-        <a class="btn btn-primary" id="resCta" href="#" target="_blank" rel="noopener">Talk with LizOn</a>
-        <a class="btn btn-ghost" href="#watch">Watch Class</a>
+        <a class="btn btn-whatsapp" id="resCta" href="#" target="_blank" rel="noopener">Chat Now</a>
+        <a class="btn btn-secondary" href="#watch">Watch Class</a>
         <a class="btn btn-ghost" href="#payment">Payment</a>
-        <button class="btn btn-ghost" id="askRestart" type="button">Reset</button>
+        <button class="btn btn-primary" id="askRestart" type="button">Reset</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+  /* ===== Sticky bar height -> used for floating UI alignment ===== */
+  const stickyInner = document.getElementById('stickyBarInner');
+  function updateStickyHeight(){
+    const h = stickyInner ? stickyInner.getBoundingClientRect().height : 86;
+    document.documentElement.style.setProperty('--sticky-h', Math.ceil(h) + 'px');
+  }
+  updateStickyHeight();
+  window.addEventListener('resize', updateStickyHeight);
+
   /* ===== Theme toggle (persist) ===== */
   const body = document.body;
   const topbar = document.getElementById('topbar');
@@ -1399,10 +1553,8 @@
   }
 
   function showAnswer(){
-    const feeText = `Fee: ৳ ${PTE_FEE.toLocaleString('en-US')}`;
-    resPrice.textContent = feeText;
+    resPrice.textContent = `Fee: ৳ ${PTE_FEE.toLocaleString('en-US')}`;
 
-    const why = [];
     const sit = {
       aus: 'Australia timeline close — confusion komanor jonno plan + execution first.',
       ielts: 'IELTS e atke gele PTE te “execution-based” approach e fast progress hoy.',
@@ -1422,10 +1574,12 @@
       ns: 'Not sure hole taps onujayi next steps dibe.'
     };
 
-    why.push(`<b>Situation:</b> ${sit[state.situation] || 'Plan set kora hobe.'}`);
-    why.push(`<b>Blocker:</b> ${weak[state.weakness] || 'Blocker fix kora hobe.'}`);
-    why.push(`<b>Timeline:</b> ${time[state.timeline] || 'Timeline onujayi direction.'}`);
-    why.push(`<b>What you’ll get:</b> 15 PTE sessions + 5 typing sessions + 1 month portal. Discount gimmick nai — quality focus.`);
+    const why = [
+      `<b>Situation:</b> ${sit[state.situation] || 'Plan set kora hobe.'}`,
+      `<b>Blocker:</b> ${weak[state.weakness] || 'Blocker fix kora hobe.'}`,
+      `<b>Timeline:</b> ${time[state.timeline] || 'Timeline onujayi direction.'}`,
+      `<b>What you’ll get:</b> 15 PTE sessions + 5 typing sessions + 1 month portal. Discount gimmick nai — quality focus.`
+    ];
 
     askResult.classList.add('show');
     resTitle.textContent = 'Best next step for you';
@@ -1452,41 +1606,31 @@
     "bkash-merchant": {
       title: "Bkash Merchant (Make Payment)",
       subtitle: "Open bKash → Payment → Merchant",
-      fields: [
-        { k:"Merchant No", v:"01611611139" }
-      ],
+      fields: [{ k:"Merchant No", v:"01611611139" }],
       note: "Payment complete korar por screenshot/Txn ID WhatsApp e send korun."
     },
     "bkash-personal": {
       title: "Bkash Personal (Send Money)",
       subtitle: "Open bKash → Send Money",
-      fields: [
-        { k:"Personal No", v:"01337533979" }
-      ],
+      fields: [{ k:"Personal No", v:"01337533979" }],
       note: "Send Money kore screenshot/Txn ID WhatsApp e send korun."
     },
     "rocket": {
       title: "Rocket Personal (Send Money)",
       subtitle: "Rocket app → Send Money",
-      fields: [
-        { k:"Personal No", v:"01337533979" }
-      ],
+      fields: [{ k:"Personal No", v:"01337533979" }],
       note: "Rocket e send kore screenshot/Txn ID WhatsApp e send korun."
     },
     "nagad": {
       title: "Nagad Personal (Send Money)",
       subtitle: "Nagad app → Send Money",
-      fields: [
-        { k:"Personal No", v:"01337533979" }
-      ],
+      fields: [{ k:"Personal No", v:"01337533979" }],
       note: "Nagad e send kore screenshot/Txn ID WhatsApp e send korun."
     },
     "upay": {
       title: "Upay Personal (Send Money)",
       subtitle: "Upay app → Send Money",
-      fields: [
-        { k:"Personal No", v:"01889993896" }
-      ],
+      fields: [{ k:"Personal No", v:"01889993896" }],
       note: "Upay e send kore screenshot/Txn ID WhatsApp e send korun."
     },
     "bank": {
@@ -1512,6 +1656,13 @@
     }
   };
 
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+  }
+  function escapeAttr(str){
+    return String(str).replace(/"/g,'&quot;');
+  }
+
   function buildKv(fields){
     const wrap = document.createElement('div');
     fields.forEach(f=>{
@@ -1529,16 +1680,21 @@
     return wrap.innerHTML;
   }
 
-  function escapeHtml(str){
-    return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
-  }
-  function escapeAttr(str){
-    return String(str).replace(/"/g,'&quot;');
+  function fallbackCopy(text){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
   }
 
   function openPayment(key){
     const d = paymentData[key];
     if(!d) return;
+
     payTitle.textContent = d.title;
     paySub.textContent = d.subtitle;
     payKv.innerHTML = buildKv(d.fields);
@@ -1553,7 +1709,6 @@
     payDetail.classList.add('show');
     payDetail.scrollIntoView({behavior:'smooth', block:'start'});
 
-    // Attach copy handlers
     payKv.querySelectorAll('[data-copy-btn]').forEach(btn=>{
       btn.addEventListener('click', async ()=>{
         const val = btn.getAttribute('data-copy-btn') || '';
@@ -1575,17 +1730,6 @@
   }
   payClose.addEventListener('click', closePayment);
 
-  function fallbackCopy(text){
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.focus(); ta.select();
-    try{ document.execCommand('copy'); }catch(e){}
-    document.body.removeChild(ta);
-  }
-
   payCopyAll.addEventListener('click', async ()=>{
     const text = payDetail.dataset.copyAll || '';
     if(!text) return;
@@ -1605,8 +1749,8 @@
     card.addEventListener('click', ()=> openPayment(key));
     card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openPayment(key); });
   });
-
 </script>
 
 </body>
 </html>
+```0

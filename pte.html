@@ -1,238 +1,1442 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PTE Preparation | LizOn Education</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- SEO -->
   <meta name="description" content="PTE in 30 Days. 20 sessions. Question-based practice + typing speed training. Designed for fast, real results. Admit via WhatsApp." />
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#0b2a1f" />
 
   <style>
-    body {
-      background: radial-gradient(1200px 600px at top, #0f3b2e, #071812);
-      color: #f3f7f5;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      margin: 0;
+    :root{
+      --bg:#071b16;
+      --grad1: radial-gradient(1000px 700px at 20% 0%, rgba(35,140,110,.18), transparent 55%);
+      --grad2: radial-gradient(900px 700px at 80% 30%, rgba(255,190,100,.08), transparent 55%);
+      --panel:#0b241e;
+      --panel2:#0e2c25;
+      --text:#e9f3ef;
+      --muted:rgba(233,243,239,.78);
+      --border:rgba(233,243,239,.14);
+      --border2:rgba(233,243,239,.22);
+      --chip-bg: rgba(255,255,255,.03);
+      --card-grad: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      --mini-bg: rgba(255,255,255,.02);
+      --highlight-grad: linear-gradient(180deg, rgba(35,140,110,.16), rgba(255,190,100,.06));
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --gold: rgba(255,190,100,.55);
+      --gold-strong: rgba(255,190,100,.80);
+      --goldbg: rgba(255,190,100,.10);
+
+      --topbar-bg: rgba(7,27,22,.88);
+      --topbar-bg-scrolled: rgba(7,27,22,.55);
+
+      --radius-xl: 20px;
+      --radius-lg: 16px;
     }
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 28px 16px 60px;
+
+    .theme-light{
+      --bg:#eef6f3;
+      --grad1: radial-gradient(1100px 800px at 10% -10%, rgba(12,123,89,.10), transparent 60%);
+      --grad2: radial-gradient(1000px 800px at 100% 0%, rgba(255,190,100,.10), transparent 60%);
+      --panel:#ffffff;
+      --panel2:#ffffff;
+      --text:#0b201a;
+      --muted:rgba(11,32,26,.70);
+      --border:rgba(11,32,26,.12);
+      --border2:rgba(11,32,26,.22);
+      --chip-bg:#ffffff;
+      --card-grad: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.98));
+      --mini-bg:#f5faf7;
+      --highlight-grad: linear-gradient(180deg, rgba(255,230,180,.38), rgba(12,123,89,.08));
+      --shadow: 0 8px 24px rgba(8,25,20,.08);
+      --gold: rgba(165,127,50,.55);
+      --gold-strong: rgba(165,127,50,.80);
+      --goldbg: #f3ebd7;
+
+      --topbar-bg: rgba(255,255,255,.90);
+      --topbar-bg-scrolled: rgba(255,255,255,.62);
     }
-    .badge {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(255,215,90,.12);
-      color: #ffd75a;
-      font-size: 12px;
-      margin-bottom: 10px;
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--grad1), var(--grad2), var(--bg);
+      color:var(--text);
+      line-height:1.6;
     }
-    h1 {
-      font-size: 36px;
-      line-height: 1.15;
-      margin: 10px 0;
+    a{ color:inherit; }
+    .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
+
+    /* ===== TOPBAR ===== */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      isolation: isolate;
+      backdrop-filter: blur(12px);
+      background: var(--topbar-bg);
+      border-bottom:1px solid var(--border);
+      transition: background .2s ease, box-shadow .2s ease;
     }
-    h2 {
-      font-size: 22px;
-      margin: 22px 0 8px;
+    .topbar.scrolled{
+      background: var(--topbar-bg-scrolled);
+      box-shadow: 0 10px 25px rgba(0,0,0,.12);
     }
-    p {
-      opacity: .9;
-      line-height: 1.6;
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 10px 0;
     }
-    .highlight {
-      color: #ffd75a;
-      font-weight: 600;
+    .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+    .logo-link{
+      display:flex; align-items:center; gap:10px;
+      text-decoration:none; min-width:0;
     }
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 18px;
+    .logo-img{
+      width:44px; height:44px; border-radius:14px;
+      object-fit:contain;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+    .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
+    .brand-text b{
+      font-size:18px; letter-spacing:.2px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 240px;
+    }
+    .brand-text span{
+      font-size:12px; color:var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 280px;
+    }
+    .desktop-nav{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
+    .chip{
+      padding:6px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      text-decoration:none;
+      font-size:12px;
+      color:var(--muted);
+      background: var(--chip-bg);
+      white-space:nowrap;
+    }
+    .chip:hover{ border-color:var(--border2); color:var(--text); }
+
+    /* ===== DRAWER ===== */
+    .backdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.45);
+      display:none;
+      z-index: 9998;
+    }
+    .backdrop.open{ display:block; }
+
+    .drawer{
+      position:fixed;
+      left:12px; right:12px; bottom:12px;
+      max-height: calc(100vh - 24px);
+      overflow:auto;
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding:14px;
+      display:none;
+      z-index: 10000;
+      backdrop-filter: blur(10px);
+      transform: translateY(8px);
+    }
+    .drawer.open{ display:block; animation: sheetIn .14s ease-out forwards; }
+    @keyframes sheetIn{ from{ opacity:.0; transform: translateY(14px);} to{ opacity:1; transform: translateY(0);} }
+
+    .drawer-top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:10px;
+    }
+    .drawer-top h3{
+      margin:0;
+      font-size:13px;
+      color: var(--muted);
+      letter-spacing:.2px;
+      font-weight:900;
+    }
+    .xbtn{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .drawer-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .drawer a{
+      display:block;
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      text-decoration:none;
+      color: var(--text);
+      font-weight:900;
+      text-align:center;
+    }
+    .drawer a:hover{ border-color: var(--border2); }
+    .drawer .full{ grid-column: 1 / -1; }
+    .drawer-sub{
+      margin:12px 0 8px;
+      font-size:12px;
+      color: var(--muted);
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+
+    /* ===== MAIN ===== */
+    header{ padding: 18px 0 10px; }
+    section{ padding: 20px 0; }
+    .hero-card{
+      background: var(--card-grad);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
       padding: 18px;
-      margin-top: 18px;
+      box-shadow: var(--shadow);
     }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+      border: 1px solid var(--border);
+      background: var(--chip-bg);
     }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+    h1{ margin:10px 0 6px; font-size:30px; line-height:1.2; }
+    .lead{ margin:0; color:var(--muted); max-width:900px; }
+    .section-title{ margin:10px 0 8px; font-size:22px; line-height:1.25; }
+    .muted{ color:var(--muted); }
+    .rule{ height:1px; background: var(--border); margin:18px 0; }
+
+    .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .grid-3{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+
+    .card{
+      background: var(--card-grad);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 16px;
     }
-    .mini {
+    .card h3{ margin:0 0 8px; font-size:16px; }
+    .list{ margin:10px 0 0; padding-left:18px; }
+    .note{ margin-top: 10px; color:var(--muted); font-size: 13px; }
+
+    .mini-card{
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      background:var(--mini-bg);
+    }
+    .mini-title{ margin:0 0 6px; font-weight:950; font-size:13px; }
+    .mini-text{ margin:0; color:var(--muted); font-size:13px; }
+
+    .highlight{
+      background: var(--highlight-grad);
+      border: 1px solid rgba(255,190,100,.20);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:12px 16px;
+      border-radius: 14px;
+      text-decoration:none;
+      font-weight:950;
+      border:1px solid transparent;
+      white-space:nowrap;
+      user-select:none;
+    }
+    .btn-primary{ background: var(--goldbg); border-color: var(--gold); }
+    .btn-ghost{ background: transparent; border-color: var(--border); color: var(--muted); }
+    .btn:hover{ filter: brightness(1.03); }
+    .btn-tiny{
+      padding:9px 11px;
+      font-weight:950;
+      border-radius:12px;
+      font-size:12px;
+      background: rgba(255,255,255,.02);
+      border:1px solid var(--border);
+      color:var(--text);
+      text-decoration:none;
+      cursor:pointer;
+    }
+    .btn-tiny:hover{ border-color: var(--border2); }
+    .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+
+    /* ===== VIDEO ===== */
+    .video-card{
+      border:1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      background: var(--card-grad);
+      box-shadow: var(--shadow);
+    }
+    .video-top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding: 14px 14px 10px;
+    }
+    .video-top b{ font-size:14px; }
+    .video-top span{ color:var(--muted); font-size:12px; }
+    .thumb{
+      position:relative;
+      display:block;
+      border-top:1px solid var(--border);
+      background: rgba(0,0,0,.12);
+      cursor:pointer;
+      user-select:none;
+    }
+    .thumb img{
+      width:100%;
+      height:auto;
+      display:block;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      filter: saturate(1.02) contrast(1.02);
+    }
+    .play{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      pointer-events:none;
+    }
+    .play .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,190,100,.35);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      font-weight:950;
+    }
+    .play svg{ width:18px; height:18px; }
+
+    /* ===== REVIEWS ===== */
+    .review{
+      border:1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding:14px;
+      background: var(--card-grad);
+    }
+    .review p{ margin:0; color: var(--text); }
+    .review .who{ margin-top:10px; color: var(--muted); font-size:12px; font-weight:900; }
+
+    /* ===== ASK LIZON (PTE) ===== */
+    .ask-wrap{
+      position:fixed; inset:0;
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      padding:16px;
+      z-index: 12060;
+    }
+    .ask-wrap.show{ display:flex; }
+    .modal-back{
+      position:absolute; inset:0;
+      background: rgba(0,0,0,.50);
+    }
+    .ask{
+      position:relative;
+      width:min(720px, 100%);
+      border-radius: var(--radius-xl);
+      border:1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
       padding: 14px;
-      border-radius: 14px;
-      background: rgba(0,0,0,.25);
-      border: 1px solid rgba(255,255,255,.08);
+      animation: sheetIn .14s ease-out forwards;
     }
-    .mini h3 {
-      margin: 0 0 6px;
-      font-size: 15px;
+    .ask-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+    .ask-title{ display:flex; align-items:center; gap:10px; }
+    .ask-badge{
+      width:38px; height:38px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      display:grid; place-items:center;
+      overflow:hidden;
     }
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
+    .ask-badge img{ width:100%; height:100%; object-fit:contain; padding:6px; }
+    .ask h4{ margin:0; font-size:16px; }
+    .ask p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
+    .modal-x{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      border-radius:14px;
+      width:42px; height:42px;
+      display:grid; place-items:center;
+      cursor:pointer;
+      font-weight:950;
+      flex:0 0 auto;
     }
-    .btn {
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-block;
+    .ask-steps{ margin-top:12px; }
+    .step-label{
+      font-size:12px;
+      color: var(--muted);
+      font-weight:900;
+      letter-spacing:.2px;
+      margin-bottom:8px;
     }
-    .btn.primary {
-      background: #ffd75a;
-      color: #000;
+    .opt-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    .opt{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      border-radius:18px;
+      padding:12px;
+      text-align:left;
+      cursor:pointer;
+      user-select:none;
     }
-    .btn.secondary {
-      border: 1px solid rgba(255,255,255,.25);
-      color: #fff;
+    .opt:hover{ border-color: var(--border2); }
+    .opt b{ display:block; font-size:14px; margin-bottom:4px; }
+    .opt span{ display:block; color: var(--muted); font-size:12px; }
+
+    .ask-result{
+      margin-top:12px;
+      border:1px solid rgba(255,190,100,.22);
+      background: linear-gradient(180deg, rgba(255,190,100,.08), rgba(255,255,255,.01)), rgba(255,255,255,.01);
+      border-radius: var(--radius-xl);
+      padding: 14px;
+      display:none;
     }
-    .note {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(0,0,0,.25);
-      border: 1px solid rgba(255,255,255,.08);
+    .ask-result.show{ display:block; }
+    .res-top{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; flex-wrap:wrap; }
+    .res-title{ font-weight:950; font-size:16px; margin:0; }
+    .res-meta{ color: var(--muted); font-size:13px; margin-top:4px; }
+    .res-price{ font-weight:950; font-size:16px; white-space:nowrap; }
+    .why{ margin-top:10px; color: var(--text); font-size:13px; line-height:1.55; }
+    .ask-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center; }
+
+    /* ===== FLOATING CONTROLS ===== */
+    .scroll-dock{
+      position:fixed;
+      right:14px;
+      bottom:120px;
+      z-index:2300;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+    .sbtn{
+      width:44px; height:44px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      display:grid; place-items:center;
+      cursor:pointer; user-select:none;
+      transition: transform .12s ease, border-color .12s ease, filter .12s ease;
+    }
+    .sbtn:hover{ border-color: var(--border2); filter: brightness(1.03); transform: translateY(-1px); }
+    .sbtn svg{ width:20px; height:20px; }
+
+    .hamb-fab{
+      position:fixed; left:14px; bottom:54px; z-index:2400;
+      width:54px; height:54px;
+      border-radius:20px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      display:grid; place-items:center;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .hamb-fab svg{ width:22px; height:22px; }
+
+    .ask-pill{
+      position:fixed; left:14px; bottom:116px; z-index:2400;
+      border:1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      border-radius:999px;
+      padding:10px 12px;
+      display:flex; align-items:center; gap:10px;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .ask-pill .lz{
+      width:16px; height:16px;
+      border-radius:6px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      overflow:hidden;
+      display:grid; place-items:center;
+      flex:0 0 auto;
+    }
+    .ask-pill .lz img{ width:100%; height:100%; object-fit:contain; padding:2px; }
+    .ask-pill b{ font-size:13px; }
+    .ask-pill span{ font-size:12px; color: var(--muted); }
+
+    .theme-fab{
+      position:fixed; right:14px; bottom:54px; z-index:2400;
+      border:1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+      width:52px; height:52px;
+      display:grid; place-items:center;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .theme-fab svg{ width:18px; height:18px; }
+    .icon-sun{ display:none; }
+    .theme-light .icon-sun{ display:block; }
+    .theme-light .icon-moon{ display:none; }
+
+    .sticky-bar{
+      position:fixed; left:0; right:0; bottom:12px; z-index:2200;
+      display:flex; justify-content:center;
+      pointer-events:none;
+    }
+    .sticky-bar .bar{
+      pointer-events:auto;
+      display:flex; align-items:center; gap:10px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding:10px 14px;
+      border-radius:999px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .bar .dot{ width:10px; height:10px; border-radius:50%; background:#00d26a; }
+
+    /* ===== FOOTER ===== */
+    footer{
+      padding: 10px 0 160px;
+      border-top: 1px solid var(--border);
+      margin-top: 18px;
+      color: var(--muted);
       font-size: 14px;
     }
-    .price {
-      font-size: 28px;
-      font-weight: 700;
-      color: #ffd75a;
+    .footer-card{
+      background: var(--card-grad);
+      border:1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding:16px;
+      box-shadow: var(--shadow);
     }
-    @media (max-width: 900px) {
-      h1 { font-size: 28px; }
-      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .footer-columns{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr .9fr;
+      gap:14px;
+      margin-top:12px;
+    }
+    .footer-title{
+      margin:0 0 8px;
+      font-size:13px;
+      color: var(--text);
+      font-weight:950;
+    }
+    .footer-links{ display:flex; gap:10px; flex-wrap:wrap; }
+    .footer-links a{ text-decoration:none; }
+    .socials{ display:flex; gap:10px; flex-wrap:wrap; }
+    .footer-small{ font-size:13px; color: var(--muted); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 920px){
+      .grid-2{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+      h1{ font-size:24px; }
+      .footer-columns{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px){
+      .opt-grid{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
 
-    <!-- HERO -->
-    <span class="badge">LizOn Education · PTE Preparation</span>
-    <h1>PTE in <span class="highlight">30 Days</span><br/>Designed for <span class="highlight">Fast Results</span></h1>
-    <p>
-      A focused PTE course for students who want a <strong>clear path</strong>, not random practice.<br/>
-      <span class="highlight">20 structured sessions</span> · question-based training · typing speed mastery · unlimited portal access.
+<!-- TOPBAR -->
+<div class="topbar" id="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="logo-link" href="index.html" title="Go to Home" aria-label="Go to Home">
+          <img class="logo-img" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+          <div class="brand-text">
+            <b>LizOn Education</b>
+            <span>PTE Preparation (30 Days)</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="desktop-nav" aria-label="Top navigation">
+        <a class="chip" href="index.html">Home</a>
+        <a class="chip" href="ielts.html">IELTS</a>
+        <a class="chip" href="#fee">Fee</a>
+        <a class="chip" href="#reviews">Reviews</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- DRAWER -->
+<div class="backdrop" id="backdrop"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Navigate">
+  <div class="drawer-top">
+    <h3>Navigate</h3>
+    <button class="xbtn" id="closeDrawer" type="button" aria-label="Close">✕</button>
+  </div>
+
+  <div class="drawer-sub">Core</div>
+  <div class="drawer-grid">
+    <a class="full" href="index.html">Home</a>
+    <a class="full" href="about.html">About</a>
+    <a class="full" href="Upcoming.html">Upcoming</a>
+    <a href="ielts.html">IELTS</a>
+    <a href="pte.html">PTE</a>
+    <a class="full" href="studyabroad.html">Study Abroad</a>
+  </div>
+
+  <div class="drawer-sub">IELTS Pages</div>
+  <div class="drawer-grid">
+    <a class="full" href="ielts-roadmap.html">IELTS Roadmap</a>
+    <a class="full" href="ielts-choose-level.html">Choose Level</a>
+    <a class="full" href="ielts-band-improvement.html">Band Improvement</a>
+    <a class="full" href="ielts-grammar.html">IELTS Grammar</a>
+    <a class="full" href="ielts-computer-based.html">Computer Based IELTS</a>
+    <a class="full" href="ielts-faq-bangladesh.html">IELTS FAQ (Bangladesh)</a>
+  </div>
+
+  <div class="drawer-sub">Practice</div>
+  <div class="drawer-grid">
+    <a class="full" href="ielts-listening.html">IELTS Listening</a>
+    <a class="full" href="ielts-reading.html">IELTS Reading</a>
+    <a class="full" href="ielts-writing.html">IELTS Writing</a>
+    <a class="full" href="ielts-speaking.html">IELTS Speaking</a>
+  </div>
+
+  <div style="margin-top:12px;">
+    <a class="btn-tiny" style="display:block;text-align:center;"
+       href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20niye%20guidance%20chai.%20Course%20details%20diben%3F"
+       target="_blank" rel="noopener">Talk with LizOn</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header>
+  <div class="container">
+    <div class="hero-card">
+      <span class="badge">Designed for Desired Score</span>
+      <h1>PTE in 30 Days — fast, structured, realistic.</h1>
+      <p class="lead">
+        Random YouTube practise e time waste hoy. LizOn e <b>20 live sessions</b> e
+        <b>question-based execution</b> + <b>typing speed mastery</b> — so score “try” na, score “plan”.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20e%20admission%20nite%20chai.%20Details%20diben%3F"
+           target="_blank" rel="noopener">Admit Now</a>
+        <button class="btn btn-ghost" id="openAskFromHero" type="button">Help Me Choose</button>
+        <a class="btn btn-ghost" href="#watch">Watch a Class</a>
+        <a class="btn btn-ghost" href="#fee">See Fee</a>
+      </div>
+
+      <div class="rule"></div>
+
+      <div class="grid-2">
+        <div class="mini-card">
+          <p class="mini-title">Fast Clarity</p>
+          <p class="mini-text"><b>Duration:</b> 30 Days • <b>Sessions:</b> 20 • <b>Split:</b> 15 PTE + 5 Typing • <b>Portal:</b> 1 month unlimited</p>
+        </div>
+        <div class="mini-card">
+          <p class="mini-title">Who this fits</p>
+          <p class="mini-text">Short timeline • IELTS e atke gechen • typing slow • confusion high • “what to practise” clear na</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- WATCH -->
+<section id="watch">
+  <div class="container">
+    <p class="badge">Free Preview</p>
+    <h2 class="section-title">Watch a Class (Real vibe)</h2>
+    <p class="muted" style="max-width:920px;">
+      Nicher video ta ekta real class feel দিবে — how we explain, how we structure, and why students stop random practice after this.
     </p>
 
-    <div class="btn-row">
-      <a class="btn primary" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-      <a class="btn secondary" href="#fee">See Fee & What’s Included</a>
-    </div>
-
-    <div class="note">
-      <strong>Not sure between IELTS & PTE?</strong><br/>
-      Message us first. We’ll check your profile and tell you honestly which exam fits you better.
-    </div>
-
-    <!-- FAST CLARITY -->
-    <div class="card">
-      <h2>Fast Clarity (3-Second Scan)</h2>
-      <div class="grid-2">
-        <div class="mini"><strong>Duration:</strong> 1 Month (30 Days)</div>
-        <div class="mini"><strong>Total Sessions:</strong> 20 Live Sessions</div>
-        <div class="mini"><strong>Session Split:</strong> 15 PTE + 5 Typing Speed</div>
-        <div class="mini"><strong>Portal Access:</strong> 1 Month Unlimited</div>
+    <div class="video-card" aria-label="Watch class video">
+      <div class="video-top">
+        <div>
+          <b>PTE Class Preview</b><br/>
+          <span>Tap thumbnail to play</span>
+        </div>
+        <a class="btn-tiny" href="https://youtu.be/-266DaxnGBc?si=t8ynFZScm3VZjAFZ" target="_blank" rel="noopener">Open on YouTube</a>
       </div>
-    </div>
 
-    <!-- WHAT WE FIX -->
-    <div class="card">
-      <h2>Common PTE Mistakes We Fix</h2>
-      <div class="grid-2">
-        <div class="mini">
-          <h3>Random Practice</h3>
-          <p>Students practice everything daily with no scoring logic. We give a clear execution sequence.</p>
-        </div>
-        <div class="mini">
-          <h3>Typing Speed Bottleneck</h3>
-          <p>Good answers fail due to slow typing. We train speed + accuracy together.</p>
-        </div>
-        <div class="mini">
-          <h3>No Time Control</h3>
-          <p>Knowing answers isn’t enough. We train timed execution from day one.</p>
-        </div>
-        <div class="mini">
-          <h3>Wrong Focus</h3>
-          <p>People chase tricks. We train what PTE actually rewards.</p>
+      <div class="thumb" id="videoThumb" role="button" tabindex="0" aria-label="Play video">
+        <!-- Prefer your own thumbnail file if you have it:
+             Replace src with: assets/pte-watch-thumb.jpg (or whatever you upload)
+        -->
+        <img id="thumbImg"
+             src="assets/pte-watch-thumb.jpg"
+             onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/-266DaxnGBc/hqdefault.jpg';"
+             alt="PTE class thumbnail" />
+        <div class="play">
+          <div class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+            Play
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- COURSE STRUCTURE -->
-    <div class="card">
-      <h2>Course Structure</h2>
-      <div class="grid-3">
-        <div class="mini">
-          <h3>15 PTE Sessions</h3>
-          <p>All core question types with scoring logic, structure & timing.</p>
-        </div>
-        <div class="mini">
-          <h3>5 Typing Speed Sessions</h3>
-          <p>Accuracy + speed drills so typing never kills your score.</p>
-        </div>
-        <div class="mini">
-          <h3>Portal Practice</h3>
-          <p>Unlimited practice access for one full month.</p>
-        </div>
-      </div>
+    <div class="note" style="margin-top:12px;">
+      Tip: Video jodi kono phone e “AI audio/dubbed” show kore, eta usually YouTube app-er setting. Website embed theke usually original audio-i play hoy.
     </div>
-
-    <!-- SKILLS -->
-    <div class="card">
-      <h2>What You Will Learn</h2>
-      <div class="grid-2">
-        <div class="mini">
-          <h3>PTE Question Handling</h3>
-          <p>Read Aloud, Repeat Sentence, Describe Image, Essay, Listening & more.</p>
-        </div>
-        <div class="mini">
-          <h3>Typing Speed & Control</h3>
-          <p>Speed building, error reduction & exam-safe typing habits.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- WHO -->
-    <div class="card">
-      <h2>Who This Course Is For</h2>
-      <ul>
-        <li>Students who want <strong>fast results</strong></li>
-        <li>Students struggling with <strong>typing speed</strong></li>
-        <li>Students tired of random YouTube practice</li>
-        <li>Students with <strong>short timelines</strong></li>
-      </ul>
-    </div>
-
-    <!-- FEE -->
-    <div class="card" id="fee">
-      <h2>Course Fee & What’s Included</h2>
-      <p class="price">৳ 9,000</p>
-      <ul>
-        <li>20 Live Sessions</li>
-        <li>1 Month Unlimited Portal Access</li>
-        <li>Typing Speed Training</li>
-        <li>Guidance & Progress Tracking</li>
-      </ul>
-
-      <div class="btn-row">
-        <a class="btn primary" href="https://wa.me/8801611611139" target="_blank">Admit in WhatsApp</a>
-      </div>
-    </div>
-
   </div>
+</section>
+
+<!-- FIXES -->
+<section id="fixes">
+  <div class="container">
+    <p class="badge">Problems</p>
+    <h2 class="section-title">Common PTE mistakes we fix</h2>
+
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card">
+        <h3>Random practice</h3>
+        <p class="muted" style="margin:0;">“সব daily practise করি” — but scoring logic nai. We give a clear execution sequence.</p>
+        <ul class="list">
+          <li>What to practise first (score-heavy)</li>
+          <li>What to pause/avoid (time-wasters)</li>
+          <li>Timed execution from day one</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Typing speed bottleneck</h3>
+        <p class="muted" style="margin:0;">Good answer o fail hoy typing slow hole. So we train speed + accuracy together.</p>
+        <ul class="list">
+          <li>5 dedicated typing sessions</li>
+          <li>Exam-safe typing habits</li>
+          <li>Error reduction + speed building drills</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card">
+        <h3>No time control</h3>
+        <p class="muted" style="margin:0;">Answer jana enough na. Time e execute korte hobe.</p>
+        <ul class="list">
+          <li>Timed practice templates</li>
+          <li>Real pacing strategy</li>
+          <li>“Finish” mindset training</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Wrong focus (tricks)</h3>
+        <p class="muted" style="margin:0;">People chase hacks. We train what PTE actually rewards.</p>
+        <ul class="list">
+          <li>Structure + scoring logic</li>
+          <li>Repeatable system</li>
+          <li>Clean correction loop</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUCTURE -->
+<section id="structure">
+  <div class="container">
+    <p class="badge">Structure</p>
+    <h2 class="section-title">Course structure (30 days)</h2>
+
+    <div class="highlight" style="margin-top:12px;">
+      <div class="grid-3">
+        <div class="mini-card">
+          <p class="mini-title">15 PTE sessions</p>
+          <p class="mini-text">All core question types with scoring logic, structure & timing.</p>
+        </div>
+        <div class="mini-card">
+          <p class="mini-title">5 typing sessions</p>
+          <p class="mini-text">Speed + accuracy drills so typing never kills your score.</p>
+        </div>
+        <div class="mini-card">
+          <p class="mini-title">Portal practice</p>
+          <p class="mini-text">Unlimited practice for 1 month (guided).</p>
+        </div>
+      </div>
+
+      <div class="cta-row" style="margin-top:12px;">
+        <button class="btn btn-primary" data-open-ask type="button">Open AskLizOn (PTE)</button>
+        <a class="btn btn-ghost" href="#fee">See Fee</a>
+        <a class="btn btn-ghost" href="ielts.html">Compare with IELTS</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section id="who">
+  <div class="container">
+    <p class="badge">Fit Check</p>
+    <h2 class="section-title">Who this course is for</h2>
+
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card">
+        <h3>Perfect if</h3>
+        <ul class="list">
+          <li>Short timeline e fast result chai</li>
+          <li>Typing slow / essay finish hoy na</li>
+          <li>“What to practise” confusion</li>
+          <li>Random practise e tired</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>What you’ll feel after joining</h3>
+        <ul class="list">
+          <li>Clarity: kon sequence e practise korben</li>
+          <li>Speed: typing fear kombe</li>
+          <li>Control: time + structure set hobe</li>
+          <li>Confidence: “I can finish” mindset</li>
+        </ul>
+        <p class="note">Goal: 30 din e “direction + execution” lock.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="container">
+    <p class="badge">Student Voice</p>
+    <h2 class="section-title">Reviews (Bangladeshi students)</h2>
+
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="review">
+        <p>“Typing slow ছিল, essay শেষই করতে পারতাম না। এখন speed নিয়ে ভয় নাই।”</p>
+        <div class="who">— Nusrat, Dhaka</div>
+      </div>
+
+      <div class="review">
+        <p>“সবচেয়ে ভালো লাগছে—কি practise করবো, কোনটা বাদ দিবো—এই clarity টা।”</p>
+        <div class="who">— Rafi, Mirpur</div>
+      </div>
+
+      <div class="review">
+        <p>“Typing speed training না থাকলে PTE সম্ভব না। LizOn এটা ঠিক জায়গায় ধরছে।”</p>
+        <div class="who">— Sohana, Uttara</div>
+      </div>
+
+      <div class="review">
+        <p>“Short timeline থাকলে PTE course-টা gold.”</p>
+        <div class="who">— Tanvir, Basabo</div>
+      </div>
+    </div>
+
+    <div class="cta-row" style="margin-top:14px;">
+      <a class="btn btn-primary" href="https://youtu.be/-266DaxnGBc?si=t8ynFZScm3VZjAFZ" target="_blank" rel="noopener">Watch a Class</a>
+      <button class="btn btn-ghost" data-open-ask type="button">Get Instant Guidance</button>
+      <a class="btn btn-ghost"
+         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20niye%20guidance%20chai.%20Amar%20typing%20slow%20%2F%20timeline%20short.%20Help%20korben%3F"
+         target="_blank" rel="noopener">Talk with Expert</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEE -->
+<section id="fee">
+  <div class="container">
+    <div class="card">
+      <h2 class="section-title">Course Fee & What’s Included</h2>
+      <p class="muted" style="margin:0;">Simple fee. Clean inclusions. Decide fast.</p>
+
+      <div class="highlight" style="margin-top:12px;">
+        <div class="grid-2">
+          <div class="mini-card">
+            <p class="mini-title">Fee</p>
+            <p class="mini-text" style="font-size:18px; font-weight:950; color:var(--text);">৳ 9,000</p>
+            <p class="mini-text">20 live sessions + 1 month portal access</p>
+          </div>
+          <div class="mini-card">
+            <p class="mini-title">Includes</p>
+            <p class="mini-text">15 PTE sessions • 5 typing sessions • timed drills • guidance & tracking</p>
+          </div>
+        </div>
+
+        <div class="cta-row" style="margin-top:12px;">
+          <a class="btn btn-primary"
+             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20e%20admission%20nite%20chai.%20Fee%20%26%20schedule%20confirm%20korben%3F"
+             target="_blank" rel="noopener">Admit Now</a>
+          <button class="btn btn-ghost" data-open-ask type="button">AskLizOn (PTE)</button>
+          <a class="btn btn-ghost" href="#watch">Watch a Class</a>
+        </div>
+
+        <div class="note">
+          <b>Not sure between IELTS & PTE?</b> Message us. We’ll tell you honestly which exam fits you better.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-card">
+
+      <h3 class="footer-title">All Options</h3>
+      <div class="footer-links" style="margin-bottom:10px;">
+        <a class="btn btn-ghost" href="index.html">Home</a>
+        <a class="btn btn-ghost" href="about.html">About</a>
+        <a class="btn btn-ghost" href="ielts.html">IELTS Journey</a>
+        <a class="btn btn-ghost" href="pte.html">PTE</a>
+        <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
+        <a class="btn btn-ghost" href="Upcoming.html">Upcoming</a>
+      </div>
+
+      <div class="footer-columns">
+        <div>
+          <h3 class="footer-title">IELTS Pages</h3>
+          <div class="footer-links">
+            <a class="btn-tiny" href="ielts-roadmap.html">Roadmap</a>
+            <a class="btn-tiny" href="ielts-choose-level.html">Choose Level</a>
+            <a class="btn-tiny" href="ielts-band-improvement.html">Band Improvement</a>
+            <a class="btn-tiny" href="ielts-grammar.html">Grammar</a>
+            <a class="btn-tiny" href="ielts-computer-based.html">Computer Based</a>
+            <a class="btn-tiny" href="ielts-faq-bangladesh.html">FAQ (BD)</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Practice</h3>
+          <div class="footer-links">
+            <a class="btn-tiny" href="ielts-listening.html">Listening</a>
+            <a class="btn-tiny" href="ielts-reading.html">Reading</a>
+            <a class="btn-tiny" href="ielts-writing.html">Writing</a>
+            <a class="btn-tiny" href="ielts-speaking.html">Speaking</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Contact & Location</h3>
+          <p class="footer-small" style="margin:0 0 10px;">
+            <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
+            <b>IELTS/PTE Helpline:</b> 01611611139<br/>
+            <b>Study Abroad/Visa Processing:</b> 01608881545
+          </p>
+          <div class="footer-links">
+            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+            <a class="btn btn-primary"
+               href="https://wa.me/8801611611139?text=Need%20guidance%20about%20PTE%20or%20Study%20Abroad"
+               target="_blank" rel="noopener">Chat Now</a>
+          </div>
+
+          <h3 class="footer-title" style="margin-top:14px;">Social Media</h3>
+          <div class="socials">
+            <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+            <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted" style="margin:14px 0 0;">© 2025 myLizOn.com | LizOn Education</p>
+    </div>
+  </div>
+
+  <div class="sticky-bar" aria-label="Guidance bar">
+    <div class="bar">
+      <span class="dot"></span>
+      <span><b>Need guidance?</b></span>
+      <a class="btn-tiny"
+         href="https://wa.me/8801611611139?text=Hi%2C%20need%20guidance%20for%20PTE%20course."
+         target="_blank" rel="noopener">Chat Now</a>
+      <button class="btn-tiny" data-open-ask type="button">AskLizOn (PTE)</button>
+      <a class="btn-tiny" href="#watch">Watch</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Modern Scroll Dock -->
+<div class="scroll-dock" aria-label="Scroll controls">
+  <button class="sbtn" id="scrollTopBtn" type="button" title="Top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M6 11l6-6 6 6"/></svg>
+  </button>
+  <button class="sbtn" id="scrollBottomBtn" type="button" title="Bottom" aria-label="Scroll to bottom">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M6 13l6 6 6-6"/></svg>
+  </button>
+</div>
+
+<!-- Bottom-left hamburger -->
+<button class="hamb-fab" id="hambFab" type="button" aria-label="Open navigation" title="Navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+  </svg>
+</button>
+
+<!-- AskLizOn pill -->
+<div class="ask-pill" id="askPill" role="button" tabindex="0" aria-label="Open AskLizOn">
+  <span class="lz">
+    <img id="askLogoTiny" src="assets/logo-mark.png" alt="LizOn" onerror="this.style.display='none'"/>
+  </span>
+  <div>
+    <b>AskLizOn (PTE)</b>
+    <span style="display:block;margin-top:-2px;">Tap & decide</span>
+  </div>
+</div>
+
+<!-- Theme toggle (icon only, tiny) -->
+<div class="theme-fab" id="themeFab" role="button" tabindex="0" aria-label="Toggle theme" title="Toggle theme">
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8Z"/>
+  </svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+</div>
+
+<!-- VIDEO MODAL -->
+<div class="ask-wrap" id="videoWrap" aria-hidden="true">
+  <div class="modal-back" id="videoBack"></div>
+  <div class="ask" role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="ask-top">
+      <div class="ask-title">
+        <div class="ask-badge">
+          <img src="assets/logo-mark.png" alt="LizOn" onerror="this.style.display='none'">
+        </div>
+        <div>
+          <h4>Watch a Class</h4>
+          <p>PTE class preview (original YouTube)</p>
+        </div>
+      </div>
+      <button class="modal-x" id="videoClose" aria-label="Close video">✕</button>
+    </div>
+    <div style="margin-top:12px; border:1px solid var(--border); border-radius:18px; overflow:hidden; background:rgba(0,0,0,.12);">
+      <iframe id="ytFrame"
+        width="100%" height="380"
+        style="display:block; border:0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin"
+        title="PTE Class Preview"></iframe>
+    </div>
+    <div class="note" style="margin-top:10px;">
+      Jodi kono device e YouTube “AI audio track” choose kore ney, tokhon YouTube app settings theke “Audio track: Original” select korte hoy.
+    </div>
+  </div>
+</div>
+
+<!-- ASK LIZON (PTE) -->
+<div class="ask-wrap" id="askWrap" aria-hidden="true">
+  <div class="modal-back" id="askBack"></div>
+  <div class="ask" role="dialog" aria-modal="true" aria-label="AskLizOn PTE">
+    <div class="ask-top">
+      <div class="ask-title">
+        <div class="ask-badge">
+          <img src="assets/logo-mark.png" alt="LizOn" onerror="this.style.display='none'">
+        </div>
+        <div>
+          <h4>AskLizOn — PTE Guidance</h4>
+          <p>Tap-only answers. No typing.</p>
+        </div>
+      </div>
+      <button class="modal-x" id="askClose" aria-label="Close AskLizOn">✕</button>
+    </div>
+
+    <div class="ask-steps" id="askSteps">
+      <div class="step-label" id="stepLabel">Step 1/3 — Why PTE?</div>
+      <div class="opt-grid" id="optGrid"></div>
+    </div>
+
+    <div class="ask-result" id="askResult">
+      <div class="res-top">
+        <div>
+          <p class="res-title" id="resTitle">Answer</p>
+          <div class="res-meta" id="resMeta">Based on your taps</div>
+        </div>
+        <div class="res-price" id="resPrice">Fee: ৳ 9,000</div>
+      </div>
+
+      <div class="why" id="resWhy"></div>
+
+      <div class="ask-actions">
+        <a class="btn btn-primary" id="resCta" href="#" target="_blank" rel="noopener">Talk with Expert</a>
+        <a class="btn btn-ghost" href="#fee">See Fee</a>
+        <button class="btn btn-ghost" id="watchFromAsk" type="button">Watch a Class</button>
+        <button class="btn btn-ghost" id="askRestart" type="button">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ===== Theme toggle (persist) ===== */
+  const body = document.body;
+  const topbar = document.getElementById('topbar');
+  const logoImg = document.getElementById('logoImg');
+
+  function setTheme(mode){
+    const isLight = mode === 'light';
+    body.classList.toggle('theme-light', isLight);
+    localStorage.setItem('lizon-theme', isLight ? 'light' : 'dark');
+    logoImg.src = isLight ? 'assets/logo-light.png' : 'assets/logo-dark.png';
+  }
+  setTheme(localStorage.getItem('lizon-theme') || 'dark');
+
+  function toggleTheme(){
+    const isLight = body.classList.contains('theme-light');
+    setTheme(isLight ? 'dark' : 'light');
+  }
+  document.getElementById('themeFab').addEventListener('click', toggleTheme);
+  document.getElementById('themeFab').addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') toggleTheme(); });
+
+  /* ===== Topbar scroll style ===== */
+  function handleTopbar(){
+    if(window.scrollY > 8) topbar.classList.add('scrolled');
+    else topbar.classList.remove('scrolled');
+  }
+  handleTopbar();
+  window.addEventListener('scroll', handleTopbar, {passive:true});
+
+  /* ===== Drawer ===== */
+  const drawer = document.getElementById('drawer');
+  const backdrop = document.getElementById('backdrop');
+  const closeDrawer = document.getElementById('closeDrawer');
+  const hambFab = document.getElementById('hambFab');
+
+  function openDrawer(){
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawerFn(){
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function toggleDrawer(){
+    if(drawer.classList.contains('open')) closeDrawerFn();
+    else openDrawer();
+  }
+  hambFab.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleDrawer(); });
+  closeDrawer.addEventListener('click', closeDrawerFn);
+  backdrop.addEventListener('click', closeDrawerFn);
+  drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeDrawerFn));
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDrawerFn(); });
+  document.addEventListener('click', (e)=>{
+    if(!drawer.classList.contains('open')) return;
+    const within = drawer.contains(e.target) || hambFab.contains(e.target);
+    if(!within) closeDrawerFn();
+  }, true);
+
+  /* ===== Scroll buttons ===== */
+  document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.getElementById('scrollBottomBtn').addEventListener('click', ()=>{
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+  });
+
+  /* ===== Video modal ===== */
+  const videoId = "-266DaxnGBc";
+  const videoWrap = document.getElementById('videoWrap');
+  const videoBack = document.getElementById('videoBack');
+  const videoClose = document.getElementById('videoClose');
+  const ytFrame = document.getElementById('ytFrame');
+  const videoThumb = document.getElementById('videoThumb');
+
+  function openVideo(){
+    videoWrap.classList.add('show');
+    videoWrap.setAttribute('aria-hidden','false');
+    // Using nocookie embed; YouTube should default to original audio track.
+    // autoplay=1 triggers play. modestbranding reduces UI noise.
+    ytFrame.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&hl=en`;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVideo(){
+    videoWrap.classList.remove('show');
+    videoWrap.setAttribute('aria-hidden','true');
+    ytFrame.src = "";
+    document.body.style.overflow = '';
+  }
+  videoBack.addEventListener('click', closeVideo);
+  videoClose.addEventListener('click', closeVideo);
+  if(videoThumb){
+    videoThumb.addEventListener('click', openVideo);
+    videoThumb.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openVideo(); });
+  }
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && videoWrap.classList.contains('show')) closeVideo(); });
+
+  /* ===== AskLizOn (PTE) tap-only ===== */
+  const askWrap = document.getElementById('askWrap');
+  const askBack = document.getElementById('askBack');
+  const askClose = document.getElementById('askClose');
+  const askPill = document.getElementById('askPill');
+  const openAskFromHero = document.getElementById('openAskFromHero');
+
+  const stepLabel = document.getElementById('stepLabel');
+  const optGrid = document.getElementById('optGrid');
+  const askResult = document.getElementById('askResult');
+  const resTitle = document.getElementById('resTitle');
+  const resMeta = document.getElementById('resMeta');
+  const resWhy = document.getElementById('resWhy');
+  const resCta = document.getElementById('resCta');
+  const askRestart = document.getElementById('askRestart');
+  const watchFromAsk = document.getElementById('watchFromAsk');
+
+  const state = { why:null, confusion:null, want:null };
+
+  function openAsk(){
+    askWrap.classList.add('show');
+    askWrap.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    resetAsk();
+  }
+  function closeAsk(){
+    askWrap.classList.remove('show');
+    askWrap.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+  askBack.addEventListener('click', closeAsk);
+  askClose.addEventListener('click', closeAsk);
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && askWrap.classList.contains('show')) closeAsk(); });
+
+  if(askPill){
+    askPill.addEventListener('click', openAsk);
+    askPill.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openAsk(); });
+  }
+  if(openAskFromHero) openAskFromHero.addEventListener('click', openAsk);
+  document.querySelectorAll('[data-open-ask]').forEach(b=> b.addEventListener('click', openAsk));
+
+  watchFromAsk.addEventListener('click', ()=>{
+    closeAsk();
+    openVideo();
+  });
+
+  function resetAsk(){
+    state.why = null; state.confusion = null; state.want = null;
+    askResult.classList.remove('show');
+    renderStep1();
+  }
+  askRestart.addEventListener('click', resetAsk);
+
+  function setOptions(options, onPick){
+    optGrid.innerHTML = '';
+    options.forEach(o=>{
+      const div = document.createElement('div');
+      div.className = 'opt';
+      div.tabIndex = 0;
+      div.innerHTML = `<b>${o.title}</b><span>${o.desc}</span>`;
+      div.addEventListener('click', ()=> onPick(o.value));
+      div.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') onPick(o.value); });
+      optGrid.appendChild(div);
+    });
+  }
+
+  function renderStep1(){
+    stepLabel.textContent = 'Step 1/3 — Why PTE?';
+    setOptions([
+      { title:'Australia / NZ target', desc:'Fast score needed for plan', value:'aus' },
+      { title:'Short timeline', desc:'1 month er moddhe ready hote chai', value:'short' },
+      { title:'IELTS e atke gechi', desc:'Switch korte chai / alternatives dekhi', value:'ielts_stuck' },
+      { title:'Already booked exam', desc:'Date fixed — now execution', value:'booked' },
+      { title:'Confusion high', desc:'PTE niye clear na', value:'confused' }
+    ], (v)=>{ state.why=v; renderStep2(); });
+  }
+
+  function renderStep2(){
+    stepLabel.textContent = 'Step 2/3 — Biggest confusion?';
+    setOptions([
+      { title:'PTE vs IELTS', desc:'Which one fits me?', value:'vs' },
+      { title:'Typing slow', desc:'Essay finish hoy na', value:'typing' },
+      { title:'Question types', desc:'Bujhi na kibhabe handle korbo', value:'types' },
+      { title:'Score realistic?', desc:'Target possible kina', value:'score' },
+      { title:'Random practice', desc:'What to practise / what to skip', value:'random' }
+    ], (v)=>{ state.confusion=v; renderStep3(); });
+  }
+
+  function renderStep3(){
+    stepLabel.textContent = 'Step 3/3 — What do you want now?';
+    setOptions([
+      { title:'Course breakdown', desc:'Ki ki pabo (clear list)', value:'breakdown' },
+      { title:'How we teach', desc:'Class style + practice system', value:'teach' },
+      { title:'Timeline plan', desc:'30 days e ki ki hobe', value:'timeline' },
+      { title:'Fee + admission', desc:'Fee + WhatsApp process', value:'fee' },
+      { title:'Watch a class', desc:'Real class preview', value:'watch' },
+      { title:'Talk with expert', desc:'Direct WhatsApp guidance', value:'talk' }
+    ], (v)=>{ state.want=v; showAnswer(); });
+  }
+
+  function showAnswer(){
+    const answers = {
+      vs: {
+        title: 'PTE vs IELTS (BD reality)',
+        body: [
+          'Easy na — different. PTE te speed + system thik thakle score ashe.',
+          'IELTS e jader writing/speaking e atke thake, PTE te onek time smoother hoy.',
+          'Best move: 1ta class preview dekhen + WhatsApp e profile check.'
+        ]
+      },
+      typing: {
+        title: 'Typing slow হলে কী হবে?',
+        body: [
+          'PTE te typing bottleneck — tai course e 5 dedicated typing sessions ache.',
+          'Speed + accuracy ekshathe train kori, jate exam e “finish” mindset set hoy.',
+          'Result: essay/time fear komে.'
+        ]
+      },
+      types: {
+        title: 'Question types handle kibhabe?',
+        body: [
+          'Random practice na — question type gulo sequence e সাজানো.',
+          'First scoring-heavy types → then supporting types.',
+          'Each class: scoring logic → structure → timed execution.'
+        ]
+      },
+      score: {
+        title: 'Score realistic?',
+        body: [
+          'Realistic depends on: current level + timeline + execution discipline.',
+          'Amra “trick” না, “repeatable system” di.',
+          'WhatsApp e 2 minute profile check korlei honest plan dite parbo.'
+        ]
+      },
+      random: {
+        title: 'Clarity: ki practise / ki skip',
+        body: [
+          'সব daily practise করলে time waste hoy.',
+          'Amra “what to do first” + “what to pause” clear করি.',
+          'Goal: 30 days e direction + execution lock.'
+        ]
+      }
+    };
+
+    const want = state.want;
+
+    let title = 'PTE Guidance';
+    let lines = [];
+
+    // Base by confusion
+    const base = answers[state.confusion] || { title:'PTE Guidance', body:['Tap kore plan banai, then next action.'] };
+
+    // Add by want
+    if(want === 'breakdown'){
+      title = 'What you get (clear list)';
+      lines = [
+        '20 live sessions: 15 PTE + 5 typing',
+        '1 month unlimited portal practice',
+        'Question-based execution sequence',
+        'Timed drills + accuracy correction',
+        'Guidance & tracking (no random practise)'
+      ];
+    } else if(want === 'teach'){
+      title = 'How we teach (class style)';
+      lines = [
+        'First: scoring logic (why this works)',
+        'Then: structure/template',
+        'Then: timed execution (real pacing)',
+        'Homework: portal tasks',
+        'Next class: review + correction loop'
+      ];
+    } else if(want === 'timeline'){
+      title = '30 days plan (simple)';
+      lines = [
+        'Week 1: foundations + scoring-heavy types start',
+        'Week 2: timing + templates lock',
+        'Week 3: mixed practice + speed discipline',
+        'Week 4: exam-like execution + final corrections'
+      ];
+    } else if(want === 'fee'){
+      title = 'Fee + admission';
+      lines = [
+        'Fee: ৳ 9,000',
+        'WhatsApp e message korlei admission steps + schedule paben',
+        'We’ll also tell you honestly: PTE vs IELTS—what fits you'
+      ];
+    } else if(want === 'watch'){
+      title = 'Watch a class';
+      lines = [
+        'Tap “Watch a Class” button — real vibe dekhe decision nin.'
+      ];
+    } else if(want === 'talk'){
+      title = 'Talk with expert';
+      lines = [
+        'WhatsApp e message korun — timeline + level based honest plan paben.'
+      ];
+    } else {
+      // Default mixed
+      title = base.title;
+      lines = base.body;
+    }
+
+    // Compose final
+    const header = `<b>${title}</b>`;
+    const baseHeader = `<span style="color: var(--muted); display:block; margin-top:6px;">${base.title}</span>`;
+    const baseBody = (base.body || []).map(t=>`• ${t}`).join('<br/>');
+
+    const wantBody = lines.map(t=>`• ${t}`).join('<br/>');
+
+    askResult.classList.add('show');
+    resTitle.textContent = title;
+    resMeta.textContent = 'Based on your taps — fast guidance, no typing.';
+    resWhy.innerHTML =
+      `${baseHeader}<div style="margin-top:6px;">${baseBody}</div>` +
+      `<div style="height:10px;"></div>` +
+      `<span style="color: var(--muted); font-weight:900;">Next (your choice):</span><div style="margin-top:6px;">${wantBody}</div>` +
+      `<div style="height:10px;"></div>` +
+      `<span style="color: var(--muted); font-weight:900;">Student voice:</span><div style="margin-top:6px;">• “সবচেয়ে ভালো লাগছে—কি practise করবো, কোনটা বাদ দিবো—এই clarity টা।”</div>`;
+
+    const msg = encodeURIComponent(`Assalamu Alaikum, AskLizOn(PTE) e tap kore dekhlam. Why:${state.why}, Confusion:${state.confusion}, Want:${state.want}. PTE 30 days course niye guidance + admission process bolben?`);
+    resCta.href = `https://wa.me/8801611611139?text=${msg}`;
+
+    // If user picked "watch", open video after showing quick panel
+    if(want === 'watch'){
+      setTimeout(()=>{ closeAsk(); openVideo(); }, 250);
+    }
+  }
+</script>
+
 </body>
 </html>
+```0

@@ -1,1100 +1,232 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Upcoming | LizOn Education</title>
-  <meta name="description" content="Basic to Advanced IELTS batch starts 26th December 9 PM — Full access to ZERO, HOPE, STEP-UP, DESPERATE. Limited-time discount." />
-  <meta name="theme-color" content="#0b2a1f" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upcoming | LizOn Education — Basic to Advanced</title>
 
-  <style>
-    :root{
-      --bg1:#06140f;
-      --bg2:#0b2a1f;
-      --card:#0c2019cc;
-      --card2:#0a1a1480;
-      --line:#1d4a3a;
-      --text:#e9f3ef;
-      --muted:#b7c9c2;
+<meta name="description" content="IELTS Basic to Advanced (ZERO + HOPE + STEP-UP + DESPERATE). Full access, full guidance, 50% discount. Class starts 26 December, 9 PM.">
 
-      --gold:#d7b24a;
-      --gold2:#b8922f;
+<style>
+:root{
+  --bg:#071b16;
+  --panel:#0b241e;
+  --panel2:#0e2c25;
+  --text:#e9f3ef;
+  --muted:rgba(233,243,239,.78);
+  --border:rgba(233,243,239,.14);
+  --gold:#f5c56b;
+  --gold-bg:rgba(245,197,107,.14);
+  --radius:20px;
+  --shadow:0 12px 40px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto}
+a{color:inherit;text-decoration:none}
+.container{max-width:960px;margin:0 auto;padding:16px}
 
-      --soft: 0 12px 40px rgba(0,0,0,.35);
-      --shadow2: 0 18px 60px rgba(0,0,0,.45);
+/* Video */
+.video-wrap{
+  position:relative;
+  border-radius:var(--radius);
+  overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+.video-thumb{
+  display:block;
+  width:100%;
+  cursor:pointer;
+}
+.play-btn{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.45));
+}
+.play-btn span{
+  width:72px;height:72px;
+  border-radius:50%;
+  background:var(--gold);
+  display:grid;
+  place-items:center;
+  color:#000;
+  font-size:28px;
+  font-weight:900;
+}
 
-      --radius-xl: 20px;
-      --radius-lg: 16px;
+/* Cards */
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-top:16px;
+}
 
-      --topbar-bg: rgba(6,20,15,.88);
-      --topbar-bg-scrolled: rgba(6,20,15,.55);
+/* Headings */
+h1{margin:12px 0 8px;font-size:28px;line-height:1.2}
+h2{margin:0 0 8px;font-size:22px}
+p{margin:6px 0;color:var(--muted)}
 
-      --chip-bg: rgba(255,255,255,.03);
-      --chip-br: rgba(255,255,255,.14);
-      --chip-br2: rgba(255,255,255,.22);
+/* Highlight */
+.highlight{
+  background:var(--gold-bg);
+  border:1px solid rgba(245,197,107,.35);
+  border-radius:var(--radius);
+  padding:16px;
+  margin-top:14px;
+}
 
-      --ok:#00d26a;
-      --warn:#ffbe64;
-      --info:#78d2ff;
-      --danger:#ff8aa2;
-      --hot:#ff6b6b;
+/* Pills */
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pill{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+}
 
-      --pulse: rgba(215,178,74,.22);
-    }
+/* Buttons */
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.btn{
+  padding:14px 18px;
+  border-radius:14px;
+  font-weight:900;
+  border:1px solid transparent;
+}
+.btn-primary{
+  background:var(--gold);
+  color:#000;
+}
+.btn-ghost{
+  border-color:var(--border);
+  color:var(--text);
+}
 
-    .theme-light{
-      --bg1:#eef6f3;
-      --bg2:#eef6f3;
-      --card:#ffffff;
-      --card2:#ffffffcc;
-      --line:rgba(11,32,26,.14);
-      --text:#0b201a;
-      --muted:rgba(11,32,26,.72);
+/* Section title */
+.section-title{
+  margin:24px 0 10px;
+  font-size:20px;
+}
 
-      --gold: rgba(165,127,50,.60);
-      --gold2: rgba(165,127,50,.85);
+/* List */
+ul{padding-left:18px;margin:10px 0}
+li{margin:6px 0;color:var(--muted)}
 
-      --soft: 0 10px 28px rgba(8,25,20,.10);
-      --shadow2: 0 14px 48px rgba(8,25,20,.12);
-
-      --topbar-bg: rgba(255,255,255,.92);
-      --topbar-bg-scrolled: rgba(255,255,255,.62);
-
-      --chip-bg:#ffffff;
-      --chip-br: rgba(11,32,26,.12);
-      --chip-br2: rgba(11,32,26,.22);
-
-      --pulse: rgba(165,127,50,.18);
-    }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; scroll-behavior:smooth; }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1100px 800px at 15% -10%, rgba(35,140,110,.20), transparent 60%),
-        radial-gradient(900px 700px at 85% 10%, rgba(215,178,74,.12), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      line-height:1.55;
-    }
-    a{ color:inherit; }
-    .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
-
-    /* ===== TOPBAR ===== */
-    .topbar{
-      position:sticky; top:0; z-index:9999; isolation:isolate;
-      backdrop-filter: blur(12px);
-      background: var(--topbar-bg);
-      border-bottom: 1px solid var(--line);
-      transition: background .2s ease, box-shadow .2s ease;
-    }
-    .topbar.scrolled{
-      background: var(--topbar-bg-scrolled);
-      box-shadow: 0 10px 25px rgba(0,0,0,.12);
-    }
-    .topbar-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding: 10px 0;
-    }
-    .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
-    .logo-link{ display:flex; align-items:center; gap:10px; text-decoration:none; min-width:0; }
-    .logo-img{
-      width:44px; height:44px; border-radius:14px;
-      object-fit:contain;
-      background: rgba(255,255,255,.06);
-      border:1px solid var(--chip-br);
-      box-shadow: var(--soft);
-      flex: 0 0 auto;
-    }
-    .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
-    .brand-text b{
-      font-size:18px; letter-spacing:.2px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width: 220px;
-    }
-    .brand-text span{
-      font-size:12px; color: var(--muted);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width: 260px;
-    }
-    .desktop-nav{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
-    .chip{
-      padding:6px 10px;
-      border:1px solid var(--chip-br);
-      border-radius:999px;
-      text-decoration:none;
-      font-size:12px;
-      color: var(--muted);
-      background: var(--chip-bg);
-      white-space:nowrap;
-      user-select:none;
-    }
-    .chip:hover{ border-color:var(--chip-br2); color:var(--text); }
-
-    /* ===== DRAWER ===== */
-    .backdrop{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.45);
-      display:none; z-index:9998;
-    }
-    .backdrop.open{ display:block; }
-    .drawer{
-      position:fixed;
-      left:12px; right:12px; bottom:12px;
-      max-height: calc(100vh - 24px);
-      overflow:auto;
-      background: var(--card);
-      border:1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow2);
-      padding:14px;
-      display:none; z-index:10000;
-      backdrop-filter: blur(10px);
-      transform: translateY(8px);
-    }
-    .drawer.open{ display:block; animation: sheetIn .14s ease-out forwards; }
-    @keyframes sheetIn{ from{ opacity:0; transform: translateY(14px);} to{ opacity:1; transform: translateY(0);} }
-
-    .drawer-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
-    .drawer-top h3{
-      margin:0; font-size:13px; color: var(--muted);
-      letter-spacing:.2px; font-weight:900;
-    }
-    .xbtn{
-      border:1px solid var(--chip-br);
-      background: rgba(255,255,255,.02);
-      color: var(--text);
-      border-radius:14px;
-      padding:10px 12px;
-      cursor:pointer;
-      font-weight:900;
-    }
-    .drawer-sub{
-      margin:12px 0 8px;
-      font-size:12px; color: var(--muted);
-      font-weight:900; letter-spacing:.2px;
-    }
-    .drawer-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
-    .drawer a{
-      display:block;
-      padding:12px 12px;
-      border-radius:16px;
-      border:1px solid var(--chip-br);
-      background: rgba(255,255,255,.02);
-      text-decoration:none;
-      color: var(--text);
-      font-weight:900;
-      text-align:center;
-    }
-    .drawer a:hover{ border-color: var(--chip-br2); }
-    .drawer .full{ grid-column: 1 / -1; }
-
-    /* ===== MAIN ===== */
-    header{ padding: 18px 0 10px; }
-    section{ padding: 18px 0; }
-    .hero-card, .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      padding: 18px;
-      box-shadow: var(--soft);
-    }
-
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      color:var(--muted);
-      border: 1px solid var(--chip-br);
-      background: var(--chip-bg);
-    }
-    .dot{
-      width:10px; height:10px; border-radius:50%;
-      background: var(--ok);
-    }
-    h1{ margin:10px 0 6px; font-size:28px; line-height:1.18; }
-    .lead{ margin:0; color:var(--muted); max-width:920px; }
-    .rule{ height:1px; background: var(--line); margin:18px 0; }
-    .muted{ color:var(--muted); }
-    .title{ margin:0 0 8px; font-size:18px; line-height:1.25; }
-
-    .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .grid-3{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-
-    .btn{
-      display:inline-block;
-      padding:12px 16px;
-      border-radius: 14px;
-      text-decoration:none;
-      font-weight:950;
-      border:1px solid transparent;
-      white-space:nowrap;
-      user-select:none;
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      background: transparent;
-      color: var(--text);
-    }
-    .btn-primary{
-      background: linear-gradient(180deg, rgba(215,178,74,.22), rgba(215,178,74,.10));
-      border-color: rgba(215,178,74,.60);
-      position:relative;
-      overflow:hidden;
-    }
-    .btn-primary:after{
-      content:"";
-      position:absolute;
-      inset:-20px;
-      background: radial-gradient(circle at 20% 30%, rgba(255,255,255,.18), transparent 55%);
-      opacity:.55;
-      pointer-events:none;
-    }
-    .btn-ghost{
-      background: rgba(255,255,255,.02);
-      border-color: var(--chip-br);
-      color: var(--muted);
-    }
-    .btn:hover{ filter: brightness(1.03); }
-    .btn-tiny{
-      padding:9px 11px;
-      font-weight:950;
-      border-radius:12px;
-      font-size:12px;
-      background: rgba(255,255,255,.02);
-      border:1px solid var(--chip-br);
-      color:var(--text);
-      text-decoration:none;
-      cursor:pointer;
-    }
-    .btn-tiny:hover{ border-color: var(--chip-br2); }
-
-    .cta-row{ margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
-
-    /* ===== BIG HIGHLIGHT CARD ===== */
-    .focus{
-      border:1px solid rgba(215,178,74,.30);
-      background:
-        radial-gradient(700px 320px at 20% 0%, var(--pulse), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border-radius: var(--radius-xl);
-      padding: 16px;
-      box-shadow: var(--soft);
-      position:relative;
-      overflow:hidden;
-    }
-    .focus:before{
-      content:"";
-      position:absolute;
-      right:-70px; top:-70px;
-      width:240px; height:240px;
-      background: radial-gradient(circle at 35% 35%, rgba(215,178,74,.22), transparent 62%);
-      transform: rotate(18deg);
-      pointer-events:none;
-    }
-    .focus-top{
-      display:flex; align-items:flex-start; justify-content:space-between;
-      gap:12px; flex-wrap:wrap;
-      position:relative;
-    }
-    .kpi{
-      display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;
-      position:relative;
-    }
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid var(--chip-br);
-      background: rgba(255,255,255,.02);
-      color: var(--muted);
-      font-size:12px;
-      font-weight:900;
-    }
-    .pill strong{ color: var(--text); }
-    .pill.hot{
-      border-color: rgba(255,107,107,.40);
-      background: rgba(255,107,107,.10);
-      color: var(--text);
-    }
-    .pill.gold{
-      border-color: rgba(215,178,74,.55);
-      background: rgba(215,178,74,.10);
-      color: var(--text);
-    }
-
-    .mini{
-      border:1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: rgba(255,255,255,.02);
-      padding: 14px;
-    }
-    .mini b{ display:block; font-size:13px; }
-    .mini p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
-
-    .list{ margin:10px 0 0; padding-left:18px; color: var(--muted); }
-    .list li{ margin:6px 0; }
-
-    .warning{
-      margin-top:12px;
-      border:1px solid rgba(255,190,100,.28);
-      background: rgba(255,190,100,.08);
-      border-radius: 16px;
-      padding: 12px;
-      color: var(--text);
-    }
-    .warning b{ color: var(--text); }
-
-    /* ===== ASK PANEL (tap selector) ===== */
-    .ask-wrap{
-      position:fixed; inset:0;
-      display:none; align-items:flex-end; justify-content:center;
-      padding:16px; z-index:12060;
-    }
-    .ask-wrap.show{ display:flex; }
-    .modal-back{ position:absolute; inset:0; background: rgba(0,0,0,.50); }
-    .ask{
-      position:relative;
-      width:min(760px, 100%);
-      border-radius: var(--radius-xl);
-      border:1px solid var(--line);
-      background: var(--card);
-      box-shadow: var(--shadow2);
-      padding: 14px;
-      animation: sheetIn .14s ease-out forwards;
-      backdrop-filter: blur(10px);
-    }
-    .ask-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
-    .ask-title{ display:flex; align-items:center; gap:10px; }
-    .ask-badge{
-      width:38px; height:38px; border-radius:14px;
-      border:1px solid var(--chip-br);
-      background: rgba(255,255,255,.02);
-      display:grid; place-items:center;
-      font-weight:950;
-    }
-    .ask h4{ margin:0; font-size:16px; }
-    .ask p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
-    .modal-x{
-      border:1px solid var(--chip-br);
-      background: rgba(255,255,255,.02);
-      color: var(--text);
-      border-radius:14px;
-      width:42px; height:42px;
-      display:grid; place-items:center;
-      cursor:pointer; font-weight:950;
-      flex:0 0 auto;
-    }
-    .step-label{
-      font-size:12px; color: var(--muted);
-      font-weight:900; letter-spacing:.2px;
-      margin: 12px 0 8px;
-    }
-    .opt-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
-    .opt{
-      border:1px solid var(--chip-br);
-      background: rgba(255,255,255,.02);
-      border-radius:18px;
-      padding:12px;
-      text-align:left;
-      cursor:pointer;
-      user-select:none;
-    }
-    .opt:hover{ border-color: var(--chip-br2); }
-    .opt b{ display:block; font-size:14px; margin-bottom:4px; }
-    .opt span{ display:block; color: var(--muted); font-size:12px; }
-
-    .ask-result{
-      margin-top:12px;
-      border:1px solid rgba(215,178,74,.30);
-      background: linear-gradient(180deg, rgba(215,178,74,.10), rgba(255,255,255,.01)), rgba(255,255,255,.01);
-      border-radius: var(--radius-xl);
-      padding: 14px;
-      display:none;
-    }
-    .ask-result.show{ display:block; }
-    .res-top{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; flex-wrap:wrap; }
-    .res-title{ font-weight:950; font-size:16px; margin:0; }
-    .res-meta{ color: var(--muted); font-size:13px; margin-top:4px; }
-    .res-price{ font-weight:950; font-size:16px; white-space:nowrap; }
-    .why{ margin-top:10px; color: var(--text); font-size:13px; line-height:1.55; }
-    .ask-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center; }
-
-    /* ===== FLOATING CONTROLS ===== */
-    .scroll-dock{
-      position:fixed; right:14px; bottom:120px; z-index:2300;
-      display:flex; flex-direction:column; gap:10px;
-      padding:10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.02);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--soft);
-    }
-    .sbtn{
-      width:44px; height:44px;
-      border-radius:16px;
-      border:1px solid var(--chip-br);
-      background: var(--card);
-      color: var(--text);
-      display:grid; place-items:center;
-      cursor:pointer;
-      transition: transform .12s ease, border-color .12s ease, filter .12s ease;
-    }
-    .sbtn:hover{ border-color: var(--chip-br2); filter: brightness(1.03); transform: translateY(-1px); }
-    .sbtn svg{ width:20px; height:20px; }
-
-    .hamb-fab{
-      position:fixed; left:14px; bottom:54px; z-index:2400;
-      width:54px; height:54px; border-radius:20px;
-      border:1px solid var(--chip-br);
-      background: var(--card);
-      box-shadow: var(--soft);
-      display:grid; place-items:center;
-      cursor:pointer;
-      backdrop-filter: blur(10px);
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-    .hamb-fab svg{ width:22px; height:22px; }
-
-    .ask-pill{
-      position:fixed; left:14px; bottom:116px; z-index:2400;
-      border:1px solid var(--chip-br);
-      background: var(--card);
-      box-shadow: var(--soft);
-      border-radius:999px;
-      padding:10px 12px;
-      display:flex; align-items:center; gap:10px;
-      cursor:pointer;
-      backdrop-filter: blur(10px);
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-    .ask-dot{ width:12px; height:12px; border-radius:50%; background: rgba(215,178,74,.85); }
-    .ask-pill b{ font-size:13px; }
-    .ask-pill span{ font-size:12px; color: var(--muted); }
-
-    .theme-fab{
-      position:fixed; right:14px; bottom:54px; z-index:2400;
-      border:1px solid var(--chip-br);
-      background: var(--card);
-      box-shadow: var(--soft);
-      border-radius:18px;
-      width:52px; height:52px;
-      display:grid; place-items:center;
-      cursor:pointer;
-      backdrop-filter: blur(10px);
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-    .theme-fab svg{ width:18px; height:18px; }
-    .icon-sun{ display:none; }
-    .theme-light .icon-sun{ display:block; }
-    .theme-light .icon-moon{ display:none; }
-
-    /* ===== FOOTER + GUIDANCE BAR ===== */
-    footer{
-      padding: 10px 0 160px;
-      border-top: 1px solid var(--line);
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .footer-card{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border:1px solid var(--line);
-      border-radius: var(--radius-xl);
-      padding:16px;
-      box-shadow: var(--soft);
-    }
-    .footer-columns{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr .9fr;
-      gap:14px;
-      margin-top:12px;
-    }
-    .footer-title{ margin:0 0 8px; font-size:13px; color: var(--text); font-weight:950; }
-    .footer-links{ display:flex; gap:10px; flex-wrap:wrap; }
-    .footer-links a{ text-decoration:none; }
-    .socials{ display:flex; gap:10px; flex-wrap:wrap; }
-    .footer-small{ font-size:13px; color: var(--muted); }
-
-    .sticky-bar{
-      position:fixed; left:0; right:0; bottom:12px; z-index:2200;
-      display:flex; justify-content:center;
-      pointer-events:none;
-    }
-    .sticky-bar .bar{
-      pointer-events:auto;
-      display:flex; align-items:center; gap:10px;
-      border:1px solid var(--line);
-      background: var(--card);
-      padding:10px 14px;
-      border-radius:999px;
-      box-shadow: var(--soft);
-      backdrop-filter: blur(10px);
-      flex-wrap:wrap;
-      justify-content:center;
-    }
-    .bar .dot{ width:10px; height:10px; border-radius:50%; background: var(--ok); }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 920px){
-      .grid-2, .grid-3{ grid-template-columns: 1fr; }
-      h1{ font-size:24px; }
-      .footer-columns{ grid-template-columns: 1fr; }
-    }
-    @media (max-width: 520px){
-      .opt-grid{ grid-template-columns: 1fr; }
-    }
-  </style>
+/* Footer */
+footer{
+  margin-top:40px;
+  padding:30px 16px;
+  border-top:1px solid var(--border);
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+</style>
 </head>
 
 <body>
 
-<!-- TOPBAR -->
-<div class="topbar" id="topbar">
-  <div class="container">
-    <div class="topbar-inner">
-      <div class="brand">
-        <a class="logo-link" href="index.html" title="Go to Home" aria-label="Go to Home">
-          <img class="logo-img" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo" />
-          <div class="brand-text">
-            <b>LizOn Education</b>
-            <span>Upcoming — Basic to Advanced</span>
-          </div>
-        </a>
-      </div>
+<div class="container">
 
-      <nav class="desktop-nav" aria-label="Top navigation">
-        <a class="chip" href="index.html">Home</a>
-        <a class="chip" href="ielts.html">IELTS Journey</a>
-        <a class="chip" href="#start">Batch Start</a>
-        <a class="chip" href="#access">Full Access</a>
-      </nav>
+  <!-- VIDEO -->
+  <div class="video-wrap" id="videoWrap">
+    <img src="assets/thumb-basic-advanced.jpg" alt="IELTS Basic to Advanced" class="video-thumb" id="videoThumb">
+    <div class="play-btn"><span>▶</span></div>
+  </div>
+
+  <!-- HERO -->
+  <div class="card">
+    <h1>IELTS Basic → Advanced  
+      <br><span style="font-size:18px;color:var(--muted)">Full Journey. Full Control.</span>
+    </h1>
+
+    <p>
+      Admit korle <b>amra shob handle kori</b> — level confusion, routine,
+      practice, evaluation, guidance.
+    </p>
+
+    <div class="pills">
+      <span class="pill">Starts: <b>26 December</b></span>
+      <span class="pill">Time: <b>9:00 PM</b></span>
+      <span class="pill">Computer Based</span>
     </div>
   </div>
+
+  <!-- OFFER -->
+  <div class="highlight">
+    <h2>ZERO + HOPE + STEP-UP + DESPERATE</h2>
+    <p>
+      One admission. All 4 levels.  
+      From absolute basics → final exam readiness.
+    </p>
+
+    <ul>
+      <li>No random class hopping</li>
+      <li>Clear level-wise roadmap</li>
+      <li>Speaking, Writing, Reading, Listening — all covered</li>
+      <li>Weekly evaluation + correction</li>
+      <li>Mentor guidance until exam</li>
+    </ul>
+
+    <div class="pills">
+      <span class="pill">12 + 16 + 16 + 28 Sessions</span>
+      <span class="pill">Full Access (N2F)</span>
+    </div>
+  </div>
+
+  <!-- DISCOUNT -->
+  <div class="card">
+    <h2>🎯 50% Discount Applied</h2>
+    <p>
+      Normally students buy courses one by one and lose direction.  
+      This bundle exists so you don’t repeat that mistake.
+    </p>
+    <p>
+      <b>One decision → complete journey.</b>
+    </p>
+  </div>
+
+  <!-- CTA -->
+  <div class="card">
+    <h2>Should you admit?</h2>
+    <p>
+      If you are tired of guessing, restarting, or failing to improve —
+      this is built exactly for you.
+    </p>
+
+    <div class="actions">
+      <a class="btn btn-primary"
+         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20I%20want%20to%20admit%20in%20IELTS%20Basic%20to%20Advanced%20course.%20Please%20guide%20me."
+         target="_blank">Admit Now</a>
+
+      <a class="btn btn-ghost" href="ielts.html">More Details</a>
+    </div>
+  </div>
+
 </div>
 
-<!-- DRAWER -->
-<div class="backdrop" id="backdrop"></div>
-<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
-  <div class="drawer-top">
-    <h3>Navigate</h3>
-    <button class="xbtn" id="closeDrawer" type="button" aria-label="Close">✕</button>
-  </div>
-
-  <div class="drawer-sub">Core</div>
-  <div class="drawer-grid">
-    <a class="full" href="index.html">Home</a>
-    <a class="full" href="about.html">About</a>
-    <a class="full" href="ielts.html">IELTS Journey</a>
-    <a class="full" href="#start">Batch Start</a>
-    <a class="full" href="#access">Full Access</a>
-    <a class="full" href="#discount">Discount</a>
-  </div>
-
-  <div class="drawer-sub">Practice</div>
-  <div class="drawer-grid">
-    <a class="full" href="ielts-listening.html">IELTS Listening</a>
-    <a class="full" href="ielts-reading.html">IELTS Reading</a>
-    <a class="full" href="ielts-writing.html">IELTS Writing</a>
-    <a class="full" href="ielts-speaking.html">IELTS Speaking</a>
-  </div>
-
-  <div class="drawer-sub">Other</div>
-  <div class="drawer-grid">
-    <a class="full" href="pte.html">PTE</a>
-    <a class="full" href="studyabroad.html">Study Abroad</a>
-  </div>
-
-  <div style="margin-top:12px;">
-    <a class="btn-tiny" style="display:block;text-align:center;"
-       href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20batch%20e%20admission%20nibo.%2050%25%20discount%20details%20den%3F"
-       target="_blank" rel="noopener">Talk with LizOn</a>
-  </div>
-</div>
-
-<!-- HERO -->
-<header id="start">
-  <div class="container">
-    <div class="hero-card focus">
-      <span class="badge"><span class="dot"></span>Basic → Advanced (Batch Start)</span>
-      <h1>Class starts: <span style="color:var(--gold)">26th December</span> — <span style="color:var(--gold)">9 PM</span></h1>
-      <p class="lead">
-        Ei batch ta <b>Basic–Advanced</b> journey er jonno. Apni admit korben —
-        <b>we take care of everything</b>: routine, guidance, practice direction, evaluation.
-      </p>
-
-      <div class="kpi">
-        <span class="pill gold"><strong>Full Access</strong> ZERO + HOPE + STEP-UP + DESPERATE</span>
-        <span class="pill hot"><strong>50% Discount</strong> Limited-time</span>
-        <span class="pill"><strong>Start time</strong> 9 PM</span>
-      </div>
-
-      <div class="cta-row">
-        <a class="btn btn-primary"
-           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20batch%20(26th%20Dec%209%20PM)%20e%20admission%20nibo.%2050%25%20discount%20available%3F%20Seat%20confirm%20korben%3F"
-           target="_blank" rel="noopener">Admit Now (Discount)</a>
-
-        <a class="btn btn-ghost" href="#details">See Details</a>
-
-        <button class="btn btn-ghost" id="openAskFromHero" type="button">Help Me Choose</button>
-      </div>
-
-      <div class="warning" id="discount">
-        <b>50% Discount:</b> Ei offer ta shobai pabe na — seats/criteria wise close hoy.
-        Jara “arek din pore” bole, ora usually miss kore. Today decision = seat locked.
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- DETAILS -->
-<section id="details">
-  <div class="container">
-    <div class="card">
-      <span class="badge"><span class="dot" style="background:var(--info)"></span>Basic → Advanced Details</span>
-      <h2 class="title" style="margin-top:10px;">One admission. Full access to all 4 levels.</h2>
-      <p class="muted" style="margin:0; max-width:920px;">
-        Ei program e apni <b>ZERO, HOPE, STEP-UP, DESPERATE</b> — shob level er access paben.
-        Mane: apnar current level jeta, shei level thekei start; pore progress hole next level unlock e jaben.
-        Confusion kom, direction clear.
-      </p>
-
-      <div class="rule"></div>
-
-      <div class="grid-3" id="access">
-        <div class="mini">
-          <b>ZERO (Foundation)</b>
-          <p>Grammar base + speaking/writing start control.</p>
-        </div>
-        <div class="mini">
-          <b>HOPE (Reset)</b>
-          <p>Reading/Listening/Writing/Speaking — blockers fix.</p>
-        </div>
-        <div class="mini">
-          <b>STEP-UP (Band Jump)</b>
-          <p>Accuracy + strategy + 6+ to 6.5–7+ move.</p>
-        </div>
-      </div>
-
-      <div class="mini" style="margin-top:12px;">
-        <b>DESPERATE (Final + Evaluation)</b>
-        <p>Exam near / repeat fail — weakness detect → fix → test → evaluate.</p>
-      </div>
-
-      <div class="rule"></div>
-
-      <h3 class="title">Why students miss this chance</h3>
-      <ul class="list">
-        <li>“Ami nijey practice korbo” bole 2–3 week loss hoy — then panic.</li>
-        <li>Routine thake na, tai improvement measurable hoy na.</li>
-        <li>Exam date ashle sudden “crash mode” e giye wrong plan follow kore.</li>
-      </ul>
-
-      <div class="warning">
-        <b>Real talk:</b> Admit na korle, apnar problem solve hoy na. Admit korle, apnar job shudhu follow kora.
-        We will guide you, push you, and evaluate you.
-      </div>
-
-      <div class="cta-row">
-        <a class="btn btn-primary"
-           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Basic%20to%20Advanced%20(Full%20Access%204%20Levels)%20e%20admission%20nibo.%20Seat%20lock%20korben.%2050%25%20discount%20details%20den."
-           target="_blank" rel="noopener">Admit Now</a>
-
-        <!-- Link to details page (change if your details page is different) -->
-        <a class="btn btn-ghost" href="ielts.html">Open IELTS Journey Details</a>
-
-        <button class="btn btn-ghost" data-open-ask type="button">Help Me Choose</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- QUICK PROCESS -->
-<section id="process">
-  <div class="container">
-    <div class="card">
-      <span class="badge"><span class="dot" style="background:var(--warn)"></span>Fast Admission</span>
-      <h2 class="title" style="margin-top:10px;">Admit today, start 26th Dec (9 PM)</h2>
-      <p class="muted" style="margin:0; max-width:920px;">
-        Seat confirm korte delay korle, offer/seat shift hoy. Today admission = peace.
-      </p>
-
-      <div class="rule"></div>
-
-      <div class="grid-2">
-        <div class="mini">
-          <b>You send</b>
-          <ul class="list" style="margin-top:10px;">
-            <li>Name + phone</li>
-            <li>Payment method + Txn ID / screenshot</li>
-            <li>“Basic–Advanced batch” mention</li>
-          </ul>
-        </div>
-
-        <div class="mini">
-          <b>We send back</b>
-          <ul class="list" style="margin-top:10px;">
-            <li>Seat confirmation</li>
-            <li>Routine + how to start properly</li>
-            <li>Next steps + support guidance</li>
-          </ul>
-
-          <div class="cta-row" style="margin-top:12px;">
-            <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20Basic%20to%20Advanced%20batch%20(26th%20Dec%209%20PM)%20e%20admission%20confirm%20korte%20chai.%20Payment%20details%20kothay%20pathabo%3F"
-               target="_blank" rel="noopener">Start Admission</a>
-
-            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Visit Office</a>
-          </div>
-
-          <p class="muted" style="margin:12px 0 0;font-size:13px;">
-            Helpline: 01611611139 (IELTS/PTE) • 01608881545 (Study Abroad)
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer id="footer">
-  <div class="container">
-    <div class="footer-card">
-
-      <h3 class="footer-title">All Options</h3>
-      <div class="footer-links" style="margin-bottom:10px;">
-        <a class="btn btn-ghost" href="index.html">Home</a>
-        <a class="btn btn-ghost" href="about.html">About</a>
-        <a class="btn btn-ghost" href="ielts.html">IELTS Journey</a>
-        <a class="btn btn-ghost" href="pte.html">PTE</a>
-        <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
-      </div>
-
-      <div class="footer-columns">
-        <div>
-          <h3 class="footer-title">IELTS Pages</h3>
-          <div class="footer-links">
-            <a class="btn-tiny" href="ielts-roadmap.html">Roadmap</a>
-            <a class="btn-tiny" href="ielts-choose-level.html">Choose Level</a>
-            <a class="btn-tiny" href="ielts-band-improvement.html">Band Improvement</a>
-            <a class="btn-tiny" href="ielts-grammar.html">Grammar</a>
-            <a class="btn-tiny" href="ielts-computer-based.html">Computer Based</a>
-            <a class="btn-tiny" href="ielts-faq-bangladesh.html">FAQ (BD)</a>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="footer-title">Practice</h3>
-          <div class="footer-links">
-            <a class="btn-tiny" href="ielts-listening.html">Listening</a>
-            <a class="btn-tiny" href="ielts-reading.html">Reading</a>
-            <a class="btn-tiny" href="ielts-writing.html">Writing</a>
-            <a class="btn-tiny" href="ielts-speaking.html">Speaking</a>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="footer-title">Contact & Location</h3>
-          <p class="footer-small" style="margin:0 0 10px;">
-            <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
-            <b>IELTS/PTE Helpline:</b> 01611611139<br/>
-            <b>Study Abroad/Visa Processing:</b> 01608881545
-          </p>
-          <div class="footer-links">
-            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-            <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=Need%20guidance%20about%20Basic%20to%20Advanced%20IELTS%20batch%20(26th%20Dec%209%20PM)%20+%2050%25%20discount"
-               target="_blank" rel="noopener">Chat Now</a>
-          </div>
-
-          <h3 class="footer-title" style="margin-top:14px;">Social Media</h3>
-          <div class="socials">
-            <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-            <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
-          </div>
-        </div>
-      </div>
-
-      <p class="muted" style="margin:14px 0 0;">© 2025 myLizOn.com | LizOn Education</p>
-    </div>
-  </div>
-
-  <div class="sticky-bar" aria-label="Guidance bar">
-    <div class="bar">
-      <span class="dot"></span>
-      <span><b>Need guidance?</b></span>
-      <a class="btn-tiny"
-         href="https://wa.me/8801611611139?text=Hi%2C%20Basic%20to%20Advanced%20batch%20(26th%20Dec%209%20PM)%20niye%20guidance%20chai.%2050%25%20discount%20details%20den."
-         target="_blank" rel="noopener">Chat Now</a>
-      <button class="btn-tiny" data-open-ask type="button">Help Me Choose</button>
-      <a class="btn-tiny" href="ielts.html">Details</a>
-    </div>
-  </div>
+<footer>
+  © 2025 myLizOn.com | LizOn Education  
 </footer>
 
-<!-- Modern Scroll Dock -->
-<div class="scroll-dock" aria-label="Scroll controls">
-  <button class="sbtn" id="scrollTopBtn" type="button" title="Top" aria-label="Scroll to top">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M6 11l6-6 6 6"/></svg>
-  </button>
-  <button class="sbtn" id="scrollBottomBtn" type="button" title="Bottom" aria-label="Scroll to bottom">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M6 13l6 6 6-6"/></svg>
-  </button>
-</div>
-
-<!-- Bottom-left hamburger -->
-<button class="hamb-fab" id="hambFab" type="button" aria-label="Open menu" title="Menu">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
-  </svg>
-</button>
-
-<!-- AskLizOn pill -->
-<div class="ask-pill" id="askPill" role="button" tabindex="0" aria-label="Open AskLizOn">
-  <span class="ask-dot"></span>
-  <div>
-    <b>AskLizOn</b>
-    <span style="display:block;margin-top:-2px;">Tap & decide</span>
-  </div>
-</div>
-
-<!-- Theme toggle -->
-<div class="theme-fab" id="themeFab" role="button" tabindex="0" aria-label="Toggle theme" title="Toggle theme">
-  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8Z"/>
-  </svg>
-  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="12" cy="12" r="4"/>
-    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-  </svg>
-</div>
-
-<!-- ASK LIZON (tap selector) -->
-<div class="ask-wrap" id="askWrap" aria-hidden="true">
-  <div class="modal-back" id="askBack"></div>
-  <div class="ask" role="dialog" aria-modal="true" aria-label="AskLizOn selector">
-    <div class="ask-top">
-      <div class="ask-title">
-        <div class="ask-badge">LZ</div>
-        <div>
-          <h4>AskLizOn — Basic → Advanced</h4>
-          <p>Tap-only. No typing. We’ll guide the next move.</p>
-        </div>
-      </div>
-      <button class="modal-x" id="askClose" aria-label="Close AskLizOn">✕</button>
-    </div>
-
-    <div id="askSteps">
-      <div class="step-label" id="stepLabel">Step 1/2 — Your situation?</div>
-      <div class="opt-grid" id="optGrid"></div>
-    </div>
-
-    <div class="ask-result" id="askResult">
-      <div class="res-top">
-        <div>
-          <p class="res-title" id="resTitle">Recommendation</p>
-          <div class="res-meta" id="resMeta">Reasons will show here</div>
-        </div>
-        <div class="res-price" id="resPrice">—</div>
-      </div>
-
-      <div class="why" id="resWhy"></div>
-
-      <div class="ask-actions">
-        <a class="btn btn-primary" id="resCta" href="#" target="_blank" rel="noopener">Talk with LizOn</a>
-        <a class="btn btn-ghost" href="#details">Details</a>
-        <button class="btn btn-ghost" id="askRestart" type="button">Reset</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-  /* ===== Theme toggle (persist) ===== */
-  const body = document.body;
-  const topbar = document.getElementById('topbar');
-  const logoImg = document.getElementById('logoImg');
-
-  function setTheme(mode){
-    const isLight = mode === 'light';
-    body.classList.toggle('theme-light', isLight);
-    localStorage.setItem('lizon-theme', isLight ? 'light' : 'dark');
-    logoImg.src = isLight ? 'assets/logo-light.png' : 'assets/logo-dark.png';
-    document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
-  }
-  setTheme(localStorage.getItem('lizon-theme') || 'dark');
-
-  function toggleTheme(){
-    const isLight = body.classList.contains('theme-light');
-    setTheme(isLight ? 'dark' : 'light');
-  }
-  document.getElementById('themeFab').addEventListener('click', toggleTheme);
-  document.getElementById('themeFab').addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') toggleTheme(); });
-
-  /* ===== Topbar scroll style ===== */
-  function handleTopbar(){
-    if(window.scrollY > 8) topbar.classList.add('scrolled');
-    else topbar.classList.remove('scrolled');
-  }
-  handleTopbar();
-  window.addEventListener('scroll', handleTopbar, {passive:true});
-
-  /* ===== Drawer ===== */
-  const drawer = document.getElementById('drawer');
-  const backdrop = document.getElementById('backdrop');
-  const closeDrawer = document.getElementById('closeDrawer');
-  const hambFab = document.getElementById('hambFab');
-
-  function openDrawer(){
-    drawer.classList.add('open');
-    backdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeDrawerFn(){
-    drawer.classList.remove('open');
-    backdrop.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function toggleDrawer(){
-    if(drawer.classList.contains('open')) closeDrawerFn();
-    else openDrawer();
-  }
-
-  hambFab.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleDrawer(); });
-  closeDrawer.addEventListener('click', closeDrawerFn);
-  backdrop.addEventListener('click', closeDrawerFn);
-  drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeDrawerFn));
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDrawerFn(); });
-  document.addEventListener('click', (e)=>{
-    if(!drawer.classList.contains('open')) return;
-    const within = drawer.contains(e.target) || hambFab.contains(e.target);
-    if(!within) closeDrawerFn();
-  }, true);
-
-  /* ===== Scroll buttons ===== */
-  document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-  document.getElementById('scrollBottomBtn').addEventListener('click', ()=>{
-    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-  });
-
-  /* ===== AskLizOn (tap selector) ===== */
-  const askWrap = document.getElementById('askWrap');
-  const askBack = document.getElementById('askBack');
-  const askClose = document.getElementById('askClose');
-  const askPill = document.getElementById('askPill');
-  const openAskFromHero = document.getElementById('openAskFromHero');
-
-  const stepLabel = document.getElementById('stepLabel');
-  const optGrid = document.getElementById('optGrid');
-  const askResult = document.getElementById('askResult');
-  const resTitle = document.getElementById('resTitle');
-  const resMeta = document.getElementById('resMeta');
-  const resPrice = document.getElementById('resPrice');
-  const resWhy = document.getElementById('resWhy');
-  const resCta = document.getElementById('resCta');
-  const askRestart = document.getElementById('askRestart');
-
-  const state = { situation:null, time:null };
-
-  function openAsk(){
-    askWrap.classList.add('show');
-    askWrap.setAttribute('aria-hidden','false');
-    resetAsk();
-  }
-  function closeAsk(){
-    askWrap.classList.remove('show');
-    askWrap.setAttribute('aria-hidden','true');
-  }
-
-  askBack.addEventListener('click', closeAsk);
-  askClose.addEventListener('click', closeAsk);
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && askWrap.classList.contains('show')) closeAsk(); });
-
-  askPill.addEventListener('click', openAsk);
-  askPill.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openAsk(); });
-  if(openAskFromHero) openAskFromHero.addEventListener('click', openAsk);
-  document.querySelectorAll('[data-open-ask]').forEach(b=> b.addEventListener('click', openAsk));
-
-  function resetAsk(){
-    state.situation = null; state.time = null;
-    askResult.classList.remove('show');
-    renderStep1();
-  }
-  askRestart.addEventListener('click', resetAsk);
-
-  function setOptions(options, onPick){
-    optGrid.innerHTML = '';
-    options.forEach(o=>{
-      const div = document.createElement('div');
-      div.className = 'opt';
-      div.tabIndex = 0;
-      div.innerHTML = `<b>${o.title}</b><span>${o.desc}</span>`;
-      div.addEventListener('click', ()=> onPick(o.value));
-      div.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') onPick(o.value); });
-      optGrid.appendChild(div);
-    });
-  }
-
-  function renderStep1(){
-    stepLabel.textContent = 'Step 1/2 — Your situation?';
-    setOptions([
-      { title:'First time / confusion', desc:'Kothay theke shuru korbo bujhi na', value:'start' },
-      { title:'Base ase, progress hoy na', desc:'Score atke ase / stuck', value:'stuck' },
-      { title:'Multiple problem', desc:'Speaking + Writing + Grammar mixed', value:'multi' },
-      { title:'Exam close', desc:'Short time e guidance lagbe', value:'near' }
-    ], (v)=>{ state.situation=v; renderStep2(); });
-  }
-
-  function renderStep2(){
-    stepLabel.textContent = 'Step 2/2 — Time situation?';
-    setOptions([
-      { title:'Ready to start now', desc:'Seat lock korte chai', value:'now' },
-      { title:'Need discount info', desc:'50% discount criteria', value:'disc' },
-      { title:'Need level check', desc:'Amar level ta bujhte chai', value:'level' },
-      { title:'Just guide me', desc:'Ami confused, plan den', value:'guide' }
-    ], (v)=>{ state.time=v; showRecommendation(); });
-  }
-
-  function showRecommendation(){
-    const why = [];
-
-    const sMap = {
-      start: 'First start hole, full access e step-by-step best.',
-      stuck: 'Stuck hole, guided routine chara time waste hoy.',
-      multi: 'Multiple problem e ekta plan + evaluation lagbei.',
-      near: 'Exam close hole, fast decision + strict guidance needed.'
-    };
-    const tMap = {
-      now: 'Seat lock korlei apnar plan fixed.',
-      disc: 'Discount criteria wise close hoy — early confirm best.',
-      level: 'Level check kore direct right starting point set kora hoy.',
-      guide: 'We will guide you from day 1.'
-    };
-
-    why.push(`• <b>Reason:</b> ${sMap[state.situation] || 'We will guide.'}`);
-    why.push(`• <b>Next:</b> ${tMap[state.time] || 'We will guide.'}`);
-    why.push('• <b>Outcome:</b> Admit → routine → practice → evaluation. You just follow.');
-
-    askResult.classList.add('show');
-    resTitle.textContent = 'Next step: Admit (26th Dec, 9 PM) — Basic → Advanced';
-    resMeta.textContent = 'Tap-based guidance — no typing.';
-    resPrice.textContent = '50% Discount';
-    resWhy.innerHTML = why.join('<br/>');
-
-    const msg = encodeURIComponent(`Assalamu Alaikum, Basic to Advanced batch (26th Dec 9 PM) e admission nibo. Situation:${state.situation}, Need:${state.time}. 50% discount details + seat confirm korben?`);
-    resCta.href = `https://wa.me/8801611611139?text=${msg}`;
-  }
+const wrap = document.getElementById('videoWrap');
+wrap.addEventListener('click', () => {
+  wrap.innerHTML = `
+    <iframe width="100%" height="315"
+      src="https://www.youtube.com/embed/U-tOkpuhQxI?autoplay=1"
+      title="IELTS Basic to Advanced"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  `;
+});
 </script>
 
 </body>
 </html>
-```0

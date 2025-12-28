@@ -724,6 +724,75 @@
   .footer-small{ font-size:13px; color: var(--muted); }
   .socials{ display:flex; gap:10px; flex-wrap:wrap; }
 
+  /* ===== POPUP (Early Access) ===== */
+  .pop-wrap{
+    position:fixed; inset:0;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    padding:16px;
+    z-index: 13000;
+  }
+  .pop-wrap.show{ display:flex; }
+  .pop-back{
+    position:absolute; inset:0;
+    background: rgba(0,0,0,.55);
+  }
+  .pop{
+    position:relative;
+    width:min(520px, 100%);
+    border-radius: var(--radius-xl);
+    border:1px solid var(--border);
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    overflow:hidden;
+    animation: sheetIn .14s ease-out forwards;
+  }
+  .pop-top{
+    position:absolute;
+    top:10px; right:10px;
+    z-index:2;
+  }
+  .pop-x{
+    border:1px solid var(--border);
+    background: rgba(0,0,0,.22);
+    color: var(--text);
+    border-radius:14px;
+    width:42px; height:42px;
+    display:grid; place-items:center;
+    cursor:pointer;
+    font-weight:950;
+    backdrop-filter: blur(10px);
+  }
+  .theme-light .pop-x{ background: rgba(255,255,255,.65); }
+  .pop-imgbtn{
+    display:block;
+    width:100%;
+    background: none;
+    border:0;
+    padding:0;
+    cursor:pointer;
+  }
+  .pop-img{
+    width:100%;
+    display:block;
+    max-height: 66vh;
+    object-fit: cover;
+  }
+  .pop-actions{
+    padding:12px;
+    border-top:1px solid var(--border);
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .pop-actions .btn{
+    flex: 1 1 auto;
+    min-width: 160px;
+  }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 920px){
     .grid-2{ grid-template-columns: 1fr; }
@@ -737,11 +806,35 @@
   @media (max-width: 520px){
     .opt-grid{ grid-template-columns: 1fr; }
     .sticky-bar .bar{ border-radius: 22px; }
+    .pop-actions .btn{ min-width: 100%; }
   }
 </style>
 </head>
 
 <body>
+
+<!-- EARLY ACCESS POPUP -->
+<div class="pop-wrap" id="earlyPopWrap" aria-hidden="true">
+  <div class="pop-back" id="earlyPopBack"></div>
+
+  <div class="pop" role="dialog" aria-modal="true" aria-label="Early Access Reward">
+    <div class="pop-top">
+      <button class="pop-x" id="earlyPopClose" type="button" aria-label="Close">✕</button>
+    </div>
+
+    <!-- Clicking the image = go to course details + close popup -->
+    <button class="pop-imgbtn" id="earlyPopImageBtn" type="button" aria-label="Open course details">
+      <img class="pop-img" src="assets/pte-early-access-2000tk.png" alt="Early Access Reward — 2000tk fee reduction" loading="eager">
+    </button>
+
+    <div class="pop-actions">
+      <button class="btn btn-blue" id="earlyPopQuickTips" type="button">Watch Quick Tips</button>
+      <a class="btn btn-primary" id="earlyPopSecure"
+         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20January%20batch%20e%20early%20admission%20nite%20chai.%20Early%20Access%20reward%20niye%20details%20diben%3F"
+         target="_blank" rel="noopener">Secure Now</a>
+    </div>
+  </div>
+</div>
 
 <!-- TOPBAR -->
 <div class="topbar" id="topbar">
@@ -782,7 +875,7 @@
   <div class="drawer-grid">
     <a class="full" href="index.html">Home</a>
     <a class="full" href="about.html">About</a>
-    <a class="full" href="Upcoming.html">Upcoming - What's New?</a>
+    <a class="full" href="upcoming.html">Upcoming — What’s New?</a>
     <a class="full" href="ielts.html">IELTS Journey</a>
     <a class="full" href="pte.html">PTE (This page)</a>
   </div>
@@ -818,7 +911,7 @@
 </div>
 
 <!-- HERO -->
-<header>
+<header id="course">
   <div class="container">
     <div class="hero-card">
       <span class="badge"><span class="dot"></span>Designed for Desired Score</span>
@@ -827,7 +920,7 @@
 
       <p class="lead">
         Built on: <b>question-based execution</b> + <b>typing speed control</b> + <b>time discipline</b>.
-        No Discount - Making your Preparation easy and accurate: <span style="color:var(--gold-strong)"score er jonno practical system<span style="color:var(--gold-strong)".
+        No discount noise — just a practical system, so score ta efficiently build hoy.
       </p>
 
       <div class="pill-row">
@@ -850,7 +943,7 @@
       </div>
 
       <p class="muted" style="margin:10px 0 0;font-size:13px;">
-        Get Ready
+        Prothome Quick Tips dekhen. Tarpor Full Class segments. Then decision.
       </p>
     </div>
   </div>
@@ -929,17 +1022,17 @@
 <section id="quicktips">
   <div class="container">
     <div class="card">
-      <h2 class="section-title">PTE Quick Tips — 4 ta score blocker (short timeline e mostly ei 4 ta te fail hoy)</h2>
+      <h2 class="section-title">PTE Quick Tips — 4 ta score blocker (short timeline e mostly ei 4 ta te atke jay)</h2>
       <p class="muted" style="margin:0;">
-        Egula “tip” na — exam e je mistakes score ke silently kheye felle, oita fix.
-        Prothome eita dekhen. Tarpor Full Class segments e jaben.
+        Egula “tip” na — exam e je mistakes score ke silently kheye fele, oigula fix.
+        Prothome eta dekhen. Tarpor Full Class segments e jan.
       </p>
 
       <div class="grid-2" style="margin-top:12px;">
         <!-- QT 1 -->
         <div class="mini-card" style="border-color: rgba(255,190,100,.22); background: linear-gradient(180deg, rgba(255,190,100,.08), rgba(255,255,255,.01));">
           <p class="mini-title" style="margin-bottom:6px;">Highlight Incorrect Words — most common trap</p>
-          <p class="mini-text">“Choto mone hoy”, but wrong clicks e score drop hoy. Ekhane rule clear hole random guess bondho hoy.</p>
+          <p class="mini-text">“Choto mone hoy”, but wrong clicks e score drop hoy. Rule clear hole random guess off hoy.</p>
 
           <div class="video-wrap" style="margin-top:10px;" data-video="mtH9hmTonMo" data-title="Highlight Incorrect Words">
             <img class="video-thumb" src="assets/Highlight%20Incorrect%20Words.png" alt="Highlight Incorrect Words thumbnail" loading="lazy">
@@ -1016,7 +1109,7 @@
       <div class="highlight" style="margin-top:14px;">
         <span class="badge"><span class="dot"></span>Bridge</span>
         <p class="muted" style="margin:8px 0 0;">
-          Done? Admit now or Watch A Full Class  Your “execution system”.
+          Done? Ekhon Full Class segments dekhen — then admission decision.
           Next step: AskLizOn → batch fit → payment.
         </p>
         <div class="cta-row" style="margin-top:12px;">
@@ -1037,7 +1130,8 @@
     <div class="card">
       <h2 class="section-title">Full Class segments (Proof)</h2>
       <p class="muted" style="margin:0;">
-        Eita “free video” na — eta proof je amra class e exactly ki fix kori. Dekhe bujben: random practice vs execution system.
+        Eta “free video” na — eta proof je amra class e exactly ki fix kori.
+        Dekhe bujben: random practice vs execution system.
       </p>
 
       <div class="grid-2" style="margin-top:12px;">
@@ -1066,7 +1160,7 @@
 
         <div class="mini-card" style="border-color: rgba(35,140,110,.28); background: linear-gradient(180deg, rgba(35,140,110,.10), rgba(255,255,255,.01));">
           <p class="mini-title" style="margin-bottom:8px;">After watching — do this</p>
-          <p class="mini-text" style="margin-bottom:10px;">Quick Tips → AskLizOn → payment → screenshot WhatsApp.</p>
+          <p class="mini-text" style="margin-bottom:10px;">Quick Tips → AskLizOn → payment → screenshot WhatsApp e.</p>
 
           <div class="cta-row" style="margin-top:10px;">
             <button class="btn btn-teal" data-open-ask type="button">Get clarity (AskLizOn)</button>
@@ -1106,7 +1200,7 @@
               </div>
             </div>
           </div>
-          <p class="quote">“Typing slow ছিল, essay শেষই করতে পারতam na। এখন speed নিয়ে ভয় নাই।”</p>
+          <p class="quote">“Typing slow chilo, essay sesh-i korte partam na. Ekhon speed niye voy nai.”</p>
         </div>
 
         <div class="review">
@@ -1119,7 +1213,7 @@
               </div>
             </div>
           </div>
-          <p class="quote">“সবচেয়ে ভালো লাগছে—কি practise করবো, কোনটা বাদ দিবো—এই clarity টা।”</p>
+          <p class="quote">“Sobcheye bhalo lagse—ki practice korbo, konta bad dibo—ei clarity ta.”</p>
         </div>
 
         <div class="review">
@@ -1132,7 +1226,7 @@
               </div>
             </div>
           </div>
-          <p class="quote">“Typing speed training না থাকলে PTE সম্ভব না। LizOn এটা ঠিক জায়গায় ধরছে।”</p>
+          <p class="quote">“Typing speed training na thakle PTE possible na. LizOn eta thik jaygay dhorse.”</p>
         </div>
 
         <div class="review">
@@ -1145,7 +1239,7 @@
               </div>
             </div>
           </div>
-          <p class="quote">“Short timeline থাকলে PTE course-টা gold।”</p>
+          <p class="quote">“Short timeline thakle PTE course-ta gold.”</p>
         </div>
       </div>
 
@@ -1177,7 +1271,7 @@
           <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20fee%209000%20-%20admission%20nite%20chai.%20Payment%20details%20diben%3F"
              target="_blank" rel="noopener">Talk with LizOn</a>
-          <a class="btn btn-ghost" href="#payment">Go Payment</a>
+          <a class="btn btn-ghost" href="#payment">Go to Payment</a>
         </div>
       </div>
 
@@ -1199,13 +1293,13 @@
   </div>
 </section>
 
-<!-- PAYMENT (UNCHANGED) -->
+<!-- PAYMENT (UNCHANGED CONTENT, corrected wording) -->
 <section id="payment">
   <div class="container">
     <div class="card">
       <h2 class="section-title">Payment — tap & follow</h2>
       <p class="muted" style="margin:0;">
-        Choose method → follow instruction → send screenshot/Txn ID WhatsApp e.
+        Choose method → instruction follow korun → screenshot/Txn ID WhatsApp e pathan.
         Amra confirm kore batch/group + portal direction share kore dibo.
       </p>
 
@@ -1307,7 +1401,7 @@
   </div>
 </section>
 
-<!-- FOOTER (UNCHANGED) -->
+<!-- FOOTER -->
 <footer id="footer">
   <div class="container">
     <div class="footer-card">
@@ -1456,7 +1550,7 @@
     <div class="sheet-top">
       <div>
         <h4 id="payTitle">Payment</h4>
-        <p id="payHint">Follow instruction → then send screenshot/Txn ID WhatsApp e.</p>
+        <p id="payHint">Instruction follow korun → then screenshot/Txn ID WhatsApp e pathan.</p>
       </div>
       <button class="sheet-x" id="paySheetClose" aria-label="Close payment">✕</button>
     </div>
@@ -1488,7 +1582,6 @@
       <button class="sheet-x" id="askClose" aria-label="Close AskLizOn">✕</button>
     </div>
 
-    <!-- Quick Tips shortcut (locked requirement) -->
     <div class="ask-quick">
       <div>
         <b>Need Quick Tips?</b>
@@ -1590,17 +1683,15 @@
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.allowFullscreen = true;
 
-    // FIX (Quick Tips): force player UI + captions prefs to Bangla, keep captions OFF by default.
-    // NOTE: spoken audio is always the video's original track; this mainly fixes the "English UI/CC feel".
     const params = new URLSearchParams({
       autoplay: '1',
       rel: '0',
       modestbranding: '1',
       playsinline: '1',
       iv_load_policy: '3',
-      hl: 'bn',              // player UI language
-      cc_lang_pref: 'bn',    // caption language preference
-      cc_load_policy: '0'    // captions OFF by default
+      hl: 'bn',
+      cc_lang_pref: 'bn',
+      cc_load_policy: '0'
     });
 
     iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?${params.toString()}`;
@@ -1653,7 +1744,7 @@
     mistakes: {
       title: 'Common PTE mistakes we fix',
       html: `
-        <div class="row"><div><b>Random practice</b><span>sequence & scoring logic na bujhe practise</span></div></div>
+        <div class="row"><div><b>Random practice</b><span>sequence & scoring logic na bujhe practice</span></div></div>
         <div class="row"><div><b>Typing bottleneck</b><span>slow typing e essay/SWT time sesh hoye jay</span></div></div>
         <div class="row"><div><b>No time control</b><span>answer jana thakleo execution e time manage hoy na</span></div></div>
         <div class="row"><div><b>Trick chase</b><span>we focus what PTE actually rewards</span></div></div>
@@ -1665,7 +1756,7 @@
         <div class="row"><div><b>Short timeline</b><span>Australia (and others) — fast result dorkar</span></div></div>
         <div class="row"><div><b>Retake</b><span>age try koreo score atke thake</span></div></div>
         <div class="row"><div><b>Typing slow</b><span>essay/SWT e panic hoy</span></div></div>
-        <div class="row"><div><b>Need clarity</b><span>ki practise korbo / ki bad dibo</span></div></div>
+        <div class="row"><div><b>Need clarity</b><span>ki practice korbo / ki bad dibo</span></div></div>
       `
     },
     whatget: {
@@ -1743,7 +1834,7 @@
     bank: {
       title:'Bank Transfer (DBBL)',
       rows: [
-        {label:'Bank', value:'DBBL (Dutch Bangla Bank Limited)', hint:'Account transfer'},
+        {label:'Bank', value:'DBBL (Dutch-Bangla Bank Limited)', hint:'Account transfer'},
         {label:'Account No', value:'2211510117789', hint:''},
         {label:'Account Name', value:'SHUVA SARKER JOY', hint:''},
         {label:'Branch', value:'Manda', hint:''},
@@ -1907,7 +1998,7 @@
       { title:'Very urgent', desc:'1–3 week e exam / deadline close', value:'urgent' },
       { title:'Short timeline', desc:'1 month e result dorkar', value:'short' },
       { title:'Retake', desc:'age try korechi, ekhon fixed plan chai', value:'retake' },
-      { title:'Not sure', desc:'Ami confusion e — suggest best plan', value:'ns' }
+      { title:'Not sure', desc:'ami confusion e — suggest best plan', value:'ns' }
     ], (v)=>{ pteState.timeline=v; renderStep2(); });
   }
   function renderStep2(){
@@ -1937,29 +2028,29 @@
     const why = [];
 
     const timelineMap = {
-      urgent: 'Urgent timeline—execution + time control must be strict.',
-      short: 'Short timeline—sequence + routine fixed rakhte hobe.',
-      retake: 'Retake—previous mistake repeat na kore correct plan dorkar.',
-      ns: 'Confusion—clear roadmap + guidance lagbe.'
+      urgent: 'Urgent timeline — execution + time control must be strict.',
+      short: 'Short timeline — sequence + routine fixed rakhte hobe.',
+      retake: 'Retake — previous mistake repeat na kore correct plan dorkar.',
+      ns: 'Confusion — clear roadmap + guidance lagbe.'
     };
     const blockerMap = {
-      typing: 'Typing slow—typing speed sessions + exam-safe drills must.',
-      speaking: 'Speaking tasks—structure + delivery timing fix korte hobe.',
-      listening: 'Listening—focus + capture method develop korte hobe.',
-      multi: 'Multiple problems—structured system e cover korte hobe.'
+      typing: 'Typing slow — typing speed sessions + exam-safe drills must.',
+      speaking: 'Speaking tasks — structure + delivery timing fix korte hobe.',
+      listening: 'Listening — focus + capture method develop korte hobe.',
+      multi: 'Multiple problems — structured system e cover korte hobe.'
     };
     const targetMap = {
-      '58': 'Target 50–58—foundation + consistency.',
-      '65': 'Target 65+—control + timed execution.',
-      '79': 'Target 79+—high accuracy + discipline.',
-      't_ns': 'Target unclear—profile check kore honest suggestion.'
+      '58': 'Target 50–58 — foundation + consistency.',
+      '65': 'Target 65+ — control + timed execution.',
+      '79': 'Target 79+ — high accuracy + discipline.',
+      't_ns': 'Target unclear — profile check kore honest suggestion.'
     };
 
     why.push(`• <b>Timeline:</b> ${timelineMap[t] || 'timeline onujayi plan.'}`);
     why.push(`• <b>Blocker:</b> ${blockerMap[b] || 'blocker identify kore fix.'}`);
     why.push(`• <b>Target:</b> ${targetMap[g] || 'target onujayi intensity.'}`);
     why.push(`• <b>Fast start:</b> Quick Tips dekhen (4 ta score blocker). Then Full Class.`);
-    why.push(`• <b>Next:</b> Payment → screenshot/Txn ID WhatsApp.`);
+    why.push(`• <b>Next:</b> Payment → screenshot/Txn ID WhatsApp e.`);
 
     askResult.classList.add('show');
     resTitle.textContent = `Recommendation: ${title}`;
@@ -1972,6 +2063,69 @@
     resCta.href = `https://wa.me/8801611611139?text=${msg}`;
   }
 
+  /* ===== Early Access Popup ===== */
+  const earlyPopWrap = document.getElementById('earlyPopWrap');
+  const earlyPopBack = document.getElementById('earlyPopBack');
+  const earlyPopClose = document.getElementById('earlyPopClose');
+  const earlyPopImageBtn = document.getElementById('earlyPopImageBtn');
+  const earlyPopQuickTips = document.getElementById('earlyPopQuickTips');
+  const earlyPopSecure = document.getElementById('earlyPopSecure');
+
+  const EARLY_POP_KEY = 'pte-early-access-pop-dismissed-v1';
+
+  function openEarlyPop(){
+    earlyPopWrap.classList.add('show');
+    earlyPopWrap.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeEarlyPop(markDismiss=true){
+    earlyPopWrap.classList.remove('show');
+    earlyPopWrap.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    if(markDismiss){
+      // show again after 24 hours
+      try{
+        localStorage.setItem(EARLY_POP_KEY, String(Date.now()));
+      }catch(e){}
+    }
+  }
+  function shouldShowEarlyPop(){
+    try{
+      const t = Number(localStorage.getItem(EARLY_POP_KEY) || '0');
+      if(!t) return true;
+      const day = 24 * 60 * 60 * 1000;
+      return (Date.now() - t) > day;
+    }catch(e){
+      return true;
+    }
+  }
+
+  // show after a tiny delay so page doesn't feel "jumpy"
+  window.addEventListener('load', ()=>{
+    if(shouldShowEarlyPop()){
+      setTimeout(openEarlyPop, 650);
+    }
+  });
+
+  earlyPopBack.addEventListener('click', ()=> closeEarlyPop(true));
+  earlyPopClose.addEventListener('click', ()=> closeEarlyPop(true));
+
+  earlyPopQuickTips.addEventListener('click', ()=>{
+    closeEarlyPop(true);
+    setTimeout(()=> scrollToId('quicktips'), 80);
+  });
+
+  // Click image => go to course details (Fast Clarity / Course area), popup gone
+  earlyPopImageBtn.addEventListener('click', ()=>{
+    closeEarlyPop(true);
+    setTimeout(()=> scrollToId('clarity'), 80);
+  });
+
+  // Secure Now => close popup so when they return, it's gone (still keeps 24h logic)
+  earlyPopSecure.addEventListener('click', ()=>{
+    closeEarlyPop(true);
+  });
+
   /* ===== Global ESC closes sheets ===== */
   document.addEventListener('keydown', (e)=>{
     if(e.key !== 'Escape') return;
@@ -1979,6 +2133,7 @@
     if(infoSheetWrap.classList.contains('show')) closeInfoSheet();
     if(paySheetWrap.classList.contains('show')) closePaySheet();
     if(askWrap.classList.contains('show')) closeAsk();
+    if(earlyPopWrap.classList.contains('show')) closeEarlyPop(true);
   });
 </script>
 

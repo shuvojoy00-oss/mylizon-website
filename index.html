@@ -41,16 +41,11 @@
       --surface2: rgba(255,255,255,.04);
       --onGold:#142015;
 
-      --danger:#ff5c5c;
-      --danger2:#ff3b3b;
-      --dangerBg: rgba(255, 92, 92, .10);
-
-      --info:#5aa7ff;
-      --info2:#2f86ff;
-      --infoBg: rgba(90, 167, 255, .10);
-
-      --ok:#2cffb2;
-      --okBg: rgba(44,255,178,.10);
+      --ok: #2cffb2;
+      --warn: #ffcc66;
+      --danger: #ff5a5a;
+      --violet: #b8a6ff;
+      --sky: #7fd7ff;
     }
 
     html[data-theme="light"]{
@@ -79,10 +74,6 @@
       --surface: rgba(255,255,255,.72);
       --surface2: rgba(255,255,255,.58);
       --onGold:#142015;
-
-      --dangerBg: rgba(255, 92, 92, .10);
-      --infoBg: rgba(90, 167, 255, .10);
-      --okBg: rgba(44,255,178,.10);
     }
 
     *{box-sizing:border-box}
@@ -99,8 +90,8 @@
     }
     a{color:inherit; text-decoration:none}
 
-    .container{max-width:1100px; margin:0 auto; padding:22px 18px 180px}
-    @media (max-width:520px){ .container{padding:18px 14px 200px} }
+    .container{max-width:1100px; margin:0 auto; padding:22px 18px 200px}
+    @media (max-width:520px){ .container{padding:18px 14px 220px} }
 
     /* =======================
        Topbar
@@ -120,8 +111,6 @@
       max-width:1100px; margin:0 auto; padding:14px 18px;
       display:flex; align-items:center; justify-content:space-between; gap:12px;
     }
-
-    /* Brand (logo left, text stacked = "vertical") */
     .brand{
       display:flex; align-items:center; gap:10px;
       font-weight:900; letter-spacing:.2px;
@@ -136,42 +125,26 @@
       box-shadow: 0 0 0 3px rgba(215,178,74,.10);
       flex:0 0 auto;
     }
-    .titleWrap{
-      display:flex;
-      flex-direction:column;
-      line-height:1.1;
-      min-width:0;
-    }
-    .brandName{
-      font-weight:1000;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 66vw;
-    }
-    .brandTag{
-      margin-top:4px;
-      font-weight:850;
+    .brand .titleWrap{min-width:0}
+    .brand small{
+      display:block;
+      font-weight:750;
       color:var(--muted);
-      font-size:12.5px;
+      margin-top:2px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 66vw;
+      max-width: 60vw;
     }
 
-    /* Right controls (top right menu + theme) */
-    .topRight{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex:0 0 auto;
+    .topActions{
+      display:flex; align-items:center; gap:10px; flex:0 0 auto;
     }
-    .topIconBtn{
-      width:42px; height:42px;
+    .iconSquare{
+      width:44px; height:44px;
       border-radius:14px;
       border:1px solid rgba(29,74,58,.75);
-      background: rgba(6,20,15,.70);
+      background: rgba(6,20,15,.72);
       backdrop-filter: blur(14px);
       box-shadow: var(--soft);
       display:grid;
@@ -181,12 +154,9 @@
       user-select:none;
       color: var(--text);
     }
-    html[data-theme="light"] .topIconBtn{
-      background: rgba(255,255,255,.70);
-      border-color: rgba(9,64,45,.18);
-    }
-    .topIconBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .topIconBtn svg{ width:18px; height:18px; }
+    html[data-theme="light"] .iconSquare{ background: rgba(255,255,255,.86); border-color: rgba(9,64,45,.18); }
+    .iconSquare:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+    .iconSquare svg{ width:18px; height:18px; }
 
     /* =======================
        Buttons / chips
@@ -208,12 +178,14 @@
       color: var(--text);
     }
     .btn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
+
     .btn.primary{
       background: linear-gradient(180deg, var(--gold), var(--gold2));
       color: var(--onGold);
       border-color: rgba(215,178,74,.85);
       box-shadow: 0 18px 60px rgba(215,178,74,.12);
     }
+
     .btn.ghost{
       background: transparent;
       border-color: rgba(29,74,58,.65);
@@ -236,9 +208,32 @@
     }
     .btn.upcoming .badgeDot{
       width:10px; height:10px; border-radius:999px;
-      background:#2cffb2;
+      background: var(--ok);
       box-shadow: 0 0 0 4px rgba(44,255,178,.16);
       flex:0 0 auto;
+    }
+
+    .btn.glow{
+      position:relative;
+      overflow:hidden;
+      border-color: rgba(127,215,255,.45);
+      background:
+        radial-gradient(520px 180px at 15% 30%, rgba(127,215,255,.22), transparent 60%),
+        linear-gradient(180deg, rgba(12,32,25,.78), rgba(10,26,20,.55));
+      box-shadow: 0 18px 60px rgba(127,215,255,.12);
+    }
+    html[data-theme="light"] .btn.glow{
+      background:
+        radial-gradient(520px 180px at 15% 30%, rgba(127,215,255,.22), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.78));
+    }
+
+    .btn.pulse{
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{ transform: translateY(0); box-shadow: 0 18px 70px rgba(215,178,74,.10); }
+      50%{ transform: translateY(-1px); box-shadow: 0 22px 90px rgba(215,178,74,.18); }
     }
 
     .chipRow{ display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 0; }
@@ -254,6 +249,13 @@
       white-space:nowrap;
     }
     .chip b{ color: var(--gold); }
+
+    .chip.action{
+      cursor:pointer;
+      transition:.18s ease;
+      user-select:none;
+    }
+    .chip.action:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
 
     /* =======================
        Hero
@@ -287,22 +289,24 @@
     }
     @media (max-width:520px){ .heroTitle{ font-size:30px; } }
     .heroTitle span{ color: var(--gold); }
-    .sub{
-      margin:0;
-      color: var(--muted);
-      font-size:15.5px;
-      line-height:1.65;
-      max-width: 920px;
-      position:relative;
-    }
+
     .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; position:relative; }
     @media (max-width:520px){ .ctaRow .btn{ width:100%; } }
+
+    .triplet{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:12px;
+      position:relative;
+    }
+    @media (max-width:900px){ .triplet{ grid-template-columns: 1fr; } }
 
     /* =======================
        Sections
     ======================= */
     .sectionTitle{
-      margin:20px 0 10px;
+      margin:22px 0 10px;
       font-size:16px;
       letter-spacing:.2px;
       font-weight:1000;
@@ -351,6 +355,82 @@
     .card .row .btn{ width:100%; }
 
     /* =======================
+       Excellence (colored)
+    ======================= */
+    .exCard{
+      border-radius: var(--radius);
+      border:1px solid rgba(29,74,58,.7);
+      box-shadow: var(--soft);
+      padding:16px;
+      display:grid;
+      gap:10px;
+      overflow:hidden;
+      position:relative;
+    }
+    .exCard:before{
+      content:"";
+      position:absolute; inset:-120px -120px auto auto;
+      width:420px; height:420px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 62%);
+      pointer-events:none;
+      opacity:.8;
+    }
+    .exCard h4{ margin:0; font-size:15px; font-weight:1000; position:relative; }
+    .exCard p{ margin:0; color: rgba(255,255,255,.86); font-weight:850; font-size:13px; line-height:1.55; position:relative; }
+    html[data-theme="light"] .exCard p{ color: rgba(11,27,20,.86); }
+
+    .exCard .mini{
+      display:flex; gap:8px; flex-wrap:wrap; position:relative;
+    }
+    .pill{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.10);
+      font-weight:950;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    html[data-theme="light"] .pill{
+      border:1px solid rgba(9,64,45,.18);
+      background: rgba(255,255,255,.70);
+      color: var(--text);
+    }
+
+    .exIELTS{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(215,178,74,.30), transparent 65%),
+        linear-gradient(180deg, rgba(11,42,31,.90), rgba(6,20,15,.74));
+    }
+    html[data-theme="light"] .exIELTS{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(215,178,74,.26), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.80));
+    }
+
+    .exPTE{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(127,215,255,.28), transparent 65%),
+        linear-gradient(180deg, rgba(8,38,34,.90), rgba(6,20,15,.74));
+    }
+    html[data-theme="light"] .exPTE{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(127,215,255,.22), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.80));
+    }
+
+    .exN2F{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(184,166,255,.26), transparent 65%),
+        linear-gradient(180deg, rgba(12,32,25,.90), rgba(6,20,15,.74));
+    }
+    html[data-theme="light"] .exN2F{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(184,166,255,.22), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.80));
+    }
+
+    /* =======================
        Reviews
     ======================= */
     .review{
@@ -381,6 +461,7 @@
       font-weight:1000;
       flex:0 0 auto;
     }
+    .review p{ margin:0; color: var(--muted); font-weight:850; line-height:1.55; }
 
     /* =======================
        Footer (card style)
@@ -484,7 +565,7 @@
     .bottomBar b{ color: var(--gold); }
     .dot{
       width:10px; height:10px; border-radius:999px;
-      background:#2cffb2;
+      background: var(--ok);
       box-shadow: 0 0 0 3px rgba(44,255,178,.15);
       flex:0 0 auto;
     }
@@ -725,6 +806,7 @@
     @media (max-width:380px){
       .sheetChip{ flex: 1 1 100%; min-width: 0; }
     }
+
     .divider{ height:1px; background: rgba(29,74,58,.55); margin: 2px 0; }
 
     /* AskLizOn Panel (TAP ONLY) */
@@ -819,14 +901,6 @@
       background: var(--ask-bubble2);
       border-color: rgba(215,178,74,.35);
     }
-    .askMsg.info{
-      background: var(--infoBg);
-      border-color: rgba(90,167,255,.35);
-    }
-    .askMsg.danger{
-      background: var(--dangerBg);
-      border-color: rgba(255,92,92,.35);
-    }
     .askMsg h4{ margin:0 0 6px; font-size:13.5px; font-weight:1000; }
     .askMsg p{ margin:0; color: var(--muted); font-weight:850; font-size:13px; line-height:1.55; }
 
@@ -855,37 +929,48 @@
       border-color: rgba(215,178,74,.85);
     }
 
-    /* Popups (modal card) */
-    .modal{
+    /* =======================
+       Popups (modals)
+    ======================= */
+    .modalWrap{
       position:fixed;
       inset:0;
+      z-index:1400;
       display:none;
-      z-index:1300;
-      background: var(--overlay);
-      padding: 14px;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
     }
-    .modal.open{ display:flex; align-items:flex-end; justify-content:center; }
-    .modalCard{
-      width: min(720px, 100%);
-      border-radius: 22px;
+    .modalWrap.open{ display:flex; }
+    .modal{
+      width:min(520px, 100%);
+      border-radius:22px;
       border:1px solid rgba(29,74,58,.75);
-      background: linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
       box-shadow: var(--shadow2);
       overflow:hidden;
+      transform: translateY(10px);
+      animation: pop .18s ease forwards;
+      background: linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
+      color: var(--text);
     }
-    html[data-theme="light"] .modalCard{
+    html[data-theme="light"] .modal{
       background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
       border:1px solid rgba(9,64,45,.18);
     }
+    @keyframes pop{
+      to{ transform: translateY(0); }
+    }
     .modalHead{
-      padding:12px 14px;
+      padding:14px 14px;
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
-      gap:10px;
+      gap:12px;
       border-bottom:1px solid rgba(29,74,58,.55);
     }
-    .modalHead b{ font-weight:1000; }
+    html[data-theme="light"] .modalHead{ border-bottom:1px solid var(--line); }
+    .modalHead b{ font-size:14px; font-weight:1100; }
+    .modalHead small{ display:block; margin-top:4px; color: var(--muted); font-weight:850; line-height:1.45; }
     .modalClose{
       padding:10px 12px;
       border-radius:999px;
@@ -894,34 +979,71 @@
       font-weight:1000;
       cursor:pointer;
       color: var(--text);
+      white-space:nowrap;
+      flex:0 0 auto;
     }
-    .modalBody{ padding:14px; display:grid; gap:10px; }
-    .pillRow{ display:flex; flex-wrap:wrap; gap:8px; }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.65);
-      background: var(--surface2);
-      font-weight:950;
-      font-size:12px;
-      color: var(--muted);
+    .modalBody{
+      padding:14px;
+      display:grid;
+      gap:12px;
     }
-    .pill strong{ color: var(--gold); }
-    .modalTitle{
-      margin:0;
-      font-size:18px;
-      font-weight:1100;
-      letter-spacing:-.2px;
+    .ribbon{
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      font-weight:900;
+      line-height:1.55;
+      color: rgba(255,255,255,.88);
     }
-    .modalText{
-      margin:0;
-      color: var(--muted);
-      font-weight:850;
-      line-height:1.6;
-      font-size:13.5px;
+    html[data-theme="light"] .ribbon{
+      border:1px solid rgba(9,64,45,.18);
+      background: rgba(255,255,255,.72);
+      color: var(--text);
+    }
+    .ribbon b{ color: var(--gold); }
+    .ribbon.danger b{ color: #ffe0e0; }
+    .modalActions{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .modalActions .btn{ width:100%; }
+    @media (min-width:520px){
+      .modalActions .btn{ width:auto; }
+    }
+
+    .modal.pte{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(127,215,255,.20), transparent 65%),
+        radial-gradient(700px 260px at 80% 30%, rgba(215,178,74,.18), transparent 65%),
+        linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
+    }
+    html[data-theme="light"] .modal.pte{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(127,215,255,.18), transparent 65%),
+        radial-gradient(700px 260px at 80% 30%, rgba(215,178,74,.18), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
+    }
+
+    .modal.counselor{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(184,166,255,.22), transparent 65%),
+        linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
+    }
+    html[data-theme="light"] .modal.counselor{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(184,166,255,.20), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
+    }
+
+    .modal.mistake{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(255,90,90,.18), transparent 65%),
+        linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
+    }
+    html[data-theme="light"] .modal.mistake{
+      background:
+        radial-gradient(700px 260px at 20% 30%, rgba(255,90,90,.16), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
     }
 
     /* Mobile placements */
@@ -932,9 +1054,13 @@
       .scrollBtn{ width:40px; height:40px; }
       .upFab{ right:12px; bottom:122px; width:40px; height:40px; }
       .themeTiny{ right:12px; bottom:172px; width:40px; height:40px; }
-      .topbar-inner{ padding:12px 14px; }
-      .brand-logo{ width:36px; height:36px; }
-      .topIconBtn{ width:40px; height:40px; border-radius:14px; }
+    }
+
+    /* Reduce motion respect */
+    @media (prefers-reduced-motion: reduce){
+      .btn.pulse{ animation:none; }
+      .modal{ animation:none; }
+      .btn:hover, .chip.action:hover, .iconSquare:hover, .iconbtn:hover, .siteMap a:hover, .tap:hover{ transform:none; }
     }
   </style>
 </head>
@@ -945,17 +1071,13 @@
       <a class="brand" href="index.html" aria-label="LizOn Education Home">
         <img class="brand-logo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
         <div class="titleWrap">
-          <div class="brandName">LizOn Education</div>
-          <div class="brandTag">Designed for Desired Score</div>
+          LizOn Education
+          <small>Designed for Desired Score</small>
         </div>
       </a>
 
-      <div class="topRight" aria-label="Top right actions">
-        <button class="topIconBtn" id="topThemeBtn" type="button" aria-label="Toggle theme">
-          <span id="topThemeIcon" aria-hidden="true"></span>
-        </button>
-
-        <button class="topIconBtn" id="topMenuBtn" type="button" aria-label="Open menu">
+      <div class="topActions">
+        <button class="iconSquare" id="topMenuBtn" type="button" aria-label="Open menu">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M4 7h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -972,15 +1094,27 @@
     <section class="hero">
       <div class="heroCard">
         <div class="chipRow">
-          <span class="chip">Tap-only <b>AskLizOn</b> guidance</span>
-          <span class="chip">Dhaka office + helpline</span>
+          <span class="chip action" id="chipAsk" role="button" tabindex="0" aria-label="Open AskLizOn">
+            Tap-only <b>AskLizOn</b> guidance
+          </span>
+          <span class="chip action" id="chipOffice" role="button" tabindex="0" aria-label="Go to footer with office details">
+            Dhaka office + helpline
+          </span>
         </div>
 
         <h1 class="heroTitle">Start IELTS the <span>right way</span> — not the random way.</h1>
-        <p class="sub">
-          Most students fail because they don’t know what to practice, how to measure progress, and which level they actually belong to.
-          This homepage is built to guide you — pick a path, get help, choose courses, or start learning today.
-        </p>
+
+        <div class="triplet" aria-label="Main programs">
+          <a class="btn primary pulse" id="btnIELTS" href="ielts.html#levels" aria-label="Explore IELTS">
+            IELTS — Explore Now
+          </a>
+          <a class="btn glow" id="btnPTE" href="pte.html" aria-label="Explore PTE">
+            PTE — Explore Now
+          </a>
+          <a class="btn" id="btnSA" href="studyabroad.html" aria-label="Explore Study Abroad">
+            Study Abroad — Explore Now
+          </a>
+        </div>
 
         <div class="ctaRow">
           <a class="btn upcoming" href="Upcoming.html" aria-label="Upcoming - What's New">
@@ -988,110 +1122,78 @@
             🔔 Upcoming - What’s New?
           </a>
 
-          <a class="btn" href="#basicadvanced">Basic - Advanced (All Access)</a>
-          <a class="btn" href="#free">Watch Free Lessons</a>
+          <button class="btn primary" id="instantHelpTop" type="button" aria-label="Get Instant Help">
+            Get Instant Help
+          </button>
+
+          <a class="btn" id="bookAppointmentTop" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20book%20an%20appointment.%20IELTS%2FPTE%3A%20____%20Target%3A%20____%20Exam%20date%3A%20____%20(Source%3A%20Home_book_appointment_top)" target="_blank" rel="noopener" aria-label="Book an appointment on WhatsApp">
+            Book Appointment
+          </a>
+
           <a class="btn ghost" href="#learn">Start Learning</a>
         </div>
       </div>
     </section>
 
-    <!-- BASIC - ADVANCED -->
-    <section id="basicadvanced">
-      <div class="sectionTitle">Basic - Advanced</div>
+    <!-- EXCELLENCE -->
+    <section id="excellence">
+      <div class="sectionTitle">Why students trust LizOn</div>
 
       <div class="grid3">
-        <div class="card">
-          <span class="tag"><b>All Access</b> — 4 IELTS Levels</span>
-          <h4>ZERO + HOPE + STEP-UP + DESPERATE</h4>
-          <p>One full journey. Foundation → upgrade → evaluation. Built for students who want the complete path.</p>
+        <div class="exCard exIELTS">
+          <span class="tag"><b>IELTS</b> — Mentored, corrected, improved</span>
+          <h4>Band-focused training (not “tips”)</h4>
+          <p>
+            Routine + correction + evaluation — so your score becomes stable, not lucky.
+          </p>
+          <div class="mini">
+            <span class="pill">Feedback-driven</span>
+            <span class="pill">Real exam strategy</span>
+            <span class="pill">Level-based</span>
+          </div>
           <div class="row">
             <a class="btn primary" href="ielts.html#levels">Choose IELTS Level</a>
-            <a class="btn" href="ielts.html#pricing">See Pricing</a>
+            <a class="btn" href="ielts-computer-based.html">Computer IELTS</a>
           </div>
         </div>
 
-        <div class="card">
-          <span class="tag"><b>N2F</b> — Now to Fly</span>
-          <h4>Study Abroad + Visa Support</h4>
-          <p>After IELTS, plan the next step properly — country, intake, documents, counselor support.</p>
+        <div class="exCard exPTE">
+          <span class="tag"><b>PTE</b> — Score-based learning</span>
+          <h4>Target score, then train the exact tasks</h4>
+          <p>
+            Templates + timing + accuracy — so your mock scores match your final score.
+          </p>
+          <div class="mini">
+            <span class="pill">Task mastery</span>
+            <span class="pill">Mock + analysis</span>
+            <span class="pill">Speed training</span>
+          </div>
           <div class="row">
-            <a class="btn primary" href="studyabroad.html">N2F Details</a>
-            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20Study%20Abroad%20guidance%20(N2F).%20Country%3A%20____%20Intake%3A%20____%20(Source%3A%20Home_basicadvanced_n2f)" target="_blank" rel="noopener">Talk to Counselor</a>
+            <a class="btn primary" href="pte.html">Open PTE</a>
+            <a class="btn" href="Upcoming.html">See Upcoming</a>
           </div>
         </div>
 
-        <div class="card">
-          <span class="tag"><b>Guidance</b> — Start correct</span>
-          <h4>Not sure where you belong?</h4>
-          <p>Tap-only AskLizOn will guide you. Or talk with an expert directly. If you’re in Dhaka, visit the office.</p>
+        <div class="exCard exN2F">
+          <span class="tag"><b>Study Abroad</b> — N2F support</span>
+          <h4>Country + intake + documents — clear plan</h4>
+          <p>
+            No confusion, no random submissions. One clean roadmap with counselor support.
+          </p>
+          <div class="mini">
+            <span class="pill">Document checklist</span>
+            <span class="pill">Visa guidance</span>
+            <span class="pill">Counselor support</span>
+          </div>
           <div class="row">
-            <button class="btn primary" id="openAskFromSection" type="button">Open AskLizOn</button>
-            <a class="btn" href="#footer">Office & Map</a>
+            <a class="btn primary" href="studyabroad.html">Open Study Abroad</a>
+            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20Study%20Abroad%20guidance%20(N2F).%20Country%3A%20____%20Intake%3A%20____%20(Source%3A%20Home_excellence_n2f)" target="_blank" rel="noopener">Talk to Counselor</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FREE LESSONS -->
-    <section id="free">
-      <div class="sectionTitle">Free Lessons</div>
-
-      <div class="grid3">
-        <div class="card">
-          <span class="tag"><b>Start today</b></span>
-          <h4>After live session, start properly</h4>
-          <p>After live session, don’t stop. Start learning properly from <b style="color:var(--gold)">MyLizOn.com</b>.</p>
-          <div class="row">
-            <a class="btn primary" href="#free-videos">Watch Free Lessons</a>
-            <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20free%20learning%20guidance%20from%20MyLizOn.com%20(Source%3A%20Home_free_start)" target="_blank" rel="noopener">Get Guidance</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <span class="tag"><b>IELTS Skills</b></span>
-          <h4>Start from a single skill</h4>
-          <p>Listening / Reading / Writing / Speaking — start from one and build momentum.</p>
-          <div class="row">
-            <a class="btn primary" href="ielts-listening.html">Listening</a>
-            <a class="btn" href="ielts-speaking.html">Speaking</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <span class="tag"><b>Computer IELTS</b></span>
-          <h4>Computer-based strategy</h4>
-          <p>Timing, typing, navigation, and scoring approach — so you don’t panic on exam day.</p>
-          <div class="row">
-            <a class="btn primary" href="ielts-computer-based.html">Computer IELTS</a>
-            <a class="btn" href="ielts-faq-bangladesh.html">FAQ (BD)</a>
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-top:12px" id="free-videos">
-        <div class="card">
-          <span class="tag"><b>Free Lessons</b></span>
-          <h4>Watch & learn</h4>
-          <p>Replace these links anytime with your exact MyLizOn/YouTube lessons.</p>
-
-          <div class="siteMap" style="margin-top:10px">
-            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>IELTS Basics</strong> — free video</a>
-            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Listening</strong> — free video</a>
-            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Reading</strong> — free video</a>
-            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Writing</strong> — free video</a>
-            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Speaking</strong> — free video</a>
-            <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener"><strong>Computer IELTS</strong> — free video</a>
-          </div>
-
-          <div class="footer-links">
-            <a class="iconbtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">Open YouTube</a>
-            <a class="iconbtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20watched%20free%20lessons.%20Now%20I%20need%20proper%20guidance.%20(Source%3A%20Home_free_videos)" target="_blank" rel="noopener">Get Guidance</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- START LEARNING -->
+    <!-- LEARN -->
     <section id="learn">
       <div class="sectionTitle">Start Learning</div>
 
@@ -1136,10 +1238,10 @@
         <div class="review">
           <div class="reviewTop">
             <div class="who">
-              <div class="avatar">SM</div>
+              <div class="avatar">SR</div>
               <div>
-                Shafiq Mahmud
-                <small>Moved from 5.0 → 6.0</small>
+                Sumi Rahman
+                <small>Reading speed + understanding</small>
               </div>
             </div>
             <div class="stars" aria-label="5 stars">
@@ -1150,16 +1252,16 @@
               <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
             </div>
           </div>
-          <p>“Before LizOn, ami random practice kortam. Ekhon level-based routine follow করি, progress clear.”</p>
+          <p>“Age ami Bangla theke translate kore portam. Ekhon skimming + scanning diye passage ta actually bujhi.”</p>
         </div>
 
         <div class="review">
           <div class="reviewTop">
             <div class="who">
-              <div class="avatar">FR</div>
+              <div class="avatar">MH</div>
               <div>
-                Farzana Rahman
-                <small>Writing & Speaking improved</small>
+                Mehedi Hasan
+                <small>Listening score stable</small>
               </div>
             </div>
             <div class="stars" aria-label="5 stars">
@@ -1170,16 +1272,16 @@
               <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
             </div>
           </div>
-          <p>“Teacher feedback + evaluation system ta game changer. Just ‘tips’ na — proper correction.”</p>
+          <p>“Question type bujhe practice korar por panic komse. Ekhon guess na — decision.”</p>
         </div>
 
         <div class="review">
           <div class="reviewTop">
             <div class="who">
-              <div class="avatar">AR</div>
+              <div class="avatar">TN</div>
               <div>
-                Arafat Hossain
-                <small>Listening score stabilized</small>
+                Tania Nahar
+                <small>Writing structure + ideas</small>
               </div>
             </div>
             <div class="stars" aria-label="5 stars">
@@ -1190,17 +1292,20 @@
               <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
             </div>
           </div>
-          <p>“Question types bujhe practice korar por anxiety komse. Now I know what I’m doing.”</p>
+          <p>“Idea na thakle ami freeze hoye jetam. Ekhon structure fixed, examples clean — time e finish hoy.”</p>
         </div>
       </div>
 
       <div class="ctaRow" style="margin-top:14px">
         <a class="btn" href="https://www.facebook.com/lizoneducation/reviews" target="_blank" rel="noopener">
-          See Facebook Reviews
+          See Facebook Live Reviews
         </a>
         <button class="btn primary" id="instantGuidanceBtn" type="button">
           Get Instant Help
         </button>
+        <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20book%20an%20appointment.%20IELTS%2FPTE%3A%20____%20Target%3A%20____%20Exam%20date%3A%20____%20(Source%3A%20Home_book_appointment_reviews)" target="_blank" rel="noopener">
+          Book Appointment
+        </a>
       </div>
     </section>
 
@@ -1239,8 +1344,6 @@
 
         <div class="siteMap" aria-label="Site map links">
           <a href="Upcoming.html"><strong>Upcoming</strong> — What’s New?</a>
-          <a href="#basicadvanced"><strong>Basic - Advanced</strong> — All Access</a>
-          <a href="#free"><strong>Free Lessons</strong> — Videos</a>
           <a href="ielts.html#levels"><strong>IELTS</strong> — Levels</a>
           <a href="ielts.html#pricing"><strong>IELTS</strong> — Pricing</a>
           <a href="pte.html"><strong>PTE</strong> — Program</a>
@@ -1283,7 +1386,7 @@
     </svg>
   </button>
 
-  <!-- Theme toggle (floating) -->
+  <!-- Theme toggle (icon only) -->
   <button class="themeTiny" id="themeTiny" type="button" aria-label="Toggle theme">
     <span id="themeIcon" aria-hidden="true"></span>
   </button>
@@ -1320,8 +1423,6 @@
       <div class="divider" aria-hidden="true"></div>
 
       <div class="sheetChips" aria-label="Core Links">
-        <a class="sheetChip" href="#basicadvanced"><span><strong>Basic - Advanced</strong></span><span>→</span></a>
-        <a class="sheetChip" href="#free"><span><strong>Free</strong> Lessons</span><span>→</span></a>
         <a class="sheetChip" href="ielts.html#levels"><span><strong>IELTS</strong> Levels</span><span>→</span></a>
         <a class="sheetChip" href="ielts.html#pricing"><span><strong>IELTS</strong> Pricing</span><span>→</span></a>
         <a class="sheetChip" href="pte.html"><span><strong>PTE</strong></span><span>→</span></a>
@@ -1376,9 +1477,8 @@
         <h4>What do you want right now?</h4>
         <p>Tap one. No typing needed.</p>
         <div class="tapRow">
-          <button class="tap primary" data-action="choose_course">Choose Course</button>
+          <button class="tap primary" data-action="choose_course">Choose Program</button>
           <button class="tap" data-action="learn">Start Learning</button>
-          <button class="tap" data-action="free">Watch Free Lessons</button>
           <button class="tap" data-action="know">Know Things (FAQ)</button>
           <button class="tap" data-action="expert">Talk with Expert</button>
           <button class="tap" data-action="visit">Visit Office (Dhaka)</button>
@@ -1399,11 +1499,14 @@
     </button>
   </div>
 
-  <!-- Popups -->
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modalCard" role="dialog" aria-modal="true" aria-label="Popup">
+  <!-- POPUPS -->
+  <div class="modalWrap" id="modalWrap" aria-hidden="true">
+    <div class="modal" id="modalBox" role="dialog" aria-modal="true" aria-label="Popup">
       <div class="modalHead">
-        <b id="modalLabel">Notice</b>
+        <div>
+          <b id="modalTitle">Notice</b>
+          <small id="modalSub">Details</small>
+        </div>
         <button class="modalClose" id="modalClose" type="button" aria-label="Close popup">Close</button>
       </div>
       <div class="modalBody" id="modalBody"></div>
@@ -1420,8 +1523,6 @@
       const root = document.documentElement;
       const themeTiny = document.getElementById('themeTiny');
       const themeIcon = document.getElementById('themeIcon');
-      const topThemeBtn = document.getElementById('topThemeBtn');
-      const topThemeIcon = document.getElementById('topThemeIcon');
 
       function iconSun(){
         return `
@@ -1441,25 +1542,72 @@
         localStorage.setItem('lizon_theme', next);
         const meta = document.querySelector('meta[name="theme-color"]');
         if(meta) meta.setAttribute('content', next === 'light' ? '#eaf6f0' : '#0b2a1f');
-        const ic = (next === 'light') ? iconSun() : iconMoon();
-        if (themeIcon) themeIcon.innerHTML = ic;
-        if (topThemeIcon) topThemeIcon.innerHTML = ic;
+        if (themeIcon) themeIcon.innerHTML = (next === 'light') ? iconSun() : iconMoon();
       }
       const saved = localStorage.getItem('lizon_theme');
       if (saved === 'light' || saved === 'dark') setTheme(saved);
       else setTheme('dark');
 
-      function toggleTheme(){
-        const current = root.getAttribute('data-theme') || 'dark';
-        setTheme(current === 'dark' ? 'light' : 'dark');
+      if (themeTiny){
+        themeTiny.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme') || 'dark';
+          setTheme(current === 'dark' ? 'light' : 'dark');
+        });
       }
-      if (themeTiny) themeTiny.addEventListener('click', toggleTheme);
-      if (topThemeBtn) topThemeBtn.addEventListener('click', toggleTheme);
+
+      // Sound + Voice (tap feedback)
+      let audioCtx;
+      function ping(freq=660, dur=0.06){
+        try{
+          audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.type = "sine";
+          o.frequency.value = freq;
+          g.gain.value = 0.0001;
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          o.start();
+          const now = audioCtx.currentTime;
+          g.gain.exponentialRampToValueAtTime(0.12, now + 0.01);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+          o.stop(now + dur + 0.01);
+        }catch(_){}
+      }
+      function speak(text){
+        try{
+          if (!('speechSynthesis' in window)) return;
+          if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          const u = new SpeechSynthesisUtterance(text);
+          u.rate = 1.02;
+          u.pitch = 1.02;
+          u.volume = 0.9;
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(u);
+        }catch(_){}
+      }
+
+      const btnIELTS = document.getElementById('btnIELTS');
+      const btnPTE = document.getElementById('btnPTE');
+      const btnSA = document.getElementById('btnSA');
+
+      function tapFeedback(type){
+        if(type === 'ielts'){ ping(740); speak("Let's explore IELTS."); }
+        else if(type === 'pte'){ ping(620); speak("Let's explore PTE."); }
+        else { ping(540); speak("Let's explore Study Abroad."); }
+      }
+
+      if(btnIELTS) btnIELTS.addEventListener('click', ()=> tapFeedback('ielts'));
+      if(btnPTE) btnPTE.addEventListener('click', ()=> tapFeedback('pte'));
+      if(btnSA) btnSA.addEventListener('click', ()=> tapFeedback('sa'));
 
       // Up button
       const upFab = document.getElementById('upFab');
       function atTop(){ return (window.scrollY || document.documentElement.scrollTop || 0) <= 2; }
-      function refreshUp(){ if (upFab) upFab.disabled = atTop(); }
+      function refreshUp(){
+        if (!upFab) return;
+        upFab.disabled = atTop();
+      }
       if (upFab){
         upFab.addEventListener('click', () => {
           document.getElementById('top')?.scrollIntoView({behavior:'smooth', block:'start'});
@@ -1469,7 +1617,7 @@
       window.addEventListener('resize', refreshUp);
       refreshUp();
 
-      // Scroll down
+      // Scroll down button
       const down = document.getElementById('scrollDown');
       if (down){
         down.addEventListener('click', () => {
@@ -1479,16 +1627,16 @@
 
       // Overlay + sheets
       const overlay = document.getElementById('overlay');
+
       const navFab = document.getElementById('navFab');
+      const topMenuBtn = document.getElementById('topMenuBtn');
       const navSheet = document.getElementById('navSheet');
       const navClose = document.getElementById('navClose');
-      const topMenuBtn = document.getElementById('topMenuBtn');
 
       const askFab = document.getElementById('askFab');
       const askPanel = document.getElementById('askPanel');
       const askClose = document.getElementById('askClose');
       const openAskFromNav = document.getElementById('openAskFromNav');
-      const openAskFromSection = document.getElementById('openAskFromSection');
 
       function closeAll(){
         navSheet?.classList.remove('open');
@@ -1513,11 +1661,9 @@
       if (navFab) navFab.addEventListener('click', openNav);
       if (topMenuBtn) topMenuBtn.addEventListener('click', openNav);
       if (navClose) navClose.addEventListener('click', closeAll);
-
       if (askFab) askFab.addEventListener('click', openAsk);
       if (askClose) askClose.addEventListener('click', closeAll);
       if (openAskFromNav) openAskFromNav.addEventListener('click', openAsk);
-      if (openAskFromSection) openAskFromSection.addEventListener('click', openAsk);
 
       if (overlay) overlay.addEventListener('click', closeAll);
       document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeAll(); });
@@ -1527,11 +1673,24 @@
         if (a) closeAll();
       });
 
+      // Chips as buttons
+      const chipAsk = document.getElementById('chipAsk');
+      const chipOffice = document.getElementById('chipOffice');
+      if (chipAsk){
+        chipAsk.addEventListener('click', openAsk);
+        chipAsk.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') openAsk(); });
+      }
+      if (chipOffice){
+        chipOffice.addEventListener('click', ()=> document.getElementById('footer')?.scrollIntoView({behavior:'smooth', block:'start'}));
+        chipOffice.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') document.getElementById('footer')?.scrollIntoView({behavior:'smooth', block:'start'}); });
+      }
+
       // =====================================
       // AskLizOn (TAP ONLY)
       // =====================================
       const askDynamic = document.getElementById('askDynamic');
       const instantGuidanceBtn = document.getElementById('instantGuidanceBtn');
+      const instantHelpTop = document.getElementById('instantHelpTop');
 
       const helpline = "01611611139";
       const counselor = "01608881545";
@@ -1591,16 +1750,16 @@
             "Quick guidance",
             "Tap what you need.",
             [
-              {tag:'a', label:'🔔 Upcoming - What’s New?', href:'Upcoming.html', primary:true},
-              {tag:'a', label:'Basic - Advanced (All Access)', href:'#basicadvanced'},
-              {tag:'a', label:'Watch Free Lessons', href:'#free-videos'},
-              {tag:'a', label:'Study Abroad (N2F)', href:'studyabroad.html'}
+              {tag:'a', label:'IELTS (Levels)', href:'ielts.html#levels', primary:true},
+              {tag:'a', label:'PTE Program', href:'pte.html'},
+              {tag:'a', label:'Study Abroad (N2F)', href:'studyabroad.html'},
+              {tag:'a', label:'🔔 Upcoming - What’s New?', href:'Upcoming.html'}
             ]
           )
         );
       }
 
-      function renderChooseCourse(){
+      function renderChooseProgram(){
         clearDynamic();
         askDynamic.appendChild(
           block(
@@ -1614,13 +1773,12 @@
             ]
           )
         );
-
         askDynamic.appendChild(
           block(
             "Need a human to confirm?",
             "Tap to WhatsApp with a ready message.",
             [
-              {tag:'a', label:'Talk with LizOn', href: waLink("Assalamu Alaikum LizOn Education. I need guidance to choose my course/level. Current level: ____. Target: ____. Exam date: ____. (Source: AskLizOn_home_choose_course)"), external:true, primary:true}
+              {tag:'a', label:'Talk with LizOn', href: waLink("Assalamu Alaikum LizOn Education. I want help choosing my program/level. IELTS/PTE: ____. Target: ____. Exam date: ____. (Source: AskLizOn_home_choose_program)"), external:true, primary:true}
             ]
           )
         );
@@ -1630,7 +1788,7 @@
         clearDynamic();
         askDynamic.appendChild(
           block(
-            "Start learning (skill pages)",
+            "Start learning (IELTS skills)",
             "Pick what you need today.",
             [
               {tag:'a', label:'Listening', href:'ielts-listening.html', primary:true},
@@ -1649,20 +1807,6 @@
             [
               {tag:'a', label:'Computer IELTS', href:'ielts-computer-based.html', primary:true},
               {tag:'a', label:'IELTS FAQ (BD)', href:'ielts-faq-bangladesh.html'}
-            ]
-          )
-        );
-      }
-
-      function renderFree(){
-        clearDynamic();
-        askDynamic.appendChild(
-          block(
-            "Free Lessons",
-            "Tap to jump to Free Lessons.",
-            [
-              {tag:'a', label:'Watch Free Lessons', href:'#free-videos', primary:true},
-              {tag:'a', label:'Open YouTube', href:'https://www.youtube.com/@lizoneducation', external:true}
             ]
           )
         );
@@ -1718,6 +1862,7 @@
           <p><b style="color:var(--gold)">Address:</b> ${addressText}</p>
           <div class="tapRow">
             <a class="tap primary" href="${mapLink}" target="_blank" rel="noopener">Open Map</a>
+            <a class="tap" href="#footer" onclick="setTimeout(()=>{document.getElementById('askClose')?.click();},50)">Footer</a>
             <a class="tap" href="tel:+8801611611139">Call Helpline</a>
           </div>
         `;
@@ -1737,27 +1882,42 @@
             ]
           )
         );
+
+        askDynamic.appendChild(
+          block(
+            "Visa / documents support",
+            "Tap to send a clear message.",
+            [
+              {tag:'a', label:'Start 상담 (WhatsApp)', href: waCounselor("Assalamu Alaikum LizOn Education. I need help with documents/visa process. Country: ____. Intake: ____. Current status: ____. (Source: AskLizOn_home_abroad_docs)"), external:true, primary:true}
+            ]
+          )
+        );
       }
 
+      // Delegated taps inside AskLizOn panel
       askPanel?.addEventListener('click', (e)=>{
         const btn = e.target.closest('[data-action]');
         if (!btn) return;
         const action = btn.dataset.action;
 
-        if (action === "choose_course") renderChooseCourse();
+        if (action === "choose_course") renderChooseProgram();
         else if (action === "learn") renderLearn();
-        else if (action === "free") renderFree();
         else if (action === "know") renderKnow();
         else if (action === "expert") renderExpert();
         else if (action === "visit") renderVisit();
         else if (action === "abroad") renderAbroad();
       });
 
-      if (instantGuidanceBtn){
-        instantGuidanceBtn.addEventListener('click', () => {
-          openAsk();
-        });
+      // Instant help buttons
+      function openAskInstant(){
+        closeAll();
+        overlay?.classList.add('open');
+        overlay?.setAttribute('aria-hidden','false');
+        askPanel?.classList.add('open');
+        renderAskHome();
       }
+      if (instantGuidanceBtn) instantGuidanceBtn.addEventListener('click', openAskInstant);
+      if (instantHelpTop) instantHelpTop.addEventListener('click', openAskInstant);
 
       // Smooth anchor scroll
       document.addEventListener('click', (e)=>{
@@ -1769,137 +1929,139 @@
         const target = document.getElementById(id);
         if(target){
           e.preventDefault();
-          closeAll();
           target.scrollIntoView({behavior:'smooth', block:'start'});
         }
       });
 
       // =====================================
-      // Popups (3-step smart, not annoying)
-      // Shows at most once per 18 hours
+      // Popups (3 sequence, session-safe)
       // =====================================
-      const modal = document.getElementById('modal');
+      const modalWrap = document.getElementById('modalWrap');
+      const modalBox = document.getElementById('modalBox');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSub = document.getElementById('modalSub');
       const modalBody = document.getElementById('modalBody');
       const modalClose = document.getElementById('modalClose');
-      const modalLabel = document.getElementById('modalLabel');
 
-      const POP_KEY = "lizon_home_pop_last";
-      const POP_STEP = "lizon_home_pop_step";
-
-      function nowMs(){ return Date.now(); }
-      function canShow(){
-        const last = Number(localStorage.getItem(POP_KEY) || 0);
-        const diff = nowMs() - last;
-        return diff > (18 * 60 * 60 * 1000); // 18 hours
-      }
-      function markShown(){
-        localStorage.setItem(POP_KEY, String(nowMs()));
-      }
-      function getStep(){
-        return Number(localStorage.getItem(POP_STEP) || 0);
-      }
-      function setStep(s){
-        localStorage.setItem(POP_STEP, String(s));
-      }
-
-      function openModal(label, html){
-        if(!modal || !modalBody) return;
-        modalLabel.textContent = label || "Notice";
-        modalBody.innerHTML = html || "";
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden','false');
+      function openModal({kind, title, sub, bodyNodes}){
+        if(!modalWrap || !modalBox) return;
+        modalBox.className = 'modal ' + (kind || '');
+        if(modalTitle) modalTitle.textContent = title || 'Notice';
+        if(modalSub) modalSub.textContent = sub || '';
+        if(modalBody){
+          modalBody.innerHTML = '';
+          (bodyNodes || []).forEach(n => modalBody.appendChild(n));
+        }
+        modalWrap.classList.add('open');
+        modalWrap.setAttribute('aria-hidden','false');
       }
       function closeModal(){
-        modal?.classList.remove('open');
-        modal?.setAttribute('aria-hidden','true');
+        modalWrap?.classList.remove('open');
+        modalWrap?.setAttribute('aria-hidden','true');
       }
-      if (modalClose) modalClose.addEventListener('click', closeModal);
-      modal?.addEventListener('click', (e)=>{
-        if(e.target === modal) closeModal();
-      });
+      modalClose?.addEventListener('click', closeModal);
+      modalWrap?.addEventListener('click', (e)=>{ if(e.target === modalWrap) closeModal(); });
+      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
 
-      function popup1(){
-        openModal("PTE Early Bird", `
-          <div class="pillRow">
-            <span class="pill">Limited seats <strong>early</strong></span>
-            <span class="pill">Start strong, not late</span>
-            <span class="pill">Dhaka support</span>
-          </div>
-          <h3 class="modalTitle">PTE batch start er agei admit korle smart decision.</h3>
-          <p class="modalText">
-            Late admit মানে: routine miss + confidence gap. Early admit মানে: start clean + tracking clear.
-          </p>
-          <div class="tapRow">
-            <a class="tap primary" href="pte.html">Let’s Jump to PTE</a>
-            <a class="tap" target="_blank" rel="noopener" href="${waLink("Assalamu Alaikum LizOn Education. I want PTE early admission guidance. My target score: ____. Exam date: ____. (Source: Home_popup_pte_earlybird)") }">Talk on WhatsApp</a>
-            <button class="tap" id="nextPopBtn" type="button">Next</button>
-          </div>
-        `);
-        document.getElementById('nextPopBtn')?.addEventListener('click', ()=>{
-          closeModal(); setStep(1); popup2();
-        });
+      function ribbon(text, cls){
+        const d = document.createElement('div');
+        d.className = 'ribbon' + (cls ? (' ' + cls) : '');
+        d.innerHTML = text;
+        return d;
       }
-      function popup2(){
-        openModal("Counselor Check", `
-          <div class="pillRow">
-            <span class="pill"><strong>Proper</strong> counselor matters</span>
-            <span class="pill">Wrong advice = delay</span>
-          </div>
-          <h3 class="modalTitle">Did you talk with a proper counselor yet?</h3>
-          <p class="modalText">
-            “Bro just practice” type advice দিলে damage হয়. Level + plan + evaluation লাগবেই.
-          </p>
-          <div class="tapRow">
-            <button class="tap primary" id="openAskNow" type="button">Open AskLizOn</button>
-            <a class="tap" target="_blank" rel="noopener" href="${waLink("Assalamu Alaikum LizOn Education. I need counseling (proper plan). IELTS/PTE: ____. Target: ____. Exam date: ____. (Source: Home_popup_counselor)") }">WhatsApp Now</a>
-            <button class="tap" id="nextPopBtn2" type="button">Next</button>
-          </div>
-        `);
-        document.getElementById('openAskNow')?.addEventListener('click', ()=>{
-          closeModal(); openAsk();
+      function actions(btns){
+        const w = document.createElement('div');
+        w.className = 'modalActions';
+        (btns || []).forEach(b=>{
+          const el = document.createElement(b.tag || 'button');
+          el.className = 'btn' + (b.primary ? ' primary' : '');
+          el.textContent = b.label;
+          if(b.tag === 'a'){
+            el.href = b.href;
+            if(b.external){ el.target = '_blank'; el.rel = 'noopener'; }
+          } else {
+            el.type = 'button';
+            el.addEventListener('click', b.onClick || (()=>{}));
+          }
+          w.appendChild(el);
         });
-        document.getElementById('nextPopBtn2')?.addEventListener('click', ()=>{
-          closeModal(); setStep(2); popup3();
-        });
+        return w;
       }
-      function popup3(){
-        openModal("Common Mistake", `
-          <div class="pillRow">
-            <span class="pill" style="border-color: rgba(255,92,92,.45); background: var(--dangerBg); color: var(--text);">
-              <strong style="color: var(--danger)">Confusion</strong> is common
-            </span>
-            <span class="pill">Fix fast = score moves</span>
-          </div>
-          <h3 class="modalTitle">Confusion or mistake (red zone) — is very common.</h3>
-          <p class="modalText">
-            Reading e translation trap, Listening e “100% bujhte hobe”, Writing e idea + structure stuck —
-            এগুলা normal. Solution hoilo right routine + evaluation.
-          </p>
-          <div class="tapRow">
-            <button class="tap primary" id="openAskNow2" type="button">Get Instant Help</button>
-            <a class="tap" href="ielts.html#levels">Let’s Jump to IELTS</a>
-            <a class="tap" target="_blank" rel="noopener" href="${waLink("Assalamu Alaikum LizOn Education. I am confused about my routine/level. Please guide me. (Source: Home_popup_confusion)") }">WhatsApp</a>
-          </div>
-        `);
-        document.getElementById('openAskNow2')?.addEventListener('click', ()=>{
-          closeModal(); openAsk();
+
+      function dayKey(){
+        const d = new Date();
+        return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+      }
+      function shouldShowPopups(){
+        const k = 'lizon_popups_day';
+        const last = localStorage.getItem(k);
+        const today = dayKey();
+        if(last === today) return false;
+        localStorage.setItem(k, today);
+        return true;
+      }
+
+      function showPopup1(){
+        openModal({
+          kind: 'pte',
+          title: 'PTE — Early Bird Admission',
+          sub: 'Smart move: confirm your seat early and train calmly.',
+          bodyNodes: [
+            ribbon('Limited seats. Early booking মানে you get the best routine + smooth start.', ''),
+            ribbon('<b>Urgency without panic:</b> Late admission usually means rushed practice.', ''),
+            actions([
+              {tag:'a', label:'Explore PTE', href:'pte.html', primary:true},
+              {tag:'a', label:'Book Early (WhatsApp)', href: waLink('Assalamu Alaikum LizOn Education. I want Early Bird admission for PTE. Target score: ____. Exam month: ____. (Source: Popup_PTE_EarlyBird)'), external:true}
+            ]),
+            actions([
+              {tag:'button', label:'Next', primary:false, onClick: ()=>{ closeModal(); setTimeout(showPopup2, 220); } }
+            ])
+          ]
         });
       }
 
-      // show popup chain (smart)
+      function showPopup2(){
+        openModal({
+          kind: 'counselor',
+          title: 'Did you talk with a Proper Counselor yet?',
+          sub: 'One good conversation can save weeks of confusion.',
+          bodyNodes: [
+            ribbon('Country, intake, documents — ekta clean plan thakle decision easy hoy.', ''),
+            actions([
+              {tag:'button', label:'Get Instant Help', primary:true, onClick: ()=>{ closeModal(); openAskInstant(); } },
+              {tag:'a', label:'Book Appointment', href: waLink('Assalamu Alaikum LizOn Education. I want to book an appointment for proper guidance. IELTS/PTE/Study Abroad: ____. (Source: Popup_Counselor_Appointment)'), external:true}
+            ]),
+            actions([
+              {tag:'button', label:'Next', primary:false, onClick: ()=>{ closeModal(); setTimeout(showPopup3, 220); } }
+            ])
+          ]
+        });
+      }
+
+      function showPopup3(){
+        openModal({
+          kind: 'mistake',
+          title: 'Confusion or Mistake — is very common',
+          sub: 'It’s not you. It’s the system.',
+          bodyNodes: [
+            ribbon('<b>Red flag:</b> Random practice → random result.', 'danger'),
+            ribbon('Short fix: Choose a level, follow routine, get correction. তাহলেই progress visible.', ''),
+            actions([
+              {tag:'button', label:'Get Instant Help', primary:true, onClick: ()=>{ closeModal(); openAskInstant(); } },
+              {tag:'a', label:'Talk on WhatsApp', href: waLink('Assalamu Alaikum LizOn Education. I feel confused about my level/routine. Please guide me. Current level: ____. Target: ____. (Source: Popup_Mistake_Guidance)'), external:true}
+            ])
+          ]
+        });
+      }
+
       window.addEventListener('load', ()=>{
-        if(!canShow()) return;
-        markShown();
-        const step = getStep();
-        // restart chain after finishing
-        if(step >= 2) setStep(0);
-        const s = getStep();
-        if (s === 0) popup1();
-        else if (s === 1) popup2();
-        else popup3();
+        if(shouldShowPopups()){
+          setTimeout(showPopup1, 650);
+        }
       });
 
     })();
   </script>
 </body>
 </html>
+```0

@@ -9,16 +9,13 @@
 
 <style>
   :root{
-    /* Dark (NO PURE BLACK) */
     --bg:#071b16;
     --grad1: radial-gradient(1100px 760px at 15% 0%, rgba(35,140,110,.18), transparent 58%);
     --grad2: radial-gradient(900px 760px at 85% 25%, rgba(255,190,100,.10), transparent 55%);
     --grad3: radial-gradient(900px 760px at 40% 90%, rgba(110,170,255,.10), transparent 55%);
 
     --panel:#0b241e;
-    --panel2:#0e2c25;
     --card: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-    --mini: rgba(255,255,255,.02);
 
     --text:#e9f3ef;
     --muted:rgba(233,243,239,.78);
@@ -29,17 +26,11 @@
     --gold-strong: rgba(255,190,100,.85);
     --goldbg: rgba(255,190,100,.12);
 
-    --teal: rgba(35,140,110,.90);
-    --tealbg: rgba(35,140,110,.14);
-
-    --blue: rgba(110,170,255,.90);
     --bluebg: rgba(110,170,255,.14);
 
     --shadow: 0 16px 55px rgba(0,0,0,.35);
 
     --radius-xl: 22px;
-    --radius-lg: 16px;
-
     --topbar-bg: rgba(7,27,22,.88);
     --topbar-bg-scrolled: rgba(7,27,22,.55);
   }
@@ -51,9 +42,7 @@
     --grad3: radial-gradient(900px 820px at 35% 100%, rgba(110,170,255,.12), transparent 60%);
 
     --panel:#ffffff;
-    --panel2:#ffffff;
     --card: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.98));
-    --mini:#f5faf7;
 
     --text:#0b201a;
     --muted:rgba(11,32,26,.70);
@@ -64,10 +53,6 @@
     --gold-strong: rgba(165,127,50,.85);
     --goldbg: rgba(255,230,180,.55);
 
-    --teal: rgba(12,123,89,.90);
-    --tealbg: rgba(12,123,89,.12);
-
-    --blue: rgba(0,120,190,.90);
     --bluebg: rgba(0,120,190,.10);
 
     --shadow: 0 10px 28px rgba(8,25,20,.10);
@@ -85,118 +70,42 @@
     color: var(--text);
     line-height:1.6;
   }
-  a{ color:inherit; }
   .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
 
-  /* ===== TOPBAR ===== */
+  /* IMPORTANT: reserve space so floating buttons never cover content */
+  .page-pad{ padding-bottom: 240px; }
+
+  /* Topbar */
   .topbar{
-    position: sticky;
-    top:0;
-    z-index:9999;
+    position: sticky; top:0; z-index: 9999;
     backdrop-filter: blur(12px);
     background: var(--topbar-bg);
     border-bottom:1px solid var(--border);
     transition: background .2s ease, box-shadow .2s ease;
   }
-  .topbar.scrolled{
-    background: var(--topbar-bg-scrolled);
-    box-shadow: 0 10px 25px rgba(0,0,0,.12);
-  }
-  .topbar-inner{
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding: 10px 0;
-  }
-  .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
-  .logo-link{ display:flex; align-items:center; gap:10px; text-decoration:none; min-width:0; }
+  .topbar.scrolled{ background: var(--topbar-bg-scrolled); box-shadow: 0 10px 25px rgba(0,0,0,.12); }
+  .topbar-inner{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 10px 0; }
+
+  .logo-link{ display:flex; align-items:center; gap:10px; text-decoration:none; min-width:0; color:inherit; }
   .logo-img{
-    width:44px; height:44px; border-radius:14px;
-    object-fit:contain;
-    background: rgba(255,255,255,.06);
-    border:1px solid var(--border);
-    box-shadow: var(--shadow);
+    width:44px; height:44px; border-radius:14px; object-fit:contain;
+    background: rgba(255,255,255,.06); border:1px solid var(--border); box-shadow: var(--shadow);
     flex:0 0 auto;
   }
   .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
-  .brand-text b{
-    font-size:18px; letter-spacing:.2px;
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    max-width: 240px;
-  }
-  .brand-text span{
-    font-size:12px; color:var(--muted);
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    max-width: 320px;
-  }
+  .brand-text b{ font-size:18px; letter-spacing:.2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width: 240px; }
+  .brand-text span{ font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width: 320px; }
+
   .desktop-nav{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
   .chip{
-    padding:6px 10px;
-    border:1px solid var(--border);
-    border-radius:999px;
-    text-decoration:none;
-    font-size:12px;
-    color:var(--muted);
-    background: rgba(255,255,255,.03);
-    white-space:nowrap;
+    padding:6px 10px; border:1px solid var(--border); border-radius:999px;
+    text-decoration:none; font-size:12px; color:var(--muted);
+    background: rgba(255,255,255,.03); white-space:nowrap;
   }
   .chip:hover{ border-color:var(--border2); color:var(--text); }
 
-  /* ===== DRAWER ===== */
-  .backdrop{
-    position:fixed; inset:0;
-    background: rgba(0,0,0,.45);
-    display:none;
-    z-index:9998;
-  }
-  .backdrop.open{ display:block; }
-
-  .drawer{
-    position:fixed;
-    left:12px; right:12px; bottom:12px;
-    max-height: calc(100vh - 24px);
-    overflow:auto;
-    background: var(--panel);
-    border:1px solid var(--border);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow);
-    padding:14px;
-    display:none;
-    z-index:10000;
-    backdrop-filter: blur(10px);
-    transform: translateY(8px);
-  }
-  .drawer.open{ display:block; animation: sheetIn .14s ease-out forwards; }
-  @keyframes sheetIn{ from{ opacity:0; transform: translateY(14px);} to{ opacity:1; transform: translateY(0);} }
-
-  .drawer-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
-  .drawer-top h3{ margin:0; font-size:13px; color: var(--muted); letter-spacing:.2px; font-weight:900; }
-  .xbtn{
-    border:1px solid var(--border);
-    background: rgba(255,255,255,.02);
-    color: var(--text);
-    border-radius:14px;
-    padding:10px 12px;
-    cursor:pointer;
-    font-weight:900;
-  }
-  .drawer-sub{ margin:12px 0 8px; font-size:12px; color: var(--muted); font-weight:900; letter-spacing:.2px; }
-  .drawer-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
-  .drawer a{
-    display:block;
-    padding:12px 12px;
-    border-radius:16px;
-    border:1px solid var(--border);
-    background: rgba(255,255,255,.02);
-    text-decoration:none;
-    color: var(--text);
-    font-weight:900;
-    text-align:center;
-  }
-  .drawer a:hover{ border-color: var(--border2); }
-  .drawer .full{ grid-column: 1 / -1; }
-
-  /* ===== COMMON UI ===== */
+  /* Hero */
   header{ padding: 18px 0 10px; }
-  section{ padding: 18px 0; }
   .card{
     background: var(--card);
     border:1px solid var(--border);
@@ -205,82 +114,47 @@
     box-shadow: var(--shadow);
   }
   .badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 10px;
-    border-radius:999px;
-    font-size:12px;
-    color:var(--muted);
+    display:inline-flex; align-items:center; gap:8px;
+    padding:6px 10px; border-radius:999px;
+    font-size:12px; color:var(--muted);
     border:1px solid var(--border);
     background: rgba(255,255,255,.03);
   }
-  .dot{
-    width:10px; height:10px; border-radius:50%;
-    background: var(--gold-strong);
-    box-shadow: 0 0 0 4px rgba(255,190,100,.10);
-  }
-  h1{ margin:10px 0 6px; font-size:28px; line-height:1.18; letter-spacing:.2px; }
+  .dot{ width:10px; height:10px; border-radius:50%; background: var(--gold-strong); box-shadow: 0 0 0 4px rgba(255,190,100,.10); }
+  h1{ margin:10px 0 6px; font-size:28px; line-height:1.18; }
   .lead{ margin:0; color:var(--muted); max-width:920px; }
-  .section-title{ margin:10px 0 8px; font-size:22px; line-height:1.25; }
-  .muted{ color:var(--muted); }
   .rule{ height:1px; background: var(--border); margin:16px 0; }
 
   .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 
   .btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    padding:12px 16px;
-    border-radius: 14px;
-    text-decoration:none;
-    font-weight:950;
-    border:1px solid transparent;
-    white-space:nowrap;
-    user-select:none;
-    cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    padding:12px 16px; border-radius: 14px; text-decoration:none;
+    font-weight:950; border:1px solid transparent; white-space:nowrap; cursor:pointer;
   }
   .btn:hover{ filter: brightness(1.03); }
   .btn-primary{ background: var(--goldbg); border-color: var(--gold); color: var(--text); }
-  .btn-teal{ background: var(--tealbg); border-color: rgba(35,140,110,.40); color: var(--text); }
   .btn-blue{ background: var(--bluebg); border-color: rgba(110,170,255,.40); color: var(--text); }
-  .btn-ghost{ background: transparent; border-color: var(--border); color: var(--muted); }
-  .btn-ghost:hover{ border-color: var(--border2); color: var(--text); }
 
-  .btn-tiny{
-    padding:9px 11px;
-    border-radius:12px;
-    font-size:12px;
-    font-weight:950;
-    border:1px solid var(--border);
-    background: rgba(255,255,255,.02);
-    color: var(--text);
-    text-decoration:none;
-    cursor:pointer;
-  }
-  .btn-tiny:hover{ border-color: var(--border2); }
-
-  /* ===== PROMO CARDS (no overlap) ===== */
+  /* Promo cards */
   .promo{
     border:1px solid var(--border);
     border-radius: var(--radius-xl);
     overflow:hidden;
     background: rgba(255,255,255,.02);
   }
+  .promo a{ text-decoration:none; color:inherit; display:block; }
   .promo-img{
-    display:block;
     width:100%;
     height:auto;
     aspect-ratio: 16/9;
     object-fit: cover;
-    background: rgba(255,255,255,.02);
+    display:block;
+    background: rgba(255,255,255,.03);
   }
   .promo-cta{
     padding:12px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+    background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
     border-top:1px solid var(--border);
     display:flex;
     align-items:center;
@@ -288,37 +162,100 @@
     gap:10px;
     flex-wrap:wrap;
   }
-  .promo-cta b{ font-size:14px; letter-spacing:.2px; }
+  .promo-cta b{ font-size:14px; }
   .promo-cta span{ display:block; font-size:12px; color: var(--muted); margin-top:2px; }
   .promo-left{ min-width: 210px; }
   .promo-actions{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
 
-  /* ===== ASK LIZON (tap-only sheet) ===== */
-  .sheet-wrap{
-    position:fixed; inset:0;
+  /* Drawer */
+  .backdrop{ position:fixed; inset:0; background: rgba(0,0,0,.45); display:none; z-index: 9998; }
+  .backdrop.open{ display:block; }
+  .drawer{
+    position:fixed; left:12px; right:12px; bottom:12px;
+    max-height: calc(100vh - 24px); overflow:auto;
+    background: var(--panel); border:1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow);
+    padding:14px;
     display:none;
-    align-items:flex-end;
-    justify-content:center;
-    padding: 16px;
-    z-index: 12080;
+    z-index: 10000;
+    backdrop-filter: blur(10px);
+  }
+  .drawer.open{ display:block; animation: sheetIn .14s ease-out forwards; }
+  @keyframes sheetIn{ from{opacity:0; transform: translateY(14px);} to{opacity:1; transform: translateY(0);} }
+  .drawer-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
+  .drawer-top h3{ margin:0; font-size:13px; color:var(--muted); font-weight:900; }
+  .xbtn{ border:1px solid var(--border); background: rgba(255,255,255,.02); color: var(--text); border-radius:14px; padding:10px 12px; cursor:pointer; font-weight:900; }
+  .drawer-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+  .drawer a{
+    display:block; padding:12px 12px; border-radius:16px;
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    text-decoration:none; color: var(--text);
+    font-weight:900; text-align:center;
+  }
+  .drawer .full{ grid-column: 1 / -1; }
+
+  /* Floating controls (fixed positions so they DON'T cover cards) */
+  .scroll-dock{
+    position:fixed; right:14px; bottom: 150px; z-index:2300;
+    display:flex; flex-direction:column; gap:10px; padding:10px;
+    border-radius:999px; border:1px solid var(--border);
+    background: rgba(255,255,255,.02); backdrop-filter: blur(10px); box-shadow: var(--shadow);
+  }
+  .sbtn{
+    width:44px; height:44px;
+    border-radius:16px; border:1px solid var(--border);
+    background: var(--panel); color: var(--text);
+    display:grid; place-items:center; cursor:pointer;
+  }
+  .sbtn svg{ width:20px; height:20px; }
+
+  .hamb-fab{
+    position:fixed; left:14px; bottom: 18px; z-index:2400;
+    width:54px; height:54px; border-radius:20px;
+    border:1px solid var(--border); background: var(--panel); box-shadow: var(--shadow);
+    display:grid; place-items:center; cursor:pointer; backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  }
+  .ask-pill{
+    position:fixed; left:14px; bottom: 86px; z-index:2400;
+    border:1px solid var(--border); background: var(--panel); box-shadow: var(--shadow);
+    border-radius:999px; padding:10px 12px; display:flex; align-items:center; gap:10px;
+    cursor:pointer; backdrop-filter: blur(10px); user-select:none;
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  }
+  .ask-dot{ width:12px; height:12px; border-radius:50%; background: rgba(35,140,110,.95); box-shadow: 0 0 0 4px rgba(35,140,110,.10); }
+  .ask-pill b{ font-size:13px; }
+  .ask-pill span{ font-size:12px; color: var(--muted); }
+
+  .theme-fab{
+    position:fixed; right:14px; bottom: 18px; z-index:2400;
+    border:1px solid var(--border); background: var(--panel); box-shadow: var(--shadow);
+    border-radius: 18px; width:52px; height:52px;
+    display:grid; place-items:center; cursor:pointer; backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  }
+  .theme-fab svg{ width:18px; height:18px; }
+  .icon-sun{ display:none; }
+  .theme-light .icon-sun{ display:block; }
+  .theme-light .icon-moon{ display:none; }
+
+  /* Ask sheet */
+  .sheet-wrap{
+    position:fixed; inset:0; display:none; align-items:flex-end; justify-content:center;
+    padding:16px; z-index:12080;
   }
   .sheet-wrap.show{ display:flex; }
-  .sheet-back{
-    position:absolute; inset:0;
-    background: rgba(0,0,0,.50);
-  }
+  .sheet-back{ position:absolute; inset:0; background: rgba(0,0,0,.50); }
   .sheet{
-    position:relative;
-    width:min(760px, 100%);
-    border-radius: var(--radius-xl);
-    border:1px solid var(--border);
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    padding: 14px;
-    animation: sheetIn .14s ease-out forwards;
+    position:relative; width:min(760px, 100%);
+    border-radius: var(--radius-xl); border:1px solid var(--border);
+    background: var(--panel); box-shadow: var(--shadow);
+    padding:14px; animation: sheetIn .14s ease-out forwards;
   }
   .sheet-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
-  .sheet h4{ margin:0; font-size:16px; line-height:1.25; }
+  .sheet h4{ margin:0; font-size:16px; }
   .sheet p{ margin:8px 0 0; color: var(--muted); font-size:13px; }
   .sheet-x{
     border:1px solid var(--border);
@@ -327,9 +264,7 @@
     border-radius:14px;
     width:42px; height:42px;
     display:grid; place-items:center;
-    cursor:pointer;
-    font-weight:950;
-    flex:0 0 auto;
+    cursor:pointer; font-weight:950;
   }
   .opt-grid{ margin-top:12px; display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
   .opt{
@@ -337,173 +272,51 @@
     background: rgba(255,255,255,.02);
     border-radius:18px;
     padding:12px;
-    text-align:left;
-    cursor:pointer;
-    user-select:none;
+    cursor:pointer; user-select:none;
   }
   .opt:hover{ border-color: var(--border2); }
   .opt b{ display:block; font-size:14px; margin-bottom:4px; }
   .opt span{ display:block; color: var(--muted); font-size:12px; }
 
-  /* ===== FLOATING CONTROLS ===== */
-  .scroll-dock{
-    position:fixed;
-    right:14px;
-    bottom:140px;
-    z-index:2300;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    padding:10px;
-    border-radius:999px;
-    border:1px solid var(--border);
-    background: rgba(255,255,255,.02);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--shadow);
-  }
-  .sbtn{
-    width:44px; height:44px;
-    border-radius:16px;
-    border:1px solid var(--border);
-    background: var(--panel);
-    color: var(--text);
-    display:grid; place-items:center;
-    cursor:pointer; user-select:none;
-  }
-  .sbtn svg{ width:20px; height:20px; }
-
-  .hamb-fab{
-    position:fixed; left:14px; bottom:78px; z-index:2400;
-    width:54px; height:54px;
-    border-radius:20px;
-    border:1px solid var(--border);
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    display:grid; place-items:center;
-    cursor:pointer;
-    backdrop-filter: blur(10px);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-  .hamb-fab svg{ width:22px; height:22px; }
-
-  /* AskLizOn pill (LEFT BOTTOM) */
-  .ask-pill{
-    position:fixed; left:14px; bottom:140px; z-index:2400;
-    border:1px solid var(--border);
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    border-radius:999px;
-    padding:10px 12px;
-    display:flex; align-items:center; gap:10px;
-    cursor:pointer;
-    backdrop-filter: blur(10px);
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-  .ask-dot{ width:12px; height:12px; border-radius:50%; background: rgba(35,140,110,.95); box-shadow: 0 0 0 4px rgba(35,140,110,.10); }
-  .ask-pill b{ font-size:13px; }
-  .ask-pill span{ font-size:12px; color: var(--muted); }
-
-  .theme-fab{
-    position:fixed; right:14px; bottom:78px; z-index:2400;
-    border:1px solid var(--border);
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    border-radius: 18px;
-    width:52px; height:52px;
-    display:grid; place-items:center;
-    cursor:pointer;
-    backdrop-filter: blur(10px);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-  .theme-fab svg{ width:18px; height:18px; }
-  .icon-sun{ display:none; }
-  .theme-light .icon-sun{ display:block; }
-  .theme-light .icon-moon{ display:none; }
-
-  /* ===== FOOTER ===== */
-  footer{
-    padding: 10px 0 170px;
-    border-top: 1px solid var(--border);
-    margin-top: 18px;
-    color: var(--muted);
-    font-size: 14px;
-  }
-  .footer-card{
-    background: var(--card);
-    border:1px solid var(--border);
-    border-radius: var(--radius-xl);
-    padding:16px;
-    box-shadow: var(--shadow);
-  }
-  .footer-columns{
-    display:grid;
-    grid-template-columns: 1.1fr .9fr .9fr;
-    gap:14px;
-    margin-top:12px;
-  }
-  .footer-title{
-    margin:0 0 8px;
-    font-size:13px;
-    color: var(--text);
-    font-weight:950;
-  }
-  .footer-links{ display:flex; gap:10px; flex-wrap:wrap; }
-  .footer-links a{ text-decoration:none; }
-  .footer-small{ font-size:13px; color: var(--muted); }
-  .socials{ display:flex; gap:10px; flex-wrap:wrap; }
-
-  /* ===== RESPONSIVE ===== */
   @media (max-width: 920px){
     .grid-2{ grid-template-columns: 1fr; }
     h1{ font-size:24px; }
-    .footer-columns{ grid-template-columns: 1fr; }
     .desktop-nav{ display:none; }
     .opt-grid{ grid-template-columns: 1fr; }
+    .scroll-dock{ bottom: 150px; } /* keeps it above theme button */
   }
 </style>
 </head>
 
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar" id="topbar">
   <div class="container">
     <div class="topbar-inner">
-      <div class="brand">
-        <!-- Logo + LizOn Education LEFT, tap -> Home -->
-        <a class="logo-link" href="index.html" title="Go to Home" aria-label="Go to Home">
-          <img class="logo-img" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo"
-               onerror="this.src='assets/logo-dark.png';" />
-          <div class="brand-text">
-            <b>LizOn Education</b>
-            <span>Upcoming — What’s New</span>
-          </div>
-        </a>
-      </div>
+      <a class="logo-link" href="index.html" title="Go to Home" aria-label="Go to Home">
+        <img class="logo-img" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+        <div class="brand-text">
+          <b>LizOn Education</b>
+          <span>Upcoming — What’s New</span>
+        </div>
+      </a>
 
       <nav class="desktop-nav" aria-label="Top navigation">
         <a class="chip" href="index.html">Home</a>
         <a class="chip" href="pte.html">PTE</a>
         <a class="chip" href="ielts.html">IELTS</a>
-        <a class="chip" href="#jump">Jump Now</a>
       </nav>
     </div>
   </div>
 </div>
 
-<!-- DRAWER -->
+<!-- Drawer -->
 <div class="backdrop" id="backdrop"></div>
 <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
   <div class="drawer-top">
     <h3>Navigate</h3>
     <button class="xbtn" id="closeDrawer" type="button" aria-label="Close">✕</button>
   </div>
-
-  <div class="drawer-sub">Core</div>
   <div class="drawer-grid">
     <a class="full" href="index.html">Home</a>
     <a class="full" href="Upcoming.html">Upcoming (This page)</a>
@@ -511,39 +324,35 @@
     <a class="full" href="ielts.html">IELTS</a>
     <a class="full" href="studyabroad.html">Study Abroad</a>
   </div>
-
-  <div style="margin-top:12px;">
-    <a class="btn-tiny" style="display:block;text-align:center;"
-       href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20need%20guidance%20for%20PTE%20or%20IELTS."
-       target="_blank" rel="noopener">Talk with LizOn</a>
-  </div>
 </div>
 
-<!-- HERO -->
-<header>
+<header class="page-pad">
   <div class="container">
     <div class="card">
       <span class="badge"><span class="dot"></span>Designed for Desired Score</span>
       <h1>Two paths. One tap.</h1>
       <p class="lead">
-        This page is only for what’s active right now. No finished course, no old hype.
-        Pick your track and jump to details.
+        This page is only for what’s active right now.
+        No finished course, no old hype. Pick your track and jump to details.
       </p>
 
       <div class="rule"></div>
 
-      <div class="grid-2" id="jump" aria-label="Upcoming promotions">
+      <div class="grid-2" id="jump">
 
-        <!-- PTE PROMO -->
+        <!-- PTE -->
         <div class="promo">
-          <!-- IMPORTANT: upload your image to /assets/ with this name -->
           <a href="pte.html" aria-label="Open PTE page">
-            <img class="promo-img" src="assets/upcoming-pte.png" alt="PTE promotion banner" loading="lazy" />
+            <!-- ✅ YOUR REAL FILENAME -->
+            <img class="promo-img"
+                 src="assets/upcoming-pte-fast-track-advantage.png"
+                 alt="PTE promotion banner"
+                 loading="lazy" />
           </a>
           <div class="promo-cta">
             <div class="promo-left">
               <b>PTE — Live Batch + Early Access</b>
-              <span>Tap the image for full details</span>
+              <span>Tap the image or jump now</span>
             </div>
             <div class="promo-actions">
               <a class="btn btn-blue" href="pte.html">Let’s Jump</a>
@@ -554,16 +363,19 @@
           </div>
         </div>
 
-        <!-- IELTS PROMO -->
+        <!-- IELTS -->
         <div class="promo">
-          <!-- IMPORTANT: upload your image to /assets/ with this name -->
           <a href="ielts.html" aria-label="Open IELTS page">
-            <img class="promo-img" src="assets/upcoming-ielts.png" alt="IELTS promotion banner" loading="lazy" />
+            <!-- ✅ YOUR REAL FILENAME -->
+            <img class="promo-img"
+                 src="assets/upcoming-ielts-journey-advantage.png"
+                 alt="IELTS promotion banner"
+                 loading="lazy" />
           </a>
           <div class="promo-cta">
             <div class="promo-left">
               <b>IELTS — Full Journey (ZERO → N2F)</b>
-              <span>Tap the image for full details</span>
+              <span>Tap the image or jump now</span>
             </div>
             <div class="promo-actions">
               <a class="btn btn-blue" href="ielts.html">Let’s Jump</a>
@@ -574,74 +386,35 @@
           </div>
         </div>
 
+        <!-- Discount image (your existing promo) -->
+        <div class="promo" style="grid-column: 1 / -1;">
+          <a href="pte.html" aria-label="Open PTE page">
+            <img class="promo-img"
+                 src="assets/pte-early-access-2000tk.png"
+                 alt="PTE Early Access 2000tk"
+                 loading="lazy" />
+          </a>
+          <div class="promo-cta">
+            <div class="promo-left">
+              <b>PTE Early Access Reward</b>
+              <span>See details on the PTE page</span>
+            </div>
+            <div class="promo-actions">
+              <a class="btn btn-blue" href="pte.html">Let’s Jump</a>
+              <a class="btn btn-primary"
+                 href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20Early%20Access%202000tk%20discount%20niye%20admission%20nite%20chai.%20Please%20guide%20me."
+                 target="_blank" rel="noopener">Secure Now</a>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <p class="muted" style="margin:12px 0 0; font-size:13px;">
-        Tip: AskLizOn (bottom-left) is tap-only — no typing. You’ll get the right direction fast.
-      </p>
     </div>
   </div>
 </header>
 
-<!-- FOOTER -->
-<footer id="footer">
-  <div class="container">
-    <div class="footer-card">
-
-      <h3 class="footer-title">All Options</h3>
-      <div class="footer-links" style="margin-bottom:10px;">
-        <a class="btn btn-ghost" href="index.html">Home</a>
-        <a class="btn btn-ghost" href="pte.html">PTE</a>
-        <a class="btn btn-ghost" href="ielts.html">IELTS</a>
-        <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
-      </div>
-
-      <div class="footer-columns">
-        <div>
-          <h3 class="footer-title">Quick Links</h3>
-          <div class="footer-links">
-            <a class="btn-tiny" href="pte.html">PTE Details</a>
-            <a class="btn-tiny" href="ielts.html">IELTS Details</a>
-            <a class="btn-tiny" href="Upcoming.html#jump">Jump Cards</a>
-          </div>
-          <p class="footer-small" style="margin:10px 0 0;">
-            This page stays clean: only active promos.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="footer-title">Contact & Location</h3>
-          <p class="footer-small" style="margin:0 0 10px;">
-            <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
-            <b>IELTS/PTE Helpline:</b> 01611611139<br/>
-            <b>Study Abroad/Visa Processing:</b> 01608881545
-          </p>
-          <div class="footer-links">
-            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-            <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=Need%20guidance%20about%20PTE%20or%20IELTS."
-               target="_blank" rel="noopener">Chat Now</a>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="footer-title">Social Media</h3>
-          <div class="socials">
-            <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-            <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
-          </div>
-          <div class="rule"></div>
-          <p class="footer-small" style="margin:0;">
-            © 2025 myLizOn.com | LizOn Education
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- Modern Scroll Dock -->
+<!-- Scroll Dock -->
 <div class="scroll-dock" aria-label="Scroll controls">
   <button class="sbtn" id="scrollTopBtn" type="button" title="Top" aria-label="Scroll to top">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M6 11l6-6 6 6"/></svg>
@@ -658,7 +431,7 @@
   </svg>
 </button>
 
-<!-- AskLizOn (LEFT BOTTOM) -->
+<!-- AskLizOn bottom-left -->
 <div class="ask-pill" id="askPill" role="button" tabindex="0" aria-label="Open AskLizOn">
   <span class="ask-dot"></span>
   <div>
@@ -678,51 +451,40 @@
   </svg>
 </div>
 
-<!-- ASK LIZON SHEET (tap-only) -->
+<!-- AskLizOn Sheet -->
 <div class="sheet-wrap" id="askWrap" aria-hidden="true">
   <div class="sheet-back" id="askBack"></div>
   <div class="sheet" role="dialog" aria-modal="true" aria-label="AskLizOn">
     <div class="sheet-top">
       <div>
         <h4>AskLizOn</h4>
-        <p>Tap-only: pick one option and we’ll take you to the right place (or WhatsApp).</p>
+        <p>Tap-only: pick one option and we’ll take you to the right place.</p>
       </div>
       <button class="sheet-x" id="askClose" aria-label="Close">✕</button>
     </div>
 
-    <div class="opt-grid" aria-label="AskLizOn options">
+    <div class="opt-grid">
       <div class="opt" data-go="pte">
         <b>PTE — I need guidance</b>
-        <span>Jump to PTE details + quick next step</span>
+        <span>Go to PTE details</span>
       </div>
       <div class="opt" data-go="ielts">
         <b>IELTS — I need guidance</b>
-        <span>Jump to IELTS journey + pricing</span>
+        <span>Go to IELTS journey</span>
       </div>
       <div class="opt" data-go="wa_pte">
         <b>WhatsApp — PTE admission</b>
-        <span>Direct message with intent (no typing needed)</span>
+        <span>Direct message (prefilled)</span>
       </div>
       <div class="opt" data-go="wa_ielts">
         <b>WhatsApp — IELTS help</b>
-        <span>Direct message with intent (no typing needed)</span>
+        <span>Direct message (prefilled)</span>
       </div>
-    </div>
-
-    <div class="rule"></div>
-
-    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end;">
-      <a class="btn btn-ghost" href="pte.html">Go PTE</a>
-      <a class="btn btn-ghost" href="ielts.html">Go IELTS</a>
-      <a class="btn btn-primary"
-         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20need%20guidance%20for%20PTE%20or%20IELTS."
-         target="_blank" rel="noopener">Chat Now</a>
     </div>
   </div>
 </div>
 
 <script>
-  /* ===== Theme toggle (persist) ===== */
   const body = document.body;
   const topbar = document.getElementById('topbar');
   const logoImg = document.getElementById('logoImg');
@@ -735,14 +497,11 @@
   }
   setTheme(localStorage.getItem('lizon-theme') || 'dark');
 
-  function toggleTheme(){
+  document.getElementById('themeFab').addEventListener('click', ()=>{
     const isLight = body.classList.contains('theme-light');
     setTheme(isLight ? 'dark' : 'light');
-  }
-  document.getElementById('themeFab').addEventListener('click', toggleTheme);
-  document.getElementById('themeFab').addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') toggleTheme(); });
+  });
 
-  /* ===== Topbar scroll style ===== */
   function handleTopbar(){
     if(window.scrollY > 8) topbar.classList.add('scrolled');
     else topbar.classList.remove('scrolled');
@@ -750,60 +509,33 @@
   handleTopbar();
   window.addEventListener('scroll', handleTopbar, {passive:true});
 
-  /* ===== Drawer ===== */
+  // Drawer
   const drawer = document.getElementById('drawer');
   const backdrop = document.getElementById('backdrop');
-  const closeDrawer = document.getElementById('closeDrawer');
   const hambFab = document.getElementById('hambFab');
+  const closeDrawer = document.getElementById('closeDrawer');
 
-  function openDrawer(){
-    drawer.classList.add('open');
-    backdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeDrawerFn(){
-    drawer.classList.remove('open');
-    backdrop.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function toggleDrawer(){
-    if(drawer.classList.contains('open')) closeDrawerFn();
-    else openDrawer();
-  }
+  function openDrawer(){ drawer.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeDrawerFn(){ drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow=''; }
 
-  hambFab.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleDrawer(); });
+  hambFab.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); openDrawer(); });
   closeDrawer.addEventListener('click', closeDrawerFn);
   backdrop.addEventListener('click', closeDrawerFn);
-  drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeDrawerFn));
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDrawerFn(); });
 
-  /* ===== Scroll buttons ===== */
-  document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-  document.getElementById('scrollBottomBtn').addEventListener('click', ()=>{
-    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-  });
+  // Scroll buttons
+  document.getElementById('scrollTopBtn').addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
+  document.getElementById('scrollBottomBtn').addEventListener('click', ()=> window.scrollTo({ top:document.documentElement.scrollHeight, behavior:'smooth' }));
 
-  /* ===== AskLizOn (tap-only) ===== */
+  // AskLizOn (tap-only)
   const askWrap = document.getElementById('askWrap');
   const askBack = document.getElementById('askBack');
   const askClose = document.getElementById('askClose');
   const askPill = document.getElementById('askPill');
 
-  function openAsk(){
-    askWrap.classList.add('show');
-    askWrap.setAttribute('aria-hidden','false');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeAsk(){
-    askWrap.classList.remove('show');
-    askWrap.setAttribute('aria-hidden','true');
-    document.body.style.overflow = '';
-  }
+  function openAsk(){ askWrap.classList.add('show'); askWrap.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function closeAsk(){ askWrap.classList.remove('show'); askWrap.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
   askPill.addEventListener('click', openAsk);
-  askPill.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openAsk(); });
   askBack.addEventListener('click', closeAsk);
   askClose.addEventListener('click', closeAsk);
 
@@ -819,16 +551,9 @@
       if(key === 'wa_ielts') window.open(waIelts, '_blank', 'noopener');
       closeAsk();
     });
-    el.addEventListener('keydown', (e)=>{
-      if(e.key==='Enter' || e.key===' '){
-        e.preventDefault();
-        el.click();
-      }
-    });
     el.tabIndex = 0;
   });
 
-  /* ===== Global ESC closes sheets ===== */
   document.addEventListener('keydown', (e)=>{
     if(e.key !== 'Escape') return;
     if(drawer.classList.contains('open')) closeDrawerFn();

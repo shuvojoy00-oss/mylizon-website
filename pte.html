@@ -1585,30 +1585,23 @@
   });
 
   /* ===== Video: play on site (swap thumbnail -> iframe) ===== */
-  function makeYouTubeIframe(videoId, opts){
+  function makeYouTubeIframe(videoId){
     const iframe = document.createElement('iframe');
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.allowFullscreen = true;
 
+    // FIX (Quick Tips): force player UI + captions prefs to Bangla, keep captions OFF by default.
+    // NOTE: spoken audio is always the video's original track; this mainly fixes the "English UI/CC feel".
     const params = new URLSearchParams({
       autoplay: '1',
       rel: '0',
       modestbranding: '1',
       playsinline: '1',
-      iv_load_policy: '3'
+      iv_load_policy: '3',
+      hl: 'bn',              // player UI language
+      cc_lang_pref: 'bn',    // caption language preference
+      cc_load_policy: '0'    // captions OFF by default
     });
-
-    // ===== QUICK TIPS ONLY FIX =====
-    // Goal: stop YouTube from defaulting to English captions on these short clips.
-    // We can't force "audio language", but we can:
-    // - keep captions OFF by default
-    // - hint BD locale for UI/auto-caption preference
-    if(opts && opts.quickTips){
-      params.set('cc_load_policy', '0');   // captions OFF by default
-      params.set('hl', 'bn');              // UI language hint
-      params.set('gl', 'BD');              // region hint
-      params.set('cc_lang_pref', 'bn');    // caption preference hint (if user turns CC on)
-    }
 
     iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?${params.toString()}`;
     return iframe;
@@ -1619,14 +1612,12 @@
     const vid = wrap.getAttribute('data-video');
     if(!vid) return;
 
-    const isQuickTips = !!wrap.closest('#quicktips'); // Quick Tips section only
-
     wrap.dataset.playing = '1';
     wrap.innerHTML = '';
 
     const box = document.createElement('div');
     box.className = 'iframe-box';
-    box.appendChild(makeYouTubeIframe(vid, { quickTips: isQuickTips }));
+    box.appendChild(makeYouTubeIframe(vid));
     wrap.appendChild(box);
   }
 

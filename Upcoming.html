@@ -1,246 +1,933 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Upcoming — What’s New | LizOn Education</title>
-
-<meta name="description" content="PTE is live at LizOn Education. Built for serious students who need fast, controlled results. Explore the full PTE program now." />
+<title>Upcoming | LizOn Education</title>
+<meta name="description" content="What’s active right now at LizOn Education — PTE and IELTS. Tap to explore the full pages, or get instant guidance via AskLizOn." />
 <meta name="theme-color" content="#0b2a1f" />
 
 <style>
-:root{
-  --bg:#071b16;
-  --grad1: radial-gradient(1000px 700px at 15% 0%, rgba(35,140,110,.18), transparent 55%);
-  --grad2: radial-gradient(900px 700px at 85% 30%, rgba(255,190,100,.10), transparent 55%);
-  --panel:#0b241e;
-  --text:#e9f3ef;
-  --muted:rgba(233,243,239,.78);
-  --border:rgba(233,243,239,.14);
-  --gold:#ffd38a;
-  --goldbg:rgba(255,211,138,.14);
-  --shadow:0 14px 40px rgba(0,0,0,.35);
-}
+  :root{
+    /* Dark (NO BLACK) */
+    --bg:#071b16;
+    --grad1: radial-gradient(1100px 760px at 15% 0%, rgba(35,140,110,.18), transparent 58%);
+    --grad2: radial-gradient(900px 760px at 85% 25%, rgba(255,190,100,.10), transparent 55%);
+    --grad3: radial-gradient(900px 760px at 40% 90%, rgba(110,170,255,.10), transparent 55%);
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background: var(--grad1), var(--grad2), var(--bg);
-  color:var(--text);
-  line-height:1.6;
-}
+    --panel:#0b241e;
+    --card: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    --mini: rgba(255,255,255,.02);
 
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:32px 16px 120px;
-}
+    --text:#e9f3ef;
+    --muted:rgba(233,243,239,.78);
+    --border:rgba(233,243,239,.14);
+    --border2:rgba(233,243,239,.22);
 
-/* Header */
-.header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px 0 32px;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  text-decoration:none;
-  color:inherit;
-}
-.brand img{
-  width:46px;
-  height:46px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:#0a1d17;
-}
-.brand b{
-  font-size:18px;
-}
-.brand span{
-  font-size:12px;
-  color:var(--muted);
-}
+    --gold: rgba(255,190,100,.55);
+    --gold-strong: rgba(255,190,100,.90);
+    --goldbg: rgba(255,190,100,.12);
 
-.back{
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  text-decoration:none;
-  font-size:12px;
-  color:var(--muted);
-}
-.back:hover{color:var(--text)}
+    --teal: rgba(35,140,110,.90);
+    --tealbg: rgba(35,140,110,.14);
 
-/* Hero */
-.hero{
-  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:28px;
-  box-shadow:var(--shadow);
-}
+    --blue: rgba(110,170,255,.90);
+    --bluebg: rgba(110,170,255,.14);
 
-.badge{
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  border:1px solid var(--border);
-  color:var(--muted);
-  background:rgba(255,255,255,.03);
-}
+    --pink: rgba(255,160,210,.90);
+    --pinkbg: rgba(255,160,210,.14);
 
-h1{
-  margin:14px 0 10px;
-  font-size:36px;
-  line-height:1.15;
-}
+    --shadow: 0 16px 55px rgba(0,0,0,.35);
 
-.lead{
-  max-width:760px;
-  color:var(--muted);
-  margin:0;
-}
+    --radius-xl: 22px;
+    --radius-lg: 16px;
 
-/* Divider text */
-.divider{
-  margin:28px 0 18px;
-  height:1px;
-  background:linear-gradient(90deg, transparent, var(--border), transparent);
-}
+    --topbar-bg: rgba(7,27,22,.88);
+    --topbar-bg-scrolled: rgba(7,27,22,.55);
+  }
 
-/* Focus blocks */
-.focus{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  margin-top:20px;
-}
-.focus div{
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:16px;
-  background:rgba(255,255,255,.03);
-}
-.focus b{
-  display:block;
-  margin-bottom:6px;
-}
+  .theme-light{
+    --bg:#eef6f3;
+    --grad1: radial-gradient(1200px 820px at 10% -10%, rgba(12,123,89,.12), transparent 60%);
+    --grad2: radial-gradient(1000px 820px at 100% 0%, rgba(255,190,100,.14), transparent 60%);
+    --grad3: radial-gradient(900px 820px at 35% 100%, rgba(110,170,255,.12), transparent 60%);
 
-/* CTA area */
-.cta{
-  margin-top:30px;
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-}
+    --panel:#ffffff;
+    --card: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.98));
+    --mini:#f5faf7;
 
-.btn{
-  padding:14px 22px;
-  border-radius:16px;
-  font-weight:700;
-  text-decoration:none;
-  border:1px solid transparent;
-}
+    --text:#0b201a;
+    --muted:rgba(11,32,26,.70);
+    --border:rgba(11,32,26,.12);
+    --border2:rgba(11,32,26,.22);
 
-.btn-primary{
-  background:var(--goldbg);
-  border-color:var(--gold);
-  color:#000;
-}
+    --gold: rgba(165,127,50,.55);
+    --gold-strong: rgba(165,127,50,.90);
+    --goldbg: rgba(255,230,180,.55);
 
-.btn-secondary{
-  border:1px solid var(--border);
-  color:var(--text);
-  background:transparent;
-}
+    --teal: rgba(12,123,89,.90);
+    --tealbg: rgba(12,123,89,.12);
 
-.btn:hover{filter:brightness(1.05)}
+    --blue: rgba(0,120,190,.90);
+    --bluebg: rgba(0,120,190,.10);
 
-/* Closing line */
-.closing{
-  margin-top:34px;
-  font-size:18px;
-  font-weight:600;
-  color:var(--gold);
-}
+    --pink: rgba(170,0,110,.85);
+    --pinkbg: rgba(170,0,110,.08);
 
-/* Responsive */
-@media(max-width:900px){
-  h1{font-size:28px}
-  .focus{grid-template-columns:1fr}
-}
+    --shadow: 0 10px 28px rgba(8,25,20,.10);
+
+    --topbar-bg: rgba(255,255,255,.90);
+    --topbar-bg-scrolled: rgba(255,255,255,.62);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--grad1), var(--grad2), var(--grad3), var(--bg);
+    color: var(--text);
+    line-height:1.6;
+  }
+  a{ color:inherit; }
+  .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
+
+  /* ===== TOPBAR ===== */
+  .topbar{
+    position: sticky;
+    top:0;
+    z-index:9999;
+    backdrop-filter: blur(12px);
+    background: var(--topbar-bg);
+    border-bottom:1px solid var(--border);
+    transition: background .2s ease, box-shadow .2s ease;
+  }
+  .topbar.scrolled{
+    background: var(--topbar-bg-scrolled);
+    box-shadow: 0 10px 25px rgba(0,0,0,.12);
+  }
+  .topbar-inner{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding: 10px 0;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+  .logo-link{ display:flex; align-items:center; gap:10px; text-decoration:none; min-width:0; }
+  .logo-img{
+    width:44px; height:44px; border-radius:14px;
+    object-fit:contain;
+    background: rgba(255,255,255,.06);
+    border:1px solid var(--border);
+    box-shadow: var(--shadow);
+    flex:0 0 auto;
+  }
+  .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
+  .brand-text b{
+    font-size:18px; letter-spacing:.2px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    max-width: 240px;
+  }
+  .brand-text span{
+    font-size:12px; color:var(--muted);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    max-width: 300px;
+  }
+  .desktop-nav{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
+  .chip{
+    padding:6px 10px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    text-decoration:none;
+    font-size:12px;
+    color:var(--muted);
+    background: rgba(255,255,255,.03);
+    white-space:nowrap;
+  }
+  .chip:hover{ border-color:var(--border2); color:var(--text); }
+
+  /* ===== DRAWER ===== */
+  .backdrop{
+    position:fixed; inset:0;
+    background: rgba(0,0,0,.45);
+    display:none;
+    z-index:9998;
+  }
+  .backdrop.open{ display:block; }
+  .drawer{
+    position:fixed;
+    left:12px; right:12px; bottom:12px;
+    max-height: calc(100vh - 24px);
+    overflow:auto;
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow);
+    padding:14px;
+    display:none;
+    z-index:10000;
+    backdrop-filter: blur(10px);
+    transform: translateY(8px);
+  }
+  .drawer.open{ display:block; animation: sheetIn .14s ease-out forwards; }
+  @keyframes sheetIn{ from{ opacity:0; transform: translateY(14px);} to{ opacity:1; transform: translateY(0);} }
+  .drawer-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
+  .drawer-top h3{ margin:0; font-size:13px; color: var(--muted); letter-spacing:.2px; font-weight:900; }
+  .xbtn{
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    color: var(--text);
+    border-radius:14px;
+    padding:10px 12px;
+    cursor:pointer;
+    font-weight:900;
+  }
+  .drawer-sub{ margin:12px 0 8px; font-size:12px; color: var(--muted); font-weight:900; letter-spacing:.2px; }
+  .drawer-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+  .drawer a{
+    display:block;
+    padding:12px 12px;
+    border-radius:16px;
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    text-decoration:none;
+    color: var(--text);
+    font-weight:900;
+    text-align:center;
+  }
+  .drawer a:hover{ border-color: var(--border2); }
+  .drawer .full{ grid-column: 1 / -1; }
+
+  /* ===== COMMON UI ===== */
+  header{ padding: 18px 0 10px; }
+  section{ padding: 18px 0; }
+  .hero-card, .card{
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding:16px;
+    box-shadow: var(--shadow);
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+    color:var(--muted);
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.03);
+  }
+  .dot{
+    width:10px; height:10px; border-radius:50%;
+    background: var(--gold-strong);
+    box-shadow: 0 0 0 4px rgba(255,190,100,.10);
+  }
+  h1{ margin:10px 0 8px; font-size:28px; line-height:1.18; letter-spacing:.2px; }
+  .lead{ margin:0; color:var(--muted); max-width:920px; }
+  .muted{ color:var(--muted); }
+  .rule{ height:1px; background: var(--border); margin:16px 0; }
+
+  .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:12px 16px;
+    border-radius: 14px;
+    text-decoration:none;
+    font-weight:950;
+    border:1px solid transparent;
+    white-space:nowrap;
+    user-select:none;
+    cursor:pointer;
+  }
+  .btn:hover{ filter: brightness(1.03); }
+  .btn-primary{ background: var(--goldbg); border-color: var(--gold); color: var(--text); }
+  .btn-teal{ background: var(--tealbg); border-color: rgba(35,140,110,.40); color: var(--text); }
+  .btn-blue{ background: var(--bluebg); border-color: rgba(110,170,255,.40); color: var(--text); }
+  .btn-ghost{ background: transparent; border-color: var(--border); color: var(--muted); }
+  .btn-ghost:hover{ border-color: var(--border2); color: var(--text); }
+
+  .btn-tiny{
+    padding:9px 11px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:950;
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    color: var(--text);
+    text-decoration:none;
+    cursor:pointer;
+  }
+  .btn-tiny:hover{ border-color: var(--border2); }
+
+  .cta-row{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+
+  /* ===== FEATURE CARDS ===== */
+  .feature{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .feature-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .tag{
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    padding:7px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    color: var(--muted);
+    font-size:12px;
+    font-weight:900;
+  }
+  .tag strong{ color: var(--text); }
+  .feature h2{ margin:0; font-size:20px; letter-spacing:.2px; line-height:1.25; }
+
+  .media{
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    background: rgba(255,255,255,.02);
+  }
+  .media a{ display:block; text-decoration:none; }
+  .media img{
+    width:100%;
+    display:block;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+  .media .cap{
+    padding:10px 12px;
+    border-top:1px solid var(--border);
+    color: var(--muted);
+    font-size:13px;
+  }
+
+  .highlight{
+    background: linear-gradient(180deg, rgba(255,190,100,.10), rgba(35,140,110,.06));
+    border: 1px solid rgba(255,190,100,.22);
+    border-radius: var(--radius-xl);
+    padding: 14px;
+  }
+
+  /* ===== FLOATING CONTROLS ===== */
+  .scroll-dock{
+    position:fixed;
+    right:14px;
+    bottom:152px;
+    z-index:2300;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    padding:10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+  }
+  .sbtn{
+    width:44px; height:44px;
+    border-radius:16px;
+    border:1px solid var(--border);
+    background: var(--panel);
+    color: var(--text);
+    display:grid; place-items:center;
+    cursor:pointer; user-select:none;
+    transition: transform .12s ease, border-color .12s ease, filter .12s ease;
+  }
+  .sbtn:hover{ border-color: var(--border2); filter: brightness(1.03); transform: translateY(-1px); }
+  .sbtn svg{ width:20px; height:20px; }
+
+  .hamb-fab{
+    position:fixed; left:14px; bottom:78px; z-index:2400;
+    width:54px; height:54px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    display:grid; place-items:center;
+    cursor:pointer;
+    backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .hamb-fab svg{ width:22px; height:22px; }
+
+  .theme-fab{
+    position:fixed; right:14px; bottom:78px; z-index:2400;
+    border:1px solid var(--border);
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    border-radius: 18px;
+    width:52px; height:52px;
+    display:grid; place-items:center;
+    cursor:pointer;
+    backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .theme-fab svg{ width:18px; height:18px; }
+  .icon-sun{ display:none; }
+  .theme-light .icon-sun{ display:block; }
+  .theme-light .icon-moon{ display:none; }
+
+  /* Sticky bottom bar */
+  .sticky-bar{
+    position:fixed; left:0; right:0; bottom:12px; z-index:2200;
+    display:flex; justify-content:center;
+    pointer-events:none;
+  }
+  .sticky-bar .bar{
+    pointer-events:auto;
+    width: min(920px, calc(100% - 24px));
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    border:1px solid var(--border);
+    background: var(--panel);
+    padding:10px 12px;
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+  }
+  .bar-left{ display:flex; align-items:center; gap:10px; min-width:0; }
+  .bar-left .gdot{ width:10px; height:10px; border-radius:50%; background:#00d26a; flex:0 0 auto; }
+  .bar-left b{ white-space:nowrap; }
+  .bar-actions{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+
+  /* ===== MODAL: Discount ===== */
+  .modal-wrap{
+    position:fixed; inset:0;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    padding: 16px;
+    z-index: 14000;
+  }
+  .modal-wrap.show{ display:flex; }
+  .modal-back{
+    position:absolute; inset:0;
+    background: rgba(0,0,0,.55);
+  }
+  .modal{
+    position:relative;
+    width: min(760px, 100%);
+    border-radius: var(--radius-xl);
+    border:1px solid var(--border);
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    overflow:hidden;
+    animation: sheetIn .14s ease-out forwards;
+  }
+  .modal-top{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px;
+    padding: 12px 12px 0;
+  }
+  .modal-top b{ font-size:13px; color: var(--muted); letter-spacing:.2px; }
+  .modal-x{
+    border:1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    color: var(--text);
+    border-radius:14px;
+    width:42px; height:42px;
+    display:grid; place-items:center;
+    cursor:pointer;
+    font-weight:950;
+  }
+  .modal img{
+    width:100%;
+    display:block;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    background: rgba(255,255,255,.02);
+  }
+  .modal-actions{
+    padding: 12px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    border-top:1px solid var(--border);
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    padding: 10px 0 170px;
+    border-top: 1px solid var(--border);
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .footer-card{
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding:16px;
+    box-shadow: var(--shadow);
+  }
+  .footer-columns{
+    display:grid;
+    grid-template-columns: 1.1fr .9fr .9fr;
+    gap:14px;
+    margin-top:12px;
+  }
+  .footer-title{
+    margin:0 0 8px;
+    font-size:13px;
+    color: var(--text);
+    font-weight:950;
+  }
+  .footer-links{ display:flex; gap:10px; flex-wrap:wrap; }
+  .footer-links a{ text-decoration:none; }
+  .footer-small{ font-size:13px; color: var(--muted); }
+  .socials{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 920px){
+    .grid-2{ grid-template-columns: 1fr; }
+    h1{ font-size:24px; }
+    .footer-columns{ grid-template-columns: 1fr; }
+    .desktop-nav{ display:none; }
+  }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-  <!-- Header -->
-  <div class="header">
-    <a class="brand" href="index.html">
-      <img src="assets/logo-dark.png" alt="LizOn Education Logo">
-      <div>
-        <b>LizOn Education</b><br>
-        <span>Upcoming · What’s New</span>
+<!-- TOPBAR -->
+<div class="topbar" id="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="logo-link" href="index.html" title="Go to Home" aria-label="Go to Home">
+          <img class="logo-img" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo"
+               onerror="this.src='assets/logo-dark.png';" />
+          <div class="brand-text">
+            <b>LizOn Education</b>
+            <span>Upcoming — What’s Active Now</span>
+          </div>
+        </a>
       </div>
-    </a>
 
-    <a class="back" href="index.html">← Home</a>
+      <nav class="desktop-nav" aria-label="Top navigation">
+        <a class="chip" href="index.html">Home</a>
+        <a class="chip" href="ielts.html">IELTS</a>
+        <a class="chip" href="pte.html">PTE</a>
+        <a class="chip" href="#active">Active Now</a>
+        <a class="chip" href="#footer">Contact</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- DRAWER -->
+<div class="backdrop" id="backdrop"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="drawer-top">
+    <h3>Navigate</h3>
+    <button class="xbtn" id="closeDrawer" type="button" aria-label="Close">✕</button>
   </div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <span class="badge">Now Live</span>
+  <div class="drawer-sub">Core</div>
+  <div class="drawer-grid">
+    <a class="full" href="index.html">Home</a>
+    <a class="full" href="about.html">About</a>
+    <a class="full" href="Upcoming.html">Upcoming (This page)</a>
+    <a class="full" href="ielts.html">IELTS Journey</a>
+    <a class="full" href="pte.html">PTE</a>
+  </div>
 
-    <h1>PTE Is Live —<br>Not for Guessers.</h1>
+  <div class="drawer-sub">IELTS Pages</div>
+  <div class="drawer-grid">
+    <a class="full" href="ielts-roadmap.html">IELTS Roadmap</a>
+    <a class="full" href="ielts-choose-level.html">Choose Level</a>
+    <a class="full" href="ielts-band-improvement.html">Band Improvement</a>
+    <a class="full" href="ielts-grammar.html">IELTS Grammar</a>
+    <a class="full" href="ielts-computer-based.html">Computer Based IELTS</a>
+    <a class="full" href="ielts-faq-bangladesh.html">IELTS FAQ (Bangladesh)</a>
+  </div>
 
-    <p class="lead">
-      This isn’t a “try and see” course.<br>
-      This is for students who need <b>fast, controlled results</b> — without confusion, without random practice.
-    </p>
+  <div class="drawer-sub">Practice</div>
+  <div class="drawer-grid">
+    <a class="full" href="ielts-listening.html">IELTS Listening</a>
+    <a class="full" href="ielts-reading.html">IELTS Reading</a>
+    <a class="full" href="ielts-writing.html">IELTS Writing</a>
+    <a class="full" href="ielts-speaking.html">IELTS Speaking</a>
+  </div>
 
-    <div class="divider"></div>
+  <div class="drawer-sub">Other</div>
+  <div class="drawer-grid">
+    <a class="full" href="studyabroad.html">Study Abroad</a>
+  </div>
 
-    <div class="focus">
-      <div>
-        <b>Short Timeline?</b>
-        IELTS isn’t always the answer. PTE often works better — when done right.
-      </div>
-      <div>
-        <b>Typing Speed Killing Scores?</b>
-        We fix speed, accuracy, and execution together.
-      </div>
-      <div>
-        <b>Australia, UK, EU?</b>
-        PTE works — but only with correct scoring logic.
-      </div>
-    </div>
-
-    <div class="cta">
-      <a class="btn btn-primary" href="pte.html">
-        Explore PTE Program →
-      </a>
-
-      <a class="btn btn-secondary" href="pte.html#quicktips">
-        Watch Quick Tips →
-      </a>
-    </div>
-
-    <p class="closing">
-      If you’re still deciding, the PTE page will decide for you.
-    </p>
-  </section>
-
+  <div style="margin-top:12px;">
+    <a class="btn-tiny" style="display:block;text-align:center;"
+       href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20I%20need%20guidance%20about%20PTE%20or%20IELTS.%20Please%20help%20me%20choose."
+       target="_blank" rel="noopener">Talk with LizOn</a>
+  </div>
 </div>
+
+<!-- HERO -->
+<header>
+  <div class="container">
+    <div class="hero-card">
+      <span class="badge"><span class="dot"></span>Designed for Desired Score</span>
+
+      <h1>What’s active right now at <span style="color:var(--gold-strong)">LizOn</span>?</h1>
+
+      <p class="lead">
+        This page is a shortcut. No old batches. No confusion.
+        Choose your path: <b>PTE</b> or <b>IELTS</b> → open the full page → take the next step.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#active">See Active Options</a>
+        <a class="btn btn-blue" href="pte.html">Go PTE</a>
+        <a class="btn btn-ghost" href="ielts.html">Go IELTS</a>
+        <button class="btn btn-teal" id="openDiscount" type="button">See Early Access Offer</button>
+      </div>
+
+      <p class="muted" style="margin:10px 0 0;font-size:13px;">
+        Tip: Tap the image to open details fast.
+      </p>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIVE OPTIONS -->
+<section id="active">
+  <div class="container">
+    <div class="grid-2">
+
+      <!-- PTE -->
+      <div class="card feature" id="pteCard">
+        <div class="feature-top">
+          <div>
+            <h2>PTE Preparation</h2>
+            <div class="muted" style="font-size:13px;margin-top:4px;">
+              Quick Tips + Full Class segments + live feedback + portal support.
+            </div>
+          </div>
+          <span class="tag"><strong>PTE</strong> • Active now</span>
+        </div>
+
+        <div class="media">
+          <a href="pte.html" aria-label="Open PTE page">
+            <!-- Existing asset in your repo -->
+            <img src="assets/pte-early-access-2000tk.png" alt="PTE Early Access offer" loading="lazy"
+                 onerror="this.src='assets/thumb-basic-advanced.jpg';" />
+          </a>
+          <div class="cap">
+            Early Access offer + full details inside <b>pte.html</b>.
+          </div>
+        </div>
+
+        <div class="highlight">
+          <div style="font-weight:950; margin-bottom:6px;">Fast next steps</div>
+          <div class="muted" style="font-size:13px;">
+            1) Open PTE page → 2) Watch Quick Tips → 3) Decide → 4) Payment & confirmation.
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="pte.html">Explore PTE Details</a>
+          <a class="btn btn-teal"
+             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20I%20need%20guidance%20for%20PTE.%20Please%20help%20me%20choose%20the%20right%20plan%20and%20next%20steps."
+             target="_blank" rel="noopener">AskLizOn — PTE</a>
+          <button class="btn btn-ghost" type="button" id="openDiscount2">See Offer</button>
+        </div>
+      </div>
+
+      <!-- IELTS -->
+      <div class="card feature" id="ieltsCard">
+        <div class="feature-top">
+          <div>
+            <h2>IELTS Journey</h2>
+            <div class="muted" style="font-size:13px;margin-top:4px;">
+              ZERO → HOPE → STEP-UP → DESPERATE. Structured path + evaluation focus.
+            </div>
+          </div>
+          <span class="tag"><strong>IELTS</strong> • Full system</span>
+        </div>
+
+        <div class="media">
+          <a href="ielts.html" aria-label="Open IELTS page">
+            <!-- Use any IELTS promo image you already have. This is a safe default in your assets list. -->
+            <img src="assets/thumb-basic-advanced.jpg" alt="IELTS Journey" loading="lazy"
+                 onerror="this.src='assets/pte-early-access-2000tk.png';" />
+          </a>
+          <div class="cap">
+            Explore courses, pricing, and the full roadmap inside <b>ielts.html</b>.
+          </div>
+        </div>
+
+        <div class="highlight">
+          <div style="font-weight:950; margin-bottom:6px;">If you’re confused about level</div>
+          <div class="muted" style="font-size:13px;">
+            Don’t guess. Go to IELTS page → Choose Level → then decide with an expert.
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="ielts.html">Explore IELTS Details</a>
+          <a class="btn btn-blue" href="ielts-choose-level.html">Choose Level</a>
+          <a class="btn btn-teal"
+             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20I%20need%20guidance%20for%20IELTS.%20Please%20help%20me%20choose%20the%20right%20level%20and%20next%20steps."
+             target="_blank" rel="noopener">AskLizOn — IELTS</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-card">
+
+      <h3 class="footer-title">All Options</h3>
+      <div class="footer-links" style="margin-bottom:10px;">
+        <a class="btn btn-ghost" href="index.html">Home</a>
+        <a class="btn btn-ghost" href="about.html">About</a>
+        <a class="btn btn-ghost" href="ielts.html">IELTS Journey</a>
+        <a class="btn btn-ghost" href="pte.html">PTE</a>
+        <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
+      </div>
+
+      <div class="footer-columns">
+        <div>
+          <h3 class="footer-title">Quick Access</h3>
+          <div class="footer-links">
+            <a class="btn-tiny" href="#active">Active Now</a>
+            <a class="btn-tiny" href="pte.html">PTE Page</a>
+            <a class="btn-tiny" href="ielts.html">IELTS Page</a>
+          </div>
+
+          <p class="footer-small" style="margin:10px 0 0;">
+            This page only shows what’s <b>active</b>.
+            Old items are removed on purpose.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Contact & Location</h3>
+          <p class="footer-small" style="margin:0 0 10px;">
+            <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
+            <b>IELTS/PTE Helpline:</b> 01611611139<br/>
+            <b>Study Abroad/Visa Processing:</b> 01608881545
+          </p>
+          <div class="footer-links">
+            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+            <a class="btn btn-primary"
+               href="https://wa.me/8801611611139?text=Need%20guidance%20about%20IELTS%20or%20PTE%20admission."
+               target="_blank" rel="noopener">Chat Now</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Social Media</h3>
+          <div class="socials">
+            <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+            <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+          <div class="rule"></div>
+          <p class="footer-small" style="margin:0;">
+            © 2025 myLizOn.com | LizOn Education
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky-bar" aria-label="Guidance bar">
+    <div class="bar">
+      <div class="bar-left">
+        <span class="gdot"></span>
+        <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+          <b>Need guidance?</b> Tap the right AskLizOn
+        </span>
+      </div>
+      <div class="bar-actions">
+        <a class="btn-tiny"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20I%20need%20guidance%20for%20PTE.%20Please%20help%20me%20choose."
+           target="_blank" rel="noopener">AskLizOn — PTE</a>
+        <a class="btn-tiny"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20I%20need%20guidance%20for%20IELTS.%20Please%20help%20me%20choose."
+           target="_blank" rel="noopener">AskLizOn — IELTS</a>
+        <a class="btn-tiny" href="#active">Active</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Modern Scroll Dock -->
+<div class="scroll-dock" aria-label="Scroll controls">
+  <button class="sbtn" id="scrollTopBtn" type="button" title="Top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M6 11l6-6 6 6"/></svg>
+  </button>
+  <button class="sbtn" id="scrollBottomBtn" type="button" title="Bottom" aria-label="Scroll to bottom">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M6 13l6 6 6-6"/></svg>
+  </button>
+</div>
+
+<!-- Bottom-left hamburger -->
+<button class="hamb-fab" id="hambFab" type="button" aria-label="Open menu" title="Menu">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+  </svg>
+</button>
+
+<!-- Theme toggle -->
+<div class="theme-fab" id="themeFab" role="button" tabindex="0" aria-label="Toggle theme" title="Toggle theme">
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8Z"/>
+  </svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+</div>
+
+<!-- DISCOUNT MODAL (PTE) -->
+<div class="modal-wrap" id="discountWrap" aria-hidden="true">
+  <div class="modal-back" id="discountBack"></div>
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Early access offer">
+    <div class="modal-top">
+      <b>Early Access Offer (PTE)</b>
+      <button class="modal-x" id="discountClose" aria-label="Close">✕</button>
+    </div>
+
+    <a href="pte.html" aria-label="Open PTE page">
+      <img src="assets/pte-early-access-2000tk.png" alt="PTE Early Access reward" loading="lazy">
+    </a>
+
+    <div class="modal-actions">
+      <a class="btn btn-blue" href="pte.html#quicktips">Watch Quick Tips</a>
+      <a class="btn btn-primary"
+         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20I%20want%20to%20secure%20the%20PTE%20Early%20Access%20offer.%20Please%20guide%20me%20with%20admission%20and%20payment."
+         target="_blank" rel="noopener">Secure Now</a>
+      <button class="btn btn-ghost" type="button" id="discountLater">Later</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ===== Theme toggle (persist) ===== */
+  const body = document.body;
+  const topbar = document.getElementById('topbar');
+  const logoImg = document.getElementById('logoImg');
+
+  function setTheme(mode){
+    const isLight = mode === 'light';
+    body.classList.toggle('theme-light', isLight);
+    localStorage.setItem('lizon-theme', isLight ? 'light' : 'dark');
+    if(logoImg) logoImg.src = isLight ? 'assets/logo-light.png' : 'assets/logo-dark.png';
+  }
+  setTheme(localStorage.getItem('lizon-theme') || 'dark');
+
+  function toggleTheme(){
+    const isLight = body.classList.contains('theme-light');
+    setTheme(isLight ? 'dark' : 'light');
+  }
+  document.getElementById('themeFab').addEventListener('click', toggleTheme);
+  document.getElementById('themeFab').addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') toggleTheme(); });
+
+  /* ===== Topbar scroll style ===== */
+  function handleTopbar(){
+    if(window.scrollY > 8) topbar.classList.add('scrolled');
+    else topbar.classList.remove('scrolled');
+  }
+  handleTopbar();
+  window.addEventListener('scroll', handleTopbar, {passive:true});
+
+  /* ===== Drawer ===== */
+  const drawer = document.getElementById('drawer');
+  const backdrop = document.getElementById('backdrop');
+  const closeDrawer = document.getElementById('closeDrawer');
+  const hambFab = document.getElementById('hambFab');
+
+  function openDrawer(){
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawerFn(){
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function toggleDrawer(){
+    if(drawer.classList.contains('open')) closeDrawerFn();
+    else openDrawer();
+  }
+
+  hambFab.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleDrawer(); });
+  closeDrawer.addEventListener('click', closeDrawerFn);
+  backdrop.addEventListener('click', closeDrawerFn);
+  drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeDrawerFn));
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDrawerFn(); });
+
+  /* ===== Scroll buttons ===== */
+  document.getElementById('scrollTopBtn').addEventListener('click', ()=>{
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.getElementById('scrollBottomBtn').addEventListener('click', ()=>{
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+  });
+
+  /* ===== Discount modal (session-based) ===== */
+  const discountWrap = document.getElementById('discountWrap');
+  const discountBack = document.getElementById('discountBack');
+  const discountClose = document.getElementById('discountClose');
+  const discountLater = document.getElementById('discountLater');
+
+  function openDiscount(){
+    discountWrap.classList.add('show');
+    discountWrap.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    sessionStorage.setItem('lizon-upcoming-discount-seen', '1');
+  }
+  function closeDiscount(){
+    discountWrap.classList.remove('show');
+    discountWrap.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('openDiscount')?.addEventListener('click', openDiscount);
+  document.getElementById('openDiscount2')?.addEventListener('click', openDiscount);
+  discountBack.addEventListener('click', closeDiscount);
+  discountClose.addEventListener('click', closeDiscount);
+  discountLater.addEventListener('click', closeDiscount);
+
+  // Show once per session (only if user is not already on pte.html directly)
+  const seen = sessionStorage.getItem('lizon-upcoming-discount-seen');
+  if(!seen){
+    setTimeout(()=> openDiscount(), 650);
+  }
+
+  /* ===== Global ESC closes modal too ===== */
+  document.addEventListener('keydown', (e)=>{
+    if(e.key !== 'Escape') return;
+    if(drawer.classList.contains('open')) closeDrawerFn();
+    if(discountWrap.classList.contains('show')) closeDiscount();
+  });
+</script>
 
 </body>
 </html>
+```0

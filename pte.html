@@ -1585,23 +1585,30 @@
   });
 
   /* ===== Video: play on site (swap thumbnail -> iframe) ===== */
-  function makeYouTubeIframe(videoId){
+  function makeYouTubeIframe(videoId, opts){
     const iframe = document.createElement('iframe');
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.allowFullscreen = true;
 
-    // NOTE: audio track cannot be forced from embed; user can switch to Original inside player settings.
     const params = new URLSearchParams({
       autoplay: '1',
       rel: '0',
       modestbranding: '1',
       playsinline: '1',
-      iv_load_policy: '3',
-
-      /* prefer BD locale so YouTube stops auto-picking English dub on multi-audio videos */
-      hl: 'bn',
-      gl: 'BD'
+      iv_load_policy: '3'
     });
+
+    // ===== QUICK TIPS ONLY FIX =====
+    // Goal: stop YouTube from defaulting to English captions on these short clips.
+    // We can't force "audio language", but we can:
+    // - keep captions OFF by default
+    // - hint BD locale for UI/auto-caption preference
+    if(opts && opts.quickTips){
+      params.set('cc_load_policy', '0');   // captions OFF by default
+      params.set('hl', 'bn');              // UI language hint
+      params.set('gl', 'BD');              // region hint
+      params.set('cc_lang_pref', 'bn');    // caption preference hint (if user turns CC on)
+    }
 
     iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?${params.toString()}`;
     return iframe;
@@ -1612,12 +1619,14 @@
     const vid = wrap.getAttribute('data-video');
     if(!vid) return;
 
+    const isQuickTips = !!wrap.closest('#quicktips'); // Quick Tips section only
+
     wrap.dataset.playing = '1';
     wrap.innerHTML = '';
 
     const box = document.createElement('div');
     box.className = 'iframe-box';
-    box.appendChild(makeYouTubeIframe(vid));
+    box.appendChild(makeYouTubeIframe(vid, { quickTips: isQuickTips }));
     wrap.appendChild(box);
   }
 

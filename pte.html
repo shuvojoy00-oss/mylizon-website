@@ -65,25 +65,11 @@
 
     .wrap{ width: min(var(--max), calc(100% - 32px)); margin:0 auto; }
 
-    /* TOP CLICKABLE IMAGE */
-    .top-img{
-      width:100%;
-      display:block;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      background: rgba(0,0,0,.14);
-    }
-    .top-img a{ display:block; }
-    .top-img img{
-      width:100%;
-      height:auto;
-      display:block;
-    }
-
     /* Header */
     .header{
       position:sticky;
       top:0;
-      z-index:20;
+      z-index:30;
       backdrop-filter: blur(12px);
       background: linear-gradient(180deg, rgba(6,20,15,.82), rgba(6,20,15,.35));
       border-bottom: 1px solid rgba(255,255,255,.06);
@@ -107,19 +93,20 @@
       gap:12px;
       min-width: 220px;
     }
-    .logo{
+    .logo-box{
       width:44px; height:44px;
       border-radius: 12px;
-      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.34), rgba(37,165,138,.18));
+      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.30), rgba(37,165,138,.16));
       border: 1px solid rgba(255,255,255,.10);
       display:grid;
       place-items:center;
       box-shadow: var(--soft);
+      overflow:hidden;
     }
-    .logo svg{ width:26px; height:26px; opacity:.9; }
-    .brand-txt{
-      line-height:1.15;
-    }
+    .logo-box img{ width:34px; height:34px; object-fit:contain; }
+    [data-theme="light"] .logo-box img{ filter: saturate(1.1) contrast(1.05); }
+
+    .brand-txt{ line-height:1.15; }
     .brand-txt b{ display:block; font-size:14px; letter-spacing:.2px; }
     .brand-txt span{ display:block; font-size:12px; color:var(--muted); margin-top:2px; }
 
@@ -142,7 +129,6 @@
     .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,.07); }
     [data-theme="light"] .chip{ border:1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.72); }
 
-    /* TOP RIGHT HAMBURGER */
     .menu-btn{
       width:44px; height:44px;
       border-radius: 14px;
@@ -156,11 +142,24 @@
     }
     .menu-btn svg{ width:22px; height:22px; }
 
+    /* TOP CLICKABLE IMAGE (NOW UNDER HEADER) */
+    .top-img{
+      width:100%;
+      display:block;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.10);
+    }
+    .top-img a{ display:block; }
+    .top-img img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+
     /* Sections */
     section{ padding: 22px 0; }
-    .hero{
-      padding: 22px 0 10px;
-    }
+    .hero{ padding: 22px 0 10px; }
+
     .card{
       border-radius: var(--radius2);
       border:1px solid rgba(255,255,255,.10);
@@ -172,7 +171,6 @@
       border:1px solid rgba(0,0,0,.08);
       background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.76));
     }
-
     .card-pad{ padding: 18px; }
 
     .kicker{
@@ -341,8 +339,13 @@
       color: var(--text);
     }
     .tap-btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+
     .tap-left b{ display:block; font-size:14px; }
     .tap-left span{ display:block; margin-top:4px; font-size:12.5px; color: var(--muted); }
+
+    /* Fast Clarity titles = Yellow */
+    #why .tap-left b{ color: var(--gold-strong); }
+
     .tap-ico{
       width:42px; height:42px;
       border-radius: 14px;
@@ -464,9 +467,7 @@
     .quote{ margin:0; color: var(--text); font-weight: 700; line-height: 1.55; opacity:.95; }
 
     /* Footer */
-    .footer{
-      padding: 26px 0 90px;
-    }
+    .footer{ padding: 26px 0 96px; }
     .footer-columns{
       display:grid;
       grid-template-columns: 1.1fr 1.4fr 1fr;
@@ -531,11 +532,33 @@
     .bottom-row b{ font-size: 13px; }
     .bottom-row .muted{ font-size:12.5px; }
 
+    /* Tiny Discount button (replaces Chat Now) */
+    .discount-tiny{
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(215,178,74,.32);
+      background: linear-gradient(180deg, rgba(215,178,74,.14), rgba(215,178,74,.06));
+      font-size: 11.5px;
+      font-weight: 900;
+      box-shadow: var(--soft);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height: 32px;
+      white-space: nowrap;
+    }
+    .discount-tiny i{
+      width:8px;height:8px;border-radius:99px;
+      background: var(--gold-strong);
+      box-shadow: 0 0 0 3px rgba(215,178,74,.12);
+      display:inline-block;
+    }
+
     /* FABs */
     .fab{
       position:fixed;
       left:16px;
-      bottom:88px;
+      bottom:92px;
       width:52px;
       height:52px;
       border-radius: 18px;
@@ -544,28 +567,98 @@
       box-shadow: var(--shadow2);
       display:grid;
       place-items:center;
-      z-index:30;
+      z-index:35;
       cursor:pointer;
     }
     .fab svg{ width:22px; height:22px; }
 
-    .fab-mini{
+    /* Smart scroll button */
+    .fab-right{
       position:fixed;
       right:16px;
-      bottom: 148px;
-      width:46px;
-      height:46px;
+      bottom: 140px;
+      width:50px;
+      height:50px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      display:grid;
+      place-items:center;
+      z-index:35;
+      cursor:pointer;
+    }
+    .fab-right svg{ width:22px; height:22px; }
+    .fab-right .hint{
+      position:absolute;
+      right:60px;
+      bottom:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.26);
+      font-size: 11.5px;
+      font-weight: 900;
+      color: var(--text);
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+      opacity:0;
+      transform: translateX(6px);
+      transition: .15s ease;
+      pointer-events:none;
+    }
+    .fab-right:hover .hint{ opacity:1; transform: translateX(0); }
+
+    /* Smaller theme toggle */
+    .theme-mini{
+      position:fixed;
+      right:16px;
+      bottom: 92px;
+      width:40px;
+      height:40px;
       border-radius: 16px;
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
       box-shadow: var(--shadow2);
       display:grid;
       place-items:center;
-      z-index:30;
+      z-index:35;
       cursor:pointer;
     }
-    .fab-mini.teal{ border-color: rgba(37,165,138,.35); }
-    #themeBtn{ bottom: 96px; }
+    .theme-mini svg{ width:18px; height:18px; opacity:.95; }
+
+    /* Floating AskLizOn pill */
+    .ask-pill{
+      position:fixed;
+      left:50%;
+      transform: translateX(-50%);
+      bottom: 154px;
+      z-index:36;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(215,178,74,.22);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow2);
+      cursor:pointer;
+    }
+    .ask-pill .ico{
+      width:34px;height:34px;border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+      display:grid; place-items:center;
+      overflow:hidden;
+    }
+    .ask-pill .ico svg{ width:18px; height:18px; }
+    .ask-pill b{ font-size: 13px; letter-spacing:.1px; }
+    .ask-pill b span{ color: var(--gold-strong); }
+    @media (max-width: 380px){
+      .ask-pill{ padding: 9px 12px; bottom: 158px; }
+      .ask-pill b{ font-size: 12.5px; }
+    }
 
     /* Sheets / Popups */
     .overlay{
@@ -581,6 +674,12 @@
     }
     .overlay.show{ display:flex; }
 
+    /* iPhone-like floating menu (top-right) */
+    .overlay.menu-float{
+      align-items:flex-start;
+      justify-content:flex-end;
+      padding-top: 70px;
+    }
     .sheet{
       width:min(720px, 100%);
       border-radius: 22px;
@@ -591,14 +690,23 @@
       transform: translateY(10px);
       animation: sheetIn .16s ease forwards;
     }
+    .sheet.float{
+      width: min(360px, calc(100vw - 28px));
+      border-radius: 22px;
+      transform: translateY(-6px) scale(.98);
+      opacity:.98;
+      animation: floatIn .16s ease forwards;
+    }
+    @keyframes floatIn{
+      to{ transform: translateY(0) scale(1); opacity:1; }
+    }
+
     [data-theme="light"] .sheet{
       background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.86));
       border:1px solid rgba(0,0,0,.10);
     }
 
-    @keyframes sheetIn{
-      to{ transform: translateY(0); }
-    }
+    @keyframes sheetIn{ to{ transform: translateY(0); } }
 
     .sheet-head{
       display:flex;
@@ -692,12 +800,17 @@
     .pop-body p{ margin:0; color: var(--muted); line-height:1.65; font-size: 13.5px; }
     .pop-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
 
-    /* Special: WHY titles different color (only titles inside #why) */
-    #why .mini-title{
-      color: var(--gold-strong);
+    .pop-img{
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+      box-shadow: var(--soft);
+      margin-bottom: 12px;
     }
+    .pop-img img{ width:100%; height:auto; display:block; }
 
-    /* Modal video */
+    /* Video modal */
     .video-modal{
       width:min(900px, 100%);
       border-radius: 22px;
@@ -717,27 +830,66 @@
 
 <body>
 
-  <!-- TOP IMAGE (CLICKABLE TO WHATSAPP) -->
+  <!-- HEADER -->
+  <header class="header">
+    <div class="wrap">
+      <div class="head-row">
+        <a class="brand" href="index.html" aria-label="LizOn Education Home">
+          <div class="logo-box" aria-hidden="true">
+            <img src="assets/logo-dark.png" alt="LizOn Logo" />
+          </div>
+          <div class="brand-txt">
+            <b>LizOn Education</b>
+            <span>PTE Preparation (30 Days)</span>
+          </div>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Top navigation">
+          <a class="chip" href="index.html">Home</a>
+          <a class="chip" href="ielts.html">IELTS</a>
+          <a class="chip" href="#why">Fast Clarity</a>
+          <a class="chip" href="#quicktips">Quick Tips</a>
+          <a class="chip" href="#watch">Full Class</a>
+          <a class="chip" href="#fee">Fee</a>
+          <a class="chip" href="#payment">Payment</a>
+          <a class="chip" href="#faq">Frequent Asking</a>
+        </nav>
+
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOP IMAGE (CLICKABLE TO WHATSAPP) — UNDER HEADER -->
   <div class="top-img">
-    <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20January%20batch%20e%20admission%20nite%20chai.%20Details%20diben%3F" target="_blank" rel="noopener" aria-label="Tap image to WhatsApp LizOn for PTE admission">
+    <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20January%20batch%20e%20admission%20nite%20chai.%20Details%20diben%3F"
+       target="_blank" rel="noopener" aria-label="Tap image to WhatsApp LizOn for PTE admission">
       <img src="assets/pte-top-img.png" alt="PTE Top Banner - LizOn Education" loading="eager" />
     </a>
   </div>
 
-  <!-- EARLY ACCESS POPUP -->
+  <!-- EARLY ACCESS POPUP (IMAGE ADDED) -->
   <div class="pop-wrap" id="earlyPop" aria-hidden="true">
     <div class="pop" role="dialog" aria-modal="true" aria-label="Early Access Reward">
       <div class="pop-head">
-        <div class="pop-title">Early Access Reward</div>
+        <div class="pop-title">Limited Time Discount</div>
         <button class="x" id="earlyPopClose" type="button" aria-label="Close">✕</button>
       </div>
       <div class="pop-body">
-        <p><b>Early Access Reward — 2000tk fee reduction</b></p>
+        <div class="pop-img" aria-label="Early access discount poster">
+          <img src="assets/pte-early-access-2000tk.png" alt="PTE Early Access 2000tk Discount - LizOn Education" loading="eager" />
+        </div>
+        <p><b>2000tk fee reduction</b> — early admission e.</p>
         <div class="pop-actions">
           <button class="btn btn-blue" id="earlyPopQuickTips" type="button">Watch Quick Tips</button>
           <a class="btn btn-primary" id="earlyPopSecure"
-             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20January%20batch%20e%20early%20admission%20nite%20chai.%20Early%20Access%20reward%20niye%20details%20diben%3F"
-             target="_blank" rel="noopener">Secure Now</a>
+             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20January%20batch%20e%20early%20admission%20nite%20chai.%20Limited%20Time%20Discount%20niye%20details%20diben%3F"
+             target="_blank" rel="noopener">Get Discount</a>
+          <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
         </div>
       </div>
     </div>
@@ -754,125 +906,62 @@
         <p style="color:var(--text); font-weight:950; margin-bottom:8px;">“Practice beshi, score kom”</p>
         <p>
           Task-based scoring na bujhle practice random hoy.<br/>
-          Amra score-based routine + timing + template correction diye exactly oi jaygay hit kori<br/>
+          Amra score-based routine + timing + template correction diye exactly oi jaygay hit kori
           jekhane marks ase.
         </p>
         <div class="pop-actions">
           <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20Score%20Plan%20chai.%20Amar%20timeline%20bolle%20routine%20set%20kore%20diben%3F"
              target="_blank" rel="noopener">Get Score Plan</a>
-          <button class="btn btn-blue" id="mistakePopStart" type="button">Start PTE Now</button>
+          <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
           <button class="btn btn-ghost" id="mistakePopClose2" type="button">Close</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="wrap">
-      <div class="head-row">
-        <a class="brand" href="index.html" aria-label="LizOn Education Home">
-          <div class="logo" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2l8 5v10l-8 5-8-5V7l8-5Z"></path>
-              <path d="M8 12h8"></path>
-              <path d="M12 8v8"></path>
-            </svg>
-          </div>
-          <div class="brand-txt">
-            <b>LizOn Education</b>
-            <span>PTE Preparation (30 Days)</span>
-          </div>
-        </a>
-
-        <nav class="desktop-nav" aria-label="Top navigation">
-          <a class="chip" href="index.html">Home</a>
-          <a class="chip" href="ielts.html">IELTS</a>
-          <a class="chip" href="#why">Why this course</a>
-          <a class="chip" href="#quicktips">Quick Tips</a>
-          <a class="chip" href="#watch">Full Class</a>
-          <a class="chip" href="#fee">Fee</a>
-          <a class="chip" href="#payment">Payment</a>
-        </nav>
-
-        <!-- TOP RIGHT HAMBURGER (FIXED) -->
-        <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 7h16M4 12h16M4 17h16"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- MENU SHEET -->
-  <div class="overlay" id="menuSheet" aria-hidden="true">
-    <div class="sheet" role="dialog" aria-modal="true" aria-label="Navigate">
+  <!-- MENU SHEET (iPhone floating) -->
+  <div class="overlay menu-float" id="menuSheet" aria-hidden="true">
+    <div class="sheet float" role="dialog" aria-modal="true" aria-label="Navigate">
       <div class="sheet-head">
-        <b>Navigate</b>
+        <b>Menu</b>
         <button class="x" id="menuClose" type="button" aria-label="Close">✕</button>
       </div>
       <div class="sheet-body">
-        <div style="font-weight:950; margin-bottom:10px;">Core</div>
         <div class="list">
           <a class="item" href="index.html">Home <span>→</span></a>
           <a class="item" href="about.html">About <span>→</span></a>
-          <a class="item" href="upcoming.html">Upcoming — What’s New? <span>→</span></a>
-          <a class="item" href="ielts-roadmap.html">IELTS Journey <span>→</span></a>
-          <a class="item" href="pte.html">PTE (This page) <span>→</span></a>
-        </div>
-
-        <div class="sep"></div>
-
-        <div style="font-weight:950; margin-bottom:10px;">IELTS Pages</div>
-        <div class="list">
-          <a class="item" href="ielts-roadmap.html">IELTS Roadmap <span>→</span></a>
-          <a class="item" href="ielts-choose-level.html">Choose Level <span>→</span></a>
-          <a class="item" href="ielts-band-improvement.html">Band Improvement <span>→</span></a>
-          <a class="item" href="ielts-grammar.html">IELTS Grammar <span>→</span></a>
-          <a class="item" href="ielts-computer-based.html">Computer Based IELTS <span>→</span></a>
-          <a class="item" href="ielts-faq-bangladesh.html">IELTS FAQ (Bangladesh) <span>→</span></a>
-        </div>
-
-        <div class="sep"></div>
-
-        <div style="font-weight:950; margin-bottom:10px;">Practice</div>
-        <div class="list">
-          <a class="item" href="ielts-listening.html">IELTS Listening <span>→</span></a>
-          <a class="item" href="ielts-reading.html">IELTS Reading <span>→</span></a>
-          <a class="item" href="ielts-writing.html">IELTS Writing <span>→</span></a>
-          <a class="item" href="ielts-speaking.html">IELTS Speaking <span>→</span></a>
-        </div>
-
-        <div class="sep"></div>
-
-        <div style="font-weight:950; margin-bottom:10px;">Other</div>
-        <div class="list">
+          <a class="item" href="upcoming.html">Upcoming <span>→</span></a>
+          <a class="item" href="#why">Fast Clarity <span>→</span></a>
+          <a class="item" href="#quicktips">Quick Tips <span>→</span></a>
+          <a class="item" href="#watch">Full Class <span>→</span></a>
+          <a class="item" href="#fee">Fee <span>→</span></a>
+          <a class="item" href="#payment">Payment <span>→</span></a>
+          <a class="item" href="#faq">Frequent Asking <span>→</span></a>
           <a class="item" href="studyabroad.html">Study Abroad <span>→</span></a>
-          <a class="item"
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="cta-row" style="margin-top:0;">
+          <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
+          <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20niye%20guidance%20chai.%20New%20batch%20admission%20details%20diben%3F"
-             target="_blank" rel="noopener">Talk with LizOn <span>↗</span></a>
+             target="_blank" rel="noopener">Talk with LizOn</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ASK / DETAILS SHEET -->
+  <!-- DETAILS SHEET -->
   <div class="overlay" id="detailsSheet" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true" aria-label="Details">
       <div class="sheet-head">
         <b>Details</b>
         <button class="x" id="detailsClose" type="button" aria-label="Close">✕</button>
       </div>
-      <div class="sheet-body">
-        <div class="cta-row" style="margin-top:0;">
-          <button class="btn btn-teal" data-open-ask type="button">Get clarity (tap)</button>
-          <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
-          <a class="btn btn-primary"
-             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20niye%20clarity%20pelam.%20Admission%20nite%20chai."
-             target="_blank" rel="noopener">Talk with LizOn</a>
-        </div>
+      <div class="sheet-body" id="detailsBody">
+        <!-- injected -->
       </div>
     </div>
   </div>
@@ -885,12 +974,19 @@
         <button class="x" id="paymentClose" type="button" aria-label="Close">✕</button>
       </div>
       <div class="sheet-body">
-        <div class="cta-row" style="margin-top:0;">
-          <a class="btn btn-primary"
-             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20payment%20complete%20korbo.%20Method%20choose%20kore%20screenshot%20pathabo.%20Confirm%20korben%3F"
-             target="_blank" rel="noopener">Send Screenshot / Txn ID</a>
-          <button class="btn btn-ghost" id="copyAll" type="button">Copy all</button>
-          <button class="btn btn-ghost" id="payBack" type="button">Back</button>
+        <div class="mini-card">
+          <p class="mini-title" style="margin:0 0 6px;">Payment flow (simple)</p>
+          <p class="mini-text">
+            Choose method → pay → screenshot/Txn ID → WhatsApp e pathan.<br/>
+            Confirm hole batch/group + portal direction chole jabe.
+          </p>
+          <div class="cta-row" style="margin-top:12px;">
+            <a class="btn btn-primary"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20payment%20complete%20korbo.%20Method%20choose%20kore%20screenshot%20pathabo.%20Confirm%20korben%3F"
+               target="_blank" rel="noopener">Send Screenshot / Txn ID</a>
+            <button class="btn btn-ghost" id="copyAll" type="button">Copy all</button>
+            <button class="btn btn-ghost" id="payBack" type="button">Back</button>
+          </div>
         </div>
       </div>
     </div>
@@ -900,18 +996,18 @@
   <div class="overlay" id="askSheet" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true" aria-label="Clarity Tap — PTE">
       <div class="sheet-head">
-        <b>Clarity Tap — PTE</b>
+        <b>AskLizOn — PTE</b>
         <button class="x" id="askClose" type="button" aria-label="Close">✕</button>
       </div>
       <div class="sheet-body">
         <div class="mini-card" style="margin-bottom:12px;">
-          <p class="mini-title" style="margin:0 0 6px;">Need Quick Tips?</p>
-          <p class="mini-text">4 ta score blocker — ekhanei shuru korun.</p>
+          <p class="mini-title" style="margin:0 0 6px;">Quick clarity in 20 sec</p>
+          <p class="mini-text">Tap 3 ta answer → apnar jonno best plan show korbe.</p>
           <div class="cta-row" style="margin-top:10px;">
-            <a class="btn btn-blue" href="#quicktips">Learn Here</a>
+            <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
             <a class="btn btn-primary"
                href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20niye%20quick%20guidance%20chai.%20Amar%20timeline%20bole%20advice%20diben%3F"
-               target="_blank" rel="noopener">Talk</a>
+               target="_blank" rel="noopener">Talk with LizOn</a>
           </div>
         </div>
 
@@ -919,12 +1015,8 @@
         <div class="grid-2" id="optGrid"></div>
 
         <div class="highlight" id="askResult" style="margin-top:12px; display:none;">
-          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">
-            <div>
-              <p class="mini-title" id="resTitle" style="margin:0;">Recommendation</p>
-              <div class="muted" id="resMeta" style="font-size:13px; margin-top:4px;">Based on your taps</div>
-            </div>
-          </div>
+          <p class="mini-title" id="resTitle" style="margin:0;">Recommendation</p>
+          <div class="muted" id="resMeta" style="font-size:13px; margin-top:4px;">Based on your taps</div>
           <div id="resWhy" class="muted" style="margin-top:10px; line-height:1.6;"></div>
 
           <div class="cta-row" style="margin-top:12px;">
@@ -976,13 +1068,11 @@
                href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20e%20admission%20nite%20chai.%20New%20batch%2015th%20January%20-%20details%20diben%3F"
                target="_blank" rel="noopener">Talk with LizOn</a>
 
+            <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
+
             <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
-
-            <!-- (Removed: plain AskLizOn button) -->
-            <button class="btn btn-teal" data-open-ask type="button">Get Clarity (tap)</button>
-
-            <a class="btn btn-ghost" href="#why">Why this course</a>
             <a class="btn btn-ghost" href="#payment">Payment</a>
+            <a class="btn btn-ghost" href="#faq">Frequent Asking</a>
           </div>
 
           <p class="muted" style="margin:10px 0 0;font-size:13px;">
@@ -1049,8 +1139,9 @@
       </div>
 
       <div class="cta-row" style="margin-top:14px;">
-        <button class="btn btn-teal" data-open-ask type="button">Get Clarity (tap)</button>
-        <a class="btn btn-blue" href="#quicktips">Quick Tips (4 score blockers)</a>
+        <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
+        <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
+        <a class="btn btn-ghost" href="#faq">Frequent Asking</a>
         <a class="btn btn-primary"
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20e%20admission%20nite%20chai.%20Payment%20process%20bolben%3F"
            target="_blank" rel="noopener">Admit / Talk</a>
@@ -1096,7 +1187,7 @@
         <div class="mini-card" style="border-color: rgba(37,165,138,.28); background: linear-gradient(180deg, rgba(37,165,138,.10), rgba(255,255,255,.01));">
           <p class="mini-title">This course feels like: “finally, I know what to do”</p>
           <p class="mini-text">
-            First you watch Quick Tips → then proof (Full class segment) → then clarity tap confirms your fit.
+            First you watch Quick Tips → then proof (Full class segment) → then AskLizOn confirms your fit.
             No confusion, no noise — just a path.
           </p>
         </div>
@@ -1105,7 +1196,7 @@
       <div class="cta-row" style="margin-top:14px;">
         <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
         <a class="btn btn-ghost" href="#watch">Proof (Full Class)</a>
-        <button class="btn btn-teal" data-open-ask type="button">Get Clarity (tap)</button>
+        <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
         <a class="btn btn-primary"
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Why%20this%20course%20section%20dekhechi.%20PTE%20January%20batch%20e%20admission%20nite%20chai.%20Next%20step%20bolben%3F"
            target="_blank" rel="noopener">Admit / Talk</a>
@@ -1114,7 +1205,7 @@
 
     <!-- QUICK TIPS -->
     <section id="quicktips">
-      <h2 style="margin:0 0 10px; font-size:18px; letter-spacing:-.2px;">PTE Quick Tips — 4 ta score blocker (short timeline e mostly ei 4 ta te atke jay)</h2>
+      <h2 style="margin:0 0 10px; font-size:18px; letter-spacing:-.2px;">PTE Quick Tips — 4 ta score blocker</h2>
       <p class="muted" style="margin:0 0 12px;">
         Egula “tip” na — exam e je mistakes score ke silently kheye fele, oigula fix. Prothome eta dekhen. Tarpor Full Class segments e jan.
       </p>
@@ -1196,14 +1287,15 @@
       <div class="highlight" style="margin-top:14px;">
         <span class="badge"><span class="dot"></span>Bridge</span>
         <p class="muted" style="margin:8px 0 0;">
-          Done? Ekhon Full Class segments dekhen — then admission decision. Next step: clarity tap → batch fit → payment.
+          Done? Ekhon Full Class segments dekhen — then decision. Next step: AskLizOn → batch fit → payment.
         </p>
         <div class="cta-row" style="margin-top:12px;">
           <a class="btn btn-blue" href="#watch">See Full Class segments</a>
-          <button class="btn btn-teal" data-open-ask type="button">Get clarity (tap)</button>
+          <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
+          <a class="btn btn-ghost" href="#faq">Frequent Asking</a>
           <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Quick%20Tips%20dekhechi.%20PTE%20course%20e%20admission%20nite%20chai.%20Next%20step%20bolben%3F"
-             target="_blank" rel="noopener">Talk with LizOn</a>
+             target="_blank" rel="noopener">Admit / Talk</a>
         </div>
       </div>
     </section>
@@ -1241,14 +1333,14 @@
 
         <div class="mini-card" style="border-color: rgba(35,140,110,.28); background: linear-gradient(180deg, rgba(35,140,110,.10), rgba(255,255,255,.01));">
           <p class="mini-title" style="margin-bottom:8px;">After watching — do this</p>
-          <p class="mini-text" style="margin-bottom:10px;">Quick Tips → clarity tap → payment → screenshot WhatsApp e.</p>
+          <p class="mini-text" style="margin-bottom:10px;">Quick Tips → AskLizOn → payment → screenshot WhatsApp e.</p>
 
           <div class="cta-row" style="margin-top:10px;">
-            <button class="btn btn-teal" data-open-ask type="button">Get clarity (tap)</button>
+            <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
             <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
             <a class="btn btn-primary"
                href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Full%20Class%20segment%20dekhlam.%20PTE%20course%20e%20admission%20nite%20chai.%20Next%20step%20bolben%3F"
-               target="_blank" rel="noopener">Talk with LizOn</a>
+               target="_blank" rel="noopener">Admit / Talk</a>
           </div>
 
           <div class="highlight" style="margin-top:12px;">
@@ -1258,6 +1350,74 @@
             </p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- FREQUENT ASKING (TAP ONLY) -->
+    <section id="faq">
+      <h2 style="margin:0 0 10px; font-size:18px; letter-spacing:-.2px;">Frequent Asking (tap only)</h2>
+      <p class="muted" style="margin:0 0 12px;">Confusion thakle tap koren — answer instantly.</p>
+
+      <div class="tap-grid" style="margin-top:12px;">
+        <button class="tap-btn gold" type="button" data-faq="req">
+          <div class="tap-left">
+            <b>PTE score requirement kibhabe set korbo?</b>
+            <span>University / course er requirement diye</span>
+          </div>
+          <div class="tap-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+        </button>
+
+        <button class="tap-btn teal" type="button" data-faq="timeline">
+          <div class="tap-left">
+            <b>15–30 days e ki possible?</b>
+            <span>Yes, but execution system must</span>
+          </div>
+          <div class="tap-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+        </button>
+
+        <button class="tap-btn blue" type="button" data-faq="typing">
+          <div class="tap-left">
+            <b>Typing speed keno eto important?</b>
+            <span>WFD/Essay e marks leak hoy</span>
+          </div>
+          <div class="tap-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+        </button>
+
+        <button class="tap-btn pink" type="button" data-faq="portal">
+          <div class="tap-left">
+            <b>Portal e ki pabo?</b>
+            <span>Unlimited practice for 1 month</span>
+          </div>
+          <div class="tap-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+        </button>
+
+        <button class="tap-btn teal" type="button" data-faq="payment">
+          <div class="tap-left">
+            <b>Payment diye ki bhabe confirm hobe?</b>
+            <span>Screenshot/Txn ID WhatsApp</span>
+          </div>
+          <div class="tap-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+        </button>
+
+        <button class="tap-btn gold" type="button" data-open-ask>
+          <div class="tap-left">
+            <b>Amar case-ta quickly check koren</b>
+            <span>AskLizOn (tap)</span>
+          </div>
+          <div class="tap-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+        </button>
       </div>
     </section>
 
@@ -1321,9 +1481,8 @@
       </div>
 
       <div class="cta-row" style="margin-top:14px;">
-        <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
-        <a class="btn btn-ghost" href="#watch">Full Class segments</a>
-        <button class="btn btn-teal" data-open-ask type="button">Get clarity (tap)</button>
+        <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
+        <a class="btn btn-blue" href="#payment">Payment</a>
         <a class="btn btn-primary"
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20review%20dekhechi.%20Admission%20process%20bolben%3F"
            target="_blank" rel="noopener">Admit Now</a>
@@ -1421,18 +1580,6 @@
           </div>
         </button>
 
-        <button class="tap-btn teal" type="button" data-pay="upay" aria-label="Upay">
-          <div class="tap-left">
-            <b>Upay</b>
-            <span>Send Money</span>
-          </div>
-          <div class="tap-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 12h18"></path><path d="M12 3v18"></path>
-            </svg>
-          </div>
-        </button>
-
         <button class="tap-btn gold" type="button" data-pay="bank" aria-label="Bank DBBL">
           <div class="tap-left">
             <b>Bank (DBBL)</b>
@@ -1462,7 +1609,7 @@
         <a class="btn btn-primary"
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20payment%20complete%20korbo.%20Method%20choose%20kore%20screenshot%20pathabo.%20Confirm%20korben%3F"
            target="_blank" rel="noopener">Send Screenshot / Txn ID</a>
-        <button class="btn btn-ghost" data-open-ask type="button">Need clarity? Tap</button>
+        <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
       </div>
     </section>
 
@@ -1476,7 +1623,7 @@
               <div class="footer-links">
                 <a class="btn-tiny" href="#quicktips">Quick Tips</a>
                 <a class="btn-tiny" href="#watch">Full Class</a>
-                <a class="btn-tiny" href="#reviews">Reviews</a>
+                <a class="btn-tiny" href="#faq">Frequent Asking</a>
                 <a class="btn-tiny" href="#fee">Fee</a>
                 <a class="btn-tiny" href="#payment">Payment</a>
               </div>
@@ -1497,9 +1644,7 @@
 
               <div class="footer-links">
                 <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-                <a class="btn btn-primary"
-                   href="https://wa.me/8801611611139?text=Need%20guidance%20about%20PTE%20course%20admission."
-                   target="_blank" rel="noopener">Chat Now</a>
+                <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
               </div>
             </div>
 
@@ -1524,16 +1669,29 @@
   <div class="bottom-bar" role="contentinfo">
     <div class="bottom-row">
       <div>
-        <b>Need guidance?</b> <span class="muted">Tap & decide</span>
+        <b>Need guidance?</b> <span class="muted">Tap AskLizOn</span>
       </div>
       <div style="display:flex; gap:10px; align-items:center;">
-        <a class="btn btn-primary" style="min-height:38px; padding:9px 12px;"
-           href="https://wa.me/8801611611139?text=Hi%2C%20need%20guidance%20for%20PTE%20course."
-           target="_blank" rel="noopener">Chat Now</a>
-        <a class="btn btn-ghost" style="min-height:38px; padding:9px 12px;" href="#payment">Payment</a>
+        <a class="discount-tiny"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20Limited%20Time%20Discount%20(2000tk)%20niye%20details%20diben%3F"
+           target="_blank" rel="noopener" aria-label="Get Limited Time Discount">
+          <i></i> Get Limited Time Discount
+        </a>
+        <a class="btn btn-ghost" style="min-height:34px; padding:8px 12px;" href="#payment">Payment</a>
       </div>
     </div>
   </div>
+
+  <!-- Floating AskLizOn pill (missing button fixed) -->
+  <button class="ask-pill" id="askPill" type="button" aria-label="Ask LizOn">
+    <span class="ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12a8.5 8.5 0 0 1-8.5 8.5H12a8.5 8.5 0 1 1 0-17h.5A8.5 8.5 0 0 1 21 12Z"></path>
+        <path d="M8 12h8"></path>
+      </svg>
+    </span>
+    <b>Ask <span>LizOn</span></b>
+  </button>
 
   <!-- FABs -->
   <button class="fab" id="menuFab" type="button" aria-label="Open menu (bottom left)">
@@ -1542,13 +1700,16 @@
     </svg>
   </button>
 
-  <button class="fab-mini teal" id="scrollDownBtn" type="button" aria-label="Scroll down">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <!-- Smart scroll button -->
+  <button class="fab-right" id="smartScrollBtn" type="button" aria-label="Smart scroll">
+    <span class="hint" id="scrollHint">Next</span>
+    <svg id="scrollIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M12 19l7-7h-4V5H9v7H5l7 7Z"></path>
     </svg>
   </button>
 
-  <button class="fab-mini" id="themeBtn" type="button" aria-label="Toggle theme">
+  <!-- Smaller theme toggle -->
+  <button class="theme-mini" id="themeBtn" type="button" aria-label="Toggle theme">
     <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M12 3v2M12 19v2M4.2 6.2l1.4 1.4M18.4 17.4l1.4 1.4M3 12h2M19 12h2M6.2 19.8l1.4-1.4M17.4 6.6l1.4-1.4"></path>
       <circle cx="12" cy="12" r="4"></circle>
@@ -1562,19 +1723,23 @@
     const $ = (q, el=document) => el.querySelector(q);
     const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
 
+    function lockScroll(lock){
+      document.body.style.overflow = lock ? 'hidden' : '';
+    }
+
     function openOverlay(id){
       const el = document.getElementById(id);
       if(!el) return;
       el.classList.add('show');
       el.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
+      lockScroll(true);
     }
     function closeOverlay(id){
       const el = document.getElementById(id);
       if(!el) return;
       el.classList.remove('show');
       el.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
+      lockScroll(false);
     }
 
     function openPop(id){
@@ -1582,18 +1747,18 @@
       if(!el) return;
       el.classList.add('show');
       el.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
+      lockScroll(true);
     }
     function closePop(id){
       const el = document.getElementById(id);
       if(!el) return;
       el.classList.remove('show');
       el.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
+      lockScroll(false);
     }
 
     // ----------------------------
-    // Menu (Top Right + Bottom Left)
+    // Menu (Top Right + Bottom Left) — iPhone floating
     // ----------------------------
     const menuSheet = $('#menuSheet');
     $('#menuBtn').addEventListener('click', ()=> openOverlay('menuSheet'));
@@ -1601,27 +1766,9 @@
     $('#menuClose').addEventListener('click', ()=> closeOverlay('menuSheet'));
     menuSheet.addEventListener('click', (e)=>{ if(e.target === menuSheet) closeOverlay('menuSheet'); });
 
-    // Details sheet
-    const detailsSheet = $('#detailsSheet');
-    $$('#detailsSheet [data-open-ask], [data-open-ask]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        closeOverlay('detailsSheet');
-        closeOverlay('menuSheet');
-        closeOverlay('paymentSheet');
-        openOverlay('askSheet');
-        buildAskStep(1);
-      });
-    });
-    $('#detailsClose').addEventListener('click', ()=> closeOverlay('detailsSheet'));
-    detailsSheet.addEventListener('click', (e)=>{ if(e.target === detailsSheet) closeOverlay('detailsSheet'); });
-
-    // Payment sheet
-    const paymentSheet = $('#paymentSheet');
-    $('#paymentClose').addEventListener('click', ()=> closeOverlay('paymentSheet'));
-    $('#payBack').addEventListener('click', ()=> closeOverlay('paymentSheet'));
-    paymentSheet.addEventListener('click', (e)=>{ if(e.target === paymentSheet) closeOverlay('paymentSheet'); });
-
+    // ----------------------------
     // Theme toggle
+    // ----------------------------
     const themeBtn = $('#themeBtn');
     const root = document.documentElement;
     function setTheme(t){
@@ -1634,16 +1781,12 @@
       setTheme(cur === 'dark' ? 'light' : 'dark');
     });
 
-    // Scroll down button
-    $('#scrollDownBtn').addEventListener('click', ()=>{
-      window.scrollBy({ top: Math.min(window.innerHeight * 0.9, 720), left: 0, behavior: 'smooth' });
-    });
-
     // ----------------------------
     // Video modal
     // ----------------------------
     const videoPop = $('#videoPop');
     const videoFrame = $('#videoFrame');
+
     function openVideo(id, title){
       $('.pop-title', $('#videoPop')).textContent = title || 'Video';
       videoFrame.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
@@ -1679,18 +1822,13 @@
 
     $('#mistakePopClose').addEventListener('click', ()=> closePop('mistakePop'));
     $('#mistakePopClose2').addEventListener('click', ()=> closePop('mistakePop'));
-    $('#mistakePopStart').addEventListener('click', ()=>{
-      closePop('mistakePop');
-      openOverlay('askSheet');
-      buildAskStep(1);
-    });
     mistakePop.addEventListener('click', (e)=>{ if(e.target === mistakePop) closePop('mistakePop'); });
 
     // Show Early Access once per session
     try{
       if(!sessionStorage.getItem('pte_early_shown')){
         sessionStorage.setItem('pte_early_shown','1');
-        setTimeout(()=> openPop('earlyPop'), 1200);
+        setTimeout(()=> openPop('earlyPop'), 1100);
       }
     }catch(_){}
 
@@ -1698,126 +1836,81 @@
     let mistakeShown = false;
     window.addEventListener('scroll', ()=>{
       if(mistakeShown) return;
-      if(window.scrollY > 600){
+      if(window.scrollY > 650){
         mistakeShown = true;
         setTimeout(()=> openPop('mistakePop'), 900);
       }
     }, { passive:true });
 
     // ----------------------------
-    // CREATIVE SCROLL-LONG POPUPS (1 min, 3 min, 7 min)
-    // Triggered after FIRST meaningful scroll.
+    // Smart Scroll Button (smarter)
+    // - If there is a next section below -> scroll to it
+    // - If near bottom -> go top
     // ----------------------------
-    const scrollLongConfig = [
-      {
-        key: 'pte_long_1',
-        afterMs: 60 * 1000,
-        title: 'Mini Wake-up Call',
-        body: 'Apni scroll kortesen মানে interest ase. Ekhon 10 sec e clarity নেন: timeline + target bolle amra exact routine set kore dibo.',
-        ctaText: 'Get Clarity (tap)',
-        ctaFn: () => { openOverlay('askSheet'); buildAskStep(1); }
-      },
-      {
-        key: 'pte_long_3',
-        afterMs: 3 * 60 * 1000,
-        title: 'Score Shortcut Alert',
-        body: 'PTE te “more practice” na — “right execution” scoreboard. Quick Tips e 4 blocker fix korle score jump starts hoy.',
-        ctaText: 'Go to Quick Tips',
-        ctaFn: () => { location.hash = '#quicktips'; }
-      },
-      {
-        key: 'pte_long_7',
-        afterMs: 7 * 60 * 1000,
-        title: 'Last Nudge (Friendly)',
-        body: 'Apnar timeline jodi short hoy, late decision মানে pressure. Batch 15th January — payment process simple: method choose → screenshot WhatsApp.',
-        ctaText: 'Open Payment',
-        ctaFn: () => { location.hash = '#payment'; }
+    const smartBtn = $('#smartScrollBtn');
+    const scrollHint = $('#scrollHint');
+    const scrollIcon = $('#scrollIcon');
+
+    const downIcon = `<path d="M12 19l7-7h-4V5H9v7H5l7 7Z"></path>`;
+    const upIcon   = `<path d="M12 5l-7 7h4v7h6v-7h4l-7-7Z"></path>`;
+
+    function getNextSectionTop(){
+      const sections = $$('main section');
+      const y = window.scrollY;
+      const headerOffset = 92;
+      for(const s of sections){
+        const top = s.getBoundingClientRect().top + window.scrollY;
+        if(top > y + headerOffset + 40) return top - headerOffset;
       }
-    ];
-
-    function buildTimedPop(cfg){
-      // Create a one-off popup using existing pop component
-      const id = `timed_${cfg.key}`;
-      if(document.getElementById(id)) return;
-
-      const wrap = document.createElement('div');
-      wrap.className = 'pop-wrap';
-      wrap.id = id;
-      wrap.setAttribute('aria-hidden','true');
-      wrap.innerHTML = `
-        <div class="pop" role="dialog" aria-modal="true" aria-label="${cfg.title}">
-          <div class="pop-head">
-            <div class="pop-title">${cfg.title}</div>
-            <button class="x" type="button" aria-label="Close">✕</button>
-          </div>
-          <div class="pop-body">
-            <p>${cfg.body}</p>
-            <div class="pop-actions">
-              <button class="btn btn-teal" type="button" data-cta>${cfg.ctaText}</button>
-              <a class="btn btn-primary" target="_blank" rel="noopener"
-                 href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20niye%20guidance%20chai.%20Amar%20timeline%20bole%20advice%20diben%3F">Talk with LizOn</a>
-              <button class="btn btn-ghost" type="button" data-close>Close</button>
-            </div>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(wrap);
-
-      const closeAll = () => {
-        closePop(id);
-        try{ sessionStorage.setItem(cfg.key, '1'); }catch(_){}
-      };
-      $('.x', wrap).addEventListener('click', closeAll);
-      $('[data-close]', wrap).addEventListener('click', closeAll);
-      wrap.addEventListener('click', (e)=>{ if(e.target === wrap) closeAll(); });
-
-      $('[data-cta]', wrap).addEventListener('click', ()=>{
-        closeAll();
-        cfg.ctaFn();
-      });
+      return null;
     }
 
-    let firstScrollAt = null;
-    let firstScrollPassed = false;
-
-    function armScrollLongTimers(){
-      scrollLongConfig.forEach(cfg=>{
-        try{
-          if(sessionStorage.getItem(cfg.key) === '1') return;
-        }catch(_){}
-        buildTimedPop(cfg);
-        setTimeout(()=>{
-          // Only show if user has actually scrolled meaningfully (keeps it honest)
-          if(!firstScrollPassed) return;
-          openPop(`timed_${cfg.key}`);
-        }, cfg.afterMs);
-      });
+    function updateSmartScrollUI(){
+      const doc = document.documentElement;
+      const nearBottom = (window.scrollY + window.innerHeight) >= (doc.scrollHeight - 160);
+      if(nearBottom){
+        scrollHint.textContent = 'Top';
+        scrollIcon.innerHTML = upIcon;
+      }else{
+        scrollHint.textContent = 'Next';
+        scrollIcon.innerHTML = downIcon;
+      }
     }
+    updateSmartScrollUI();
+    window.addEventListener('scroll', updateSmartScrollUI, { passive:true });
 
-    window.addEventListener('scroll', ()=>{
-      if(firstScrollAt === null){
-        firstScrollAt = Date.now();
-        armScrollLongTimers();
+    smartBtn.addEventListener('click', ()=>{
+      const doc = document.documentElement;
+      const nearBottom = (window.scrollY + window.innerHeight) >= (doc.scrollHeight - 160);
+      if(nearBottom){
+        window.scrollTo({ top:0, behavior:'smooth' });
+        return;
       }
-      if(!firstScrollPassed && window.scrollY > 250){
-        firstScrollPassed = true;
+      const nextTop = getNextSectionTop();
+      if(nextTop !== null){
+        window.scrollTo({ top: nextTop, behavior:'smooth' });
+      }else{
+        window.scrollBy({ top: Math.min(window.innerHeight * 0.9, 720), behavior:'smooth' });
       }
-    }, { passive:true });
-
-    // ----------------------------
-    // Payment tap buttons -> open payment sheet (simple)
-    // ----------------------------
-    $$('#payment [data-pay]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        openOverlay('paymentSheet');
-      });
     });
 
-    // Copy all (simple: copies fee + payment instruction)
+    // ----------------------------
+    // Payment tap buttons -> open payment sheet
+    // ----------------------------
+    $$('#payment [data-pay]').forEach(btn=>{
+      btn.addEventListener('click', ()=> openOverlay('paymentSheet'));
+    });
+
+    const paymentSheet = $('#paymentSheet');
+    $('#paymentClose').addEventListener('click', ()=> closeOverlay('paymentSheet'));
+    $('#payBack').addEventListener('click', ()=> closeOverlay('paymentSheet'));
+    paymentSheet.addEventListener('click', (e)=>{ if(e.target === paymentSheet) closeOverlay('paymentSheet'); });
+
+    // Copy all
     $('#copyAll').addEventListener('click', async ()=>{
       const text = [
         'PTE Course Fee: 9000tk',
-        'Payment: Choose method → follow instruction → send screenshot/Txn ID on WhatsApp (01611611139)',
+        'Payment: Choose method → pay → send screenshot/Txn ID on WhatsApp (01611611139)',
         'WhatsApp: https://wa.me/8801611611139'
       ].join('\n');
       try{
@@ -1831,12 +1924,25 @@
     });
 
     // ----------------------------
-    // Clarity Tap (Ask Sheet)
+    // AskLizOn (Ask Sheet)
     // ----------------------------
     const askSheet = $('#askSheet');
     $('#askClose').addEventListener('click', ()=> closeOverlay('askSheet'));
     askSheet.addEventListener('click', (e)=>{ if(e.target === askSheet) closeOverlay('askSheet'); });
 
+    function openAsk(){
+      closeOverlay('menuSheet');
+      closeOverlay('detailsSheet');
+      closeOverlay('paymentSheet');
+      openOverlay('askSheet');
+      buildAskStep(1);
+    }
+
+    // Bind all Ask buttons
+    $$('[data-open-ask]').forEach(btn=> btn.addEventListener('click', openAsk));
+    $('#askPill').addEventListener('click', openAsk);
+
+    // Ask logic
     const stepLabel = $('#stepLabel');
     const optGrid = $('#optGrid');
     const askResult = $('#askResult');
@@ -1854,10 +1960,10 @@
         label: 'Step 1/3 — Your timeline?',
         key: 'timeline',
         options: [
-          { id:'7_14', title:'7–14 days', meta:'very tight timeline', tag:'tight' },
-          { id:'15_30', title:'15–30 days', meta:'perfect for this course', tag:'ideal' },
-          { id:'30_plus', title:'30+ days', meta:'can build stronger base', tag:'steady' },
-          { id:'not_sure', title:'Not sure', meta:'we will guide in 1 min', tag:'help' },
+          { id:'7_14', title:'7–14 days', meta:'very tight timeline' },
+          { id:'15_30', title:'15–30 days', meta:'perfect for this course' },
+          { id:'30_plus', title:'30+ days', meta:'can build stronger base' },
+          { id:'not_sure', title:'Not sure', meta:'we will guide in 1 min' },
         ]
       },
       {
@@ -1865,10 +1971,10 @@
         label: 'Step 2/3 — Your target?',
         key: 'target',
         options: [
-          { id:'50_58', title:'50–58+', meta:'foundation + speed needed', tag:'mid' },
-          { id:'58_65', title:'58–65+', meta:'execution + timing discipline', tag:'good' },
-          { id:'65_79', title:'65–79+', meta:'high score requires tight routine', tag:'high' },
-          { id:'not_sure', title:'Not sure', meta:'we will map quickly', tag:'help' },
+          { id:'50_58', title:'50–58+', meta:'foundation + speed needed' },
+          { id:'58_65', title:'58–65+', meta:'execution + timing discipline' },
+          { id:'65_79', title:'65–79+', meta:'tight routine needed' },
+          { id:'not_sure', title:'Not sure', meta:'we will map quickly' },
         ]
       },
       {
@@ -1876,10 +1982,10 @@
         label: 'Step 3/3 — Biggest pain?',
         key: 'pain',
         options: [
-          { id:'typing', title:'Typing slow', meta:'Essay/WFD kills marks', tag:'typing' },
-          { id:'speaking', title:'Speaking panic', meta:'DI/RTS structure needed', tag:'speak' },
-          { id:'writing', title:'Writing time loss', meta:'timed flow needed', tag:'write' },
-          { id:'all', title:'Everything mixed', meta:'needs full execution plan', tag:'all' },
+          { id:'typing', title:'Typing slow', meta:'Essay/WFD kills marks' },
+          { id:'speaking', title:'Speaking panic', meta:'DI/RTS structure needed' },
+          { id:'writing', title:'Writing time loss', meta:'timed flow needed' },
+          { id:'all', title:'Everything mixed', meta:'needs full execution plan' },
         ]
       }
     ];
@@ -1910,11 +2016,8 @@
         `;
         b.addEventListener('click', ()=>{
           askState.answers[s.key] = opt.id;
-          if(step < 3){
-            buildAskStep(step + 1);
-          }else{
-            showAskResult();
-          }
+          if(step < 3) buildAskStep(step + 1);
+          else showAskResult();
         });
         optGrid.appendChild(b);
       });
@@ -1925,44 +2028,40 @@
 
       let title = 'Recommendation';
       let why = [];
-      let ctaText = 'Talk with LizOn';
       let waText = 'Assalamu Alaikum, PTE course niye guidance chai. Amar timeline & target bole routine set kore diben?';
 
-      // Timeline logic
       if(timeline === '7_14'){
         title = 'Fast Track Plan (7–14 days)';
-        why.push('Apnar timeline tight — tai amader target: fast scoring execution (random practice na).');
+        why.push('Timeline tight — tai amader focus: fast scoring execution (random practice na).');
       } else if(timeline === '15_30'){
         title = 'Best Fit: 30 Days Execution Plan';
         why.push('15–30 days e ei course-ta best result dey: timing + scoring logic + typing control.');
       } else if(timeline === '30_plus'){
         title = 'Steady Build Plan (30+ days)';
-        why.push('Time beshi thakle routine ta aro clean vabe build hoy — score stable hoy.');
+        why.push('Time beshi thakle routine ta clean vabe build hoy — score stable hoy.');
       } else {
         title = 'Quick Guidance Needed (1 min)';
-        why.push('Timeline sure na holeo problem nai — apnar exam date bollei amra route map kore dibo.');
+        why.push('Timeline sure na holeo problem nai — exam date bollei route map kore dibo.');
       }
 
-      // Target logic
       if(target === '65_79'){
-        why.push('High target hole “mistake leak” bandhaite hobe — timed drills + strict templates.');
+        why.push('High target hole “mistake leak” bandhaite hobe — timed drills + strict flow.');
       } else if(target === '58_65'){
-        why.push('58–65+ usually timing + structure fix korlei hoy — ei course exactly oitai kore.');
+        why.push('58–65+ usually timing + structure fix korlei hoy — course ta exactly oitai kore.');
       } else if(target === '50_58'){
         why.push('50–58+ e speed + accuracy combo lagbe — typing + question logic must.');
       } else {
-        why.push('Target sure na? University requirement bollei exact score goal set hoy.');
+        why.push('Target sure na? requirement bollei exact score goal set hoy.');
       }
 
-      // Pain logic
       if(pain === 'typing'){
-        why.push('Typing slow hole WFD/Essay e marks auto-drop — 5 typing sessions important.');
+        why.push('Typing slow hole WFD/Essay e marks auto-drop — 5 typing sessions crucial.');
       } else if(pain === 'speaking'){
-        why.push('Speaking panic hole DI/RTS fixed flow দিলে confident delivery ashbe.');
+        why.push('Speaking panic hole DI/RTS fixed flow dile confident delivery ashbe.');
       } else if(pain === 'writing'){
-        why.push('Writing time loss মানে structure missing — timed flow diye fix.');
+        why.push('Writing time loss মানe structure missing — timed flow diye fix.');
       } else {
-        why.push('Mixed problems = full execution plan লাগবে — quick tips → proof → routine.');
+        why.push('Mixed problems = full execution plan — quick tips → proof → routine.');
       }
 
       resTitle.textContent = title;
@@ -1970,7 +2069,7 @@
       resWhy.innerHTML = '• ' + why.join('<br/>• ');
 
       const wa = 'https://wa.me/8801611611139?text=' + encodeURIComponent(waText);
-      resCta.textContent = ctaText;
+      resCta.textContent = 'Talk with LizOn';
       resCta.href = wa;
 
       askResult.style.display = 'block';
@@ -1981,71 +2080,84 @@
       buildAskStep(1);
     });
 
-    // Start ask flow if opened
-    $$('[data-open-ask]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        openOverlay('askSheet');
-        buildAskStep(1);
-      });
-    });
+    // ----------------------------
+    // Details sheet (Fast Clarity + FAQ)
+    // ----------------------------
+    const detailsSheet = $('#detailsSheet');
+    const detailsBody = $('#detailsBody');
+    $('#detailsClose').addEventListener('click', ()=> closeOverlay('detailsSheet'));
+    detailsSheet.addEventListener('click', (e)=>{ if(e.target === detailsSheet) closeOverlay('detailsSheet'); });
 
-    // ----------------------------
-    // Tap-grid info (optional simple micro-sheet using Details)
-    // ----------------------------
     const sheetCopy = {
-      structure: {
-        title: 'Course Structure',
-        body: '30 days • 20 sessions (15 PTE + 5 Typing) • 1 month portal. Target: execution + timing + typing control.'
+      structure: { title: 'Course Structure', body: '30 days • 20 sessions (15 PTE + 5 Typing) • 1 month portal. Target: execution + timing + typing control.' },
+      mistakes: { title: 'Common mistakes we fix', body: 'Random practice, scoring mismatch, timed execution absent, typing weak—egula fix na korle score stuck thake.' },
+      who: { title: 'Who this course is for', body: 'Short timeline, retake candidates, AU plan, jara “what to practice” confusion e thaken—tader jonno.' },
+      whatget: { title: 'What you will get', body: 'Question logic + timing discipline + typing control + live correction mindset — so practice becomes score.' }
+    };
+
+    const faqCopy = {
+      req: {
+        title: 'PTE score requirement kibhabe set korbo?',
+        body: 'Simple: university + course requirement check koren. Jodi doubt thake, apni requirement pathale amra exact target + routine set kore dibo.'
       },
-      mistakes: {
-        title: 'Common mistakes we fix',
-        body: 'Random practice, scoring logic mismatch, timed execution absent, typing weak—egula fix na korle score stuck thake.'
+      timeline: {
+        title: '15–30 days e ki possible?',
+        body: 'Yes. Kintu “more practice” diye na—execution system diye. Quick Tips dekhe shuru koren, then timed routine.'
       },
-      who: {
-        title: 'Who this course is for',
-        body: 'Short timeline, retake candidates, AU plan, jara “what to practice” confusion e thaken—tader jonno.'
+      typing: {
+        title: 'Typing speed keno important?',
+        body: 'Essay + WFD + summaries e typing slow hole time sesh hoy, mistakes bare, marks drop. Tai typing training mandatory.'
       },
-      whatget: {
-        title: 'What you will get',
-        body: 'Question logic + timing discipline + typing control + live correction mindset — so practice becomes score.'
+      portal: {
+        title: 'Portal e ki pabo?',
+        body: '1 month unlimited practice. Target: routine maintain + task wise practice—so you don’t get lost.'
+      },
+      payment: {
+        title: 'Payment diye confirm kibhabe hobe?',
+        body: 'Pay kore screenshot/Txn ID WhatsApp e pathaben. Confirm hole batch/group + portal direction share hobe.'
       }
     };
 
-    // Build a tiny pop for tap cards (uses detailsSheet)
-    const detailsBody = $('.sheet-body', detailsSheet);
+    function openDetails(title, body){
+      detailsBody.innerHTML = `
+        <div class="mini-card">
+          <p class="mini-title" style="margin:0 0 6px;">${title}</p>
+          <p class="mini-text">${body}</p>
+          <div class="cta-row" style="margin-top:12px;">
+            <button class="btn btn-teal" type="button" id="detailsAsk">AskLizOn (tap)</button>
+            <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
+            <a class="btn btn-primary" target="_blank" rel="noopener"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20niye%20guidance%20chai.%20Amar%20timeline%20bole%20routine%20set%20kore%20diben%3F">Talk with LizOn</a>
+          </div>
+        </div>
+      `;
+      $('#detailsAsk').addEventListener('click', ()=>{
+        closeOverlay('detailsSheet');
+        openAsk();
+      });
+      openOverlay('detailsSheet');
+    }
+
     $$('#why [data-sheet]').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const key = btn.getAttribute('data-sheet');
         const info = sheetCopy[key];
         if(!info) return;
+        openDetails(info.title, info.body);
+      });
+    });
 
-        detailsBody.innerHTML = `
-          <div class="mini-card">
-            <p class="mini-title" style="margin:0 0 6px;">${info.title}</p>
-            <p class="mini-text">${info.body}</p>
-            <div class="cta-row" style="margin-top:12px;">
-              <button class="btn btn-teal" data-open-ask type="button">Get clarity (tap)</button>
-              <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
-              <a class="btn btn-primary"
-                 href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20niye%20guidance%20chai.%20Amar%20timeline%20bole%20routine%20set%20kore%20diben%3F"
-                 target="_blank" rel="noopener">Talk with LizOn</a>
-            </div>
-          </div>
-        `;
-
-        // rebind open-ask inside rebuilt content
-        $('[data-open-ask]', detailsBody).addEventListener('click', ()=>{
-          closeOverlay('detailsSheet');
-          openOverlay('askSheet');
-          buildAskStep(1);
-        });
-
-        openOverlay('detailsSheet');
+    $$('#faq [data-faq]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const key = btn.getAttribute('data-faq');
+        const info = faqCopy[key];
+        if(!info) return;
+        openDetails(info.title, info.body);
       });
     });
 
     // ----------------------------
-    // Smooth anchor scrolling (basic)
+    // Smooth anchor scrolling
     // ----------------------------
     $$('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', (e)=>{
@@ -2057,10 +2169,86 @@
           closeOverlay('menuSheet');
           closeOverlay('detailsSheet');
           closeOverlay('paymentSheet');
-          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 86, behavior:'smooth' });
+          const headerOffset = 92;
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - headerOffset, behavior:'smooth' });
         }
       });
     });
+
+    // ----------------------------
+    // Ask from top floating pill shows even after overlays close
+    // ----------------------------
+    // (Already bound)
+
+    // ----------------------------
+    // Frequent long-scroll nudges (optional) — still kept minimal
+    // ----------------------------
+    const longPopCfg = [
+      { key:'pte_long_1', afterMs: 60*1000, title:'Mini Wake-up Call', body:'Apni scroll kortesen মানe interest ase. 20 sec e clarity nen — AskLizOn e tap korun.', action:'AskLizOn', fn: openAsk },
+      { key:'pte_long_3', afterMs: 3*60*1000, title:'Score Shortcut', body:'Quick Tips e 4 blocker fix korle score jump start hoy. Tokhon routine smooth hoy.', action:'Quick Tips', fn: ()=>{ location.hash='#quicktips'; } },
+      { key:'pte_long_7', afterMs: 7*60*1000, title:'Friendly Last Nudge', body:'Late decision মানe pressure. Batch 15th January — payment easy. Discount ask korte chaile bottom e tiny button ase.', action:'Payment', fn: ()=>{ location.hash='#payment'; } },
+    ];
+
+    function buildTimedPop(cfg){
+      const id = `timed_${cfg.key}`;
+      if(document.getElementById(id)) return;
+
+      const wrap = document.createElement('div');
+      wrap.className = 'pop-wrap';
+      wrap.id = id;
+      wrap.setAttribute('aria-hidden','true');
+      wrap.innerHTML = `
+        <div class="pop" role="dialog" aria-modal="true" aria-label="${cfg.title}">
+          <div class="pop-head">
+            <div class="pop-title">${cfg.title}</div>
+            <button class="x" type="button" aria-label="Close">✕</button>
+          </div>
+          <div class="pop-body">
+            <p>${cfg.body}</p>
+            <div class="pop-actions">
+              <button class="btn btn-teal" type="button" data-cta>${cfg.action}</button>
+              <a class="btn btn-primary" target="_blank" rel="noopener"
+                 href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20niye%20guidance%20chai.%20Amar%20timeline%20bole%20advice%20diben%3F">Talk with LizOn</a>
+              <button class="btn btn-ghost" type="button" data-close>Close</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(wrap);
+
+      const closeAll = () => {
+        closePop(id);
+        try{ sessionStorage.setItem(cfg.key, '1'); }catch(_){}
+      };
+      $('.x', wrap).addEventListener('click', closeAll);
+      $('[data-close]', wrap).addEventListener('click', closeAll);
+      wrap.addEventListener('click', (e)=>{ if(e.target === wrap) closeAll(); });
+
+      $('[data-cta]', wrap).addEventListener('click', ()=>{
+        closeAll();
+        cfg.fn();
+      });
+    }
+
+    let timersArmed = false;
+    let userScrolled = false;
+
+    window.addEventListener('scroll', ()=>{
+      if(!userScrolled && window.scrollY > 220) userScrolled = true;
+
+      if(!timersArmed){
+        timersArmed = true;
+        longPopCfg.forEach(cfg=>{
+          try{ if(sessionStorage.getItem(cfg.key) === '1') return; }catch(_){}
+          buildTimedPop(cfg);
+          setTimeout(()=>{
+            if(!userScrolled) return;
+            openPop(`timed_${cfg.key}`);
+          }, cfg.afterMs);
+        });
+      }
+    }, { passive:true });
+
   </script>
 </body>
 </html>

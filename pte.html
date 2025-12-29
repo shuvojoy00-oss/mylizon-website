@@ -33,6 +33,24 @@
       --radius2:22px;
 
       --max:1100px;
+
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
+
+    /* LIGHT THEME */
+    html[data-theme="light"]{
+      --bg1:#f4fbf8;
+      --bg2:#e8f6ef;
+      --card: rgba(255,255,255,.92);
+      --card2: rgba(255,255,255,.7);
+      --line:#b9d9cc;
+      --text:#0a1a14;
+      --muted:#2b4a3f;
+
+      --shadow: 0 10px 28px rgba(10,26,20,.10);
+      --shadow2: 0 18px 46px rgba(10,26,20,.14);
     }
 
     *{box-sizing:border-box}
@@ -51,11 +69,16 @@
     img{max-width:100%; display:block}
 
     .wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
+
     .topbar{
       position:sticky; top:0; z-index:60;
       backdrop-filter: blur(10px);
       background: linear-gradient(180deg, rgba(6,20,15,.88), rgba(6,20,15,.55));
       border-bottom:1px solid rgba(29,74,58,.7);
+    }
+    html[data-theme="light"] .topbar{
+      background: linear-gradient(180deg, rgba(244,251,248,.92), rgba(244,251,248,.72));
+      border-bottom:1px solid rgba(185,217,204,.95);
     }
     .topbar-inner{
       display:flex; align-items:center; justify-content:space-between;
@@ -71,11 +94,17 @@
       background: rgba(12,32,25,.45);
       box-shadow: var(--shadow);
       position:relative;
-      z-index:99; /* clickable */
+      z-index:2;
+      max-width: calc(100% - 58px);
+    }
+    html[data-theme="light"] .brand{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
     }
     .brand img{
       width:34px; height:34px; object-fit:contain;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,.25));
+      flex:0 0 auto;
     }
     .brand b{display:block; font-size:13px; line-height:1.1}
     .brand span{display:block; font-size:12px; opacity:.85}
@@ -95,23 +124,33 @@
       transition:.15s ease;
       white-space:nowrap;
     }
+    html[data-theme="light"] .chip{
+      background: rgba(255,255,255,.84);
+      border-color: rgba(185,217,204,.95);
+    }
     .chip:hover{transform: translateY(-1px); border-color: rgba(215,178,74,.55)}
+
     .menu-btn{
-      display:none;
       width:44px; height:44px;
       border-radius:14px;
       border:1px solid rgba(29,74,58,.7);
       background: rgba(12,32,25,.45);
       color: var(--text);
       box-shadow: var(--shadow);
+      display:flex;
       align-items:center; justify-content:center;
       cursor:pointer;
+      flex:0 0 auto;
+      position:relative;
+      z-index:3;
+    }
+    html[data-theme="light"] .menu-btn{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
     }
     .menu-btn svg{width:22px; height:22px}
 
-    header.hero{
-      padding:22px 0 10px;
-    }
+    header.hero{ padding:22px 0 10px; }
     .hero-card{
       border:1px solid rgba(29,74,58,.7);
       background: rgba(12,32,25,.55);
@@ -120,6 +159,10 @@
       padding:18px;
       position:relative;
       overflow:hidden;
+    }
+    html[data-theme="light"] .hero-card{
+      background: rgba(255,255,255,.92);
+      border-color: rgba(185,217,204,.95);
     }
     .hero-card:before{
       content:"";
@@ -130,10 +173,7 @@
       pointer-events:none;
     }
     .hero-inner{position:relative; z-index:1}
-    .kicker{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin-bottom:8px;
-    }
+    .kicker{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px;}
     .tag{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 12px;
@@ -141,6 +181,10 @@
       border:1px solid rgba(29,74,58,.7);
       background: rgba(10,26,20,.55);
       font-size:13px; color:var(--muted);
+    }
+    html[data-theme="light"] .tag{
+      background: rgba(255,255,255,.75);
+      border-color: rgba(185,217,204,.95);
     }
     .tag b{color:var(--gold-strong)}
     .title{
@@ -158,6 +202,10 @@
       background: rgba(10,26,20,.45);
       font-size:13px; color:var(--text);
     }
+    html[data-theme="light"] .pill{
+      background: rgba(255,255,255,.82);
+      border-color: rgba(185,217,204,.95);
+    }
     .pill strong{color:var(--gold-strong)}
 
     .cta-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
@@ -174,6 +222,10 @@
       transition:.15s ease;
       user-select:none;
     }
+    html[data-theme="light"] .btn{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
+    }
     .btn:hover{transform: translateY(-1px); border-color: rgba(215,178,74,.55)}
     .btn-primary{
       background: linear-gradient(180deg, rgba(215,178,74,.95), rgba(184,146,47,.95));
@@ -184,15 +236,27 @@
       background: linear-gradient(180deg, rgba(90,167,255,.22), rgba(10,26,20,.45));
       border-color: rgba(90,167,255,.45);
     }
+    html[data-theme="light"] .btn-blue{
+      background: linear-gradient(180deg, rgba(90,167,255,.20), rgba(255,255,255,.86));
+      border-color: rgba(90,167,255,.40);
+    }
     .btn-teal{
       background: linear-gradient(180deg, rgba(37,165,138,.22), rgba(10,26,20,.45));
       border-color: rgba(37,165,138,.45);
+    }
+    html[data-theme="light"] .btn-teal{
+      background: linear-gradient(180deg, rgba(37,165,138,.18), rgba(255,255,255,.86));
+      border-color: rgba(37,165,138,.40);
     }
     .btn-ghost{
       background: rgba(10,26,20,.28);
       border-color: rgba(29,74,58,.55);
       color: var(--muted);
       font-weight:600;
+    }
+    html[data-theme="light"] .btn-ghost{
+      background: rgba(255,255,255,.72);
+      border-color: rgba(185,217,204,.95);
     }
     .btn-tiny{
       display:inline-flex; align-items:center; justify-content:center;
@@ -203,6 +267,10 @@
       font-size:12px;
       color:var(--text);
     }
+    html[data-theme="light"] .btn-tiny{
+      background: rgba(255,255,255,.80);
+      border-color: rgba(185,217,204,.95);
+    }
 
     section{padding:14px 0}
     .card{
@@ -210,6 +278,10 @@
       background: rgba(12,32,25,.45);
       border-radius: var(--radius2);
       box-shadow: var(--shadow);
+    }
+    html[data-theme="light"] .card{
+      background: rgba(255,255,255,.92);
+      border-color: rgba(185,217,204,.95);
     }
     .pad{padding:16px}
     h2{margin:0; font-size:20px}
@@ -232,6 +304,10 @@
       transition:.15s ease;
       text-align:left;
     }
+    html[data-theme="light"] .tap-btn{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
+    }
     .tap-btn:hover{transform: translateY(-1px); border-color: rgba(215,178,74,.55)}
     .tap-left b{display:block; font-size:16px; margin-bottom:4px}
     .tap-left span{display:block; font-size:13px; color:var(--muted)}
@@ -241,6 +317,11 @@
       border:1px solid rgba(29,74,58,.65);
       background: rgba(12,32,25,.45);
       display:flex; align-items:center; justify-content:center;
+      flex:0 0 auto;
+    }
+    html[data-theme="light"] .tap-ico{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
     }
     .tap-ico svg{width:22px; height:22px; opacity:.95}
 
@@ -248,11 +329,13 @@
     .tap-btn.teal{background: linear-gradient(180deg, rgba(37,165,138,.12), rgba(10,26,20,.35)); border-color: rgba(37,165,138,.25)}
     .tap-btn.blue{background: linear-gradient(180deg, rgba(90,167,255,.12), rgba(10,26,20,.35)); border-color: rgba(90,167,255,.25)}
     .tap-btn.pink{background: linear-gradient(180deg, rgba(255,127,191,.10), rgba(10,26,20,.35)); border-color: rgba(255,127,191,.22)}
+    html[data-theme="light"] .tap-btn.gold{background: linear-gradient(180deg, rgba(215,178,74,.16), rgba(255,255,255,.86))}
+    html[data-theme="light"] .tap-btn.teal{background: linear-gradient(180deg, rgba(37,165,138,.12), rgba(255,255,255,.86))}
+    html[data-theme="light"] .tap-btn.blue{background: linear-gradient(180deg, rgba(90,167,255,.12), rgba(255,255,255,.86))}
+    html[data-theme="light"] .tap-btn.pink{background: linear-gradient(180deg, rgba(255,127,191,.10), rgba(255,255,255,.86))}
 
     /* Fast Clarity titles yellow */
-    #clarity .tap-left b{
-      color: var(--gold-strong);
-    }
+    #clarity .tap-left b{ color: var(--gold-strong); }
 
     /* Mini Cards + Video */
     .mini-card{
@@ -260,6 +343,10 @@
       background: rgba(10,26,20,.32);
       border-radius: 18px;
       padding:14px;
+    }
+    html[data-theme="light"] .mini-card{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
     }
     .mini-title{margin:0; font-weight:800}
     .mini-text{margin:8px 0 0; color:var(--muted); font-size:13px; line-height:1.55}
@@ -270,6 +357,10 @@
       border:1px solid rgba(29,74,58,.7);
       position:relative;
       background:#07130f;
+    }
+    html[data-theme="light"] .video-wrap{
+      border-color: rgba(185,217,204,.95);
+      background:#eaf6f0;
     }
     .video-thumb{width:100%; height:170px; object-fit:cover; opacity:.95}
     .video-overlay{
@@ -308,6 +399,10 @@
       background: rgba(10,26,20,.35);
       padding:14px;
     }
+    html[data-theme="light"] .highlight{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
+    }
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 10px;
@@ -326,6 +421,10 @@
       background: rgba(10,26,20,.32);
       border-radius: 18px;
       padding:14px;
+    }
+    html[data-theme="light"] .review{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
     }
     .r-top{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px}
     .avatar{
@@ -349,6 +448,8 @@
       transition:.18s ease;
       z-index:200;
     }
+    .backdrop.show{opacity:1; pointer-events:auto}
+
     .sheet{
       position:fixed; left:0; right:0; bottom:-100%;
       background: linear-gradient(180deg, rgba(7,18,14,.98), rgba(6,20,15,.98));
@@ -362,14 +463,20 @@
       max-height: 82vh;
       overflow:auto;
     }
+    html[data-theme="light"] .sheet{
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(244,251,248,.98));
+      border-color: rgba(185,217,204,.95);
+    }
     .sheet.show{bottom:0}
-    .backdrop.show{opacity:1; pointer-events:auto}
 
     .sheet-head{
       display:flex; align-items:center; justify-content:space-between;
       padding:14px 14px 10px;
       border-bottom:1px solid rgba(29,74,58,.7);
       gap:10px;
+    }
+    html[data-theme="light"] .sheet-head{
+      border-bottom:1px solid rgba(185,217,204,.95);
     }
     .sheet-head b{font-size:15px}
     .xbtn{
@@ -381,6 +488,10 @@
       cursor:pointer;
       display:flex; align-items:center; justify-content:center;
     }
+    html[data-theme="light"] .xbtn{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
+    }
     .sheet-body{padding:14px}
     .info-box{
       border:1px solid rgba(29,74,58,.7);
@@ -390,6 +501,10 @@
       color:var(--text);
       line-height:1.6;
       font-size:14px;
+    }
+    html[data-theme="light"] .info-box{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
     }
     .sheet-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
 
@@ -409,10 +524,17 @@
       box-shadow: var(--shadow2);
       overflow:hidden;
     }
+    html[data-theme="light"] .drawer-panel{
+      background: rgba(255,255,255,.98);
+      border-color: rgba(185,217,204,.95);
+    }
     .drawer-head{
       display:flex; align-items:center; justify-content:space-between;
       padding:14px;
       border-bottom:1px solid rgba(29,74,58,.7);
+    }
+    html[data-theme="light"] .drawer-head{
+      border-bottom:1px solid rgba(185,217,204,.95);
     }
     .drawer-body{padding:14px}
     .drawer h3{margin:0 0 10px; font-size:14px; color: var(--muted)}
@@ -422,16 +544,17 @@
       border-radius:16px;
       border:1px solid rgba(29,74,58,.7);
       background: rgba(10,26,20,.35);
+      display:block;
+    }
+    html[data-theme="light"] .drawer a.item{
+      background: rgba(255,255,255,.86);
+      border-color: rgba(185,217,204,.95);
     }
     .drawer a.item:hover{border-color: rgba(215,178,74,.55)}
     .sep{height:10px}
 
     /* Video modal */
-    .vmodal{
-      position:fixed; inset:0;
-      z-index:260;
-      display:none;
-    }
+    .vmodal{ position:fixed; inset:0; z-index:260; display:none; }
     .vmodal.show{display:block}
     .vpanel{
       position:absolute; left:50%; top:50%;
@@ -443,22 +566,25 @@
       box-shadow: var(--shadow2);
       overflow:hidden;
     }
+    html[data-theme="light"] .vpanel{
+      background: rgba(255,255,255,.98);
+      border-color: rgba(185,217,204,.95);
+    }
     .vhead{
       display:flex; align-items:center; justify-content:space-between;
       padding:12px 14px;
       border-bottom:1px solid rgba(29,74,58,.7);
       gap:10px;
     }
+    html[data-theme="light"] .vhead{
+      border-bottom:1px solid rgba(185,217,204,.95);
+    }
     .vtitle{font-weight:900}
     .vbody{padding:0; background:#000}
     .vbody iframe{width:100%; height:min(56vw, 520px); border:0; display:block}
 
     /* Popup */
-    .popwrap{
-      position:fixed; inset:0;
-      z-index:280;
-      display:none;
-    }
+    .popwrap{ position:fixed; inset:0; z-index:280; display:none; }
     .popwrap.show{display:block}
     .popback{
       position:absolute; inset:0;
@@ -476,34 +602,32 @@
       box-shadow: var(--shadow2);
       overflow:hidden;
     }
+    html[data-theme="light"] .pop{
+      background: rgba(255,255,255,.98);
+      border-color: rgba(185,217,204,.95);
+    }
     .pophead{
       display:flex; align-items:center; justify-content:space-between;
       padding:12px 14px;
       border-bottom:1px solid rgba(29,74,58,.7);
     }
+    html[data-theme="light"] .pophead{
+      border-bottom:1px solid rgba(185,217,204,.95);
+    }
     .pophead b{font-size:14px}
     .popbody{padding:14px}
     .pop-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-    .pop-imgbtn{
-      border:0; padding:0; margin:0;
-      background:transparent;
-      width:100%;
-      cursor:pointer;
-    }
+    .pop-imgbtn{ border:0; padding:0; margin:0; background:transparent; width:100%; cursor:pointer; }
     .pop-img{
       width:100%;
       border-radius:18px;
       border:1px solid rgba(29,74,58,.7);
       overflow:hidden;
     }
-    .pop-title{
-      margin:0 0 8px;
-      font-size:18px;
-      font-weight:1000;
-      letter-spacing:-.2px;
-    }
+    html[data-theme="light"] .pop-img{ border-color: rgba(185,217,204,.95); }
+    .pop-title{ margin:0 0 8px; font-size:18px; font-weight:1000; letter-spacing:-.2px; }
 
-    /* Footer + Bottom Bar */
+    /* Footer */
     footer{padding:12px 0 110px}
     .footer-columns{display:grid; grid-template-columns:1.1fr 1.1fr .8fr; gap:12px; margin-top:12px}
     .footer-title{margin:0; font-size:14px; color: var(--muted)}
@@ -511,14 +635,20 @@
     .footer-small{font-size:13px; color: var(--muted); line-height:1.6}
     .socials{display:flex; flex-wrap:wrap; gap:10px}
     .rule{height:1px; background: rgba(29,74,58,.7); margin:12px 0}
+    html[data-theme="light"] .rule{ background: rgba(185,217,204,.95); }
 
+    /* Bottom Bar (kept clean: NO AskLizOn label here) */
     .bbar{
       position:fixed; left:0; right:0; bottom:0;
       z-index:70;
-      padding:10px 12px;
+      padding:10px 12px calc(10px + var(--safe-bottom));
       background: linear-gradient(180deg, rgba(6,20,15,.1), rgba(6,20,15,.92));
       border-top:1px solid rgba(29,74,58,.7);
       backdrop-filter: blur(10px);
+    }
+    html[data-theme="light"] .bbar{
+      background: linear-gradient(180deg, rgba(244,251,248,.30), rgba(244,251,248,.92));
+      border-top:1px solid rgba(185,217,204,.95);
     }
     .bbar-inner{
       max-width:var(--max);
@@ -529,12 +659,121 @@
     .bbar-left{font-size:13px; color: var(--muted)}
     .bbar-actions{display:flex; gap:10px; flex-wrap:wrap}
 
+    /* ===== FLOATING CONTROLS (ALWAYS VISIBLE) ===== */
+    .float-left{
+      position:fixed;
+      left: calc(14px + var(--safe-left));
+      bottom: calc(14px + var(--safe-bottom) + 68px);
+      z-index:120;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:flex-start;
+      pointer-events:none;
+    }
+    .float-left *{ pointer-events:auto; }
+
+    .fab{
+      width:56px; height:56px;
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(12,32,25,.55);
+      box-shadow: var(--shadow2);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      color: var(--text);
+    }
+    html[data-theme="light"] .fab{
+      background: rgba(255,255,255,.92);
+      border-color: rgba(185,217,204,.95);
+    }
+    .fab svg{width:22px; height:22px}
+
+    .fab-ask{
+      height:56px;
+      padding:0 14px 0 12px;
+      border-radius:18px;
+      border:1px solid rgba(215,178,74,.55);
+      background:
+        radial-gradient(420px 120px at 10% 0%, rgba(215,178,74,.18), transparent 55%),
+        radial-gradient(420px 120px at 90% 100%, rgba(37,165,138,.16), transparent 58%),
+        rgba(12,32,25,.55);
+      box-shadow: var(--shadow2);
+      display:flex; align-items:center; gap:10px;
+      cursor:pointer;
+      color: var(--text);
+      font-weight:900;
+      letter-spacing:-.1px;
+    }
+    html[data-theme="light"] .fab-ask{
+      background:
+        radial-gradient(420px 120px at 10% 0%, rgba(215,178,74,.20), transparent 55%),
+        radial-gradient(420px 120px at 90% 100%, rgba(37,165,138,.16), transparent 58%),
+        rgba(255,255,255,.92);
+      border-color: rgba(215,178,74,.60);
+    }
+    .fab-ask .spark{
+      width:36px; height:36px;
+      border-radius:14px;
+      border:1px solid rgba(215,178,74,.45);
+      background: rgba(215,178,74,.14);
+      display:flex; align-items:center; justify-content:center;
+      flex:0 0 auto;
+    }
+    .fab-ask .spark svg{width:18px; height:18px}
+    .fab-ask small{display:block; font-weight:700; color: var(--muted); margin-top:1px; letter-spacing:0}
+
+    .float-right{
+      position:fixed;
+      right: calc(14px + var(--safe-right));
+      bottom: calc(14px + var(--safe-bottom) + 68px);
+      z-index:120;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:flex-end;
+      pointer-events:none;
+    }
+    .float-right *{ pointer-events:auto; }
+
+    .fab-mini{
+      width:52px; height:52px;
+      border-radius:18px;
+      border:1px solid rgba(29,74,58,.75);
+      background: rgba(12,32,25,.55);
+      box-shadow: var(--shadow2);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      color: var(--text);
+    }
+    html[data-theme="light"] .fab-mini{
+      background: rgba(255,255,255,.92);
+      border-color: rgba(185,217,204,.95);
+    }
+
+    .fab-mini svg{width:20px; height:20px}
+
+    .fab-mini.teal{
+      border-color: rgba(37,165,138,.55);
+      background: linear-gradient(180deg, rgba(37,165,138,.22), rgba(12,32,25,.55));
+    }
+    html[data-theme="light"] .fab-mini.teal{
+      background: linear-gradient(180deg, rgba(37,165,138,.18), rgba(255,255,255,.92));
+    }
+
+    .fab-mini.gold{
+      border-color: rgba(215,178,74,.55);
+      background: linear-gradient(180deg, rgba(215,178,74,.20), rgba(12,32,25,.55));
+    }
+    html[data-theme="light"] .fab-mini.gold{
+      background: linear-gradient(180deg, rgba(215,178,74,.18), rgba(255,255,255,.92));
+    }
+
     /* Responsive */
     @media (max-width: 980px){
       .grid-3{grid-template-columns:1fr}
       .grid-2{grid-template-columns:1fr}
       .desktop-nav{display:none}
-      .menu-btn{display:flex}
       .footer-columns{grid-template-columns:1fr}
       .video-thumb{height:190px}
       .title{font-size:26px}
@@ -553,7 +792,6 @@
         <button class="xbtn" id="earlyPopClose" type="button" aria-label="Close">✕</button>
       </div>
       <div class="popbody">
-        <!-- Clicking the image = go to course details + close popup -->
         <button class="pop-imgbtn" id="earlyPopImageBtn" type="button" aria-label="Open course details">
           <img class="pop-img" src="assets/pte-early-access-2000tk.png" alt="Early Access Reward — 2000tk fee reduction" loading="eager">
         </button>
@@ -599,7 +837,7 @@
   <div class="topbar">
     <div class="wrap">
       <div class="topbar-inner">
-        <a class="brand" href="index.html" aria-label="Go to home" style="position:relative; z-index:99;">
+        <a class="brand" href="index.html" aria-label="Go to home">
           <img src="assets/logo-dark.png" alt="LizOn Education Logo" />
           <div>
             <b>LizOn Education</b>
@@ -617,6 +855,7 @@
           <a class="chip" href="#payment">Payment</a>
         </nav>
 
+        <!-- TOP RIGHT HAMBURGER (FIXED) -->
         <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 7h16M4 12h16M4 17h16"></path>
@@ -628,7 +867,7 @@
 
   <!-- Drawer -->
   <div class="drawer" id="drawer" aria-hidden="true">
-    <div class="backdrop show" id="drawerBack"></div>
+    <div class="backdrop" id="drawerBack"></div>
     <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Navigate">
       <div class="drawer-head">
         <b>Navigate</b>
@@ -709,10 +948,10 @@
 
             <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
 
-            <button class="btn btn-teal" id="openAskFromHero" type="button">AskLizOn — PTE</button>
+            <!-- (Removed: plain AskLizOn button) -->
+            <button class="btn btn-teal" data-open-ask type="button">Get Clarity (tap)</button>
 
             <a class="btn btn-ghost" href="#why">Why this course</a>
-
             <a class="btn btn-ghost" href="#payment">Payment</a>
           </div>
 
@@ -785,7 +1024,7 @@
         </div>
 
         <div class="cta-row" style="margin-top:14px;">
-          <button class="btn btn-teal" data-open-ask type="button">AskLizOn — PTE (tap-only)</button>
+          <button class="btn btn-teal" data-open-ask type="button">Get Clarity (tap)</button>
           <a class="btn btn-blue" href="#quicktips">Quick Tips (4 score blockers)</a>
           <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20e%20admission%20nite%20chai.%20Payment%20process%20bolben%3F"
@@ -795,7 +1034,7 @@
     </div>
   </section>
 
-  <!-- WHY THIS COURSE (NEW) -->
+  <!-- WHY THIS COURSE -->
   <section id="why">
     <div class="wrap">
       <div class="card pad">
@@ -836,7 +1075,7 @@
           <div class="mini-card" style="border-color: rgba(37,165,138,.28); background: linear-gradient(180deg, rgba(37,165,138,.10), rgba(255,255,255,.01));">
             <p class="mini-title">This course feels like: “finally, I know what to do”</p>
             <p class="mini-text">
-              First you watch Quick Tips → then proof (Full class segment) → then AskLizOn confirms your fit.
+              First you watch Quick Tips → then proof (Full class segment) → then clarity tap confirms your fit.
               No confusion, no noise — just a path.
             </p>
           </div>
@@ -845,7 +1084,7 @@
         <div class="cta-row" style="margin-top:14px;">
           <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
           <a class="btn btn-ghost" href="#watch">Proof (Full Class)</a>
-          <button class="btn btn-teal" data-open-ask type="button">AskLizOn — PTE</button>
+          <button class="btn btn-teal" data-open-ask type="button">Get Clarity (tap)</button>
           <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Why%20this%20course%20section%20dekhechi.%20PTE%20January%20batch%20e%20admission%20nite%20chai.%20Next%20step%20bolben%3F"
              target="_blank" rel="noopener">Admit / Talk</a>
@@ -864,7 +1103,6 @@
         </p>
 
         <div class="grid-2" style="margin-top:12px;">
-          <!-- QT 1 -->
           <div class="mini-card" style="border-color: rgba(255,190,100,.22); background: linear-gradient(180deg, rgba(255,190,100,.08), rgba(255,255,255,.01));">
             <p class="mini-title" style="margin-bottom:6px;">Highlight Incorrect Words — most common trap</p>
             <p class="mini-text">“Choto mone hoy”, but wrong clicks e score drop hoy. Rule clear hole random guess off hoy.</p>
@@ -883,7 +1121,6 @@
             </div>
           </div>
 
-          <!-- QT 2 -->
           <div class="mini-card" style="border-color: rgba(35,140,110,.22); background: linear-gradient(180deg, rgba(35,140,110,.08), rgba(255,255,255,.01));">
             <p class="mini-title" style="margin-bottom:6px;">Respond to a Situation — template chara panic</p>
             <p class="mini-text">Most students “idea” na peye blank hoy. Structure thakle 10 sec e response ready.</p>
@@ -902,7 +1139,6 @@
             </div>
           </div>
 
-          <!-- QT 3 -->
           <div class="mini-card" style="border-color: rgba(110,170,255,.22); background: linear-gradient(180deg, rgba(110,170,255,.08), rgba(255,255,255,.01));">
             <p class="mini-title" style="margin-bottom:6px;">Describe Image — speaking e time waste</p>
             <p class="mini-text">Graph dekhe “ki bolbo” vabte vabtei time sesh. Fixed flow thakle confident delivery.</p>
@@ -921,7 +1157,6 @@
             </div>
           </div>
 
-          <!-- QT 4 -->
           <div class="mini-card" style="border-color: rgba(255,160,210,.18); background: linear-gradient(180deg, rgba(255,160,210,.06), rgba(255,255,255,.01));">
             <p class="mini-title" style="margin-bottom:6px;">Live Feedback — real correction dekhen</p>
             <p class="mini-text">Advice onek jaygay paben. Feedback rarely paben. Ei video proof: amra mistake dhore fix kori.</p>
@@ -944,11 +1179,11 @@
         <div class="highlight" style="margin-top:14px;">
           <span class="badge"><span class="dot"></span>Bridge</span>
           <p class="muted" style="margin:8px 0 0;">
-            Done? Ekhon Full Class segments dekhen — then admission decision. Next step: AskLizOn → batch fit → payment.
+            Done? Ekhon Full Class segments dekhen — then admission decision. Next step: clarity tap → batch fit → payment.
           </p>
           <div class="cta-row" style="margin-top:12px;">
             <a class="btn btn-blue" href="#watch">See Full Class segments</a>
-            <button class="btn btn-teal" data-open-ask type="button">Get clarity (AskLizOn)</button>
+            <button class="btn btn-teal" data-open-ask type="button">Get clarity (tap)</button>
             <a class="btn btn-primary"
                href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Quick%20Tips%20dekhechi.%20PTE%20course%20e%20admission%20nite%20chai.%20Next%20step%20bolben%3F"
                target="_blank" rel="noopener">Talk with LizOn</a>
@@ -993,10 +1228,10 @@
 
           <div class="mini-card" style="border-color: rgba(35,140,110,.28); background: linear-gradient(180deg, rgba(35,140,110,.10), rgba(255,255,255,.01));">
             <p class="mini-title" style="margin-bottom:8px;">After watching — do this</p>
-            <p class="mini-text" style="margin-bottom:10px;">Quick Tips → AskLizOn → payment → screenshot WhatsApp e.</p>
+            <p class="mini-text" style="margin-bottom:10px;">Quick Tips → clarity tap → payment → screenshot WhatsApp e.</p>
 
             <div class="cta-row" style="margin-top:10px;">
-              <button class="btn btn-teal" data-open-ask type="button">Get clarity (AskLizOn)</button>
+              <button class="btn btn-teal" data-open-ask type="button">Get clarity (tap)</button>
               <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
               <a class="btn btn-primary"
                  href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Full%20Class%20segment%20dekhlam.%20PTE%20course%20e%20admission%20nite%20chai.%20Next%20step%20bolben%3F"
@@ -1079,7 +1314,7 @@
         <div class="cta-row" style="margin-top:14px;">
           <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
           <a class="btn btn-ghost" href="#watch">Full Class segments</a>
-          <button class="btn btn-teal" data-open-ask type="button">Get clarity (AskLizOn)</button>
+          <button class="btn btn-teal" data-open-ask type="button">Get clarity (tap)</button>
           <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20review%20dekhechi.%20Admission%20process%20bolben%3F"
              target="_blank" rel="noopener">Admit Now</a>
@@ -1232,7 +1467,7 @@
           <a class="btn btn-primary"
              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20payment%20complete%20korbo.%20Method%20choose%20kore%20screenshot%20pathabo.%20Confirm%20korben%3F"
              target="_blank" rel="noopener">Send Screenshot / Txn ID</a>
-          <button class="btn btn-ghost" data-open-ask type="button">Still confused? AskLizOn</button>
+          <button class="btn btn-ghost" data-open-ask type="button">Need clarity? Tap</button>
         </div>
       </div>
     </div>
@@ -1299,20 +1534,64 @@
     </div>
   </footer>
 
-  <!-- Bottom Bar -->
+  <!-- Bottom Bar (clean + consistent) -->
   <div class="bbar">
     <div class="bbar-inner">
       <div class="bbar-left">
         <b style="color:var(--text);">Need guidance?</b> Tap & decide
       </div>
       <div class="bbar-actions">
-        <button class="btn btn-teal" data-open-ask type="button">AskLizOn — PTE</button>
         <a class="btn btn-primary"
            href="https://wa.me/8801611611139?text=Hi%2C%20need%20guidance%20for%20PTE%20course."
            target="_blank" rel="noopener">Chat Now</a>
         <a class="btn btn-ghost" href="#payment">Payment</a>
       </div>
     </div>
+  </div>
+
+  <!-- ===== FLOATING LEFT: (1) Creative clarity button (2) Bottom-left hamburger menu ===== -->
+  <div class="float-left" aria-label="Quick controls left">
+    <button class="fab-ask" id="askFab" type="button" aria-label="Open clarity tap">
+      <span class="spark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l1.8 5.3L19 9l-5.2 1.7L12 16l-1.8-5.3L5 9l5.2-1.7L12 2Z"/>
+          <path d="M20 14l.8 2.3L23 17l-2.2.7L20 20l-.8-2.3L17 17l2.2-.7L20 14Z"/>
+        </svg>
+      </span>
+      <span>
+        Clarity Tap
+        <small>10 sec e fit bujhen</small>
+      </span>
+    </button>
+
+    <button class="fab" id="menuFab" type="button" aria-label="Open menu (bottom left)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ===== FLOATING RIGHT: Scroll buttons + Theme toggle (always visible) ===== -->
+  <div class="float-right" aria-label="Quick controls right">
+    <button class="fab-mini gold" id="scrollTopBtn" type="button" aria-label="Scroll to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5l-7 7h4v7h6v-7h4l-7-7Z"></path>
+      </svg>
+    </button>
+
+    <button class="fab-mini teal" id="scrollDownBtn" type="button" aria-label="Scroll down">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 19l7-7h-4V5H9v7H5l7 7Z"></path>
+      </svg>
+    </button>
+
+    <button class="fab-mini" id="themeBtn" type="button" aria-label="Toggle theme">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <!-- default icon updated by JS -->
+        <path d="M12 3v2M12 19v2M4.2 6.2l1.4 1.4M18.4 17.4l1.4 1.4M3 12h2M19 12h2M6.2 19.8l1.4-1.4M17.4 6.6l1.4-1.4"></path>
+        <circle cx="12" cy="12" r="4"></circle>
+      </svg>
+    </button>
   </div>
 
   <!-- Backdrops + Sheets -->
@@ -1327,7 +1606,7 @@
     <div class="sheet-body">
       <div class="info-box" id="infoBody"></div>
       <div class="sheet-actions">
-        <button class="btn btn-teal" data-open-ask type="button">AskLizOn — PTE</button>
+        <button class="btn btn-teal" data-open-ask type="button">Get clarity (tap)</button>
         <a class="btn btn-blue" href="#quicktips">Quick Tips</a>
         <a class="btn btn-primary"
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20course%20niye%20clarity%20pelam.%20Admission%20nite%20chai."
@@ -1352,10 +1631,10 @@
     </div>
   </div>
 
-  <!-- AskLizOn Sheet -->
+  <!-- Ask Sheet (kept, but user-facing triggers are now creative) -->
   <div class="sheet" id="askSheet" aria-hidden="true">
     <div class="sheet-head">
-      <b>AskLizOn — PTE</b>
+      <b>Clarity Tap — PTE</b>
       <button class="xbtn" id="askClose" type="button" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -1402,7 +1681,7 @@
   </div>
 
   <script>
-    // Helpers
+    // Helpers (safe)
     const $ = (q, el=document) => el.querySelector(q);
     const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
 
@@ -1412,56 +1691,119 @@
       el.scrollIntoView({behavior:'smooth', block:'start'});
     }
 
-    // Drawer
+    // ===== Theme toggle (ALWAYS visible) =====
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+
+    function setTheme(mode){
+      root.setAttribute('data-theme', mode);
+      try{ localStorage.setItem('liz_theme', mode); }catch(e){}
+      renderThemeIcon(mode);
+    }
+    function renderThemeIcon(mode){
+      if(!themeIcon) return;
+      if(mode === 'light'){
+        themeIcon.innerHTML = `
+          <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path>
+        `;
+      }else{
+        themeIcon.innerHTML = `
+          <path d="M12 3v2M12 19v2M4.2 6.2l1.4 1.4M18.4 17.4l1.4 1.4M3 12h2M19 12h2M6.2 19.8l1.4-1.4M17.4 6.6l1.4-1.4"></path>
+          <circle cx="12" cy="12" r="4"></circle>
+        `;
+      }
+    }
+    (function initTheme(){
+      let saved = null;
+      try{ saved = localStorage.getItem('liz_theme'); }catch(e){}
+      if(saved !== 'light' && saved !== 'dark') saved = 'dark';
+      setTheme(saved);
+    })();
+
+    if(themeBtn){
+      themeBtn.addEventListener('click', ()=>{
+        const now = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        setTheme(now === 'light' ? 'dark' : 'light');
+      });
+    }
+
+    // ===== Scroll buttons (ALWAYS visible) =====
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const scrollDownBtn = document.getElementById('scrollDownBtn');
+
+    if(scrollTopBtn){
+      scrollTopBtn.addEventListener('click', ()=>{
+        window.scrollTo({top:0, behavior:'smooth'});
+      });
+    }
+    if(scrollDownBtn){
+      scrollDownBtn.addEventListener('click', ()=>{
+        const step = Math.max(480, Math.floor(window.innerHeight * 0.85));
+        window.scrollBy({top: step, behavior:'smooth'});
+      });
+    }
+
+    // ===== Drawer (TOP RIGHT + BOTTOM LEFT BOTH OPEN SAME MENU) =====
     const drawer = document.getElementById('drawer');
     const menuBtn = document.getElementById('menuBtn');
+    const menuFab = document.getElementById('menuFab');
     const drawerClose = document.getElementById('drawerClose');
     const drawerBack = document.getElementById('drawerBack');
 
     function openDrawer(){
+      if(!drawer) return;
       drawer.classList.add('open');
       drawer.setAttribute('aria-hidden','false');
+      if(drawerBack) drawerBack.classList.add('show');
       document.body.style.overflow='hidden';
     }
     function closeDrawer(){
+      if(!drawer) return;
       drawer.classList.remove('open');
       drawer.setAttribute('aria-hidden','true');
+      if(drawerBack) drawerBack.classList.remove('show');
       document.body.style.overflow='';
     }
-    menuBtn.addEventListener('click', openDrawer);
-    drawerClose.addEventListener('click', closeDrawer);
-    drawerBack.addEventListener('click', closeDrawer);
-    drawer.addEventListener('click', (e)=>{
-      if(e.target === drawer) closeDrawer();
-    });
 
-    // Sheets common
+    if(menuBtn) menuBtn.addEventListener('click', openDrawer);
+    if(menuFab) menuFab.addEventListener('click', openDrawer);
+    if(drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    if(drawerBack) drawerBack.addEventListener('click', closeDrawer);
+
+    if(drawer){
+      drawer.addEventListener('click', (e)=>{
+        if(e.target === drawer) closeDrawer();
+      });
+    }
+
+    // ===== Sheets common =====
     const sheetBack = document.getElementById('sheetBack');
     const infoSheetWrap = document.getElementById('infoSheet');
     const paySheetWrap  = document.getElementById('paySheet');
     const askWrap       = document.getElementById('askSheet');
 
     function closeAllSheets(){
-      infoSheetWrap.classList.remove('show');
-      paySheetWrap.classList.remove('show');
-      askWrap.classList.remove('show');
-      sheetBack.classList.remove('show');
-      infoSheetWrap.setAttribute('aria-hidden','true');
-      paySheetWrap.setAttribute('aria-hidden','true');
-      askWrap.setAttribute('aria-hidden','true');
+      if(infoSheetWrap){ infoSheetWrap.classList.remove('show'); infoSheetWrap.setAttribute('aria-hidden','true'); }
+      if(paySheetWrap){  paySheetWrap.classList.remove('show');  paySheetWrap.setAttribute('aria-hidden','true'); }
+      if(askWrap){       askWrap.classList.remove('show');       askWrap.setAttribute('aria-hidden','true'); }
+      if(sheetBack) sheetBack.classList.remove('show');
       document.body.style.overflow='';
     }
     function openSheet(which){
       closeAllSheets();
-      sheetBack.classList.add('show');
+      if(sheetBack) sheetBack.classList.add('show');
       which.classList.add('show');
       which.setAttribute('aria-hidden','false');
       document.body.style.overflow='hidden';
     }
-    sheetBack.addEventListener('click', closeAllSheets);
-    $('#infoClose').addEventListener('click', closeAllSheets);
-    $('#payClose').addEventListener('click', closeAllSheets);
-    $('#askClose').addEventListener('click', closeAllSheets);
+    if(sheetBack) sheetBack.addEventListener('click', closeAllSheets);
+    const infoClose = document.getElementById('infoClose');
+    const payClose = document.getElementById('payClose');
+    const askClose = document.getElementById('askClose');
+    if(infoClose) infoClose.addEventListener('click', closeAllSheets);
+    if(payClose)  payClose.addEventListener('click', closeAllSheets);
+    if(askClose)  askClose.addEventListener('click', closeAllSheets);
 
     // Details content
     const infoBody = document.getElementById('infoBody');
@@ -1502,8 +1844,8 @@
     $$('#clarity .tap-btn').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const key = btn.getAttribute('data-sheet');
-        infoBody.innerHTML = DETAILS[key] || '';
-        openSheet(infoSheetWrap);
+        if(infoBody) infoBody.innerHTML = DETAILS[key] || '';
+        if(infoSheetWrap) openSheet(infoSheetWrap);
       });
     });
 
@@ -1514,19 +1856,17 @@
 
     const PAY = {
       bkash_merchant: {
-        title: "Bkash Merchant (Make Payment)",
         body: `
           <b>Bkash Merchant</b><br/><br/>
           1) bKash app খুলুন<br/>
           2) <b>Payment</b> select করুন<br/>
-          3) Merchant number দিন (LizOn) <br/>
+          3) Merchant number দিন (LizOn)<br/>
           4) Amount: <b>9000</b><br/>
           5) Reference: <b>PTE</b><br/>
           6) Screenshot নিয়ে WhatsApp এ পাঠান
         `
       },
       bkash_personal: {
-        title: "Bkash Personal (Send Money)",
         body: `
           <b>Bkash Personal</b><br/><br/>
           1) bKash app → <b>Send Money</b><br/>
@@ -1537,7 +1877,6 @@
         `
       },
       rocket: {
-        title: "Rocket (Send Money)",
         body: `
           <b>Rocket</b><br/><br/>
           1) Rocket app/USSD → Send Money<br/>
@@ -1548,7 +1887,6 @@
         `
       },
       nagad: {
-        title: "Nagad (Send Money)",
         body: `
           <b>Nagad</b><br/><br/>
           1) Nagad app → Send Money<br/>
@@ -1559,7 +1897,6 @@
         `
       },
       upay: {
-        title: "Upay (Send Money)",
         body: `
           <b>Upay</b><br/><br/>
           1) Upay app → Send Money<br/>
@@ -1569,7 +1906,6 @@
         `
       },
       bank: {
-        title: "Bank (DBBL)",
         body: `
           <b>Bank Transfer (DBBL)</b><br/><br/>
           1) Bank account transfer করুন<br/>
@@ -1579,7 +1915,6 @@
         `
       },
       visa: {
-        title: "Visa Card Transfer (IFIC)",
         body: `
           <b>Visa Card Transfer (IFIC Bank)</b><br/><br/>
           1) Card transfer / bank transfer করুন<br/>
@@ -1595,25 +1930,27 @@
         const key = btn.getAttribute('data-pay');
         const p = PAY[key];
         if(!p) return;
-        payBody.innerHTML = p.body;
-        payWhatsApp.href = "https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20payment%20done.%20Screenshot%20or%20Txn%20ID%20attach%20kore%20pathacchi.";
-        openSheet(paySheetWrap);
+        if(payBody) payBody.innerHTML = p.body;
+        if(payWhatsApp) payWhatsApp.href = "https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20payment%20done.%20Screenshot%20or%20Txn%20ID%20attach%20kore%20pathacchi.";
+        if(paySheetWrap) openSheet(paySheetWrap);
       });
     });
 
-    payCopyAll.addEventListener('click', async ()=>{
-      const text = payBody.innerText || '';
-      try{
-        await navigator.clipboard.writeText(text);
-        payCopyAll.textContent = "Copied!";
-        setTimeout(()=> payCopyAll.textContent="Copy all", 1200);
-      }catch(e){
-        payCopyAll.textContent = "Copy failed";
-        setTimeout(()=> payCopyAll.textContent="Copy all", 1200);
-      }
-    });
+    if(payCopyAll){
+      payCopyAll.addEventListener('click', async ()=>{
+        const text = (payBody && (payBody.innerText || '')) || '';
+        try{
+          await navigator.clipboard.writeText(text);
+          payCopyAll.textContent = "Copied!";
+          setTimeout(()=> payCopyAll.textContent="Copy all", 1200);
+        }catch(e){
+          payCopyAll.textContent = "Copy failed";
+          setTimeout(()=> payCopyAll.textContent="Copy all", 1200);
+        }
+      });
+    }
 
-    // AskLizOn
+    // ===== Clarity Tap (Ask Sheet) =====
     const stepLabel = document.getElementById('stepLabel');
     const optGrid = document.getElementById('optGrid');
     const askResult = document.getElementById('askResult');
@@ -1622,28 +1959,24 @@
     const resWhy   = document.getElementById('resWhy');
     const resCta   = document.getElementById('resCta');
     const askRestart = document.getElementById('askRestart');
-
     const askQuickTipsBtn = document.getElementById('askQuickTipsBtn');
 
     const STEPS = [
-      {
-        label: "Step 1/3 — Your timeline?",
+      { label: "Step 1/3 — Your timeline?",
         opts: [
           {k:"t10", t:"10 days", s:"exam close / urgent"},
           {k:"t20", t:"20 days", s:"tight but doable"},
           {k:"t30", t:"30 days", s:"best timeline"}
         ]
       },
-      {
-        label: "Step 2/3 — Your goal?",
+      { label: "Step 2/3 — Your goal?",
         opts: [
           {k:"g50", t:"Score 50–58", s:"basic requirement"},
           {k:"g60", t:"Score 58–65+", s:"safe target"},
           {k:"gretake", t:"Retake", s:"score stuck / repeat"}
         ]
       },
-      {
-        label: "Step 3/3 — Your biggest blocker?",
+      { label: "Step 3/3 — Your biggest blocker?",
         opts: [
           {k:"btime", t:"Time management", s:"finish korte pari na"},
           {k:"btyping", t:"Typing speed", s:"WFD/essay e slow"},
@@ -1656,8 +1989,9 @@
     let picks = [];
 
     function renderAsk(){
-      askResult.style.display = "none";
-      stepLabel.textContent = STEPS[step].label;
+      if(askResult) askResult.style.display = "none";
+      if(stepLabel) stepLabel.textContent = STEPS[step].label;
+      if(!optGrid) return;
 
       optGrid.innerHTML = "";
       STEPS[step].opts.forEach(o=>{
@@ -1689,47 +2023,59 @@
     }
 
     function showAskResult(){
+      if(!askResult) return;
       askResult.style.display = "block";
 
       const timeline = picks[0]?.t || "";
       const goal = picks[1]?.t || "";
       const blocker = picks[2]?.t || "";
 
-      resTitle.textContent = "Recommendation — PTE 30 Days Execution Plan";
-      resMeta.textContent = `Timeline: ${timeline} • Goal: ${goal} • Blocker: ${blocker}`;
+      if(resTitle) resTitle.textContent = "Recommendation — PTE 30 Days Execution Plan";
+      if(resMeta)  resMeta.textContent = `Timeline: ${timeline} • Goal: ${goal} • Blocker: ${blocker}`;
 
-      resWhy.innerHTML = `
-        Based on your taps, apnar jeta dorkar:
-        <br/><br/>
-        • Score-based routine (random practice stop)<br/>
-        • Timing discipline for each task<br/>
-        • Typing control + template correction<br/><br/>
-        Best next step: <b>Quick Tips</b> dekhe nin, then WhatsApp e apnar timeline bolun — amra routine set kore dibo.
-      `;
+      if(resWhy){
+        resWhy.innerHTML = `
+          Based on your taps, apnar jeta dorkar:
+          <br/><br/>
+          • Score-based routine (random practice stop)<br/>
+          • Timing discipline for each task<br/>
+          • Typing control + template correction<br/><br/>
+          Best next step: <b>Quick Tips</b> dekhe nin, then WhatsApp e apnar timeline bolun — amra routine set kore dibo.
+        `;
+      }
 
-      resCta.href = "https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20AskLizOn%20use%20korechi.%20Amar%20timeline%20and%20goal%20onujayi%20PTE%20routine%20set%20kore%20diben%3F";
+      if(resCta){
+        resCta.href = "https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Clarity%20Tap%20use%20korechi.%20Amar%20timeline%20and%20goal%20onujayi%20PTE%20routine%20set%20kore%20diben%3F";
+      }
     }
 
-    askRestart.addEventListener('click', ()=>{
-      step = 0; picks = [];
-      renderAsk();
-    });
+    if(askRestart){
+      askRestart.addEventListener('click', ()=>{
+        step = 0; picks = [];
+        renderAsk();
+      });
+    }
 
-    // Open Ask from buttons
     function openAsk(){
+      if(!askWrap) return;
       openSheet(askWrap);
       step = 0; picks = [];
       renderAsk();
     }
+
+    // Triggers: all "data-open-ask" + creative FAB
     $$('.btn[data-open-ask]').forEach(b=> b.addEventListener('click', openAsk));
-    document.getElementById('openAskFromHero').addEventListener('click', openAsk);
+    const askFab = document.getElementById('askFab');
+    if(askFab) askFab.addEventListener('click', openAsk);
 
-    askQuickTipsBtn.addEventListener('click', ()=>{
-      closeAllSheets();
-      setTimeout(()=> scrollToId('quicktips'), 120);
-    });
+    if(askQuickTipsBtn){
+      askQuickTipsBtn.addEventListener('click', ()=>{
+        closeAllSheets();
+        setTimeout(()=> scrollToId('quicktips'), 120);
+      });
+    }
 
-    // Video modal
+    // ===== Video modal =====
     const vwrap = document.getElementById('vwrap');
     const vback = document.getElementById('vback');
     const vclose= document.getElementById('vclose');
@@ -1737,26 +2083,33 @@
     const vbody  = document.getElementById('vbody');
 
     function closeVideo(){
+      if(!vwrap) return;
       vwrap.classList.remove('show');
       vwrap.setAttribute('aria-hidden','true');
-      vbody.innerHTML = "";
+      if(vbody) vbody.innerHTML = "";
       document.body.style.overflow='';
     }
     function openVideo(videoId, title){
-      // Close sheets first
       closeAllSheets();
-      vtitle.textContent = title || "Video";
-      vbody.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
-        title="${title || 'Video'}"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>`;
-      vwrap.classList.add('show');
-      vwrap.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
+      closeDrawer();
+
+      if(vtitle) vtitle.textContent = title || "Video";
+      if(vbody){
+        vbody.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+          title="${title || 'Video'}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>`;
+      }
+
+      if(vwrap){
+        vwrap.classList.add('show');
+        vwrap.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+      }
     }
 
-    vback.addEventListener('click', closeVideo);
-    vclose.addEventListener('click', closeVideo);
+    if(vback) vback.addEventListener('click', closeVideo);
+    if(vclose) vclose.addEventListener('click', closeVideo);
 
     $$('.video-wrap').forEach(w=>{
       const vid = w.getAttribute('data-video');
@@ -1769,7 +2122,7 @@
       }
     });
 
-    // Smooth anchor scrolling (keeps everything clean on mobile)
+    // Smooth anchor scrolling
     $$('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', (e)=>{
         const href = a.getAttribute('href');
@@ -1793,7 +2146,6 @@
     const earlyPopQuickTips = document.getElementById('earlyPopQuickTips');
     const earlyPopSecure = document.getElementById('earlyPopSecure');
 
-    // Popup #2
     const mistakePopWrap = document.getElementById('mistakePopWrap');
     const mistakePopBack = document.getElementById('mistakePopBack');
     const mistakePopClose = document.getElementById('mistakePopClose');
@@ -1805,17 +2157,18 @@
 
     function isAnyModalOpen(){
       return (
-        drawer.classList.contains('open') ||
-        infoSheetWrap.classList.contains('show') ||
-        paySheetWrap.classList.contains('show') ||
-        askWrap.classList.contains('show') ||
-        vwrap.classList.contains('show') ||
-        earlyPopWrap.classList.contains('show') ||
-        mistakePopWrap.classList.contains('show')
+        (drawer && drawer.classList.contains('open')) ||
+        (infoSheetWrap && infoSheetWrap.classList.contains('show')) ||
+        (paySheetWrap && paySheetWrap.classList.contains('show')) ||
+        (askWrap && askWrap.classList.contains('show')) ||
+        (vwrap && vwrap.classList.contains('show')) ||
+        (earlyPopWrap && earlyPopWrap.classList.contains('show')) ||
+        (mistakePopWrap && mistakePopWrap.classList.contains('show'))
       );
     }
 
     function openEarlyPop(){
+      if(!earlyPopWrap) return;
       if(isAnyModalOpen()) return;
       earlyPopWrap.classList.add('show');
       earlyPopWrap.setAttribute('aria-hidden','false');
@@ -1823,6 +2176,7 @@
     }
 
     function closeEarlyPop(){
+      if(!earlyPopWrap) return;
       earlyPopWrap.classList.remove('show');
       earlyPopWrap.setAttribute('aria-hidden','true');
       document.body.style.overflow = '';
@@ -1830,8 +2184,9 @@
     }
 
     function openMistakePop(){
+      if(!mistakePopWrap) return;
       if(mistakeShown) return;
-      if(!earlyClosed) return;         // must close popup #1 first
+      if(!earlyClosed) return;
       if(isAnyModalOpen()) return;
       mistakeShown = true;
       mistakePopWrap.classList.add('show');
@@ -1840,45 +2195,45 @@
     }
 
     function closeMistakePop(){
+      if(!mistakePopWrap) return;
       mistakePopWrap.classList.remove('show');
       mistakePopWrap.setAttribute('aria-hidden','true');
       document.body.style.overflow = '';
     }
 
-    /* --- Popup #1 events --- */
-    earlyPopBack.addEventListener('click', closeEarlyPop);
-    earlyPopClose.addEventListener('click', closeEarlyPop);
+    if(earlyPopBack) earlyPopBack.addEventListener('click', closeEarlyPop);
+    if(earlyPopClose) earlyPopClose.addEventListener('click', closeEarlyPop);
 
-    earlyPopQuickTips.addEventListener('click', ()=>{
-      closeEarlyPop();
-      setTimeout(()=> scrollToId('quicktips'), 80);
-    });
+    if(earlyPopQuickTips){
+      earlyPopQuickTips.addEventListener('click', ()=>{
+        closeEarlyPop();
+        setTimeout(()=> scrollToId('quicktips'), 80);
+      });
+    }
+    if(earlyPopImageBtn){
+      earlyPopImageBtn.addEventListener('click', ()=>{
+        closeEarlyPop();
+        setTimeout(()=> scrollToId('clarity'), 80);
+      });
+    }
+    if(earlyPopSecure) earlyPopSecure.addEventListener('click', closeEarlyPop);
 
-    earlyPopImageBtn.addEventListener('click', ()=>{
-      closeEarlyPop();
-      setTimeout(()=> scrollToId('clarity'), 80);
-    });
+    if(mistakePopBack) mistakePopBack.addEventListener('click', closeMistakePop);
+    if(mistakePopClose) mistakePopClose.addEventListener('click', closeMistakePop);
+    if(mistakePopClose2) mistakePopClose2.addEventListener('click', closeMistakePop);
 
-    earlyPopSecure.addEventListener('click', ()=>{
-      closeEarlyPop();
-    });
+    if(mistakePopStart){
+      mistakePopStart.addEventListener('click', ()=>{
+        closeMistakePop();
+        setTimeout(()=> scrollToId('clarity'), 80);
+      });
+    }
 
-    /* --- Popup #2 events --- */
-    mistakePopBack.addEventListener('click', closeMistakePop);
-    mistakePopClose.addEventListener('click', closeMistakePop);
-    mistakePopClose2.addEventListener('click', closeMistakePop);
-    mistakePopStart.addEventListener('click', ()=>{
-      closeMistakePop();
-      setTimeout(()=> scrollToId('clarity'), 80);
-    });
-
-    /* --- Trigger rules --- */
-    /* Popup #1: show in 2–3 seconds */
+    // Popup triggers
     window.addEventListener('load', ()=>{
       setTimeout(()=> openEarlyPop(), 2300);
     });
 
-    /* Popup #2: show after some scrolling */
     window.addEventListener('scroll', ()=>{
       if(mistakeShown) return;
       if(!earlyClosed) return;
@@ -1887,9 +2242,7 @@
       }
     }, { passive:true });
 
-    // Close drawer on route change
     window.addEventListener('hashchange', closeDrawer);
   </script>
 </body>
 </html>
-```0

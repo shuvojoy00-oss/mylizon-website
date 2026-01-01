@@ -1,323 +1,1389 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Computer Skills | LizOn Education</title>
-<meta name="theme-color" content="#062b1f">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Computer Lessons (IELTS & PTE) | LizOn Education</title>
+  <meta name="description" content="Tap-only AskLizOn Computer bot for IELTS & PTE. No scrolling needed. Fast guidance for computer-based exam performance." />
+  <meta name="theme-color" content="#062b1f" />
 
-<style>
-:root{
-  --bg:#041f16;
-  --bg2:#062b1f;
-  --card:rgba(255,255,255,.06);
-  --stroke:rgba(255,255,255,.12);
-  --text:rgba(255,255,255,.92);
-  --muted:rgba(255,255,255,.72);
-  --gold:#d6b35a;
-  --shadow:0 18px 60px rgba(0,0,0,.45);
-  --safeBottom:88px;
-}
-[data-theme="light"]{
-  --bg:#f6fbf8;
-  --bg2:#e9f4ee;
-  --card:rgba(6,43,31,.06);
-  --stroke:rgba(6,43,31,.14);
-  --text:rgba(6,43,31,.92);
-  --muted:rgba(6,43,31,.70);
-  --shadow:0 18px 60px rgba(6,43,31,.12);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,Arial,sans-serif;
-  background:linear-gradient(180deg,var(--bg2),var(--bg));
-  color:var(--text);
-}
-a{text-decoration:none;color:inherit}
+  <style>
+    :root{
+      /* Dark mode (NO pure black) */
+      --bg:#041f16;
+      --bg2:#062b1f;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
+      --gold:#d6b35a;
+      --gold2:#caa64a;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
 
-/* HEADER */
-header{
-  position:sticky;top:0;z-index:50;
-  backdrop-filter:blur(10px);
-  background:rgba(4,31,22,.85);
-  border-bottom:1px solid var(--stroke);
-}
-.header-inner{
-  max-width:1100px;margin:auto;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px;
-}
-.brand{display:flex;gap:10px;align-items:center}
-.logo{
-  width:34px;height:34px;border-radius:10px;
-  display:grid;place-items:center;
-  background:linear-gradient(135deg,rgba(214,179,90,.3),rgba(255,255,255,.05));
-  font-weight:900;
-}
-.nav{display:flex;gap:8px}
-.nav a{
-  padding:8px 12px;border-radius:999px;
-  border:1px solid var(--stroke);
-  background:rgba(255,255,255,.05);
-  font-size:13px;font-weight:700;
-}
-.hamburger{
-  width:42px;height:42px;border-radius:14px;
-  border:1px solid var(--stroke);
-  background:rgba(255,255,255,.05);
-  display:grid;place-items:center;cursor:pointer;
-}
-.hamburger div{
-  width:18px;height:2px;background:#fff;position:relative;
-}
-.hamburger div::before,
-.hamburger div::after{
-  content:"";position:absolute;left:0;right:0;height:2px;background:#fff;
-}
-.hamburger div::before{top:-5px}
-.hamburger div::after{top:5px}
+      --radius:18px;
+      --radius2:22px;
+      --tap:52px;
+      --max:1050px;
 
-/* MAIN */
-main{max-width:1100px;margin:auto;padding:16px 12px 160px}
-h1{font-size:20px;margin:8px 0}
-p{color:var(--muted);font-size:14px}
+      --safeBottom: 88px; /* bottom bars space */
+    }
 
-/* CARDS */
-.card{
-  border:1px solid var(--stroke);
-  background:var(--card);
-  border-radius:22px;
-  box-shadow:var(--shadow);
-  margin:14px 0;
-}
-.card-header{
-  padding:14px;border-bottom:1px solid var(--stroke);
-  display:flex;justify-content:space-between;align-items:center;
-}
-.card-body{padding:14px}
+    [data-theme="light"]{
+      --bg:#f6fbf8;
+      --bg2:#e9f4ee;
+      --card:rgba(6,43,31,.06);
+      --card2:rgba(6,43,31,.08);
+      --stroke:rgba(6,43,31,.14);
+      --text:rgba(6,43,31,.92);
+      --muted:rgba(6,43,31,.70);
+      --shadow: 0 18px 60px rgba(6,43,31,.12);
+    }
 
-/* ASK LIZON CHAT */
-.chat{
-  min-height:260px;
-  max-height:480px;
-  overflow:auto;
-}
-.bubble{
-  padding:10px 12px;border-radius:16px;
-  margin:8px 0;font-size:13px;
-  border:1px solid var(--stroke);
-  background:rgba(255,255,255,.05);
-}
-.bubble.user{
-  margin-left:auto;
-  background:linear-gradient(135deg,rgba(214,179,90,.25),rgba(255,255,255,.04));
-}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{
-  padding:10px 14px;border-radius:999px;
-  border:1px solid var(--stroke);
-  background:rgba(255,255,255,.05);
-  font-size:13px;font-weight:700;cursor:pointer;
-}
-.chip.gold{
-  background:linear-gradient(135deg,rgba(214,179,90,.35),rgba(255,255,255,.05));
-}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 0%, rgba(214,179,90,.16) 0%, rgba(6,43,31,0) 55%),
+        radial-gradient(1100px 700px at 90% 10%, rgba(14,58,40,.45) 0%, rgba(4,31,22,0) 58%),
+        linear-gradient(180deg, var(--bg2) 0%, var(--bg) 65%, var(--bg) 100%);
+      min-height:100vh;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{width:min(var(--max), 92vw); margin:0 auto; padding:14px 0 calc(var(--safeBottom) + 220px);}
 
-/* ASK LIZON FLOAT */
-.askliz{
-  position:fixed;left:56%;transform:translateX(-50%);
-  bottom:calc(var(--safeBottom) + 10px);
-  z-index:90;
-  display:flex;gap:8px;align-items:center;
-  padding:8px 14px;border-radius:999px;
-  border:1px solid rgba(214,179,90,.45);
-  background:rgba(6,43,31,.75);
-  font-weight:900;font-size:13px;
-}
-.askliz span{
-  width:28px;height:28px;border-radius:50%;
-  display:grid;place-items:center;
-  border:1px solid var(--stroke);
-}
+    /* ===== Header (Index-like: logo + chips + burger) ===== */
+    .topbar{
+      position:sticky; top:0; z-index:60;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(4,31,22,.92) 0%, rgba(4,31,22,.72) 70%, rgba(4,31,22,0) 100%);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    [data-theme="light"] .topbar{
+      background: linear-gradient(180deg, rgba(246,251,248,.92) 0%, rgba(246,251,248,.75) 70%, rgba(246,251,248,0) 100%);
+      border-bottom: 1px solid rgba(6,43,31,.08);
+    }
+    .topbarInner{
+      width:min(var(--max), 92vw);
+      margin:0 auto;
+      padding:12px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      user-select:none;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      display:grid; place-items:center;
+      background:linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.06));
+      border:1px solid var(--stroke);
+      font-weight:900; letter-spacing:.4px;
+    }
+    .brandText b{display:block; font-size:14px; line-height:1.1}
+    .brandText span{display:block; font-size:12px; color:var(--muted); margin-top:2px}
 
-/* FLOATING BUTTONS */
-.fab{
-  position:fixed;width:52px;height:52px;border-radius:16px;
-  border:1px solid var(--stroke);
-  background:rgba(255,255,255,.06);
-  backdrop-filter:blur(10px);
-  display:grid;place-items:center;
-  cursor:pointer;z-index:95;
-}
-.fab-left{left:14px;bottom:calc(var(--safeBottom)+10px)}
-.fab-right{right:14px;bottom:calc(var(--safeBottom)+10px)}
+    .navChips{
+      display:flex; gap:8px; flex-wrap:wrap;
+      align-items:center; justify-content:center;
+      flex:1;
+    }
+    .chipNav{
+      height:40px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      font-size:12.5px;
+      font-weight:800;
+      display:inline-flex; align-items:center; justify-content:center;
+      user-select:none;
+    }
+    .chipNav.active{
+      border-color: rgba(214,179,90,.60);
+      background: linear-gradient(135deg, rgba(214,179,90,.20), rgba(255,255,255,.05));
+    }
+    .rightControls{display:flex; gap:10px; align-items:center;}
+    .iconbtn{
+      height:42px; min-width:42px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      cursor:pointer;
+      user-select:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    }
+    .iconbtn:active{transform: translateY(1px)}
+    .iconbtn .bars{
+      width:18px; height:12px; position:relative;
+    }
+    .iconbtn .bars:before,
+    .iconbtn .bars:after,
+    .iconbtn .bars i{
+      content:"";
+      position:absolute; left:0; right:0;
+      height:2px; border-radius:2px;
+      background:rgba(255,255,255,.86);
+      opacity:.92;
+    }
+    .iconbtn .bars:before{top:0}
+    .iconbtn .bars i{top:5px}
+    .iconbtn .bars:after{bottom:0}
+    [data-theme="light"] .iconbtn .bars:before,
+    [data-theme="light"] .iconbtn .bars:after,
+    [data-theme="light"] .iconbtn .bars i{
+      background:rgba(6,43,31,.86);
+    }
 
-/* SMART ARROW */
-.fab-right .arrow{
-  width:0;height:0;
+    @media (max-width: 980px){
+      .navChips{display:none}
+    }
+
+    /* ===== Hero ===== */
+    .hero{
+      padding:14px 0 10px;
+      display:grid; gap:10px;
+    }
+    .hero h1{
+      margin:0;
+      font-size:20px;
+      letter-spacing:.2px;
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+      max-width:80ch;
+    }
+
+    /* ===== Layout ===== */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardHeader{
+      padding:14px 14px 10px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+    .title{display:flex; flex-direction:column; gap:2px}
+    .title b{font-size:14px}
+    .title span{font-size:12px; color:var(--muted)}
+    .pill{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      white-space:nowrap;
+    }
+
+    /* ===== AskLizOn Bot ===== */
+    .toggleRow{
+      padding:12px 14px 0;
+      display:grid; gap:10px;
+    }
+    .toggle{
+      display:grid; grid-template-columns:1fr 1fr; gap:10px;
+    }
+    .tbtn{
+      height:var(--tap);
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900;
+      cursor:pointer;
+      user-select:none;
+    }
+    .tbtn.active{
+      border-color: rgba(214,179,90,.65);
+      background: linear-gradient(135deg, rgba(214,179,90,.18), rgba(255,255,255,.06));
+      box-shadow: 0 14px 40px rgba(0,0,0,.22);
+    }
+    .tbtn span{font-size:13px; letter-spacing:.2px}
+
+    .botWrap{padding:12px 14px 14px}
+    .chat{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      border-radius:18px;
+      padding:12px;
+      min-height:300px;
+      max-height: 540px;
+      overflow:auto;
+      scroll-behavior:smooth;
+    }
+    .bubble{
+      max-width: 92%;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      margin:8px 0;
+      font-size:13px;
+      line-height:1.45;
+    }
+    .bubble.bot{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+    }
+    .bubble.user{
+      margin-left:auto;
+      background:linear-gradient(180deg, rgba(214,179,90,.16), rgba(255,255,255,.04));
+      border-color: rgba(214,179,90,.35);
+    }
+    .chips{
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin:10px 0 4px;
+    }
+    .chip{
+      min-height:44px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      cursor:pointer;
+      user-select:none;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .chip:active{transform: translateY(1px)}
+    .chip.gold{
+      border-color: rgba(214,179,90,.55);
+      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
+      font-weight:900;
+    }
+
+    /* ===== Locked Content (Tap-to-see) ===== */
+    .contentWrap{padding:12px 14px 14px}
+    details{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      border-radius:16px;
+      padding:10px 12px;
+      margin:10px 0;
+    }
+    summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:900;
+      font-size:13px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    summary::-webkit-details-marker{display:none}
+    .chev{opacity:.75; transition: transform .15s ease}
+    details[open] .chev{transform: rotate(90deg)}
+    .block{
+      margin-top:10px;
+      font-size:13px;
+      line-height:1.55;
+    }
+    .muted{color:var(--muted)}
+    ul{margin:10px 0 0 18px; padding:0}
+    li{margin:6px 0}
+
+    /* ===== AskLizOnComputer floating pill (like PTE) ===== */
+    .askliz-fab{
+      position: fixed;
+      left: 56%;  /* slightly right like screenshot */
+      bottom: calc(var(--safeBottom) + 10px);
+      transform: translateX(-50%);
+      z-index: 90;
+
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      height: 46px;
+      padding: 0 14px 0 8px;
+      border-radius: 999px;
+
+      border: 1px solid rgba(214,179,90,.45);
+      background: rgba(6,43,31,.70);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+
+      color: rgba(255,255,255,.92);
+      font-weight: 900;
+      font-size: 13px;
+
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .askliz-fab:active{ transform: translateX(-50%) translateY(1px); }
+    .askliz-icon{
+      width: 30px; height: 30px; border-radius: 999px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      font-weight: 900; font-size: 14px;
+    }
+
+    @media (max-width:420px){
+      .askliz-fab{height:44px; padding:0 12px 0 7px; font-size:12.5px; left:55%;}
+      .askliz-icon{width:28px; height:28px;}
+    }
+
+    /* ===== Bottom Floating Buttons ===== */
+    .fab{
+      position:fixed;
+      z-index: 95;
+      width:52px; height:52px;
+      border-radius: 16px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fab:active{transform: translateY(1px)}
+    .fabLeft{
+      left:14px;
+      bottom: calc(var(--safeBottom) + 10px);
+    }
+    .fabRight{
+      right:14px;
+      bottom: calc(var(--safeBottom) + 10px);
+    }
+    .fab .miniBars{width:18px; height:12px; position:relative;}
+    .fab .miniBars:before, .fab .miniBars:after, .fab .miniBars i{
+      content:""; position:absolute; left:0; right:0;
+      height:2px; border-radius:2px;
+      background:rgba(255,255,255,.86);
+    }
+    .fab .miniBars:before{top:0}
+    .fab .miniBars i{top:5px}
+    .fab .miniBars:after{bottom:0}
+    [data-theme="light"] .fab .miniBars:before,
+    [data-theme="light"] .fab .miniBars:after,
+    [data-theme="light"] .fab .miniBars i{
+      background:rgba(6,43,31,.86);
+    }
+.fabRight .arrow{
+  width:0; height:0;
   border-left:7px solid transparent;
   border-right:7px solid transparent;
-  border-bottom:10px solid #fff;
-  transition:transform .18s ease;
+  border-bottom:10px solid rgba(255,255,255,.90);
+  transform: translateY(-1px) rotate(0deg); /* default UP */
+  transition: transform .18s ease;
 }
-.fab-right.isDown .arrow{transform:rotate(180deg)}
-.fab-right.isUp .arrow{transform:rotate(0deg)}
-
-/* BOTTOM BAR */
-.bottom-bar{
-  position:fixed;left:0;right:0;bottom:0;z-index:80;
-  background:linear-gradient(180deg,transparent,rgba(4,31,22,.95));
-  padding:10px 12px;
-}
-.bottom-inner{
-  max-width:1100px;margin:auto;
-  display:flex;justify-content:space-between;align-items:center;
-  border:1px solid var(--stroke);
-  border-radius:999px;padding:10px 14px;
-  background:rgba(255,255,255,.05);
-}
-.cta{
-  padding:10px 16px;border-radius:999px;
-  background:linear-gradient(135deg,rgba(214,179,90,.35),rgba(255,255,255,.05));
-  font-weight:900;
+[data-theme="light"] .fabRight .arrow{
+  border-bottom-color: rgba(6,43,31,.90);
 }
 
-/* FOOTER */
-footer{
-  margin-top:20px;
-  border-top:1px solid var(--stroke);
-  padding:16px 12px;color:var(--muted);font-size:13px;
-}
-</style>
+/* ✅ Direction states */
+.fabRight.isDown .arrow{ transform: translateY(-1px) rotate(180deg); } /* DOWN */
+.fabRight.isUp .arrow{ transform: translateY(-1px) rotate(0deg); }     /* UP */
+
+   
+    /* Smart scroll label (optional) */
+    .fabHint{
+      position:fixed;
+      right:14px;
+      bottom: calc(var(--safeBottom) + 66px);
+      z-index: 95;
+      font-size:12px;
+      padding:7px 10px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      backdrop-filter: blur(10px);
+      display:none;
+    }
+
+    /* ===== Bottom Guidance Bar ===== */
+    .bottomBar{
+      position:fixed; left:0; right:0; bottom:0;
+      z-index:80;
+      background: linear-gradient(180deg, rgba(4,31,22,0) 0%, rgba(4,31,22,.82) 22%, rgba(4,31,22,.96) 100%);
+      padding:10px 12px 14px;
+      display:flex; justify-content:center;
+      backdrop-filter: blur(10px);
+    }
+    [data-theme="light"] .bottomBar{
+      background: linear-gradient(180deg, rgba(246,251,248,0) 0%, rgba(246,251,248,.82) 22%, rgba(246,251,248,.96) 100%);
+    }
+    .barInner{
+      width:min(var(--max), 92vw);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      border-radius:999px;
+      padding:10px 12px;
+    }
+    .barInner .left{display:flex; flex-direction:column; gap:2px}
+    .barInner .left b{font-size:13px}
+    .barInner .left span{font-size:12px; color:var(--muted)}
+    .cta{
+      height:42px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid rgba(214,179,90,.55);
+      background: linear-gradient(135deg, rgba(214,179,90,.28), rgba(255,255,255,.04));
+      font-weight:900;
+      cursor:pointer;
+      text-decoration:none;
+      display:flex; align-items:center; justify-content:center;
+      white-space:nowrap;
+    }
+    .cta:active{transform: translateY(1px)}
+
+    /* ===== Footer (card style like your new standard) ===== */
+    footer{
+      margin-top: 18px;
+    }
+    .footerGrid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+    }
+    @media(max-width:980px){ .footerGrid{grid-template-columns:1fr} }
+
+    .footerCard{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .footerCard .fh{
+      padding:14px 14px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+    .footerCard .fh b{font-size:14px}
+    .footerCard .fb{padding:12px 14px 14px}
+    .footerRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .fbtn{
+      height:44px;
+      padding:0 12px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      font-weight:900;
+      display:inline-flex;
+      align-items:center; justify-content:center;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fbtn.gold{
+      border-color: rgba(214,179,90,.55);
+      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
+    }
+    .fbtn:active{transform: translateY(1px)}
+    .small{font-size:12px; color:var(--muted); line-height:1.5}
+
+    /* ===== iPhone-style Menu Sheet ===== */
+    .sheetOverlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.35);
+      z-index: 120;
+      display:none;
+    }
+    [data-theme="light"] .sheetOverlay{ background: rgba(6,43,31,.18); }
+
+    .sheet{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      z-index: 130;
+      transform: translateY(110%);
+      transition: transform .22s ease;
+      padding: 10px 12px 18px;
+    }
+    .sheet.open{ transform: translateY(0); }
+    .sheetInner{
+      width:min(var(--max), 92vw);
+      margin:0 auto;
+      border-radius: 22px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 28px 90px rgba(0,0,0,.45);
+      overflow:hidden;
+    }
+    .sheetTop{
+      padding:12px 14px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+    .handle{
+      width:52px; height:5px;
+      border-radius:999px;
+      background: rgba(255,255,255,.20);
+      margin: 0 auto 8px;
+    }
+    [data-theme="light"] .handle{ background: rgba(6,43,31,.18); }
+    .sheetTop b{font-size:14px}
+    .sheetBody{padding:12px 14px 14px}
+    .sheetGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media(max-width:520px){ .sheetGrid{grid-template-columns:1fr} }
+    .sheetItem{
+      height:48px;
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sheetItem.gold{
+      border-color: rgba(214,179,90,.55);
+      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
+    }
+    .sheetItem:active{transform: translateY(1px)}
+  </style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="brand">
-      <div class="logo">LZ</div>
-      <div>
-        <strong>LizOn Education</strong><br>
-        <span style="font-size:12px;color:var(--muted)">Computer Skills</span>
+  <!-- ===== Header ===== -->
+  <header class="topbar">
+    <div class="topbarInner">
+      <a class="brand" href="index.html" aria-label="LizOn Home">
+        <div class="logo">LZ</div>
+        <div class="brandText">
+          <b>LizOn Education</b>
+          <span>Computer Lessons</span>
+        </div>
+      </a>
+
+      <!-- Chips (desktop) -->
+      <nav class="navChips" aria-label="Quick navigation">
+        <a class="chipNav" href="index.html">Home</a>
+        <a class="chipNav" href="ielts.html">IELTS</a>
+        <a class="chipNav" href="pte.html">PTE</a>
+        <a class="chipNav active" href="#">Computer</a>
+        <a class="chipNav" href="studyabroad.html">Study Abroad</a>
+      </nav>
+
+      <div class="rightControls">
+        <!-- Dark/Light Toggle (Dark first by default) -->
+        <button class="iconbtn" id="btnTheme" type="button" aria-label="Toggle light or dark mode">🌓</button>
+
+        <!-- Top-right hamburger (like index style) -->
+        <button class="iconbtn" id="btnMenuTop" type="button" aria-label="Open menu">
+          <span class="bars" aria-hidden="true"><i></i></span>
+        </button>
       </div>
     </div>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="ielts.html">IELTS</a>
-      <a href="pte.html">PTE</a>
-    </nav>
-    <div class="hamburger" id="themeToggle"><div></div></div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Computer Skills for IELTS & PTE (Tap-only)</h1>
+      <p>
+        Students don’t want to scroll or type. This page works like <b>AskLizOn</b>:
+        <b>tap a problem → get a short answer → tap next options</b>.
+      </p>
+    </section>
+
+    <section class="grid">
+      <!-- LEFT: AskLizOn Computer Bot -->
+      <div class="card" id="asklizSection">
+        <div class="cardHeader">
+          <div class="title">
+            <b>AskLizOn – Computer</b>
+            <span>Tap-only bot options (no typing)</span>
+          </div>
+          <div class="pill" id="pillExam">Mode: IELTS</div>
+        </div>
+
+        <div class="toggleRow">
+          <div class="toggle" role="tablist" aria-label="Exam toggle">
+            <div class="tbtn active" id="tabIELTS" role="tab" aria-selected="true"><span>IELTS</span></div>
+            <div class="tbtn" id="tabPTE" role="tab" aria-selected="false"><span>PTE</span></div>
+          </div>
+        </div>
+
+        <div class="botWrap">
+          <div class="chat" id="chat" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Locked Content (Tap-to-see) -->
+      <div class="card" id="moduleSection">
+        <div class="cardHeader">
+          <div class="title">
+            <b>Inside the Module</b>
+            <span>Tap & see (IELTS + PTE locked)</span>
+          </div>
+          <div class="pill">5 Sessions</div>
+        </div>
+
+        <div class="contentWrap">
+          <details open>
+            <summary>IELTS (Computer-Based) — Locked <span class="chev">›</span></summary>
+            <div class="block">
+              <p><b>This is not a computer course.</b> This is to stop you from losing marks for stupid reasons.</p>
+
+              <p class="muted"><b>The Real Problem</b></p>
+              <ul>
+                <li>Writing e idea thake, type korte giye time shesh</li>
+                <li>Paragraph change korte giye sentence bhange</li>
+                <li>Reading e scroll korlei line haray</li>
+                <li>Highlight korte giye wrong line select hoy</li>
+                <li>Copy–paste korle format / double hoy</li>
+                <li>Timer dekhe panic hoy</li>
+              </ul>
+
+              <p class="muted"><b>What We Fix</b></p>
+              <ul>
+                <li>Fast typing without panic</li>
+                <li>Edit without breaking flow</li>
+                <li>Scroll control (line harabe na)</li>
+                <li>Highlight only what matters</li>
+                <li>Copy–paste properly (overuse na)</li>
+                <li>Finish on time, calmly</li>
+              </ul>
+
+              <p class="muted"><b>Who Must Take This</b></p>
+              <ul>
+                <li>First time computer-based IELTS</li>
+                <li>Paper-based practice korecho</li>
+                <li>Mobile heavy, keyboard weak</li>
+                <li>Band 6.5–7+ target</li>
+              </ul>
+
+              <p><b>Final truth:</b> IELTS is not only about English. It’s also about how you use the computer.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>PTE — Locked <span class="chev">›</span></summary>
+            <div class="block">
+              <p><b>This is not a computer course.</b> This is to stop you from messing up PTE because of the system speed.</p>
+
+              <p class="muted"><b>The Real Problem</b></p>
+              <ul>
+                <li>Mic on holei matha blank</li>
+                <li>Speaking start korte giye voice cut hoy</li>
+                <li>Timer dekhe answer chere dey</li>
+                <li>Writing e type korte giye sentence bhul hoy</li>
+                <li>Copy–paste korle same line duibar</li>
+                <li>Click miss hole question skip / panic</li>
+                <li>Task change hole confused hoy</li>
+              </ul>
+
+              <p class="muted"><b>What We Fix</b></p>
+              <ul>
+                <li>Mic + timer control (panic-free)</li>
+                <li>Speaking start/pause/finish control</li>
+                <li>Fast, clean typing without mess</li>
+                <li>Copy–paste safely (repeat na hoy)</li>
+                <li>Cursor control (Fill in the blanks)</li>
+                <li>PTE flow er shathe adjust kora</li>
+              </ul>
+
+              <p class="muted"><b>Who Must Take This</b></p>
+              <ul>
+                <li>First time PTE</li>
+                <li>Mic e nervous</li>
+                <li>Keyboard slow</li>
+                <li>PTE 58 / 65 / 79+ target</li>
+              </ul>
+
+              <p><b>Final truth:</b> PTE fast. System strong. This module makes you faster than the system.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>How this page avoids scrolling <span class="chev">›</span></summary>
+            <div class="block">
+              <ul>
+                <li>AskLizOn answers are short.</li>
+                <li>Every answer ends with tap options.</li>
+                <li>Locked content stays inside tap sections.</li>
+                <li>Quick buttons + smart scroll make it mobile-friendly.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Footer (index-like card footer) ===== -->
+    <footer>
+      <div class="footerGrid">
+        <div class="footerCard">
+          <div class="fh"><b>Contact & Location</b></div>
+          <div class="fb">
+            <div class="small">
+              51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
+            </div>
+            <div class="footerRow">
+              <a class="fbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+              <a class="fbtn gold" id="footerWhatsApp" href="#" target="_blank" rel="noopener">Chat (WhatsApp)</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footerCard">
+          <div class="fh"><b>Social Media</b></div>
+          <div class="fb">
+            <div class="small">Follow LizOn Education for updates, tips, and student stories.</div>
+            <div class="footerRow">
+              <a class="fbtn" href="#" target="_blank" rel="noopener">Facebook</a>
+              <a class="fbtn" href="#" target="_blank" rel="noopener">YouTube</a>
+              <a class="fbtn" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+            <div class="footerRow">
+              <button class="fbtn" id="footerTheme" type="button">Toggle Light/Dark</button>
+              <a class="fbtn" href="index.html">Home</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- AskLizOnComputer pill button (like PTE.html) -->
+  <button class="askliz-fab" id="asklizFab" type="button" aria-label="Ask LizOn Computer">
+    <span class="askliz-icon" aria-hidden="true">?</span>
+    <span>Ask LizOn</span>
+  </button>
+
+  <!-- Bottom-left Hamburger (floating) -->
+  <button class="fab fabLeft" id="btnMenuFab" type="button" aria-label="Open menu (bottom left)">
+    <span class="miniBars" aria-hidden="true"><i></i></span>
+  </button>
+
+  <!-- Right-bottom Smart Scroll -->
+  <button class="fab fabRight" id="btnSmartScroll" type="button" aria-label="Smart scroll">
+    <span class="arrow" aria-hidden="true"></span>
+  </button>
+  <div class="fabHint" id="scrollHint">Smart scroll</div>
+
+  <!-- Bottom Guidance Bar -->
+  <div class="bottomBar">
+    <div class="barInner">
+      <div class="left">
+        <b>Need guidance?</b>
+        <span>Tap AskLizOn or chat on WhatsApp</span>
+      </div>
+      <a class="cta" id="ctaWhatsApp" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    </div>
   </div>
-</header>
 
-<main>
-  <h1>Computer Skills for IELTS & PTE</h1>
-  <p>Tap-only guidance. No scrolling. No typing.</p>
-
-  <section class="card" id="asklizSection">
-    <div class="card-header">
-      <strong>AskLizOn – Computer</strong>
-      <span>Tap to choose</span>
+  <!-- Menu Sheet -->
+  <div class="sheetOverlay" id="sheetOverlay" aria-hidden="true"></div>
+  <div class="sheet" id="menuSheet" aria-hidden="true">
+    <div class="handle"></div>
+    <div class="sheetInner">
+      <div class="sheetTop">
+        <b>Menu</b>
+        <button class="iconbtn" id="btnCloseSheet" type="button" aria-label="Close menu">✕</button>
+      </div>
+      <div class="sheetBody">
+        <div class="sheetGrid">
+          <a class="sheetItem" href="index.html">Home</a>
+          <a class="sheetItem" href="ielts.html">IELTS</a>
+          <a class="sheetItem" href="pte.html">PTE</a>
+          <a class="sheetItem gold" href="#">Computer</a>
+          <button class="sheetItem" id="sheetTheme" type="button">Light/Dark</button>
+          <button class="sheetItem" id="sheetSwitchExam" type="button">Switch IELTS/PTE</button>
+          <a class="sheetItem" href="#moduleSection">See Module</a>
+          <a class="sheetItem gold" id="sheetWhatsApp" href="#" target="_blank" rel="noopener">Talk with Expert</a>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <div class="chat" id="chat"></div>
-    </div>
-  </section>
-
-  <section class="card" id="moduleSection">
-    <div class="card-header">
-      <strong>Inside the Module</strong>
-      <span>5 Sessions</span>
-    </div>
-    <div class="card-body">
-      <p><b>This is not a computer course.</b> This stops you from losing marks for stupid reasons.</p>
-      <ul>
-        <li>Typing slow → time shesh</li>
-        <li>Scroll korlei line haray</li>
-        <li>Copy–paste e mess</li>
-        <li>Timer panic</li>
-      </ul>
-    </div>
-  </section>
-</main>
-
-<footer>
-  LizOn Education · Dhaka · Need guidance? Chat on WhatsApp
-</footer>
-
-<!-- FLOATING ELEMENTS -->
-<button class="askliz" id="asklizBtn"><span>?</span>Ask LizOn</button>
-<button class="fab fab-left" id="menuBtn">☰</button>
-<button class="fab fab-right isDown" id="scrollBtn"><span class="arrow"></span></button>
-
-<div class="bottom-bar">
-  <div class="bottom-inner">
-    <span>Need guidance?</span>
-    <a class="cta" href="https://wa.me/8801611611139" target="_blank">Chat on WhatsApp</a>
   </div>
-</div>
 
-<script>
-/* THEME */
-document.getElementById("themeToggle").onclick=()=>{
-  const t=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
-  document.documentElement.setAttribute("data-theme",t);
-};
+  <script>
+    /* =========================
+       CONFIG
+    ========================== */
+    const WHATSAPP_NUMBER = "8801611611139";
+    const WA_DEFAULT_TEXT = "Assalamu Alaikum, I want guidance about Computer Skills for IELTS/PTE.";
 
-/* ASK LIZON BOT (simple demo) */
-const chat=document.getElementById("chat");
-function bot(msg,opts){
-  const b=document.createElement("div");
-  b.className="bubble";b.textContent=msg;chat.appendChild(b);
-  const c=document.createElement("div");c.className="chips";
-  opts.forEach(o=>{
-    const x=document.createElement("button");
-    x.className="chip";x.textContent=o;
-    x.onclick=()=>user(o);
-    c.appendChild(x);
-  });
-  chat.appendChild(c);chat.scrollTop=chat.scrollHeight;
+    function waLink(text){
+      return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text || WA_DEFAULT_TEXT);
+    }
+
+    /* =========================
+       THEME (Dark first)
+    ========================== */
+    const THEME_KEY = "mylizon_theme";
+    function applyTheme(t){
+      document.documentElement.setAttribute("data-theme", t);
+      localStorage.setItem(THEME_KEY, t);
+    }
+    (function initTheme(){
+      const saved = localStorage.getItem(THEME_KEY);
+      if(saved === "light" || saved === "dark"){
+        applyTheme(saved);
+      }else{
+        applyTheme("dark"); // Dark mode first (your request)
+      }
+    })();
+
+    document.getElementById("btnTheme").addEventListener("click", ()=>{
+      const cur = document.documentElement.getAttribute("data-theme") || "dark";
+      applyTheme(cur === "dark" ? "light" : "dark");
+    });
+    document.getElementById("footerTheme").addEventListener("click", ()=>{
+      const cur = document.documentElement.getAttribute("data-theme") || "dark";
+      applyTheme(cur === "dark" ? "light" : "dark");
+    });
+    document.getElementById("sheetTheme").addEventListener("click", ()=>{
+      const cur = document.documentElement.getAttribute("data-theme") || "dark";
+      applyTheme(cur === "dark" ? "light" : "dark");
+    });
+
+    /* =========================
+       WhatsApp links
+    ========================== */
+    const ctaWhatsApp = document.getElementById("ctaWhatsApp");
+    const footerWhatsApp = document.getElementById("footerWhatsApp");
+    const sheetWhatsApp = document.getElementById("sheetWhatsApp");
+    function setWAForExam(exam){
+      const msg = `Assalamu Alaikum, I want guidance about Computer Skills for ${exam}.`;
+      ctaWhatsApp.href = waLink(msg);
+      footerWhatsApp.href = waLink(msg);
+      sheetWhatsApp.href = waLink(msg);
+    }
+
+    /* =========================
+       MENU SHEET (hamburger)
+    ========================== */
+    const overlay = document.getElementById("sheetOverlay");
+    const sheet = document.getElementById("menuSheet");
+    const openers = [document.getElementById("btnMenuTop"), document.getElementById("btnMenuFab")];
+    const closer = document.getElementById("btnCloseSheet");
+
+    function openSheet(){
+      overlay.style.display = "block";
+      sheet.classList.add("open");
+      sheet.setAttribute("aria-hidden","false");
+      overlay.setAttribute("aria-hidden","false");
+    }
+    function closeSheet(){
+      sheet.classList.remove("open");
+      sheet.setAttribute("aria-hidden","true");
+      overlay.setAttribute("aria-hidden","true");
+      setTimeout(()=>{ overlay.style.display = "none"; }, 160);
+    }
+    openers.forEach(btn => btn.addEventListener("click", openSheet));
+    closer.addEventListener("click", closeSheet);
+    overlay.addEventListener("click", closeSheet);
+
+    /* =========================
+       AskLizOnComputer pill
+    ========================== */
+    document.getElementById("asklizFab").addEventListener("click", ()=>{
+      document.getElementById("asklizSection").scrollIntoView({behavior:"smooth", block:"start"});
+      // gentle nudge to chat top
+      setTimeout(()=>{ document.getElementById("chat").focus?.(); }, 200);
+    });
+
+  /* =========================
+   SMART SCROLL (Both directions)
+   - Near TOP -> arrow DOWN -> goes to Module
+   - Else     -> arrow UP   -> goes to TOP
+========================= */
+const smartBtn = document.getElementById("btnSmartScroll");
+const hint = document.getElementById("scrollHint");
+let hintTimer = null;
+
+function showHint(txt){
+  if(!hint) return;
+  hint.textContent = txt || "Smart scroll";
+  hint.style.display = "block";
+  clearTimeout(hintTimer);
+  hintTimer = setTimeout(()=>{ hint.style.display = "none"; }, 900);
 }
-function user(txt){
-  const u=document.createElement("div");
-  u.className="bubble user";u.textContent=txt;chat.appendChild(u);
-  bot("Noted. This module fixes this problem.",["More help","Talk with Expert"]);
+
+function isNearTop(){
+  return window.scrollY < 220;
 }
-bot("What problem are you facing?",[
-  "Typing slow",
-  "Scroll problem",
-  "Timer panic"
-]);
 
-/* ASK BUTTON */
-document.getElementById("asklizBtn").onclick=()=>{
-  document.getElementById("asklizSection").scrollIntoView({behavior:"smooth"});
-};
-
-/* SMART SCROLL BOTH WAY */
-const scrollBtn=document.getElementById("scrollBtn");
-function nearTop(){return window.scrollY<220}
-function updateScrollBtn(){
-  if(nearTop()){
-    scrollBtn.classList.add("isDown");
-    scrollBtn.classList.remove("isUp");
+/* ✅ update arrow direction based on scroll */
+function updateSmartDirection(){
+  if(isNearTop()){
+    smartBtn.classList.add("isDown");
+    smartBtn.classList.remove("isUp");
+    smartBtn.setAttribute("aria-label","Scroll down to module");
   }else{
-    scrollBtn.classList.add("isUp");
-    scrollBtn.classList.remove("isDown");
+    smartBtn.classList.add("isUp");
+    smartBtn.classList.remove("isDown");
+    smartBtn.setAttribute("aria-label","Scroll up to top");
   }
 }
-scrollBtn.onclick=()=>{
-  if(nearTop()){
-    document.getElementById("moduleSection").scrollIntoView({behavior:"smooth"});
+
+/* ✅ click behavior */
+smartBtn.addEventListener("click", ()=>{
+  if(isNearTop()){
+    showHint("Down to module");
+    document.getElementById("moduleSection").scrollIntoView({behavior:"smooth", block:"start"});
   }else{
-    window.scrollTo({top:0,behavior:"smooth"});
+    showHint("Up to top");
+    window.scrollTo({top:0, behavior:"smooth"});
   }
-};
-window.addEventListener("scroll",updateScrollBtn);
-updateScrollBtn();
-</script>
+});
+
+/* ✅ keep it updated while scrolling */
+window.addEventListener("scroll", updateSmartDirection, { passive:true });
+
+/* init */
+updateSmartDirection();
+
+
+
+    /* =========================
+       TAP-ONLY BOT (IELTS/PTE)
+    ========================== */
+    const pillExam = document.getElementById("pillExam");
+    const tabIELTS = document.getElementById("tabIELTS");
+    const tabPTE = document.getElementById("tabPTE");
+    const chat = document.getElementById("chat");
+    const sheetSwitchExam = document.getElementById("sheetSwitchExam");
+
+    const BOT = {
+      IELTS: {
+        home: "i_home",
+        nodes: {
+          i_home: {
+            bot: "Assalamu Alaikum! Computer-Based IELTS e kon problem face kortesen? Tap korun — type korte hobe na.",
+            options: [
+              { label:"Typing slow — time shesh", next:"i_typing" },
+              { label:"Reading e scroll korlei line haray", next:"i_scroll" },
+              { label:"Highlight wrong jayga hoy", next:"i_highlight" },
+              { label:"Writing edit korte giye paragraph bhange", next:"i_edit" },
+              { label:"Copy–paste e format / duplicate hoy", next:"i_copy" },
+              { label:"Timer dekhe panic hoy", next:"i_timer" },
+              { label:"I don’t know what I need", next:"i_guided" },
+              { label:"Talk with Expert", next:{wa:true, text:"Assalamu Alaikum, I need help for Computer-Based IELTS. Please guide me."} }
+            ]
+          },
+          i_typing: {
+            bot: "Real pain: idea thake, kintu typing slow hole Writing-e last moment-e rush hoy. Structure nosto hoy + mistake bare.",
+            options: [
+              { label:"How we fix in 5 sessions", next:"i_fix5" },
+              { label:"What to practice at home", next:"i_routine" },
+              { label:"Talk with Expert", next:{wa:true, text:"I’m slow at typing for IELTS. Need a plan."} }
+            ]
+          },
+          i_scroll: {
+            bot: "Scroll control na thakle line haray, abar abar re-read korte hoy. Time loss hoy. Confidence neme jay.",
+            options: [
+              { label:"Quick scrolling rules", next:"i_scroll_rules" },
+              { label:"How we practice this", next:"i_practice" },
+              { label:"Talk with Expert", next:{wa:true, text:"Reading e scroll control problem. Need guidance."} }
+            ]
+          },
+          i_highlight: {
+            bot: "Highlight wrong hole focus venge jay. Too much highlight = confused brain.",
+            options: [
+              { label:"Highlighting rules", next:"i_highlight_rules" },
+              { label:"Common mistakes", next:"i_mistakes" },
+              { label:"Talk with Expert", next:{wa:true, text:"IELTS highlight problem. Need help."} }
+            ]
+          },
+          i_edit: {
+            bot: "Writing-e edit korte giye paragraph bhange = coherence nosto + time nosto. We fix editing control.",
+            options: [
+              { label:"Editing rules (simple)", next:"i_edit_rules" },
+              { label:"How we practice editing", next:"i_practice_edit" },
+              { label:"Talk with Expert", next:{wa:true, text:"Writing edit korte giye paragraph bhange. Need solution."} }
+            ]
+          },
+          i_copy: {
+            bot: "Copy–paste wrong hole duplicate line, wrong placement, format mess hoy. We teach safe copy–paste.",
+            options: [
+              { label:"Safe copy–paste rules", next:"i_copy_rules" },
+              { label:"What NOT to do", next:"i_copy_no" },
+              { label:"Talk with Expert", next:{wa:true, text:"IELTS copy–paste e problem. Need guidance."} }
+            ]
+          },
+          i_timer: {
+            bot: "Timer dekhe panic hole speed barate giye accuracy noshto hoy. We make your routine predictable.",
+            options: [
+              { label:"Simple timer strategy", next:"i_timer_rules" },
+              { label:"How we train calm speed", next:"i_practice" },
+              { label:"Talk with Expert", next:{wa:true, text:"IELTS timer panic. Need a plan."} }
+            ]
+          },
+          i_guided: {
+            bot: "No problem. Kon area beshi hurt kore?",
+            options: [
+              { label:"Writing", next:"i_typing" },
+              { label:"Reading", next:"i_scroll" },
+              { label:"Listening", next:"i_practice" },
+              { label:"I’m not sure", next:"i_fix5" }
+            ]
+          },
+          i_fix5: {
+            bot: "5 sessions e amra fix kori: typing flow + editing control + navigation speed. Small habits remove korlei score stable hoy.",
+            options: [
+              { label:"See how class works", next:"i_practice" },
+              { label:"Back to Home", next:"i_home" },
+              { label:"Talk with Expert", next:{wa:true, text:"I want the 5-session plan for Computer Skills (IELTS)." } }
+            ]
+          },
+          i_routine: {
+            bot: "Home routine: daily 10–15 min typing + 10 min short writing. Goal: clean speed, not rushing.",
+            options: [
+              { label:"Back to Home", next:"i_home" },
+              { label:"Talk with Expert", next:{wa:true, text:"Give me a home routine for IELTS computer-based."} }
+            ]
+          },
+          i_scroll_rules: {
+            bot: "Scroll rules: small scroll only. Stop-read-scroll. Wheel panic korben na. Line lose hole one step back.",
+            options: [
+              { label:"How we practice", next:"i_practice" },
+              { label:"Back to Home", next:"i_home" }
+            ]
+          },
+          i_highlight_rules: {
+            bot: "Highlight rules: keywords only. Full line highlight na. Understand kore then highlight. Highlight কম = focus বেশি.",
+            options: [
+              { label:"Common mistakes", next:"i_mistakes" },
+              { label:"Back to Home", next:"i_home" }
+            ]
+          },
+          i_edit_rules: {
+            bot: "Editing rules: structure first. Grammar last. Draft-e line-e line edit korben na. Second pass e edit.",
+            options: [
+              { label:"How we practice editing", next:"i_practice_edit" },
+              { label:"Back to Home", next:"i_home" }
+            ]
+          },
+          i_copy_rules: {
+            bot: "Safe copy–paste: copy small parts. Paste kore abar meaning check. Blind paste na.",
+            options: [
+              { label:"What NOT to do", next:"i_copy_no" },
+              { label:"Back to Home", next:"i_home" }
+            ]
+          },
+          i_copy_no: {
+            bot: "Don’t do: same line duibar paste, paste kore na pore move, coherence break kore time save korte jawya.",
+            options: [
+              { label:"Back to Home", next:"i_home" },
+              { label:"Talk with Expert", next:{wa:true, text:"I keep making copy–paste mistakes in IELTS. Help."} }
+            ]
+          },
+          i_timer_rules: {
+            bot: "Timer strategy: fixed routine follow korun. Seconds dekhe fear na. Block e kaj korun.",
+            options: [
+              { label:"Back to Home", next:"i_home" },
+              { label:"Talk with Expert", next:{wa:true, text:"Need timer control strategy for IELTS computer-based."} }
+            ]
+          },
+          i_practice: {
+            bot: "Class style: You do → sir watches → mistake instantly fix. No lecture. Only test-ready practice.",
+            options: [
+              { label:"Back to Home", next:"i_home" },
+              { label:"Talk with Expert", next:{wa:true, text:"Explain how this 5-session training works for IELTS."} }
+            ]
+          },
+          i_practice_edit: {
+            bot: "Editing practice: sentence move + paragraph restructure without breaking meaning. ‘Structure first, grammar last’.",
+            options: [
+              { label:"Back to Home", next:"i_home" },
+              { label:"Talk with Expert", next:{wa:true, text:"Need editing drills for IELTS writing on computer."} }
+            ]
+          },
+          i_mistakes: {
+            bot: "Common mistakes: over-scrolling, too much highlight, draft-e over-editing, blind copy–paste, timer panic.",
+            options: [
+              { label:"Back to Home", next:"i_home" }
+            ]
+          }
+        }
+      },
+
+      PTE: {
+        home: "p_home",
+        nodes: {
+          p_home: {
+            bot: "Assalamu Alaikum! PTE te kon problem face kortesen? Tap korun — type korte hobe na.",
+            options: [
+              { label:"Mic on holei matha blank", next:"p_blank" },
+              { label:"Voice cut hoy / nervous", next:"p_voice" },
+              { label:"Timer dekhe freeze hoy", next:"p_timer" },
+              { label:"Reading e click miss / skip hoy", next:"p_click" },
+              { label:"Fill in blanks e cursor control hoy na", next:"p_cursor" },
+              { label:"Writing e typing messy hoy", next:"p_typing" },
+              { label:"PTE flow onek fast lage", next:"p_flow" },
+              { label:"I don’t know what I need", next:"p_guided" },
+              { label:"Talk with Expert", next:{wa:true, text:"Assalamu Alaikum, I need help for PTE computer skills. Please guide me."} }
+            ]
+          },
+          p_blank: {
+            bot: "Mic on holei blank hoy — super common. PTE te speed + calm start dorkar.",
+            options: [
+              { label:"Quick tip now", next:"p_tip_mic" },
+              { label:"How we train this", next:"p_practice" },
+              { label:"Talk with Expert", next:{wa:true, text:"Mic on holei blank hoy (PTE). Need help."} }
+            ]
+          },
+          p_voice: {
+            bot: "Voice cut/nervous usually bad start + panic breathing. We train start/pause/finish control.",
+            options: [
+              { label:"Quick tip now", next:"p_tip_voice" },
+              { label:"How we train this", next:"p_practice" },
+              { label:"Talk with Expert", next:{wa:true, text:"PTE speaking e voice cut hoy. Need solution."} }
+            ]
+          },
+          p_timer: {
+            bot: "Timer dekhe freeze hole answer half e chere dey. We fix by fixed routine per task.",
+            options: [
+              { label:"Timer strategy (simple)", next:"p_tip_timer" },
+              { label:"How we train this", next:"p_practice" },
+              { label:"Talk with Expert", next:{wa:true, text:"PTE timer panic. Need a plan."} }
+            ]
+          },
+          p_click: {
+            bot: "Click miss hole skip + panic. PTE waits for no one. We train accuracy under speed.",
+            options: [
+              { label:"Click rules", next:"p_tip_click" },
+              { label:"How we train this", next:"p_practice" },
+              { label:"Talk with Expert", next:{wa:true, text:"PTE click miss/skip problem. Need help."} }
+            ]
+          },
+          p_cursor: {
+            bot: "Fill in blanks e cursor wrong hole wrong place e type hoy. Then answer lost.",
+            options: [
+              { label:"Cursor rules", next:"p_tip_cursor" },
+              { label:"How we train this", next:"p_practice" },
+              { label:"Talk with Expert", next:{wa:true, text:"PTE fill-in-blanks cursor control problem. Need help."} }
+            ]
+          },
+          p_typing: {
+            bot: "Writing e typing messy hole mistake bare + time nosto hoy. We fix clean speed (panic na).",
+            options: [
+              { label:"How we fix in 5 sessions", next:"p_fix5" },
+              { label:"Home routine", next:"p_routine" },
+              { label:"Talk with Expert", next:{wa:true, text:"PTE writing typing messy. Need plan."} }
+            ]
+          },
+          p_flow: {
+            bot: "PTE flow fast lage because test doesn’t wait. Ekta mistake hole next task chole ashe.",
+            options: [
+              { label:"How we train flow control", next:"p_practice" },
+              { label:"Talk with Expert", next:{wa:true, text:"PTE flow onek fast lage. Need guidance."} }
+            ]
+          },
+          p_guided: {
+            bot: "No problem. Kon area beshi hurt kore?",
+            options: [
+              { label:"Speaking", next:"p_blank" },
+              { label:"Writing", next:"p_typing" },
+              { label:"Reading", next:"p_click" },
+              { label:"Listening", next:"p_flow" }
+            ]
+          },
+          p_fix5: {
+            bot: "5 sessions e fix kori: mic calm + timer control + clean typing + click/cursor accuracy + flow control.",
+            options: [
+              { label:"How class works", next:"p_practice" },
+              { label:"Back to Home", next:"p_home" },
+              { label:"Talk with Expert", next:{wa:true, text:"I want the 5-session plan for Computer Skills (PTE)." } }
+            ]
+          },
+          p_routine: {
+            bot: "Home routine: daily 10–15 min typing + 5–10 min speaking (calm first line). Goal: stability first.",
+            options: [
+              { label:"Back to Home", next:"p_home" },
+              { label:"Talk with Expert", next:{wa:true, text:"Give me a home routine for PTE computer skills."} }
+            ]
+          },
+          p_tip_mic: {
+            bot: "Quick tip: first 2 seconds calm. Fast start = shaky voice. Start stable, then speed naturally.",
+            options: [
+              { label:"Back to Home", next:"p_home" },
+              { label:"How we train this", next:"p_practice" }
+            ]
+          },
+          p_tip_voice: {
+            bot: "Quick tip: speak slightly slower than your brain. Jodi push koren, voice cut hoy.",
+            options: [
+              { label:"Back to Home", next:"p_home" },
+              { label:"How we train this", next:"p_practice" }
+            ]
+          },
+          p_tip_timer: {
+            bot: "Timer strategy: routine follow korun. Seconds dekhe fear na. Clean finish > fast finish.",
+            options: [
+              { label:"Back to Home", next:"p_home" },
+              { label:"How we train this", next:"p_practice" }
+            ]
+          },
+          p_tip_click: {
+            bot: "Click rules: click once, confirm, then move. Double-click panic korben na. Miss hole calm fix.",
+            options: [
+              { label:"Back to Home", next:"p_home" },
+              { label:"How we train this", next:"p_practice" }
+            ]
+          },
+          p_tip_cursor: {
+            bot: "Cursor rules: active box check kore then type. Short moves. Ekbar mistake hole calm fix.",
+            options: [
+              { label:"Back to Home", next:"p_home" },
+              { label:"How we train this", next:"p_practice" }
+            ]
+          },
+          p_practice: {
+            bot: "Class style: real task + real pressure. You do → sir watches → mistake instantly fix. No lecture.",
+            options: [
+              { label:"Back to Home", next:"p_home" },
+              { label:"Talk with Expert", next:{wa:true, text:"Explain how this 5-session training works for PTE."} }
+            ]
+          }
+        }
+      }
+    };
+
+    let exam = "IELTS";
+    let currentId = BOT[exam].home;
+
+    function setExam(nextExam, reset=true){
+      exam = nextExam;
+      pillExam.textContent = "Mode: " + exam;
+
+      tabIELTS.classList.toggle("active", exam==="IELTS");
+      tabPTE.classList.toggle("active", exam==="PTE");
+      tabIELTS.setAttribute("aria-selected", exam==="IELTS" ? "true":"false");
+      tabPTE.setAttribute("aria-selected", exam==="PTE" ? "true":"false");
+
+      setWAForExam(exam);
+
+      if(reset){
+        chat.innerHTML = "";
+        currentId = BOT[exam].home;
+        renderNode();
+      }
+    }
+
+    function pushUser(text){
+      const el = document.createElement("div");
+      el.className = "bubble user";
+      el.textContent = text;
+      chat.appendChild(el);
+    }
+
+    function pushBot(text, options){
+      const b = document.createElement("div");
+      b.className = "bubble bot";
+      b.textContent = text;
+      chat.appendChild(b);
+
+      const chips = document.createElement("div");
+      chips.className = "chips";
+      (options || []).forEach(opt=>{
+        const btn = document.createElement("button");
+        btn.className = "chip" + (String(opt.label).toLowerCase().includes("talk") ? " gold" : "");
+        btn.type = "button";
+        btn.textContent = opt.label;
+        btn.addEventListener("click", ()=>handleOption(opt));
+        chips.appendChild(btn);
+      });
+      chat.appendChild(chips);
+
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function handleOption(opt){
+      pushUser(opt.label);
+
+      if(typeof opt.next === "string"){
+        currentId = opt.next;
+        renderNode();
+        return;
+      }
+
+      if(opt.next && opt.next.wa){
+        window.open(waLink(opt.next.text || `Assalamu Alaikum, I need guidance for Computer Skills (${exam}).`), "_blank", "noopener");
+        pushBot("WhatsApp opened. Tap another option if needed.", [
+          { label:"Back to Home", next: BOT[exam].home }
+        ]);
+        return;
+      }
+    }
+
+    function renderNode(){
+      const node = BOT[exam].nodes[currentId];
+      if(!node){
+        pushBot("Something went wrong. Tap Home and try again.", [
+          { label:"Home", next: BOT[exam].home },
+          { label:"Talk with Expert", next:{wa:true, text:`Assalamu Alaikum, bot issue. Please guide me for ${exam}.`} }
+        ]);
+        return;
+      }
+      pushBot(node.bot, node.options);
+    }
+
+    tabIELTS.addEventListener("click", ()=> setExam("IELTS", true));
+    tabPTE.addEventListener("click", ()=> setExam("PTE", true));
+
+    sheetSwitchExam.addEventListener("click", ()=>{
+      setExam(exam === "IELTS" ? "PTE" : "IELTS", true);
+      closeSheet();
+      document.getElementById("asklizSection").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    // Init
+    setExam("IELTS", true);
+    setWAForExam("IELTS");
+  </script>
 
 </body>
 </html>
+
+

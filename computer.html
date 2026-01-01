@@ -179,14 +179,41 @@
       white-space:nowrap;
     }
 
-    /* ===== Tap dropdown style ===== */
-    .contentWrap{padding:12px 14px 14px}
-    details{
+    /* ===== TOP IELTS/PTE BUTTONS (red mark area) ===== */
+    .topSwitch{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .switchBtn{
+      height:44px;
+      padding:0 16px;
+      border-radius:14px;
       border:1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      border-radius:16px;
-      padding:10px 12px;
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      font-weight:900;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .switchBtn.active{
+      border-color: rgba(214,179,90,.55);
+      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
+    }
+
+    /* ===== Tap dropdown style (make like payment tiles) ===== */
+    .contentWrap{padding:12px 14px 14px}
+
+    /* OUTER dropdowns look like tiles */
+    details{
+      padding:0;
       margin:10px 0;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
     }
     summary{
       cursor:pointer;
@@ -199,12 +226,27 @@
       gap:10px;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
+
+      padding:14px 14px;
+      border-radius:16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
     }
     summary::-webkit-details-marker{display:none}
-    .chev{opacity:.75; transition: transform .15s ease}
+
+    details[open] > summary{
+      border-color: rgba(214,179,90,.28);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18) inset;
+    }
+
+    .chev{
+      opacity:.8;
+      transition: transform .15s ease;
+      font-size:18px;
+    }
     details[open] > summary .chev{transform: rotate(90deg)}
+
     .block{
-      margin-top:10px;
+      padding: 0 14px 14px;
       font-size:13px;
       line-height:1.55;
     }
@@ -212,11 +254,21 @@
     ul{margin:10px 0 0 18px; padding:0}
     li{margin:6px 0}
 
-    /* Make inner dropdowns look tight like screenshot */
+    /* INNER dropdown tiles (The Real Problem / What We Fix / Who Must Take This) */
     .inner details{
       margin-top:10px;
-      border-radius:14px;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
+    }
+    .inner details > summary{
+      border-radius:16px;
+      padding:14px 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .inner .block{
+      padding: 0 14px 14px;
     }
 
     /* ===== Bottom Floating Buttons ===== */
@@ -264,7 +316,7 @@
       border-left:7px solid transparent;
       border-right:7px solid transparent;
       border-bottom:10px solid rgba(255,255,255,.90);
-      transform: translateY(-1px) rotate(0deg); /* UP default */
+      transform: translateY(-1px) rotate(180deg); /* DOWN default */
       transition: transform .18s ease;
     }
     [data-theme="light"] .fabRight .arrow{
@@ -326,9 +378,7 @@
     .cta:active{transform: translateY(1px)}
 
     /* ===== Footer (card style like your new standard) ===== */
-    footer{
-      margin-top: 18px;
-    }
+    footer{ margin-top: 18px; }
     .footerGrid{
       display:grid;
       grid-template-columns: 1.1fr .9fr;
@@ -487,14 +537,21 @@
         <div class="title">
           <b>Computer Skills for IELTS & PTE</b>
           <span>Tap each dropdown — no heavy scrolling</span>
+
+          <!-- NEW: IELTS/PTE buttons (red mark area) -->
+          <div class="topSwitch">
+            <button class="switchBtn active" id="btnGoIELTS" type="button">IELTS</button>
+            <button class="switchBtn" id="btnGoPTE" type="button">PTE</button>
+          </div>
         </div>
+
         <div class="pill">5 Sessions</div>
       </div>
 
       <div class="contentWrap">
 
         <!-- IELTS -->
-        <details open>
+        <details open id="ieltsBlock">
           <summary>IELTS (Computer-Based) <span class="chev">›</span></summary>
 
           <div class="block inner">
@@ -545,7 +602,7 @@
         </details>
 
         <!-- PTE -->
-        <details>
+        <details id="pteBlock">
           <summary>PTE (Computer-Based) <span class="chev">›</span></summary>
 
           <div class="block inner">
@@ -762,6 +819,41 @@
     overlay.addEventListener("click", closeSheet);
 
     /* =========================
+       TOP IELTS/PTE JUMP BUTTONS
+    ========================== */
+    const btnGoIELTS = document.getElementById("btnGoIELTS");
+    const btnGoPTE = document.getElementById("btnGoPTE");
+    const ieltsBlock = document.getElementById("ieltsBlock");
+    const pteBlock = document.getElementById("pteBlock");
+
+    function headerOffset(){
+      const header = document.querySelector(".topbar");
+      return (header ? header.offsetHeight : 0) + 10;
+    }
+    function getTop(el){
+      const r = el.getBoundingClientRect();
+      return r.top + window.pageYOffset;
+    }
+    function jumpTo(el){
+      const off = headerOffset();
+      window.scrollTo({ top: Math.max(0, getTop(el) - off), behavior:"smooth" });
+    }
+
+    btnGoIELTS.addEventListener("click", ()=>{
+      btnGoIELTS.classList.add("active");
+      btnGoPTE.classList.remove("active");
+      ieltsBlock.open = true;
+      jumpTo(ieltsBlock);
+    });
+
+    btnGoPTE.addEventListener("click", ()=>{
+      btnGoPTE.classList.add("active");
+      btnGoIELTS.classList.remove("active");
+      pteBlock.open = true;
+      jumpTo(pteBlock);
+    });
+
+    /* =========================
        SMART SCROLL (PTE-like next/prev jump)
        - DOWN = jump to next section below
        - UP = jump to previous section above
@@ -778,17 +870,9 @@
       hintTimer = setTimeout(()=>{ hint.style.display = "none"; }, 850);
     }
 
-    function headerOffset(){
-      const header = document.querySelector(".topbar");
-      return (header ? header.offsetHeight : 0) + 10;
-    }
-    function getTop(el){
-      const r = el.getBoundingClientRect();
-      return r.top + window.pageYOffset;
-    }
-
     function getTargets(){
-      const ids = ["moduleSection", "footerSection"];
+      // add IELTS/PTE blocks too so DOWN works properly inside module
+      const ids = ["moduleSection","ieltsBlock","pteBlock","footerSection"];
       const els = ids.map(id => document.getElementById(id)).filter(Boolean);
       return [{ el: document.body, y: 0, name: "Top" }, ...els.map(el => ({ el, y: getTop(el), name: el.id }))].sort((a,b)=>a.y-b.y);
     }

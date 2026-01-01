@@ -179,7 +179,7 @@
       white-space:nowrap;
     }
 
-    /* ===== TOP IELTS/PTE BUTTONS (red mark area) ===== */
+    /* ===== TOP IELTS/PTE BUTTONS ===== */
     .topSwitch{
       margin-top:10px;
       display:flex;
@@ -203,10 +203,9 @@
       background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
     }
 
-    /* ===== Tap dropdown style (make like payment tiles) ===== */
+    /* ===== Tap dropdown style ===== */
     .contentWrap{padding:12px 14px 14px}
 
-    /* OUTER dropdowns look like tiles */
     details{
       padding:0;
       margin:10px 0;
@@ -254,21 +253,70 @@
     ul{margin:10px 0 0 18px; padding:0}
     li{margin:6px 0}
 
-    /* INNER dropdown tiles (The Real Problem / What We Fix / Who Must Take This) */
-    .inner details{
+    /* ===== NEW: IELTS Skills Sections (Apple-glass tiles) ===== */
+    .sectionTitle{
+      font-weight: 950;
+      font-size: 13.5px;
+      letter-spacing: .2px;
+      margin: 14px 0 8px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .sectionTitle .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: rgba(214,179,90,.75);
+      box-shadow: 0 10px 20px rgba(0,0,0,.22);
+    }
+
+    /* different colors per title */
+    .t1{ color:#d6b35a; }  /* gold */
+    .t2{ color:#8fe3c7; }  /* mint */
+    .t3{ color:#7fb4ff; }  /* blue */
+    .t4{ color:#ff9f7f; }  /* orange */
+    .t5{ color:#c6a7ff; }  /* purple */
+
+    /* Apple glass tile look */
+    .glassTile{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      box-shadow:
+        0 18px 55px rgba(0,0,0,.30),
+        0 1px 0 rgba(255,255,255,.08) inset;
+      backdrop-filter: blur(12px);
+      padding: 12px 12px;
+      margin-top: 6px;
+    }
+
+    .glassTile ul{ margin:10px 0 0 18px; }
+    .glassTile li{ margin:7px 0; }
+
+    .k{
+      font-weight: 950;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(214,179,90,.35);
+      background: rgba(214,179,90,.14);
+      color: rgba(255,255,255,.92);
+    }
+    [data-theme="light"] .k{
+      color: rgba(6,43,31,.92);
+      background: rgba(214,179,90,.20);
+    }
+
+    /* important words (different colors) */
+    .impGold{ color: var(--gold); font-weight:950; }
+    .impMint{ color:#8fe3c7; font-weight:950; }
+    .impBlue{ color:#7fb4ff; font-weight:950; }
+    .impOrange{ color:#ff9f7f; font-weight:950; }
+    .impPurple{ color:#c6a7ff; font-weight:950; }
+
+    .miniNote{
       margin-top:10px;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-    }
-    .inner details > summary{
-      border-radius:16px;
-      padding:14px 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-    }
-    .inner .block{
-      padding: 0 14px 14px;
+      color: var(--muted);
+      font-size:12.5px;
+      line-height:1.55;
     }
 
     /* ===== Bottom Floating Buttons ===== */
@@ -377,7 +425,7 @@
     }
     .cta:active{transform: translateY(1px)}
 
-    /* ===== Footer (card style like your new standard) ===== */
+    /* ===== Footer (card style) ===== */
     footer{ margin-top: 18px; }
     .footerGrid{
       display:grid;
@@ -538,7 +586,7 @@
           <b>Computer Skills for IELTS & PTE</b>
           <span>Tap each dropdown — no heavy scrolling</span>
 
-          <!-- NEW: IELTS/PTE buttons (red mark area) -->
+          <!-- IELTS/PTE buttons -->
           <div class="topSwitch">
             <button class="switchBtn active" id="btnGoIELTS" type="button">IELTS</button>
             <button class="switchBtn" id="btnGoPTE" type="button">PTE</button>
@@ -554,50 +602,84 @@
         <details open id="ieltsBlock">
           <summary>IELTS (Computer-Based) <span class="chev">›</span></summary>
 
-          <div class="block inner">
+          <div class="block">
             <p><b>This is not a computer course.</b> This is to stop you from losing marks for stupid reasons.</p>
 
-            <details>
-              <summary>The Real Problem <span class="chev">›</span></summary>
-              <div class="block">
-                <ul>
-                  <li>Writing e idea thake, type korte giye time shesh</li>
-                  <li>Paragraph change korte giye sentence bhange</li>
-                  <li>Reading e scroll korlei line haray</li>
-                  <li>Highlight korte giye wrong line select hoy</li>
-                  <li>Copy–paste korle format / double hoy</li>
-                  <li>Timer dekhe panic hoy</li>
-                </ul>
+            <!-- 1 -->
+            <div class="sectionTitle t1"><span class="dot"></span>1. Skills Covered</div>
+            <div class="glassTile">
+              <div class="miniNote">
+                This module trains students to operate the <span class="impGold">IELTS computer test environment</span> smoothly,
+                without <span class="impOrange">panic</span> or technical hesitation.
               </div>
-            </details>
+              <ul>
+                <li><span class="k">Fast & accurate</span> keyboard typing for <span class="impGold">Writing</span> tasks</li>
+                <li><span class="k">Smart mouse control</span> (drag, drop, highlight, select)</li>
+                <li>Scrolling, zooming & navigation inside <span class="impBlue">IELTS interface</span></li>
+                <li>Using <span class="impMint">copy–paste</span> safely and strategically</li>
+                <li>Text editing skills (cut, move, replace, reorganize ideas)</li>
+                <li>Time-saving <span class="impPurple">keyboard shortcuts</span> for Writing & Reading</li>
+                <li>Handling on-screen instructions, timers & navigation buttons</li>
+                <li>Avoiding common computer-based mistakes that <span class="impOrange">cost marks</span></li>
+              </ul>
+            </div>
 
-            <details>
-              <summary>What We Fix <span class="chev">›</span></summary>
-              <div class="block">
-                <ul>
-                  <li>Fast typing without panic</li>
-                  <li>Edit without breaking flow</li>
-                  <li>Scroll control (line harabe na)</li>
-                  <li>Highlight only what matters</li>
-                  <li>Copy–paste properly (overuse na)</li>
-                  <li>Finish on time, calmly</li>
-                </ul>
+            <!-- 2 -->
+            <div class="sectionTitle t2"><span class="dot"></span>2. This Course Comes With</div>
+            <div class="glassTile">
+              <ul>
+                <li>Live guided practice on realistic <span class="impBlue">IELTS computer interface</span></li>
+                <li>Step-by-step demonstrations (<span class="impOrange">not assumptions</span>)</li>
+                <li>Supervised hands-on drills (<span class="impGold">Writing + Reading</span> focus)</li>
+                <li>Individual correction of bad habits (over-scrolling, mis-clicks, panic typing)</li>
+                <li>Exam-day strategies: what to touch, what <span class="impOrange">not</span> to touch</li>
+                <li>Confidence training so students feel <span class="impMint">in control</span> of the screen</li>
+              </ul>
+            </div>
+
+            <!-- 3 -->
+            <div class="sectionTitle t3"><span class="dot"></span>3. Benefited Modules</div>
+            <div class="glassTile">
+              <div class="miniNote">This computer skills training directly improves performance in:</div>
+              <ul>
+                <li><span class="impGold">Listening</span> – fast navigation, question jumping, focus retention</li>
+                <li><span class="impBlue">Reading</span> – highlight, locate answers faster, reduce eye fatigue</li>
+                <li><span class="impMint">Writing</span> – faster typing, better structuring, easier editing</li>
+                <li><span class="impPurple">Speaking</span> – indirect benefit (confidence, reduced exam stress)</li>
+              </ul>
+            </div>
+
+            <!-- 4 -->
+            <div class="sectionTitle t4"><span class="dot"></span>4. Aim of the Module</div>
+            <div class="glassTile">
+              <div class="miniNote">
+                The aim is simple and ruthless:
+                <span class="impOrange">Remove technology as a weakness.</span>
+                Turn it into an <span class="impMint">advantage</span>.
               </div>
-            </details>
-
-            <details>
-              <summary>Who Must Take This <span class="chev">›</span></summary>
-              <div class="block">
-                <ul>
-                  <li>First time computer-based IELTS</li>
-                  <li>Paper-based practice korecho</li>
-                  <li>Mobile heavy, keyboard weak</li>
-                  <li>Band 6.5–7+ target</li>
-                </ul>
+              <div class="miniNote">
+                By the end of this module, the student should think only about <span class="impGold">English</span>,
+                not about:
+                <br><span class="impPurple">“Eita click hobe?”</span>
+                <span class="impBlue">“Scroll bhul hoye gelo”</span>
+                <span class="impOrange">“Time shesh hoye jacche”</span>
               </div>
-            </details>
+            </div>
 
-            <p><b>Final truth:</b> IELTS is not only about English. It’s also about how you use the computer.</p>
+            <!-- 5 -->
+            <div class="sectionTitle t5"><span class="dot"></span>5. What You Will Become After This</div>
+            <div class="glassTile">
+              <div class="miniNote">After completing this module, a student becomes:</div>
+              <ul>
+                <li><span class="impMint">Calm</span> inside a computer-based IELTS exam</li>
+                <li><span class="impBlue">Faster</span> without rushing</li>
+                <li><span class="impGold">More accurate</span> without overthinking</li>
+                <li>Confident enough to <span class="impPurple">edit writing like a pro</span></li>
+                <li>Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally</li>
+              </ul>
+            </div>
+
+            <p style="margin-top:12px"><b>Final truth:</b> IELTS is not only about English. It’s also about how you use the computer.</p>
           </div>
         </details>
 
@@ -605,58 +687,27 @@
         <details id="pteBlock">
           <summary>PTE (Computer-Based) <span class="chev">›</span></summary>
 
-          <div class="block inner">
+          <div class="block">
             <p><b>This is not a computer course.</b> This is to stop you from messing up PTE because of the system speed.</p>
 
-            <details>
-              <summary>The Real Problem <span class="chev">›</span></summary>
-              <div class="block">
-                <ul>
-                  <li>Mic on holei matha blank</li>
-                  <li>Speaking start korte giye voice cut hoy</li>
-                  <li>Timer dekhe freeze hoye jay</li>
-                  <li>Writing e type korte giye sentence bhul hoy</li>
-                  <li>Copy–paste korle same line duibar</li>
-                  <li>Click miss hole question skip / panic</li>
-                  <li>Task change hole confused hoy</li>
-                </ul>
-              </div>
-            </details>
+            <ul>
+              <li>Mic on holei matha blank</li>
+              <li>Speaking start korte giye voice cut hoy</li>
+              <li>Timer dekhe freeze hoye jay</li>
+              <li>Writing e type korte giye sentence bhul hoy</li>
+              <li>Copy–paste korle same line duibar</li>
+              <li>Click miss hole question skip / panic</li>
+              <li>Task change hole confused hoy</li>
+            </ul>
 
-            <details>
-              <summary>What We Fix <span class="chev">›</span></summary>
-              <div class="block">
-                <ul>
-                  <li>Mic + timer control (panic-free)</li>
-                  <li>Speaking start/pause/finish control</li>
-                  <li>Fast, clean typing without mess</li>
-                  <li>Copy–paste safely (repeat na hoy)</li>
-                  <li>Cursor control (Fill in the blanks)</li>
-                  <li>PTE flow er shathe adjust kora</li>
-                </ul>
-              </div>
-            </details>
-
-            <details>
-              <summary>Who Must Take This <span class="chev">›</span></summary>
-              <div class="block">
-                <ul>
-                  <li>First time PTE</li>
-                  <li>Mic e nervous</li>
-                  <li>Keyboard slow</li>
-                  <li>PTE 58 / 65 / 79+ target</li>
-                </ul>
-              </div>
-            </details>
-
-            <p><b>Final truth:</b> PTE fast. System strong. This module makes you faster than the system.</p>
+            <p style="margin-top:12px"><b>Final truth:</b> PTE fast. System strong. This module makes you faster than the system.</p>
           </div>
         </details>
 
       </div>
     </section>
 
-    <!-- ===== Footer (index-like card footer) ===== -->
+    <!-- ===== Footer ===== -->
     <footer id="footerSection">
       <div class="footerGrid">
         <div class="footerCard">
@@ -854,9 +905,7 @@
     });
 
     /* =========================
-       SMART SCROLL (PTE-like next/prev jump)
-       - DOWN = jump to next section below
-       - UP = jump to previous section above
+       SMART SCROLL
     ========================== */
     const smartBtn = document.getElementById("btnSmartScroll");
     const hint = document.getElementById("scrollHint");
@@ -871,7 +920,6 @@
     }
 
     function getTargets(){
-      // add IELTS/PTE blocks too so DOWN works properly inside module
       const ids = ["moduleSection","ieltsBlock","pteBlock","footerSection"];
       const els = ids.map(id => document.getElementById(id)).filter(Boolean);
       return [{ el: document.body, y: 0, name: "Top" }, ...els.map(el => ({ el, y: getTop(el), name: el.id }))].sort((a,b)=>a.y-b.y);

@@ -117,6 +117,7 @@
       background: rgba(255,255,255,.04);
       font-weight:850;
       font-size:13px;
+      cursor:pointer;
     }
 
     /* Hero */
@@ -373,6 +374,65 @@
       .desktopOnly{display:none}
       .brand{min-width:auto}
     }
+
+    /* ====================== AskLizOn – Study Abroad (NEW) ====================== */
+    .saModal{position:fixed; inset:0; display:none; z-index:9999;}
+    .saModal[aria-hidden="false"]{display:block;}
+    .saBackdrop{position:absolute; inset:0; background:rgba(1,12,8,.55);}
+    .saSheet{
+      position:absolute; left:50%; bottom:16px; transform:translateX(-50%);
+      width:min(560px,92vw);
+      background: rgba(6,43,31,.98);
+      border:1px solid rgba(214,179,90,.25);
+      border-radius: 18px;
+      overflow:hidden;
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+    }
+    .saTop{display:flex; align-items:flex-start; justify-content:space-between; padding:14px 14px 10px; border-bottom:1px solid rgba(214,179,90,.14);}
+    .saTitle{font-weight:950; letter-spacing:.2px}
+    .saStep{font-size:12px; opacity:.85; margin-top:2px}
+    .saX{
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--text);
+      border-radius:12px;
+      padding:7px 10px;
+      cursor:pointer;
+    }
+    .saBody{padding:14px; min-height:160px;}
+    .saBottom{display:flex; gap:10px; justify-content:space-between; padding:12px 14px; border-top:1px solid rgba(214,179,90,.14);}
+    .saQ{font-weight:950; margin:0 0 10px 0;}
+    .saChoices{display:flex; flex-direction:column; gap:10px;}
+    .saChoice{
+      display:flex; gap:10px; align-items:center;
+      padding:12px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      cursor:pointer;
+      background: rgba(255,255,255,.04);
+    }
+    .saChoice:hover{border-color: rgba(214,179,90,.25)}
+    .saChoice input{transform:scale(1.05);}
+    .saInput{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+    }
+    .saHint{opacity:.85; font-size:12px; margin-top:8px}
+    .saResult .box{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:12px;
+      background: rgba(255,255,255,.04);
+      margin-top:10px;
+    }
+    .saResult .k{opacity:.9; font-size:13px;}
+    .saResult .v{font-weight:950; font-size:16px; margin-top:2px;}
+    .saCTA{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
   </style>
 </head>
 
@@ -409,6 +469,7 @@
         <a class="miniBtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
         <a class="miniBtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
         <a class="miniBtn" id="waMenu" href="#">WhatsApp</a>
+        <button class="miniBtn" id="saOpenMenu" type="button">AskLizOn</button>
       </div>
     </div>
   </div>
@@ -432,6 +493,7 @@
           <a class="btn btn-gold" id="waHero" href="#">Talk With an Expert Counselor</a>
           <a class="btn btn-soft" href="#countries">Explore Countries</a>
           <a class="btn btn-soft" href="#which">Which Country Needs What?</a>
+          <button class="btn btn-soft" id="saOpen" type="button">AskLizOn – Study Abroad</button>
         </div>
 
         <div class="note">
@@ -627,6 +689,7 @@
 
     <div style="margin-top:12px" class="ctaRow">
       <a class="btn btn-gold" id="waQuestions" href="#">Talk With an Expert Counselor</a>
+      <button class="btn btn-soft" id="saOpenQuestions" type="button">AskLizOn – Study Abroad</button>
     </div>
   </section>
 
@@ -766,6 +829,7 @@
     <div class="ctaRow" style="margin-top:12px;">
       <a class="btn btn-gold" id="waCountries" href="#">Talk With an Expert Counselor</a>
       <a class="btn btn-soft" href="#n2f">See N2F (Now to Fly)</a>
+      <button class="btn btn-soft" id="saOpenCountries" type="button">AskLizOn – Study Abroad</button>
     </div>
   </section>
 
@@ -792,6 +856,7 @@
 
       <div class="ctaRow" style="margin-top:12px;">
         <a class="btn btn-gold" id="waN2F" href="#">Talk With an Expert Counselor</a>
+        <button class="btn btn-soft" id="saOpenN2F" type="button">AskLizOn – Study Abroad</button>
       </div>
     </div>
   </section>
@@ -824,6 +889,7 @@
           <a class="miniBtn" href="#countries">Countries</a>
           <a class="miniBtn" href="#which">Requirements</a>
           <a class="miniBtn" href="#n2f">N2F</a>
+          <button class="miniBtn" id="saOpenFooter" type="button">AskLizOn</button>
         </div>
       </div>
     </div>
@@ -833,6 +899,27 @@
     </p>
   </div>
 </footer>
+
+<!-- AskLizOn – Study Abroad Modal -->
+<div class="saModal" id="saModal" aria-hidden="true">
+  <div class="saBackdrop" id="saClose"></div>
+  <div class="saSheet" role="dialog" aria-modal="true" aria-label="Study Abroad Assessment">
+    <div class="saTop">
+      <div>
+        <div class="saTitle" id="saTitle">Study Abroad Assessment</div>
+        <div class="saStep" id="saStep">Step 1 of 10</div>
+      </div>
+      <button class="saX" id="saX" type="button" aria-label="Close">✕</button>
+    </div>
+
+    <div class="saBody" id="saBody"></div>
+
+    <div class="saBottom">
+      <button class="btn btn-soft" id="saBack" type="button" disabled>Back</button>
+      <button class="btn btn-gold" id="saNext" type="button">Next</button>
+    </div>
+  </div>
+</div>
 
 <a class="floatWA" id="waFloat" href="#">
   <span class="dot" aria-hidden="true"></span>
@@ -891,6 +978,322 @@
   btns.forEach(b => b.addEventListener("click", () => activate(b.dataset.target)));
 
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ===================== AskLizOn – Study Abroad (NEW SCRIPT) ===================== */
+  (() => {
+    const modal = document.getElementById("saModal");
+    const body = document.getElementById("saBody");
+    const titleEl = document.getElementById("saTitle");
+    const stepEl = document.getElementById("saStep");
+    const btnClose = document.getElementById("saClose");
+    const btnX = document.getElementById("saX");
+    const btnBack = document.getElementById("saBack");
+    const btnNext = document.getElementById("saNext");
+
+    const openButtons = [
+      "saOpen","saOpenMenu","saOpenQuestions","saOpenCountries","saOpenN2F","saOpenFooter"
+    ].map(id => document.getElementById(id)).filter(Boolean);
+
+    // Google Form endpoint (silent submit)
+    const FORM_RESPONSE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeXrn9BxfY2vbCjjFwlwoR_vBc0sBc5LKpmE1RmEy1rq1AFgg/formResponse";
+
+    // Entry IDs (LOCKED)
+    const ENTRY = {
+      primaryCountry: "entry.558668368",
+      alternativeCountry: "entry.1449571988",
+      advisorNotes: "entry.1418164387",
+      degreePlan: "entry.1517239466",
+      goingStatus: "entry.1329474689",
+      timeline: "entry.1846964778",
+      lastEducation: "entry.952184453",
+      academicStanding: "entry.2057090668",
+      studyGap: "entry.841310428",
+      englishTestStatus: "entry.1353182138",
+      scoreStatus: "entry.1347744288",
+      budgetRange: "entry.1325109422",
+      priority: "entry.803446780",
+      phoneNumber: "entry.1919103491"
+    };
+
+    // Form expects degree like "PS - Post Grad" for Masters (based on your prefill)
+    const DEGREE_VALUE = {
+      "Bachelor": "Bachelor",
+      "Masters": "PS - Post Grad"
+    };
+
+    const steps = [
+      { key:"goingStatus", label:"Are you planning to go:", type:"choice", required:true, options:["Alone","With Spouse"] },
+      { key:"degreePlan", label:"You are planning for:", type:"choice", required:true, options:["Bachelor","Masters"] },
+      { key:"timeline", label:"Preferred intake timeline", type:"choice", required:true, options:["0–3 months","3–6 months","6–12 months","Just exploring"] },
+      { key:"lastEducation", label:"Last completed education", type:"choice", required:true, options:["SSC","HSC","Diploma","Bachelor","Masters"] },
+      { key:"academicStanding", label:"Academic standing", type:"choice", required:true, options:["Strong","Average","Needs Improvement"] },
+      { key:"studyGap", label:"Study gap", type:"choice", required:true, options:["0–1 year","1–3 years","3–5 years","5+ years"] },
+      { key:"englishTestStatus", label:"English test status", type:"choice", required:true, options:["Not taken yet","IELTS","PTE","Duolingo","Not sure"] },
+      { key:"scoreStatus", label:"Score status", type:"choice", required:false, options:["Targeting","Booked","Have score"] },
+      { key:"budgetRange", label:"Budget range", type:"choice", required:true, options:["Tight","Moderate","Flexible"] },
+      { key:"priority", label:"Primary study priority", type:"choice", required:true, options:["Lowest cost","Faster visa","PR / long-term stay","Part-time work","Best universities"] },
+      { key:"phoneNumber", label:"Phone number", type:"phone", required:true, placeholder:"01XXXXXXXXX" }
+    ];
+
+    // Country pools + spouse rules (as locked with you)
+    const POOLS = {
+      bachelor_alone: ["Australia","New Zealand","UK","Canada","Belgium","Netherlands","Denmark","Finland","Hungary","Malta","Cyprus"],
+      masters_alone: ["Australia","New Zealand","UK","Canada","USA","Belgium","Netherlands","Ireland","Denmark","Finland","Hungary","Malta","Cyprus","Malaysia"],
+      bachelor_spouse: ["Finland","Netherlands","Belgium"],
+      masters_spouse: ["Australia","New Zealand","Canada","USA","Belgium","Netherlands","Denmark","Finland","Malaysia"]
+    };
+
+    const BOOST = ["Australia","UK","New Zealand","Belgium"];
+
+    let idx = 0;
+    const state = Object.create(null);
+
+    function openModal(){
+      modal.setAttribute("aria-hidden","false");
+      idx = 0;
+      for (const k in state) delete state[k];
+      btnBack.style.display = "";
+      btnNext.textContent = "Next";
+      btnNext.onclick = null;
+      renderStep();
+    }
+    function closeModal(){
+      modal.setAttribute("aria-hidden","true");
+    }
+
+    openButtons.forEach(b => b.addEventListener("click", openModal));
+    btnClose.addEventListener("click", closeModal);
+    btnX.addEventListener("click", closeModal);
+
+    function renderStep(){
+      const total = steps.length;
+      stepEl.textContent = `Step ${Math.min(idx+1,total)} of ${total}`;
+      btnBack.disabled = idx === 0;
+
+      if (idx >= steps.length) return renderResult();
+
+      const s = steps[idx];
+      titleEl.textContent = "Study Abroad Assessment";
+
+      let html = `<p class="saQ">${s.label}</p>`;
+
+      if (s.type === "choice") {
+        html += `<div class="saChoices">` + s.options.map(opt => {
+          const checked = state[s.key] === opt ? "checked" : "";
+          return `
+            <label class="saChoice">
+              <input type="radio" name="${s.key}" value="${opt}" ${checked}/>
+              <div>${opt}</div>
+            </label>
+          `;
+        }).join("") + `</div>`;
+      } else if (s.type === "phone") {
+        const val = state[s.key] || "";
+        html += `<input class="saInput" inputmode="numeric" autocomplete="tel" placeholder="${s.placeholder}"
+                value="${val}" id="saPhone" />`;
+        html += `<div class="saHint">Example: 017XXXXXXXX</div>`;
+      }
+
+      body.innerHTML = html;
+
+      if (s.type === "choice") {
+        body.querySelectorAll(`input[name="${s.key}"]`).forEach(r => {
+          r.addEventListener("change", (e) => {
+            state[s.key] = e.target.value;
+          });
+        });
+      } else if (s.type === "phone") {
+        const inp = document.getElementById("saPhone");
+        inp?.addEventListener("input", e => {
+          state[s.key] = e.target.value.replace(/[^\d]/g,"").slice(0,11);
+          inp.value = state[s.key];
+        });
+      }
+    }
+
+    function validateStep(){
+      const s = steps[idx];
+      const val = state[s.key];
+
+      if (s.required && (!val || String(val).trim()==="")) {
+        alert("Please complete this step.");
+        return false;
+      }
+      if (s.type === "phone") {
+        const p = String(val||"").trim();
+        if (!/^01\d{9}$/.test(p)) {
+          alert("Please enter a valid 11-digit phone number.");
+          return false;
+        }
+      }
+      return true;
+    }
+
+    btnBack.addEventListener("click", () => {
+      if (idx > 0) idx--;
+      renderStep();
+    });
+
+    btnNext.addEventListener("click", () => {
+      if (idx < steps.length) {
+        if (!validateStep()) return;
+        idx++;
+        renderStep();
+      }
+    });
+
+    function pickPool(){
+      const going = state.goingStatus;
+      const degree = state.degreePlan;
+      if (going === "With Spouse" && degree === "Bachelor") return POOLS.bachelor_spouse.slice();
+      if (going === "With Spouse" && degree === "Masters") return POOLS.masters_spouse.slice();
+      if (going === "Alone" && degree === "Bachelor") return POOLS.bachelor_alone.slice();
+      return POOLS.masters_alone.slice();
+    }
+
+    function chooseCountries(){
+      const pool = pickPool();
+      const score = new Map(pool.map(c => [c, 0]));
+
+      // Business boost
+      for (const c of BOOST) if (score.has(c)) score.set(c, score.get(c) + 3);
+
+      // Light heuristics (keeps it “advisor-like”, not absolute)
+      const budget = state.budgetRange;
+      const timeline = state.timeline;
+      const gap = state.studyGap;
+      const pr = state.priority;
+
+      if (budget === "Tight") {
+        ["Belgium","Hungary","Malta","Cyprus","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
+        ["USA"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
+      }
+      if (budget === "Flexible") {
+        ["Australia","UK","Canada","USA","New Zealand","Netherlands","Denmark","Finland","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+      }
+      if (timeline === "0–3 months") {
+        ["UK","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+      }
+      if (gap === "5+ years") {
+        ["USA"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
+      }
+      if (pr === "PR / long-term stay") {
+        ["Canada","Australia","New Zealand"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
+      }
+      if (pr === "Best universities") {
+        ["UK","USA","Canada","Australia","Netherlands","Denmark","Finland","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+      }
+      if (pr === "Lowest cost") {
+        ["Hungary","Malta","Cyprus","Belgium","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
+      }
+
+      const ranked = [...score.entries()].sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
+      const primary = ranked[0] || pool[0] || "Belgium";
+      const alt = ranked.find(c => c !== primary) || pool[1] || primary;
+      return { primary, alt };
+    }
+
+    function buildAdvisorNotes(primary, alt){
+      const parts = [];
+      parts.push(`Primary direction: ${primary}. Alternative option: ${alt}.`);
+      parts.push(`Next step: confirm intake availability and shortlist based on documents (academics, gap explanation, and budget proof).`);
+      parts.push(`Counselor review is recommended before finalizing the country route.`);
+      return parts.join(" ");
+    }
+
+    function whatsappPrefill(primary, alt){
+      const lines = [
+        "Assalamu Alaikum. I completed the Study Abroad Assessment on MyLizOn.",
+        `Plan: ${state.degreePlan || "-"}`,
+        `Going: ${state.goingStatus || "-"}`,
+        `Timeline: ${state.timeline || "-"}`,
+        `Education: ${state.lastEducation || "-"}`,
+        `Academic Standing: ${state.academicStanding || "-"}`,
+        `Gap: ${state.studyGap || "-"}`,
+        `English: ${state.englishTestStatus || "-"} (${state.scoreStatus || "Status not selected"})`,
+        `Budget: ${state.budgetRange || "-"}`,
+        `Priority: ${state.priority || "-"}`,
+        `Suggested: ${primary} (Primary), ${alt} (Alternative)`,
+        `Phone: ${state.phoneNumber || "-"}`
+      ];
+      return WA_LINK + "?text=" + encodeURIComponent(lines.join("\n"));
+    }
+
+    function submitToGoogleForm(primary, alt, notes){
+      const fd = new FormData();
+      fd.append(ENTRY.primaryCountry, primary);
+      fd.append(ENTRY.alternativeCountry, alt);
+      fd.append(ENTRY.advisorNotes, notes);
+
+      // Degree plan conversion to match form labels
+      const degreeVal = DEGREE_VALUE[state.degreePlan] || state.degreePlan || "";
+      fd.append(ENTRY.degreePlan, degreeVal);
+
+      fd.append(ENTRY.goingStatus, state.goingStatus || "");
+      fd.append(ENTRY.timeline, state.timeline || "");
+      fd.append(ENTRY.lastEducation, state.lastEducation || "");
+      fd.append(ENTRY.academicStanding, state.academicStanding || "");
+      fd.append(ENTRY.studyGap, state.studyGap || "");
+      fd.append(ENTRY.englishTestStatus, state.englishTestStatus || "");
+      fd.append(ENTRY.scoreStatus, state.scoreStatus || "");
+      fd.append(ENTRY.budgetRange, state.budgetRange || "");
+      fd.append(ENTRY.priority, state.priority || "");
+      fd.append(ENTRY.phoneNumber, state.phoneNumber || "");
+
+      fetch(FORM_RESPONSE_URL, { method:"POST", mode:"no-cors", body: fd }).catch(()=>{});
+    }
+
+    function renderResult(){
+      titleEl.textContent = "Your Study Direction";
+      stepEl.textContent = "Completed";
+
+      const { primary, alt } = chooseCountries();
+      const notes = buildAdvisorNotes(primary, alt);
+
+      // Silent submit first
+      submitToGoogleForm(primary, alt, notes);
+
+      const snapshot = `${state.degreePlan || ""} • ${state.goingStatus || ""} • ${state.timeline || ""} • ${state.budgetRange || ""}`;
+      const wa = whatsappPrefill(primary, alt);
+
+      body.innerHTML = `
+        <div class="saResult">
+          <div style="opacity:.9; font-size:13px;">Profile snapshot</div>
+          <div style="font-weight:950; margin-top:4px;">${snapshot}</div>
+
+          <div class="box">
+            <div class="k">Primary Country Direction</div>
+            <div class="v">${primary}</div>
+          </div>
+
+          <div class="box">
+            <div class="k">Alternative Country Option</div>
+            <div class="v">${alt}</div>
+          </div>
+
+          <div class="box">
+            <div class="k">Advisor Notes / Initial Guidance</div>
+            <div style="margin-top:6px; opacity:.92; line-height:1.55;">${notes}</div>
+          </div>
+
+          <div class="saCTA">
+            <a class="btn btn-gold" href="${wa}" target="_blank" rel="noopener">Book a Live Meeting with Expert</a>
+            <button class="btn btn-soft" id="saDone" type="button">Close</button>
+          </div>
+
+          <div style="opacity:.78; font-size:12px; margin-top:10px;">
+            Note: Final eligibility depends on documents and intake availability.
+          </div>
+        </div>
+      `;
+
+      document.getElementById("saDone")?.addEventListener("click", closeModal);
+
+      btnBack.style.display = "none";
+      btnNext.textContent = "Close";
+      btnNext.onclick = closeModal;
+    }
+  })();
 </script>
 
 </body>

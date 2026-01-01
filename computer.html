@@ -545,13 +545,15 @@
 
     /* Middle-left button like ielts-pte.html */
    /* Ask button: TRUE middle of visible screen */
+/* AskLizOn C — TRUE visual middle (between header & bottom bar) */
 .askFloat{
   position: fixed;
   left: 18px;
 
-  /* ✅ true middle */
-  top: 50vh;
-  transform: translateY(-50%);
+  /* 🔥 real visual center */
+  top: calc(
+    (100vh - var(--safeBottom) - 64px) / 2 + 64px
+  );
 
   z-index: 110;
 
@@ -559,7 +561,11 @@
   padding: 0 14px 0 12px;
   border-radius: 999px;
   border: 1px solid rgba(214,179,90,.55);
-  background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.05));
+  background: linear-gradient(
+    135deg,
+    rgba(214,179,90,.22),
+    rgba(255,255,255,.05)
+  );
   color: var(--text);
   font-weight: 1000;
 
@@ -573,12 +579,10 @@
   box-shadow: 0 18px 55px rgba(0,0,0,.35);
 }
 
-/* ✅ keep it above the bottom bar on small screens */
-@media (max-height: 720px){
-  .askFloat{
-    top: calc(50vh - 24px);
-  }
+.askFloat:active{
+  transform: translateY(1px);
 }
+
 
     .askFloat:active{ transform: translateY(-50%) translateY(1px); }
     .askDot{
@@ -1077,7 +1081,7 @@
   <!-- AskLizOn C button (middle like ielts-pte.html) -->
   <button class="askFloat" id="btnAskFloat" type="button" aria-label="Open AskLizOn C">
     <span class="askDot" aria-hidden="true"></span>
-    <span>Ask LizOn</span>
+   <span>AskLizOn C</span>
   </button>
 
   <!-- Bottom-left Hamburger -->

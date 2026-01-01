@@ -535,7 +535,7 @@
     }
     .sheetItem:active{transform: translateY(1px)}
 
-    /* ===== AskLizOn C (Computer) ===== */
+    /* ===== AskLizOn C (Modal + middle button) ===== */
     .flash{
       position:relative;
       outline: 2px solid rgba(214,179,90,.55);
@@ -543,47 +543,85 @@
       transition: .25s ease;
     }
 
-    .fabLeft.above{
-      bottom: calc(var(--safeBottom) + 74px);
-    }
-    .fab.askFab{
-      border-color: rgba(214,179,90,.55);
+    /* Middle-left button like ielts-pte.html */
+    .askFloat{
+      position:fixed;
+      left:18px;
+      top:50%;
+      transform: translateY(-50%);
+      z-index: 110;
+      height:46px;
+      padding:0 14px 0 12px;
+      border-radius:999px;
+      border:1px solid rgba(214,179,90,.55);
       background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.05));
-      font-weight: 950;
-      letter-spacing: .2px;
+      color: var(--text);
+      font-weight: 1000;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+    }
+    .askFloat:active{ transform: translateY(-50%) translateY(1px); }
+    .askDot{
+      width:18px; height:18px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.18);
+      display:grid; place-items:center;
+      font-weight: 1000;
+      line-height:1;
+    }
+    .askDot:before{
+      content:"?";
+      font-size:12px;
+      opacity:.95;
+    }
+    [data-theme="light"] .askDot{
+      background: rgba(6,43,31,.10);
+      border-color: rgba(6,43,31,.18);
     }
 
-    .askWrap{
+    /* Overlay closes on blank click */
+    .askOverlay{
       position:fixed;
-      left:12px; right:12px;
-      bottom: calc(var(--safeBottom) + 10px);
-      z-index: 115;
-      pointer-events:none;
+      inset:0;
+      z-index: 112;
+      background: rgba(0,0,0,.45);
+      display:none;
     }
+    [data-theme="light"] .askOverlay{ background: rgba(6,43,31,.18); }
+    .askOverlay.show{ display:block; }
+
     .askPanel{
-      width:min(var(--max), 92vw);
-      margin:0 auto;
+      position:fixed;
+      left:50%;
+      top:50%;
+      transform: translate(-50%,-50%) scale(.98);
+      width:min(980px, 92vw);
+      max-height: min(78vh, 720px);
+      overflow:auto;
+      z-index: 113;
+
       border-radius: 22px;
       border:1px solid var(--stroke);
-      background: rgba(255,255,255,.92);
-      color: rgba(6,43,31,.92);
-      box-shadow: 0 28px 90px rgba(0,0,0,.45);
+      background: rgba(4,31,22,.94);
+      color: var(--text);
+      box-shadow: 0 28px 90px rgba(0,0,0,.55);
       backdrop-filter: blur(12px);
-      overflow:hidden;
-      transform: translateY(14px);
+
       opacity:0;
       pointer-events:none;
-      transition: .20s ease;
-    }
-    [data-theme="dark"] .askPanel{
-      background: rgba(4,31,22,.92);
-      color: var(--text);
+      transition: .18s ease;
     }
     .askPanel.show{
-      transform: translateY(0);
       opacity:1;
       pointer-events:auto;
+      transform: translate(-50%,-50%) scale(1);
     }
+
     .askHead{
       padding:12px 14px;
       display:flex;
@@ -592,6 +630,9 @@
       gap:10px;
       border-bottom:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
+      position:sticky;
+      top:0;
+      z-index: 2;
     }
     .askTitle{
       font-weight: 1000;
@@ -871,7 +912,6 @@
           <div class="block">
             <p><b>This is not a computer course.</b> This is to stop you from messing up PTE because of the system speed.</p>
 
-            <!-- 1 -->
             <details class="sec" id="pte-skills">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t1">Skills Covered</span></div>
@@ -899,7 +939,6 @@
               </div>
             </details>
 
-            <!-- 2 -->
             <details class="sec" id="pte-with">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t2">This Course Comes With</span></div>
@@ -918,7 +957,6 @@
               </div>
             </details>
 
-            <!-- 3 (PTE) Benefited Modules with links -->
             <details class="sec" id="pte-modules">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t3">Benefited Modules</span></div>
@@ -938,7 +976,6 @@
               </div>
             </details>
 
-            <!-- 4 -->
             <details class="sec" id="pte-aim">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t4">Aim of the Module</span></div>
@@ -960,7 +997,6 @@
               </div>
             </details>
 
-            <!-- 5 -->
             <details class="sec" id="pte-become">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t5">What You Will Become After This</span></div>
@@ -1023,8 +1059,13 @@
 
   </main>
 
-  <!-- Bottom-left: AskLizOn C + Hamburger -->
-  <button class="fab fabLeft above askFab" id="btnAskFab" type="button" aria-label="Open AskLizOn C">Ask</button>
+  <!-- AskLizOn C button (middle like ielts-pte.html) -->
+  <button class="askFloat" id="btnAskFloat" type="button" aria-label="Open AskLizOn C">
+    <span class="askDot" aria-hidden="true"></span>
+    <span>Ask LizOn</span>
+  </button>
+
+  <!-- Bottom-left Hamburger -->
   <button class="fab fabLeft" id="btnMenuFab" type="button" aria-label="Open menu (bottom left)">
     <span class="miniBars" aria-hidden="true"><i></i></span>
   </button>
@@ -1035,36 +1076,36 @@
   </button>
   <div class="fabHint" id="scrollHint">Smart scroll</div>
 
-  <!-- AskLizOn C Panel -->
-  <div class="askWrap" aria-live="polite">
-    <div class="askPanel" id="askPanel" aria-hidden="true">
-      <div class="askHead">
-        <div class="askTitle">
-          AskLizOn C
-          <span>Computer-based clarity (IELTS + PTE)</span>
-        </div>
-        <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn C">✕</button>
+  <!-- AskLizOn C Overlay + Modal -->
+  <div class="askOverlay" id="askOverlay" aria-hidden="true"></div>
+
+  <div class="askPanel" id="askPanel" aria-hidden="true">
+    <div class="askHead">
+      <div class="askTitle">
+        AskLizOn C
+        <span>Computer-based clarity (IELTS + PTE)</span>
+      </div>
+      <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn C">✕</button>
+    </div>
+
+    <div class="askBody">
+      <div class="askPrompt" id="askPrompt">First choose your exam.</div>
+
+      <div class="askChips" id="askStage1">
+        <button class="askChip" data-exam="ielts" type="button">IELTS (Computer-Based)</button>
+        <button class="askChip" data-exam="pte" type="button">PTE (Computer-Based)</button>
       </div>
 
-      <div class="askBody">
-        <div class="askPrompt" id="askPrompt">First choose your exam.</div>
+      <div class="askChips" id="askStage2" style="display:none"></div>
 
-        <div class="askChips" id="askStage1">
-          <button class="askChip" data-exam="ielts" type="button">IELTS (Computer-Based)</button>
-          <button class="askChip" data-exam="pte" type="button">PTE (Computer-Based)</button>
-        </div>
+      <div class="askAnswer" id="askAnswer">
+        Tap an option — I’ll show the fix + take you to the exact place.
+        <small>No theory fluff. Just execution.</small>
+      </div>
 
-        <div class="askChips" id="askStage2" style="display:none"></div>
-
-        <div class="askAnswer" id="askAnswer">
-          Tap an option — I’ll show the fix + take you to the exact place.
-          <small>No theory fluff. Just execution.</small>
-        </div>
-
-        <div class="askActions">
-          <button class="askBtn" id="askGoBtn" type="button">Show me where to fix</button>
-          <span class="askHint" id="askHint">No selection yet.</span>
-        </div>
+      <div class="askActions">
+        <button class="askBtn" id="askGoBtn" type="button">Show me where to fix</button>
+        <span class="askHint" id="askHint">No selection yet.</span>
       </div>
     </div>
   </div>
@@ -1222,8 +1263,6 @@
 
     /* =========================
        SMART SCROLL (FIXED)
-       - DOWN: next section
-       - UP: when near bottom, go top (or previous section)
     ========================== */
     const smartBtn = document.getElementById("btnSmartScroll");
     const hint = document.getElementById("scrollHint");
@@ -1238,18 +1277,14 @@
     }
 
     function getTargets(){
-      // include BOTH blocks + footer
       const ids = ["moduleSection","ieltsBlock","pteBlock","footerSection"];
       const els = ids.map(id => document.getElementById(id)).filter(Boolean);
       const arr = [{ el: document.body, y: 0, name: "Top" }, ...els.map(el => ({ el, y: getTop(el), name: el.id }))];
-      // unique by y (avoid duplicates on some browsers)
       arr.sort((a,b)=>a.y-b.y);
       return arr;
     }
 
-    function currentLine(){
-      return window.scrollY + headerOffset();
-    }
+    function currentLine(){ return window.scrollY + headerOffset(); }
     function nextTarget(){
       const targets = getTargets();
       const line = currentLine();
@@ -1261,15 +1296,12 @@
       const above = targets.filter(t => t.y < line - 10);
       return above.length ? above[above.length - 1] : null;
     }
-
     function nearBottom(){
       const scrollBottom = window.scrollY + window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
-      return (docHeight - scrollBottom) < 30; // px threshold
+      return (docHeight - scrollBottom) < 30;
     }
-
     function updateSmartDirection(){
-      // if at/near bottom -> show UP
       if(nearBottom()){
         smartBtn.classList.add("isUp");
         smartBtn.classList.remove("isDown");
@@ -1290,22 +1322,17 @@
 
     smartBtn.addEventListener("click", ()=>{
       const off = headerOffset();
-
-      // if near bottom, go TOP immediately
       if(nearBottom()){
         showHint("Up");
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
-
       const n = nextTarget();
       if(n){
         showHint("Next");
         window.scrollTo({ top: Math.max(0, n.y - off), behavior: "smooth" });
         return;
       }
-
-      // fallback: previous or top
       const p = prevTarget();
       showHint("Up");
       if(p){
@@ -1319,17 +1346,17 @@
     window.addEventListener("resize", updateSmartDirection);
     updateSmartDirection();
 
-    // ensure PTE titles visible even if browser restores state
     (function ensureOpen(){
       ieltsBlock.open = true;
       pteBlock.open = true;
     })();
 
     /* =========================
-       AskLizOn C (Computer)
+       AskLizOn C (Modal)
     ========================== */
-    const askFab = document.getElementById("btnAskFab");
+    const askBtn = document.getElementById("btnAskFloat");
     const askPanel = document.getElementById("askPanel");
+    const askOverlay = document.getElementById("askOverlay");
     const askClose = document.getElementById("askClose");
     const askPrompt = document.getElementById("askPrompt");
     const askStage1 = document.getElementById("askStage1");
@@ -1377,13 +1404,19 @@
     let askChoice = null;
 
     function openAsk(){
-      closeSheet(); // close menu if open
+      closeSheet();
+      askOverlay.classList.add("show");
+      askOverlay.setAttribute("aria-hidden","false");
       askPanel.classList.add("show");
       askPanel.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
     }
     function closeAsk(){
       askPanel.classList.remove("show");
       askPanel.setAttribute("aria-hidden","true");
+      askOverlay.classList.remove("show");
+      askOverlay.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
     }
 
     function clearActive(container){
@@ -1452,8 +1485,9 @@
       setTimeout(()=>flashEl(el), 350);
     }
 
-    askFab.addEventListener("click", openAsk);
+    askBtn.addEventListener("click", openAsk);
     askClose.addEventListener("click", closeAsk);
+    askOverlay.addEventListener("click", closeAsk);
 
     askStage1.addEventListener("click", (e)=>{
       const btn = e.target.closest(".askChip");
@@ -1470,19 +1504,15 @@
     askGoBtn.addEventListener("click", ()=>{
       if(!askExam){
         setAnswer("First choose IELTS or PTE.<small>Then choose your problem.</small>", "Choose exam first.");
-        askPanel.animate([{transform:"translateY(0)"},{transform:"translateY(6px)"},{transform:"translateY(0)"}],{duration:220,easing:"ease-out"});
         return;
       }
       if(!askChoice){
         setAnswer("Now choose your problem from the list.<small>Then I’ll take you to the exact dropdown.</small>", "Choose a problem.");
-        askPanel.animate([{transform:"translateY(0)"},{transform:"translateY(6px)"},{transform:"translateY(0)"}],{duration:220,easing:"ease-out"});
         return;
       }
       closeAsk();
-      // open chain of details first, then jump
       openDetailsChain(askChoice.open || []);
       setTimeout(()=>jumpToSelector(askChoice.target), 160);
-      // update URL hash for shareable deep link
       try{ history.replaceState(null, "", askChoice.target); }catch(err){}
     });
 
@@ -1490,7 +1520,7 @@
       if(e.key === "Escape"){ closeAsk(); closeSheet(); }
     });
 
-    // Deep-link support: open correct dropdown when hash is present
+    /* Deep-link support: open correct dropdown when hash is present */
     (function initHash(){
       const h = (location.hash || "").trim();
       if(!h) return;
@@ -1504,12 +1534,10 @@
 
       const id = h.replace("#","");
       if(allDetailIds.has(id)){
-        // open parent blocks
         if(id.startsWith("ielts-")) openDetailsChain(["ieltsBlock", id]);
         if(id.startsWith("pte-")) openDetailsChain(["pteBlock", id]);
         if(id==="ieltsBlock") openDetailsChain(["ieltsBlock"]);
         if(id==="pteBlock") openDetailsChain(["pteBlock"]);
-        // jump
         setTimeout(()=>jumpToSelector(h), 120);
       }
     })();

@@ -54,7 +54,7 @@
     a{color:inherit; text-decoration:none}
     .container{width:min(var(--max), 92vw); margin:0 auto; padding:14px 0 calc(var(--safeBottom) + 220px);}
 
-    /* ===== Header (Index-like: logo + chips + burger) ===== */
+    /* ===== Header ===== */
     .topbar{
       position:sticky; top:0; z-index:60;
       backdrop-filter: blur(10px);
@@ -126,9 +126,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.18);
     }
     .iconbtn:active{transform: translateY(1px)}
-    .iconbtn .bars{
-      width:18px; height:12px; position:relative;
-    }
+    .iconbtn .bars{width:18px; height:12px; position:relative;}
     .iconbtn .bars:before,
     .iconbtn .bars:after,
     .iconbtn .bars i{
@@ -146,7 +144,6 @@
     [data-theme="light"] .iconbtn .bars i{
       background:rgba(6,43,31,.86);
     }
-
     @media (max-width: 980px){
       .navChips{display:none}
     }
@@ -203,7 +200,7 @@
       background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
     }
 
-    /* ===== Tap dropdown style ===== */
+    /* ===== OUTER dropdowns (IELTS/PTE blocks) ===== */
     .contentWrap{padding:12px 14px 14px}
 
     details{
@@ -249,24 +246,53 @@
       font-size:13px;
       line-height:1.55;
     }
-    .muted{color:var(--muted)}
     ul{margin:10px 0 0 18px; padding:0}
     li{margin:6px 0}
 
-    /* ===== NEW: IELTS Skills Sections (Apple-glass tiles) ===== */
-    .sectionTitle{
-      font-weight: 950;
-      font-size: 13.5px;
-      letter-spacing: .2px;
-      margin: 14px 0 8px;
+    /* ===== NEW: Section dropdown buttons (Apple glass) ===== */
+    .sec{
+      margin-top: 12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+    }
+    .sec > summary{
+      padding:14px 14px;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      box-shadow:
+        0 18px 55px rgba(0,0,0,.28),
+        0 1px 0 rgba(255,255,255,.08) inset;
+      backdrop-filter: blur(12px);
+    }
+    .sec[open] > summary{
+      border-color: rgba(214,179,90,.28);
+      box-shadow:
+        0 18px 55px rgba(0,0,0,.28),
+        0 1px 0 rgba(255,255,255,.10) inset;
+    }
+    .secBody{
+      padding: 0 14px 14px;
+      font-size:13px;
+      line-height:1.55;
+    }
+    .secTitleRow{
       display:flex;
       align-items:center;
-      gap:8px;
+      gap:10px;
+      min-height: 18px;
     }
-    .sectionTitle .dot{
+    .secDot{
       width:10px; height:10px; border-radius:999px;
       background: rgba(214,179,90,.75);
       box-shadow: 0 10px 20px rgba(0,0,0,.22);
+      flex:0 0 auto;
+    }
+    .secTitle{
+      font-weight: 950;
+      letter-spacing: .2px;
+      font-size: 13.5px;
     }
 
     /* different colors per title */
@@ -276,22 +302,7 @@
     .t4{ color:#ff9f7f; }  /* orange */
     .t5{ color:#c6a7ff; }  /* purple */
 
-    /* Apple glass tile look */
-    .glassTile{
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
-      box-shadow:
-        0 18px 55px rgba(0,0,0,.30),
-        0 1px 0 rgba(255,255,255,.08) inset;
-      backdrop-filter: blur(12px);
-      padding: 12px 12px;
-      margin-top: 6px;
-    }
-
-    .glassTile ul{ margin:10px 0 0 18px; }
-    .glassTile li{ margin:7px 0; }
-
+    /* important words */
     .k{
       font-weight: 950;
       padding: 1px 6px;
@@ -304,8 +315,6 @@
       color: rgba(6,43,31,.92);
       background: rgba(214,179,90,.20);
     }
-
-    /* important words (different colors) */
     .impGold{ color: var(--gold); font-weight:950; }
     .impMint{ color:#8fe3c7; font-weight:950; }
     .impBlue{ color:#7fb4ff; font-weight:950; }
@@ -335,14 +344,8 @@
       -webkit-tap-highlight-color: transparent;
     }
     .fab:active{transform: translateY(1px)}
-    .fabLeft{
-      left:14px;
-      bottom: calc(var(--safeBottom) + 10px);
-    }
-    .fabRight{
-      right:14px;
-      bottom: calc(var(--safeBottom) + 10px);
-    }
+    .fabLeft{ left:14px; bottom: calc(var(--safeBottom) + 10px); }
+    .fabRight{ right:14px; bottom: calc(var(--safeBottom) + 10px); }
     .fab .miniBars{width:18px; height:12px; position:relative;}
     .fab .miniBars:before, .fab .miniBars:after, .fab .miniBars i{
       content:""; position:absolute; left:0; right:0;
@@ -364,14 +367,12 @@
       border-left:7px solid transparent;
       border-right:7px solid transparent;
       border-bottom:10px solid rgba(255,255,255,.90);
-      transform: translateY(-1px) rotate(180deg); /* DOWN default */
+      transform: translateY(-1px) rotate(180deg);
       transition: transform .18s ease;
     }
-    [data-theme="light"] .fabRight .arrow{
-      border-bottom-color: rgba(6,43,31,.90);
-    }
-    .fabRight.isDown .arrow{ transform: translateY(-1px) rotate(180deg); } /* DOWN */
-    .fabRight.isUp .arrow{ transform: translateY(-1px) rotate(0deg); }     /* UP */
+    [data-theme="light"] .fabRight .arrow{ border-bottom-color: rgba(6,43,31,.90); }
+    .fabRight.isDown .arrow{ transform: translateY(-1px) rotate(180deg); }
+    .fabRight.isUp .arrow{ transform: translateY(-1px) rotate(0deg); }
 
     .fabHint{
       position:fixed;
@@ -425,7 +426,7 @@
     }
     .cta:active{transform: translateY(1px)}
 
-    /* ===== Footer (card style) ===== */
+    /* ===== Footer ===== */
     footer{ margin-top: 18px; }
     .footerGrid{
       display:grid;
@@ -448,10 +449,7 @@
     }
     .footerCard .fh b{font-size:14px}
     .footerCard .fb{padding:12px 14px 14px}
-    .footerRow{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:10px;
-    }
+    .footerRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
     .fbtn{
       height:44px;
       padding:0 12px;
@@ -566,10 +564,7 @@
       </nav>
 
       <div class="rightControls">
-        <!-- Dark/Light Toggle (Dark first by default) -->
         <button class="iconbtn" id="btnTheme" type="button" aria-label="Toggle light or dark mode">🌓</button>
-
-        <!-- Top-right hamburger -->
         <button class="iconbtn" id="btnMenuTop" type="button" aria-label="Open menu">
           <span class="bars" aria-hidden="true"><i></i></span>
         </button>
@@ -579,20 +574,16 @@
 
   <main class="container">
 
-    <!-- ===== Module Only (IELTS + PTE) ===== -->
     <section class="card" id="moduleSection">
       <div class="cardHeader">
         <div class="title">
           <b>Computer Skills for IELTS & PTE</b>
           <span>Tap each dropdown — no heavy scrolling</span>
-
-          <!-- IELTS/PTE buttons -->
           <div class="topSwitch">
             <button class="switchBtn active" id="btnGoIELTS" type="button">IELTS</button>
             <button class="switchBtn" id="btnGoPTE" type="button">PTE</button>
           </div>
         </div>
-
         <div class="pill">5 Sessions</div>
       </div>
 
@@ -605,85 +596,125 @@
           <div class="block">
             <p><b>This is not a computer course.</b> This is to stop you from losing marks for stupid reasons.</p>
 
-            <!-- 1 -->
-            <div class="sectionTitle t1"><span class="dot"></span>1. Skills Covered</div>
-            <div class="glassTile">
-              <div class="miniNote">
-                This module trains students to operate the <span class="impGold">IELTS computer test environment</span> smoothly,
-                without <span class="impOrange">panic</span> or technical hesitation.
+            <!-- 1. Skills Covered -->
+            <details class="sec">
+              <summary>
+                <div class="secTitleRow">
+                  <span class="secDot" aria-hidden="true"></span>
+                  <span class="secTitle t1">Skills Covered</span>
+                </div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                <div class="miniNote">
+                  This module trains students to operate the <span class="impGold">IELTS computer test environment</span> smoothly,
+                  without <span class="impOrange">panic</span> or technical hesitation.
+                </div>
+                <ul>
+                  <li><span class="k">Fast & accurate</span> keyboard typing for <span class="impGold">Writing</span> tasks</li>
+                  <li><span class="k">Smart mouse control</span> (drag, drop, highlight, select)</li>
+                  <li>Scrolling, zooming & navigation inside <span class="impBlue">IELTS interface</span></li>
+                  <li>Using <span class="impMint">copy–paste</span> safely and strategically</li>
+                  <li>Text editing skills (cut, move, replace, reorganize ideas)</li>
+                  <li>Time-saving <span class="impPurple">keyboard shortcuts</span> for Writing & Reading</li>
+                  <li>Handling on-screen instructions, timers & navigation buttons</li>
+                  <li>Avoiding common computer-based mistakes that <span class="impOrange">cost marks</span></li>
+                </ul>
               </div>
-              <ul>
-                <li><span class="k">Fast & accurate</span> keyboard typing for <span class="impGold">Writing</span> tasks</li>
-                <li><span class="k">Smart mouse control</span> (drag, drop, highlight, select)</li>
-                <li>Scrolling, zooming & navigation inside <span class="impBlue">IELTS interface</span></li>
-                <li>Using <span class="impMint">copy–paste</span> safely and strategically</li>
-                <li>Text editing skills (cut, move, replace, reorganize ideas)</li>
-                <li>Time-saving <span class="impPurple">keyboard shortcuts</span> for Writing & Reading</li>
-                <li>Handling on-screen instructions, timers & navigation buttons</li>
-                <li>Avoiding common computer-based mistakes that <span class="impOrange">cost marks</span></li>
-              </ul>
-            </div>
+            </details>
 
-            <!-- 2 -->
-            <div class="sectionTitle t2"><span class="dot"></span>2. This Course Comes With</div>
-            <div class="glassTile">
-              <ul>
-                <li>Live guided practice on realistic <span class="impBlue">IELTS computer interface</span></li>
-                <li>Step-by-step demonstrations (<span class="impOrange">not assumptions</span>)</li>
-                <li>Supervised hands-on drills (<span class="impGold">Writing + Reading</span> focus)</li>
-                <li>Individual correction of bad habits (over-scrolling, mis-clicks, panic typing)</li>
-                <li>Exam-day strategies: what to touch, what <span class="impOrange">not</span> to touch</li>
-                <li>Confidence training so students feel <span class="impMint">in control</span> of the screen</li>
-              </ul>
-            </div>
-
-            <!-- 3 -->
-            <div class="sectionTitle t3"><span class="dot"></span>3. Benefited Modules</div>
-            <div class="glassTile">
-              <div class="miniNote">This computer skills training directly improves performance in:</div>
-              <ul>
-                <li><span class="impGold">Listening</span> – fast navigation, question jumping, focus retention</li>
-                <li><span class="impBlue">Reading</span> – highlight, locate answers faster, reduce eye fatigue</li>
-                <li><span class="impMint">Writing</span> – faster typing, better structuring, easier editing</li>
-                <li><span class="impPurple">Speaking</span> – indirect benefit (confidence, reduced exam stress)</li>
-              </ul>
-            </div>
-
-            <!-- 4 -->
-            <div class="sectionTitle t4"><span class="dot"></span>4. Aim of the Module</div>
-            <div class="glassTile">
-              <div class="miniNote">
-                The aim is simple and ruthless:
-                <span class="impOrange">Remove technology as a weakness.</span>
-                Turn it into an <span class="impMint">advantage</span>.
+            <!-- 2. This Course Comes With -->
+            <details class="sec">
+              <summary>
+                <div class="secTitleRow">
+                  <span class="secDot" aria-hidden="true"></span>
+                  <span class="secTitle t2">This Course Comes With</span>
+                </div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                <ul>
+                  <li>Live guided practice on realistic <span class="impBlue">IELTS computer interface</span></li>
+                  <li>Step-by-step demonstrations (<span class="impOrange">not assumptions</span>)</li>
+                  <li>Supervised hands-on drills (<span class="impGold">Writing + Reading</span> focus)</li>
+                  <li>Individual correction of bad habits (over-scrolling, mis-clicks, panic typing)</li>
+                  <li>Exam-day strategies: what to touch, what <span class="impOrange">not</span> to touch</li>
+                  <li>Confidence training so students feel <span class="impMint">in control</span> of the screen</li>
+                </ul>
               </div>
-              <div class="miniNote">
-                By the end of this module, the student should think only about <span class="impGold">English</span>,
-                not about:
-                <br><span class="impPurple">“Eita click hobe?”</span>
-                <span class="impBlue">“Scroll bhul hoye gelo”</span>
-                <span class="impOrange">“Time shesh hoye jacche”</span>
-              </div>
-            </div>
+            </details>
 
-            <!-- 5 -->
-            <div class="sectionTitle t5"><span class="dot"></span>5. What You Will Become After This</div>
-            <div class="glassTile">
-              <div class="miniNote">After completing this module, a student becomes:</div>
-              <ul>
-                <li><span class="impMint">Calm</span> inside a computer-based IELTS exam</li>
-                <li><span class="impBlue">Faster</span> without rushing</li>
-                <li><span class="impGold">More accurate</span> without overthinking</li>
-                <li>Confident enough to <span class="impPurple">edit writing like a pro</span></li>
-                <li>Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally</li>
-              </ul>
-            </div>
+            <!-- 3. Benefited Modules -->
+            <details class="sec">
+              <summary>
+                <div class="secTitleRow">
+                  <span class="secDot" aria-hidden="true"></span>
+                  <span class="secTitle t3">Benefited Modules</span>
+                </div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                <div class="miniNote">This computer skills training directly improves performance in:</div>
+                <ul>
+                  <li><span class="impGold">Listening</span> – fast navigation, question jumping, focus retention</li>
+                  <li><span class="impBlue">Reading</span> – highlight, locate answers faster, reduce eye fatigue</li>
+                  <li><span class="impMint">Writing</span> – faster typing, better structuring, easier editing</li>
+                  <li><span class="impPurple">Speaking</span> – indirect benefit (confidence, reduced exam stress)</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- 4. Aim of the Module -->
+            <details class="sec">
+              <summary>
+                <div class="secTitleRow">
+                  <span class="secDot" aria-hidden="true"></span>
+                  <span class="secTitle t4">Aim of the Module</span>
+                </div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                <div class="miniNote">
+                  The aim is simple and ruthless:
+                  <span class="impOrange">Remove technology as a weakness.</span>
+                  Turn it into an <span class="impMint">advantage</span>.
+                </div>
+                <div class="miniNote">
+                  By the end of this module, the student should think only about <span class="impGold">English</span>,
+                  not about:
+                  <br><span class="impPurple">“Eita click hobe?”</span>
+                  <span class="impBlue">“Scroll bhul hoye gelo”</span>
+                  <span class="impOrange">“Time shesh hoye jacche”</span>
+                </div>
+              </div>
+            </details>
+
+            <!-- 5. What You Will Become After This -->
+            <details class="sec">
+              <summary>
+                <div class="secTitleRow">
+                  <span class="secDot" aria-hidden="true"></span>
+                  <span class="secTitle t5">What You Will Become After This</span>
+                </div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                <div class="miniNote">After completing this module, a student becomes:</div>
+                <ul>
+                  <li><span class="impMint">Calm</span> inside a computer-based IELTS exam</li>
+                  <li><span class="impBlue">Faster</span> without rushing</li>
+                  <li><span class="impGold">More accurate</span> without overthinking</li>
+                  <li>Confident enough to <span class="impPurple">edit writing like a pro</span></li>
+                  <li>Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally</li>
+                </ul>
+              </div>
+            </details>
 
             <p style="margin-top:12px"><b>Final truth:</b> IELTS is not only about English. It’s also about how you use the computer.</p>
           </div>
         </details>
 
-        <!-- PTE -->
+        <!-- PTE (kept as-is) -->
         <details id="pteBlock">
           <summary>PTE (Computer-Based) <span class="chev">›</span></summary>
 
@@ -707,7 +738,7 @@
       </div>
     </section>
 
-    <!-- ===== Footer ===== -->
+    <!-- Footer -->
     <footer id="footerSection">
       <div class="footerGrid">
         <div class="footerCard">

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Computer Lessons (IELTS & PTE) | LizOn Education</title>
-  <meta name="description" content="Tap-only AskLizOn Computer bot for IELTS & PTE. No scrolling needed. Fast guidance for computer-based exam performance." />
+  <meta name="description" content="Computer Skills module for IELTS & PTE. Tap-only dropdowns. No scrolling heavy content. Built for computer-based exam performance." />
   <meta name="theme-color" content="#062b1f" />
 
   <style>
@@ -151,41 +151,14 @@
       .navChips{display:none}
     }
 
-    /* ===== Hero ===== */
-    .hero{
-      padding:14px 0 10px;
-      display:grid; gap:10px;
-    }
-    .hero h1{
-      margin:0;
-      font-size:20px;
-      letter-spacing:.2px;
-    }
-    .hero p{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.45;
-      max-width:80ch;
-    }
-
-    /* ===== Layout ===== */
-    .grid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:14px;
-      align-items:start;
-    }
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr}
-    }
-
+    /* ===== Cards ===== */
     .card{
       border:1px solid var(--stroke);
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
       border-radius: var(--radius2);
       box-shadow: var(--shadow);
       overflow:hidden;
+      margin-top: 12px;
     }
     .cardHeader{
       padding:14px 14px 10px;
@@ -206,88 +179,7 @@
       white-space:nowrap;
     }
 
-    /* ===== AskLizOn Bot ===== */
-    .toggleRow{
-      padding:12px 14px 0;
-      display:grid; gap:10px;
-    }
-    .toggle{
-      display:grid; grid-template-columns:1fr 1fr; gap:10px;
-    }
-    .tbtn{
-      height:var(--tap);
-      border-radius:16px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      display:flex; align-items:center; justify-content:center;
-      font-weight:900;
-      cursor:pointer;
-      user-select:none;
-    }
-    .tbtn.active{
-      border-color: rgba(214,179,90,.65);
-      background: linear-gradient(135deg, rgba(214,179,90,.18), rgba(255,255,255,.06));
-      box-shadow: 0 14px 40px rgba(0,0,0,.22);
-    }
-    .tbtn span{font-size:13px; letter-spacing:.2px}
-
-    .botWrap{padding:12px 14px 14px}
-    .chat{
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      border-radius:18px;
-      padding:12px;
-      min-height:300px;
-      max-height: 540px;
-      overflow:auto;
-      scroll-behavior:smooth;
-    }
-    .bubble{
-      max-width: 92%;
-      padding:10px 12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      margin:8px 0;
-      font-size:13px;
-      line-height:1.45;
-    }
-    .bubble.bot{
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
-    }
-    .bubble.user{
-      margin-left:auto;
-      background:linear-gradient(180deg, rgba(214,179,90,.16), rgba(255,255,255,.04));
-      border-color: rgba(214,179,90,.35);
-    }
-    .chips{
-      display:flex; flex-wrap:wrap; gap:8px;
-      margin:10px 0 4px;
-    }
-    .chip{
-      min-height:44px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      cursor:pointer;
-      user-select:none;
-      font-size:13px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .chip:active{transform: translateY(1px)}
-    .chip.gold{
-      border-color: rgba(214,179,90,.55);
-      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
-      font-weight:900;
-    }
-
-    /* ===== Locked Content (Tap-to-see) ===== */
+    /* ===== Tap dropdown style ===== */
     .contentWrap{padding:12px 14px 14px}
     details{
       border:1px solid var(--stroke);
@@ -310,7 +202,7 @@
     }
     summary::-webkit-details-marker{display:none}
     .chev{opacity:.75; transition: transform .15s ease}
-    details[open] .chev{transform: rotate(90deg)}
+    details[open] > summary .chev{transform: rotate(90deg)}
     .block{
       margin-top:10px;
       font-size:13px;
@@ -320,47 +212,11 @@
     ul{margin:10px 0 0 18px; padding:0}
     li{margin:6px 0}
 
-    /* ===== AskLizOnComputer floating pill (like PTE) ===== */
-    .askliz-fab{
-      position: fixed;
-      left: 56%;  /* slightly right like screenshot */
-      bottom: calc(var(--safeBottom) + 10px);
-      transform: translateX(-50%);
-      z-index: 90;
-
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-
-      height: 46px;
-      padding: 0 14px 0 8px;
-      border-radius: 999px;
-
-      border: 1px solid rgba(214,179,90,.45);
-      background: rgba(6,43,31,.70);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 18px 55px rgba(0,0,0,.35);
-
-      color: rgba(255,255,255,.92);
-      font-weight: 900;
-      font-size: 13px;
-
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .askliz-fab:active{ transform: translateX(-50%) translateY(1px); }
-    .askliz-icon{
-      width: 30px; height: 30px; border-radius: 999px;
-      display:inline-flex; align-items:center; justify-content:center;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      font-weight: 900; font-size: 14px;
-    }
-
-    @media (max-width:420px){
-      .askliz-fab{height:44px; padding:0 12px 0 7px; font-size:12.5px; left:55%;}
-      .askliz-icon{width:28px; height:28px;}
+    /* Make inner dropdowns look tight like screenshot */
+    .inner details{
+      margin-top:10px;
+      border-radius:14px;
+      background: rgba(255,255,255,.03);
     }
 
     /* ===== Bottom Floating Buttons ===== */
@@ -401,24 +257,22 @@
     [data-theme="light"] .fab .miniBars i{
       background:rgba(6,43,31,.86);
     }
-.fabRight .arrow{
-  width:0; height:0;
-  border-left:7px solid transparent;
-  border-right:7px solid transparent;
-  border-bottom:10px solid rgba(255,255,255,.90);
-  transform: translateY(-1px) rotate(0deg); /* default UP */
-  transition: transform .18s ease;
-}
-[data-theme="light"] .fabRight .arrow{
-  border-bottom-color: rgba(6,43,31,.90);
-}
 
-/* ✅ Direction states */
-.fabRight.isDown .arrow{ transform: translateY(-1px) rotate(180deg); } /* DOWN */
-.fabRight.isUp .arrow{ transform: translateY(-1px) rotate(0deg); }     /* UP */
+    /* Smart scroll arrow (UP/DOWN) */
+    .fabRight .arrow{
+      width:0; height:0;
+      border-left:7px solid transparent;
+      border-right:7px solid transparent;
+      border-bottom:10px solid rgba(255,255,255,.90);
+      transform: translateY(-1px) rotate(0deg); /* UP default */
+      transition: transform .18s ease;
+    }
+    [data-theme="light"] .fabRight .arrow{
+      border-bottom-color: rgba(6,43,31,.90);
+    }
+    .fabRight.isDown .arrow{ transform: translateY(-1px) rotate(180deg); } /* DOWN */
+    .fabRight.isUp .arrow{ transform: translateY(-1px) rotate(0deg); }     /* UP */
 
-   
-    /* Smart scroll label (optional) */
     .fabHint{
       position:fixed;
       right:14px;
@@ -617,7 +471,7 @@
         <!-- Dark/Light Toggle (Dark first by default) -->
         <button class="iconbtn" id="btnTheme" type="button" aria-label="Toggle light or dark mode">🌓</button>
 
-        <!-- Top-right hamburger (like index style) -->
+        <!-- Top-right hamburger -->
         <button class="iconbtn" id="btnMenuTop" type="button" aria-label="Open menu">
           <span class="bars" aria-hidden="true"><i></i></span>
         </button>
@@ -626,140 +480,127 @@
   </header>
 
   <main class="container">
-    <section class="hero">
-      <h1>Computer Skills for IELTS & PTE (Tap-only)</h1>
-      <p>
-        Students don’t want to scroll or type. This page works like <b>AskLizOn</b>:
-        <b>tap a problem → get a short answer → tap next options</b>.
-      </p>
-    </section>
 
-    <section class="grid">
-      <!-- LEFT: AskLizOn Computer Bot -->
-      <div class="card" id="asklizSection">
-        <div class="cardHeader">
-          <div class="title">
-            <b>AskLizOn – Computer</b>
-            <span>Tap-only bot options (no typing)</span>
-          </div>
-          <div class="pill" id="pillExam">Mode: IELTS</div>
+    <!-- ===== Module Only (IELTS + PTE) ===== -->
+    <section class="card" id="moduleSection">
+      <div class="cardHeader">
+        <div class="title">
+          <b>Computer Skills for IELTS & PTE</b>
+          <span>Tap each dropdown — no heavy scrolling</span>
         </div>
-
-        <div class="toggleRow">
-          <div class="toggle" role="tablist" aria-label="Exam toggle">
-            <div class="tbtn active" id="tabIELTS" role="tab" aria-selected="true"><span>IELTS</span></div>
-            <div class="tbtn" id="tabPTE" role="tab" aria-selected="false"><span>PTE</span></div>
-          </div>
-        </div>
-
-        <div class="botWrap">
-          <div class="chat" id="chat" aria-live="polite"></div>
-        </div>
+        <div class="pill">5 Sessions</div>
       </div>
 
-      <!-- RIGHT: Locked Content (Tap-to-see) -->
-      <div class="card" id="moduleSection">
-        <div class="cardHeader">
-          <div class="title">
-            <b>Inside the Module</b>
-            <span>Tap & see (IELTS + PTE locked)</span>
+      <div class="contentWrap">
+
+        <!-- IELTS -->
+        <details open>
+          <summary>IELTS (Computer-Based) <span class="chev">›</span></summary>
+
+          <div class="block inner">
+            <p><b>This is not a computer course.</b> This is to stop you from losing marks for stupid reasons.</p>
+
+            <details>
+              <summary>The Real Problem <span class="chev">›</span></summary>
+              <div class="block">
+                <ul>
+                  <li>Writing e idea thake, type korte giye time shesh</li>
+                  <li>Paragraph change korte giye sentence bhange</li>
+                  <li>Reading e scroll korlei line haray</li>
+                  <li>Highlight korte giye wrong line select hoy</li>
+                  <li>Copy–paste korle format / double hoy</li>
+                  <li>Timer dekhe panic hoy</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>What We Fix <span class="chev">›</span></summary>
+              <div class="block">
+                <ul>
+                  <li>Fast typing without panic</li>
+                  <li>Edit without breaking flow</li>
+                  <li>Scroll control (line harabe na)</li>
+                  <li>Highlight only what matters</li>
+                  <li>Copy–paste properly (overuse na)</li>
+                  <li>Finish on time, calmly</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>Who Must Take This <span class="chev">›</span></summary>
+              <div class="block">
+                <ul>
+                  <li>First time computer-based IELTS</li>
+                  <li>Paper-based practice korecho</li>
+                  <li>Mobile heavy, keyboard weak</li>
+                  <li>Band 6.5–7+ target</li>
+                </ul>
+              </div>
+            </details>
+
+            <p><b>Final truth:</b> IELTS is not only about English. It’s also about how you use the computer.</p>
           </div>
-          <div class="pill">5 Sessions</div>
-        </div>
+        </details>
 
-        <div class="contentWrap">
-          <details open>
-            <summary>IELTS (Computer-Based) — Locked <span class="chev">›</span></summary>
-            <div class="block">
-              <p><b>This is not a computer course.</b> This is to stop you from losing marks for stupid reasons.</p>
+        <!-- PTE -->
+        <details>
+          <summary>PTE (Computer-Based) <span class="chev">›</span></summary>
 
-              <p class="muted"><b>The Real Problem</b></p>
-              <ul>
-                <li>Writing e idea thake, type korte giye time shesh</li>
-                <li>Paragraph change korte giye sentence bhange</li>
-                <li>Reading e scroll korlei line haray</li>
-                <li>Highlight korte giye wrong line select hoy</li>
-                <li>Copy–paste korle format / double hoy</li>
-                <li>Timer dekhe panic hoy</li>
-              </ul>
+          <div class="block inner">
+            <p><b>This is not a computer course.</b> This is to stop you from messing up PTE because of the system speed.</p>
 
-              <p class="muted"><b>What We Fix</b></p>
-              <ul>
-                <li>Fast typing without panic</li>
-                <li>Edit without breaking flow</li>
-                <li>Scroll control (line harabe na)</li>
-                <li>Highlight only what matters</li>
-                <li>Copy–paste properly (overuse na)</li>
-                <li>Finish on time, calmly</li>
-              </ul>
+            <details>
+              <summary>The Real Problem <span class="chev">›</span></summary>
+              <div class="block">
+                <ul>
+                  <li>Mic on holei matha blank</li>
+                  <li>Speaking start korte giye voice cut hoy</li>
+                  <li>Timer dekhe freeze hoye jay</li>
+                  <li>Writing e type korte giye sentence bhul hoy</li>
+                  <li>Copy–paste korle same line duibar</li>
+                  <li>Click miss hole question skip / panic</li>
+                  <li>Task change hole confused hoy</li>
+                </ul>
+              </div>
+            </details>
 
-              <p class="muted"><b>Who Must Take This</b></p>
-              <ul>
-                <li>First time computer-based IELTS</li>
-                <li>Paper-based practice korecho</li>
-                <li>Mobile heavy, keyboard weak</li>
-                <li>Band 6.5–7+ target</li>
-              </ul>
+            <details>
+              <summary>What We Fix <span class="chev">›</span></summary>
+              <div class="block">
+                <ul>
+                  <li>Mic + timer control (panic-free)</li>
+                  <li>Speaking start/pause/finish control</li>
+                  <li>Fast, clean typing without mess</li>
+                  <li>Copy–paste safely (repeat na hoy)</li>
+                  <li>Cursor control (Fill in the blanks)</li>
+                  <li>PTE flow er shathe adjust kora</li>
+                </ul>
+              </div>
+            </details>
 
-              <p><b>Final truth:</b> IELTS is not only about English. It’s also about how you use the computer.</p>
-            </div>
-          </details>
+            <details>
+              <summary>Who Must Take This <span class="chev">›</span></summary>
+              <div class="block">
+                <ul>
+                  <li>First time PTE</li>
+                  <li>Mic e nervous</li>
+                  <li>Keyboard slow</li>
+                  <li>PTE 58 / 65 / 79+ target</li>
+                </ul>
+              </div>
+            </details>
 
-          <details>
-            <summary>PTE — Locked <span class="chev">›</span></summary>
-            <div class="block">
-              <p><b>This is not a computer course.</b> This is to stop you from messing up PTE because of the system speed.</p>
+            <p><b>Final truth:</b> PTE fast. System strong. This module makes you faster than the system.</p>
+          </div>
+        </details>
 
-              <p class="muted"><b>The Real Problem</b></p>
-              <ul>
-                <li>Mic on holei matha blank</li>
-                <li>Speaking start korte giye voice cut hoy</li>
-                <li>Timer dekhe answer chere dey</li>
-                <li>Writing e type korte giye sentence bhul hoy</li>
-                <li>Copy–paste korle same line duibar</li>
-                <li>Click miss hole question skip / panic</li>
-                <li>Task change hole confused hoy</li>
-              </ul>
-
-              <p class="muted"><b>What We Fix</b></p>
-              <ul>
-                <li>Mic + timer control (panic-free)</li>
-                <li>Speaking start/pause/finish control</li>
-                <li>Fast, clean typing without mess</li>
-                <li>Copy–paste safely (repeat na hoy)</li>
-                <li>Cursor control (Fill in the blanks)</li>
-                <li>PTE flow er shathe adjust kora</li>
-              </ul>
-
-              <p class="muted"><b>Who Must Take This</b></p>
-              <ul>
-                <li>First time PTE</li>
-                <li>Mic e nervous</li>
-                <li>Keyboard slow</li>
-                <li>PTE 58 / 65 / 79+ target</li>
-              </ul>
-
-              <p><b>Final truth:</b> PTE fast. System strong. This module makes you faster than the system.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>How this page avoids scrolling <span class="chev">›</span></summary>
-            <div class="block">
-              <ul>
-                <li>AskLizOn answers are short.</li>
-                <li>Every answer ends with tap options.</li>
-                <li>Locked content stays inside tap sections.</li>
-                <li>Quick buttons + smart scroll make it mobile-friendly.</li>
-              </ul>
-            </div>
-          </details>
-        </div>
       </div>
     </section>
 
     <!-- ===== Footer (index-like card footer) ===== -->
-    <footer>
+    <footer id="footerSection">
       <div class="footerGrid">
         <div class="footerCard">
           <div class="fh"><b>Contact & Location</b></div>
@@ -791,15 +632,8 @@
         </div>
       </div>
     </footer>
+
   </main>
-
-  <!-- AskLizOnComputer pill button (like PTE.html) -->
-<button class="askliz-fab" id="btnAskLizOnComputer" type="button"
-  aria-label="AskLizOnComputer">
-  <span class="askliz-icon">?</span>
-  <span>AskLizOnComputer</span>
-</button>
-
 
   <!-- Bottom-left Hamburger (floating) -->
   <button class="fab fabLeft" id="btnMenuFab" type="button" aria-label="Open menu (bottom left)">
@@ -807,48 +641,17 @@
   </button>
 
   <!-- Right-bottom Smart Scroll -->
-  <button class="fab fabRight" id="btnSmartScroll" type="button" aria-label="Smart scroll">
+  <button class="fab fabRight isDown" id="btnSmartScroll" type="button" aria-label="Smart scroll">
     <span class="arrow" aria-hidden="true"></span>
   </button>
   <div class="fabHint" id="scrollHint">Smart scroll</div>
-
-  <!-- AskLizOnComputer Panel -->
-<div class="sheetOverlay" id="asklizOverlay"></div>
-
-<div class="sheet" id="asklizSheet" aria-hidden="true">
-  <div class="handle"></div>
-
-  <div class="sheetInner">
-    <div class="sheetTop">
-      <b>AskLizOn — Computer</b>
-      <button class="iconbtn" id="closeAskLizOn" aria-label="Close">✕</button>
-    </div>
-
-    <div class="sheetBody">
-      <div class="card" style="border-radius:18px">
-        <div style="padding:14px">
-          <b style="font-size:14px">Quick clarity in 20 sec</b>
-          <p class="muted" style="margin:6px 0 12px">
-            Tap 3 ta answer → apnar jonno best plan show korbe.
-          </p>
-
-          <div class="footerRow">
-            <button class="fbtn gold" id="askQuickTips">Quick Tips</button>
-            <a class="fbtn" id="askTalkLizOn" target="_blank">Talk with LizOn</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 
   <!-- Bottom Guidance Bar -->
   <div class="bottomBar">
     <div class="barInner">
       <div class="left">
         <b>Need guidance?</b>
-        <span>Tap AskLizOn or chat on WhatsApp</span>
+        <span>Chat on WhatsApp</span>
       </div>
       <a class="cta" id="ctaWhatsApp" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
     </div>
@@ -870,8 +673,8 @@
           <a class="sheetItem" href="pte.html">PTE</a>
           <a class="sheetItem gold" href="#">Computer</a>
           <button class="sheetItem" id="sheetTheme" type="button">Light/Dark</button>
-          <button class="sheetItem" id="sheetSwitchExam" type="button">Switch IELTS/PTE</button>
-          <a class="sheetItem" href="#moduleSection">See Module</a>
+          <a class="sheetItem" href="#moduleSection">Go to Module</a>
+          <a class="sheetItem" href="#footerSection">Go to Footer</a>
           <a class="sheetItem gold" id="sheetWhatsApp" href="#" target="_blank" rel="noopener">Talk with Expert</a>
         </div>
       </div>
@@ -902,7 +705,7 @@
       if(saved === "light" || saved === "dark"){
         applyTheme(saved);
       }else{
-        applyTheme("dark"); // Dark mode first (your request)
+        applyTheme("dark");
       }
     })();
 
@@ -917,6 +720,7 @@
     document.getElementById("sheetTheme").addEventListener("click", ()=>{
       const cur = document.documentElement.getAttribute("data-theme") || "dark";
       applyTheme(cur === "dark" ? "light" : "dark");
+      closeSheet();
     });
 
     /* =========================
@@ -925,15 +729,16 @@
     const ctaWhatsApp = document.getElementById("ctaWhatsApp");
     const footerWhatsApp = document.getElementById("footerWhatsApp");
     const sheetWhatsApp = document.getElementById("sheetWhatsApp");
-    function setWAForExam(exam){
-      const msg = `Assalamu Alaikum, I want guidance about Computer Skills for ${exam}.`;
+    function setWA(){
+      const msg = "Assalamu Alaikum, I want guidance about Computer Skills for IELTS/PTE.";
       ctaWhatsApp.href = waLink(msg);
       footerWhatsApp.href = waLink(msg);
       sheetWhatsApp.href = waLink(msg);
     }
+    setWA();
 
     /* =========================
-       MENU SHEET (hamburger)
+       MENU SHEET
     ========================== */
     const overlay = document.getElementById("sheetOverlay");
     const sheet = document.getElementById("menuSheet");
@@ -957,550 +762,85 @@
     overlay.addEventListener("click", closeSheet);
 
     /* =========================
-       AskLizOnComputer pill
+       SMART SCROLL (PTE-like next/prev jump)
+       - DOWN = jump to next section below
+       - UP = jump to previous section above
     ========================== */
- /* =========================
-   AskLizOnComputer Panel
-========================= */
-const askBtn = document.getElementById("btnAskLizOnComputer");
-const askSheet = document.getElementById("asklizSheet");
-const askOverlay = document.getElementById("asklizOverlay");
-const closeAsk = document.getElementById("closeAskLizOn");
+    const smartBtn = document.getElementById("btnSmartScroll");
+    const hint = document.getElementById("scrollHint");
+    let hintTimer = null;
 
-function openAskLizOn(){
-  askOverlay.style.display = "block";
-  askSheet.classList.add("open");
-  askSheet.setAttribute("aria-hidden","false");
-}
+    function showHint(txt){
+      if(!hint) return;
+      hint.textContent = txt || "Smart scroll";
+      hint.style.display = "block";
+      clearTimeout(hintTimer);
+      hintTimer = setTimeout(()=>{ hint.style.display = "none"; }, 850);
+    }
 
-function closeAskLizOn(){
-  askSheet.classList.remove("open");
-  askSheet.setAttribute("aria-hidden","true");
-  setTimeout(()=>{ askOverlay.style.display="none"; },160);
-}
+    function headerOffset(){
+      const header = document.querySelector(".topbar");
+      return (header ? header.offsetHeight : 0) + 10;
+    }
+    function getTop(el){
+      const r = el.getBoundingClientRect();
+      return r.top + window.pageYOffset;
+    }
 
-askBtn.addEventListener("click", openAskLizOn);
-closeAsk.addEventListener("click", closeAskLizOn);
-askOverlay.addEventListener("click", closeAskLizOn);
+    function getTargets(){
+      const ids = ["moduleSection", "footerSection"];
+      const els = ids.map(id => document.getElementById(id)).filter(Boolean);
+      return [{ el: document.body, y: 0, name: "Top" }, ...els.map(el => ({ el, y: getTop(el), name: el.id }))].sort((a,b)=>a.y-b.y);
+    }
 
-/* Buttons inside panel */
-document.getElementById("askQuickTips").addEventListener("click", ()=>{
-  closeAskLizOn();
-  document.getElementById("asklizSection")
-    .scrollIntoView({behavior:"smooth", block:"start"});
-});
+    function currentLine(){
+      return window.scrollY + headerOffset();
+    }
+    function nextTarget(){
+      const targets = getTargets();
+      const line = currentLine();
+      return targets.find(t => t.y > line + 10) || null;
+    }
+    function prevTarget(){
+      const targets = getTargets();
+      const line = currentLine();
+      const above = targets.filter(t => t.y < line - 10);
+      return above.length ? above[above.length - 1] : null;
+    }
 
-document.getElementById("askTalkLizOn").href =
-  waLink("Assalamu Alaikum, I want quick clarity about Computer Skills (IELTS/PTE).");
-
-
-/* =========================
-   SMART SCROLL (PTE-like: Next/Prev section jump)
-   - DOWN = jump to next section below viewport
-   - UP   = jump to previous section above viewport
-   - Arrow auto changes based on availability
-========================= */
-
-const smartBtn = document.getElementById("btnSmartScroll");
-const hint = document.getElementById("scrollHint");
-let hintTimer = null;
-
-function showHint(txt){
-  if(!hint) return;
-  hint.textContent = txt || "Smart scroll";
-  hint.style.display = "block";
-  clearTimeout(hintTimer);
-  hintTimer = setTimeout(()=>{ hint.style.display = "none"; }, 900);
-}
-
-function headerOffset(){
-  const header = document.querySelector(".topbar");
-  return (header ? header.offsetHeight : 0) + 10;
-}
-
-function getTop(el){
-  const r = el.getBoundingClientRect();
-  return r.top + window.pageYOffset;
-}
-
-/* ✅ define “scroll steps” like PTE page */
-function getTargets(){
-  const ids = ["asklizSection", "moduleSection"];
-  const els = ids
-    .map(id => document.getElementById(id))
-    .filter(Boolean);
-
-  // also include footer as a final step (optional but nice)
-  const footer = document.querySelector("footer");
-  if(footer) els.push(footer);
-
-  // always include top of page as first step
-  return [
-    { el: document.body, y: 0, name: "Top" },
-    ...els.map(el => ({ el, y: getTop(el), name: el.id || "Section" }))
-  ].sort((a,b)=>a.y-b.y);
-}
-
-function currentScrollLine(){
-  return window.scrollY + headerOffset();
-}
-
-function nextTarget(){
-  const targets = getTargets();
-  const line = currentScrollLine();
-  // first target BELOW current line
-  return targets.find(t => t.y > line + 10) || null;
-}
-
-function prevTarget(){
-  const targets = getTargets();
-  const line = currentScrollLine();
-  // last target ABOVE current line
-  const above = targets.filter(t => t.y < line - 10);
-  return above.length ? above[above.length - 1] : null;
-}
-
-/* ✅ arrow direction like PTE: if there is a next section, show DOWN. else show UP */
-function updateSmartDirection(){
-  const n = nextTarget();
-  if(n){
-    smartBtn.classList.add("isDown");
-    smartBtn.classList.remove("isUp");
-    smartBtn.setAttribute("aria-label","Scroll to next section");
-  }else{
-    smartBtn.classList.add("isUp");
-    smartBtn.classList.remove("isDown");
-    smartBtn.setAttribute("aria-label","Scroll to previous section / top");
-  }
-}
-
-smartBtn.addEventListener("click", ()=>{
-  const off = headerOffset();
-
-  const n = nextTarget();
-  if(n){
-    showHint("Next");
-    const y = Math.max(0, n.y - off);
-    window.scrollTo({ top: y, behavior: "smooth" });
-    return;
-  }
-
-  // if no next, go UP to previous (or top)
-  const p = prevTarget();
-  showHint("Up");
-  if(p){
-    const y = Math.max(0, p.y - off);
-    window.scrollTo({ top: y, behavior: "smooth" });
-  }else{
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-});
-
-window.addEventListener("scroll", updateSmartDirection, { passive:true });
-updateSmartDirection();
-
-
-
-
-    /* =========================
-       TAP-ONLY BOT (IELTS/PTE)
-    ========================== */
-    const pillExam = document.getElementById("pillExam");
-    const tabIELTS = document.getElementById("tabIELTS");
-    const tabPTE = document.getElementById("tabPTE");
-    const chat = document.getElementById("chat");
-    const sheetSwitchExam = document.getElementById("sheetSwitchExam");
-
-    const BOT = {
-      IELTS: {
-        home: "i_home",
-        nodes: {
-          i_home: {
-            bot: "Assalamu Alaikum! Computer-Based IELTS e kon problem face kortesen? Tap korun — type korte hobe na.",
-            options: [
-              { label:"Typing slow — time shesh", next:"i_typing" },
-              { label:"Reading e scroll korlei line haray", next:"i_scroll" },
-              { label:"Highlight wrong jayga hoy", next:"i_highlight" },
-              { label:"Writing edit korte giye paragraph bhange", next:"i_edit" },
-              { label:"Copy–paste e format / duplicate hoy", next:"i_copy" },
-              { label:"Timer dekhe panic hoy", next:"i_timer" },
-              { label:"I don’t know what I need", next:"i_guided" },
-              { label:"Talk with Expert", next:{wa:true, text:"Assalamu Alaikum, I need help for Computer-Based IELTS. Please guide me."} }
-            ]
-          },
-          i_typing: {
-            bot: "Real pain: idea thake, kintu typing slow hole Writing-e last moment-e rush hoy. Structure nosto hoy + mistake bare.",
-            options: [
-              { label:"How we fix in 5 sessions", next:"i_fix5" },
-              { label:"What to practice at home", next:"i_routine" },
-              { label:"Talk with Expert", next:{wa:true, text:"I’m slow at typing for IELTS. Need a plan."} }
-            ]
-          },
-          i_scroll: {
-            bot: "Scroll control na thakle line haray, abar abar re-read korte hoy. Time loss hoy. Confidence neme jay.",
-            options: [
-              { label:"Quick scrolling rules", next:"i_scroll_rules" },
-              { label:"How we practice this", next:"i_practice" },
-              { label:"Talk with Expert", next:{wa:true, text:"Reading e scroll control problem. Need guidance."} }
-            ]
-          },
-          i_highlight: {
-            bot: "Highlight wrong hole focus venge jay. Too much highlight = confused brain.",
-            options: [
-              { label:"Highlighting rules", next:"i_highlight_rules" },
-              { label:"Common mistakes", next:"i_mistakes" },
-              { label:"Talk with Expert", next:{wa:true, text:"IELTS highlight problem. Need help."} }
-            ]
-          },
-          i_edit: {
-            bot: "Writing-e edit korte giye paragraph bhange = coherence nosto + time nosto. We fix editing control.",
-            options: [
-              { label:"Editing rules (simple)", next:"i_edit_rules" },
-              { label:"How we practice editing", next:"i_practice_edit" },
-              { label:"Talk with Expert", next:{wa:true, text:"Writing edit korte giye paragraph bhange. Need solution."} }
-            ]
-          },
-          i_copy: {
-            bot: "Copy–paste wrong hole duplicate line, wrong placement, format mess hoy. We teach safe copy–paste.",
-            options: [
-              { label:"Safe copy–paste rules", next:"i_copy_rules" },
-              { label:"What NOT to do", next:"i_copy_no" },
-              { label:"Talk with Expert", next:{wa:true, text:"IELTS copy–paste e problem. Need guidance."} }
-            ]
-          },
-          i_timer: {
-            bot: "Timer dekhe panic hole speed barate giye accuracy noshto hoy. We make your routine predictable.",
-            options: [
-              { label:"Simple timer strategy", next:"i_timer_rules" },
-              { label:"How we train calm speed", next:"i_practice" },
-              { label:"Talk with Expert", next:{wa:true, text:"IELTS timer panic. Need a plan."} }
-            ]
-          },
-          i_guided: {
-            bot: "No problem. Kon area beshi hurt kore?",
-            options: [
-              { label:"Writing", next:"i_typing" },
-              { label:"Reading", next:"i_scroll" },
-              { label:"Listening", next:"i_practice" },
-              { label:"I’m not sure", next:"i_fix5" }
-            ]
-          },
-          i_fix5: {
-            bot: "5 sessions e amra fix kori: typing flow + editing control + navigation speed. Small habits remove korlei score stable hoy.",
-            options: [
-              { label:"See how class works", next:"i_practice" },
-              { label:"Back to Home", next:"i_home" },
-              { label:"Talk with Expert", next:{wa:true, text:"I want the 5-session plan for Computer Skills (IELTS)." } }
-            ]
-          },
-          i_routine: {
-            bot: "Home routine: daily 10–15 min typing + 10 min short writing. Goal: clean speed, not rushing.",
-            options: [
-              { label:"Back to Home", next:"i_home" },
-              { label:"Talk with Expert", next:{wa:true, text:"Give me a home routine for IELTS computer-based."} }
-            ]
-          },
-          i_scroll_rules: {
-            bot: "Scroll rules: small scroll only. Stop-read-scroll. Wheel panic korben na. Line lose hole one step back.",
-            options: [
-              { label:"How we practice", next:"i_practice" },
-              { label:"Back to Home", next:"i_home" }
-            ]
-          },
-          i_highlight_rules: {
-            bot: "Highlight rules: keywords only. Full line highlight na. Understand kore then highlight. Highlight কম = focus বেশি.",
-            options: [
-              { label:"Common mistakes", next:"i_mistakes" },
-              { label:"Back to Home", next:"i_home" }
-            ]
-          },
-          i_edit_rules: {
-            bot: "Editing rules: structure first. Grammar last. Draft-e line-e line edit korben na. Second pass e edit.",
-            options: [
-              { label:"How we practice editing", next:"i_practice_edit" },
-              { label:"Back to Home", next:"i_home" }
-            ]
-          },
-          i_copy_rules: {
-            bot: "Safe copy–paste: copy small parts. Paste kore abar meaning check. Blind paste na.",
-            options: [
-              { label:"What NOT to do", next:"i_copy_no" },
-              { label:"Back to Home", next:"i_home" }
-            ]
-          },
-          i_copy_no: {
-            bot: "Don’t do: same line duibar paste, paste kore na pore move, coherence break kore time save korte jawya.",
-            options: [
-              { label:"Back to Home", next:"i_home" },
-              { label:"Talk with Expert", next:{wa:true, text:"I keep making copy–paste mistakes in IELTS. Help."} }
-            ]
-          },
-          i_timer_rules: {
-            bot: "Timer strategy: fixed routine follow korun. Seconds dekhe fear na. Block e kaj korun.",
-            options: [
-              { label:"Back to Home", next:"i_home" },
-              { label:"Talk with Expert", next:{wa:true, text:"Need timer control strategy for IELTS computer-based."} }
-            ]
-          },
-          i_practice: {
-            bot: "Class style: You do → sir watches → mistake instantly fix. No lecture. Only test-ready practice.",
-            options: [
-              { label:"Back to Home", next:"i_home" },
-              { label:"Talk with Expert", next:{wa:true, text:"Explain how this 5-session training works for IELTS."} }
-            ]
-          },
-          i_practice_edit: {
-            bot: "Editing practice: sentence move + paragraph restructure without breaking meaning. ‘Structure first, grammar last’.",
-            options: [
-              { label:"Back to Home", next:"i_home" },
-              { label:"Talk with Expert", next:{wa:true, text:"Need editing drills for IELTS writing on computer."} }
-            ]
-          },
-          i_mistakes: {
-            bot: "Common mistakes: over-scrolling, too much highlight, draft-e over-editing, blind copy–paste, timer panic.",
-            options: [
-              { label:"Back to Home", next:"i_home" }
-            ]
-          }
-        }
-      },
-
-      PTE: {
-        home: "p_home",
-        nodes: {
-          p_home: {
-            bot: "Assalamu Alaikum! PTE te kon problem face kortesen? Tap korun — type korte hobe na.",
-            options: [
-              { label:"Mic on holei matha blank", next:"p_blank" },
-              { label:"Voice cut hoy / nervous", next:"p_voice" },
-              { label:"Timer dekhe freeze hoy", next:"p_timer" },
-              { label:"Reading e click miss / skip hoy", next:"p_click" },
-              { label:"Fill in blanks e cursor control hoy na", next:"p_cursor" },
-              { label:"Writing e typing messy hoy", next:"p_typing" },
-              { label:"PTE flow onek fast lage", next:"p_flow" },
-              { label:"I don’t know what I need", next:"p_guided" },
-              { label:"Talk with Expert", next:{wa:true, text:"Assalamu Alaikum, I need help for PTE computer skills. Please guide me."} }
-            ]
-          },
-          p_blank: {
-            bot: "Mic on holei blank hoy — super common. PTE te speed + calm start dorkar.",
-            options: [
-              { label:"Quick tip now", next:"p_tip_mic" },
-              { label:"How we train this", next:"p_practice" },
-              { label:"Talk with Expert", next:{wa:true, text:"Mic on holei blank hoy (PTE). Need help."} }
-            ]
-          },
-          p_voice: {
-            bot: "Voice cut/nervous usually bad start + panic breathing. We train start/pause/finish control.",
-            options: [
-              { label:"Quick tip now", next:"p_tip_voice" },
-              { label:"How we train this", next:"p_practice" },
-              { label:"Talk with Expert", next:{wa:true, text:"PTE speaking e voice cut hoy. Need solution."} }
-            ]
-          },
-          p_timer: {
-            bot: "Timer dekhe freeze hole answer half e chere dey. We fix by fixed routine per task.",
-            options: [
-              { label:"Timer strategy (simple)", next:"p_tip_timer" },
-              { label:"How we train this", next:"p_practice" },
-              { label:"Talk with Expert", next:{wa:true, text:"PTE timer panic. Need a plan."} }
-            ]
-          },
-          p_click: {
-            bot: "Click miss hole skip + panic. PTE waits for no one. We train accuracy under speed.",
-            options: [
-              { label:"Click rules", next:"p_tip_click" },
-              { label:"How we train this", next:"p_practice" },
-              { label:"Talk with Expert", next:{wa:true, text:"PTE click miss/skip problem. Need help."} }
-            ]
-          },
-          p_cursor: {
-            bot: "Fill in blanks e cursor wrong hole wrong place e type hoy. Then answer lost.",
-            options: [
-              { label:"Cursor rules", next:"p_tip_cursor" },
-              { label:"How we train this", next:"p_practice" },
-              { label:"Talk with Expert", next:{wa:true, text:"PTE fill-in-blanks cursor control problem. Need help."} }
-            ]
-          },
-          p_typing: {
-            bot: "Writing e typing messy hole mistake bare + time nosto hoy. We fix clean speed (panic na).",
-            options: [
-              { label:"How we fix in 5 sessions", next:"p_fix5" },
-              { label:"Home routine", next:"p_routine" },
-              { label:"Talk with Expert", next:{wa:true, text:"PTE writing typing messy. Need plan."} }
-            ]
-          },
-          p_flow: {
-            bot: "PTE flow fast lage because test doesn’t wait. Ekta mistake hole next task chole ashe.",
-            options: [
-              { label:"How we train flow control", next:"p_practice" },
-              { label:"Talk with Expert", next:{wa:true, text:"PTE flow onek fast lage. Need guidance."} }
-            ]
-          },
-          p_guided: {
-            bot: "No problem. Kon area beshi hurt kore?",
-            options: [
-              { label:"Speaking", next:"p_blank" },
-              { label:"Writing", next:"p_typing" },
-              { label:"Reading", next:"p_click" },
-              { label:"Listening", next:"p_flow" }
-            ]
-          },
-          p_fix5: {
-            bot: "5 sessions e fix kori: mic calm + timer control + clean typing + click/cursor accuracy + flow control.",
-            options: [
-              { label:"How class works", next:"p_practice" },
-              { label:"Back to Home", next:"p_home" },
-              { label:"Talk with Expert", next:{wa:true, text:"I want the 5-session plan for Computer Skills (PTE)." } }
-            ]
-          },
-          p_routine: {
-            bot: "Home routine: daily 10–15 min typing + 5–10 min speaking (calm first line). Goal: stability first.",
-            options: [
-              { label:"Back to Home", next:"p_home" },
-              { label:"Talk with Expert", next:{wa:true, text:"Give me a home routine for PTE computer skills."} }
-            ]
-          },
-          p_tip_mic: {
-            bot: "Quick tip: first 2 seconds calm. Fast start = shaky voice. Start stable, then speed naturally.",
-            options: [
-              { label:"Back to Home", next:"p_home" },
-              { label:"How we train this", next:"p_practice" }
-            ]
-          },
-          p_tip_voice: {
-            bot: "Quick tip: speak slightly slower than your brain. Jodi push koren, voice cut hoy.",
-            options: [
-              { label:"Back to Home", next:"p_home" },
-              { label:"How we train this", next:"p_practice" }
-            ]
-          },
-          p_tip_timer: {
-            bot: "Timer strategy: routine follow korun. Seconds dekhe fear na. Clean finish > fast finish.",
-            options: [
-              { label:"Back to Home", next:"p_home" },
-              { label:"How we train this", next:"p_practice" }
-            ]
-          },
-          p_tip_click: {
-            bot: "Click rules: click once, confirm, then move. Double-click panic korben na. Miss hole calm fix.",
-            options: [
-              { label:"Back to Home", next:"p_home" },
-              { label:"How we train this", next:"p_practice" }
-            ]
-          },
-          p_tip_cursor: {
-            bot: "Cursor rules: active box check kore then type. Short moves. Ekbar mistake hole calm fix.",
-            options: [
-              { label:"Back to Home", next:"p_home" },
-              { label:"How we train this", next:"p_practice" }
-            ]
-          },
-          p_practice: {
-            bot: "Class style: real task + real pressure. You do → sir watches → mistake instantly fix. No lecture.",
-            options: [
-              { label:"Back to Home", next:"p_home" },
-              { label:"Talk with Expert", next:{wa:true, text:"Explain how this 5-session training works for PTE."} }
-            ]
-          }
-        }
-      }
-    };
-
-    let exam = "IELTS";
-    let currentId = BOT[exam].home;
-
-    function setExam(nextExam, reset=true){
-      exam = nextExam;
-      pillExam.textContent = "Mode: " + exam;
-
-      tabIELTS.classList.toggle("active", exam==="IELTS");
-      tabPTE.classList.toggle("active", exam==="PTE");
-      tabIELTS.setAttribute("aria-selected", exam==="IELTS" ? "true":"false");
-      tabPTE.setAttribute("aria-selected", exam==="PTE" ? "true":"false");
-
-      setWAForExam(exam);
-
-      if(reset){
-        chat.innerHTML = "";
-        currentId = BOT[exam].home;
-        renderNode();
+    function updateSmartDirection(){
+      const n = nextTarget();
+      if(n){
+        smartBtn.classList.add("isDown");
+        smartBtn.classList.remove("isUp");
+        smartBtn.setAttribute("aria-label","Scroll to next section");
+      }else{
+        smartBtn.classList.add("isUp");
+        smartBtn.classList.remove("isDown");
+        smartBtn.setAttribute("aria-label","Scroll to previous section / top");
       }
     }
 
-    function pushUser(text){
-      const el = document.createElement("div");
-      el.className = "bubble user";
-      el.textContent = text;
-      chat.appendChild(el);
-    }
-
-    function pushBot(text, options){
-      const b = document.createElement("div");
-      b.className = "bubble bot";
-      b.textContent = text;
-      chat.appendChild(b);
-
-      const chips = document.createElement("div");
-      chips.className = "chips";
-      (options || []).forEach(opt=>{
-        const btn = document.createElement("button");
-        btn.className = "chip" + (String(opt.label).toLowerCase().includes("talk") ? " gold" : "");
-        btn.type = "button";
-        btn.textContent = opt.label;
-        btn.addEventListener("click", ()=>handleOption(opt));
-        chips.appendChild(btn);
-      });
-      chat.appendChild(chips);
-
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    function handleOption(opt){
-      pushUser(opt.label);
-
-      if(typeof opt.next === "string"){
-        currentId = opt.next;
-        renderNode();
+    smartBtn.addEventListener("click", ()=>{
+      const off = headerOffset();
+      const n = nextTarget();
+      if(n){
+        showHint("Next");
+        window.scrollTo({ top: Math.max(0, n.y - off), behavior: "smooth" });
         return;
       }
-
-      if(opt.next && opt.next.wa){
-        window.open(waLink(opt.next.text || `Assalamu Alaikum, I need guidance for Computer Skills (${exam}).`), "_blank", "noopener");
-        pushBot("WhatsApp opened. Tap another option if needed.", [
-          { label:"Back to Home", next: BOT[exam].home }
-        ]);
-        return;
+      const p = prevTarget();
+      showHint("Up");
+      if(p){
+        window.scrollTo({ top: Math.max(0, p.y - off), behavior: "smooth" });
+      }else{
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
-    }
-
-    function renderNode(){
-      const node = BOT[exam].nodes[currentId];
-      if(!node){
-        pushBot("Something went wrong. Tap Home and try again.", [
-          { label:"Home", next: BOT[exam].home },
-          { label:"Talk with Expert", next:{wa:true, text:`Assalamu Alaikum, bot issue. Please guide me for ${exam}.`} }
-        ]);
-        return;
-      }
-      pushBot(node.bot, node.options);
-    }
-
-    tabIELTS.addEventListener("click", ()=> setExam("IELTS", true));
-    tabPTE.addEventListener("click", ()=> setExam("PTE", true));
-
-    sheetSwitchExam.addEventListener("click", ()=>{
-      setExam(exam === "IELTS" ? "PTE" : "IELTS", true);
-      closeSheet();
-      document.getElementById("asklizSection").scrollIntoView({behavior:"smooth", block:"start"});
     });
 
-    // Init
-    setExam("IELTS", true);
-    setWAForExam("IELTS");
+    window.addEventListener("scroll", updateSmartDirection, { passive:true });
+    updateSmartDirection();
   </script>
 
 </body>
 </html>
-
-

@@ -547,8 +547,8 @@
     .askFloat{
       position: fixed;
       left: 50%;
-      top: 70%;
-      transform: translate(-50%,-70%); /* will be overridden by JS for PERFECT center between header & bottom bar */
+      top: 50%;
+      transform: translate(-50%,-50%); /* will be overridden by JS for PERFECT center between header & bottom bar */
       z-index: 110;
 
       height: 46px;
@@ -1246,9 +1246,10 @@
       const bottomH = bottom ? bottom.getBoundingClientRect().height : 0;
 
       const usable = Math.max(0, window.innerHeight - headerH - bottomH);
-      const top = headerH + (usable / 2);
+      const OFFSET = 30; // increase to move further down
+const top = headerH + (usable / 2) + OFFSET;
+askFloatBtn.style.top = top + "px";
 
-      askFloatBtn.style.top = top + "px";
       // keep translate(-50%,-50%) from CSS
     }
     window.addEventListener("resize", placeAskFloatPerfect);

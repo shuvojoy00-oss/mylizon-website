@@ -544,27 +544,42 @@
     }
 
     /* Middle-left button like ielts-pte.html */
-    .askFloat{
-      position:fixed;
-      left:18px;
-      top:50%;
-      transform: translateY(-50%);
-      z-index: 110;
-      height:46px;
-      padding:0 14px 0 12px;
-      border-radius:999px;
-      border:1px solid rgba(214,179,90,.55);
-      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.05));
-      color: var(--text);
-      font-weight: 1000;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      cursor:pointer;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-      box-shadow: 0 18px 55px rgba(0,0,0,.35);
-    }
+   /* Ask button: TRUE middle of visible screen */
+.askFloat{
+  position: fixed;
+  left: 18px;
+
+  /* ✅ true middle */
+  top: 50vh;
+  transform: translateY(-50%);
+
+  z-index: 110;
+
+  height: 46px;
+  padding: 0 14px 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(214,179,90,.55);
+  background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.05));
+  color: var(--text);
+  font-weight: 1000;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 18px 55px rgba(0,0,0,.35);
+}
+
+/* ✅ keep it above the bottom bar on small screens */
+@media (max-height: 720px){
+  .askFloat{
+    top: calc(50vh - 24px);
+  }
+}
+
     .askFloat:active{ transform: translateY(-50%) translateY(1px); }
     .askDot{
       width:18px; height:18px; border-radius:999px;

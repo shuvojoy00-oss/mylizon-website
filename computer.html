@@ -794,10 +794,12 @@
   </main>
 
   <!-- AskLizOnComputer pill button (like PTE.html) -->
-  <button class="askliz-fab" id="asklizFab" type="button" aria-label="Ask LizOn Computer">
-    <span class="askliz-icon" aria-hidden="true">?</span>
-    <span>Ask LizOn</span>
-  </button>
+<button class="askliz-fab" id="btnAskLizOnComputer" type="button"
+  aria-label="AskLizOnComputer">
+  <span class="askliz-icon">?</span>
+  <span>AskLizOnComputer</span>
+</button>
+
 
   <!-- Bottom-left Hamburger (floating) -->
   <button class="fab fabLeft" id="btnMenuFab" type="button" aria-label="Open menu (bottom left)">
@@ -809,6 +811,37 @@
     <span class="arrow" aria-hidden="true"></span>
   </button>
   <div class="fabHint" id="scrollHint">Smart scroll</div>
+
+  <!-- AskLizOnComputer Panel -->
+<div class="sheetOverlay" id="asklizOverlay"></div>
+
+<div class="sheet" id="asklizSheet" aria-hidden="true">
+  <div class="handle"></div>
+
+  <div class="sheetInner">
+    <div class="sheetTop">
+      <b>AskLizOn — Computer</b>
+      <button class="iconbtn" id="closeAskLizOn" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sheetBody">
+      <div class="card" style="border-radius:18px">
+        <div style="padding:14px">
+          <b style="font-size:14px">Quick clarity in 20 sec</b>
+          <p class="muted" style="margin:6px 0 12px">
+            Tap 3 ta answer → apnar jonno best plan show korbe.
+          </p>
+
+          <div class="footerRow">
+            <button class="fbtn gold" id="askQuickTips">Quick Tips</button>
+            <a class="fbtn" id="askTalkLizOn" target="_blank">Talk with LizOn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <!-- Bottom Guidance Bar -->
   <div class="bottomBar">
@@ -926,11 +959,40 @@
     /* =========================
        AskLizOnComputer pill
     ========================== */
-    document.getElementById("asklizFab").addEventListener("click", ()=>{
-      document.getElementById("asklizSection").scrollIntoView({behavior:"smooth", block:"start"});
-      // gentle nudge to chat top
-      setTimeout(()=>{ document.getElementById("chat").focus?.(); }, 200);
-    });
+ /* =========================
+   AskLizOnComputer Panel
+========================= */
+const askBtn = document.getElementById("btnAskLizOnComputer");
+const askSheet = document.getElementById("asklizSheet");
+const askOverlay = document.getElementById("asklizOverlay");
+const closeAsk = document.getElementById("closeAskLizOn");
+
+function openAskLizOn(){
+  askOverlay.style.display = "block";
+  askSheet.classList.add("open");
+  askSheet.setAttribute("aria-hidden","false");
+}
+
+function closeAskLizOn(){
+  askSheet.classList.remove("open");
+  askSheet.setAttribute("aria-hidden","true");
+  setTimeout(()=>{ askOverlay.style.display="none"; },160);
+}
+
+askBtn.addEventListener("click", openAskLizOn);
+closeAsk.addEventListener("click", closeAskLizOn);
+askOverlay.addEventListener("click", closeAskLizOn);
+
+/* Buttons inside panel */
+document.getElementById("askQuickTips").addEventListener("click", ()=>{
+  closeAskLizOn();
+  document.getElementById("asklizSection")
+    .scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+document.getElementById("askTalkLizOn").href =
+  waLink("Assalamu Alaikum, I want quick clarity about Computer Skills (IELTS/PTE).");
+
 
 /* =========================
    SMART SCROLL (PTE-like: Next/Prev section jump)

@@ -932,11 +932,12 @@
       setTimeout(()=>{ document.getElementById("chat").focus?.(); }, 200);
     });
 
-  /* =========================
-   SMART SCROLL (Both directions)
-   - Near TOP -> arrow DOWN -> goes to Module
-   - Else     -> arrow UP   -> goes to TOP
+ /* =========================
+   SMART SCROLL (FIXED DOWN + UP)
+   - Near TOP -> arrow DOWN -> scroll to Module (guaranteed)
+   - Else     -> arrow UP   -> scroll to TOP
 ========================= */
+
 const smartBtn = document.getElementById("btnSmartScroll");
 const hint = document.getElementById("scrollHint");
 let hintTimer = null;
@@ -953,6 +954,12 @@ function isNearTop(){
   return window.scrollY < 220;
 }
 
+/* get element top position reliably */
+function getTop(el){
+  const r = el.getBoundingClientRect();
+  return r.top + window.pageYOffset;
+}
+
 /* ✅ update arrow direction based on scroll */
 function updateSmartDirection(){
   if(isNearTop()){
@@ -966,14 +973,25 @@ function updateSmartDirection(){
   }
 }
 
-/* ✅ click behavior */
+/* ✅ click behavior (DOWN is now guaranteed) */
 smartBtn.addEventListener("click", ()=>{
+  const header = document.querySelector(".topbar");
+  const headerH = header ? header.offsetHeight : 0;
+
   if(isNearTop()){
-    showHint("Down to module");
-    document.getElementById("moduleSection").scrollIntoView({behavior:"smooth", block:"start"});
+    const target = document.getElementById("moduleSection");
+    if(target){
+      const y = Math.max(0, getTop(target) - headerH - 10);
+      showHint("Down to module");
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }else{
+      // fallback
+      showHint("Down");
+      window.scrollTo({ top: window.innerHeight * 0.9, behavior: "smooth" });
+    }
   }else{
     showHint("Up to top");
-    window.scrollTo({top:0, behavior:"smooth"});
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
 

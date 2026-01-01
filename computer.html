@@ -535,7 +535,7 @@
     }
     .sheetItem:active{transform: translateY(1px)}
 
-    /* ===== AskLizOn C (Modal + middle button) ===== */
+    /* ===== AskLizOn C (Modal + CENTER button) ===== */
     .flash{
       position:relative;
       outline: 2px solid rgba(214,179,90,.55);
@@ -543,52 +543,40 @@
       transition: .25s ease;
     }
 
-    /* Middle-left button like ielts-pte.html */
-   /* Ask button: TRUE middle of visible screen */
-/* AskLizOn C — TRUE visual middle (between header & bottom bar) */
-.askFloat{
-  position: fixed;
- left:50%;
+    /* AskLizOn C button: TRUE center of the visible area (between sticky header + bottom bar) */
+    .askFloat{
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%); /* will be overridden by JS for PERFECT center between header & bottom bar */
+      z-index: 110;
 
-  /* 🔥 real visual center */
-  top: calc(
-    (100vh - var(--safeBottom) - 64px) / 2 + 64px
-  );
+      height: 46px;
+      padding: 0 14px 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(214,179,90,.55);
+      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.05));
+      color: var(--text);
+      font-weight: 1000;
 
-  z-index: 110;
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
-  height: 46px;
-  padding: 0 14px 0 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(214,179,90,.55);
-  background: linear-gradient(
-    135deg,
-    rgba(214,179,90,.22),
-    rgba(255,255,255,.05)
-  );
-  color: var(--text);
-  font-weight: 1000;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      will-change: top, transform;
+    }
+    .askFloat:active{
+      transform: translate(-50%,-50%) translateY(1px);
+    }
 
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 18px 55px rgba(0,0,0,.35);
-}
-
-.askFloat:active{
-  transform: translateY(1px);
-}
-
-
-    .askFloat:active{ transform: translateY(-50%) translateY(1px); }
     .askDot{
       width:18px; height:18px; border-radius:999px;
       border:1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.18);
+      background: rgba(4,31,22,.28); /* not pure black */
       display:grid; place-items:center;
       font-weight: 1000;
       line-height:1;
@@ -924,7 +912,7 @@
           </div>
         </details>
 
-        <!-- PTE (OPEN by default so titles show immediately) -->
+        <!-- PTE -->
         <details open id="pteBlock">
           <summary>PTE (Computer-Based) <span class="chev">›</span></summary>
 
@@ -984,6 +972,7 @@
               <div class="secBody">
                 <div class="miniNote">This computer skills training directly improves performance in:</div>
                 <ul>
+                  <!-- keeping your existing links -->
                   <li><a class="impGold" href="ielts-speaking.html">Speaking</a> – mic confidence, stable delivery, less restart panic</li>
                   <li><a class="impBlue" href="ielts-reading.html">Reading</a> – faster navigation, better focus in FIB tasks</li>
                   <li><a class="impMint" href="ielts-writing.html">Writing</a> – faster typing, cleaner editing, better time control</li>
@@ -1078,10 +1067,10 @@
 
   </main>
 
-  <!-- AskLizOn C button (middle like ielts-pte.html) -->
+  <!-- AskLizOn C button (TRUE center like your mark) -->
   <button class="askFloat" id="btnAskFloat" type="button" aria-label="Open AskLizOn C">
     <span class="askDot" aria-hidden="true"></span>
-   <span>AskLizOn C</span>
+    <span>AskLizOn C</span>
   </button>
 
   <!-- Bottom-left Hamburger -->
@@ -1130,7 +1119,7 @@
   </div>
 
   <!-- Bottom Guidance Bar -->
-  <div class="bottomBar">
+  <div class="bottomBar" id="bottomBar">
     <div class="barInner">
       <div class="left">
         <b>Need guidance?</b>
@@ -1244,6 +1233,30 @@
     overlay.addEventListener("click", closeSheet);
 
     /* =========================
+       PERFECT CENTER: AskLizOn C between Header & BottomBar
+    ========================== */
+    const askFloatBtn = document.getElementById("btnAskFloat");
+    function placeAskFloatPerfect(){
+      if(!askFloatBtn) return;
+
+      const header = document.querySelector(".topbar");
+      const bottom = document.getElementById("bottomBar");
+
+      const headerH = header ? header.getBoundingClientRect().height : 0;
+      const bottomH = bottom ? bottom.getBoundingClientRect().height : 0;
+
+      const usable = Math.max(0, window.innerHeight - headerH - bottomH);
+      const top = headerH + (usable / 2);
+
+      askFloatBtn.style.top = top + "px";
+      // keep translate(-50%,-50%) from CSS
+    }
+    window.addEventListener("resize", placeAskFloatPerfect);
+    window.addEventListener("orientationchange", placeAskFloatPerfect);
+    // run after layout paints
+    requestAnimationFrame(()=>{ placeAskFloatPerfect(); });
+
+    /* =========================
        TOP IELTS/PTE JUMP BUTTONS
     ========================== */
     const btnGoIELTS = document.getElementById("btnGoIELTS");
@@ -1268,7 +1281,7 @@
       btnGoIELTS.classList.add("active");
       btnGoPTE.classList.remove("active");
       ieltsBlock.open = true;
-      pteBlock.open = true; /* keep titles visible on both */
+      pteBlock.open = true;
       jumpTo(ieltsBlock);
     });
 
@@ -1276,7 +1289,7 @@
       btnGoPTE.classList.add("active");
       btnGoIELTS.classList.remove("active");
       pteBlock.open = true;
-      ieltsBlock.open = true; /* keep titles visible on both */
+      ieltsBlock.open = true;
       jumpTo(pteBlock);
     });
 
@@ -1436,15 +1449,17 @@
       askOverlay.classList.remove("show");
       askOverlay.setAttribute("aria-hidden","true");
       document.body.style.overflow = "";
+      // re-place button after closing modal (mobile address bar can change height)
+      placeAskFloatPerfect();
     }
 
     function clearActive(container){
       container.querySelectorAll(".askChip").forEach(b=>b.classList.remove("active"));
     }
 
-    function setAnswer(html, hint){
+    function setAnswer(html, hintText){
       askAnswer.innerHTML = html;
-      askHint.textContent = hint || "";
+      askHint.textContent = hintText || "";
     }
 
     function buildStage2(examKey){
@@ -1539,7 +1554,7 @@
       if(e.key === "Escape"){ closeAsk(); closeSheet(); }
     });
 
-    /* Deep-link support: open correct dropdown when hash is present */
+    /* Deep-link support */
     (function initHash(){
       const h = (location.hash || "").trim();
       if(!h) return;

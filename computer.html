@@ -534,6 +534,172 @@
       background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
     }
     .sheetItem:active{transform: translateY(1px)}
+
+    /* ===== AskLizOn C (Computer) ===== */
+    .flash{
+      position:relative;
+      outline: 2px solid rgba(214,179,90,.55);
+      box-shadow: 0 0 0 6px rgba(214,179,90,.12);
+      transition: .25s ease;
+    }
+
+    .fabLeft.above{
+      bottom: calc(var(--safeBottom) + 74px);
+    }
+    .fab.askFab{
+      border-color: rgba(214,179,90,.55);
+      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.05));
+      font-weight: 950;
+      letter-spacing: .2px;
+    }
+
+    .askWrap{
+      position:fixed;
+      left:12px; right:12px;
+      bottom: calc(var(--safeBottom) + 10px);
+      z-index: 115;
+      pointer-events:none;
+    }
+    .askPanel{
+      width:min(var(--max), 92vw);
+      margin:0 auto;
+      border-radius: 22px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.92);
+      color: rgba(6,43,31,.92);
+      box-shadow: 0 28px 90px rgba(0,0,0,.45);
+      backdrop-filter: blur(12px);
+      overflow:hidden;
+      transform: translateY(14px);
+      opacity:0;
+      pointer-events:none;
+      transition: .20s ease;
+    }
+    [data-theme="dark"] .askPanel{
+      background: rgba(4,31,22,.92);
+      color: var(--text);
+    }
+    .askPanel.show{
+      transform: translateY(0);
+      opacity:1;
+      pointer-events:auto;
+    }
+    .askHead{
+      padding:12px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .askTitle{
+      font-weight: 1000;
+      font-size: 14px;
+      display:flex;
+      flex-direction:column;
+      line-height:1.15;
+    }
+    .askTitle span{
+      font-size:12px;
+      color: var(--muted);
+      font-weight: 850;
+      margin-top:2px;
+    }
+    .askClose{
+      height:42px; min-width:42px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      cursor:pointer;
+      font-weight: 1000;
+      display:flex; align-items:center; justify-content:center;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .askBody{
+      padding:12px 14px 14px;
+      display:grid;
+      gap:10px;
+    }
+    .askPrompt{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius:18px;
+      padding:12px 14px;
+      font-weight: 1000;
+      font-size: 14px;
+    }
+    .askChips{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width:520px){ .askChips{ grid-template-columns: 1fr; } }
+
+    .askChip{
+      height:44px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-weight: 950;
+      cursor:pointer;
+      user-select:none;
+      display:flex; align-items:center; justify-content:center;
+      -webkit-tap-highlight-color: transparent;
+      transition: .14s ease;
+      text-align:center;
+    }
+    .askChip:active{ transform: translateY(1px); }
+    .askChip.active{
+      border-color: rgba(214,179,90,.70);
+      box-shadow: 0 0 0 4px rgba(214,179,90,.14);
+      background: linear-gradient(135deg, rgba(214,179,90,.18), rgba(255,255,255,.04));
+    }
+
+    .askAnswer{
+      border-radius:18px;
+      border:1px solid rgba(214,179,90,.28);
+      background: rgba(214,179,90,.10);
+      padding:12px 14px;
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 900;
+    }
+    .askAnswer small{
+      display:block;
+      margin-top:6px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .askActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .askBtn{
+      height:44px;
+      padding:0 14px;
+      border-radius:14px;
+      border:1px solid rgba(214,179,90,.55);
+      background: linear-gradient(135deg, rgba(214,179,90,.28), rgba(255,255,255,.04));
+      font-weight: 1000;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .askHint{
+      font-size:12px;
+      color: var(--muted);
+      font-weight: 850;
+    }
   </style>
 </head>
 
@@ -591,7 +757,7 @@
           <div class="block">
             <p><b>This is not a computer course.</b> This is to stop you from losing marks for stupid reasons.</p>
 
-            <details class="sec">
+            <details class="sec" id="ielts-skills">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t1">Skills Covered</span></div>
                 <span class="chev">›</span>
@@ -618,7 +784,7 @@
               </div>
             </details>
 
-            <details class="sec">
+            <details class="sec" id="ielts-with">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t2">This Course Comes With</span></div>
                 <span class="chev">›</span>
@@ -636,7 +802,7 @@
               </div>
             </details>
 
-            <details class="sec">
+            <details class="sec" id="ielts-modules">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t3">Benefited Modules</span></div>
                 <span class="chev">›</span>
@@ -653,7 +819,7 @@
               </div>
             </details>
 
-            <details class="sec">
+            <details class="sec" id="ielts-aim">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t4">Aim of the Module</span></div>
                 <span class="chev">›</span>
@@ -674,7 +840,7 @@
               </div>
             </details>
 
-            <details class="sec">
+            <details class="sec" id="ielts-become">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t5">What You Will Become After This</span></div>
                 <span class="chev">›</span>
@@ -706,7 +872,7 @@
             <p><b>This is not a computer course.</b> This is to stop you from messing up PTE because of the system speed.</p>
 
             <!-- 1 -->
-            <details class="sec">
+            <details class="sec" id="pte-skills">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t1">Skills Covered</span></div>
                 <span class="chev">›</span>
@@ -734,7 +900,7 @@
             </details>
 
             <!-- 2 -->
-            <details class="sec">
+            <details class="sec" id="pte-with">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t2">This Course Comes With</span></div>
                 <span class="chev">›</span>
@@ -753,7 +919,7 @@
             </details>
 
             <!-- 3 (PTE) Benefited Modules with links -->
-            <details class="sec">
+            <details class="sec" id="pte-modules">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t3">Benefited Modules</span></div>
                 <span class="chev">›</span>
@@ -773,7 +939,7 @@
             </details>
 
             <!-- 4 -->
-            <details class="sec">
+            <details class="sec" id="pte-aim">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t4">Aim of the Module</span></div>
                 <span class="chev">›</span>
@@ -795,7 +961,7 @@
             </details>
 
             <!-- 5 -->
-            <details class="sec">
+            <details class="sec" id="pte-become">
               <summary>
                 <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t5">What You Will Become After This</span></div>
                 <span class="chev">›</span>
@@ -857,7 +1023,8 @@
 
   </main>
 
-  <!-- Bottom-left Hamburger -->
+  <!-- Bottom-left: AskLizOn C + Hamburger -->
+  <button class="fab fabLeft above askFab" id="btnAskFab" type="button" aria-label="Open AskLizOn C">Ask</button>
   <button class="fab fabLeft" id="btnMenuFab" type="button" aria-label="Open menu (bottom left)">
     <span class="miniBars" aria-hidden="true"><i></i></span>
   </button>
@@ -867,6 +1034,40 @@
     <span class="arrow" aria-hidden="true"></span>
   </button>
   <div class="fabHint" id="scrollHint">Smart scroll</div>
+
+  <!-- AskLizOn C Panel -->
+  <div class="askWrap" aria-live="polite">
+    <div class="askPanel" id="askPanel" aria-hidden="true">
+      <div class="askHead">
+        <div class="askTitle">
+          AskLizOn C
+          <span>Computer-based clarity (IELTS + PTE)</span>
+        </div>
+        <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn C">✕</button>
+      </div>
+
+      <div class="askBody">
+        <div class="askPrompt" id="askPrompt">First choose your exam.</div>
+
+        <div class="askChips" id="askStage1">
+          <button class="askChip" data-exam="ielts" type="button">IELTS (Computer-Based)</button>
+          <button class="askChip" data-exam="pte" type="button">PTE (Computer-Based)</button>
+        </div>
+
+        <div class="askChips" id="askStage2" style="display:none"></div>
+
+        <div class="askAnswer" id="askAnswer">
+          Tap an option — I’ll show the fix + take you to the exact place.
+          <small>No theory fluff. Just execution.</small>
+        </div>
+
+        <div class="askActions">
+          <button class="askBtn" id="askGoBtn" type="button">Show me where to fix</button>
+          <span class="askHint" id="askHint">No selection yet.</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Bottom Guidance Bar -->
   <div class="bottomBar">
@@ -1122,6 +1323,195 @@
     (function ensureOpen(){
       ieltsBlock.open = true;
       pteBlock.open = true;
+    })();
+
+    /* =========================
+       AskLizOn C (Computer)
+    ========================== */
+    const askFab = document.getElementById("btnAskFab");
+    const askPanel = document.getElementById("askPanel");
+    const askClose = document.getElementById("askClose");
+    const askPrompt = document.getElementById("askPrompt");
+    const askStage1 = document.getElementById("askStage1");
+    const askStage2 = document.getElementById("askStage2");
+    const askAnswer = document.getElementById("askAnswer");
+    const askGoBtn = document.getElementById("askGoBtn");
+    const askHint = document.getElementById("askHint");
+
+    const ASK_MAP = {
+      ielts: {
+        label: "IELTS (Computer-Based)",
+        prompt: "IELTS e kon problem hocche? Choose one.",
+        options: [
+          { key:"typing",  text:"Typing / Editing slow", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
+            answer:"Typing slow hole Writing e time shesh hoy. Fix: typing clean + shortcut use + editing discipline. Drill: 10 min/day copy-typing + 5 min edit-only (cut/move/replace)." },
+          { key:"mouse",   text:"Mouse / highlight bhul", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
+            answer:"Highlight/jump miss mane marks nai, time jai. Fix: drag-select control + proof-line hunting without losing place. Drill: 5 min highlight-only practice on long text." },
+          { key:"scroll",  text:"Scrolling e place harai", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
+            answer:"Screen flow na thakle Reading e brain fry hoy. Fix: scroll → stop → re-locate habit. Drill: passage e 10 bar re-locate (same paragraph) within 60 seconds." },
+          { key:"timer",   text:"Timer dekhe panic", target:"#ielts-aim", open:["ieltsBlock","ielts-aim"],
+            answer:"Timer enemy na—timer guide. Fix: pace lock + stuck hole skip rule. Drill: 2-min stuck rule practice (mark & move) so momentum thake." },
+          { key:"mistakes",text:"Stupid mistakes cost marks", target:"#ielts-with", open:["ieltsBlock","ielts-with"],
+            answer:"Mis-click, over-scroll, panic typing — egula marks khaiye dey silently. Fix: supervised drills + exam-day do/don’t list. Drill: 1 full mini mock with ‘zero misclick’ rule." }
+        ]
+      },
+      pte: {
+        label: "PTE (Computer-Based)",
+        prompt: "PTE te kon problem hocche? Choose one.",
+        options: [
+          { key:"mic",     text:"Mic + timer e freeze", target:"#pte-skills", open:["pteBlock","pte-skills"],
+            answer:"Mic on hole matha blank = execution issue. Fix: mic distance + start timing habit + no-restart discipline. Drill: 20 sec warm-up + 3 task continuous speaking (no stop)." },
+          { key:"typing",  text:"SWT/Essay typing messy", target:"#pte-skills", open:["pteBlock","pte-skills"],
+            answer:"Typing messy hole points drop. Fix: clean typing + punctuation + quick edit. Drill: 5 SWT daily (timed) + 1 essay outline + 8 min type." },
+          { key:"cursor",  text:"FIB e cursor/spacing problem", target:"#pte-skills", open:["pteBlock","pte-skills"],
+            answer:"FIB e cursor control na thakle time loss. Fix: click discipline + space control + skip smartly. Drill: 10 blanks practice focusing only on cursor accuracy." },
+          { key:"navigate",text:"Next task e confusion", target:"#pte-with", open:["pteBlock","pte-with"],
+            answer:"PTE e transitions fast — freeze korle chain break hoy. Fix: instruction scan + next-click habit. Drill: rapid task switching practice (10 tasks mock flow)." },
+          { key:"panic",   text:"Overthinking + panic under pressure", target:"#pte-aim", open:["pteBlock","pte-aim"],
+            answer:"PTE execution is ruthless. Fix: system-user mindset: do, move, don’t mourn. Drill: timed sets where you must move on instantly after buzzer." }
+        ]
+      }
+    };
+
+    let askExam = null;
+    let askChoice = null;
+
+    function openAsk(){
+      closeSheet(); // close menu if open
+      askPanel.classList.add("show");
+      askPanel.setAttribute("aria-hidden","false");
+    }
+    function closeAsk(){
+      askPanel.classList.remove("show");
+      askPanel.setAttribute("aria-hidden","true");
+    }
+
+    function clearActive(container){
+      container.querySelectorAll(".askChip").forEach(b=>b.classList.remove("active"));
+    }
+
+    function setAnswer(html, hint){
+      askAnswer.innerHTML = html;
+      askHint.textContent = hint || "";
+    }
+
+    function buildStage2(examKey){
+      askExam = examKey;
+      askChoice = null;
+
+      clearActive(askStage1);
+      askStage1.querySelector(`[data-exam="${examKey}"]`)?.classList.add("active");
+
+      const cfg = ASK_MAP[examKey];
+      askPrompt.textContent = cfg.prompt;
+
+      askStage2.innerHTML = cfg.options.map(o =>
+        `<button class="askChip" type="button" data-choice="${o.key}">${o.text}</button>`
+      ).join("");
+
+      askStage2.style.display = "";
+      setAnswer(`Tap one problem — I'll show the fix.<small>Then press <b>Show me where to fix</b> to jump.</small>`, `Selected: ${cfg.label}`);
+    }
+
+    function setChoice(choiceKey){
+      if(!askExam) return;
+      const cfg = ASK_MAP[askExam];
+      const opt = cfg.options.find(x=>x.key===choiceKey);
+      if(!opt) return;
+
+      askChoice = opt;
+
+      clearActive(askStage2);
+      askStage2.querySelector(`[data-choice="${choiceKey}"]`)?.classList.add("active");
+
+      setAnswer(`<b>${opt.text}</b><br/>${opt.answer}<small>Press <b>Show me where to fix</b> — I'll open the exact dropdown.</small>`, `Ready to jump: ${opt.target}`);
+    }
+
+    function openDetailsChain(ids){
+      ids.forEach(id=>{
+        const el = document.getElementById(id);
+        if(el && el.tagName && el.tagName.toLowerCase()==="details"){
+          el.open = true;
+        }
+      });
+    }
+
+    function flashEl(el){
+      if(!el) return;
+      document.querySelectorAll(".flash").forEach(x=>x.classList.remove("flash"));
+      el.classList.add("flash");
+      setTimeout(()=>el.classList.remove("flash"), 1400);
+    }
+
+    function jumpToSelector(sel){
+      const el = document.querySelector(sel);
+      if(!el) return;
+      const off = headerOffset();
+      const y = getTop(el) - off;
+      window.scrollTo({ top: Math.max(0, y), behavior:"smooth" });
+      setTimeout(()=>flashEl(el), 350);
+    }
+
+    askFab.addEventListener("click", openAsk);
+    askClose.addEventListener("click", closeAsk);
+
+    askStage1.addEventListener("click", (e)=>{
+      const btn = e.target.closest(".askChip");
+      if(!btn) return;
+      buildStage2(btn.getAttribute("data-exam"));
+    });
+
+    askStage2.addEventListener("click", (e)=>{
+      const btn = e.target.closest(".askChip");
+      if(!btn) return;
+      setChoice(btn.getAttribute("data-choice"));
+    });
+
+    askGoBtn.addEventListener("click", ()=>{
+      if(!askExam){
+        setAnswer("First choose IELTS or PTE.<small>Then choose your problem.</small>", "Choose exam first.");
+        askPanel.animate([{transform:"translateY(0)"},{transform:"translateY(6px)"},{transform:"translateY(0)"}],{duration:220,easing:"ease-out"});
+        return;
+      }
+      if(!askChoice){
+        setAnswer("Now choose your problem from the list.<small>Then I’ll take you to the exact dropdown.</small>", "Choose a problem.");
+        askPanel.animate([{transform:"translateY(0)"},{transform:"translateY(6px)"},{transform:"translateY(0)"}],{duration:220,easing:"ease-out"});
+        return;
+      }
+      closeAsk();
+      // open chain of details first, then jump
+      openDetailsChain(askChoice.open || []);
+      setTimeout(()=>jumpToSelector(askChoice.target), 160);
+      // update URL hash for shareable deep link
+      try{ history.replaceState(null, "", askChoice.target); }catch(err){}
+    });
+
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape"){ closeAsk(); closeSheet(); }
+    });
+
+    // Deep-link support: open correct dropdown when hash is present
+    (function initHash(){
+      const h = (location.hash || "").trim();
+      if(!h) return;
+
+      const allDetailIds = new Set([
+        "ieltsBlock","pteBlock",
+        "ielts-skills","ielts-with","ielts-modules","ielts-aim","ielts-become",
+        "pte-skills","pte-with","pte-modules","pte-aim","pte-become",
+        "moduleSection","footerSection"
+      ]);
+
+      const id = h.replace("#","");
+      if(allDetailIds.has(id)){
+        // open parent blocks
+        if(id.startsWith("ielts-")) openDetailsChain(["ieltsBlock", id]);
+        if(id.startsWith("pte-")) openDetailsChain(["pteBlock", id]);
+        if(id==="ieltsBlock") openDetailsChain(["ieltsBlock"]);
+        if(id==="pteBlock") openDetailsChain(["pteBlock"]);
+        // jump
+        setTimeout(()=>jumpToSelector(h), 120);
+      }
     })();
   </script>
 

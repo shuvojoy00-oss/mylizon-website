@@ -932,10 +932,11 @@
       setTimeout(()=>{ document.getElementById("chat").focus?.(); }, 200);
     });
 
- /* =========================
-   SMART SCROLL (FIXED DOWN + UP)
-   - Near TOP -> arrow DOWN -> scroll to Module (guaranteed)
-   - Else     -> arrow UP   -> scroll to TOP
+/* =========================
+   SMART SCROLL (PTE-like: Next/Prev section jump)
+   - DOWN = jump to next section below viewport
+   - UP   = jump to previous section above viewport
+   - Arrow auto changes based on availability
 ========================= */
 
 const smartBtn = document.getElementById("btnSmartScroll");
@@ -950,56 +951,92 @@ function showHint(txt){
   hintTimer = setTimeout(()=>{ hint.style.display = "none"; }, 900);
 }
 
-function isNearTop(){
-  return window.scrollY < 220;
+function headerOffset(){
+  const header = document.querySelector(".topbar");
+  return (header ? header.offsetHeight : 0) + 10;
 }
 
-/* get element top position reliably */
 function getTop(el){
   const r = el.getBoundingClientRect();
   return r.top + window.pageYOffset;
 }
 
-/* ✅ update arrow direction based on scroll */
+/* ✅ define “scroll steps” like PTE page */
+function getTargets(){
+  const ids = ["asklizSection", "moduleSection"];
+  const els = ids
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  // also include footer as a final step (optional but nice)
+  const footer = document.querySelector("footer");
+  if(footer) els.push(footer);
+
+  // always include top of page as first step
+  return [
+    { el: document.body, y: 0, name: "Top" },
+    ...els.map(el => ({ el, y: getTop(el), name: el.id || "Section" }))
+  ].sort((a,b)=>a.y-b.y);
+}
+
+function currentScrollLine(){
+  return window.scrollY + headerOffset();
+}
+
+function nextTarget(){
+  const targets = getTargets();
+  const line = currentScrollLine();
+  // first target BELOW current line
+  return targets.find(t => t.y > line + 10) || null;
+}
+
+function prevTarget(){
+  const targets = getTargets();
+  const line = currentScrollLine();
+  // last target ABOVE current line
+  const above = targets.filter(t => t.y < line - 10);
+  return above.length ? above[above.length - 1] : null;
+}
+
+/* ✅ arrow direction like PTE: if there is a next section, show DOWN. else show UP */
 function updateSmartDirection(){
-  if(isNearTop()){
+  const n = nextTarget();
+  if(n){
     smartBtn.classList.add("isDown");
     smartBtn.classList.remove("isUp");
-    smartBtn.setAttribute("aria-label","Scroll down to module");
+    smartBtn.setAttribute("aria-label","Scroll to next section");
   }else{
     smartBtn.classList.add("isUp");
     smartBtn.classList.remove("isDown");
-    smartBtn.setAttribute("aria-label","Scroll up to top");
+    smartBtn.setAttribute("aria-label","Scroll to previous section / top");
   }
 }
 
-/* ✅ click behavior (DOWN is now guaranteed) */
 smartBtn.addEventListener("click", ()=>{
-  const header = document.querySelector(".topbar");
-  const headerH = header ? header.offsetHeight : 0;
+  const off = headerOffset();
 
-  if(isNearTop()){
-    const target = document.getElementById("moduleSection");
-    if(target){
-      const y = Math.max(0, getTop(target) - headerH - 10);
-      showHint("Down to module");
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }else{
-      // fallback
-      showHint("Down");
-      window.scrollTo({ top: window.innerHeight * 0.9, behavior: "smooth" });
-    }
+  const n = nextTarget();
+  if(n){
+    showHint("Next");
+    const y = Math.max(0, n.y - off);
+    window.scrollTo({ top: y, behavior: "smooth" });
+    return;
+  }
+
+  // if no next, go UP to previous (or top)
+  const p = prevTarget();
+  showHint("Up");
+  if(p){
+    const y = Math.max(0, p.y - off);
+    window.scrollTo({ top: y, behavior: "smooth" });
   }else{
-    showHint("Up to top");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
 
-/* ✅ keep it updated while scrolling */
 window.addEventListener("scroll", updateSmartDirection, { passive:true });
-
-/* init */
 updateSmartDirection();
+
 
 
 

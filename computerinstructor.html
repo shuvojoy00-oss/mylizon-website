@@ -1,839 +1,235 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Instructor Profile | Computer Skills | LizOn Education</title>
-  <meta name="description" content="Instructor profile for Computer Skills module (IELTS & PTE). Tap to see teaching method, experience, and outcomes." />
-  <meta name="theme-color" content="#062b1f" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Instructor Profile | LizOn Education</title>
 
-  <style>
-    :root{
-      /* Dark mode (NO pure black) */
-      --bg:#041f16;
-      --bg2:#062b1f;
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.08);
-      --stroke:rgba(255,255,255,.12);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.72);
-      --gold:#d6b35a;
-      --gold2:#caa64a;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
+<style>
+:root{
+  --bg:#041f16;
+  --bg2:#062b1f;
+  --card:rgba(255,255,255,.06);
+  --stroke:rgba(255,255,255,.12);
+  --text:rgba(255,255,255,.92);
+  --muted:rgba(255,255,255,.7);
+  --gold:#d6b35a;
+  --radius:18px;
+}
 
-      --radius:18px;
-      --radius2:22px;
-      --tap:52px;
-      --max:1050px;
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:linear-gradient(180deg,var(--bg2),var(--bg));
+  color:var(--text);
+}
 
-      --safeBottom: 88px; /* bottom bar space */
-    }
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:18px 14px 120px;
+}
 
-    [data-theme="light"]{
-      --bg:#f6fbf8;
-      --bg2:#e9f4ee;
-      --card:rgba(6,43,31,.06);
-      --card2:rgba(6,43,31,.08);
-      --stroke:rgba(6,43,31,.14);
-      --text:rgba(6,43,31,.92);
-      --muted:rgba(6,43,31,.70);
-      --shadow: 0 18px 60px rgba(6,43,31,.12);
-    }
+/* Header */
+.header{
+  margin-bottom:16px;
+}
+.header h1{
+  font-size:20px;
+  margin:0;
+}
+.header p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 15% 0%, rgba(214,179,90,.16) 0%, rgba(6,43,31,0) 55%),
-        radial-gradient(1100px 700px at 90% 10%, rgba(14,58,40,.45) 0%, rgba(4,31,22,0) 58%),
-        linear-gradient(180deg, var(--bg2) 0%, var(--bg) 65%, var(--bg) 100%);
-      min-height:100vh;
-    }
-    a{color:inherit; text-decoration:none}
-    .container{width:min(var(--max), 92vw); margin:0 auto; padding:14px 0 calc(var(--safeBottom) + 200px);}
+/* Instructor Card */
+.profile{
+  border:1px solid var(--stroke);
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:16px;
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
 
-    /* ===== Header ===== */
-    .topbar{
-      position:sticky; top:0; z-index:60;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(4,31,22,.92) 0%, rgba(4,31,22,.72) 70%, rgba(4,31,22,0) 100%);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    [data-theme="light"] .topbar{
-      background: linear-gradient(180deg, rgba(246,251,248,.92) 0%, rgba(246,251,248,.75) 70%, rgba(246,251,248,0) 100%);
-      border-bottom: 1px solid rgba(6,43,31,.08);
-    }
-    .topbarInner{
-      width:min(var(--max), 92vw);
-      margin:0 auto;
-      padding:12px 0;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      user-select:none;
-    }
-    .logo{
-      width:34px; height:34px; border-radius:10px;
-      display:grid; place-items:center;
-      background:linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.06));
-      border:1px solid var(--stroke);
-      font-weight:900; letter-spacing:.4px;
-      overflow:hidden;
-    }
-    .logo img{
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display:block;
-      padding: 5px;
-    }
-    .brandText b{display:block; font-size:14px; line-height:1.1}
-    .brandText span{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+.avatar{
+  width:54px;
+  height:54px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#d6b35a33,#ffffff12);
+  display:grid;
+  place-items:center;
+  font-weight:900;
+}
 
-    .navChips{
-      display:flex; gap:8px; flex-wrap:wrap;
-      align-items:center; justify-content:center;
-      flex:1;
-    }
-    .chipNav{
-      height:40px;
-      padding:0 12px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      font-size:12.5px;
-      font-weight:800;
-      display:inline-flex; align-items:center; justify-content:center;
-      user-select:none;
-    }
-    .chipNav.active{
-      border-color: rgba(214,179,90,.60);
-      background: linear-gradient(135deg, rgba(214,179,90,.20), rgba(255,255,255,.05));
-    }
-    .rightControls{display:flex; gap:10px; align-items:center;}
-    .iconbtn{
-      height:42px; min-width:42px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      cursor:pointer;
-      user-select:none;
-      display:inline-flex; align-items:center; justify-content:center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.18);
-      font-weight: 950;
-      letter-spacing: .2px;
-    }
-    .iconbtn:active{transform: translateY(1px)}
-    .iconbtn .bars{width:18px; height:12px; position:relative;}
-    .iconbtn .bars:before,
-    .iconbtn .bars:after,
-    .iconbtn .bars i{
-      content:"";
-      position:absolute; left:0; right:0;
-      height:2px; border-radius:2px;
-      background:rgba(255,255,255,.86);
-      opacity:.92;
-    }
-    .iconbtn .bars:before{top:0}
-    .iconbtn .bars i{top:5px}
-    .iconbtn .bars:after{bottom:0}
-    [data-theme="light"] .iconbtn .bars:before,
-    [data-theme="light"] .iconbtn .bars:after,
-    [data-theme="light"] .iconbtn .bars i{
-      background:rgba(6,43,31,.86);
-    }
-    @media (max-width: 980px){
-      .navChips{display:none}
-    }
+.profile h2{
+  margin:0;
+  font-size:16px;
+}
+.profile span{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+}
 
-    /* ===== Cards ===== */
-    .card{
-      border:1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      margin-top: 12px;
-    }
-    .cardHeader{
-      padding:14px 14px 10px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.03);
-    }
-    .title{display:flex; flex-direction:column; gap:2px}
-    .title b{font-size:14px}
-    .title span{font-size:12px; color:var(--muted)}
-    .pill{
-      font-size:12px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      white-space:nowrap;
-    }
-    .contentWrap{padding:12px 14px 14px}
+/* Buttons */
+.actions{
+  margin-left:auto;
+  display:flex;
+  gap:10px;
+}
 
-    /* ===== Section dropdown buttons (Apple glass) ===== */
-    details{
-      padding:0;
-      margin:10px 0;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-    }
-    summary{
-      cursor:pointer;
-      list-style:none;
-      font-weight:900;
-      font-size:13px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
+.btn{
+  height:40px;
+  padding:0 14px;
+  border-radius:999px;
+  border:1px solid var(--stroke);
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+  font-weight:800;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-      padding:14px 14px;
-      border-radius:16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-    }
-    summary::-webkit-details-marker{display:none}
+.btn.gold{
+  border-color:rgba(214,179,90,.6);
+  background:linear-gradient(135deg,rgba(214,179,90,.25),rgba(255,255,255,.04));
+}
 
-    .chev{
-      opacity:.8;
-      transition: transform .15s ease;
-      font-size:18px;
-    }
-    details[open] > summary .chev{transform: rotate(90deg)}
+/* Sections */
+details{
+  margin-top:14px;
+  border-radius:var(--radius);
+  border:1px solid var(--stroke);
+  background:rgba(255,255,255,.04);
+  overflow:hidden;
+}
 
-    .sec{
-      margin-top: 12px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      overflow:hidden;
-    }
-    .sec > summary{
-      padding:14px 14px;
-      border-radius:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
-      box-shadow:
-        0 18px 55px rgba(0,0,0,.28),
-        0 1px 0 rgba(255,255,255,.08) inset;
-      backdrop-filter: blur(12px);
-    }
-    .secBody{
-      padding: 0 14px 14px;
-      font-size:13px;
-      line-height:1.55;
-    }
-    .secTitleRow{display:flex; align-items:center; gap:10px;}
-    .secDot{
-      width:10px; height:10px; border-radius:999px;
-      background: rgba(214,179,90,.75);
-      box-shadow: 0 10px 20px rgba(0,0,0,.22);
-      flex:0 0 auto;
-    }
-    .secTitle{
-      font-weight: 950;
-      letter-spacing: .2px;
-      font-size: 13.5px;
-    }
+summary{
+  cursor:pointer;
+  padding:14px;
+  font-weight:900;
+  font-size:14px;
+  list-style:none;
+  display:flex;
+  justify-content:space-between;
+}
 
-    /* Title colors */
-    .t1{ color:#d6b35a; }
-    .t2{ color:#8fe3c7; }
-    .t3{ color:#7fb4ff; }
-    .t4{ color:#ff9f7f; }
-    .t5{ color:#c6a7ff; }
+summary::-webkit-details-marker{display:none;}
 
-    /* Important words */
-    .k{
-      font-weight: 950;
-      padding: 1px 6px;
-      border-radius: 999px;
-      border: 1px solid rgba(214,179,90,.35);
-      background: rgba(214,179,90,.14);
-      color: rgba(255,255,255,.92);
-    }
-    [data-theme="light"] .k{
-      color: rgba(6,43,31,.92);
-      background: rgba(214,179,90,.20);
-    }
-    .impGold{ color: var(--gold); font-weight:950; }
-    .impMint{ color:#8fe3c7; font-weight:950; }
-    .impBlue{ color:#7fb4ff; font-weight:950; }
-    .impOrange{ color:#ff9f7f; font-weight:950; }
-    .impPurple{ color:#c6a7ff; font-weight:950; }
+.section{
+  padding:0 14px 14px;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--muted);
+}
 
-    .miniNote{
-      margin-top:10px;
-      color: var(--muted);
-      font-size:12.5px;
-      line-height:1.55;
-    }
+/* Footer links */
+.footer-links{
+  margin-top:18px;
+  display:flex;
+  gap:16px;
+}
 
-    /* ===== Instructor Hero Card ===== */
-    .instrHero{
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      padding:14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-    }
-    .heroLeft{display:flex; align-items:center; gap:12px;}
-    .avatar{
-      width:54px; height:54px;
-      border-radius:18px;
-      border:1px solid var(--stroke);
-      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.05));
-      overflow:hidden;
-      display:grid; place-items:center;
-      flex:0 0 auto;
-    }
-    .avatar img{width:100%; height:100%; object-fit:contain; padding:10px; display:block;}
-    .heroMeta{display:flex; flex-direction:column; gap:4px;}
-    .heroName{font-weight:1000; letter-spacing:.2px; font-size:15px;}
-    .heroRole{font-weight:850; color:var(--muted); font-size:12.5px; line-height:1.35;}
-    .heroBadges{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;}
-    .badge{
-      height:34px;
-      padding:0 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.05);
-      font-weight:950;
-      font-size:12px;
-      display:inline-flex; align-items:center; justify-content:center;
-      white-space:nowrap;
-    }
-    .badge.gold{
-      border-color: rgba(214,179,90,.55);
-      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
-    }
-    .heroRight{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center;}
-    .btn{
-      height:44px;
-      padding:0 12px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
-      font-weight: 950;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .btn.gold{
-      border-color: rgba(214,179,90,.55);
-      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
-    }
-    .btn:active{transform: translateY(1px)}
-    @media(max-width:520px){
-      .instrHero{flex-direction:column; align-items:stretch;}
-      .heroRight .btn{width:100%;}
-      .heroRight{justify-content:flex-start;}
-    }
-
-    /* ===== Bottom Guidance Bar ===== */
-    .bottomBar{
-      position:fixed; left:0; right:0; bottom:0;
-      z-index:80;
-      background: linear-gradient(180deg, rgba(4,31,22,0) 0%, rgba(4,31,22,.82) 22%, rgba(4,31,22,.96) 100%);
-      padding:10px 12px 14px;
-      display:flex; justify-content:center;
-      backdrop-filter: blur(10px);
-    }
-    [data-theme="light"] .bottomBar{
-      background: linear-gradient(180deg, rgba(246,251,248,0) 0%, rgba(246,251,248,.82) 22%, rgba(246,251,248,.96) 100%);
-    }
-    .barInner{
-      width:min(var(--max), 92vw);
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      border-radius:999px;
-      padding:10px 12px;
-    }
-    .barInner .left{display:flex; flex-direction:column; gap:2px}
-    .barInner .left b{font-size:13px}
-    .barInner .left span{font-size:12px; color:var(--muted)}
-    .cta{
-      height:42px;
-      padding:0 14px;
-      border-radius:999px;
-      border:1px solid rgba(214,179,90,.55);
-      background: linear-gradient(135deg, rgba(214,179,90,.28), rgba(255,255,255,.04));
-      font-weight:900;
-      cursor:pointer;
-      text-decoration:none;
-      display:flex; align-items:center; justify-content:center;
-      white-space:nowrap;
-      color: var(--text);
-    }
-    .cta:active{transform: translateY(1px)}
-
-    /* ===== Footer ===== */
-    footer{ margin-top: 18px; }
-    .footerGrid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:14px;
-    }
-    @media(max-width:980px){ .footerGrid{grid-template-columns:1fr} }
-
-    .footerCard{
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .footerCard .fh{
-      padding:14px 14px 10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.03);
-    }
-    .footerCard .fh b{font-size:14px}
-    .footerCard .fb{padding:12px 14px 14px}
-    .footerRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
-    .fbtn{
-      height:44px;
-      padding:0 12px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      font-weight:900;
-      display:inline-flex;
-      align-items:center; justify-content:center;
-      cursor:pointer;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .fbtn.gold{
-      border-color: rgba(214,179,90,.55);
-      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
-    }
-    .fbtn:active{transform: translateY(1px)}
-    .small{font-size:12px; color:var(--muted); line-height:1.5}
-
-    /* ===== iPhone-style Menu Sheet ===== */
-    .sheetOverlay{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.35);
-      z-index: 120;
-      display:none;
-    }
-    [data-theme="light"] .sheetOverlay{ background: rgba(6,43,31,.18); }
-
-    .sheet{
-      position:fixed;
-      left:0; right:0; bottom:0;
-      z-index: 130;
-      transform: translateY(110%);
-      transition: transform .22s ease;
-      padding: 10px 12px 18px;
-    }
-    .sheet.open{ transform: translateY(0); }
-    .sheetInner{
-      width:min(var(--max), 92vw);
-      margin:0 auto;
-      border-radius: 22px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 28px 90px rgba(0,0,0,.45);
-      overflow:hidden;
-    }
-    .sheetTop{
-      padding:12px 14px 10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.03);
-    }
-    .handle{
-      width:52px; height:5px;
-      border-radius:999px;
-      background: rgba(255,255,255,.20);
-      margin: 0 auto 8px;
-    }
-    [data-theme="light"] .handle{ background: rgba(6,43,31,.18); }
-    .sheetTop b{font-size:14px}
-    .sheetBody{padding:12px 14px 14px}
-    .sheetGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    @media(max-width:520px){ .sheetGrid{grid-template-columns:1fr} }
-    .sheetItem{
-      height:48px;
-      border-radius:16px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.05);
-      display:flex; align-items:center; justify-content:center;
-      font-weight:900;
-      cursor:pointer;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-      color: var(--text);
-    }
-    .sheetItem.gold{
-      border-color: rgba(214,179,90,.55);
-      background: linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
-    }
-    .sheetItem:active{transform: translateY(1px)}
-  </style>
+.footer-links a{
+  color:var(--gold);
+  text-decoration:none;
+  font-weight:800;
+  font-size:14px;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- ===== Header ===== -->
-  <header class="topbar">
-    <div class="topbarInner">
-      <a class="brand" href="index.html" aria-label="LizOn Home">
-        <div class="logo">
-          <img src="assets/logo-dark.png" alt="LizOn Education Logo" />
-        </div>
-        <div class="brandText">
-          <b>LizOn Education</b>
-          <span>Instructor Profile</span>
-        </div>
-      </a>
+<div class="container">
 
-      <nav class="navChips" aria-label="Quick navigation">
-        <a class="chipNav" href="index.html">Home</a>
-        <a class="chipNav" href="ielts.html">IELTS</a>
-        <a class="chipNav" href="pte.html">PTE</a>
-        <a class="chipNav active" href="#">Instructor</a>
-        <a class="chipNav" href="computer.html">Computer</a>
-        <a class="chipNav" href="studyabroad.html">Study Abroad</a>
-      </nav>
+  <!-- Header -->
+  <div class="header">
+    <h1>Instructor Profile</h1>
+    <p>Tap each section to see details</p>
+  </div>
 
-      <div class="rightControls">
-        <button class="iconbtn" id="btnTheme" type="button" aria-label="Toggle light or dark mode">🌓</button>
-        <button class="iconbtn" id="btnMenuTop" type="button" aria-label="Open menu">
-          <span class="bars" aria-hidden="true"><i></i></span>
-        </button>
-      </div>
+  <!-- Profile -->
+  <div class="profile">
+    <div class="avatar">CE</div>
+    <div>
+      <h2>Computer Skills Instructor</h2>
+      <span>Computer Engineer · 3+ years with LizOn Education</span>
     </div>
-  </header>
-
-  <main class="container">
-
-    <section class="card" id="profileSection">
-      <div class="cardHeader">
-        <div class="title">
-          <b>Computer Skills Instructor</b>
-          <span>Tap each section — quick, clean, no heavy reading</span>
-        </div>
-        <div class="pill">Instructor</div>
-      </div>
-
-      <div class="contentWrap">
-
-        <!-- Hero / Profile card -->
-        <div class="instrHero">
-          <div class="heroLeft">
-            <div class="avatar" aria-hidden="true">
-              <img src="assets/logo-dark.png" alt="" />
-            </div>
-
-            <div class="heroMeta">
-              <div class="heroName">Instructor Profile</div>
-              <div class="heroRole">
-                Computer Engineer · Connected with <span class="impGold">LizOn Education</span> for <span class="impMint">3+ years</span>
-                <br/>Focus: exam execution for <span class="impBlue">IELTS</span> & <span class="impBlue">PTE</span>
-              </div>
-
-              <div class="heroBadges">
-                <span class="badge gold">Computer-Based Mastery</span>
-                <span class="badge">Typing + Editing</span>
-                <span class="badge">Mouse + Navigation</span>
-                <span class="badge">Mic + Timer Control</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="heroRight">
-            <a class="btn gold" href="computer.html#moduleSection">Back to Computer Module</a>
-            <a class="btn" id="btnWA" href="#" target="_blank" rel="noopener">Chat</a>
-            <a class="btn" href="https://www.facebook.com/share/14RWEZRAeLd/" target="_blank" rel="noopener">Facebook Page</a>
-          </div>
-        </div>
-
-        <!-- Dropdown sections -->
-        <details class="sec" open id="intro">
-          <summary>
-            <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t1">Introduction</span></div>
-            <span class="chev">›</span>
-          </summary>
-          <div class="secBody">
-            <p class="miniNote">
-              As a profession, I am a <span class="impGold">Computer Engineer</span>.
-              For the last <span class="impMint">3+ years</span>, I’ve been connected with <span class="impGold">LizOn Education</span> —
-              helping students fix the real computer-based issues that silently reduce IELTS & PTE scores.
-            </p>
-            <p class="miniNote">
-              <span class="k">This is not “learning computers.”</span> This is <span class="impOrange">exam execution</span>.
-            </p>
-          </div>
-        </details>
-
-        <details class="sec" id="trust">
-          <summary>
-            <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t2">Why Students Trust This</span></div>
-            <span class="chev">›</span>
-          </summary>
-          <div class="secBody">
-            <p class="miniNote">
-              Most students don’t fail because of English. They fail because of the screen.
-              That’s why this module exists.
-            </p>
-            <ul>
-              <li class="miniNote">Typing slow → Writing e time shesh</li>
-              <li class="miniNote">Mouse mis-click → wrong option / wrong place</li>
-              <li class="miniNote">Scroll e place harai → Reading e focus break</li>
-              <li class="miniNote">Copy–paste habit → duplicate line / formatting mess</li>
-              <li class="miniNote">Mic + timer panic → PTE speaking flow break</li>
-            </ul>
-            <p class="miniNote">
-              এগুলো English problem না — এগুলো <span class="impOrange">execution problem</span>. And that’s what we fix.
-            </p>
-          </div>
-        </details>
-
-        <details class="sec" id="experience">
-          <summary>
-            <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t3">Experience</span></div>
-            <span class="chev">›</span>
-          </summary>
-          <div class="secBody">
-            <ul>
-              <li class="miniNote">Connected with LizOn Education for <span class="impMint">3+ years</span></li>
-              <li class="miniNote">Assisted a large number of students to ace their computer skills for <span class="impBlue">IELTS & PTE</span></li>
-              <li class="miniNote">Focus: <span class="impGold">speed</span> + <span class="impMint">accuracy</span> + <span class="impOrange">calm execution</span></li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="sec" id="method">
-          <summary>
-            <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t4">How I Teach</span></div>
-            <span class="chev">›</span>
-          </summary>
-          <div class="secBody">
-            <p class="miniNote">
-              I don’t teach theory. I train <span class="impMint">muscle memory</span>.
-              So exam day te computer becomes <span class="impPurple">invisible</span>.
-            </p>
-            <ul>
-              <li class="miniNote">Live guided drills (typing + mouse + navigation)</li>
-              <li class="miniNote">Shortcut discipline (only what saves time)</li>
-              <li class="miniNote">Anti-panic timing rules (what to do when stuck)</li>
-              <li class="miniNote">PTE mic + timer habits (stable delivery)</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="sec" id="become">
-          <summary>
-            <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t5">What You Become After This</span></div>
-            <span class="chev">›</span>
-          </summary>
-          <div class="secBody">
-            <ul>
-              <li class="miniNote"><span class="impMint">Calm</span> inside the real exam room</li>
-              <li class="miniNote"><span class="impBlue">Fast</span> without chaotic clicking</li>
-              <li class="miniNote"><span class="impGold">Accurate</span> without overthinking the screen</li>
-              <li class="miniNote">Confident enough to edit writing like a <span class="impPurple">pro</span></li>
-              <li class="miniNote">Someone who uses the system <span class="impOrange">strategically</span>, not emotionally</li>
-            </ul>
-            <p class="miniNote">
-              Final truth: technology should never be the reason you miss your desired score.
-            </p>
-          </div>
-        </details>
-
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="footerSection">
-      <div class="footerGrid">
-        <div class="footerCard">
-          <div class="fh"><b>Contact & Location</b></div>
-          <div class="fb">
-            <div class="small">
-              51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
-            </div>
-            <div class="footerRow">
-              <a class="fbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-              <a class="fbtn gold" id="footerWA" href="#" target="_blank" rel="noopener">Chat</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="footerCard">
-          <div class="fh"><b>Social Media</b></div>
-          <div class="fb">
-            <div class="small">
-              Follow LizOn Education for updates, tips, and student stories.
-            </div>
-            <div class="footerRow">
-              <a class="fbtn gold" href="https://www.facebook.com/share/14RWEZRAeLd/" target="_blank" rel="noopener">Facebook</a>
-              <a class="fbtn" href="#" target="_blank" rel="noopener">YouTube</a>
-              <a class="fbtn" href="#" target="_blank" rel="noopener">LinkedIn</a>
-            </div>
-            <div class="footerRow">
-              <button class="fbtn" id="footerTheme" type="button">Toggle Light/Dark</button>
-              <a class="fbtn" href="computer.html#moduleSection">Computer Module</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-  </main>
-
-  <!-- Bottom Guidance Bar -->
-  <div class="bottomBar" id="bottomBar">
-    <div class="barInner">
-      <div class="left">
-        <b>Need guidance?</b>
-        <span>Chat on WhatsApp</span>
-      </div>
-      <a class="cta" id="ctaWA" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <div class="actions">
+      <a href="computer.html" class="btn gold">View Course</a>
+      <a href="https://wa.me/8801771253085" class="btn">Chat</a>
     </div>
   </div>
 
-  <!-- Menu Sheet -->
-  <div class="sheetOverlay" id="sheetOverlay" aria-hidden="true"></div>
-  <div class="sheet" id="menuSheet" aria-hidden="true">
-    <div class="handle"></div>
-    <div class="sheetInner">
-      <div class="sheetTop">
-        <b>Menu</b>
-        <button class="iconbtn" id="btnCloseSheet" type="button" aria-label="Close menu">✕</button>
-      </div>
-      <div class="sheetBody">
-        <div class="sheetGrid">
-          <a class="sheetItem" href="index.html">Home</a>
-          <a class="sheetItem" href="ielts.html">IELTS</a>
-          <a class="sheetItem" href="pte.html">PTE</a>
-          <a class="sheetItem gold" href="#">Instructor</a>
-          <a class="sheetItem" href="computer.html">Computer</a>
-          <button class="sheetItem" id="sheetTheme" type="button">Light/Dark</button>
-          <a class="sheetItem" href="#profileSection">Go to Profile</a>
-          <a class="sheetItem" href="#footerSection">Go to Footer</a>
-          <a class="sheetItem gold" id="sheetWA" href="#" target="_blank" rel="noopener">Talk with Expert</a>
-        </div>
-      </div>
+  <!-- Introduction -->
+  <details open>
+    <summary>Introduction</summary>
+    <div class="section">
+      As a profession, I am a Computer Engineer.  
+      For the last 3+ years, I’ve been connected with LizOn Education — helping students fix the real computer-based issues that silently reduce IELTS & PTE scores.
+      <br><br>
+      <b>This is not “learning computers.”</b>  
+      This is exam execution.
     </div>
+  </details>
+
+  <!-- Why Trust -->
+  <details>
+    <summary>Why Students Trust This</summary>
+    <div class="section">
+      Students don’t lose marks because of weak English alone.  
+      They lose marks because of panic, mis-clicks, slow typing, timer fear, and system confusion.
+      <br><br>
+      This training removes those invisible score killers.
+    </div>
+  </details>
+
+  <!-- Experience -->
+  <details>
+    <summary>Experience</summary>
+    <div class="section">
+      Already connected with LizOn Education for more than 3 years,  
+      assisting a large number of students to confidently handle computer-based IELTS & PTE exams.
+    </div>
+  </details>
+
+  <!-- Teaching Style -->
+  <details>
+    <summary>How I Teach</summary>
+    <div class="section">
+      No theory overload.  
+      No assumption-based teaching.
+      <br><br>
+      Everything is demonstrated, practiced, corrected, and repeated  
+      until the system becomes invisible during the exam.
+    </div>
+  </details>
+
+  <!-- Outcome -->
+  <details>
+    <summary>What You Become After This</summary>
+    <div class="section">
+      Calm under exam pressure.  
+      Faster without rushing.  
+      Accurate without panic.
+      <br><br>
+      You focus on English — not on the computer.
+    </div>
+  </details>
+
+  <!-- Footer links -->
+  <div class="footer-links">
+    <a href="computer.html">Go to Course</a>
   </div>
 
-  <script>
-    /* =========================
-       CONFIG
-    ========================== */
-    const WHATSAPP_NUMBER = "8801771253085";
-    const WA_TEXT = "Assalamu Alaikum, I want guidance about the Computer Skills instructor (IELTS/PTE).";
-    function waLink(text){
-      return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text || WA_TEXT);
-    }
-
-    /* =========================
-       THEME
-    ========================== */
-    const THEME_KEY = "mylizon_theme";
-    function applyTheme(t){
-      document.documentElement.setAttribute("data-theme", t);
-      localStorage.setItem(THEME_KEY, t);
-    }
-    (function initTheme(){
-      const saved = localStorage.getItem(THEME_KEY);
-      applyTheme(saved === "light" ? "light" : "dark");
-    })();
-
-    document.getElementById("btnTheme").addEventListener("click", ()=>{
-      const cur = document.documentElement.getAttribute("data-theme") || "dark";
-      applyTheme(cur === "dark" ? "light" : "dark");
-    });
-    document.getElementById("footerTheme").addEventListener("click", ()=>{
-      const cur = document.documentElement.getAttribute("data-theme") || "dark";
-      applyTheme(cur === "dark" ? "light" : "dark");
-    });
-    document.getElementById("sheetTheme").addEventListener("click", ()=>{
-      const cur = document.documentElement.getAttribute("data-theme") || "dark";
-      applyTheme(cur === "dark" ? "light" : "dark");
-      closeSheet();
-    });
-
-    /* =========================
-       WhatsApp links
-    ========================== */
-    function setWA(){
-      const href = waLink(WA_TEXT);
-      document.getElementById("ctaWA").href = href;
-      document.getElementById("footerWA").href = href;
-      document.getElementById("sheetWA").href = href;
-      document.getElementById("btnWA").href = href;
-    }
-    setWA();
-
-    /* =========================
-       MENU SHEET
-    ========================== */
-    const overlay = document.getElementById("sheetOverlay");
-    const sheet = document.getElementById("menuSheet");
-    const openBtn = document.getElementById("btnMenuTop");
-    const closeBtn = document.getElementById("btnCloseSheet");
-
-    function openSheet(){
-      overlay.style.display = "block";
-      sheet.classList.add("open");
-      sheet.setAttribute("aria-hidden","false");
-      overlay.setAttribute("aria-hidden","false");
-    }
-    function closeSheet(){
-      sheet.classList.remove("open");
-      sheet.setAttribute("aria-hidden","true");
-      overlay.setAttribute("aria-hidden","true");
-      setTimeout(()=>{ overlay.style.display = "none"; }, 160);
-    }
-    openBtn.addEventListener("click", openSheet);
-    closeBtn.addEventListener("click", closeSheet);
-    overlay.addEventListener("click", closeSheet);
-
-    document.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape"){ closeSheet(); }
-    });
-  </script>
+</div>
 
 </body>
 </html>

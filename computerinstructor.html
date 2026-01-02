@@ -7,36 +7,46 @@
 
 <style>
 :root{
+  /* Dark mode (NO pure black) */
   --bg:#041f16;
   --bg2:#062b1f;
   --card:rgba(255,255,255,.06);
+  --card2:rgba(255,255,255,.08);
   --stroke:rgba(255,255,255,.12);
   --text:rgba(255,255,255,.92);
-  --muted:rgba(255,255,255,.7);
+  --muted:rgba(255,255,255,.72);
   --gold:#d6b35a;
+  --shadow: 0 18px 60px rgba(0,0,0,.45);
   --radius:18px;
+  --radius2:22px;
 }
 
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background:linear-gradient(180deg,var(--bg2),var(--bg));
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 15% 0%, rgba(214,179,90,.16) 0%, rgba(6,43,31,0) 55%),
+    radial-gradient(1100px 700px at 90% 10%, rgba(14,58,40,.45) 0%, rgba(4,31,22,0) 58%),
+    linear-gradient(180deg, var(--bg2) 0%, var(--bg) 65%, var(--bg) 100%);
+  min-height:100vh;
 }
 
 .container{
   max-width:900px;
   margin:auto;
-  padding:18px 14px 120px;
+  padding:18px 14px 110px;
 }
 
 /* Header */
 .header{
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 .header h1{
   font-size:20px;
   margin:0;
+  letter-spacing:.2px;
 }
 .header p{
   margin:4px 0 0;
@@ -47,24 +57,35 @@ body{
 /* Instructor Card */
 .profile{
   border:1px solid var(--stroke);
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+  border-radius:var(--radius2);
+  box-shadow: var(--shadow);
+  padding:14px;
   display:flex;
   gap:14px;
   align-items:center;
 }
 
+/* Avatar image */
 .avatar{
   width:54px;
   height:54px;
-  border-radius:14px;
-  background:linear-gradient(135deg,#d6b35a33,#ffffff12);
+  border-radius:16px;
+  border:1px solid rgba(214,179,90,.35);
+  background: rgba(255,255,255,.04);
+  overflow:hidden;
+  flex: 0 0 auto;
   display:grid;
   place-items:center;
-  font-weight:900;
+}
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
 
+/* Text */
 .profile h2{
   margin:0;
   font-size:16px;
@@ -73,6 +94,7 @@ body{
   display:block;
   font-size:13px;
   color:var(--muted);
+  margin-top:2px;
 }
 
 /* Buttons */
@@ -80,6 +102,7 @@ body{
   margin-left:auto;
   display:flex;
   gap:10px;
+  flex-wrap:wrap;
 }
 
 .btn{
@@ -89,57 +112,88 @@ body{
   border:1px solid var(--stroke);
   background:rgba(255,255,255,.05);
   color:var(--text);
-  font-weight:800;
+  font-weight:900;
   text-decoration:none;
   display:flex;
   align-items:center;
   justify-content:center;
+  user-select:none;
+  -webkit-tap-highlight-color: transparent;
 }
-
 .btn.gold{
-  border-color:rgba(214,179,90,.6);
-  background:linear-gradient(135deg,rgba(214,179,90,.25),rgba(255,255,255,.04));
+  border-color:rgba(214,179,90,.60);
+  background:linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
 }
+.btn:active{ transform: translateY(1px); }
+
+/* ===== Colored Title Tokens + Highlights (same vibe as computer.html) ===== */
+.k{
+  font-weight: 950;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(214,179,90,.35);
+  background: rgba(214,179,90,.14);
+  color: rgba(255,255,255,.92);
+}
+.impGold{ color: var(--gold); font-weight:950; }
+.impMint{ color:#8fe3c7; font-weight:950; }
+.impBlue{ color:#7fb4ff; font-weight:950; }
+.impOrange{ color:#ff9f7f; font-weight:950; }
+.impPurple{ color:#c6a7ff; font-weight:950; }
 
 /* Sections */
 details{
-  margin-top:14px;
-  border-radius:var(--radius);
-  border:1px solid var(--stroke);
-  background:rgba(255,255,255,.04);
+  margin-top:12px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
   overflow:hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,.18);
 }
-
 summary{
   cursor:pointer;
   padding:14px;
-  font-weight:900;
+  font-weight:950;
   font-size:14px;
   list-style:none;
   display:flex;
   justify-content:space-between;
+  align-items:center;
+  user-select:none;
+  -webkit-tap-highlight-color: transparent;
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
 }
+summary::-webkit-details-marker{display:none}
+.chev{
+  opacity:.8;
+  transition: transform .15s ease;
+  font-size:18px;
+}
+details[open] .chev{ transform: rotate(90deg); }
 
-summary::-webkit-details-marker{display:none;}
-
-.section{
+.secBody{
   padding:0 14px 14px;
-  font-size:14px;
-  line-height:1.6;
+  font-size:13.5px;
+  line-height:1.65;
   color:var(--muted);
 }
 
-/* Footer links */
-.footer-links{
-  margin-top:18px;
-  display:flex;
-  gap:16px;
-}
+/* Title colors per section */
+.t1{ color:#d6b35a; }  /* gold */
+.t2{ color:#8fe3c7; }  /* mint */
+.t3{ color:#7fb4ff; }  /* blue */
+.t4{ color:#ff9f7f; }  /* orange */
+.t5{ color:#c6a7ff; }  /* purple */
 
+/* Footer link */
+.footer-links{
+  margin-top:16px;
+  display:flex;
+}
 .footer-links a{
   color:var(--gold);
   text-decoration:none;
-  font-weight:800;
+  font-weight:950;
   font-size:14px;
 }
 </style>
@@ -155,78 +209,86 @@ summary::-webkit-details-marker{display:none;}
     <p>Tap each section to see details</p>
   </div>
 
-  <!-- Profile -->
+  <!-- Profile Card -->
   <div class="profile">
-    <div class="avatar">CE</div>
+    <div class="avatar" aria-label="Instructor photo">
+      <img src="assets/detxgamingavatar.jpg" alt="Instructor photo" />
+    </div>
+
     <div>
       <h2>Computer Skills Instructor</h2>
       <span>Computer Engineer · 3+ years with LizOn Education</span>
     </div>
+
     <div class="actions">
-      <a href="computer.html" class="btn gold">View Course</a>
-      <a href="https://wa.me/8801771253085" class="btn">Chat</a>
+      <!-- ✅ replaced View Course with Profile + facebook link -->
+      <a class="btn gold" href="https://www.facebook.com/share/14RWEZRAeLd/" target="_blank" rel="noopener">Profile</a>
+      <a class="btn" href="https://wa.me/8801771253085" target="_blank" rel="noopener">Chat</a>
     </div>
   </div>
 
   <!-- Introduction -->
   <details open>
-    <summary>Introduction</summary>
-    <div class="section">
-      As a profession, I am a Computer Engineer.  
-      For the last 3+ years, I’ve been connected with LizOn Education — helping students fix the real computer-based issues that silently reduce IELTS & PTE scores.
+    <summary><span class="t1">Introduction</span> <span class="chev">›</span></summary>
+    <div class="secBody">
+      As a profession, I am a <span class="k">Computer Engineer</span>.
+      For the last <span class="impGold">3+ years</span>, I’ve been connected with <span class="impMint">LizOn Education</span> —
+      helping students fix the real <span class="impBlue">computer-based issues</span> that silently reduce <span class="impGold">IELTS & PTE</span> scores.
       <br><br>
-      <b>This is not “learning computers.”</b>  
-      This is exam execution.
+      This is not “learning computers.”  
+      This is <span class="k">exam execution</span>.
     </div>
   </details>
 
   <!-- Why Trust -->
   <details>
-    <summary>Why Students Trust This</summary>
-    <div class="section">
+    <summary><span class="t2">Why Students Trust This</span> <span class="chev">›</span></summary>
+    <div class="secBody">
       Students don’t lose marks because of weak English alone.  
-      They lose marks because of panic, mis-clicks, slow typing, timer fear, and system confusion.
+      They lose marks because of <span class="impOrange">panic</span>, <span class="impOrange">mis-clicks</span>,
+      <span class="impPurple">slow typing</span>, <span class="impOrange">timer fear</span>, and <span class="impBlue">system confusion</span>.
       <br><br>
-      This training removes those invisible score killers.
+      This training removes those <span class="k">invisible score killers</span>.
     </div>
   </details>
 
   <!-- Experience -->
   <details>
-    <summary>Experience</summary>
-    <div class="section">
-      Already connected with LizOn Education for more than 3 years,  
-      assisting a large number of students to confidently handle computer-based IELTS & PTE exams.
+    <summary><span class="t3">Experience</span> <span class="chev">›</span></summary>
+    <div class="secBody">
+      Already connected with <span class="impMint">LizOn Education</span> for more than <span class="impGold">3 years</span>,
+      and assisted a large number of students to confidently handle
+      <span class="impBlue">computer-based IELTS & PTE</span> exams.
     </div>
   </details>
 
-  <!-- Teaching Style -->
+  <!-- How I Teach -->
   <details>
-    <summary>How I Teach</summary>
-    <div class="section">
-      No theory overload.  
+    <summary><span class="t4">How I Teach</span> <span class="chev">›</span></summary>
+    <div class="secBody">
+      <span class="k">No theory overload.</span>  
       No assumption-based teaching.
       <br><br>
-      Everything is demonstrated, practiced, corrected, and repeated  
-      until the system becomes invisible during the exam.
+      Everything is <span class="impGold">demonstrated</span>, <span class="impMint">practiced</span>, <span class="impOrange">corrected</span>, and repeated
+      until the system becomes <span class="impPurple">invisible</span> during the exam.
     </div>
   </details>
 
   <!-- Outcome -->
   <details>
-    <summary>What You Become After This</summary>
-    <div class="section">
-      Calm under exam pressure.  
-      Faster without rushing.  
-      Accurate without panic.
+    <summary><span class="t5">What You Become After This</span> <span class="chev">›</span></summary>
+    <div class="secBody">
+      <span class="impMint">Calm</span> under exam pressure.  
+      <span class="impBlue">Faster</span> without rushing.  
+      <span class="impGold">Accurate</span> without panic.
       <br><br>
-      You focus on English — not on the computer.
+      You focus on <span class="k">English</span> — not on the <span class="impOrange">computer</span>.
     </div>
   </details>
 
-  <!-- Footer links -->
+  <!-- Footer link -->
   <div class="footer-links">
-    <a href="computer.html">Go Back to Course</a>
+    <a href="computer.html">Go to Course</a>
   </div>
 
 </div>

@@ -105,6 +105,39 @@ body{
   flex-wrap:nowrap;
 }
 
+  /* ===== HAMBURGER (drop-in, no layout change) ===== */
+.lezHamBtn{
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 9999;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.lezBars{ width:18px; height:12px; position:relative; display:block; }
+.lezBars::before,
+.lezBars::after,
+.lezBars i{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  height:2px;
+  background: rgba(255,255,255,.9);
+  border-radius: 2px;
+}
+.lezBars::before{ top:0; }
+.lezBars i{ top:5px; }
+.lezBars::after{ bottom:0; }
+
+
 .btn{
   height:40px;
   padding:0 14px;
@@ -206,7 +239,10 @@ details[open] .chev{ transform: rotate(90deg); }
   <!-- Header -->
   <div class="header">
     <h1>Instructor Profile</h1>
-  
+  <button class="lezHamBtn" id="btnMenu" aria-label="Menu">
+  <span class="lezBars"><i></i></span>
+</button>
+
   </div>
 
   <!-- Profile Card -->
@@ -292,6 +328,36 @@ details[open] .chev{ transform: rotate(90deg); }
   </div>
 
 </div>
+<div class="sheetOverlay" id="sheetOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:9998;"></div>
+
+<div class="sheet" id="menuSheet" style="position:fixed; left:0; right:0; bottom:0; transform:translateY(110%); transition:.25s ease; z-index:9999;">
+  <div class="sheetInner" style="max-width:900px; margin:auto; border-radius:22px; background:rgba(255,255,255,.06); border:1px solid var(--stroke); backdrop-filter:blur(12px); padding:16px;">
+    <a class="sheetItem" href="index.html" style="height:46px; border-radius:14px; border:1px solid var(--stroke); background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center; font-weight:900; margin-bottom:10px; color:var(--text); text-decoration:none;">Home</a>
+    <a class="sheetItem" href="computer.html" style="height:46px; border-radius:14px; border:1px solid var(--stroke); background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center; font-weight:900; margin-bottom:10px; color:var(--text); text-decoration:none;">Computer Skills</a>
+    <a class="sheetItem" href="ielts.html" style="height:46px; border-radius:14px; border:1px solid var(--stroke); background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center; font-weight:900; margin-bottom:10px; color:var(--text); text-decoration:none;">IELTS</a>
+    <a class="sheetItem" href="pte.html" style="height:46px; border-radius:14px; border:1px solid var(--stroke); background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center; font-weight:900; margin-bottom:10px; color:var(--text); text-decoration:none;">PTE</a>
+    <a class="sheetItem" href="computerinstructor.html" style="height:46px; border-radius:14px; border:1px solid rgba(214,179,90,.6); background:linear-gradient(135deg,rgba(214,179,90,.25),rgba(255,255,255,.04)); display:flex; align-items:center; justify-content:center; font-weight:900; margin-bottom:10px; color:var(--text); text-decoration:none;">Instructor</a>
+    <a class="sheetItem" href="https://wa.me/8801771253085" target="_blank" style="height:46px; border-radius:14px; border:1px solid var(--stroke); background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center; font-weight:900; margin-bottom:0; color:var(--text); text-decoration:none;">Chat on WhatsApp</a>
+  </div>
+</div>
+
+<script>
+  const btnMenu = document.getElementById("btnMenu");
+  const sheet = document.getElementById("menuSheet");
+  const overlay = document.getElementById("sheetOverlay");
+
+  function openSheet(){
+    sheet.style.transform = "translateY(0)";
+    overlay.style.display = "block";
+  }
+  function closeSheet(){
+    sheet.style.transform = "translateY(110%)";
+    overlay.style.display = "none";
+  }
+
+  btnMenu && (btnMenu.onclick = openSheet);
+  overlay && (overlay.onclick = closeSheet);
+</script>
 
 </body>
 </html>

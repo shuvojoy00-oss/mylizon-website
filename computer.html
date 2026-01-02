@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -131,6 +131,8 @@
       user-select:none;
       display:inline-flex; align-items:center; justify-content:center;
       box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      font-weight: 950;
+      letter-spacing: .2px;
     }
     .iconbtn:active{transform: translateY(1px)}
     .iconbtn .bars{width:18px; height:12px; position:relative;}
@@ -601,6 +603,7 @@
       border-color: rgba(6,43,31,.18);
     }
 
+    /* Overlay closes on blank click */
     .askOverlay{
       position:fixed;
       inset:0;
@@ -769,22 +772,24 @@
         <div class="logo">
           <img src="assets/logo-dark.png" alt="LizOn Education Logo" />
         </div>
-
         <div class="brandText">
           <b>LizOn Education</b>
-          <span>Computer Lessons</span>
+          <span data-i18n="sub_computer_lessons">Computer Lessons</span>
         </div>
       </a>
 
       <nav class="navChips" aria-label="Quick navigation">
-        <a class="chipNav" href="index.html">Home</a>
-        <a class="chipNav" href="ielts.html">IELTS</a>
-        <a class="chipNav" href="pte.html">PTE</a>
-        <a class="chipNav active" href="#">Computer</a>
-        <a class="chipNav" href="studyabroad.html">Study Abroad</a>
+        <a class="chipNav" href="index.html" data-i18n="nav_home">Home</a>
+        <a class="chipNav" href="ielts.html" data-i18n="nav_ielts">IELTS</a>
+        <a class="chipNav" href="pte.html" data-i18n="nav_pte">PTE</a>
+        <a class="chipNav active" href="#" data-i18n="nav_computer">Computer</a>
+        <a class="chipNav" href="studyabroad.html" data-i18n="nav_studyabroad">Study Abroad</a>
       </nav>
 
       <div class="rightControls">
+        <!-- ✅ NEW: BN/EN toggle button -->
+        <button class="iconbtn" id="btnLang" type="button" aria-label="Toggle language">BN</button>
+
         <button class="iconbtn" id="btnTheme" type="button" aria-label="Toggle light or dark mode">🌓</button>
         <button class="iconbtn" id="btnMenuTop" type="button" aria-label="Open menu">
           <span class="bars" aria-hidden="true"><i></i></span>
@@ -798,47 +803,54 @@
     <section class="card" id="moduleSection">
       <div class="cardHeader">
         <div class="title">
-          <b>Computer Skills for IELTS & PTE</b>
-          <span>Tap each dropdown — no heavy scrolling</span>
+          <b data-i18n="hero_title">Computer Skills for IELTS & PTE</b>
+          <span data-i18n="hero_sub">Tap each dropdown — no heavy scrolling</span>
+
           <div class="topSwitch">
-            <button class="switchBtn active" id="btnGoIELTS" type="button">IELTS</button>
-            <button class="switchBtn" id="btnGoPTE" type="button">PTE</button>
+            <button class="switchBtn active" id="btnGoIELTS" type="button" data-i18n="btn_ielts">IELTS</button>
+            <button class="switchBtn" id="btnGoPTE" type="button" data-i18n="btn_pte">PTE</button>
           </div>
         </div>
-        <div class="pill">5 Sessions</div>
+
+        <div class="pill" data-i18n="pill_sessions">5 Sessions</div>
       </div>
 
       <div class="contentWrap">
 
-        <!-- IELTS (open by default) -->
+        <!-- IELTS -->
         <details open id="ieltsBlock">
-          <summary>IELTS (Computer-Based) <span class="chev">›</span></summary>
+          <summary>
+            <span data-i18n="block_ielts">IELTS (Computer-Based)</span>
+            <span class="chev">›</span>
+          </summary>
 
           <div class="block">
-            <p><b>This is not a computer course.</b> This is to stop you from losing marks for stupid reasons.</p>
+            <p><b data-i18n="not_course_bold">This is not a computer course.</b> <span data-i18n="ielts_not_course_line">This is to stop you from losing marks for stupid reasons.</span></p>
 
             <details class="sec" id="ielts-skills">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t1">Skills Covered</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t1" data-i18n="t_skills">Skills Covered</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
-                <div class="miniNote">
+                <div class="miniNote" data-i18n-html="ielts_skills_note">
                   This module trains students to operate the <span class="impGold">IELTS computer test environment</span> smoothly,
                   without <span class="impOrange">panic</span> or technical hesitation.
                 </div>
-                <div class="miniNote"><b>You will learn:</b></div>
+                <div class="miniNote"><b data-i18n="you_will_learn">You will learn:</b></div>
+
                 <ul>
-                  <li><span class="k">Fast & accurate</span> keyboard typing for <span class="impGold">Writing</span> tasks</li>
-                  <li><span class="k">Smart mouse control</span> (drag, drop, highlight, select)</li>
-                  <li>Scrolling, zooming & navigation inside <span class="impBlue">IELTS interface</span></li>
-                  <li>Using <span class="impMint">copy–paste</span> safely and strategically</li>
-                  <li>Text editing skills (cut, move, replace, reorganize ideas)</li>
-                  <li>Time-saving <span class="impPurple">keyboard shortcuts</span> for Writing & Reading</li>
-                  <li>Handling on-screen instructions, timers & navigation buttons</li>
-                  <li>Avoiding common computer-based mistakes that <span class="impOrange">cost marks</span></li>
+                  <li data-i18n-html="ielts_li_1"><span class="k">Fast & accurate</span> keyboard typing for <span class="impGold">Writing</span> tasks</li>
+                  <li data-i18n-html="ielts_li_2"><span class="k">Smart mouse control</span> (drag, drop, highlight, select)</li>
+                  <li data-i18n-html="ielts_li_3">Scrolling, zooming & navigation inside <span class="impBlue">IELTS interface</span></li>
+                  <li data-i18n-html="ielts_li_4">Using <span class="impMint">copy–paste</span> safely and strategically</li>
+                  <li data-i18n="ielts_li_5">Text editing skills (cut, move, replace, reorganize ideas)</li>
+                  <li data-i18n-html="ielts_li_6">Time-saving <span class="impPurple">keyboard shortcuts</span> for Writing & Reading</li>
+                  <li data-i18n="ielts_li_7">Handling on-screen instructions, timers & navigation buttons</li>
+                  <li data-i18n-html="ielts_li_8">Avoiding common computer-based mistakes that <span class="impOrange">cost marks</span></li>
                 </ul>
-                <div class="miniNote">
+
+                <div class="miniNote" data-i18n-html="ielts_skills_end">
                   This removes the “<span class="impOrange">ami English jani, kintu computer e slow</span>” problem completely.
                 </div>
               </div>
@@ -846,113 +858,116 @@
 
             <details class="sec" id="ielts-with">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t2">This Course Comes With</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t2" data-i18n="t_with">This Course Comes With</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
                 <ul>
-                  <li>Live guided practice on realistic <span class="impBlue">IELTS computer interface</span></li>
-                  <li>Step-by-step demonstrations (<span class="impOrange">not assumptions</span>)</li>
-                  <li>Supervised hands-on drills (<span class="impGold">Writing + Reading</span> focus)</li>
-                  <li>Individual correction of bad habits (over-scrolling, mis-clicks, panic typing)</li>
-                  <li>Exam-day strategies: what to touch, what <span class="impOrange">not</span> to touch</li>
-                  <li>Confidence training so students feel <span class="impMint">in control</span> of the screen</li>
+                  <li data-i18n-html="ielts_with_1">Live guided practice on realistic <span class="impBlue">IELTS computer interface</span></li>
+                  <li data-i18n-html="ielts_with_2">Step-by-step demonstrations (<span class="impOrange">not assumptions</span>)</li>
+                  <li data-i18n-html="ielts_with_3">Supervised hands-on drills (<span class="impGold">Writing + Reading</span> focus)</li>
+                  <li data-i18n="ielts_with_4">Individual correction of bad habits (over-scrolling, mis-clicks, panic typing)</li>
+                  <li data-i18n-html="ielts_with_5">Exam-day strategies: what to touch, what <span class="impOrange">not</span> to touch</li>
+                  <li data-i18n-html="ielts_with_6">Confidence training so students feel <span class="impMint">in control</span> of the screen</li>
                 </ul>
-                <div class="miniNote"><b>No theory fluff.</b> Only usable skills.</div>
+                <div class="miniNote"><b data-i18n="no_fluff_bold">No theory fluff.</b> <span data-i18n="only_usable">Only usable skills.</span></div>
               </div>
             </details>
 
             <details class="sec" id="ielts-modules">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t3">Benefited Modules</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t3" data-i18n="t_modules">Benefited Modules</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
-                <div class="miniNote">This computer skills training directly improves performance in:</div>
+                <div class="miniNote" data-i18n="modules_note">This computer skills training directly improves performance in:</div>
                 <ul>
-                  <li><a class="impGold" href="ielts-listening.html">Listening</a> – fast navigation, question jumping, focus retention</li>
-                  <li><a class="impBlue" href="ielts-reading.html">Reading</a> – highlight, locate answers faster, reduce eye fatigue</li>
-                  <li><a class="impMint" href="ielts-writing.html">Writing</a> – faster typing, better structuring, easier editing</li>
-                  <li><a class="impPurple" href="ielts-speaking.html">Speaking</a> – indirect benefit (confidence, reduced exam stress)</li>
+                  <li data-i18n-html="ielts_mod_1"><a class="impGold" href="ielts-listening.html">Listening</a> – fast navigation, question jumping, focus retention</li>
+                  <li data-i18n-html="ielts_mod_2"><a class="impBlue" href="ielts-reading.html">Reading</a> – highlight, locate answers faster, reduce eye fatigue</li>
+                  <li data-i18n-html="ielts_mod_3"><a class="impMint" href="ielts-writing.html">Writing</a> – faster typing, better structuring, easier editing</li>
+                  <li data-i18n-html="ielts_mod_4"><a class="impPurple" href="ielts-speaking.html">Speaking</a> – indirect benefit (confidence, reduced exam stress)</li>
                 </ul>
-                <div class="miniNote"><b>This is not a separate skill</b>—it multiplies all four skills.</div>
+                <div class="miniNote" data-i18n="modules_end"><b>This is not a separate skill</b>—it multiplies all four skills.</div>
               </div>
             </details>
 
             <details class="sec" id="ielts-aim">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t4">Aim of the Module</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t4" data-i18n="t_aim">Aim of the Module</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
-                <div class="miniNote">
+                <div class="miniNote" data-i18n-html="ielts_aim_1">
                   The aim is simple and ruthless:
                   <span class="impOrange">Remove technology as a weakness.</span>
                   Turn it into an <span class="impMint">advantage</span>.
                 </div>
-                <div class="miniNote">
+                <div class="miniNote" data-i18n-html="ielts_aim_2">
                   By the end of this module, the student should think only about English, not about:
                   <br><span class="impPurple">“Eita click hobe?”</span>
                   <span class="impBlue">“Scroll bhul hoye gelo”</span>
                   <span class="impOrange">“Time shesh hoye jacche”</span>
                 </div>
-                <div class="miniNote"><b>The computer becomes invisible.</b></div>
+                <div class="miniNote"><b data-i18n="computer_invisible">The computer becomes invisible.</b></div>
               </div>
             </details>
 
             <details class="sec" id="ielts-become">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t5">What You Will Become After This</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t5" data-i18n="t_become">What You Will Become After This</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
-                <div class="miniNote">After completing this module, a student becomes:</div>
+                <div class="miniNote" data-i18n="become_note">After completing this module, a student becomes:</div>
                 <ul>
-                  <li><span class="impMint">Calm</span> inside a computer-based IELTS exam</li>
-                  <li><span class="impBlue">Faster</span> without rushing</li>
-                  <li><span class="impGold">More accurate</span> without overthinking</li>
-                  <li>Confident enough to edit writing like a <span class="impPurple">pro</span></li>
-                  <li>Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally</li>
+                  <li data-i18n-html="ielts_become_1"><span class="impMint">Calm</span> inside a computer-based IELTS exam</li>
+                  <li data-i18n-html="ielts_become_2"><span class="impBlue">Faster</span> without rushing</li>
+                  <li data-i18n-html="ielts_become_3"><span class="impGold">More accurate</span> without overthinking</li>
+                  <li data-i18n-html="ielts_become_4">Confident enough to edit writing like a <span class="impPurple">pro</span></li>
+                  <li data-i18n-html="ielts_become_5">Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally</li>
                 </ul>
-                <div class="miniNote">
+                <div class="miniNote" data-i18n="ielts_become_end">
                   <b>This alone can save 0.5–1 band</b> for many students.
                 </div>
               </div>
             </details>
 
-            <p style="margin-top:12px"><b>Final truth:</b> IELTS is not only about English. It’s also about how you use the computer.</p>
+            <p style="margin-top:12px" data-i18n="ielts_final"><b>Final truth:</b> IELTS is not only about English. It’s also about how you use the computer.</p>
           </div>
         </details>
 
-        <!-- PTE (CLOSED by default now) -->
-        <details id="pteBlock">
-          <summary>PTE (Computer-Based) <span class="chev">›</span></summary>
+        <!-- PTE -->
+        <details open id="pteBlock">
+          <summary>
+            <span data-i18n="block_pte">PTE (Computer-Based)</span>
+            <span class="chev">›</span>
+          </summary>
 
           <div class="block">
-            <p><b>This is not a computer course.</b> This is to stop you from messing up PTE because of the system speed.</p>
+            <p><b data-i18n="not_course_bold">This is not a computer course.</b> <span data-i18n="pte_not_course_line">This is to stop you from messing up PTE because of the system speed.</span></p>
 
             <details class="sec" id="pte-skills">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t1">Skills Covered</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t1" data-i18n="t_skills">Skills Covered</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
-                <div class="miniNote">
+                <div class="miniNote" data-i18n-html="pte_skills_note">
                   This module trains students to handle the <span class="impGold">PTE computer environment</span> smoothly,
                   without <span class="impOrange">panic</span>, mis-clicks, or mic confusion.
                 </div>
-                <div class="miniNote"><b>You will learn:</b></div>
+                <div class="miniNote"><b data-i18n="you_will_learn">You will learn:</b></div>
                 <ul>
-                  <li><span class="k">Fast & clean typing</span> for Summarize Written Text + Essay</li>
-                  <li>Proper <span class="impBlue">mic etiquette</span> (start timing, distance, voice stability)</li>
-                  <li>Speaking flow control for <span class="impMint">Read Aloud</span>, Repeat Sentence, Describe Image, Retell Lecture</li>
-                  <li>Navigation speed: next task, timers, instruction reading — without freezing</li>
-                  <li>Fill in the Blanks mastery: <span class="impPurple">cursor control</span>, spacing, skipping smartly</li>
-                  <li>Copy–paste safety (repeat line / formatting disaster avoid)</li>
-                  <li>Quick editing without breaking structure (SWT + Essay)</li>
-                  <li>Handling tight time pressure like a system user, not a panicked candidate</li>
+                  <li data-i18n-html="pte_li_1"><span class="k">Fast & clean typing</span> for Summarize Written Text + Essay</li>
+                  <li data-i18n-html="pte_li_2">Proper <span class="impBlue">mic etiquette</span> (start timing, distance, voice stability)</li>
+                  <li data-i18n-html="pte_li_3">Speaking flow control for <span class="impMint">Read Aloud</span>, Repeat Sentence, Describe Image, Retell Lecture</li>
+                  <li data-i18n="pte_li_4">Navigation speed: next task, timers, instruction reading — without freezing</li>
+                  <li data-i18n-html="pte_li_5">Fill in the Blanks mastery: <span class="impPurple">cursor control</span>, spacing, skipping smartly</li>
+                  <li data-i18n="pte_li_6">Copy–paste safety (repeat line / formatting disaster avoid)</li>
+                  <li data-i18n="pte_li_7">Quick editing without breaking structure (SWT + Essay)</li>
+                  <li data-i18n="pte_li_8">Handling tight time pressure like a system user, not a panicked candidate</li>
                 </ul>
-                <div class="miniNote">
+                <div class="miniNote" data-i18n-html="pte_skills_end">
                   This removes the “<span class="impOrange">mic + timer + typing e shob noshto</span>” problem completely.
                 </div>
               </div>
@@ -960,36 +975,36 @@
 
             <details class="sec" id="pte-with">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t2">This Course Comes With</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t2" data-i18n="t_with">This Course Comes With</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
                 <ul>
-                  <li>Live guided practice on realistic <span class="impBlue">PTE interface</span></li>
-                  <li>Step-by-step demonstrations (<span class="impOrange">not assumptions</span>)</li>
-                  <li>Supervised hands-on drills (<span class="impGold">Speaking + Writing</span> focus)</li>
-                  <li>Mic training: what to do, what <span class="impOrange">not</span> to do (voice cut / low score avoid)</li>
-                  <li>Typing correction: speed without mess, punctuation + spacing control</li>
-                  <li>Time-control habits: no freezing, no rushing — just execution</li>
-                  <li><b>No theory fluff.</b> Only usable skills.</li>
+                  <li data-i18n-html="pte_with_1">Live guided practice on realistic <span class="impBlue">PTE interface</span></li>
+                  <li data-i18n-html="pte_with_2">Step-by-step demonstrations (<span class="impOrange">not assumptions</span>)</li>
+                  <li data-i18n-html="pte_with_3">Supervised hands-on drills (<span class="impGold">Speaking + Writing</span> focus)</li>
+                  <li data-i18n-html="pte_with_4">Mic training: what to do, what <span class="impOrange">not</span> to do (voice cut / low score avoid)</li>
+                  <li data-i18n="pte_with_5">Typing correction: speed without mess, punctuation + spacing control</li>
+                  <li data-i18n="pte_with_6">Time-control habits: no freezing, no rushing — just execution</li>
+                  <li><b data-i18n="no_fluff_bold">No theory fluff.</b> <span data-i18n="only_usable">Only usable skills.</span></li>
                 </ul>
               </div>
             </details>
 
             <details class="sec" id="pte-modules">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t3">Benefited Modules</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t3" data-i18n="t_modules">Benefited Modules</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
-                <div class="miniNote">This computer skills training directly improves performance in:</div>
+                <div class="miniNote" data-i18n="modules_note">This computer skills training directly improves performance in:</div>
                 <ul>
-                  <li><a class="impGold" href="pte.html#speaking">Speaking</a> – mic confidence, stable delivery, less restart panic</li>
-                  <li><a class="impBlue" href="pte.html#reading">Reading</a> – faster navigation, better focus in FIB tasks</li>
-                  <li><a class="impMint" href="pte.html#writing">Writing</a> – faster typing, cleaner editing, better time control</li>
-                  <li><a class="impPurple" href="pte.html#listening">Listening</a> – smoother flow, less confusion during transitions</li>
+                  <li data-i18n-html="pte_mod_1"><a class="impGold" href="ielts-speaking.html">Speaking</a> – mic confidence, stable delivery, less restart panic</li>
+                  <li data-i18n-html="pte_mod_2"><a class="impBlue" href="ielts-reading.html">Reading</a> – faster navigation, better focus in FIB tasks</li>
+                  <li data-i18n-html="pte_mod_3"><a class="impMint" href="ielts-writing.html">Writing</a> – faster typing, cleaner editing, better time control</li>
+                  <li data-i18n-html="pte_mod_4"><a class="impPurple" href="ielts-listening.html">Listening</a> – smoother flow, less confusion during transitions</li>
                 </ul>
-                <div class="miniNote">
+                <div class="miniNote" data-i18n-html="pte_modules_end">
                   <b>This is not a separate skill</b> — it <span class="impOrange">multiplies</span> all four skills in PTE.
                 </div>
               </div>
@@ -997,40 +1012,40 @@
 
             <details class="sec" id="pte-aim">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t4">Aim of the Module</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t4" data-i18n="t_aim">Aim of the Module</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
-                <div class="miniNote">
+                <div class="miniNote" data-i18n-html="pte_aim_1">
                   The aim is simple and ruthless:
                   <span class="impOrange">Remove technology as a weakness.</span>
                   Turn it into an <span class="impMint">advantage</span>.
                 </div>
-                <div class="miniNote">
+                <div class="miniNote" data-i18n-html="pte_aim_2">
                   By the end, the student should think only about performance, not:
                   <br><span class="impPurple">“Mic on hoise to?”</span>
                   <span class="impBlue">“Timer dekhe matha off hoye gelo”</span>
                   <span class="impOrange">“Click miss hoye task skip hoye gelo”</span>
                 </div>
-                <div class="miniNote"><b>The computer becomes invisible.</b></div>
+                <div class="miniNote"><b data-i18n="computer_invisible">The computer becomes invisible.</b></div>
               </div>
             </details>
 
             <details class="sec" id="pte-become">
               <summary>
-                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t5">What You Will Become After This</span></div>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t5" data-i18n="t_become">What You Will Become After This</span></div>
                 <span class="chev">›</span>
               </summary>
               <div class="secBody">
-                <div class="miniNote">After completing this module, a student becomes:</div>
+                <div class="miniNote" data-i18n="become_note">After completing this module, a student becomes:</div>
                 <ul>
-                  <li><span class="impMint">Calm</span> inside a real PTE test room</li>
-                  <li><span class="impBlue">Faster</span> without chaotic clicking</li>
-                  <li><span class="impGold">More accurate</span> without overthinking the screen</li>
-                  <li>Confident enough to control mic + timer like a <span class="impPurple">pro</span></li>
-                  <li>Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally</li>
+                  <li data-i18n-html="pte_become_1"><span class="impMint">Calm</span> inside a real PTE test room</li>
+                  <li data-i18n-html="pte_become_2"><span class="impBlue">Faster</span> without chaotic clicking</li>
+                  <li data-i18n-html="pte_become_3"><span class="impGold">More accurate</span> without overthinking the screen</li>
+                  <li data-i18n-html="pte_become_4">Confident enough to control mic + timer like a <span class="impPurple">pro</span></li>
+                  <li data-i18n-html="pte_become_5">Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally</li>
                 </ul>
-                <div class="miniNote">
+                <div class="miniNote" data-i18n-html="pte_become_end">
                   This alone can save <span class="impGold">5–10 points</span> for many students.
                 </div>
               </div>
@@ -1046,30 +1061,32 @@
     <footer id="footerSection">
       <div class="footerGrid">
         <div class="footerCard">
-          <div class="fh"><b>Contact & Location</b></div>
+          <div class="fh"><b data-i18n="footer_contact">Contact & Location</b></div>
           <div class="fb">
-            <div class="small">
+            <div class="small" data-i18n="footer_address">
               51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
             </div>
             <div class="footerRow">
-              <a class="fbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-              <a class="fbtn gold" id="footerWhatsApp" href="#" target="_blank" rel="noopener">Chat (WhatsApp)</a>
+              <a class="fbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener" data-i18n="footer_open_map">Open Map</a>
+              <a class="fbtn gold" id="footerWhatsApp" href="#" target="_blank" rel="noopener" data-i18n="footer_chat">Chat (WhatsApp)</a>
             </div>
           </div>
         </div>
 
         <div class="footerCard">
-          <div class="fh"><b>Social Media</b></div>
+          <div class="fh"><b data-i18n="footer_social">Social Media</b></div>
           <div class="fb">
-            <div class="small">Follow LizOn Education for updates, tips, and student stories.</div>
-            <div class="footerRow">
-              <a class="fbtn" href="#" target="_blank" rel="noopener">Facebook</a>
-              <a class="fbtn" href="#" target="_blank" rel="noopener">YouTube</a>
-              <a class="fbtn" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            <div class="small" data-i18n="footer_follow">
+              Follow LizOn Education for updates, tips, and student stories.
             </div>
             <div class="footerRow">
-              <button class="fbtn" id="footerTheme" type="button">Toggle Light/Dark</button>
-              <a class="fbtn" href="index.html">Home</a>
+              <a class="fbtn" href="#" target="_blank" rel="noopener" data-i18n="footer_fb">Facebook</a>
+              <a class="fbtn" href="#" target="_blank" rel="noopener" data-i18n="footer_yt">YouTube</a>
+              <a class="fbtn" href="#" target="_blank" rel="noopener" data-i18n="footer_in">LinkedIn</a>
+            </div>
+            <div class="footerRow">
+              <button class="fbtn" id="footerTheme" type="button" data-i18n="footer_toggle_theme">Toggle Light/Dark</button>
+              <a class="fbtn" href="index.html" data-i18n="nav_home">Home</a>
             </div>
           </div>
         </div>
@@ -1095,7 +1112,7 @@
   <button class="fab fabRight isDown" id="btnSmartScroll" type="button" aria-label="Smart scroll">
     <span class="arrow" aria-hidden="true"></span>
   </button>
-  <div class="fabHint" id="scrollHint">Smart scroll</div>
+  <div class="fabHint" id="scrollHint" data-i18n="smart_scroll">Smart scroll</div>
 
   <!-- AskLizOn C Overlay + Modal -->
   <div class="askOverlay" id="askOverlay" aria-hidden="true"></div>
@@ -1104,29 +1121,29 @@
     <div class="askHead">
       <div class="askTitle">
         AskLizOn C
-        <span>Computer-based clarity (IELTS + PTE)</span>
+        <span data-i18n="ask_sub">Computer-based clarity (IELTS + PTE)</span>
       </div>
       <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn C">✕</button>
     </div>
 
     <div class="askBody">
-      <div class="askPrompt" id="askPrompt">First choose your exam.</div>
+      <div class="askPrompt" id="askPrompt" data-i18n="ask_first">First choose your exam.</div>
 
       <div class="askChips" id="askStage1">
-        <button class="askChip" data-exam="ielts" type="button">IELTS (Computer-Based)</button>
-        <button class="askChip" data-exam="pte" type="button">PTE (Computer-Based)</button>
+        <button class="askChip" data-exam="ielts" type="button" data-i18n="ask_ielts">IELTS (Computer-Based)</button>
+        <button class="askChip" data-exam="pte" type="button" data-i18n="ask_pte">PTE (Computer-Based)</button>
       </div>
 
       <div class="askChips" id="askStage2" style="display:none"></div>
 
-      <div class="askAnswer" id="askAnswer">
+      <div class="askAnswer" id="askAnswer" data-i18n-html="ask_default_answer">
         Tap an option — I’ll show the fix + take you to the exact place.
         <small>No theory fluff. Just execution.</small>
       </div>
 
       <div class="askActions">
-        <button class="askBtn" id="askGoBtn" type="button">Show me where to fix</button>
-        <span class="askHint" id="askHint">No selection yet.</span>
+        <button class="askBtn" id="askGoBtn" type="button" data-i18n="ask_go">Show me where to fix</button>
+        <span class="askHint" id="askHint" data-i18n="ask_hint_none">No selection yet.</span>
       </div>
     </div>
   </div>
@@ -1135,10 +1152,10 @@
   <div class="bottomBar" id="bottomBar">
     <div class="barInner">
       <div class="left">
-        <b>Need guidance?</b>
-        <span>Chat on WhatsApp</span>
+        <b data-i18n="need_guidance">Need guidance?</b>
+        <span data-i18n="chat_whatsapp">Chat on WhatsApp</span>
       </div>
-      <a class="cta" id="ctaWhatsApp" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      <a class="cta" id="ctaWhatsApp" href="#" target="_blank" rel="noopener" data-i18n="chat_whatsapp">Chat on WhatsApp</a>
     </div>
   </div>
 
@@ -1148,19 +1165,19 @@
     <div class="handle"></div>
     <div class="sheetInner">
       <div class="sheetTop">
-        <b>Menu</b>
+        <b data-i18n="menu">Menu</b>
         <button class="iconbtn" id="btnCloseSheet" type="button" aria-label="Close menu">✕</button>
       </div>
       <div class="sheetBody">
         <div class="sheetGrid">
-          <a class="sheetItem" href="index.html">Home</a>
-          <a class="sheetItem" href="ielts.html">IELTS</a>
-          <a class="sheetItem" href="pte.html">PTE</a>
-          <a class="sheetItem gold" href="#">Computer</a>
-          <button class="sheetItem" id="sheetTheme" type="button">Light/Dark</button>
-          <a class="sheetItem" href="#moduleSection">Go to Module</a>
-          <a class="sheetItem" href="#footerSection">Go to Footer</a>
-          <a class="sheetItem gold" id="sheetWhatsApp" href="#" target="_blank" rel="noopener">Talk with Expert</a>
+          <a class="sheetItem" href="index.html" data-i18n="nav_home">Home</a>
+          <a class="sheetItem" href="ielts.html" data-i18n="nav_ielts">IELTS</a>
+          <a class="sheetItem" href="pte.html" data-i18n="nav_pte">PTE</a>
+          <a class="sheetItem gold" href="#" data-i18n="nav_computer">Computer</a>
+          <button class="sheetItem" id="sheetTheme" type="button" data-i18n="sheet_theme">Light/Dark</button>
+          <a class="sheetItem" href="#moduleSection" data-i18n="sheet_go_module">Go to Module</a>
+          <a class="sheetItem" href="#footerSection" data-i18n="sheet_go_footer">Go to Footer</a>
+          <a class="sheetItem gold" id="sheetWhatsApp" href="#" target="_blank" rel="noopener" data-i18n="talk_expert">Talk with Expert</a>
         </div>
       </div>
     </div>
@@ -1214,12 +1231,13 @@
     const footerWhatsApp = document.getElementById("footerWhatsApp");
     const sheetWhatsApp = document.getElementById("sheetWhatsApp");
     function setWA(){
-      const msg = "Assalamu Alaikum, I want guidance about Computer Skills for IELTS/PTE.";
+      const msg = (document.documentElement.getAttribute("data-lang") === "bn")
+        ? "আসসালামু আলাইকুম, IELTS/PTE Computer Skills সম্পর্কে গাইডেন্স চাই।"
+        : "Assalamu Alaikum, I want guidance about Computer Skills for IELTS/PTE.";
       ctaWhatsApp.href = waLink(msg);
       footerWhatsApp.href = waLink(msg);
       sheetWhatsApp.href = waLink(msg);
     }
-    setWA();
 
     /* =========================
        MENU SHEET
@@ -1246,7 +1264,7 @@
     overlay.addEventListener("click", closeSheet);
 
     /* =========================
-       PERFECT CENTER: AskLizOn C between Header & BottomBar (NO OFFSET)
+       PERFECT CENTER: AskLizOn C between Header & BottomBar
     ========================== */
     const askFloatBtn = document.getElementById("btnAskFloat");
     function placeAskFloatPerfect(){
@@ -1259,7 +1277,8 @@
       const bottomH = bottom ? bottom.getBoundingClientRect().height : 0;
 
       const usable = Math.max(0, window.innerHeight - headerH - bottomH);
-      const top = headerH + (usable / 2);
+      const OFFSET = 150; // your current offset
+      const top = headerH + (usable / 2) + OFFSET;
       askFloatBtn.style.top = top + "px";
     }
     window.addEventListener("resize", placeAskFloatPerfect);
@@ -1267,7 +1286,7 @@
     requestAnimationFrame(()=>{ placeAskFloatPerfect(); });
 
     /* =========================
-       TOP IELTS/PTE SWITCH (real switch)
+       TOP IELTS/PTE JUMP BUTTONS
     ========================== */
     const btnGoIELTS = document.getElementById("btnGoIELTS");
     const btnGoPTE = document.getElementById("btnGoPTE");
@@ -1287,27 +1306,24 @@
       window.scrollTo({ top: Math.max(0, getTop(el) - off), behavior:"smooth" });
     }
 
-    function activateIELTS(){
+    btnGoIELTS.addEventListener("click", ()=>{
       btnGoIELTS.classList.add("active");
       btnGoPTE.classList.remove("active");
       ieltsBlock.open = true;
-      pteBlock.open = false;
+      pteBlock.open = true;
       jumpTo(ieltsBlock);
-    }
+    });
 
-    function activatePTE(){
+    btnGoPTE.addEventListener("click", ()=>{
       btnGoPTE.classList.add("active");
       btnGoIELTS.classList.remove("active");
       pteBlock.open = true;
-      ieltsBlock.open = false;
+      ieltsBlock.open = true;
       jumpTo(pteBlock);
-    }
-
-    btnGoIELTS.addEventListener("click", activateIELTS);
-    btnGoPTE.addEventListener("click", activatePTE);
+    });
 
     /* =========================
-       SMART SCROLL (as you had)
+       SMART SCROLL (FIXED)
     ========================== */
     const smartBtn = document.getElementById("btnSmartScroll");
     const hint = document.getElementById("scrollHint");
@@ -1315,7 +1331,7 @@
 
     function showHint(txt){
       if(!hint) return;
-      hint.textContent = txt || "Smart scroll";
+      hint.textContent = txt || (I18N[currentLang].smart_scroll || "Smart scroll");
       hint.style.display = "block";
       clearTimeout(hintTimer);
       hintTimer = setTimeout(()=>{ hint.style.display = "none"; }, 850);
@@ -1350,36 +1366,36 @@
       if(nearBottom()){
         smartBtn.classList.add("isUp");
         smartBtn.classList.remove("isDown");
-        smartBtn.setAttribute("aria-label","Back to top");
+        smartBtn.setAttribute("aria-label", I18N[currentLang].aria_back_top);
         return;
       }
       const n = nextTarget();
       if(n){
         smartBtn.classList.add("isDown");
         smartBtn.classList.remove("isUp");
-        smartBtn.setAttribute("aria-label","Scroll to next section");
+        smartBtn.setAttribute("aria-label", I18N[currentLang].aria_next);
       }else{
         smartBtn.classList.add("isUp");
         smartBtn.classList.remove("isDown");
-        smartBtn.setAttribute("aria-label","Back to top");
+        smartBtn.setAttribute("aria-label", I18N[currentLang].aria_back_top);
       }
     }
 
     smartBtn.addEventListener("click", ()=>{
       const off = headerOffset();
       if(nearBottom()){
-        showHint("Up");
+        showHint(I18N[currentLang].hint_up);
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
       const n = nextTarget();
       if(n){
-        showHint("Next");
+        showHint(I18N[currentLang].hint_next);
         window.scrollTo({ top: Math.max(0, n.y - off), behavior: "smooth" });
         return;
       }
       const p = prevTarget();
-      showHint("Up");
+      showHint(I18N[currentLang].hint_up);
       if(p){
         window.scrollTo({ top: Math.max(0, p.y - off), behavior: "smooth" });
       }else{
@@ -1389,10 +1405,14 @@
 
     window.addEventListener("scroll", updateSmartDirection, { passive:true });
     window.addEventListener("resize", updateSmartDirection);
-    updateSmartDirection();
+
+    (function ensureOpen(){
+      ieltsBlock.open = true;
+      pteBlock.open = true;
+    })();
 
     /* =========================
-       AskLizOn C (Modal) - your original logic kept
+       AskLizOn C (Modal)
     ========================== */
     const askBtn = document.getElementById("btnAskFloat");
     const askPanel = document.getElementById("askPanel");
@@ -1405,41 +1425,7 @@
     const askGoBtn = document.getElementById("askGoBtn");
     const askHint = document.getElementById("askHint");
 
-    const ASK_MAP = {
-      ielts: {
-        label: "IELTS (Computer-Based)",
-        prompt: "IELTS e kon problem hocche? Choose one.",
-        options: [
-          { key:"typing",  text:"Typing / Editing slow", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
-            answer:"Typing slow hole Writing e time shesh hoy. Fix: typing clean + shortcut use + editing discipline. Drill: 10 min/day copy-typing + 5 min edit-only (cut/move/replace)." },
-          { key:"mouse",   text:"Mouse / highlight bhul", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
-            answer:"Highlight/jump miss mane marks nai, time jai. Fix: drag-select control + proof-line hunting without losing place. Drill: 5 min highlight-only practice on long text." },
-          { key:"scroll",  text:"Scrolling e place harai", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
-            answer:"Screen flow na thakle Reading e brain fry hoy. Fix: scroll → stop → re-locate habit. Drill: passage e 10 bar re-locate (same paragraph) within 60 seconds." },
-          { key:"timer",   text:"Timer dekhe panic", target:"#ielts-aim", open:["ieltsBlock","ielts-aim"],
-            answer:"Timer enemy na—timer guide. Fix: pace lock + stuck hole skip rule. Drill: 2-min stuck rule practice (mark & move) so momentum thake." },
-          { key:"mistakes",text:"Stupid mistakes cost marks", target:"#ielts-with", open:["ieltsBlock","ielts-with"],
-            answer:"Mis-click, over-scroll, panic typing — egula marks khaiye dey silently. Fix: supervised drills + exam-day do/don’t list. Drill: 1 full mini mock with ‘zero misclick’ rule." }
-        ]
-      },
-      pte: {
-        label: "PTE (Computer-Based)",
-        prompt: "PTE te kon problem hocche? Choose one.",
-        options: [
-          { key:"mic",     text:"Mic + timer e freeze", target:"#pte-skills", open:["pteBlock","pte-skills"],
-            answer:"Mic on hole matha blank = execution issue. Fix: mic distance + start timing habit + no-restart discipline. Drill: 20 sec warm-up + 3 task continuous speaking (no stop)." },
-          { key:"typing",  text:"SWT/Essay typing messy", target:"#pte-skills", open:["pteBlock","pte-skills"],
-            answer:"Typing messy hole points drop. Fix: clean typing + punctuation + quick edit. Drill: 5 SWT daily (timed) + 1 essay outline + 8 min type." },
-          { key:"cursor",  text:"FIB e cursor/spacing problem", target:"#pte-skills", open:["pteBlock","pte-skills"],
-            answer:"FIB e cursor control na thakle time loss. Fix: click discipline + space control + skip smartly. Drill: 10 blanks practice focusing only on cursor accuracy." },
-          { key:"navigate",text:"Next task e confusion", target:"#pte-with", open:["pteBlock","pte-with"],
-            answer:"PTE e transitions fast — freeze korle chain break hoy. Fix: instruction scan + next-click habit. Drill: rapid task switching practice (10 tasks mock flow)." },
-          { key:"panic",   text:"Overthinking + panic under pressure", target:"#pte-aim", open:["pteBlock","pte-aim"],
-            answer:"PTE execution is ruthless. Fix: system-user mindset: do, move, don’t mourn. Drill: timed sets where you must move on instantly after buzzer." }
-        ]
-      }
-    };
-
+    let ASK_MAP = {}; // will be set by language loader below
     let askExam = null;
     let askChoice = null;
 
@@ -1484,7 +1470,7 @@
       ).join("");
 
       askStage2.style.display = "";
-      setAnswer(`Tap one problem — I'll show the fix.<small>Then press <b>Show me where to fix</b> to jump.</small>`, `Selected: ${cfg.label}`);
+      setAnswer(`${I18N[currentLang].ask_tap_problem}<small>${I18N[currentLang].ask_then_press}</small>`, `${I18N[currentLang].ask_selected}: ${cfg.label}`);
     }
 
     function setChoice(choiceKey){
@@ -1498,7 +1484,7 @@
       clearActive(askStage2);
       askStage2.querySelector(`[data-choice="${choiceKey}"]`)?.classList.add("active");
 
-      setAnswer(`<b>${opt.text}</b><br/>${opt.answer}<small>Press <b>Show me where to fix</b> — I'll open the exact dropdown.</small>`, `Ready to jump: ${opt.target}`);
+      setAnswer(`<b>${opt.text}</b><br/>${opt.answer}<small>${I18N[currentLang].ask_press_jump}</small>`, `${I18N[currentLang].ask_ready}: ${opt.target}`);
     }
 
     function openDetailsChain(ids){
@@ -1544,11 +1530,11 @@
 
     askGoBtn.addEventListener("click", ()=>{
       if(!askExam){
-        setAnswer("First choose IELTS or PTE.<small>Then choose your problem.</small>", "Choose exam first.");
+        setAnswer(`${I18N[currentLang].ask_choose_exam}<small>${I18N[currentLang].ask_choose_problem}</small>`, I18N[currentLang].ask_choose_exam_hint);
         return;
       }
       if(!askChoice){
-        setAnswer("Now choose your problem from the list.<small>Then I’ll take you to the exact dropdown.</small>", "Choose a problem.");
+        setAnswer(`${I18N[currentLang].ask_choose_problem}<small>${I18N[currentLang].ask_then_jump}</small>`, I18N[currentLang].ask_choose_problem_hint);
         return;
       }
       closeAsk();
@@ -1582,6 +1568,456 @@
         setTimeout(()=>jumpToSelector(h), 120);
       }
     })();
+
+    /* =========================
+       ✅ LANGUAGE TOGGLE (BN/EN)
+       - Button shows "BN" when page is EN (tap to switch to Bangla)
+       - Button shows "EN" when page is BN (tap to switch to English)
+    ========================== */
+    const LANG_KEY = "mylizon_lang";
+    const btnLang = document.getElementById("btnLang");
+
+    const I18N = {
+      en: {
+        /* small UI */
+        smart_scroll: "Smart scroll",
+        aria_back_top: "Back to top",
+        aria_next: "Scroll to next section",
+        hint_up: "Up",
+        hint_next: "Next",
+
+        ask_tap_problem: "Tap one problem — I'll show the fix.",
+        ask_then_press: "Then press <b>Show me where to fix</b> to jump.",
+        ask_press_jump: "Press <b>Show me where to fix</b> — I'll open the exact dropdown.",
+        ask_selected: "Selected",
+        ask_ready: "Ready to jump",
+        ask_choose_exam: "First choose IELTS or PTE.",
+        ask_choose_problem: "Then choose your problem.",
+        ask_choose_exam_hint: "Choose exam first.",
+        ask_choose_problem_hint: "Choose a problem.",
+        ask_then_jump: "Then I’ll take you to the exact dropdown.",
+
+        /* keys used by data-i18n */
+        sub_computer_lessons: "Computer Lessons",
+        nav_home: "Home",
+        nav_ielts: "IELTS",
+        nav_pte: "PTE",
+        nav_computer: "Computer",
+        nav_studyabroad: "Study Abroad",
+
+        hero_title: "Computer Skills for IELTS & PTE",
+        hero_sub: "Tap each dropdown — no heavy scrolling",
+        btn_ielts: "IELTS",
+        btn_pte: "PTE",
+        pill_sessions: "5 Sessions",
+
+        block_ielts: "IELTS (Computer-Based)",
+        block_pte: "PTE (Computer-Based)",
+
+        not_course_bold: "This is not a computer course.",
+        ielts_not_course_line: "This is to stop you from losing marks for stupid reasons.",
+        pte_not_course_line: "This is to stop you from messing up PTE because of the system speed.",
+
+        t_skills: "Skills Covered",
+        t_with: "This Course Comes With",
+        t_modules: "Benefited Modules",
+        t_aim: "Aim of the Module",
+        t_become: "What You Will Become After This",
+
+        you_will_learn: "You will learn:",
+        no_fluff_bold: "No theory fluff.",
+        only_usable: "Only usable skills.",
+        modules_note: "This computer skills training directly improves performance in:",
+        modules_end: "This is not a separate skill—it multiplies all four skills.",
+        computer_invisible: "The computer becomes invisible.",
+        become_note: "After completing this module, a student becomes:",
+        ielts_final: "Final truth: IELTS is not only about English. It’s also about how you use the computer.",
+
+        footer_contact: "Contact & Location",
+        footer_address: "51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214",
+        footer_open_map: "Open Map",
+        footer_chat: "Chat (WhatsApp)",
+        footer_social: "Social Media",
+        footer_follow: "Follow LizOn Education for updates, tips, and student stories.",
+        footer_fb: "Facebook",
+        footer_yt: "YouTube",
+        footer_in: "LinkedIn",
+        footer_toggle_theme: "Toggle Light/Dark",
+
+        ask_sub: "Computer-based clarity (IELTS + PTE)",
+        ask_first: "First choose your exam.",
+        ask_ielts: "IELTS (Computer-Based)",
+        ask_pte: "PTE (Computer-Based)",
+        ask_default_answer: 'Tap an option — I’ll show the fix + take you to the exact place.<small>No theory fluff. Just execution.</small>',
+        ask_go: "Show me where to fix",
+        ask_hint_none: "No selection yet.",
+
+        need_guidance: "Need guidance?",
+        chat_whatsapp: "Chat on WhatsApp",
+
+        menu: "Menu",
+        sheet_theme: "Light/Dark",
+        sheet_go_module: "Go to Module",
+        sheet_go_footer: "Go to Footer",
+        talk_expert: "Talk with Expert",
+
+        /* HTML keys */
+        ielts_skills_note: 'This module trains students to operate the <span class="impGold">IELTS computer test environment</span> smoothly, without <span class="impOrange">panic</span> or technical hesitation.',
+        ielts_li_1: '<span class="k">Fast & accurate</span> keyboard typing for <span class="impGold">Writing</span> tasks',
+        ielts_li_2: '<span class="k">Smart mouse control</span> (drag, drop, highlight, select)',
+        ielts_li_3: 'Scrolling, zooming & navigation inside <span class="impBlue">IELTS interface</span>',
+        ielts_li_4: 'Using <span class="impMint">copy–paste</span> safely and strategically',
+        ielts_li_5: 'Text editing skills (cut, move, replace, reorganize ideas)',
+        ielts_li_6: 'Time-saving <span class="impPurple">keyboard shortcuts</span> for Writing & Reading',
+        ielts_li_7: 'Handling on-screen instructions, timers & navigation buttons',
+        ielts_li_8: 'Avoiding common computer-based mistakes that <span class="impOrange">cost marks</span>',
+        ielts_skills_end: 'This removes the “<span class="impOrange">ami English jani, kintu computer e slow</span>” problem completely.',
+
+        ielts_with_1: 'Live guided practice on realistic <span class="impBlue">IELTS computer interface</span>',
+        ielts_with_2: 'Step-by-step demonstrations (<span class="impOrange">not assumptions</span>)',
+        ielts_with_3: 'Supervised hands-on drills (<span class="impGold">Writing + Reading</span> focus)',
+        ielts_with_4: 'Individual correction of bad habits (over-scrolling, mis-clicks, panic typing)',
+        ielts_with_5: 'Exam-day strategies: what to touch, what <span class="impOrange">not</span> to touch',
+        ielts_with_6: 'Confidence training so students feel <span class="impMint">in control</span> of the screen',
+
+        ielts_mod_1: '<a class="impGold" href="ielts-listening.html">Listening</a> – fast navigation, question jumping, focus retention',
+        ielts_mod_2: '<a class="impBlue" href="ielts-reading.html">Reading</a> – highlight, locate answers faster, reduce eye fatigue',
+        ielts_mod_3: '<a class="impMint" href="ielts-writing.html">Writing</a> – faster typing, better structuring, easier editing',
+        ielts_mod_4: '<a class="impPurple" href="ielts-speaking.html">Speaking</a> – indirect benefit (confidence, reduced exam stress)',
+
+        ielts_aim_1: 'The aim is simple and ruthless: <span class="impOrange">Remove technology as a weakness.</span> Turn it into an <span class="impMint">advantage</span>.',
+        ielts_aim_2: 'By the end of this module, the student should think only about English, not about:<br><span class="impPurple">“Eita click hobe?”</span> <span class="impBlue">“Scroll bhul hoye gelo”</span> <span class="impOrange">“Time shesh hoye jacche”</span>',
+
+        ielts_become_1: '<span class="impMint">Calm</span> inside a computer-based IELTS exam',
+        ielts_become_2: '<span class="impBlue">Faster</span> without rushing',
+        ielts_become_3: '<span class="impGold">More accurate</span> without overthinking',
+        ielts_become_4: 'Confident enough to edit writing like a <span class="impPurple">pro</span>',
+        ielts_become_5: 'Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally',
+        ielts_become_end: '<b>This alone can save 0.5–1 band</b> for many students.',
+
+        pte_skills_note: 'This module trains students to handle the <span class="impGold">PTE computer environment</span> smoothly, without <span class="impOrange">panic</span>, mis-clicks, or mic confusion.',
+        pte_li_1: '<span class="k">Fast & clean typing</span> for Summarize Written Text + Essay',
+        pte_li_2: 'Proper <span class="impBlue">mic etiquette</span> (start timing, distance, voice stability)',
+        pte_li_3: 'Speaking flow control for <span class="impMint">Read Aloud</span>, Repeat Sentence, Describe Image, Retell Lecture',
+        pte_li_4: 'Navigation speed: next task, timers, instruction reading — without freezing',
+        pte_li_5: 'Fill in the Blanks mastery: <span class="impPurple">cursor control</span>, spacing, skipping smartly',
+        pte_li_6: 'Copy–paste safety (repeat line / formatting disaster avoid)',
+        pte_li_7: 'Quick editing without breaking structure (SWT + Essay)',
+        pte_li_8: 'Handling tight time pressure like a system user, not a panicked candidate',
+        pte_skills_end: 'This removes the “<span class="impOrange">mic + timer + typing e shob noshto</span>” problem completely.',
+
+        pte_with_1: 'Live guided practice on realistic <span class="impBlue">PTE interface</span>',
+        pte_with_2: 'Step-by-step demonstrations (<span class="impOrange">not assumptions</span>)',
+        pte_with_3: 'Supervised hands-on drills (<span class="impGold">Speaking + Writing</span> focus)',
+        pte_with_4: 'Mic training: what to do, what <span class="impOrange">not</span> to do (voice cut / low score avoid)',
+        pte_with_5: 'Typing correction: speed without mess, punctuation + spacing control',
+        pte_with_6: 'Time-control habits: no freezing, no rushing — just execution',
+
+        pte_mod_1: '<a class="impGold" href="ielts-speaking.html">Speaking</a> – mic confidence, stable delivery, less restart panic',
+        pte_mod_2: '<a class="impBlue" href="ielts-reading.html">Reading</a> – faster navigation, better focus in FIB tasks',
+        pte_mod_3: '<a class="impMint" href="ielts-writing.html">Writing</a> – faster typing, cleaner editing, better time control',
+        pte_mod_4: '<a class="impPurple" href="ielts-listening.html">Listening</a> – smoother flow, less confusion during transitions',
+        pte_modules_end: '<b>This is not a separate skill</b> — it <span class="impOrange">multiplies</span> all four skills in PTE.',
+
+        pte_aim_1: 'The aim is simple and ruthless: <span class="impOrange">Remove technology as a weakness.</span> Turn it into an <span class="impMint">advantage</span>.',
+        pte_aim_2: 'By the end, the student should think only about performance, not:<br><span class="impPurple">“Mic on hoise to?”</span> <span class="impBlue">“Timer dekhe matha off hoye gelo”</span> <span class="impOrange">“Click miss hoye task skip hoye gelo”</span>',
+
+        pte_become_1: '<span class="impMint">Calm</span> inside a real PTE test room',
+        pte_become_2: '<span class="impBlue">Faster</span> without chaotic clicking',
+        pte_become_3: '<span class="impGold">More accurate</span> without overthinking the screen',
+        pte_become_4: 'Confident enough to control mic + timer like a <span class="impPurple">pro</span>',
+        pte_become_5: 'Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally',
+        pte_become_end: 'This alone can save <span class="impGold">5–10 points</span> for many students.'
+      },
+
+      bn: {
+        smart_scroll: "স্মার্ট স্ক্রল",
+        aria_back_top: "উপরে ফিরে যান",
+        aria_next: "পরের সেকশনে যান",
+        hint_up: "উপরে",
+        hint_next: "পরেরটা",
+
+        ask_tap_problem: "একটা সমস্যা ট্যাপ করুন — আমি ফিক্স দেখাবো।",
+        ask_then_press: "তারপর <b>Show me where to fix</b> চাপলে জাম্প হবে।",
+        ask_press_jump: "<b>Show me where to fix</b> চাপুন — আমি ঠিক ওই ড্রপডাউনটাই খুলে দেব।",
+        ask_selected: "সিলেক্টেড",
+        ask_ready: "জাম্প রেডি",
+        ask_choose_exam: "প্রথমে IELTS বা PTE সিলেক্ট করুন।",
+        ask_choose_problem: "তারপর আপনার সমস্যাটা সিলেক্ট করুন।",
+        ask_choose_exam_hint: "আগে এক্সাম সিলেক্ট করুন।",
+        ask_choose_problem_hint: "একটা সমস্যা সিলেক্ট করুন।",
+        ask_then_jump: "তারপর আমি আপনাকে ঠিক ওই জায়গায় নিয়ে যাব।",
+
+        sub_computer_lessons: "কম্পিউটার লেসন",
+        nav_home: "হোম",
+        nav_ielts: "IELTS",
+        nav_pte: "PTE",
+        nav_computer: "কম্পিউটার",
+        nav_studyabroad: "স্টাডি অ্যাব্রড",
+
+        hero_title: "IELTS & PTE এর জন্য কম্পিউটার স্কিল",
+        hero_sub: "প্রতিটা ড্রপডাউন ট্যাপ করুন — হেভি স্ক্রলিং নেই",
+        btn_ielts: "IELTS",
+        btn_pte: "PTE",
+        pill_sessions: "৫টি সেশন",
+
+        block_ielts: "IELTS (কম্পিউটার-বেসড)",
+        block_pte: "PTE (কম্পিউটার-বেসড)",
+
+        not_course_bold: "এটা কোনো কম্পিউটার কোর্স না।",
+        ielts_not_course_line: "এটা আপনার ‘স্টুপিড’ ভুলে মার্কস নষ্ট হওয়া বন্ধ করবে।",
+        pte_not_course_line: "এটা PTE-তে সিস্টেম/স্পিডের জন্য নষ্ট হওয়া বন্ধ করবে।",
+
+        t_skills: "Skills Covered",
+        t_with: "This Course Comes With",
+        t_modules: "Benefited Modules",
+        t_aim: "Aim of the Module",
+        t_become: "What You Will Become After This",
+
+        you_will_learn: "আপনি শিখবেন:",
+        no_fluff_bold: "থিওরি ফ্লাফ নেই।",
+        only_usable: "শুধু কাজের স্কিল।",
+        modules_note: "এই ট্রেনিং সরাসরি যেসব মডিউলে পারফরম্যান্স বাড়ায়:",
+        modules_end: "এটা আলাদা স্কিল না—চারটা স্কিলকেই মাল্টিপ্লাই করে।",
+        computer_invisible: "কম্পিউটারটা ‘অদৃশ্য’ হয়ে যাবে।",
+        become_note: "মডিউল শেষে স্টুডেন্ট হবে:",
+        ielts_final: "শেষ কথা: IELTS শুধু ইংলিশ না। কম্পিউটার আপনি কীভাবে ইউজ করেন সেটাও বড় ফ্যাক্টর।",
+
+        footer_contact: "কন্টাক্ট & লোকেশন",
+        footer_address: "৫১, বুদ্ধা মন্দির বাসাবো (মর্নিং বেল স্কুল & ব্র্যাক অফিসের পাশে), ঢাকা ১২১৪",
+        footer_open_map: "ম্যাপ খুলুন",
+        footer_chat: "চ্যাট (WhatsApp)",
+        footer_social: "সোশ্যাল মিডিয়া",
+        footer_follow: "আপডেট, টিপস আর স্টুডেন্ট স্টোরির জন্য LizOn Education ফলো করুন।",
+        footer_fb: "ফেসবুক",
+        footer_yt: "ইউটিউব",
+        footer_in: "লিংকডইন",
+        footer_toggle_theme: "লাইট/ডার্ক",
+
+        ask_sub: "কম্পিউটার-বেসড ক্ল্যারিটি (IELTS + PTE)",
+        ask_first: "প্রথমে এক্সাম সিলেক্ট করুন।",
+        ask_ielts: "IELTS (কম্পিউটার-বেসড)",
+        ask_pte: "PTE (কম্পিউটার-বেসড)",
+        ask_default_answer: "একটা অপশন ট্যাপ করুন — আমি ফিক্স দেখাবো + ঠিক জায়গায় নিয়ে যাবো।<small>থিওরি নেই। শুধু এক্সিকিউশন।</small>",
+        ask_go: "কোথায় ফিক্স করবো দেখান",
+        ask_hint_none: "এখনো কিছু সিলেক্ট করা হয়নি।",
+
+        need_guidance: "গাইডেন্স লাগবে?",
+        chat_whatsapp: "WhatsApp এ চ্যাট করুন",
+
+        menu: "মেনু",
+        sheet_theme: "লাইট/ডার্ক",
+        sheet_go_module: "মডিউলে যান",
+        sheet_go_footer: "ফুটারে যান",
+        talk_expert: "এক্সপার্টের সাথে কথা",
+
+        ielts_skills_note: 'এই মডিউল আপনাকে <span class="impGold">IELTS কম্পিউটার টেস্ট এনভায়রনমেন্ট</span> স্মুথলি ইউজ করতে শেখায় — যাতে <span class="impOrange">প্যানিক</span> বা টেকনিক্যাল হেসিটেশন না থাকে।',
+        ielts_li_1: '<span class="k">দ্রুত ও একিউরেট</span> টাইপিং — <span class="impGold">Writing</span> টাস্কের জন্য',
+        ielts_li_2: '<span class="k">স্মার্ট মাউস কন্ট্রোল</span> (ড্র্যাগ, ড্রপ, হাইলাইট, সিলেক্ট)',
+        ielts_li_3: '<span class="impBlue">IELTS ইন্টারফেস</span>-এ স্ক্রলিং, জুম ও ন্যাভিগেশন',
+        ielts_li_4: '<span class="impMint">কপি–পেস্ট</span> সেফলি ও স্ট্র্যাটেজিকভাবে ব্যবহার',
+        ielts_li_5: 'টেক্সট এডিটিং স্কিল (কাট, মুভ, রিপ্লেস, আইডিয়া রিঅর্গানাইজ)',
+        ielts_li_6: 'Writing & Reading এর জন্য টাইম-সেভিং <span class="impPurple">কিবোর্ড শর্টকাট</span>',
+        ielts_li_7: 'অন-স্ক্রিন ইনস্ট্রাকশন, টাইমার ও ন্যাভ বাটন হ্যান্ডেল করা',
+        ielts_li_8: 'যেসব কমন কম্পিউটার-বেসড ভুল <span class="impOrange">মার্কস খাইয়ে দেয়</span> সেগুলো এড়ানো',
+        ielts_skills_end: 'এটা “<span class="impOrange">ami English jani, kintu computer e slow</span>” সমস্যাটা একদম রিমুভ করে।',
+
+        ielts_with_1: '<span class="impBlue">রিয়েলিস্টিক IELTS কম্পিউটার ইন্টারফেস</span>-এ লাইভ গাইডেড প্র্যাকটিস',
+        ielts_with_2: 'স্টেপ-বাই-স্টেপ ডেমো (<span class="impOrange">assumption না</span>)',
+        ielts_with_3: 'সুপারভাইজড হ্যান্ডস-অন ড্রিল (<span class="impGold">Writing + Reading</span> ফোকাস)',
+        ielts_with_4: 'খারাপ হ্যাবিট কারেকশন (ওভার-স্ক্রল, মিস-ক্লিক, প্যানিক টাইপিং)',
+        ielts_with_5: 'এক্সাম-ডে স্ট্র্যাটেজি: কী টাচ করবেন, কী <span class="impOrange">টাচ করবেন না</span>',
+        ielts_with_6: 'কনফিডেন্স ট্রেনিং — যাতে স্টুডেন্ট স্ক্রিনে <span class="impMint">কন্ট্রোল</span> ফিল করে',
+
+        ielts_mod_1: '<a class="impGold" href="ielts-listening.html">Listening</a> – দ্রুত ন্যাভিগেশন, প্রশ্ন জাম্প, ফোকাস ধরে রাখা',
+        ielts_mod_2: '<a class="impBlue" href="ielts-reading.html">Reading</a> – হাইলাইটিং, দ্রুত লোকেট করা, আই-ফ্যাটিগ কমানো',
+        ielts_mod_3: '<a class="impMint" href="ielts-writing.html">Writing</a> – দ্রুত টাইপিং, ভালো স্ট্রাকচারিং, সহজ এডিটিং',
+        ielts_mod_4: '<a class="impPurple" href="ielts-speaking.html">Speaking</a> – ইনডাইরেক্ট বেনিফিট (কনফিডেন্স, স্ট্রেস কমে)',
+
+        ielts_aim_1: 'টার্গেট খুব সিম্পল ও রুথলেস: <span class="impOrange">টেকনোলজিকে দুর্বলতা থেকে রিমুভ করা।</span> তারপর এটাকে <span class="impMint">অ্যাডভান্টেজ</span> বানানো।',
+        ielts_aim_2: 'মডিউল শেষে স্টুডেন্ট ইংলিশ নিয়েই ভাববে—এইগুলো নিয়ে না:<br><span class="impPurple">“Eita click hobe?”</span> <span class="impBlue">“Scroll bhul hoye gelo”</span> <span class="impOrange">“Time shesh hoye jacche”</span>',
+
+        ielts_become_1: '<span class="impMint">কুল</span> থাকবে কম্পিউটার-বেসড IELTS এক্সামে',
+        ielts_become_2: '<span class="impBlue">ফাস্ট</span> হবে, কিন্তু রাশ করবে না',
+        ielts_become_3: '<span class="impGold">একিউরেট</span> হবে, ওভারথিংক করবে না',
+        ielts_become_4: 'Writing এ এডিট করতে পারবে <span class="impPurple">প্রো</span> এর মতো',
+        ielts_become_5: 'টেস্ট সিস্টেমকে <span class="impOrange">স্ট্র্যাটেজিকভাবে</span> ইউজ করবে, ইমোশনালি না',
+        ielts_become_end: '<b>অনেক স্টুডেন্টের 0.5–1 band</b> এখানেই সেভ হয়।',
+
+        pte_skills_note: 'এই মডিউল আপনাকে <span class="impGold">PTE কম্পিউটার এনভায়রনমেন্ট</span> স্মুথলি হ্যান্ডেল করতে শেখায়—<span class="impOrange">প্যানিক</span>, মিস-ক্লিক, বা মাইক কনফিউশন ছাড়া।',
+        pte_li_1: '<span class="k">ফাস্ট & ক্লিন টাইপিং</span> — Summarize Written Text + Essay',
+        pte_li_2: '<span class="impBlue">মাইক এtiquette</span> (স্টার্ট টাইমিং, দূরত্ব, ভয়েস স্ট্যাবিলিটি)',
+        pte_li_3: '<span class="impMint">Read Aloud</span>, Repeat Sentence, Describe Image, Retell Lecture—স্পিকিং ফ্লো কন্ট্রোল',
+        pte_li_4: 'ন্যাভিগেশন স্পিড: নেক্সট টাস্ক, টাইমার, ইনস্ট্রাকশন—ফ্রিজ না করে',
+        pte_li_5: 'Fill in the Blanks: <span class="impPurple">কার্সর কন্ট্রোল</span>, স্পেসিং, স্মার্ট স্কিপ',
+        pte_li_6: 'কপি–পেস্ট সেফটি (লাইন ডুপ্লিকেট/ফরম্যাটিং নষ্ট এভয়েড)',
+        pte_li_7: 'SWT + Essay এ স্ট্রাকচার না ভেঙে কুইক এডিট',
+        pte_li_8: 'টাইম প্রেসারে প্যানিক না করে “সিস্টেম ইউজার” এর মতো এক্সিকিউট',
+        pte_skills_end: 'এটা “<span class="impOrange">mic + timer + typing e shob noshto</span>” সমস্যাটা একদম রিমুভ করে।',
+
+        pte_with_1: '<span class="impBlue">রিয়েলিস্টিক PTE ইন্টারফেস</span>-এ লাইভ গাইডেড প্র্যাকটিস',
+        pte_with_2: 'স্টেপ-বাই-স্টেপ ডেমো (<span class="impOrange">assumption না</span>)',
+        pte_with_3: 'সুপারভাইজড হ্যান্ডস-অন ড্রিল (<span class="impGold">Speaking + Writing</span> ফোকাস)',
+        pte_with_4: 'মাইক ট্রেনিং: কী করবেন, কী <span class="impOrange">করবেন না</span> (ভয়েস কাট/লো স্কোর এভয়েড)',
+        pte_with_5: 'টাইপিং কারেকশন: স্পিড থাকবে, কিন্তু মেস হবে না (পাংচুয়েশন + স্পেসিং)',
+        pte_with_6: 'টাইম কন্ট্রোল হ্যাবিট: ফ্রিজ না, রাশ না—জাস্ট এক্সিকিউশন',
+
+        pte_mod_1: '<a class="impGold" href="ielts-speaking.html">Speaking</a> – মাইক কনফিডেন্স, স্টেবল ডেলিভারি, কম রিস্টার্ট প্যানিক',
+        pte_mod_2: '<a class="impBlue" href="ielts-reading.html">Reading</a> – দ্রুত ন্যাভিগেশন, FIB টাস্কে ফোকাস',
+        pte_mod_3: '<a class="impMint" href="ielts-writing.html">Writing</a> – দ্রুত টাইপিং, ক্লিন এডিটিং, টাইম কন্ট্রোল',
+        pte_mod_4: '<a class="impPurple" href="ielts-listening.html">Listening</a> – স্মুথ ফ্লো, ট্রানজিশনে কম কনফিউশন',
+        pte_modules_end: '<b>এটা আলাদা স্কিল না</b> — PTE-র চারটা স্কিলকেই <span class="impOrange">মাল্টিপ্লাই</span> করে।',
+
+        pte_aim_1: 'টার্গেট সিম্পল ও রুথলেস: <span class="impOrange">টেকনোলজিকে দুর্বলতা থেকে রিমুভ করা।</span> তারপর এটাকে <span class="impMint">অ্যাডভান্টেজ</span> বানানো।',
+        pte_aim_2: 'শেষে স্টুডেন্ট পারফরম্যান্স নিয়েই ভাববে—এইগুলো নিয়ে না:<br><span class="impPurple">“Mic on hoise to?”</span> <span class="impBlue">“Timer dekhe matha off hoye gelo”</span> <span class="impOrange">“Click miss hoye task skip hoye gelo”</span>',
+
+        pte_become_1: '<span class="impMint">কুল</span> থাকবে রিয়েল PTE টেস্ট রুমে',
+        pte_become_2: '<span class="impBlue">ফাস্ট</span> হবে, কিন্তু chaotic clicking না',
+        pte_become_3: '<span class="impGold">একিউরেট</span> হবে, স্ক্রিন নিয়ে ওভারথিংক না',
+        pte_become_4: 'মাইক + টাইমার কন্ট্রোল করবে <span class="impPurple">প্রো</span> এর মতো',
+        pte_become_5: 'সিস্টেম ইউজ করবে <span class="impOrange">স্ট্র্যাটেজিকভাবে</span>, ইমোশনালি না',
+        pte_become_end: 'অনেকের জন্য এতে <span class="impGold">5–10 পয়েন্ট</span> সেভ হয়।'
+      }
+    };
+
+    function setTextNodes(lang){
+      const dict = I18N[lang] || I18N.en;
+
+      // text-only
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const key = el.getAttribute("data-i18n");
+        if(dict[key] != null) el.textContent = dict[key];
+      });
+
+      // html allowed (keeps your spans/colors)
+      document.querySelectorAll("[data-i18n-html]").forEach(el=>{
+        const key = el.getAttribute("data-i18n-html");
+        if(dict[key] != null) el.innerHTML = dict[key];
+      });
+
+      // update smart button aria labels text
+      updateSmartDirection();
+
+      // WhatsApp message language
+      setWA();
+    }
+
+    function buildAskMap(lang){
+      // Keep your original logic, just swap prompts/options language
+      if(lang === "bn"){
+        return {
+          ielts: {
+            label: "IELTS (কম্পিউটার-বেসড)",
+            prompt: "IELTS এ কোন সমস্যা হচ্ছে? একটা সিলেক্ট করুন।",
+            options: [
+              { key:"typing",  text:"Typing / Editing স্লো", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
+                answer:"Typing slow হলে Writing এ time শেষ হয়ে যায়। Fix: clean typing + shortcut + editing discipline. Drill: প্রতিদিন 10 মিনিট copy-typing + 5 মিনিট edit-only (cut/move/replace)।" },
+              { key:"mouse",   text:"Mouse / highlight ভুল", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
+                answer:"Highlight/jump miss মানে time যায় + answer miss হতে পারে। Fix: drag-select control + hunting without losing place. Drill: 5 মিনিট highlight-only practice (long text)।" },
+              { key:"scroll",  text:"Scrolling এ place হারাই", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
+                answer:"Flow না থাকলে Reading এ brain fry হয়। Fix: scroll → stop → re-locate habit. Drill: একই paragraph 60 সেকেন্ডে 10 বার re-locate।" },
+              { key:"timer",   text:"Timer দেখলে panic", target:"#ielts-aim", open:["ieltsBlock","ielts-aim"],
+                answer:"Timer enemy না—timer guide. Fix: pace lock + stuck হলে skip rule. Drill: 2-min stuck rule practice (mark & move)।" },
+              { key:"mistakes",text:"Stupid mistakes এ marks যায়", target:"#ielts-with", open:["ieltsBlock","ielts-with"],
+                answer:"Mis-click, over-scroll, panic typing—silent marks killer. Fix: supervised drills + exam-day do/don’t. Drill: ‘zero misclick’ rule দিয়ে mini mock।" }
+            ]
+          },
+          pte: {
+            label: "PTE (কম্পিউটার-বেসড)",
+            prompt: "PTE তে কোন সমস্যা হচ্ছে? একটা সিলেক্ট করুন।",
+            options: [
+              { key:"mic",     text:"Mic + timer এ freeze", target:"#pte-skills", open:["pteBlock","pte-skills"],
+                answer:"Mic on হলে মাথা ব্ল্যাঙ্ক = execution issue. Fix: mic distance + start timing habit + no-restart. Drill: 20 sec warm-up + 3 task continuous speaking (no stop)।" },
+              { key:"typing",  text:"SWT/Essay typing messy", target:"#pte-skills", open:["pteBlock","pte-skills"],
+                answer:"Typing messy হলে points drop. Fix: clean typing + punctuation + quick edit. Drill: daily 5 SWT (timed) + 1 essay outline + 8 min type।" },
+              { key:"cursor",  text:"FIB এ cursor/spacing সমস্যা", target:"#pte-skills", open:["pteBlock","pte-skills"],
+                answer:"Cursor control না থাকলে time loss. Fix: click discipline + space control + smart skip. Drill: 10 blanks focusing only on cursor accuracy।" },
+              { key:"navigate",text:"Next task এ confusion", target:"#pte-with", open:["pteBlock","pte-with"],
+                answer:"PTE transitions fast—freeze করলে chain break. Fix: instruction scan + next-click habit. Drill: rapid switching (10 tasks mock flow)।" },
+              { key:"panic",   text:"Pressure এ overthink/panic", target:"#pte-aim", open:["pteBlock","pte-aim"],
+                answer:"PTE execution ruthless. Fix: system-user mindset: do, move, don’t mourn. Drill: buzzer এ instant move-on timed sets।" }
+            ]
+          }
+        };
+      }
+
+      // EN map (your original)
+      return {
+        ielts: {
+          label: "IELTS (Computer-Based)",
+          prompt: "IELTS e kon problem hocche? Choose one.",
+          options: [
+            { key:"typing",  text:"Typing / Editing slow", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
+              answer:"Typing slow hole Writing e time shesh hoy. Fix: typing clean + shortcut use + editing discipline. Drill: 10 min/day copy-typing + 5 min edit-only (cut/move/replace)." },
+            { key:"mouse",   text:"Mouse / highlight bhul", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
+              answer:"Highlight/jump miss mane marks nai, time jai. Fix: drag-select control + proof-line hunting without losing place. Drill: 5 min highlight-only practice on long text." },
+            { key:"scroll",  text:"Scrolling e place harai", target:"#ielts-skills", open:["ieltsBlock","ielts-skills"],
+              answer:"Screen flow na thakle Reading e brain fry hoy. Fix: scroll → stop → re-locate habit. Drill: passage e 10 bar re-locate (same paragraph) within 60 seconds." },
+            { key:"timer",   text:"Timer dekhe panic", target:"#ielts-aim", open:["ieltsBlock","ielts-aim"],
+              answer:"Timer enemy na—timer guide. Fix: pace lock + stuck hole skip rule. Drill: 2-min stuck rule practice (mark & move) so momentum thake." },
+            { key:"mistakes",text:"Stupid mistakes cost marks", target:"#ielts-with", open:["ieltsBlock","ielts-with"],
+              answer:"Mis-click, over-scroll, panic typing — egula marks khaiye dey silently. Fix: supervised drills + exam-day do/don’t list. Drill: 1 full mini mock with ‘zero misclick’ rule." }
+          ]
+        },
+        pte: {
+          label: "PTE (Computer-Based)",
+          prompt: "PTE te kon problem hocche? Choose one.",
+          options: [
+            { key:"mic",     text:"Mic + timer e freeze", target:"#pte-skills", open:["pteBlock","pte-skills"],
+              answer:"Mic on hole matha blank = execution issue. Fix: mic distance + start timing habit + no-restart discipline. Drill: 20 sec warm-up + 3 task continuous speaking (no stop)." },
+            { key:"typing",  text:"SWT/Essay typing messy", target:"#pte-skills", open:["pteBlock","pte-skills"],
+              answer:"Typing messy hole points drop. Fix: clean typing + punctuation + quick edit. Drill: 5 SWT daily (timed) + 1 essay outline + 8 min type." },
+            { key:"cursor",  text:"FIB e cursor/spacing problem", target:"#pte-skills", open:["pteBlock","pte-skills"],
+              answer:"FIB e cursor control na thakle time loss. Fix: click discipline + space control + skip smartly. Drill: 10 blanks practice focusing only on cursor accuracy." },
+            { key:"navigate",text:"Next task e confusion", target:"#pte-with", open:["pteBlock","pte-with"],
+              answer:"PTE e transitions fast — freeze korle chain break hoy. Fix: instruction scan + next-click habit. Drill: rapid task switching practice (10 tasks mock flow)." },
+            { key:"panic",   text:"Overthinking + panic under pressure", target:"#pte-aim", open:["pteBlock","pte-aim"],
+              answer:"PTE execution is ruthless. Fix: system-user mindset: do, move, don’t mourn. Drill: timed sets where you must move on instantly after buzzer." }
+          ]
+        }
+      };
+    }
+
+    function applyLang(lang){
+      const safe = (lang === "bn") ? "bn" : "en";
+      document.documentElement.setAttribute("data-lang", safe);
+      localStorage.setItem(LANG_KEY, safe);
+
+      // button behavior you asked:
+      // - if page is EN => button shows BN
+      // - if page is BN => button shows EN
+      btnLang.textContent = (safe === "en") ? "BN" : "EN";
+
+      // load maps & translate
+      currentLang = safe;
+      ASK_MAP = buildAskMap(safe);
+      setTextNodes(safe);
+
+      // reset AskLizOn modal state (so the prompts/options always match language)
+      askExam = null; askChoice = null;
+      askStage2.style.display = "none";
+      askStage2.innerHTML = "";
+      askPrompt.textContent = I18N[safe].ask_first;
+      askHint.textContent = I18N[safe].ask_hint_none;
+      askAnswer.innerHTML = I18N[safe].ask_default_answer;
+    }
+
+    let currentLang = "en";
+    (function initLang(){
+      const saved = localStorage.getItem(LANG_KEY);
+      applyLang(saved === "bn" ? "bn" : "en");
+    })();
+
+    btnLang.addEventListener("click", ()=>{
+      const now = document.documentElement.getAttribute("data-lang") || "en";
+      applyLang(now === "en" ? "bn" : "en");
+      // if menu sheet is open, keep it clean
+      // (optional) closeSheet();
+    });
+
+    // initial WA link + smart direction after language init
+    setWA();
+    updateSmartDirection();
   </script>
 
 </body>

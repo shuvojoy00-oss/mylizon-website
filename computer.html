@@ -88,14 +88,14 @@
       background:linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.06));
       border:1px solid var(--stroke);
       font-weight:900; letter-spacing:.4px;
-  }
-     .logo img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display:block;
-  padding: 5px; /* breathing space */
-}
+    }
+    .logo img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display:block;
+      padding: 5px; /* breathing space */
+    }
     .brandText b{display:block; font-size:14px; line-height:1.1}
     .brandText span{display:block; font-size:12px; color:var(--muted); margin-top:2px}
 
@@ -555,7 +555,7 @@
       position: fixed;
       left: 50%;
       top: 50%;
-      transform: translate(-50%,-50%); /* will be overridden by JS for PERFECT center between header & bottom bar */
+      transform: translate(-50%,-50%);
       z-index: 110;
 
       height: 46px;
@@ -583,25 +583,24 @@
     .askDot{
       width:18px; height:18px; border-radius:999px;
       border:1px solid rgba(255,255,255,.18);
-      background: rgba(4,31,22,.28); /* not pure black */
+      background: rgba(4,31,22,.28);
       display:grid; place-items:center;
       font-weight: 1000;
       line-height:1;
     }
-  .askDot img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display:block;
-  padding: 3px; /* dot er moddhe fit */
-}
+    .askDot img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display:block;
+      padding: 3px;
+    }
 
     [data-theme="light"] .askDot{
       background: rgba(6,43,31,.10);
       border-color: rgba(6,43,31,.18);
     }
 
-    /* Overlay closes on blank click */
     .askOverlay{
       position:fixed;
       inset:0;
@@ -767,9 +766,9 @@
   <header class="topbar">
     <div class="topbarInner">
       <a class="brand" href="index.html" aria-label="LizOn Home">
-       <div class="logo">
-  <img src="assets/logo-dark.png" alt="LizOn Education Logo" />
-</div>
+        <div class="logo">
+          <img src="assets/logo-dark.png" alt="LizOn Education Logo" />
+        </div>
 
         <div class="brandText">
           <b>LizOn Education</b>
@@ -925,8 +924,8 @@
           </div>
         </details>
 
-        <!-- PTE -->
-        <details open id="pteBlock">
+        <!-- PTE (CLOSED by default now) -->
+        <details id="pteBlock">
           <summary>PTE (Computer-Based) <span class="chev">›</span></summary>
 
           <div class="block">
@@ -985,11 +984,10 @@
               <div class="secBody">
                 <div class="miniNote">This computer skills training directly improves performance in:</div>
                 <ul>
-                  <!-- keeping your existing links -->
-                  <li><a class="impGold" href="ielts-speaking.html">Speaking</a> – mic confidence, stable delivery, less restart panic</li>
-                  <li><a class="impBlue" href="ielts-reading.html">Reading</a> – faster navigation, better focus in FIB tasks</li>
-                  <li><a class="impMint" href="ielts-writing.html">Writing</a> – faster typing, cleaner editing, better time control</li>
-                  <li><a class="impPurple" href="ielts-listening.html">Listening</a> – smoother flow, less confusion during transitions</li>
+                  <li><a class="impGold" href="pte.html#speaking">Speaking</a> – mic confidence, stable delivery, less restart panic</li>
+                  <li><a class="impBlue" href="pte.html#reading">Reading</a> – faster navigation, better focus in FIB tasks</li>
+                  <li><a class="impMint" href="pte.html#writing">Writing</a> – faster typing, cleaner editing, better time control</li>
+                  <li><a class="impPurple" href="pte.html#listening">Listening</a> – smoother flow, less confusion during transitions</li>
                 </ul>
                 <div class="miniNote">
                   <b>This is not a separate skill</b> — it <span class="impOrange">multiplies</span> all four skills in PTE.
@@ -1080,12 +1078,11 @@
 
   </main>
 
-  <!-- AskLizOn C button (TRUE center like your mark) -->
+  <!-- AskLizOn C button -->
   <button class="askFloat" id="btnAskFloat" type="button" aria-label="Open AskLizOn C">
     <span class="askDot" aria-hidden="true">
-  <img src="assets/logo-dark.png" alt="" />
-</span>
-
+      <img src="assets/logo-dark.png" alt="" />
+    </span>
     <span>AskLizOn C</span>
   </button>
 
@@ -1249,7 +1246,7 @@
     overlay.addEventListener("click", closeSheet);
 
     /* =========================
-       PERFECT CENTER: AskLizOn C between Header & BottomBar
+       PERFECT CENTER: AskLizOn C between Header & BottomBar (NO OFFSET)
     ========================== */
     const askFloatBtn = document.getElementById("btnAskFloat");
     function placeAskFloatPerfect(){
@@ -1262,19 +1259,15 @@
       const bottomH = bottom ? bottom.getBoundingClientRect().height : 0;
 
       const usable = Math.max(0, window.innerHeight - headerH - bottomH);
-      const OFFSET = 150; // increase to move further down
-const top = headerH + (usable / 2) + OFFSET;
-askFloatBtn.style.top = top + "px";
-
-      // keep translate(-50%,-50%) from CSS
+      const top = headerH + (usable / 2);
+      askFloatBtn.style.top = top + "px";
     }
     window.addEventListener("resize", placeAskFloatPerfect);
     window.addEventListener("orientationchange", placeAskFloatPerfect);
-    // run after layout paints
     requestAnimationFrame(()=>{ placeAskFloatPerfect(); });
 
     /* =========================
-       TOP IELTS/PTE JUMP BUTTONS
+       TOP IELTS/PTE SWITCH (real switch)
     ========================== */
     const btnGoIELTS = document.getElementById("btnGoIELTS");
     const btnGoPTE = document.getElementById("btnGoPTE");
@@ -1294,24 +1287,27 @@ askFloatBtn.style.top = top + "px";
       window.scrollTo({ top: Math.max(0, getTop(el) - off), behavior:"smooth" });
     }
 
-    btnGoIELTS.addEventListener("click", ()=>{
+    function activateIELTS(){
       btnGoIELTS.classList.add("active");
       btnGoPTE.classList.remove("active");
       ieltsBlock.open = true;
-      pteBlock.open = true;
+      pteBlock.open = false;
       jumpTo(ieltsBlock);
-    });
+    }
 
-    btnGoPTE.addEventListener("click", ()=>{
+    function activatePTE(){
       btnGoPTE.classList.add("active");
       btnGoIELTS.classList.remove("active");
       pteBlock.open = true;
-      ieltsBlock.open = true;
+      ieltsBlock.open = false;
       jumpTo(pteBlock);
-    });
+    }
+
+    btnGoIELTS.addEventListener("click", activateIELTS);
+    btnGoPTE.addEventListener("click", activatePTE);
 
     /* =========================
-       SMART SCROLL (FIXED)
+       SMART SCROLL (as you had)
     ========================== */
     const smartBtn = document.getElementById("btnSmartScroll");
     const hint = document.getElementById("scrollHint");
@@ -1395,13 +1391,8 @@ askFloatBtn.style.top = top + "px";
     window.addEventListener("resize", updateSmartDirection);
     updateSmartDirection();
 
-    (function ensureOpen(){
-      ieltsBlock.open = true;
-      pteBlock.open = true;
-    })();
-
     /* =========================
-       AskLizOn C (Modal)
+       AskLizOn C (Modal) - your original logic kept
     ========================== */
     const askBtn = document.getElementById("btnAskFloat");
     const askPanel = document.getElementById("askPanel");
@@ -1466,7 +1457,6 @@ askFloatBtn.style.top = top + "px";
       askOverlay.classList.remove("show");
       askOverlay.setAttribute("aria-hidden","true");
       document.body.style.overflow = "";
-      // re-place button after closing modal (mobile address bar can change height)
       placeAskFloatPerfect();
     }
 

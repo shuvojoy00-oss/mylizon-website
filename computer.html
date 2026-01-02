@@ -203,6 +203,9 @@
       cursor:pointer;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
     .switchBtn.active{
       border-color: rgba(214,179,90,.55);
@@ -331,22 +334,83 @@
       font-size:12.5px;
       line-height:1.55;
     }
-    
-   #btnInstructor{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  line-height:1;
-  padding-top:0;
-  padding-bottom:0;
-}
 
+    #btnInstructor{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      line-height:1;
+      padding-top:0;
+      padding-bottom:0;
+    }
+    #btnInstructor:hover{ color: var(--text); }
 
-#btnInstructor:hover{
-  color: var(--text);
-}
+    /* ===== Instructor mini profile (same page) ===== */
+    .profileRow{
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:14px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      margin-top: 12px;
+    }
+    .avatar{
+      width:54px;
+      height:54px;
+      border-radius:16px;
+      border:1px solid rgba(214,179,90,.35);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+      flex: 0 0 auto;
+      display:grid;
+      place-items:center;
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .profileRow h2{
+      margin:0;
+      font-size:16px;
+    }
+    .profileRow span{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+    .actions{
+      margin-left:auto;
+      display:flex;
+      gap:10px;
+      flex-wrap:nowrap;
+    }
+    .btn{
+      height:40px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      font-weight:900;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn.gold{
+      border-color:rgba(214,179,90,.60);
+      background:linear-gradient(135deg, rgba(214,179,90,.22), rgba(255,255,255,.04));
+    }
+    .btn:active{ transform: translateY(1px); }
 
-    
     /* ===== Bottom Floating Buttons ===== */
     .fab{
       position:fixed;
@@ -820,21 +884,15 @@
         <div class="title">
           <b data-i18n="hero_title">Computer Skills for IELTS & PTE</b>
           <span data-i18n="hero_sub">Tap each dropdown — no heavy scrolling</span>
-<div class="topSwitch">
-  <button class="switchBtn active" id="btnGoIELTS" type="button" data-i18n="btn_ielts">IELTS</button>
 
-  <button class="switchBtn" id="btnGoPTE" type="button" data-i18n="btn_pte">PTE</button>
+          <div class="topSwitch">
+            <button class="switchBtn active" id="btnGoIELTS" type="button" data-i18n="btn_ielts">IELTS</button>
 
-  <a
-    class="switchBtn"
-    href="https://mylizon.com/computerinstructor.html"
-    id="btnInstructor"
-  >
-    Explore Instructor
-  </a>
-</div>
+            <button class="switchBtn" id="btnGoPTE" type="button" data-i18n="btn_pte">PTE</button>
 
-        
+            <!-- ✅ UPDATED: now links to the instructor section below (after PTE) -->
+            <a class="switchBtn" href="#instructorSection" id="btnInstructor">Explore Instructor</a>
+          </div>
         </div>
 
         <div class="pill" data-i18n="pill_sessions">5 Sessions</div>
@@ -951,8 +1009,7 @@
                   <li data-i18n-html="ielts_become_4">Confident enough to edit writing like a <span class="impPurple">pro</span></li>
                   <li data-i18n-html="ielts_become_5">Someone who uses the test system <span class="impOrange">strategically</span>, not emotionally</li>
                 </ul>
-                <div class="miniNote" data-i18n="ielts_become_end">
-                </div>
+                <div class="miniNote" data-i18n="ielts_become_end"></div>
               </div>
             </details>
 
@@ -1077,6 +1134,104 @@
 
           </div>
         </details>
+
+        <!-- ✅ NEW: Instructor details (after PTE) -->
+        <div class="card" id="instructorSection">
+          <div class="cardHeader">
+            <div class="title">
+              <b>Instructor Profile</b>
+              <span>Explore Instructor details (IELTS & PTE Computer Skills)</span>
+            </div>
+            <div class="pill">Profile</div>
+          </div>
+
+          <div class="contentWrap">
+            <div class="profileRow">
+              <div class="avatar" aria-label="Instructor photo">
+                <img src="assets/detxgamingavatar.jpg" alt="Instructor photo" />
+              </div>
+
+              <div>
+                <h2>Computer Skills Instructor</h2>
+                <span>Computer Science Engineer · 3+ years with LizOn Education</span>
+              </div>
+
+              <div class="actions">
+                <a class="btn gold" href="https://www.facebook.com/share/14RWEZRAeLd/" target="_blank" rel="noopener">Profile</a>
+                <a class="btn" href="https://wa.me/8801771253085" target="_blank" rel="noopener">Chat</a>
+              </div>
+            </div>
+
+            <details open class="sec">
+              <summary>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t1">Introduction</span></div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                As a profession, I am a <span class="k">Computer Engineer</span>.
+                For the last <span class="impGold">3+ years</span>, I’ve been connected with <span class="impMint">LizOn Education</span> —
+                helping students fix the real <span class="impBlue">computer-based issues</span> that silently reduce <span class="impGold">IELTS & PTE</span> scores.
+                <br><br>
+                This is not “learning computers.”<br>
+                This is <span class="k">exam execution</span>.
+              </div>
+            </details>
+
+            <details class="sec">
+              <summary>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t2">Why Students Trust This</span></div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                Students don’t lose marks because of weak English alone.
+                They lose marks because of <span class="impOrange">panic</span>, <span class="impOrange">mis-clicks</span>,
+                <span class="impPurple">slow typing</span>, <span class="impOrange">timer fear</span>, and <span class="impBlue">system confusion</span>.
+                <br><br>
+                This training removes those <span class="k">invisible score killers</span>.
+              </div>
+            </details>
+
+            <details class="sec">
+              <summary>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t3">Experience</span></div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                Already connected with <span class="impMint">LizOn Education</span> for more than <span class="impGold">3 years</span>,
+                and assisted a large number of students to confidently handle
+                <span class="impBlue">computer-based IELTS & PTE</span> exams.
+              </div>
+            </details>
+
+            <details class="sec">
+              <summary>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t4">How I Teach</span></div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                <span class="k">No theory overload.</span>
+                No assumption-based teaching.
+                <br><br>
+                Everything is <span class="impGold">demonstrated</span>, <span class="impMint">practiced</span>, <span class="impOrange">corrected</span>, and repeated
+                until the system becomes <span class="impPurple">invisible</span> during the exam.
+              </div>
+            </details>
+
+            <details class="sec">
+              <summary>
+                <div class="secTitleRow"><span class="secDot"></span><span class="secTitle t5">What You Become After This</span></div>
+                <span class="chev">›</span>
+              </summary>
+              <div class="secBody">
+                <span class="impMint">Calm</span> under exam pressure.
+                <span class="impBlue">Faster</span> without rushing.
+                <span class="impGold">Accurate</span> without panic.
+                <br><br>
+                You focus on <span class="k">English</span> — not on the <span class="impOrange">computer</span>.
+              </div>
+            </details>
+          </div>
+        </div>
 
       </div>
     </section>
@@ -1362,7 +1517,7 @@
     }
 
     function getTargets(){
-      const ids = ["moduleSection","ieltsBlock","pteBlock","footerSection"];
+      const ids = ["moduleSection","ieltsBlock","pteBlock","instructorSection","footerSection"];
       const els = ids.map(id => document.getElementById(id)).filter(Boolean);
       const arr = [{ el: document.body, y: 0, name: "Top" }, ...els.map(el => ({ el, y: getTop(el), name: el.id }))];
       arr.sort((a,b)=>a.y-b.y);
@@ -1580,7 +1735,7 @@
         "ieltsBlock","pteBlock",
         "ielts-skills","ielts-with","ielts-modules","ielts-aim","ielts-become",
         "pte-skills","pte-with","pte-modules","pte-aim","pte-become",
-        "moduleSection","footerSection"
+        "moduleSection","instructorSection","footerSection"
       ]);
 
       const id = h.replace("#","");
@@ -1595,15 +1750,12 @@
 
     /* =========================
        ✅ LANGUAGE TOGGLE (BN/EN)
-       - Button shows "BN" when page is EN (tap to switch to Bangla)
-       - Button shows "EN" when page is BN (tap to switch to English)
     ========================== */
     const LANG_KEY = "mylizon_lang";
     const btnLang = document.getElementById("btnLang");
 
     const I18N = {
       en: {
-        /* small UI */
         smart_scroll: "Smart scroll",
         aria_back_top: "Back to top",
         aria_next: "Scroll to next section",
@@ -1621,7 +1773,6 @@
         ask_choose_problem_hint: "Choose a problem.",
         ask_then_jump: "Then I’ll take you to the exact dropdown.",
 
-        /* keys used by data-i18n */
         sub_computer_lessons: "Computer Lessons",
         nav_home: "Home",
         nav_ielts: "IELTS",
@@ -1630,7 +1781,8 @@
         nav_studyabroad: "Study Abroad",
 
         hero_title: "Computer Skills for IELTS & PTE",
-        
+        hero_sub: "Tap each dropdown — no heavy scrolling",
+
         btn_ielts: "IELTS",
         btn_pte: "PTE",
         pill_sessions: "5 Sessions",
@@ -1685,7 +1837,6 @@
         sheet_go_footer: "Go to Footer",
         talk_expert: "Talk with Expert",
 
-        /* HTML keys */
         ielts_skills_note: 'This module trains students to operate the <span class="impGold">IELTS computer test environment</span> smoothly, without <span class="impOrange">panic</span> or technical hesitation.',
         ielts_li_1: '<span class="k">Fast & accurate</span> keyboard typing for <span class="impGold">Writing</span> tasks',
         ielts_li_2: '<span class="k">Smart mouse control</span> (drag, drop, highlight, select)',
@@ -1780,7 +1931,8 @@
         nav_studyabroad: "স্টাডি অ্যাব্রড",
 
         hero_title: "IELTS & PTE এর জন্য কম্পিউটার স্কিল",
-        
+        hero_sub: "প্রতি ড্রপডাউন ট্যাপ করুন — heavy scrolling নাই",
+
         btn_ielts: "IELTS",
         btn_pte: "PTE",
         pill_sessions: "৫টি সেশন",
@@ -1799,7 +1951,6 @@
         t_become: "What You Will Become After This",
 
         you_will_learn: "আপনি শিখবেন:",
-
         only_usable: "শুধু কাজের স্কিল।",
         modules_note: "এই ট্রেনিং সরাসরি যেসব মডিউলে পারফরম্যান্স বাড়ায়:",
         modules_end: "এটা আলাদা স্কিল না—চারটা স্কিলকেই মাল্টিপ্লাই করে।",
@@ -1907,27 +2058,21 @@
     function setTextNodes(lang){
       const dict = I18N[lang] || I18N.en;
 
-      // text-only
       document.querySelectorAll("[data-i18n]").forEach(el=>{
         const key = el.getAttribute("data-i18n");
         if(dict[key] != null) el.textContent = dict[key];
       });
 
-      // html allowed (keeps your spans/colors)
       document.querySelectorAll("[data-i18n-html]").forEach(el=>{
         const key = el.getAttribute("data-i18n-html");
         if(dict[key] != null) el.innerHTML = dict[key];
       });
 
-      // update smart button aria labels text
       updateSmartDirection();
-
-      // WhatsApp message language
       setWA();
     }
 
     function buildAskMap(lang){
-      // Keep your original logic, just swap prompts/options language
       if(lang === "bn"){
         return {
           ielts: {
@@ -1965,7 +2110,6 @@
         };
       }
 
-      // EN map (your original)
       return {
         ielts: {
           label: "IELTS (Computer-Based)",
@@ -2007,17 +2151,12 @@
       document.documentElement.setAttribute("data-lang", safe);
       localStorage.setItem(LANG_KEY, safe);
 
-      // button behavior you asked:
-      // - if page is EN => button shows BN
-      // - if page is BN => button shows EN
       btnLang.textContent = (safe === "en") ? "BN" : "EN";
 
-      // load maps & translate
       currentLang = safe;
       ASK_MAP = buildAskMap(safe);
       setTextNodes(safe);
 
-      // reset AskLizOn modal state (so the prompts/options always match language)
       askExam = null; askChoice = null;
       askStage2.style.display = "none";
       askStage2.innerHTML = "";
@@ -2035,11 +2174,8 @@
     btnLang.addEventListener("click", ()=>{
       const now = document.documentElement.getAttribute("data-lang") || "en";
       applyLang(now === "en" ? "bn" : "en");
-      // if menu sheet is open, keep it clean
-      // (optional) closeSheet();
     });
 
-    // initial WA link + smart direction after language init
     setWA();
     updateSmartDirection();
   </script>

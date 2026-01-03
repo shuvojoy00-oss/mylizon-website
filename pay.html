@@ -1,331 +1,298 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Payment | LizOn Education</title>
-  <meta name="description" content="LizOn Education payment page — choose method, pay, then send screenshot or transaction ID to WhatsApp for confirmation." />
+  <meta name="description" content="Secure payment page for LizOn Education. Choose payment method, complete payment, and send screenshot or transaction ID for confirmation." />
   <meta name="theme-color" content="#062b1f" />
 
   <style>
     :root{
-      /* Dark (NO pure black) */
       --bg:#041f16;
       --bg2:#062b1f;
       --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.08);
       --stroke:rgba(255,255,255,.12);
       --text:rgba(255,255,255,.92);
       --muted:rgba(255,255,255,.72);
       --gold:#d6b35a;
-      --gold2:#caa64a;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --shadow:0 18px 60px rgba(0,0,0,.45);
 
-      --ok: rgba(67, 255, 168, .18);
-      --warn: rgba(255, 207, 86, .18);
-      --info: rgba(122, 198, 255, .18);
-      --pink: rgba(255, 125, 205, .18);
-      --violet: rgba(184, 138, 255, .18);
-      --red: rgba(255, 116, 116, .18);
+      --bkash:#ff5fa2;
+      --rocket:#9b7cff;
+      --nagad:#ff6b6b;
+      --bank:#3ddc97;
+      --cardc:#6ab8ff;
 
-      --radius: 18px;
-      --radius2: 22px;
-
-      --container: min(1100px, 92vw);
+      --container:min(1100px,92vw);
+      --radius:18px;
     }
 
-    /* Light mode */
-    html[data-theme="light"]{
-      --bg:#f4fbf7;
-      --bg2:#e8f6ef;
-      --card:rgba(6,43,31,.06);
-      --card2:rgba(6,43,31,.08);
-      --stroke:rgba(6,43,31,.14);
-      --text:rgba(4,31,22,.92);
-      --muted:rgba(4,31,22,.70);
-      --shadow: 0 18px 60px rgba(4,31,22,.18);
-
-      --ok: rgba(10, 170, 90, .12);
-      --warn: rgba(220, 160, 20, .12);
-      --info: rgba(0, 120, 210, .10);
-      --pink: rgba(210, 40, 130, .10);
-      --violet: rgba(120, 60, 210, .10);
-      --red: rgba(210, 50, 50, .10);
-    }
-
-    *{ box-sizing:border-box; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
       background:
-        radial-gradient(1200px 600px at 20% 0%, rgba(214,179,90,.16) 0%, rgba(6,43,31,0) 55%),
-        radial-gradient(900px 520px at 90% 20%, rgba(76,255,190,.10) 0%, rgba(6,43,31,0) 60%),
-        linear-gradient(180deg, var(--bg2) 0%, var(--bg) 55%, var(--bg) 100%);
+        radial-gradient(1200px 600px at 20% 0%, rgba(214,179,90,.15), transparent 60%),
+        linear-gradient(180deg,var(--bg2),var(--bg));
       color:var(--text);
-      line-height:1.45;
-      min-height:100vh;
+      line-height:1.5;
     }
-    a{ color:inherit; text-decoration:none; }
 
-    .container{ width:var(--container); margin:0 auto; }
+    a{text-decoration:none;color:inherit}
+    .container{width:var(--container);margin:auto}
 
     /* Header */
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(6,43,31,.72), rgba(6,43,31,.35));
-      border-bottom: 1px solid var(--stroke);
+    header{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter:blur(10px);
+      background:rgba(6,43,31,.85);
+      border-bottom:1px solid var(--stroke);
     }
-    html[data-theme="light"] .topbar{
-      background: linear-gradient(180deg, rgba(232,246,239,.92), rgba(232,246,239,.65));
-    }
-
-    .topbarInner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
+    .headerWrap{
+      display:flex;align-items:center;gap:12px;
       padding:12px 0;
     }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width: 190px;
-    }
     .logo{
-      width:40px; height:40px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.92);
-      display:grid;
-      place-items:center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      overflow:hidden;
-      border: 1px solid rgba(0,0,0,.06);
+      width:42px;height:42px;border-radius:50%;
+      background:#fff;color:#062b1f;
+      display:grid;place-items:center;
+      font-weight:900;
     }
-    .logo span{
-      font-weight: 900;
-      color:#062b1f;
-      letter-spacing:.4px;
-      font-size: 13px;
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a{
+      padding:8px 12px;border-radius:999px;
+      border:1px solid var(--stroke);
+      font-size:13px;
+      background:rgba(255,255,255,.05);
     }
-    .brandText{
-      display:flex;
-      flex-direction:column;
-      line-height:1.1;
-    }
-    .brandText b{ font-size: 14px; }
-    .brandText small{ color:var(--muted); font-size: 12px; margin-top:2px; }
-
-    .navChips{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:center;
-      flex: 1;
-    }
-    .chipNav{
-      padding:9px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      font-size: 13px;
-      color: var(--text);
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-      white-space: nowrap;
-    }
-    .chipNav:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); }
-    .chipNav.active{
-      border-color: rgba(214,179,90,.55);
-      background: rgba(214,179,90,.12);
-      color: var(--text);
+    nav a.active{
+      border-color:var(--gold);
+      background:rgba(214,179,90,.15);
     }
 
-    .rightControls{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      min-width: 130px;
-      justify-content:flex-end;
-    }
-    .iconbtn{
-      height:38px; width:42px;
-      border-radius: 12px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      transition: transform .15s ease, background .15s ease;
-      user-select:none;
-    }
-    .iconbtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); }
+    /* Hero */
+    .hero{padding:28px 0 14px}
+    .hero h1{margin:0 0 6px;font-size:26px}
+    .hero p{margin:0;color:var(--muted)}
 
-    /* Main */
-    .hero{
-      padding: 22px 0 10px;
-    }
-    .hero h1{
-      margin: 0 0 6px;
-      font-size: clamp(20px, 3vw, 28px);
-      letter-spacing:.2px;
-    }
-    .hero p{
-      margin: 0;
-      color: var(--muted);
-      max-width: 70ch;
-    }
-
+    /* Payment Panel */
     .panel{
-      margin: 14px 0 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
+      margin-top:16px;
+      border:1px solid var(--stroke);
+      border-radius:22px;
+      background:rgba(255,255,255,.04);
+      box-shadow:var(--shadow);
       overflow:hidden;
     }
-
-    .panelHeader{
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--stroke);
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      justify-content:space-between;
-      background: linear-gradient(90deg, rgba(214,179,90,.12), rgba(255,255,255,0));
+    .panelHead{
+      padding:14px 16px;
+      border-bottom:1px solid var(--stroke);
+      background:linear-gradient(90deg,rgba(214,179,90,.15),transparent);
     }
-    .panelHeader b{ font-size: 14px; }
-    .panelHeader small{ color: var(--muted); display:block; margin-top:4px; }
-
-    .steps{
-      padding: 12px 16px 2px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .stepPill{
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 12.8px;
-      color: var(--text);
-    }
-    .stepPill em{ color: var(--gold); font-style: normal; font-weight: 700; }
+    .panelHead b{font-size:14px}
+    .panelHead small{display:block;color:var(--muted);margin-top:4px}
 
     .grid{
-      padding: 14px 16px 16px;
+      padding:16px;
       display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 12px;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
     }
-    @media (max-width: 760px){
-      .topbarInner{ flex-wrap:wrap; }
-      .brand{ min-width:auto; }
-      .navChips{ justify-content:flex-start; }
-      .rightControls{ min-width:auto; }
-      .grid{ grid-template-columns: 1fr; }
+    @media(max-width:760px){
+      .grid{grid-template-columns:1fr}
     }
 
-    .paybtn{
-      width:100%;
-      text-align:left;
-      border-radius: 16px;
-      padding: 14px 14px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      cursor:pointer;
+    .payBtn{
+      padding:16px;
+      border-radius:16px;
+      border:1px solid var(--stroke);
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:10px;
-      transition: transform .14s ease, background .14s ease, border-color .14s ease;
-      position:relative;
-      overflow:hidden;
-      min-height: 72px;
-    }
-    .paybtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); }
-    .paybtn:active{ transform: translateY(0px) scale(.995); }
-
-    .payLeft b{ display:block; font-size: 14px; }
-    .payLeft small{ display:block; margin-top: 3px; color: var(--muted); font-size: 12.5px; }
-
-    .badge{
-      height: 38px;
-      width: 44px;
-      border-radius: 14px;
-      border: 1px solid var(--stroke);
-      display:grid;
-      place-items:center;
-      font-weight: 900;
-      letter-spacing:.4px;
-      color: var(--text);
-      background: rgba(255,255,255,.04);
-    }
-
-    /* Different method colors */
-    .m-bkashm{ background: linear-gradient(180deg, var(--pink), rgba(255,255,255,.03)); border-color: rgba(255,125,205,.35); }
-    .m-bkashp{ background: linear-gradient(180deg, var(--warn), rgba(255,255,255,.03)); border-color: rgba(255,207,86,.35); }
-    .m-rocket{ background: linear-gradient(180deg, var(--violet), rgba(255,255,255,.03)); border-color: rgba(184,138,255,.35); }
-    .m-nagad{ background: linear-gradient(180deg, var(--red), rgba(255,255,255,.03)); border-color: rgba(255,116,116,.35); }
-    .m-bank{  background: linear-gradient(180deg, var(--ok), rgba(255,255,255,.03)); border-color: rgba(67,255,168,.35); }
-    .m-card{  background: linear-gradient(180deg, var(--info), rgba(255,255,255,.03)); border-color: rgba(122,198,255,.35); }
-
-    .actionsRow{
-      padding: 0 16px 16px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
       align-items:center;
-      justify-content:space-between;
-    }
-    .cta{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding: 11px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(214,179,90,.45);
-      background: rgba(214,179,90,.12);
-      color: var(--text);
       cursor:pointer;
-      font-weight: 750;
-      font-size: 13.5px;
-      transition: transform .14s ease, background .14s ease;
-      user-select:none;
+      transition:.15s;
+      background:rgba(255,255,255,.05);
     }
-    .cta:hover{ transform: translateY(-1px); background: rgba(214,179,90,.16); }
-    .cta.secondary{
-      border-color: var(--stroke);
-      background: rgba(255,255,255,.04);
-      font-weight: 700;
-    }
+    .payBtn:hover{transform:translateY(-1px)}
+    .payBtn b{font-size:14px}
+    .payBtn small{display:block;color:var(--muted);font-size:12px}
 
-    /* Details card */
-    .details{
-      padding: 16px;
+    .bkash{border-color:var(--bkash);background:rgba(255,95,162,.12)}
+    .rocket{border-color:var(--rocket);background:rgba(155,124,255,.12)}
+    .nagad{border-color:var(--nagad);background:rgba(255,107,107,.12)}
+    .bank{border-color:var(--bank);background:rgba(61,220,151,.12)}
+    .card{border-color:var(--cardc);background:rgba(106,184,255,.12)}
+
+    /* Instruction */
+    .info{
+      padding:16px;
+      border-top:1px solid var(--stroke);
       display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap: 12px;
-      border-top: 1px solid var(--stroke);
-    }
-    @media (max-width: 900px){
-      .details{ grid-template-columns: 1fr; }
+      gap:12px;
     }
     .infoCard{
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding: 14px;
+      border:1px solid var(--stroke);
+      border-radius:16px;
+      padding:14px;
+      background:rgba(255,255,255,.04);
     }
-    .infoCard h3{
-      margin: 0 0 8px;
-      font-size: 14px;
-      letter-spacing:.2px;
+    .infoCard h3{margin:0 0 6px;font-size:14px}
+    .infoCard p,li{font-size:13px;color:var(--muted)}
+
+    /* Footer */
+    footer{
+      margin-top:26px;
+      padding:20px 0 70px;
+      border-top:1px solid var(--stroke);
+      background:rgba(255,255,255,.02);
     }
-    .infoCard p, .infoCard
+    .footerGrid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:12px;
+    }
+    @media(max-width:760px){
+      .footerGrid{grid-template-columns:1fr}
+    }
+    .footerCard{
+      border:1px solid var(--stroke);
+      border-radius:18px;
+      padding:14px;
+      background:rgba(255,255,255,.04);
+    }
+    .footerCard h3{margin:0 0 6px;font-size:14px}
+    .footerCard p{font-size:13px;color:var(--muted)}
+
+    /* Bottom WhatsApp */
+    .bottomBar{
+      position:fixed;left:0;right:0;bottom:0;
+      border-top:1px solid var(--stroke);
+      background:rgba(6,43,31,.92);
+    }
+    .bottomInner{
+      width:var(--container);
+      margin:auto;
+      padding:10px 0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .cta{
+      padding:10px 14px;
+      border-radius:14px;
+      background:rgba(214,179,90,.18);
+      border:1px solid var(--gold);
+      font-weight:700;
+      font-size:13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container headerWrap">
+    <a href="index.html" class="logo">LE</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="ielts.html">IELTS</a>
+      <a href="pte.html">PTE</a>
+      <a href="studyabroad.html">Study Abroad</a>
+      <a class="active" href="pay.html">Payment</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h1>Payment — tap & follow</h1>
+    <p>Choose method → instruction follow korun → screenshot / Txn ID WhatsApp e pathan.  
+    Amra confirm kore batch + portal direction share kore dibo.</p>
+  </section>
+
+  <section class="panel">
+    <div class="panelHead">
+      <b>Select Payment Method</b>
+      <small>Each option tap korlei instruction clear paben</small>
+    </div>
+
+    <div class="grid">
+      <div class="payBtn bkash">
+        <div><b>Bkash Merchant</b><small>Make Payment (Merchant)</small></div>
+        <div>BK</div>
+      </div>
+
+      <div class="payBtn bkash">
+        <div><b>Bkash Personal</b><small>Send Money</small></div>
+        <div>SM</div>
+      </div>
+
+      <div class="payBtn rocket">
+        <div><b>Rocket</b><small>Send Money</small></div>
+        <div>RK</div>
+      </div>
+
+      <div class="payBtn nagad">
+        <div><b>Nagad</b><small>Send Money</small></div>
+        <div>NG</div>
+      </div>
+
+      <div class="payBtn bank">
+        <div><b>Bank (DBBL)</b><small>Account Transfer</small></div>
+        <div>AC</div>
+      </div>
+
+      <div class="payBtn card">
+        <div><b>Visa Card Transfer</b><small>IFIC Bank (Card)</small></div>
+        <div>VC</div>
+      </div>
+    </div>
+
+    <div class="info">
+      <div class="infoCard">
+        <h3>Send these for confirmation</h3>
+        <ul>
+          <li>Payment Method</li>
+          <li>Transaction ID / Screenshot</li>
+          <li>Name</li>
+          <li>Phone Number</li>
+          <li>Email</li>
+        </ul>
+      </div>
+
+      <div class="infoCard">
+        <h3>After confirmation</h3>
+        <ul>
+          <li>Batch / group confirmed</li>
+          <li>Portal access shared</li>
+          <li>Class timing & next steps</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footerGrid">
+    <div class="footerCard">
+      <h3>Contact & Location</h3>
+      <p>51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214</p>
+    </div>
+    <div class="footerCard">
+      <h3>Need help?</h3>
+      <p>WhatsApp e screenshot / Txn ID pathan — amra fast confirm dibo.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="bottomBar">
+  <div class="bottomInner">
+    <span>Need guidance? Chat on WhatsApp</span>
+    <a class="cta" href="https://wa.me/8801611611139" target="_blank">Talk with LizOn</a>
+  </div>
+</div>
+
+</body>
+</html>

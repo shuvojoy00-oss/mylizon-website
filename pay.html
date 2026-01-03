@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payment | LizOn Education</title>
-  <meta name="description" content="Payment — LizOn Education. Choose method → pay → send screenshot/Txn ID on WhatsApp for confirmation." />
+  <meta name="description" content="LizOn Education payment details. Choose method → pay → send Txn ID or screenshot on WhatsApp." />
   <meta name="theme-color" content="#0b2a1f" />
 
   <style>
@@ -24,6 +24,8 @@
       --teal:#25a58a;
       --blue:#3b82f6;
       --pink:#ff6fb1;
+      --orange:#ffb020;
+      --purple:#a78bfa;
 
       --soft: 0 12px 40px rgba(0,0,0,.35);
       --shadow2: 0 18px 60px rgba(0,0,0,.45);
@@ -58,14 +60,13 @@
         linear-gradient(180deg, var(--bg1), var(--bg2));
       overflow-x:hidden;
     }
-
     a{ color:inherit; text-decoration:none; }
-    img{ max-width:100%; display:block; }
     button{ font:inherit; }
+    img{ max-width:100%; display:block; }
 
     .wrap{ width: min(var(--max), calc(100% - 32px)); margin:0 auto; }
 
-    /* Header (same vibe as pte.html) */
+    /* Header */
     .header{
       position:sticky;
       top:0;
@@ -78,7 +79,6 @@
       background: linear-gradient(180deg, rgba(243,251,247,.88), rgba(243,251,247,.55));
       border-bottom: 1px solid rgba(0,0,0,.06);
     }
-
     .head-row{
       display:flex;
       align-items:center;
@@ -86,7 +86,6 @@
       gap:14px;
       padding:12px 0;
     }
-
     .brand{
       display:flex;
       align-items:center;
@@ -127,11 +126,6 @@
       transition: transform .12s ease, background .12s ease;
     }
     .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,.07); }
-    .chip.active{
-      border-color: rgba(215,178,74,.35);
-      background: linear-gradient(180deg, rgba(215,178,74,.20), rgba(215,178,74,.10));
-      font-weight: 900;
-    }
     [data-theme="light"] .chip{ border:1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.72); }
 
     .menu-btn{
@@ -147,9 +141,7 @@
     }
     .menu-btn svg{ width:22px; height:22px; }
 
-    /* Sections / Cards */
     section{ padding: 22px 0; }
-    .hero{ padding: 22px 0 10px; }
 
     .card{
       border-radius: var(--radius2);
@@ -181,7 +173,7 @@
 
     .title{
       margin: 10px 0 8px;
-      font-size: clamp(24px, 3.2vw, 34px);
+      font-size: clamp(22px, 3vw, 34px);
       line-height: 1.1;
       letter-spacing: -0.5px;
     }
@@ -190,22 +182,44 @@
       font-size: 14.5px;
       color: var(--muted);
       line-height: 1.55;
-      max-width: 74ch;
+      max-width: 75ch;
     }
 
-    .cta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top: 14px;
+    .grid-2{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:12px;
     }
+    @media (max-width: 920px){
+      .desktop-nav{ display:none; }
+      .brand{ min-width: unset; }
+    }
+    @media (max-width: 860px){
+      .grid-2{ grid-template-columns: 1fr; }
+      .wrap{ width: calc(100% - 24px); }
+    }
+
+    .mini-card{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      padding: 14px;
+      box-shadow: var(--soft);
+    }
+    [data-theme="light"] .mini-card{
+      border:1px solid rgba(0,0,0,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.76));
+    }
+    .mini-title{ margin:0 0 6px; font-weight: 950; letter-spacing: -.2px; }
+    .mini-text{ margin:0; color: var(--muted); font-size: 13.5px; line-height: 1.55; }
+
     .btn{
       padding: 10px 14px;
       border-radius: 14px;
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.04);
       color: var(--text);
-      font-weight: 700;
+      font-weight: 900;
       font-size: 13.5px;
       cursor:pointer;
       display:inline-flex;
@@ -215,22 +229,11 @@
       min-height: 40px;
       transition: transform .12s ease, filter .12s ease, background .12s ease;
       box-shadow: var(--soft);
+      user-select:none;
     }
     .btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
     .btn:active{ transform: translateY(0px); }
 
-    .btn-primary{
-      border-color: rgba(215,178,74,.35);
-      background: linear-gradient(180deg, rgba(215,178,74,.20), rgba(215,178,74,.10));
-    }
-    .btn-blue{
-      border-color: rgba(59,130,246,.35);
-      background: linear-gradient(180deg, rgba(59,130,246,.22), rgba(59,130,246,.10));
-    }
-    .btn-teal{
-      border-color: rgba(37,165,138,.35);
-      background: linear-gradient(180deg, rgba(37,165,138,.22), rgba(37,165,138,.10));
-    }
     .btn-ghost{
       box-shadow:none;
       background: transparent;
@@ -238,17 +241,19 @@
     }
     [data-theme="light"] .btn-ghost{ border-color: rgba(0,0,0,.10); }
 
+    .cta-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 12px; }
     .muted{ color: var(--muted); }
 
-    /* Payment buttons (different color each) */
-    .tap-grid{
+    /* Payment buttons: different color each */
+    .pay-grid{
       display:grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap:12px;
+      margin-top:12px;
     }
-    @media (max-width: 860px){ .tap-grid{ grid-template-columns: 1fr; } }
+    @media (max-width: 860px){ .pay-grid{ grid-template-columns: 1fr; } }
 
-    .tap-btn{
+    .pay-btn{
       width:100%;
       text-align:left;
       display:flex;
@@ -264,31 +269,122 @@
       transition: transform .12s ease, filter .12s ease;
       color: var(--text);
     }
-    .tap-btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+    .pay-btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
 
-    .tap-left b{ display:block; font-size:14px; }
-    .tap-left span{ display:block; margin-top:4px; font-size:12.5px; color: var(--muted); }
+    .pay-left b{ display:block; font-size:14px; }
+    .pay-left span{ display:block; margin-top:4px; font-size:12.5px; color: var(--muted); }
 
-    .tap-ico{
-      width:42px; height:42px;
-      border-radius: 14px;
+    .pay-ico{
+      width:44px; height:44px;
+      border-radius: 16px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.10);
       display:grid;
       place-items:center;
       flex: 0 0 auto;
     }
-    .tap-ico svg{ width:22px; height:22px; }
+    .pay-ico svg{ width:22px; height:22px; }
 
-    /* Unique color styles per button */
-    .tap-btn.bkashM{ border-color: rgba(37,165,138,.30); background: linear-gradient(180deg, rgba(37,165,138,.12), rgba(255,255,255,.01)); }
-    .tap-btn.bkashP{ border-color: rgba(215,178,74,.30); background: linear-gradient(180deg, rgba(215,178,74,.12), rgba(255,255,255,.01)); }
-    .tap-btn.rocket{ border-color: rgba(110,170,255,.30); background: linear-gradient(180deg, rgba(110,170,255,.12), rgba(255,255,255,.01)); }
-    .tap-btn.nagad{ border-color: rgba(255,160,210,.26); background: linear-gradient(180deg, rgba(255,160,210,.10), rgba(255,255,255,.01)); }
-    .tap-btn.bank{ border-color: rgba(46,204,113,.26); background: linear-gradient(180deg, rgba(46,204,113,.10), rgba(255,255,255,.01)); }
-    .tap-btn.visa{ border-color: rgba(59,130,246,.32); background: linear-gradient(180deg, rgba(59,130,246,.14), rgba(255,255,255,.01)); }
+    .c-teal{ border-color: rgba(37,165,138,.28); background: linear-gradient(180deg, rgba(37,165,138,.10), rgba(255,255,255,.01)); }
+    .c-gold{ border-color: rgba(215,178,74,.28); background: linear-gradient(180deg, rgba(215,178,74,.10), rgba(255,255,255,.01)); }
+    .c-blue{ border-color: rgba(110,170,255,.28); background: linear-gradient(180deg, rgba(110,170,255,.10), rgba(255,255,255,.01)); }
+    .c-pink{ border-color: rgba(255,160,210,.22); background: linear-gradient(180deg, rgba(255,160,210,.08), rgba(255,255,255,.01)); }
+    .c-orange{ border-color: rgba(255,176,32,.22); background: linear-gradient(180deg, rgba(255,176,32,.08), rgba(255,255,255,.01)); }
+    .c-purple{ border-color: rgba(167,139,250,.22); background: linear-gradient(180deg, rgba(167,139,250,.08), rgba(255,255,255,.01)); }
 
-    /* Footer (same structure vibe) */
+    /* Overlay sheet */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.62);
+      backdrop-filter: blur(6px);
+      z-index:50;
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      padding: 14px;
+    }
+    .overlay.show{ display:flex; }
+
+    .sheet{
+      width:min(760px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(12,32,25,.96), rgba(6,20,15,.92));
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      transform: translateY(10px);
+      animation: sheetIn .16s ease forwards;
+    }
+    [data-theme="light"] .sheet{
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.86));
+      border:1px solid rgba(0,0,0,.10);
+    }
+    @keyframes sheetIn{ to{ transform: translateY(0); } }
+
+    .sheet-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 14px 14px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    [data-theme="light"] .sheet-head{ border-bottom:1px solid rgba(0,0,0,.08); }
+    .sheet-head b{ font-size: 14px; letter-spacing:.2px; }
+    .x{
+      width:38px; height:38px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow: var(--soft);
+      flex:0 0 auto;
+      font-weight: 950;
+    }
+    [data-theme="light"] .x{ border:1px solid rgba(0,0,0,.10); background: rgba(0,0,0,.04); }
+
+    .sheet-body{ padding: 14px; max-height: 74vh; overflow:auto; }
+
+    .kv{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin-top: 10px;
+    }
+    .kv .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    [data-theme="light"] .kv .row{ border:1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.72); }
+    .kv .row b{ font-size: 13px; }
+    .kv .row code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    [data-theme="light"] .kv .row code{ background: rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.10); }
+
+    .qr{
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+      box-shadow: var(--soft);
+    }
+
+    /* Footer */
     .footer{ padding: 26px 0 96px; }
     .footer-columns{
       display:grid;
@@ -302,34 +398,30 @@
       letter-spacing:.2px;
       font-weight: 950;
     }
-    .footer-links{ display:flex; flex-wrap:wrap; gap:10px; }
     .btn-tiny{
       padding: 8px 10px;
       border-radius: 12px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
       box-shadow: var(--soft);
       display:inline-flex;
       align-items:center;
       justify-content:center;
       min-height: 34px;
     }
+    .footer-links{ display:flex; flex-wrap:wrap; gap:10px; }
     .footer-small{
       color: var(--muted);
       font-size: 12.5px;
       line-height: 1.6;
     }
-    .socials{ display:flex; flex-wrap:wrap; gap:10px; }
-    .rule{
-      height:1px;
-      background: rgba(255,255,255,.10);
-      margin: 14px 0;
-    }
+    .rule{ height:1px; background: rgba(255,255,255,.10); margin: 14px 0; }
     [data-theme="light"] .rule{ background: rgba(0,0,0,.10); }
+    .socials{ display:flex; flex-wrap:wrap; gap:10px; }
 
-    /* Bottom guidance bar */
+    /* Bottom bar */
     .bottom-bar{
       position:fixed;
       left:0; right:0; bottom:0;
@@ -350,11 +442,12 @@
       align-items:center;
       justify-content:space-between;
       gap:12px;
+      flex-wrap:wrap;
     }
     .bottom-row b{ font-size: 13px; }
     .bottom-row .muted{ font-size:12.5px; }
 
-    /* Smaller theme toggle */
+    /* Theme toggle */
     .theme-mini{
       position:fixed;
       right:16px;
@@ -372,36 +465,11 @@
     }
     .theme-mini svg{ width:18px; height:18px; opacity:.95; }
 
-    /* Sheets / overlays */
-    .overlay{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.62);
-      backdrop-filter: blur(6px);
-      z-index:40;
-      display:none;
-      align-items:flex-end;
-      justify-content:center;
-      padding: 14px;
-    }
-    .overlay.show{ display:flex; }
-
     /* iPhone-like floating menu */
     .overlay.menu-float{
       align-items:flex-start;
       justify-content:flex-end;
       padding-top: 70px;
-    }
-
-    .sheet{
-      width:min(720px, 100%);
-      border-radius: 22px;
-      border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(12,32,25,.96), rgba(6,20,15,.92));
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      transform: translateY(10px);
-      animation: sheetIn .16s ease forwards;
     }
     .sheet.float{
       width: min(360px, calc(100vw - 28px));
@@ -411,76 +479,13 @@
       animation: floatIn .16s ease forwards;
     }
     @keyframes floatIn{ to{ transform: translateY(0) scale(1); opacity:1; } }
-    [data-theme="light"] .sheet{
-      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.86));
-      border:1px solid rgba(0,0,0,.10);
-    }
-    @keyframes sheetIn{ to{ transform: translateY(0); } }
-
-    .sheet-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding: 14px 14px 10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    [data-theme="light"] .sheet-head{ border-bottom:1px solid rgba(0,0,0,.08); }
-    .sheet-head b{ font-size: 14px; letter-spacing:.2px; }
-
-    .x{
-      width:38px; height:38px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      box-shadow: var(--soft);
-      flex:0 0 auto;
-      font-weight: 950;
-    }
-    [data-theme="light"] .x{ border:1px solid rgba(0,0,0,.10); background: rgba(0,0,0,.04); }
-
-    .sheet-body{ padding: 14px; max-height: 78vh; overflow:auto; }
-
-    .mini-card{
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      padding: 14px;
-      box-shadow: var(--soft);
-    }
-    [data-theme="light"] .mini-card{
-      border:1px solid rgba(0,0,0,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.76));
-    }
-    .mini-title{
-      margin:0 0 6px;
-      font-weight: 950;
-      letter-spacing: -.2px;
-    }
-    .mini-text{
-      margin:0;
-      color: var(--muted);
-      font-size: 13.5px;
-      line-height: 1.6;
-    }
-
-    .sep{
-      height:1px;
-      background: rgba(255,255,255,.10);
-      margin: 12px 0;
-    }
-    [data-theme="light"] .sep{ background: rgba(0,0,0,.10); }
-
     .list{ display:flex; flex-direction:column; gap:10px; }
     .item{
       padding: 12px 12px;
       border-radius: 16px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
-      font-weight: 850;
+      font-weight: 900;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -488,12 +493,27 @@
     }
     [data-theme="light"] .item{ border:1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.72); }
     .item span{ font-weight: 800; color: var(--muted); font-size: 12px; }
+    .sep{ height:1px; background: rgba(255,255,255,.10); margin: 12px 0; }
+    [data-theme="light"] .sep{ background: rgba(0,0,0,.10); }
 
-    @media (max-width: 920px){
-      .desktop-nav{ display:none; }
-      .brand{ min-width: unset; }
-      .wrap{ width: calc(100% - 24px); }
+    /* toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      transform: translateX(-50%);
+      bottom: 152px;
+      z-index:80;
+      padding:10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.30);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow2);
+      font-weight: 900;
+      font-size: 12.5px;
+      display:none;
     }
+    [data-theme="light"] .toast{ background: rgba(255,255,255,.75); border:1px solid rgba(0,0,0,.10); }
   </style>
 </head>
 
@@ -509,7 +529,7 @@
           </div>
           <div class="brand-txt">
             <b>LizOn Education</b>
-            <span>Payment (tap & follow)</span>
+            <span>Payment Details</span>
           </div>
         </a>
 
@@ -517,8 +537,8 @@
           <a class="chip" href="index.html">Home</a>
           <a class="chip" href="ielts.html">IELTS</a>
           <a class="chip" href="pte.html">PTE</a>
-          <a class="chip" href="studyabroad.html">Study Abroad</a>
-          <a class="chip active" href="pay.html">Payment</a>
+          <a class="chip" href="#payment">Payment</a>
+          <a class="chip" href="#help">Confirm</a>
         </nav>
 
         <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">
@@ -530,7 +550,7 @@
     </div>
   </header>
 
-  <!-- MENU SHEET (iPhone floating) -->
+  <!-- MENU SHEET -->
   <div class="overlay menu-float" id="menuSheet" aria-hidden="true">
     <div class="sheet float" role="dialog" aria-modal="true" aria-label="Navigate">
       <div class="sheet-head">
@@ -540,122 +560,127 @@
       <div class="sheet-body">
         <div class="list">
           <a class="item" href="index.html">Home <span>→</span></a>
-          <a class="item" href="ielts.html">IELTS <span>→</span></a>
           <a class="item" href="pte.html">PTE <span>→</span></a>
+          <a class="item" href="ielts.html">IELTS <span>→</span></a>
+          <a class="item" href="#payment">Payment <span>→</span></a>
+          <a class="item" href="#help">Confirm <span>→</span></a>
           <a class="item" href="studyabroad.html">Study Abroad <span>→</span></a>
-          <a class="item" href="pay.html">Payment <span>→</span></a>
         </div>
-
         <div class="sep"></div>
-
         <div class="cta-row" style="margin-top:0;">
-          <a class="btn btn-primary"
-             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Payment%20complete%20korbo.%20Method%20choose%20kore%20screenshot%20pathabo.%20Confirm%20korben%3F"
-             target="_blank" rel="noopener">Talk with LizOn</a>
-          <button class="btn btn-ghost" id="menuThemeQuick" type="button">Toggle Theme</button>
+          <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+          <a class="btn btn-ghost" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20payment%20confirm%20korte%20chai.%20Txn%20ID%20%2Fscreenshot%20pathabo.%20Confirm%20korben%3F" target="_blank" rel="noopener">Talk with LizOn</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- PAYMENT DETAILS SHEET -->
+  <!-- PAYMENT DETAIL SHEET -->
   <div class="overlay" id="paySheet" aria-hidden="true">
-    <div class="sheet" role="dialog" aria-modal="true" aria-label="Payment details">
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Payment detail">
       <div class="sheet-head">
-        <b id="payTitle">Payment</b>
+        <b id="paySheetTitle">Payment</b>
         <button class="x" id="payClose" type="button" aria-label="Close">✕</button>
       </div>
       <div class="sheet-body">
-        <div class="mini-card" id="payBodyCard">
-          <p class="mini-title" id="payMethod" style="margin:0 0 6px;">Method</p>
-          <p class="mini-text" id="paySteps">Steps...</p>
+        <div class="mini-card">
+          <p class="mini-title" id="paySheetKicker" style="margin:0 0 6px;">Follow this</p>
+          <p class="mini-text" id="paySheetText">
+            Choose method → pay → screenshot/Txn ID → WhatsApp e pathan.
+          </p>
 
-          <div class="sep"></div>
-
-          <div class="mini-card" style="background:transparent; box-shadow:none; border-color: rgba(255,255,255,.08);">
-            <p class="mini-title" style="margin:0 0 6px;">Send for confirmation</p>
-            <p class="mini-text" style="margin:0;">
-              Payment Method + Txn ID / Screenshot + Name + Phone + Email<br/>
-              Confirm hole batch/group + portal direction share kore dibo.
-            </p>
-          </div>
+          <div class="kv" id="payKV"></div>
 
           <div class="cta-row" style="margin-top:12px;">
-            <a class="btn btn-primary" id="waSend" href="#" target="_blank" rel="noopener">Send Screenshot / Txn ID</a>
-            <button class="btn btn-ghost" id="copyDetails" type="button">Copy details</button>
-            <button class="btn btn-ghost" id="payBack" type="button">Back</button>
+            <button class="btn btn-ghost" id="copyOne" type="button">Copy</button>
+            <button class="btn btn-ghost" id="copyAll" type="button">Copy all</button>
+            <a class="btn btn-ghost" id="waConfirm" href="#" target="_blank" rel="noopener">Send Screenshot / Txn ID</a>
           </div>
         </div>
+
+        <div class="mini-card" style="margin-top:12px;">
+          <p class="mini-title" style="margin:0 0 6px;">QR (optional)</p>
+          <p class="mini-text" style="margin:0 0 10px;">Jodi apnar side-e QR scan easier hoy — use korte paren.</p>
+          <!-- Put your QR image here -->
+          <div class="qr">
+            <img src="assets/payment-qr.png" alt="LizOn Education Payment QR" loading="lazy" />
+          </div>
+          <p class="mini-text" style="margin-top:10px;">
+            <span style="opacity:.9;">(If this file name differs in your GitHub assets, just rename it or update the src.)</span>
+          </p>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <!-- MAIN -->
+  <div class="toast" id="toast">Copied</div>
+
   <main class="wrap">
 
-    <section class="hero">
+    <!-- HERO -->
+    <section>
       <div class="card">
         <div class="card-pad">
           <div class="kicker"><span class="k-dot"></span>Designed for Desired Score</div>
-          <h1 class="title">Payment — <span style="color:var(--gold-strong)">tap & follow</span></h1>
+          <h1 class="title">Payment Details — <span style="color:var(--gold-strong)">tap & copy</span>.</h1>
           <p class="lead">
-            Choose method → instruction follow korun → screenshot/Txn ID WhatsApp e pathan.
-            Amra confirm kore batch/group + portal direction share kore dibo.
+            Rule simple: <b>choose method</b> → <b>pay</b> → <b>Txn ID / screenshot</b> WhatsApp e pathan.
+            Confirm hole amra admission/batch/portal direction ekshathe diye dibo.
           </p>
 
-          <div class="cta-row">
-            <a class="btn btn-primary"
-               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Payment%20complete%20korbo.%20Method%20choose%20kore%20screenshot%20pathabo.%20Confirm%20korben%3F"
+          <div class="cta-row" style="margin-top:14px;">
+            <button class="btn btn-ghost" id="btnCopyAllTop" type="button">Copy all payment info</button>
+            <a class="btn btn-ghost"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20payment%20confirm%20korte%20chai.%20Txn%20ID%20%2Fscreenshot%20pathabo.%20Confirm%20korben%3F"
                target="_blank" rel="noopener">Talk with LizOn</a>
-            <button class="btn btn-teal" id="copyAllQuick" type="button">Copy WhatsApp text</button>
-            <a class="btn btn-ghost" href="pte.html">Back to PTE</a>
           </div>
 
           <p class="muted" style="margin:10px 0 0;font-size:13px;">
-            Note: Payment info update korar jonno file er top-e “PAYMENT_CONFIG” section-e number change korlei hoy.
+            Helpline (WhatsApp): <b>01611611139</b>
           </p>
         </div>
       </div>
     </section>
 
-    <!-- PAYMENT BUTTONS -->
+    <!-- PAYMENT -->
     <section id="payment">
-      <h2 style="margin:0 0 10px; font-size:18px; letter-spacing:-.2px;">Choose Payment Method</h2>
+      <h2 style="margin:0 0 10px; font-size:18px; letter-spacing:-.2px;">Choose your payment method</h2>
       <p class="muted" style="margin:0 0 12px;">
-        Protita option tap korlei exact instruction + number show hobe.
+        Prottek method-er button er color alada — so confusion kom. Tap korlei details + copy option.
       </p>
 
-      <div class="tap-grid" style="margin-top:12px;">
-        <button class="tap-btn bkashM" type="button" data-pay="bkash_merchant" aria-label="Bkash Merchant">
-          <div class="tap-left">
-            <b>Bkash Merchant</b>
-            <span>Make Payment (Merchant)</span>
+      <div class="pay-grid" aria-label="Payment methods">
+        <button class="pay-btn c-teal" type="button" data-pay="bkash_merchant">
+          <div class="pay-left">
+            <b>bKash Merchant (Make Payment)</b>
+            <span>Merchant: <b>01611611139</b></span>
           </div>
-          <div class="tap-ico" aria-hidden="true">
+          <div class="pay-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2v20"></path><path d="M5 7h10a4 4 0 1 1 0 8H7a4 4 0 0 0 0 8h12"></path>
             </svg>
           </div>
         </button>
 
-        <button class="tap-btn bkashP" type="button" data-pay="bkash_personal" aria-label="Bkash Personal">
-          <div class="tap-left">
-            <b>Bkash Personal</b>
-            <span>Send Money</span>
+        <button class="pay-btn c-gold" type="button" data-pay="bkash_personal">
+          <div class="pay-left">
+            <b>bKash Personal (Send Money)</b>
+            <span>Personal: <b>01337533979</b></span>
           </div>
-          <div class="tap-ico" aria-hidden="true">
+          <div class="pay-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M20 7h-9"></path><path d="M20 12h-9"></path><path d="M20 17h-9"></path><path d="M7 7l-3 3 3 3"></path>
             </svg>
           </div>
         </button>
 
-        <button class="tap-btn rocket" type="button" data-pay="rocket" aria-label="Rocket">
-          <div class="tap-left">
-            <b>Rocket</b>
-            <span>Send Money</span>
+        <button class="pay-btn c-blue" type="button" data-pay="rocket">
+          <div class="pay-left">
+            <b>Rocket Personal (Send Money)</b>
+            <span>Rocket: <b>01337533979</b></span>
           </div>
-          <div class="tap-ico" aria-hidden="true">
+          <div class="pay-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4.5 16.5 8 13l3 3-3.5 3.5a2 2 0 0 1-3 0 2 2 0 0 1 0-3Z"></path>
               <path d="M14 10l-4 4"></path><path d="M16 8l-2 2"></path><path d="M19 5c-3 0-6 1-8 3l5 5c2-2 3-5 3-8Z"></path>
@@ -663,36 +688,48 @@
           </div>
         </button>
 
-        <button class="tap-btn nagad" type="button" data-pay="nagad" aria-label="Nagad">
-          <div class="tap-left">
-            <b>Nagad</b>
-            <span>Send Money</span>
+        <button class="pay-btn c-pink" type="button" data-pay="nagad">
+          <div class="pay-left">
+            <b>Nagad Personal (Send Money)</b>
+            <span>Nagad: <b>01337533979</b></span>
           </div>
-          <div class="tap-ico" aria-hidden="true">
+          <div class="pay-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2 2 7l10 5 10-5-10-5Z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path>
             </svg>
           </div>
         </button>
 
-        <button class="tap-btn bank" type="button" data-pay="bank" aria-label="Bank DBBL">
-          <div class="tap-left">
-            <b>Bank (DBBL)</b>
-            <span>Account transfer</span>
+        <button class="pay-btn c-purple" type="button" data-pay="upay">
+          <div class="pay-left">
+            <b>Upay Personal (Send Money)</b>
+            <span>Upay: <b>01889993896</b></span>
           </div>
-          <div class="tap-ico" aria-hidden="true">
+          <div class="pay-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.65-7 10-7 10Z"></path>
+            </svg>
+          </div>
+        </button>
+
+        <button class="pay-btn c-orange" type="button" data-pay="bank">
+          <div class="pay-left">
+            <b>Bank Transfer (DBBL)</b>
+            <span>Account: <b>2211510117789</b></span>
+          </div>
+          <div class="pay-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 10h18"></path><path d="M5 10v10"></path><path d="M19 10v10"></path><path d="M9 10v10"></path><path d="M15 10v10"></path><path d="M2 20h20"></path><path d="M12 2 2 7h20L12 2Z"></path>
             </svg>
           </div>
         </button>
 
-        <button class="tap-btn visa" type="button" data-pay="visa" aria-label="Visa Card Transfer">
-          <div class="tap-left">
-            <b>Visa Card Transfer</b>
-            <span>IFIC Bank (Card)</span>
+        <button class="pay-btn c-blue" type="button" data-pay="visa">
+          <div class="pay-left">
+            <b>Visa Card Transfer (IFIC/Brac)</b>
+            <span>Card: <b>4777920004855617</b> (Brac Bank)</span>
           </div>
-          <div class="tap-ico" aria-hidden="true">
+          <div class="pay-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M3 10h18"></path>
             </svg>
@@ -701,10 +738,45 @@
       </div>
 
       <div class="cta-row" style="margin-top:14px;">
-        <a class="btn btn-primary"
-           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Payment%20complete%20kore%20screenshot%20%2F%20Txn%20ID%20pathacchi.%20Confirm%20korben%3F"
+        <a class="btn btn-ghost"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20payment%20complete%20kore%20Txn%20ID%20%2Fscreenshot%20pathacchi.%20Please%20confirm."
            target="_blank" rel="noopener">Send Screenshot / Txn ID</a>
-        <button class="btn btn-ghost" id="openFirst" type="button">Open instructions</button>
+        <button class="btn btn-ghost" id="btnCopyAllMid" type="button">Copy all</button>
+      </div>
+    </section>
+
+    <!-- HELP -->
+    <section id="help">
+      <div class="grid-2" style="align-items:start;">
+        <div class="mini-card" style="border-color: rgba(215,178,74,.28); background: linear-gradient(180deg, rgba(215,178,74,.10), rgba(255,255,255,.01));">
+          <p class="mini-title">After payment — what to send?</p>
+          <p class="mini-text">
+            WhatsApp e just 2 ta জিনিস:
+            <br/>• <b>Transaction ID</b> (or screenshot)
+            <br/>• <b>Your name + course</b> (PTE / IELTS / others)
+            <br/><br/>
+            Confirm hole next steps: batch/group + portal.
+          </p>
+          <div class="cta-row" style="margin-top:12px;">
+            <a class="btn btn-ghost"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20payment%20complete.%20Name%3A%20____%20%7C%20Course%3A%20____%20%7C%20Txn%20ID%3A%20____"
+               target="_blank" rel="noopener">Open WhatsApp format</a>
+          </div>
+        </div>
+
+        <div class="mini-card" style="border-color: rgba(37,165,138,.28); background: linear-gradient(180deg, rgba(37,165,138,.10), rgba(255,255,255,.01));">
+          <p class="mini-title">Need quick confirmation?</p>
+          <p class="mini-text">
+            Helpline: <b>01611611139</b><br/>
+            Location: 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
+          </p>
+          <div class="cta-row" style="margin-top:12px;">
+            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+            <a class="btn btn-ghost"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20payment%20confirm%20korte%20chai.%20Please%20guide."
+               target="_blank" rel="noopener">Talk with LizOn</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -716,14 +788,14 @@
             <div>
               <h3 class="footer-title">Quick Links</h3>
               <div class="footer-links">
-                <a class="btn-tiny" href="pte.html#payment">PTE Payment</a>
+                <a class="btn-tiny" href="pte.html">PTE</a>
                 <a class="btn-tiny" href="ielts.html">IELTS</a>
-                <a class="btn-tiny" href="studyabroad.html">Study Abroad</a>
-                <a class="btn-tiny" href="index.html">Home</a>
+                <a class="btn-tiny" href="#payment">Payment</a>
+                <a class="btn-tiny" href="#help">Confirm</a>
               </div>
 
               <p class="footer-small" style="margin:10px 0 0;">
-                Payment confirm: screenshot/Txn ID WhatsApp e pathan.
+                Payment rule: <b>pay</b> → <b>send Txn ID/screenshot</b> → <b>confirmed</b>.
               </p>
             </div>
 
@@ -737,9 +809,7 @@
 
               <div class="footer-links">
                 <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-                <a class="btn btn-teal"
-                   href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Payment%20niye%20help%20chai.%20Guidance%20diben%3F"
-                   target="_blank" rel="noopener">Help Me</a>
+                <a class="btn btn-ghost" href="https://wa.me/8801611611139" target="_blank" rel="noopener">WhatsApp</a>
               </div>
             </div>
 
@@ -751,7 +821,7 @@
                 <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
               </div>
               <div class="rule"></div>
-              <p class="footer-small" style="margin:0;">© 2025 myLizOn.com | LizOn Education</p>
+              <p class="footer-small" style="margin:0;">© 2026 myLizOn.com | LizOn Education</p>
             </div>
           </div>
         </div>
@@ -764,17 +834,18 @@
   <div class="bottom-bar" role="contentinfo">
     <div class="bottom-row">
       <div>
-        <b>Need guidance?</b> <span class="muted">Send screenshot / Txn ID on WhatsApp</span>
+        <b>Payment done?</b> <span class="muted">Send Txn ID / screenshot on WhatsApp.</span>
       </div>
-      <div style="display:flex; gap:10px; align-items:center;">
-        <a class="btn btn-primary" style="min-height:34px; padding:8px 12px;"
-           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Payment%20complete%20kore%20screenshot%20%2F%20Txn%20ID%20pathacchi.%20Confirm%20korben%3F"
-           target="_blank" rel="noopener">Talk with LizOn</a>
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <button class="btn btn-ghost" style="min-height:34px; padding:8px 12px;" id="btnOpenAll">Copy all</button>
+        <a class="btn btn-ghost" style="min-height:34px; padding:8px 12px;"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20payment%20complete.%20Txn%20ID%20%2Fscreenshot%20pathacchi.%20Please%20confirm."
+           target="_blank" rel="noopener">WhatsApp Confirm</a>
       </div>
     </div>
   </div>
 
-  <!-- Smaller theme toggle -->
+  <!-- Theme toggle -->
   <button class="theme-mini" id="themeBtn" type="button" aria-label="Toggle theme">
     <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M12 3v2M12 19v2M4.2 6.2l1.4 1.4M18.4 17.4l1.4 1.4M3 12h2M19 12h2M6.2 19.8l1.4-1.4M17.4 6.6l1.4-1.4"></path>
@@ -783,59 +854,6 @@
   </button>
 
   <script>
-    // =========================================================
-    // PAYMENT CONFIG (Update ONLY here)
-    // =========================================================
-    const PAYMENT_CONFIG = {
-      helpline: "01611611139",
-      wa: "https://wa.me/8801611611139",
-
-      bkashMerchant: {
-        label: "Bkash Merchant (Make Payment)",
-        number: "01XXXXXXXXX",       // <-- put merchant number
-        accountName: "LizOn Education", // optional
-        note: "Bkash app > Payment > number > amount > reference (your name) > confirm"
-      },
-      bkashPersonal: {
-        label: "Bkash Personal (Send Money)",
-        number: "01XXXXXXXXX",       // <-- put personal number
-        note: "Bkash app > Send Money > number > amount > reference (your name) > confirm"
-      },
-      rocket: {
-        label: "Rocket (Send Money)",
-        number: "01XXXXXXXXX",       // <-- put rocket number
-        note: "Rocket app > Send Money > number > amount > reference (your name) > confirm"
-      },
-      nagad: {
-        label: "Nagad (Send Money)",
-        number: "01XXXXXXXXX",       // <-- put nagad number
-        note: "Nagad app > Send Money > number > amount > reference (your name) > confirm"
-      },
-      bank: {
-        label: "Bank (DBBL) — Account Transfer",
-        details: [
-          "Bank: DBBL",
-          "A/C Name: LizOn Education",
-          "A/C No: XXXXXXXXXXXXX",
-          "Branch: XXXXX",
-          "Routing: XXXXX"
-        ],
-        note: "Transfer complete hole screenshot / transaction slip pathaben"
-      },
-      visa: {
-        label: "Visa Card Transfer (IFIC Bank)",
-        details: [
-          "Bank: IFIC",
-          "Method: Card transfer",
-          "Card/Account: XXXXXXXXXXXXX"
-        ],
-        note: "Transfer complete hole screenshot / transaction slip pathaben"
-      }
-    };
-
-    // ----------------------------
-    // Helpers
-    // ----------------------------
     const $ = (q, el=document) => el.querySelector(q);
     const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
 
@@ -856,169 +874,208 @@
       lockScroll(false);
     }
 
-    // ----------------------------
-    // Theme toggle
-    // ----------------------------
-    const themeBtn = $('#themeBtn');
-    const root = document.documentElement;
-
-    function setTheme(t){
-      root.setAttribute('data-theme', t);
-      localStorage.setItem('mylizon_theme', t);
-    }
-    setTheme(localStorage.getItem('mylizon_theme') || 'dark');
-
-    themeBtn.addEventListener('click', ()=>{
-      const cur = root.getAttribute('data-theme') || 'dark';
-      setTheme(cur === 'dark' ? 'light' : 'dark');
-    });
-
-    // Menu quick theme toggle
-    const menuThemeQuick = $('#menuThemeQuick');
-    if(menuThemeQuick){
-      menuThemeQuick.addEventListener('click', ()=>{
-        const cur = root.getAttribute('data-theme') || 'dark';
-        setTheme(cur === 'dark' ? 'light' : 'dark');
-      });
-    }
-
-    // ----------------------------
-    // Menu (Top Right)
-    // ----------------------------
+    // Menu
     const menuSheet = $('#menuSheet');
     $('#menuBtn').addEventListener('click', ()=> openOverlay('menuSheet'));
     $('#menuClose').addEventListener('click', ()=> closeOverlay('menuSheet'));
     menuSheet.addEventListener('click', (e)=>{ if(e.target === menuSheet) closeOverlay('menuSheet'); });
 
-    // ----------------------------
-    // Payment sheet render
-    // ----------------------------
-    const paySheet = $('#paySheet');
-    const payTitle = $('#payTitle');
-    const payMethod = $('#payMethod');
-    const paySteps = $('#paySteps');
-    const waSend = $('#waSend');
-    const copyDetails = $('#copyDetails');
-
-    let lastCopyText = "";
-
-    function makeWA(text){
-      return PAYMENT_CONFIG.wa + "?text=" + encodeURIComponent(text);
+    // Theme toggle
+    const themeBtn = $('#themeBtn');
+    const root = document.documentElement;
+    function setTheme(t){
+      root.setAttribute('data-theme', t);
+      localStorage.setItem('mylizon_theme', t);
     }
-
-    function renderPay(key){
-      let title = "Payment";
-      let method = "";
-      let steps = "";
-      let copyText = "";
-
-      if(key === "bkash_merchant"){
-        const c = PAYMENT_CONFIG.bkashMerchant;
-        title = "Bkash Merchant";
-        method = c.label;
-        steps = `Number: <b>${c.number}</b><br/>${c.note}`;
-        copyText = `Payment Method: Bkash Merchant\nNumber: ${c.number}\nReference: Your Name\nSend screenshot/Txn ID to WhatsApp: ${PAYMENT_CONFIG.wa}`;
-      }
-
-      if(key === "bkash_personal"){
-        const c = PAYMENT_CONFIG.bkashPersonal;
-        title = "Bkash Personal";
-        method = c.label;
-        steps = `Number: <b>${c.number}</b><br/>${c.note}`;
-        copyText = `Payment Method: Bkash Personal\nNumber: ${c.number}\nReference: Your Name\nSend screenshot/Txn ID to WhatsApp: ${PAYMENT_CONFIG.wa}`;
-      }
-
-      if(key === "rocket"){
-        const c = PAYMENT_CONFIG.rocket;
-        title = "Rocket";
-        method = c.label;
-        steps = `Number: <b>${c.number}</b><br/>${c.note}`;
-        copyText = `Payment Method: Rocket\nNumber: ${c.number}\nReference: Your Name\nSend screenshot/Txn ID to WhatsApp: ${PAYMENT_CONFIG.wa}`;
-      }
-
-      if(key === "nagad"){
-        const c = PAYMENT_CONFIG.nagad;
-        title = "Nagad";
-        method = c.label;
-        steps = `Number: <b>${c.number}</b><br/>${c.note}`;
-        copyText = `Payment Method: Nagad\nNumber: ${c.number}\nReference: Your Name\nSend screenshot/Txn ID to WhatsApp: ${PAYMENT_CONFIG.wa}`;
-      }
-
-      if(key === "bank"){
-        const c = PAYMENT_CONFIG.bank;
-        title = "Bank (DBBL)";
-        method = c.label;
-        steps = `${c.details.map(x=>`• ${x}`).join("<br/>")}<br/><br/>${c.note}`;
-        copyText = `Payment Method: Bank Transfer (DBBL)\n${c.details.join("\n")}\nSend screenshot/Txn ID to WhatsApp: ${PAYMENT_CONFIG.wa}`;
-      }
-
-      if(key === "visa"){
-        const c = PAYMENT_CONFIG.visa;
-        title = "Visa Card Transfer";
-        method = c.label;
-        steps = `${c.details.map(x=>`• ${x}`).join("<br/>")}<br/><br/>${c.note}`;
-        copyText = `Payment Method: Visa/Card Transfer (IFIC)\n${c.details.join("\n")}\nSend screenshot/Txn ID to WhatsApp: ${PAYMENT_CONFIG.wa}`;
-      }
-
-      payTitle.textContent = title;
-      payMethod.textContent = method;
-      paySteps.innerHTML = steps;
-
-      const waText =
-        `Assalamu Alaikum, payment complete korechi.\n` +
-        `Method: ${title}\n` +
-        `Txn ID / Screenshot attached.\n` +
-        `Name: \nPhone: \nEmail: \nConfirm korben?`;
-
-      waSend.href = makeWA(waText);
-      lastCopyText = copyText;
-
-      openOverlay("paySheet");
-    }
-
-    // Bind buttons
-    $$('[data-pay]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const key = btn.getAttribute('data-pay');
-        renderPay(key);
-      });
+    setTheme(localStorage.getItem('mylizon_theme') || 'dark');
+    themeBtn.addEventListener('click', ()=>{
+      const cur = root.getAttribute('data-theme') || 'dark';
+      setTheme(cur === 'dark' ? 'light' : 'dark');
     });
 
-    // Close / back
+    // Payment data (from your screenshot)
+    const PAY = {
+      bkash_merchant: {
+        title: "bKash Merchant (Make Payment)",
+        kicker: "Use bKash app → Payment → Merchant",
+        steps: [
+          ["Merchant No", "01611611139"],
+          ["Note", "Payment er por Txn ID / screenshot pathan"]
+        ],
+        wa: "Assalamu Alaikum, bKash Merchant diye payment complete. Txn ID / screenshot pathacchi. Please confirm."
+      },
+      bkash_personal: {
+        title: "bKash Personal (Send Money)",
+        kicker: "Use bKash app → Send Money",
+        steps: [
+          ["Personal No", "01337533979"],
+          ["Note", "Payment er por Txn ID / screenshot pathan"]
+        ],
+        wa: "Assalamu Alaikum, bKash Personal (Send Money) diye payment complete. Txn ID / screenshot pathacchi. Please confirm."
+      },
+      rocket: {
+        title: "Rocket Personal (Send Money)",
+        kicker: "Use Rocket app → Send Money",
+        steps: [
+          ["Rocket No", "01337533979"],
+          ["Note", "Payment er por Txn ID / screenshot pathan"]
+        ],
+        wa: "Assalamu Alaikum, Rocket diye payment complete. Txn ID / screenshot pathacchi. Please confirm."
+      },
+      nagad: {
+        title: "Nagad Personal (Send Money)",
+        kicker: "Use Nagad app → Send Money",
+        steps: [
+          ["Nagad No", "01337533979"],
+          ["Note", "Payment er por Txn ID / screenshot pathan"]
+        ],
+        wa: "Assalamu Alaikum, Nagad diye payment complete. Txn ID / screenshot pathacchi. Please confirm."
+      },
+      upay: {
+        title: "Upay Personal (Send Money)",
+        kicker: "Use Upay app → Send Money",
+        steps: [
+          ["Upay No", "01889993896"],
+          ["Note", "Payment er por Txn ID / screenshot pathan"]
+        ],
+        wa: "Assalamu Alaikum, Upay diye payment complete. Txn ID / screenshot pathacchi. Please confirm."
+      },
+      bank: {
+        title: "Bank Transfer (DBBL)",
+        kicker: "Account transfer / deposit",
+        steps: [
+          ["Bank", "DBBL (Dutch-Bangla Bank Limited)"],
+          ["Account No", "2211510117789"],
+          ["Account Name", "SHUVA SARKER JOY"],
+          ["Branch", "Manda"],
+          ["Routing", "090262874"]
+        ],
+        wa: "Assalamu Alaikum, DBBL bank transfer diye payment complete. Txn ID / screenshot pathacchi. Please confirm."
+      },
+      visa: {
+        title: "Visa Card Transfer",
+        kicker: "Card transfer",
+        steps: [
+          ["Card No", "4777920004855617"],
+          ["Bank", "Brac Bank"]
+        ],
+        wa: "Assalamu Alaikum, Visa card transfer diye payment complete. Txn ID / screenshot pathacchi. Please confirm."
+      }
+    };
+
+    const paySheet = $('#paySheet');
+    const paySheetTitle = $('#paySheetTitle');
+    const paySheetKicker = $('#paySheetKicker');
+    const paySheetText = $('#paySheetText');
+    const payKV = $('#payKV');
+    const waConfirm = $('#waConfirm');
+    const copyOne = $('#copyOne');
+    const copyAll = $('#copyAll');
+    const toast = $('#toast');
+
+    let currentKey = null;
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=> toast.style.display='none', 1200);
+    }
+
+    function buildKV(rows){
+      payKV.innerHTML = "";
+      rows.forEach(([k,v])=>{
+        const d = document.createElement('div');
+        d.className = 'row';
+        d.innerHTML = `<b>${k}</b><code>${v}</code>`;
+        payKV.appendChild(d);
+      });
+    }
+
+    function openPay(key){
+      const info = PAY[key];
+      if(!info) return;
+      currentKey = key;
+
+      paySheetTitle.textContent = info.title;
+      paySheetKicker.textContent = info.kicker;
+      paySheetText.textContent = "Choose method → pay → Txn ID / screenshot → WhatsApp e pathan.";
+
+      buildKV(info.steps);
+
+      const wa = "https://wa.me/8801611611139?text=" + encodeURIComponent(info.wa);
+      waConfirm.href = wa;
+      waConfirm.textContent = "Send Screenshot / Txn ID";
+
+      copyOne.textContent = "Copy";
+      openOverlay('paySheet');
+    }
+
+    // Open sheet on click
+    $$('[data-pay]').forEach(btn=>{
+      btn.addEventListener('click', ()=> openPay(btn.getAttribute('data-pay')));
+    });
+
+    // Close sheet
     $('#payClose').addEventListener('click', ()=> closeOverlay('paySheet'));
-    $('#payBack').addEventListener('click', ()=> closeOverlay('paySheet'));
     paySheet.addEventListener('click', (e)=>{ if(e.target === paySheet) closeOverlay('paySheet'); });
 
-    // Copy
-    copyDetails.addEventListener('click', async ()=>{
+    // Copy one (best main number)
+    function bestCopyText(key){
+      const info = PAY[key];
+      if(!info) return "";
+      // Prefer first numeric-ish value (merchant/personal/account/card)
+      const primary = info.steps.find(r => /No|Account|Card|Merchant|Rocket|Nagad|Upay/i.test(r[0])) || info.steps[0];
+      return `${info.title}\n${primary[0]}: ${primary[1]}\nWhatsApp: 01611611139`;
+    }
+
+    async function copyText(txt){
       try{
-        await navigator.clipboard.writeText(lastCopyText || "");
-        copyDetails.textContent = "Copied";
-        setTimeout(()=> copyDetails.textContent = "Copy details", 1200);
+        await navigator.clipboard.writeText(txt);
+        showToast("Copied");
+        return true;
       }catch(e){
-        copyDetails.textContent = "Copy failed";
-        setTimeout(()=> copyDetails.textContent = "Copy details", 1200);
+        showToast("Copy failed");
+        return false;
       }
+    }
+
+    copyOne.addEventListener('click', async ()=>{
+      if(!currentKey) return;
+      await copyText(bestCopyText(currentKey));
     });
 
-    // Quick helpers
-    $('#openFirst').addEventListener('click', ()=> renderPay('bkash_merchant'));
+    // Copy all
+    function allPaymentText(){
+      return [
+        "LizOn Education — Payment Details",
+        "",
+        "bKash Merchant (Make Payment): 01611611139",
+        "bKash Personal (Send Money): 01337533979",
+        "Rocket Personal (Send Money): 01337533979",
+        "Nagad Personal (Send Money): 01337533979",
+        "Upay Personal (Send Money): 01889993896",
+        "",
+        "Bank (DBBL)",
+        "Account No: 2211510117789",
+        "Account Name: SHUVA SARKER JOY",
+        "Branch: Manda",
+        "Routing: 090262874",
+        "",
+        "Visa Card Transfer",
+        "Card No: 4777920004855617 (Brac Bank)",
+        "",
+        "After payment: send Txn ID / screenshot to WhatsApp: 01611611139",
+        "WhatsApp link: https://wa.me/8801611611139"
+      ].join("\n");
+    }
 
-    $('#copyAllQuick').addEventListener('click', async ()=>{
-      const text =
-        `Assalamu Alaikum, payment complete korar jonno method choose korte chai.\n` +
-        `Amar payment confirm er jonno ki ki lagbe?\n` +
-        `Screenshot/Txn ID + Name + Phone + Email.\n` +
-        `WhatsApp: ${PAYMENT_CONFIG.wa}`;
-      try{
-        await navigator.clipboard.writeText(text);
-        $('#copyAllQuick').textContent = "Copied";
-        setTimeout(()=> $('#copyAllQuick').textContent = "Copy WhatsApp text", 1200);
-      }catch(e){
-        $('#copyAllQuick').textContent = "Copy failed";
-        setTimeout(()=> $('#copyAllQuick').textContent = "Copy WhatsApp text", 1200);
-      }
-    });
+    copyAll.addEventListener('click', async ()=>{ await copyText(allPaymentText()); });
+
+    // Top + bottom copy all
+    $('#btnCopyAllTop').addEventListener('click', async ()=>{ await copyText(allPaymentText()); });
+    $('#btnCopyAllMid').addEventListener('click', async ()=>{ await copyText(allPaymentText()); });
+    $('#btnOpenAll').addEventListener('click', async ()=>{ await copyText(allPaymentText()); });
   </script>
 </body>
 </html>

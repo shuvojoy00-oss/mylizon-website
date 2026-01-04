@@ -52,17 +52,11 @@
   }
 
   a{ color:inherit; }
-
-  .container{
-    width:min(1100px, 92vw);
-    margin:0 auto;
-  }
+  .container{ width:min(1100px, 92vw); margin:0 auto; }
 
   /* ===== TOPBAR ===== */
   .topbar{
-    position:sticky;
-    top:0;
-    z-index:9999;
+    position:sticky; top:0; z-index:9999;
     backdrop-filter: blur(12px);
     background: rgba(4,31,22,.72);
     border-bottom:1px solid var(--stroke);
@@ -71,26 +65,14 @@
 
   .topbar-inner{
     height: var(--topbar-h);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    padding: 10px 0;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px; padding: 10px 0;
   }
 
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    min-width:0;
-  }
-
+  .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
   .logo-link{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    text-decoration:none;
-    min-width:0;
+    display:flex; align-items:center; gap:10px;
+    text-decoration:none; min-width:0;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -104,42 +86,21 @@
     flex: 0 0 auto;
   }
 
-  .brand-text{
-    display:flex;
-    flex-direction:column;
-    line-height:1.15;
-    min-width:0;
-  }
-
+  .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
   .brand-text b{
-    font-size:16px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     max-width: 200px;
   }
-
   .brand-text span{
-    font-size:12px;
-    color:var(--muted);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    font-size:12px; color:var(--muted);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     max-width: 220px;
   }
 
-  .top-actions{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    flex:0 0 auto;
-  }
+  .top-actions{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
 
   .chip{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
+    display:inline-flex; align-items:center; justify-content:center;
     padding: 10px 14px;
     border-radius: 999px;
     border:1px solid var(--stroke);
@@ -151,11 +112,6 @@
     cursor:pointer;
     -webkit-tap-highlight-color: transparent;
   }
-  .chip:hover{ filter: brightness(1.04); }
-  .chip-ghost{
-    background: transparent;
-    color: var(--muted);
-  }
 
   .iconbtn{
     width:44px; height:44px;
@@ -163,13 +119,12 @@
     border:1px solid var(--stroke);
     background: rgba(255,255,255,.03);
     color: var(--text);
-    display:grid;
-    place-items:center;
+    display:grid; place-items:center;
     cursor:pointer;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* ===== FIRST SCREEN (NO SCROLL NEEDED) ===== */
+  /* ===== FIRST SCREEN (5 cards visible) ===== */
   .screen{
     padding: 14px 0 18px;
     min-height: calc(100vh - var(--topbar-h));
@@ -197,31 +152,37 @@
   .card::after{
     content:"";
     position:absolute; inset:0;
-    background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.55));
+    background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.55));
     pointer-events:none;
   }
   .theme-light .card::after{
-    background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.35));
+    background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.32));
   }
 
-  .bg{
+  /* ✅ CHANGE #1: image frame fixed (no crop, keep full thumbnail) */
+  .imgwrap{
     position:absolute; inset:0;
-    background-size: cover;
-    background-position: center;
-    transform: scale(1.03);
-    filter: saturate(1.04);
-  }
-
-  /* fallback gradient in case image missing */
-  .bg.fallback{
+    display:grid; place-items:center;
     background:
       radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.14), transparent 55%),
-      linear-gradient(180deg, rgba(6,43,31,.75), rgba(4,31,22,.95));
+      linear-gradient(180deg, rgba(6,43,31,.78), rgba(4,31,22,.95));
+  }
+  .theme-light .imgwrap{
+    background:
+      radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.12), transparent 55%),
+      linear-gradient(180deg, rgba(255,255,255,.92), rgba(238,246,243,.98));
+  }
+  .cardimg{
+    width:100%;
+    height:100%;
+    object-fit:contain;     /* <- no crop */
+    object-position:center; /* <- centered */
+    padding: 10px;          /* <- breathing space */
+    filter: saturate(1.02);
   }
 
   .card-content{
-    position:relative;
-    z-index:2;
+    position:relative; z-index:2;
     height:100%;
     padding: 12px;
     display:flex;
@@ -230,17 +191,10 @@
     gap:10px;
   }
 
-  .left-stack{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    min-width:0;
-  }
+  .left-stack{ display:flex; flex-direction:column; gap:8px; min-width:0; }
 
   .pill{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
+    display:inline-flex; align-items:center; gap:8px;
     padding: 8px 10px;
     border-radius: 999px;
     border:1px solid rgba(255,255,255,.16);
@@ -268,9 +222,7 @@
   }
 
   .tap{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
+    display:inline-flex; align-items:center; gap:10px;
     padding: 10px 12px;
     border-radius: 999px;
     border:1px solid var(--stroke);
@@ -288,39 +240,30 @@
     box-shadow: 0 0 0 4px rgba(214,179,90,.14);
   }
 
-  .sub-actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-  }
+  .sub-actions{ display:flex; gap:8px; flex-wrap:wrap; }
 
+  /* ✅ CHANGE #3: buttons look like real buttons (color improved) */
   .mini{
     display:inline-flex;
     align-items:center;
     justify-content:center;
     padding: 10px 12px;
     border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    color: var(--text);
+    border:1px solid rgba(214,179,90,.42);
+    background: rgba(214,179,90,.18);
+    color: rgba(255,255,255,.96);
     font-weight:950;
     font-size:12px;
     cursor:pointer;
     -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 10px 26px rgba(0,0,0,.18);
   }
-  .mini:hover{ filter: brightness(1.04); }
-
-  /* Top card shows badge only (no extra buttons inside) */
-  .topcard .card-content{
-    align-items:flex-end;
-  }
-
-  /* Each course card has 3 buttons */
-  .course-actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    justify-content:flex-end;
+  .mini:hover{ filter: brightness(1.05); }
+  .theme-light .mini{
+    color: rgba(10,32,22,.92);
+    background: rgba(214,179,90,.28);
+    border-color: rgba(214,179,90,.55);
+    box-shadow: 0 10px 26px rgba(0,0,0,.08);
   }
 
   /* ===== MODALS ===== */
@@ -334,10 +277,7 @@
   }
   .overlay.show{ display:flex; }
 
-  .back{
-    position:absolute; inset:0;
-    background: rgba(0,0,0,.52);
-  }
+  .back{ position:absolute; inset:0; background: rgba(0,0,0,.52); }
 
   .sheet{
     position:relative;
@@ -351,34 +291,15 @@
     transform: translateY(10px);
     animation: in .14s ease-out forwards;
   }
-  .theme-light .sheet{
-    background: rgba(255,255,255,.92);
-  }
-
-  @keyframes in{
-    from{ opacity:.0; transform: translateY(18px); }
-    to{ opacity:1; transform: translateY(0); }
-  }
+  .theme-light .sheet{ background: rgba(255,255,255,.92); }
+  @keyframes in{ from{ opacity:.0; transform: translateY(18px);} to{ opacity:1; transform: translateY(0);} }
 
   .sheet-top{
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:10px;
-    margin-bottom:10px;
+    display:flex; align-items:flex-start; justify-content:space-between;
+    gap:10px; margin-bottom:10px;
   }
-
-  .sheet-top h3{
-    margin:0;
-    font-size:16px;
-    line-height:1.2;
-  }
-
-  .sheet-top p{
-    margin:6px 0 0;
-    color: var(--muted);
-    font-size:13px;
-  }
+  .sheet-top h3{ margin:0; font-size:16px; line-height:1.2; }
+  .sheet-top p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
 
   .x{
     width:44px; height:44px;
@@ -386,20 +307,13 @@
     border:1px solid var(--stroke);
     background: rgba(255,255,255,.04);
     color: var(--text);
-    display:grid;
-    place-items:center;
+    display:grid; place-items:center;
     cursor:pointer;
     font-weight:950;
   }
 
-  .grid2{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:10px;
-  }
-  @media (max-width:560px){
-    .grid2{ grid-template-columns: 1fr; }
-  }
+  .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+  @media (max-width:560px){ .grid2{ grid-template-columns: 1fr; } }
 
   .opt{
     border:1px solid var(--stroke);
@@ -407,23 +321,11 @@
     border-radius: 18px;
     padding: 12px;
   }
-
-  .opt b{
-    display:block;
-    margin-bottom:6px;
-  }
-
-  .opt .row{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:10px;
-  }
+  .opt b{ display:block; margin-bottom:6px; }
+  .opt .row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
 
   .btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
+    display:inline-flex; align-items:center; justify-content:center;
     padding: 10px 12px;
     border-radius: 14px;
     border:1px solid var(--stroke);
@@ -439,15 +341,33 @@
     border-color: rgba(214,179,90,.40);
     background: rgba(214,179,90,.16);
   }
-  .btn.ghost{
+  .btn.ghost{ background: transparent; color: var(--muted); }
+
+  /* ✅ CHANGE #2: video frame ratio fixed (Shorts-style, looks like real size) */
+  .videoShell{
+    width:100%;
+    display:grid;
+    place-items:center;
+    border-radius: 18px;
+    overflow:hidden;
+    border:1px solid var(--stroke);
+    background: rgba(0,0,0,.20);
+  }
+  .theme-light .videoShell{ background: rgba(10,32,22,.06); }
+
+  .videoFrame{
+    width:min(420px, 100%);        /* phone-friendly */
+    aspect-ratio: 9 / 16;          /* vertical video frame */
+    border:0;
+    display:block;
     background: transparent;
-    color: var(--muted);
+  }
+  @media (min-width:900px){
+    .videoFrame{ width: 420px; }
   }
 
   /* ===== PRICING ===== */
-  .section{
-    padding: 10px 0 120px;
-  }
+  .section{ padding: 10px 0 120px; }
 
   .panel{
     border:1px solid var(--stroke);
@@ -457,21 +377,11 @@
     overflow:hidden;
   }
 
-  .panel-head{
-    padding: 16px;
-    border-bottom: 1px solid var(--stroke);
-  }
-  .panel-head h2{
-    margin:0;
-    font-size:18px;
-  }
+  .panel-head{ padding: 16px; border-bottom: 1px solid var(--stroke); }
+  .panel-head h2{ margin:0; font-size:18px; }
   .panel-head p{ margin:8px 0 0; color:var(--muted); font-size:13px; }
 
-  .list{
-    padding: 14px 14px 8px;
-    display:grid;
-    gap:10px;
-  }
+  .list{ padding: 14px 14px 8px; display:grid; gap:10px; }
 
   .rowitem{
     border:1px solid var(--stroke);
@@ -484,31 +394,13 @@
     gap:12px;
   }
 
-  .rowitem .meta{
-    min-width:0;
-  }
-  .rowitem .meta b{
-    display:block;
-    font-size:14px;
-  }
-  .rowitem .meta span{
-    display:block;
-    margin-top:4px;
-    color: var(--muted);
-    font-size:12px;
-  }
+  .rowitem .meta{ min-width:0; }
+  .rowitem .meta b{ display:block; font-size:14px; }
+  .rowitem .meta span{ display:block; margin-top:4px; color: var(--muted); font-size:12px; }
 
-  .rowitem .actions{
-    display:flex;
-    gap:10px;
-    flex: 0 0 auto;
-  }
+  .rowitem .actions{ display:flex; gap:10px; flex: 0 0 auto; }
 
-  .divider{
-    height:1px;
-    background: var(--stroke);
-    margin: 8px 0 0;
-  }
+  .divider{ height:1px; background: var(--stroke); margin: 8px 0 0; }
 
   .subhead{
     padding: 14px 16px 0;
@@ -518,15 +410,10 @@
     gap:10px;
     flex-wrap:wrap;
   }
-  .subhead h3{
-    margin:0;
-    font-size:15px;
-  }
+  .subhead h3{ margin:0; font-size:15px; }
 
   /* ===== FOOTER ===== */
-  footer{
-    padding: 0 0 140px;
-  }
+  footer{ padding: 0 0 160px; }
   .footer-card{
     border:1px solid var(--stroke);
     border-radius: var(--radius-xl);
@@ -540,32 +427,14 @@
     gap:14px;
     margin-top:10px;
   }
-  @media (max-width:820px){
-    .footer-cols{ grid-template-columns: 1fr; }
-  }
-  .ft-title{
-    margin:0 0 8px;
-    font-weight:950;
-    font-size:13px;
-  }
-  .ft-text{
-    margin:0;
-    color: var(--muted);
-    font-size:13px;
-    line-height:1.5;
-  }
-  .ft-links{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:10px;
-  }
+  @media (max-width:820px){ .footer-cols{ grid-template-columns: 1fr; } }
+  .ft-title{ margin:0 0 8px; font-weight:950; font-size:13px; }
+  .ft-text{ margin:0; color: var(--muted); font-size:13px; line-height:1.5; }
+  .ft-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
 
-  /* ===== FLOATING HELP (WhatsApp) ===== */
-  .help-fab{
+  /* ===== Floating Buttons (requested) ===== */
+  .fab{
     position:fixed;
-    right:14px;
-    bottom:54px;
     z-index: 2400;
     border:1px solid var(--stroke);
     background: rgba(255,255,255,.04);
@@ -581,6 +450,8 @@
     -webkit-tap-highlight-color: transparent;
     backdrop-filter: blur(10px);
   }
+
+  .help-fab{ right:14px; bottom:54px; }
   .help-fab .dot{
     width:10px; height:10px;
     border-radius:50%;
@@ -588,6 +459,47 @@
     box-shadow: 0 0 0 4px rgba(0,210,106,.14);
   }
 
+  /* ✅ bottom-left hamburger */
+  .menu-fab{ left:14px; bottom:54px; }
+  .menu-fab b{ letter-spacing:.3px; }
+
+  /* ✅ bottom-right scroll-to-top */
+  .top-fab{ right:14px; bottom:108px; }
+
+  /* ✅ bottom-right theme toggle (light/green) */
+  .theme-fab{ right:14px; bottom:162px; }
+
+  /* ✅ top-right hamburger inside header */
+  .topHamburger{
+    width:44px; height:44px;
+    border-radius: 999px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    color: var(--text);
+    display:grid; place-items:center;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* MENU SHEET */
+  .menuList{
+    display:grid;
+    gap:10px;
+  }
+  .menuItem{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding: 12px;
+    border-radius: 18px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration:none;
+  }
+  .menuItem span{ color: var(--muted); font-size:12px; }
 </style>
 </head>
 
@@ -597,7 +509,6 @@
     <div class="container">
       <div class="topbar-inner">
         <div class="brand">
-          <!-- ✅ Logo must work -->
           <a class="logo-link" href="index.html" aria-label="Go to Home" title="Go to Home">
             <img class="logo-img" src="assets/logo-dark.png" alt="LizOn Education Logo" />
             <div class="brand-text">
@@ -609,6 +520,7 @@
 
         <div class="top-actions">
           <button class="chip" id="btnPricing" type="button" aria-label="Go to Pricing">Admit / Pricing</button>
+          <button class="topHamburger" id="btnMenuTop" type="button" aria-label="Menu" title="Menu">≡</button>
           <button class="iconbtn" id="btnTheme" type="button" aria-label="Toggle theme" title="Toggle theme">🌓</button>
         </div>
       </div>
@@ -622,22 +534,25 @@
 
         <!-- TOP CARD -->
         <div class="card topcard" id="cardTop" role="button" tabindex="0" aria-label="Play IELTS Journey top video">
-          <div class="bg fallback" style="background-image:url('assets/ielts-journey-top.png');"></div>
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-journey-top.png" alt="IELTS Journey Top" />
+          </div>
           <div class="card-content">
             <div class="left-stack">
               <div class="pill">Designed for Desired Score</div>
               <div class="title">IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</div>
             </div>
             <div class="tap" aria-hidden="true">
-              <span class="dot"></span>
-              <span>Tap to Play</span>
+              <span class="dot"></span><span>Tap to Play</span>
             </div>
           </div>
         </div>
 
         <!-- ZERO -->
         <div class="card" id="cardZero" role="button" tabindex="0" aria-label="Play IELTS ZERO video">
-          <div class="bg fallback" style="background-image:url('assets/ielts-zero.png');"></div>
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-zero.png" alt="IELTS ZERO" />
+          </div>
           <div class="card-content">
             <div class="left-stack">
               <div class="pill">IELTS ZERO</div>
@@ -648,15 +563,16 @@
               </div>
             </div>
             <div class="tap" aria-hidden="true">
-              <span class="dot"></span>
-              <span>Tap to Play</span>
+              <span class="dot"></span><span>Tap to Play</span>
             </div>
           </div>
         </div>
 
         <!-- HOPE -->
         <div class="card" id="cardHope" role="button" tabindex="0" aria-label="Play IELTS HOPE video">
-          <div class="bg fallback" style="background-image:url('assets/ielts-hope.png');"></div>
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-hope.png" alt="IELTS HOPE" />
+          </div>
           <div class="card-content">
             <div class="left-stack">
               <div class="pill">IELTS HOPE</div>
@@ -667,15 +583,16 @@
               </div>
             </div>
             <div class="tap" aria-hidden="true">
-              <span class="dot"></span>
-              <span>Tap to Play</span>
+              <span class="dot"></span><span>Tap to Play</span>
             </div>
           </div>
         </div>
 
         <!-- STEP-UP -->
         <div class="card" id="cardStepup" role="button" tabindex="0" aria-label="Play IELTS STEP-UP video">
-          <div class="bg fallback" style="background-image:url('assets/ielts-stepup.png');"></div>
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-stepup.png" alt="IELTS STEP-UP" />
+          </div>
           <div class="card-content">
             <div class="left-stack">
               <div class="pill">IELTS STEP-UP</div>
@@ -686,15 +603,16 @@
               </div>
             </div>
             <div class="tap" aria-hidden="true">
-              <span class="dot"></span>
-              <span>Tap to Play</span>
+              <span class="dot"></span><span>Tap to Play</span>
             </div>
           </div>
         </div>
 
         <!-- DESPERATE -->
         <div class="card" id="cardDesperate" role="button" tabindex="0" aria-label="Play IELTS DESPERATE video">
-          <div class="bg fallback" style="background-image:url('assets/ielts-desperate.png');"></div>
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-desperate.png" alt="IELTS DESPERATE" />
+          </div>
           <div class="card-content">
             <div class="left-stack">
               <div class="pill">IELTS DESPERATE</div>
@@ -705,8 +623,7 @@
               </div>
             </div>
             <div class="tap" aria-hidden="true">
-              <span class="dot"></span>
-              <span>Tap to Play</span>
+              <span class="dot"></span><span>Tap to Play</span>
             </div>
           </div>
         </div>
@@ -727,10 +644,7 @@
         <!-- Course Prices -->
         <div class="list" aria-label="Course pricing list">
           <div class="rowitem">
-            <div class="meta">
-              <b>IELTS ZERO — 4,200</b>
-              <span>Course fee</span>
-            </div>
+            <div class="meta"><b>IELTS ZERO — 4,200</b><span>Course fee</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -738,10 +652,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta">
-              <b>IELTS HOPE — 5,500</b>
-              <span>Course fee</span>
-            </div>
+            <div class="meta"><b>IELTS HOPE — 5,500</b><span>Course fee</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -749,10 +660,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta">
-              <b>IELTS STEP-UP — 6,200</b>
-              <span>Course fee</span>
-            </div>
+            <div class="meta"><b>IELTS STEP-UP — 6,200</b><span>Course fee</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -760,10 +668,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta">
-              <b>IELTS DESPERATE — 7,500</b>
-              <span>Course fee</span>
-            </div>
+            <div class="meta"><b>IELTS DESPERATE — 7,500</b><span>Course fee</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -773,17 +678,12 @@
 
         <div class="divider"></div>
 
-        <!-- Combos as cards (NOT paragraph) -->
-        <div class="subhead">
-          <h3>Combos</h3>
-        </div>
+        <!-- Combos -->
+        <div class="subhead"><h3>Combos</h3></div>
 
         <div class="list" aria-label="Combo pricing list">
           <div class="rowitem">
-            <div class="meta">
-              <b>ZERO + HOPE — 6,790</b>
-              <span>Foundation + Reset</span>
-            </div>
+            <div class="meta"><b>ZERO + HOPE — 6,790</b><span>Foundation + Reset</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -791,10 +691,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta">
-              <b>HOPE + STEP-UP — 8,190</b>
-              <span>Reset + Band jump</span>
-            </div>
+            <div class="meta"><b>HOPE + STEP-UP — 8,190</b><span>Reset + Band jump</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -802,10 +699,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta">
-              <b>STEP-UP + DESPERATE — 9,590</b>
-              <span>Band jump + Final eval</span>
-            </div>
+            <div class="meta"><b>STEP-UP + DESPERATE — 9,590</b><span>Band jump + Final eval</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -813,10 +707,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta">
-              <b>ZERO + HOPE + STEP-UP — 9,540</b>
-              <span>Build → Reset → Band jump</span>
-            </div>
+            <div class="meta"><b>ZERO + HOPE + STEP-UP — 9,540</b><span>Build → Reset → Band jump</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -824,10 +715,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta">
-              <b>HOPE + STEP-UP + DESPERATE — 11,520</b>
-              <span>Reset → Band jump → Final eval</span>
-            </div>
+            <div class="meta"><b>HOPE + STEP-UP + DESPERATE — 11,520</b><span>Reset → Band jump → Final eval</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -835,10 +723,7 @@
           </div>
 
           <div class="rowitem" style="border-color: rgba(214,179,90,.35); background: rgba(214,179,90,.08);">
-            <div class="meta">
-              <b>N2F (All 4) — 12,700</b>
-              <span>BEST VALUE • Now to Fly</span>
-            </div>
+            <div class="meta"><b>N2F (All 4) — 12,700</b><span>BEST VALUE • Now to Fly</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -850,7 +735,7 @@
     </div>
   </section>
 
-  <!-- FOOTER (Requested: must exist) -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-card">
@@ -875,7 +760,6 @@
               <a class="btn ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
               <a class="btn ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
             </div>
-
             <p class="ft-text" style="margin-top:12px;">© 2026 myLizOn.com | LizOn Education</p>
           </div>
         </div>
@@ -883,10 +767,21 @@
     </div>
   </footer>
 
-  <!-- Floating Help -->
-  <div class="help-fab" id="fabHelp" role="button" tabindex="0" aria-label="WhatsApp help">
-    <span class="dot"></span>
-    <b>Help</b>
+  <!-- Floating Buttons -->
+  <div class="fab menu-fab" id="fabMenu" role="button" tabindex="0" aria-label="Menu">
+    <b>≡</b><span style="color:var(--muted);font-size:12px;">Menu</span>
+  </div>
+
+  <div class="fab top-fab" id="fabTop" role="button" tabindex="0" aria-label="Back to top">
+    <b>↑</b><span style="color:var(--muted);font-size:12px;">Top</span>
+  </div>
+
+  <div class="fab theme-fab" id="fabTheme" role="button" tabindex="0" aria-label="Toggle theme">
+    <b>🌓</b><span style="color:var(--muted);font-size:12px;">Theme</span>
+  </div>
+
+  <div class="fab help-fab" id="fabHelp" role="button" tabindex="0" aria-label="WhatsApp help">
+    <span class="dot"></span><b>Help</b>
   </div>
 
   <!-- VIDEO MODAL -->
@@ -896,18 +791,19 @@
       <div class="sheet-top">
         <div>
           <h3 id="videoTitle">Video</h3>
-          <p>Tap outside or press ✕ to close. You will return to where you left.</p>
+          <p>Tap outside or press ✕ to close.</p>
         </div>
         <button class="x" type="button" data-close aria-label="Close">✕</button>
       </div>
-      <div class="opt" style="padding:0; overflow:hidden;">
-        <iframe id="videoFrame"
-          style="width:100%; aspect-ratio: 16/9; border:0; display:block;"
+
+      <div class="videoShell">
+        <iframe id="videoFrame" class="videoFrame"
           src=""
           title="YouTube video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen></iframe>
       </div>
+
       <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
         <a class="btn primary" id="openYouTube" href="#" target="_blank" rel="noopener">Open in YouTube</a>
         <button class="btn" type="button" data-close>Close</button>
@@ -915,7 +811,7 @@
     </div>
   </div>
 
-  <!-- DETAILS MODAL (tap-only options) -->
+  <!-- DETAILS MODAL -->
   <div class="overlay" id="detailsOverlay" aria-hidden="true">
     <div class="back" data-close-details></div>
     <div class="sheet" role="dialog" aria-modal="true" aria-label="Course details">
@@ -983,31 +879,11 @@
       </div>
 
       <div class="grid2">
-        <div class="opt">
-          <b>bKash Merchant (Make Payment)</b>
-          <div style="color:var(--muted); font-size:13px;">01611611139</div>
-        </div>
-
-        <div class="opt">
-          <b>bKash Personal (Send Money)</b>
-          <div style="color:var(--muted); font-size:13px;">01337533979</div>
-        </div>
-
-        <div class="opt">
-          <b>Rocket Personal (Send Money)</b>
-          <div style="color:var(--muted); font-size:13px;">01337533979</div>
-        </div>
-
-        <div class="opt">
-          <b>Nagad Personal (Send Money)</b>
-          <div style="color:var(--muted); font-size:13px;">01337533979</div>
-        </div>
-
-        <div class="opt">
-          <b>Upay Personal (Send Money)</b>
-          <div style="color:var(--muted); font-size:13px;">01889993896</div>
-        </div>
-
+        <div class="opt"><b>bKash Merchant (Make Payment)</b><div style="color:var(--muted); font-size:13px;">01611611139</div></div>
+        <div class="opt"><b>bKash Personal (Send Money)</b><div style="color:var(--muted); font-size:13px;">01337533979</div></div>
+        <div class="opt"><b>Rocket Personal (Send Money)</b><div style="color:var(--muted); font-size:13px;">01337533979</div></div>
+        <div class="opt"><b>Nagad Personal (Send Money)</b><div style="color:var(--muted); font-size:13px;">01337533979</div></div>
+        <div class="opt"><b>Upay Personal (Send Money)</b><div style="color:var(--muted); font-size:13px;">01889993896</div></div>
         <div class="opt">
           <b>DBBL (Dutch Bangla Bank Ltd.)</b>
           <div style="color:var(--muted); font-size:13px; line-height:1.55;">
@@ -1017,16 +893,35 @@
             Routing: 090262874
           </div>
         </div>
-
-        <div class="opt">
-          <b>Visa Card Transfer (Brac Bank)</b>
-          <div style="color:var(--muted); font-size:13px;">4777920004855617</div>
-        </div>
+        <div class="opt"><b>Visa Card Transfer (Brac Bank)</b><div style="color:var(--muted); font-size:13px;">4777920004855617</div></div>
       </div>
 
       <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
         <a class="btn primary" id="sendScreenshotBtn" href="#" target="_blank" rel="noopener">Send Screenshot</a>
         <button class="btn" type="button" data-close-pay>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU OVERLAY -->
+  <div class="overlay" id="menuOverlay" aria-hidden="true">
+    <div class="back" data-close-menu></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="sheet-top">
+        <div>
+          <h3>Menu</h3>
+          <p>Quick navigation. Tap to go.</p>
+        </div>
+        <button class="x" type="button" data-close-menu aria-label="Close">✕</button>
+      </div>
+
+      <div class="menuList">
+        <a class="menuItem" href="index.html"><b>Home</b><span>mylizon.com</span></a>
+        <a class="menuItem" href="ielts.html"><b>IELTS</b><span>Journey + skills</span></a>
+        <a class="menuItem" href="pte.html"><b>PTE</b><span>Course + guidance</span></a>
+        <a class="menuItem" href="studyabroad.html"><b>Study Abroad</b><span>Country wise</span></a>
+        <button class="menuItem" type="button" id="menuGoPricing"><b>Pricing</b><span>Jump to section</span></button>
+        <button class="menuItem" type="button" id="menuHelp"><b>Help</b><span>WhatsApp</span></button>
       </div>
     </div>
   </div>
@@ -1040,28 +935,36 @@
     localStorage.setItem('lizon-theme', isLight ? 'light' : 'dark');
   }
   setTheme(localStorage.getItem('lizon-theme') || 'dark');
-  document.getElementById('btnTheme').addEventListener('click', ()=>{
+
+  function toggleTheme(){
     const isLight = body.classList.contains('theme-light');
     setTheme(isLight ? 'dark' : 'light');
-  });
+  }
 
-  /* ===== No accidental auto-jump ===== */
+  document.getElementById('btnTheme').addEventListener('click', toggleTheme);
+  document.getElementById('fabTheme').addEventListener('click', toggleTheme);
+
+  /* Prevent accidental hash jump */
   if (location.hash === '#pricing') {
     history.replaceState(null, '', location.pathname);
     window.scrollTo(0, 0);
   }
 
-  /* ===== Smooth to pricing ===== */
-  const btnPricing = document.getElementById('btnPricing');
-  btnPricing.addEventListener('click', ()=>{
+  /* Smooth to pricing */
+  document.getElementById('btnPricing').addEventListener('click', ()=>{
     document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
   });
 
-  /* ===== WhatsApp help ===== */
+  /* WhatsApp help */
   const HELP_WA = "https://wa.me/8801611611139?text=" + encodeURIComponent("Assalamu Alaikum, IELTS Journey niye help chai.");
   const fabHelp = document.getElementById('fabHelp');
   fabHelp.addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
   fabHelp.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') window.open(HELP_WA, '_blank', 'noopener'); });
+
+  /* Scroll to top button */
+  const fabTop = document.getElementById('fabTop');
+  fabTop.addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
+  fabTop.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') window.scrollTo({ top:0, behavior:'smooth' }); });
 
   /* ===== Video mapping ===== */
   const VIDEOS = {
@@ -1073,8 +976,6 @@
   };
 
   function toEmbed(url){
-    // supports shorts and normal YouTube
-    // convert to https://www.youtube.com/embed/<id>
     try{
       const u = new URL(url);
       if(u.hostname.includes('youtu.be')){
@@ -1088,7 +989,6 @@
       if(u.searchParams.get('v')){
         return "https://www.youtube.com/embed/" + u.searchParams.get('v');
       }
-      // fallback: if already embed
       return url;
     }catch(e){
       return url;
@@ -1121,47 +1021,25 @@
     window.scrollTo({ top: lastScrollY, behavior:'instant' });
   }
 
-  videoOverlay.querySelectorAll('[data-close]').forEach(el=>{
-    el.addEventListener('click', closeVideo);
-  });
-
-  document.addEventListener('keydown', (e)=>{
-    if(e.key==='Escape'){
-      if(videoOverlay.classList.contains('show')) closeVideo();
-      if(detailsOverlay.classList.contains('show')) closeDetails();
-      if(routineOverlay.classList.contains('show')) closeRoutine();
-      if(payOverlay.classList.contains('show')) closePay();
-    }
-  });
+  videoOverlay.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', closeVideo));
 
   /* Card taps open video */
-  const cardTop = document.getElementById('cardTop');
-  const cardZero = document.getElementById('cardZero');
-  const cardHope = document.getElementById('cardHope');
-  const cardStepup = document.getElementById('cardStepup');
-  const cardDesperate = document.getElementById('cardDesperate');
-
   function bindCard(card, key, label){
-    card.addEventListener('click', (e)=>{
-      // if user tapped buttons, ignore (buttons stopPropagation below)
-      openVideo(key, label);
-    });
-    card.addEventListener('keydown', (e)=>{
-      if(e.key==='Enter' || e.key===' ') openVideo(key, label);
-    });
+    card.addEventListener('click', ()=> openVideo(key, label));
+    card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openVideo(key, label); });
   }
-  bindCard(cardTop, 'top', 'IELTS Journey');
-  bindCard(cardZero, 'zero', 'IELTS ZERO');
-  bindCard(cardHope, 'hope', 'IELTS HOPE');
-  bindCard(cardStepup, 'stepup', 'IELTS STEP-UP');
-  bindCard(cardDesperate, 'desperate', 'IELTS DESPERATE');
+  bindCard(document.getElementById('cardTop'), 'top', 'IELTS Journey');
+  bindCard(document.getElementById('cardZero'), 'zero', 'IELTS ZERO');
+  bindCard(document.getElementById('cardHope'), 'hope', 'IELTS HOPE');
+  bindCard(document.getElementById('cardStepup'), 'stepup', 'IELTS STEP-UP');
+  bindCard(document.getElementById('cardDesperate'), 'desperate', 'IELTS DESPERATE');
 
   /* Stop propagation for buttons inside cards */
   document.querySelectorAll('.mini').forEach(btn=>{
     btn.addEventListener('click', (e)=> e.stopPropagation());
   });
 
-  /* ===== Admit button -> pricing ===== */
+  /* Admit -> pricing */
   document.querySelectorAll('[data-admit]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
@@ -1203,7 +1081,6 @@
     { key:'with', title:'This Course Comes With' }
   ];
 
-  // Minimal placeholder (tap-only). Replace later with your exact course text.
   const DETAILS = {
     zero:{
       skills:"Foundation build: grammar, sentence control, basic speaking confidence, basic writing structure, reading/listening understanding system.",
@@ -1282,14 +1159,12 @@
   }
 
   detailsBack.addEventListener('click', ()=>{
-    // figure current course from title
     const t = (detailsTitle.textContent || '').toLowerCase();
     const key = t.includes('zero') ? 'zero' : t.includes('hope') ? 'hope' : t.includes('step') ? 'stepup' : 'desperate';
     renderDetailsMenu(key);
   });
 
   detailsOverlay.querySelectorAll('[data-close-details]').forEach(el=> el.addEventListener('click', closeDetails));
-
   document.querySelectorAll('[data-details]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const key = btn.getAttribute('data-details');
@@ -1307,7 +1182,6 @@
     payOverlay.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
 
-    // WhatsApp message for screenshot
     const msg = encodeURIComponent("Assalamu Alaikum, ami payment korechi. Screenshot attach korchi. Please confirm my admission.");
     sendScreenshotBtn.href = `https://wa.me/8801611611139?text=${msg}`;
   }
@@ -1322,11 +1196,54 @@
   payOverlay.querySelectorAll('[data-close-pay]').forEach(el=> el.addEventListener('click', closePay));
   document.querySelectorAll('[data-open-pay]').forEach(btn=> btn.addEventListener('click', openPay));
 
-  /* ===== Help buttons ===== */
+  /* Help buttons */
   document.querySelectorAll('[data-open-help]').forEach(btn=>{
     btn.addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
   });
 
+  /* Escape close */
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape'){
+      if(videoOverlay.classList.contains('show')) closeVideo();
+      if(detailsOverlay.classList.contains('show')) closeDetails();
+      if(routineOverlay.classList.contains('show')) closeRoutine();
+      if(payOverlay.classList.contains('show')) closePay();
+      if(menuOverlay.classList.contains('show')) closeMenu();
+    }
+  });
+
+  /* ===== Menu overlay (top-right + bottom-left) ===== */
+  const menuOverlay = document.getElementById('menuOverlay');
+  const fabMenu = document.getElementById('fabMenu');
+  const btnMenuTop = document.getElementById('btnMenuTop');
+
+  function openMenu(){
+    lastScrollY = window.scrollY;
+    menuOverlay.classList.add('show');
+    menuOverlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    menuOverlay.classList.remove('show');
+    menuOverlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    window.scrollTo({ top: lastScrollY, behavior:'instant' });
+  }
+  function bindOpen(el){
+    el.addEventListener('click', openMenu);
+    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openMenu(); });
+  }
+  bindOpen(fabMenu);
+  bindOpen(btnMenuTop);
+
+  menuOverlay.querySelectorAll('[data-close-menu]').forEach(el=> el.addEventListener('click', closeMenu));
+  document.getElementById('menuGoPricing').addEventListener('click', ()=>{
+    closeMenu();
+    document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+  document.getElementById('menuHelp').addEventListener('click', ()=>{
+    window.open(HELP_WA, '_blank', 'noopener');
+  });
 </script>
 </body>
 </html>

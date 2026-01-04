@@ -497,6 +497,53 @@
     text-decoration:none;
   }
   .menuItem span{ color: var(--muted); font-size:12px; }
+
+  /* ===== Routine table (NEW) ===== */
+  .routineWrap{
+    border:1px solid var(--stroke);
+    border-radius: 18px;
+    overflow:hidden;
+    background: rgba(255,255,255,.03);
+  }
+  .routineGrid{
+    width:100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .routineGrid th,
+  .routineGrid td{
+    border:1px solid rgba(255,255,255,.10);
+    padding: 10px 8px;
+    text-align:center;
+    font-weight:900;
+    font-size:12px;
+  }
+  .routineGrid th{
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.88);
+  }
+  .routineGrid td{
+    color: rgba(255,255,255,.92);
+    background: rgba(255,255,255,.02);
+  }
+  .theme-light .routineGrid th{
+    background: rgba(10,32,22,.06);
+    color: rgba(10,32,22,.88);
+  }
+  .theme-light .routineGrid td{
+    background: rgba(255,255,255,.70);
+    color: rgba(10,32,22,.90);
+  }
+  .tagHope{ color: #ff5b5b; }
+  .tagZero{ color: #36d28b; }
+  .tagStep{ color: #f3b04a; }
+  .tagDes{ color: #36d28b; }
+
+  /* keep colors readable in light mode too */
+  .theme-light .tagHope{ color:#c62828; }
+  .theme-light .tagZero{ color:#0b7a4a; }
+  .theme-light .tagStep{ color:#b06a00; }
+  .theme-light .tagDes{ color:#0b7a4a; }
 </style>
 </head>
 
@@ -833,30 +880,69 @@
     </div>
   </div>
 
-  <!-- ROUTINE MODAL -->
+  <!-- ROUTINE MODAL (UPDATED ONLY) -->
   <div class="overlay" id="routineOverlay" aria-hidden="true">
     <div class="back" data-close-routine></div>
     <div class="sheet" role="dialog" aria-modal="true" aria-label="Routine">
       <div class="sheet-top">
         <div>
-          <h3>Class Routine (Weekly)</h3>
-          <p>Sunday–Thursday classes. Friday no classes until after Jumu’ah. Saturday closed.</p>
+          <h3>Routine (Weekly)</h3>
+          <p>Based on the official schedule chart.</p>
         </div>
         <button class="x" type="button" data-close-routine aria-label="Close">✕</button>
       </div>
-      <div class="opt">
-        <b>IELTS Basic (10.15 PM)</b>
-        <div style="color:var(--muted); font-size:13px; margin-top:6px; line-height:1.55;">
-          Sunday: Speaking (Parts 1–3, variations, upgrading)<br/>
-          Monday: Listening (all question types + final suggestions)<br/>
-          Tuesday: Reading Academic (all question types + strategies + suggestions)<br/>
-          Wednesday: GT specialised class<br/>
-          Thursday: Writing (Task 2 whole + suggestions + Task 1 upgrading)
-        </div>
-        <div style="margin-top:10px; color:var(--muted); font-size:12px;">
-          Note: Evaluation & Advanced (7.00 PM) runs Mon/Tue/Wed/Fri — Test, Practice & Evaluation.
-        </div>
+
+      <div class="routineWrap">
+        <table class="routineGrid" aria-label="Routine Table">
+          <thead>
+            <tr>
+              <th style="width:22%;">Day</th>
+              <th>8 PM</th>
+              <th>9 PM</th>
+              <th>10 PM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sun</td>
+              <td class="tagHope">HOPE</td>
+              <td class="tagZero">ZERO</td>
+              <td class="tagDes">DESPERATE</td>
+            </tr>
+            <tr>
+              <td>Mon</td>
+              <td class="tagDes">DESPERATE</td>
+              <td class="tagHope">HOPE</td>
+              <td class="tagStep">STEP-UP</td>
+            </tr>
+            <tr>
+              <td>Tue</td>
+              <td class="tagStep">STEP-UP</td>
+              <td class="tagZero">ZERO</td>
+              <td class="tagDes">DESPERATE</td>
+            </tr>
+            <tr>
+              <td>Wed</td>
+              <td class="tagDes">DESPERATE</td>
+              <td class="tagHope">HOPE</td>
+              <td class="tagStep">STEP-UP</td>
+            </tr>
+            <tr>
+              <td>Thu</td>
+              <td class="tagDes">DESPERATE</td>
+              <td class="tagZero">ZERO</td>
+              <td class="tagDes">DESPERATE</td>
+            </tr>
+            <tr>
+              <td>Fri</td>
+              <td class="tagDes">DESPERATE</td>
+              <td class="tagHope">HOPE</td>
+              <td class="tagStep">STEP-UP</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+
       <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
         <button class="btn" type="button" data-close-routine>Close</button>
       </div>
@@ -1467,3 +1553,4 @@ This course is for students who want proper preparation, not random practice`,
 </script>
 </body>
 </html>
+```0

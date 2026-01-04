@@ -1,1452 +1,1163 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>LizOn Education — IELTS Journey (No Scroll)</title>
-<meta name="description" content="IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Tap-to-play videos. Admit opens pricing + pay. Details opens tap-only info sheets. Routine opens weekly routine." />
-<meta name="theme-color" content="#062b1f" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LizOn Education — IELTS Journey</title>
+  <meta name="description" content="LizOn Education IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Tap-only experience. Pricing + Pay + Routine." />
+  <meta name="theme-color" content="#062b1f" />
 
-<style>
-  :root{
-    /* Dark mode (NO pure black) */
-    --bg:#041f16;
-    --bg2:#062b1f;
-    --panel:rgba(255,255,255,.06);
-    --panel2:rgba(255,255,255,.08);
-    --stroke:rgba(255,255,255,.12);
-    --stroke2:rgba(255,255,255,.18);
-    --text:rgba(255,255,255,.92);
-    --muted:rgba(255,255,255,.72);
-    --gold:#d6b35a;
-    --gold2:#caa64a;
-    --shadow: 0 18px 60px rgba(0,0,0,.45);
-    --radius-xl:20px;
-    --radius-lg:16px;
-    --radius-md:14px;
-    --topbar-bg: rgba(4,31,22,.82);
-    --topbar-bg-scrolled: rgba(4,31,22,.55);
-  }
+  <style>
+    :root{
+      /* Dark mode (NO pure black) */
+      --bg:#041f16;
+      --bg2:#062b1f;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --gold: rgba(214,179,90,.95);
+      --gold2: rgba(214,179,90,.65);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --radius-md: 16px;
+      --tap: 52px;
+      --topbar: 70px;
 
-  .theme-light{
-    --bg:#eef6f3;
-    --bg2:#ffffff;
-    --panel:#ffffff;
-    --panel2:#ffffff;
-    --stroke:rgba(11,32,26,.12);
-    --stroke2:rgba(11,32,26,.18);
-    --text:#0b201a;
-    --muted:rgba(11,32,26,.70);
-    --gold:#a57f32;
-    --gold2:#b88b37;
-    --shadow: 0 12px 34px rgba(8,25,20,.10);
-    --topbar-bg: rgba(255,255,255,.88);
-    --topbar-bg-scrolled: rgba(255,255,255,.62);
-  }
-
-  *{ box-sizing:border-box; }
-  html,body{ height:100%; }
-  body{
-    margin:0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background:
-      radial-gradient(1200px 700px at 15% -10%, rgba(214,179,90,.10), transparent 55%),
-      radial-gradient(900px 700px at 85% 10%, rgba(45,170,120,.16), transparent 55%),
-      var(--bg);
-    color:var(--text);
-    line-height:1.45;
-    overflow:hidden; /* ✅ no scroll main page */
-  }
-
-  a{ color:inherit; }
-
-  .container{
-    width:min(1100px, 92vw);
-    margin:0 auto;
-  }
-
-  /* ===== TOPBAR ===== */
-  .topbar{
-    position:sticky;
-    top:0;
-    z-index:9999;
-    backdrop-filter: blur(12px);
-    background: var(--topbar-bg);
-    border-bottom:1px solid var(--stroke);
-    transition: background .18s ease, box-shadow .18s ease;
-  }
-  .topbar.scrolled{
-    background: var(--topbar-bg-scrolled);
-    box-shadow: 0 10px 25px rgba(0,0,0,.12);
-  }
-  .topbar-inner{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    padding:10px 0;
-  }
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    min-width:0;
-  }
-  .logo-link{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    text-decoration:none;
-    min-width:0;
-  }
-  .logo-img{
-    width:42px; height:42px;
-    border-radius:14px;
-    object-fit:contain;
-    background: rgba(255,255,255,.06);
-    border:1px solid var(--stroke);
-    box-shadow: var(--shadow);
-    flex:0 0 auto;
-  }
-  .brand-text{ display:flex; flex-direction:column; line-height:1.1; min-width:0; }
-  .brand-text b{
-    font-size:16px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width: 220px;
-  }
-  .brand-text span{
-    font-size:12px;
-    color:var(--muted);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width: 260px;
-  }
-
-  .top-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
-  .iconbtn{
-    width:44px; height:44px;
-    border-radius:16px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.02);
-    color:var(--text);
-    cursor:pointer;
-    display:grid; place-items:center;
-    box-shadow: none;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .pillbtn{
-    border:1px solid rgba(214,179,90,.35);
-    background: rgba(214,179,90,.12);
-    color:var(--text);
-    border-radius:999px;
-    padding:10px 12px;
-    font-weight:900;
-    font-size:12px;
-    cursor:pointer;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-    white-space:nowrap;
-  }
-  .pillbtn:hover{ filter: brightness(1.03); }
-
-  /* ===== ONE SCREEN LAYOUT ===== */
-  .screen{
-    height: calc(100svh - 64px);
-    display:flex;
-    align-items:stretch;
-    padding: 12px 0 14px;
-  }
-
-  .layout{
-    width:100%;
-    display:grid;
-    grid-template-rows: auto 1fr;
-    gap: 10px;
-  }
-
-  .hero{
-    border:1px solid var(--stroke);
-    border-radius: var(--radius-xl);
-    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-    box-shadow: var(--shadow);
-    padding: 12px 14px;
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap: 12px;
-  }
-  .hero-left{
-    min-width:0;
-  }
-  .badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 10px;
-    border-radius:999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.02);
-    color:var(--muted);
-    font-size:12px;
-    font-weight:900;
-  }
-  .hero h1{
-    margin:8px 0 4px;
-    font-size: clamp(18px, 2.4vw, 26px);
-    line-height:1.15;
-  }
-  .hero p{
-    margin:0;
-    color:var(--muted);
-    font-size: 13px;
-    max-width: 760px;
-  }
-
-  .hero-right{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    align-items:flex-end;
-  }
-
-  /* Cards wrapper: ✅ designed to fit in one screen */
-  .cards{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    min-height: 0; /* allow internal scaling */
-  }
-
-  /* Desktop: 2x2 grid for 4 courses, top banner full width */
-  @media (min-width: 940px){
-    .cards{
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      --c-zero: rgba(35,140,110,.90);
+      --c-hope: rgba(214,179,90,.90);
+      --c-step: rgba(255,160,210,.90);
+      --c-desp: rgba(120,210,255,.90);
     }
-    .card.top-banner{ grid-column: 1 / -1; }
-  }
+    .theme-light{
+      --bg:#eef6f3;
+      --bg2:#ffffff;
+      --panel: rgba(10,30,20,.05);
+      --panel2: rgba(10,30,20,.08);
+      --stroke: rgba(10,30,20,.14);
+      --text: rgba(10,30,20,.92);
+      --muted: rgba(10,30,20,.70);
+      --gold: rgba(165,127,50,.95);
+      --gold2: rgba(165,127,50,.65);
+      --shadow: 0 14px 40px rgba(8,25,20,.12);
+    }
 
-  /* Card */
-  .card{
-    border:1px solid var(--stroke);
-    border-radius: var(--radius-xl);
-    overflow:hidden;
-    background: rgba(255,255,255,.02);
-    box-shadow: var(--shadow);
-    min-height: 0;
-  }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 20% 0%, rgba(25,110,85,.18), transparent 60%),
+        radial-gradient(900px 700px at 80% 25%, rgba(214,179,90,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      color: var(--text);
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(1100px, 92vw); margin:0 auto; }
 
-  .card-media{
-    position:relative;
-    width:100%;
-    /* ✅ keep image shape consistent */
-    aspect-ratio: 4 / 5; /* for course cards */
-    background:
-      radial-gradient(600px 260px at 20% 0%, rgba(214,179,90,.12), transparent 55%),
-      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-    border-bottom:1px solid var(--stroke);
-    cursor:pointer;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-    display:block;
-  }
+    /* ===== TOPBAR ===== */
+    .topbar{
+      position: sticky; top:0; z-index: 9999;
+      backdrop-filter: blur(12px);
+      background: rgba(4,31,22,.72);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .theme-light .topbar{ background: rgba(255,255,255,.82); }
+    .topbar-inner{
+      height: var(--topbar);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; min-width:0;
+    }
+    .logo-link{
+      display:flex; align-items:center; gap:10px; min-width:0;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .logo{
+      width:46px; height:46px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--stroke);
+      object-fit:contain;
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+    .brand-text{ display:flex; flex-direction:column; line-height:1.1; min-width:0; }
+    .brand-text b{
+      font-size:17px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 44vw;
+    }
+    .brand-text span{
+      font-size:12px; color: var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 54vw;
+    }
 
-  .card.top-banner .card-media{
-    aspect-ratio: 12 / 5; /* ✅ banner */
-  }
+    .top-actions{
+      display:flex; gap:10px; align-items:center;
+    }
+    .pill{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-weight: 900;
+      font-size: 13px;
+      display:flex; align-items:center; gap:10px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .pill small{ color: var(--muted); font-weight: 800; }
+    .pill:active{ transform: translateY(1px); }
 
-  .card-media img{
-    position:absolute; inset:0;
-    width:100%; height:100%;
-    object-fit: cover;
-    filter: saturate(1.05) contrast(1.03);
-  }
+    .iconbtn{
+      width:46px; height:46px;
+      border-radius: 16px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      display:grid; place-items:center;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
 
-  /* Only allowed overlay: Tap to play */
-  .tap-pill{
-    position:absolute;
-    left: 12px;
-    bottom: 12px;
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding: 10px 12px;
-    border-radius: 999px;
-    border:1px solid rgba(214,179,90,.40);
-    background: rgba(4,31,22,.72);
-    color: var(--text);
-    backdrop-filter: blur(10px);
-    font-weight:950;
-    font-size: 12px;
-  }
-  .tap-dot{
-    width:10px; height:10px;
-    border-radius:50%;
-    background: rgba(214,179,90,.95);
-    box-shadow: 0 0 0 6px rgba(214,179,90,.14);
-  }
+    /* ===== FIRST SCREEN: 5 CARDS, NO SCROLL NEEDED ===== */
+    .screen{
+      min-height: calc(100svh - var(--topbar));
+      padding: 14px 0 12px;
+      display:flex;
+      align-items: stretch;
+    }
+    .cards{
+      width:100%;
+      display:grid;
+      gap: 12px;
+      grid-template-rows: 1.15fr 1fr 1fr 1fr 1fr; /* hero + 4 */
+    }
+    .card{
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position: relative;
+    }
+    .card-inner{ padding: 14px; }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 900;
+    }
+    .h-title{
+      margin: 10px 0 6px;
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+    .h-sub{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 80ch;
+    }
+    .course-chips{
+      margin-top: 10px;
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .chip{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-weight: 900;
+      font-size: 12px;
+      color: var(--text);
+      user-select:none;
+    }
 
-  .card-body{
-    padding: 10px 12px 12px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
+    /* Course card visuals: image-only feeling */
+    .course{
+      display:flex;
+      align-items: stretch;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .course::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 500px at 25% 10%, rgba(255,255,255,.06), transparent 62%),
+        radial-gradient(900px 600px at 80% 40%, rgba(255,255,255,.04), transparent 65%),
+        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.32));
+      pointer-events:none;
+    }
+    .course .course-overlay{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; justify-content:space-between;
+      padding: 12px;
+    }
+    .course-top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .course-name{
+      display:flex; align-items:center; gap:10px; min-width:0;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--gold);
+      flex: 0 0 auto;
+      box-shadow: 0 0 0 6px rgba(214,179,90,.14);
+    }
+    .course-name b{
+      font-size: 14px;
+      font-weight: 950;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 55vw;
+    }
+    .course-name span{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+    }
 
-  .card-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-  }
-  .course-name{
-    font-weight: 950;
-    font-size: 13px;
-    letter-spacing:.2px;
-    color: var(--text);
-  }
-  .course-mini{
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 900;
-    white-space:nowrap;
-  }
+    .tapplay{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.18);
+      padding: 10px 12px;
+      font-weight: 950;
+      font-size: 13px;
+      width: fit-content;
+    }
+    .tapplay .playdot{
+      width:14px; height:14px; border-radius:50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 7px rgba(214,179,90,.14);
+    }
 
-  /* Buttons row */
-  .btn-row{
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-  }
-  .btn{
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.02);
-    color: var(--text);
-    border-radius: 16px;
-    padding: 11px 10px;
-    font-weight: 950;
-    font-size: 12px;
-    cursor:pointer;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-    text-align:center;
-  }
-  .btn:hover{ border-color: var(--stroke2); filter: brightness(1.03); }
-  .btn.primary{
-    border-color: rgba(214,179,90,.40);
-    background: rgba(214,179,90,.12);
-  }
+    .course-actions{
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .btn3{
+      flex:1;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      padding: 10px 10px;
+      text-align:center;
+      font-weight: 950;
+      font-size: 13px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      white-space:nowrap;
+    }
+    .btn3.primary{
+      background: rgba(214,179,90,.14);
+      border-color: rgba(214,179,90,.55);
+    }
+    .btn3:active{ transform: translateY(1px); }
 
-  /* Top banner: no buttons under it */
-  .card.top-banner .card-body{ display:none; }
+    /* color accents per course */
+    .course.zero .dot, .course.zero .playdot{ background: var(--c-zero); box-shadow: 0 0 0 7px rgba(35,140,110,.14); }
+    .course.hope .dot, .course.hope .playdot{ background: var(--c-hope); box-shadow: 0 0 0 7px rgba(214,179,90,.14); }
+    .course.stepup .dot, .course.stepup .playdot{ background: var(--c-step); box-shadow: 0 0 0 7px rgba(255,160,210,.14); }
+    .course.desperate .dot, .course.desperate .playdot{ background: var(--c-desp); box-shadow: 0 0 0 7px rgba(120,210,255,.14); }
 
-  /* ===== MODALS / SHEETS ===== */
-  .wrap{
-    position:fixed; inset:0;
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    padding: 14px;
-    z-index: 12000;
-  }
-  .wrap.show{ display:flex; }
-  .back{
-    position:absolute; inset:0;
-    background: rgba(0,0,0,.52);
-  }
-  .sheet{
-    position:relative;
-    width:min(880px, 100%);
-    max-height: calc(100svh - 28px);
-    overflow:auto;
-    border-radius: var(--radius-xl);
-    border:1px solid var(--stroke);
-    background: var(--bg2);
-    box-shadow: var(--shadow);
-    padding: 14px;
-    animation: in .14s ease-out forwards;
-  }
-  @keyframes in{
-    from{ opacity:.0; transform: translateY(14px); }
-    to{ opacity:1; transform: translateY(0); }
-  }
-  .sheet-top{
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:12px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--stroke);
-  }
-  .sheet-title{
-    margin:0;
-    font-size: 15px;
-    font-weight: 950;
-    line-height:1.2;
-  }
-  .sheet-sub{
-    margin:6px 0 0;
-    color: var(--muted);
-    font-size: 13px;
-  }
-  .x{
-    width:44px; height:44px;
-    border-radius:16px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.02);
-    color: var(--text);
-    cursor:pointer;
-    display:grid; place-items:center;
-    font-weight: 950;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-  }
+    /* ===== BELOW CONTENT (scrollable) ===== */
+    .below{
+      padding: 18px 0 140px;
+    }
+    .section{
+      margin-top: 14px;
+      border-radius: var(--radius-xl);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .section h2{ margin:0 0 6px; font-size: 18px; }
+    .section p{ margin:0; color: var(--muted); }
 
-  /* Video modal uses center, not bottom */
-  .wrap.center{
-    align-items:center;
-  }
-  .video{
-    width:min(920px, 100%);
-    background: var(--bg2);
-    border:1px solid var(--stroke);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow);
-    overflow:hidden;
-    animation: in .14s ease-out forwards;
-  }
-  .video-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    padding: 12px 12px;
-    border-bottom:1px solid var(--stroke);
-  }
-  .video-top b{ font-size: 13px; }
-  .iframe-wrap{
-    position:relative;
-    width:100%;
-    aspect-ratio: 16 / 9;
-    background: rgba(0,0,0,.18);
-  }
-  .iframe-wrap iframe{
-    position:absolute; inset:0;
-    width:100%; height:100%;
-    border:0;
-  }
+    .price-grid{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .price-card{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.03);
+      padding: 12px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .price-card b{ display:block; font-size:14px; }
+    .price-card span{ display:block; font-size:12px; color: var(--muted); margin-top:3px; }
+    .price-actions{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+    .tiny{
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      padding: 9px 11px;
+      font-weight: 950;
+      font-size: 12px;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .tiny.gold{
+      background: rgba(214,179,90,.14);
+      border-color: rgba(214,179,90,.55);
+    }
 
-  /* Details accordion */
-  .tabs{
-    margin-top: 12px;
-    display:grid;
-    gap:10px;
-  }
-  details{
-    border:1px solid var(--stroke);
-    border-radius: 18px;
-    background: rgba(255,255,255,.02);
-    overflow:hidden;
-  }
-  summary{
-    list-style:none;
-    cursor:pointer;
-    padding: 12px 12px;
-    font-weight: 950;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    -webkit-tap-highlight-color: transparent;
-    user-select:none;
-  }
-  summary::-webkit-details-marker{ display:none; }
-  .chev{ opacity:.75; }
-  details[open] .chev{ transform: rotate(180deg); }
-  .pane{
-    padding: 0 12px 12px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height:1.55;
-  }
+    .combo{
+      border-color: rgba(214,179,90,.35);
+      background: linear-gradient(180deg, rgba(214,179,90,.10), rgba(255,255,255,.03));
+    }
+    .best{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid rgba(214,179,90,.55);
+      background: rgba(214,179,90,.14);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 950;
+      margin-bottom: 10px;
+    }
 
-  /* Pricing cards */
-  .grid2{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap:12px;
-    margin-top: 12px;
-  }
-  @media (min-width: 760px){
-    .grid2{ grid-template-columns: 1fr 1fr; }
-  }
+    /* ===== MODALS (Video / Details / Routine / Pay) ===== */
+    .modal-wrap{
+      position:fixed; inset:0;
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      padding: 14px;
+      z-index: 12050;
+    }
+    .modal-wrap.show{ display:flex; }
+    .back{
+      position:absolute; inset:0;
+      background: rgba(0,0,0,.55);
+    }
+    .sheet{
+      position:relative;
+      width:min(860px, 100%);
+      border-radius: var(--radius-xl);
+      border:1px solid var(--stroke);
+      background: rgba(6,43,31,.94);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      animation: up .14s ease-out forwards;
+    }
+    .theme-light .sheet{ background: rgba(255,255,255,.94); }
+    @keyframes up{ from{ transform: translateY(14px); opacity:.0; } to{ transform: translateY(0); opacity:1; } }
 
-  .p-card{
-    border:1px solid var(--stroke);
-    border-radius: var(--radius-xl);
-    background: rgba(255,255,255,.02);
-    padding: 12px;
-  }
-  .p-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:12px;
-  }
-  .p-name{ margin:0; font-weight: 950; font-size: 14px; }
-  .p-tag{ margin-top:4px; color: var(--muted); font-size: 12px; font-weight:900; }
-  .p-price{ font-weight: 950; font-size: 16px; white-space:nowrap; }
-  .p-actions{
-    margin-top: 10px;
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-  }
+    .sheet-top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      padding: 14px;
+      border-bottom:1px solid var(--stroke);
+      background: rgba(255,255,255,.02);
+    }
+    .sheet-top h3{ margin:0; font-size: 16px; }
+    .sheet-top p{ margin:6px 0 0; color: var(--muted); font-size: 13px; }
+    .x{
+      width:44px; height:44px;
+      border-radius: 16px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      display:grid; place-items:center;
+      font-weight: 950;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      flex: 0 0 auto;
+    }
+    .sheet-body{ padding: 14px; max-height: min(68svh, 520px); overflow:auto; }
 
-  .tiny{
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.02);
-    border-radius: 14px;
-    padding: 10px 12px;
-    font-weight: 950;
-    font-size: 12px;
-    cursor:pointer;
-    text-decoration:none;
-    color: var(--text);
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .tiny.primary{
-    border-color: rgba(214,179,90,.40);
-    background: rgba(214,179,90,.12);
-  }
-  .tiny:hover{ border-color: var(--stroke2); filter: brightness(1.03); }
+    /* video frame */
+    .video-frame{
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.25);
+    }
+    .video-frame iframe{ width:100%; height:100%; border:0; display:block; }
 
-  .best{
-    border:1px solid rgba(214,179,90,.35);
-    background: linear-gradient(180deg, rgba(214,179,90,.10), rgba(255,255,255,.01));
-  }
-  .best-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 10px;
-    border-radius: 999px;
-    border:1px solid rgba(214,179,90,.35);
-    background: rgba(214,179,90,.12);
-    font-weight: 950;
-    font-size: 12px;
-  }
+    /* details accordion */
+    details{
+      border:1px solid var(--stroke);
+      border-radius: 18px;
+      background: rgba(255,255,255,.03);
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight: 950;
+      list-style:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .dtext{ color: var(--muted); font-size: 13px; margin-top: 8px; }
+    .dtext ul{ margin: 8px 0 0; padding-left: 18px; }
 
-  .section-h{
-    margin: 14px 0 8px;
-    font-size: 13px;
-    font-weight: 950;
-    color: var(--muted);
-    letter-spacing:.2px;
-  }
-  .hr{ height:1px; background: var(--stroke); margin: 12px 0; }
+    /* routine table */
+    .routine{
+      border:1px solid var(--stroke);
+      border-radius: 18px;
+      overflow:hidden;
+      background: rgba(255,255,255,.02);
+    }
+    .rt-row{ display:grid; grid-template-columns: 90px 1fr 1fr 1fr; }
+    .rt-cell{
+      padding:10px;
+      border-bottom:1px solid var(--stroke);
+      border-right:1px solid var(--stroke);
+      font-weight: 900;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .rt-row .rt-cell:last-child{ border-right:none; }
+    .rt-head .rt-cell{ background: rgba(255,255,255,.03); color: var(--text); }
+    .rt-day{ color: var(--text); background: rgba(255,255,255,.02); }
+    .rt-slot{ color: var(--text); font-weight: 950; background: rgba(255,255,255,.01); }
+    .rt-slot small{ display:block; color: var(--muted); font-weight: 900; margin-top:2px; }
+    .hl{ outline:2px solid rgba(214,179,90,.55); outline-offset:-2px; background: rgba(214,179,90,.10) !important; }
 
-  /* Practice buttons row */
-  .mods{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:10px;
-    margin-top: 10px;
-  }
-  @media (min-width: 760px){
-    .mods{ grid-template-columns: repeat(4, 1fr); }
-  }
+    /* floating help button */
+    .help-fab{
+      position:fixed;
+      right:14px;
+      bottom: 16px;
+      z-index: 14000;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
+      display:flex; align-items:center; gap:10px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .help-fab .h-dot{
+      width:12px; height:12px; border-radius:50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 7px rgba(214,179,90,.14);
+    }
+    .help-fab b{ font-size: 13px; }
 
-  /* Floating WhatsApp help (small) */
-  .help-fab{
-    position:fixed;
-    right:14px;
-    bottom:14px;
-    z-index: 11000;
-    border:1px solid rgba(214,179,90,.35);
-    background: rgba(214,179,90,.12);
-    color: var(--text);
-    border-radius: 999px;
-    padding: 12px 14px;
-    font-weight: 950;
-    font-size: 12px;
-    text-decoration:none;
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(10px);
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* Mobile squeeze to truly fit */
-  @media (max-width: 520px){
-    .hero{ padding: 11px 12px; }
-    .hero p{ font-size: 12.6px; }
-    .cards{ gap: 9px; }
-    .btn{ padding: 10px 8px; font-size: 11.5px; border-radius: 14px; }
-    .tap-pill{ padding: 9px 11px; }
-    .card-body{ padding: 9px 11px 11px; }
-  }
-</style>
+    /* responsive tuning: keep 5 cards visible */
+    @media (max-width: 420px){
+      :root{ --topbar: 66px; }
+      .h-title{ font-size: 20px; }
+      .course-actions{ gap:8px; }
+      .btn3{ font-size: 12px; padding: 9px 9px; }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- TOPBAR -->
+  <div class="topbar" id="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand">
+          <a class="logo-link" href="index.html" aria-label="Go to Home">
+            <img class="logo" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+            <div class="brand-text">
+              <b>LizOn Education</b>
+              <span>IELTS Journey • Tap-only</span>
+            </div>
+          </a>
+        </div>
 
-<!-- TOPBAR -->
-<div class="topbar" id="topbar">
-  <div class="container">
-    <div class="topbar-inner">
-      <div class="brand">
-        <a class="logo-link" href="index.html" title="Go to Home" aria-label="Go to Home">
-          <img class="logo-img" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo" />
-          <div class="brand-text">
-            <b>LizOn Education</b>
-            <span>IELTS Journey • Tap-only</span>
+        <div class="top-actions">
+          <div class="pill" id="goPricingBtn" title="Pricing + Pay">
+            <span style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block;"></span>
+            <span>Admit / Pricing</span>
           </div>
-        </a>
-      </div>
-
-      <div class="top-actions">
-        <button class="iconbtn" id="btnTheme" type="button" aria-label="Toggle theme" title="Toggle theme">🌓</button>
-        <button class="pillbtn" id="btnPricing" type="button">Admit / Pricing</button>
+          <div class="iconbtn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">🌓</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ONE SCREEN -->
-<div class="screen">
-  <div class="container">
-    <div class="layout">
-
-      <!-- HERO -->
-      <div class="hero">
-        <div class="hero-left">
-          <span class="badge">Designed for Desired Score</span>
-          <h1>IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</h1>
-          <p>No scroll. Tap a card to play video. Admit opens Pricing + Pay. Details opens tap-only info. Routine opens weekly routine.</p>
-        </div>
-
-        <div class="hero-right">
-          <button class="pillbtn" id="btnRoutineAll" type="button">Routine</button>
-          <button class="pillbtn" id="btnDetailsAll" type="button" style="border-color:var(--stroke);background:rgba(255,255,255,.02);color:var(--text);">Details</button>
-        </div>
-      </div>
-
-      <!-- CARDS -->
+  <!-- FIRST SCREEN (NO SCROLL REQUIRED) -->
+  <div class="screen">
+    <div class="container">
       <div class="cards">
 
-        <!-- ✅ TOP BANNER IMAGE (no buttons under it) -->
-        <div class="card top-banner">
-          <button class="card-media"
-                  type="button"
-                  data-video-title="IELTS Journey Intro"
-                  data-video-url="https://www.youtube.com/embed/VIDEO_ID_INTRO?autoplay=1&rel=0"
-                  aria-label="Tap to play intro video">
-            <!-- Replace with your banner image -->
-            <img src="assets/ielts-journey-top.png" alt="IELTS Journey banner" onerror="this.style.display='none'">
-            <span class="tap-pill"><span class="tap-dot"></span>Tap to Play</span>
-          </button>
-          <div class="card-body"></div>
+        <!-- HERO / TOP IMAGE CARD (your “top image”) -->
+        <div class="card">
+          <div class="card-inner">
+            <span class="badge">Designed for Desired Score</span>
+            <div class="course-chips" aria-label="Courses">
+              <span class="chip">ZERO</span>
+              <span class="chip">HOPE</span>
+              <span class="chip">STEP-UP</span>
+              <span class="chip">DESPERATE</span>
+            </div>
+            <div class="h-title">IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</div>
+            <p class="h-sub">
+              No scroll on first screen. Tap a card to play video.
+              Admit opens Pricing + Pay. Details opens tap-only info.
+              Routine opens weekly routine.
+            </p>
+          </div>
         </div>
 
         <!-- ZERO -->
-        <div class="card" data-course="zero">
-          <button class="card-media"
-                  type="button"
-                  data-video-title="IELTS ZERO — Video"
-                  data-video-url="https://www.youtube.com/embed/VIDEO_ID_ZERO?autoplay=1&rel=0"
-                  aria-label="Tap to play IELTS ZERO video">
-            <img src="assets/ielts-zero.png" alt="IELTS ZERO image" onerror="this.style.display='none'">
-            <span class="tap-pill"><span class="tap-dot"></span>Tap to Play</span>
-          </button>
-          <div class="card-body">
-            <div class="card-head">
-              <div class="course-name">IELTS ZERO</div>
-              <div class="course-mini">Level 1</div>
+        <div class="card course zero" data-course="zero" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+          <div class="course-overlay">
+            <div class="course-top">
+              <div class="course-name">
+                <span class="dot"></span>
+                <div>
+                  <b>IELTS ZERO</b>
+                  <span>Tap to play intro video</span>
+                </div>
+              </div>
+              <div class="tapplay"><span class="playdot"></span>Tap to Play</div>
             </div>
-            <div class="btn-row">
-              <button class="btn primary" type="button" data-open-pricing data-focus="zero">Admit</button>
-              <button class="btn" type="button" data-open-details data-course="zero">Details</button>
-              <button class="btn" type="button" data-open-routine="zero">Routine</button>
+            <div class="course-actions">
+              <div class="btn3 primary" data-action="admit" data-target="zero">Admit</div>
+              <div class="btn3" data-action="details" data-target="zero">Details</div>
+              <div class="btn3" data-action="routine" data-target="zero">Routine</div>
             </div>
           </div>
         </div>
 
         <!-- HOPE -->
-        <div class="card" data-course="hope">
-          <button class="card-media"
-                  type="button"
-                  data-video-title="IELTS HOPE — Video"
-                  data-video-url="https://www.youtube.com/embed/VIDEO_ID_HOPE?autoplay=1&rel=0"
-                  aria-label="Tap to play IELTS HOPE video">
-            <img src="assets/ielts-hope.png" alt="IELTS HOPE image" onerror="this.style.display='none'">
-            <span class="tap-pill"><span class="tap-dot"></span>Tap to Play</span>
-          </button>
-          <div class="card-body">
-            <div class="card-head">
-              <div class="course-name">IELTS HOPE</div>
-              <div class="course-mini">Level 2</div>
+        <div class="card course hope" data-course="hope" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+          <div class="course-overlay">
+            <div class="course-top">
+              <div class="course-name">
+                <span class="dot"></span>
+                <div>
+                  <b>IELTS HOPE</b>
+                  <span>Tap to play intro video</span>
+                </div>
+              </div>
+              <div class="tapplay"><span class="playdot"></span>Tap to Play</div>
             </div>
-            <div class="btn-row">
-              <button class="btn primary" type="button" data-open-pricing data-focus="hope">Admit</button>
-              <button class="btn" type="button" data-open-details data-course="hope">Details</button>
-              <button class="btn" type="button" data-open-routine="hope">Routine</button>
+            <div class="course-actions">
+              <div class="btn3 primary" data-action="admit" data-target="hope">Admit</div>
+              <div class="btn3" data-action="details" data-target="hope">Details</div>
+              <div class="btn3" data-action="routine" data-target="hope">Routine</div>
             </div>
           </div>
         </div>
 
         <!-- STEP-UP -->
-        <div class="card" data-course="stepup">
-          <button class="card-media"
-                  type="button"
-                  data-video-title="IELTS STEP-UP — Video"
-                  data-video-url="https://www.youtube.com/embed/VIDEO_ID_STEPUP?autoplay=1&rel=0"
-                  aria-label="Tap to play IELTS STEP-UP video">
-            <img src="assets/ielts-stepup.png" alt="IELTS STEP-UP image" onerror="this.style.display='none'">
-            <span class="tap-pill"><span class="tap-dot"></span>Tap to Play</span>
-          </button>
-          <div class="card-body">
-            <div class="card-head">
-              <div class="course-name">IELTS STEP-UP</div>
-              <div class="course-mini">Level 3</div>
+        <div class="card course stepup" data-course="stepup" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+          <div class="course-overlay">
+            <div class="course-top">
+              <div class="course-name">
+                <span class="dot"></span>
+                <div>
+                  <b>IELTS STEP-UP</b>
+                  <span>Tap to play intro video</span>
+                </div>
+              </div>
+              <div class="tapplay"><span class="playdot"></span>Tap to Play</div>
             </div>
-            <div class="btn-row">
-              <button class="btn primary" type="button" data-open-pricing data-focus="stepup">Admit</button>
-              <button class="btn" type="button" data-open-details data-course="stepup">Details</button>
-              <button class="btn" type="button" data-open-routine="stepup">Routine</button>
+            <div class="course-actions">
+              <div class="btn3 primary" data-action="admit" data-target="stepup">Admit</div>
+              <div class="btn3" data-action="details" data-target="stepup">Details</div>
+              <div class="btn3" data-action="routine" data-target="stepup">Routine</div>
             </div>
           </div>
         </div>
 
         <!-- DESPERATE -->
-        <div class="card" data-course="desperate">
-          <button class="card-media"
-                  type="button"
-                  data-video-title="IELTS DESPERATE — Video"
-                  data-video-url="https://www.youtube.com/embed/VIDEO_ID_DESPERATE?autoplay=1&rel=0"
-                  aria-label="Tap to play IELTS DESPERATE video">
-            <img src="assets/ielts-desperate.png" alt="IELTS DESPERATE image" onerror="this.style.display='none'">
-            <span class="tap-pill"><span class="tap-dot"></span>Tap to Play</span>
-          </button>
-          <div class="card-body">
-            <div class="card-head">
-              <div class="course-name">IELTS DESPERATE</div>
-              <div class="course-mini">Level 4</div>
+        <div class="card course desperate" data-course="desperate" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+          <div class="course-overlay">
+            <div class="course-top">
+              <div class="course-name">
+                <span class="dot"></span>
+                <div>
+                  <b>IELTS DESPERATE</b>
+                  <span>Tap to play intro video</span>
+                </div>
+              </div>
+              <div class="tapplay"><span class="playdot"></span>Tap to Play</div>
             </div>
-            <div class="btn-row">
-              <button class="btn primary" type="button" data-open-pricing data-focus="desperate">Admit</button>
-              <button class="btn" type="button" data-open-details data-course="desperate">Details</button>
-              <button class="btn" type="button" data-open-routine="desperate">Routine</button>
+            <div class="course-actions">
+              <div class="btn3 primary" data-action="admit" data-target="desperate">Admit</div>
+              <div class="btn3" data-action="details" data-target="desperate">Details</div>
+              <div class="btn3" data-action="routine" data-target="desperate">Routine</div>
             </div>
           </div>
         </div>
 
-      </div><!-- /cards -->
+      </div>
+    </div>
+  </div>
+
+  <!-- BELOW CONTENT (SCROLLS) -->
+  <div class="below" id="below">
+    <div class="container">
+
+      <!-- PRICING -->
+      <div class="section" id="pricing">
+        <h2>Pricing + Combos</h2>
+        <p>Admit button brings you here. Tap Pay to see payment options.</p>
+
+        <div class="price-grid" aria-label="Individual pricing">
+          <div class="price-card">
+            <div>
+              <b>IELTS ZERO — 4,200</b>
+              <span>1 month • 12 sessions</span>
+            </div>
+            <div class="price-actions">
+              <button class="tiny gold" data-pay="ZERO">Pay</button>
+              <a class="tiny" target="_blank" rel="noopener"
+                 href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20ZERO%20e%20admission%20nite%20chai.%20Payment%20process%20bolben%3F">Help</a>
+            </div>
+          </div>
+
+          <div class="price-card">
+            <div>
+              <b>IELTS HOPE — 5,500</b>
+              <span>1 month • 16 sessions</span>
+            </div>
+            <div class="price-actions">
+              <button class="tiny gold" data-pay="HOPE">Pay</button>
+              <a class="tiny" target="_blank" rel="noopener"
+                 href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20HOPE%20e%20admission%20nite%20chai.%20Payment%20process%20bolben%3F">Help</a>
+            </div>
+          </div>
+
+          <div class="price-card">
+            <div>
+              <b>IELTS STEP-UP — 6,200</b>
+              <span>1 month • 16 sessions</span>
+            </div>
+            <div class="price-actions">
+              <button class="tiny gold" data-pay="STEP-UP">Pay</button>
+              <a class="tiny" target="_blank" rel="noopener"
+                 href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20STEP-UP%20e%20admission%20nite%20chai.%20Payment%20process%20bolben%3F">Help</a>
+            </div>
+          </div>
+
+          <div class="price-card">
+            <div>
+              <b>IELTS DESPERATE — 7,500</b>
+              <span>1 month • 28 sessions</span>
+            </div>
+            <div class="price-actions">
+              <button class="tiny gold" data-pay="DESPERATE">Pay</button>
+              <a class="tiny" target="_blank" rel="noopener"
+                 href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20DESPERATE%20e%20admission%20nite%20chai.%20Payment%20process%20bolben%3F">Help</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <div class="section combo">
+          <div class="best">BEST VALUE • N2F (All 4) — 12,700</div>
+          <p style="margin:0;color:var(--muted);">
+            Combos: ZERO+HOPE 6,790 • HOPE+STEP-UP 8,190 • STEP-UP+DESPERATE 9,590 •
+            ZERO+HOPE+STEP-UP 9,540 • HOPE+STEP-UP+DESPERATE 11,520
+          </p>
+          <div style="height:10px;"></div>
+          <div class="price-actions">
+            <button class="tiny gold" data-pay="COMBO">Pay</button>
+            <a class="tiny" target="_blank" rel="noopener"
+               href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20Combo%20niye%20admission%20nite%20chai.%20Payment%20process%20bolben%3F">Help</a>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
-</div>
 
-<!-- Floating Help (WhatsApp) -->
-<a class="help-fab"
-   href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20course%20choose%20korte%20Help%20chai."
-   target="_blank" rel="noopener">
-  <span style="width:10px;height:10px;border-radius:50%;background:rgba(214,179,90,.95);box-shadow:0 0 0 6px rgba(214,179,90,.14);"></span>
-  Help
-</a>
+  <!-- HELP floating -->
+  <a class="help-fab" target="_blank" rel="noopener"
+     href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20help%20chai.%20Amar%20level%20bujhte%20guide%20korben%3F">
+    <span class="h-dot"></span>
+    <b>Help</b>
+  </a>
 
-<!-- =========================
-     VIDEO MODAL (CENTER)
-========================= -->
-<div class="wrap center" id="videoWrap" aria-hidden="true">
-  <div class="back" id="videoBack"></div>
-  <div class="video" role="dialog" aria-modal="true" aria-label="Video">
-    <div class="video-top">
-      <b id="videoTitle">Video</b>
-      <button class="x" id="videoClose" type="button" aria-label="Close">✕</button>
-    </div>
-    <div class="iframe-wrap">
-      <iframe id="videoFrame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <!-- VIDEO MODAL -->
+  <div class="modal-wrap" id="videoWrap" aria-hidden="true">
+    <div class="back" data-close="video"></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Video">
+      <div class="sheet-top">
+        <div>
+          <h3 id="videoTitle">Video</h3>
+          <p id="videoHint">Tap outside to close. You will return to where you left.</p>
+        </div>
+        <div class="x" data-close="video">✕</div>
+      </div>
+      <div class="sheet-body">
+        <div class="video-frame">
+          <iframe id="videoIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- =========================
-     PRICING SHEET
-========================= -->
-<div class="wrap" id="pricingWrap" aria-hidden="true">
-  <div class="back" id="pricingBack"></div>
-  <div class="sheet" role="dialog" aria-modal="true" aria-label="Pricing and combos">
-    <div class="sheet-top">
-      <div>
-        <h3 class="sheet-title">Pricing + Combos</h3>
-        <p class="sheet-sub">Tap Pay to see payment options. Tap Help for WhatsApp.</p>
+  <!-- DETAILS MODAL -->
+  <div class="modal-wrap" id="detailsWrap" aria-hidden="true">
+    <div class="back" data-close="details"></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Details">
+      <div class="sheet-top">
+        <div>
+          <h3 id="detailsTitle">Course Details</h3>
+          <p>Tap-only dropdowns. No jumping to bottom.</p>
+        </div>
+        <div class="x" data-close="details">✕</div>
       </div>
-      <button class="x" id="pricingClose" type="button" aria-label="Close">✕</button>
-    </div>
-
-    <div class="section-h">Individual courses</div>
-    <div class="grid2" id="priceGrid">
-      <!-- ZERO -->
-      <div class="p-card" data-row="zero">
-        <div class="p-top">
-          <div>
-            <p class="p-name">IELTS ZERO</p>
-            <div class="p-tag">1 month • 12 sessions</div>
-          </div>
-          <div class="p-price">4,200</div>
-        </div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="IELTS ZERO • 4,200">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20ZERO%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
+      <div class="sheet-body" id="detailsBody">
+        <!-- injected -->
       </div>
-
-      <!-- HOPE -->
-      <div class="p-card" data-row="hope">
-        <div class="p-top">
-          <div>
-            <p class="p-name">IELTS HOPE</p>
-            <div class="p-tag">1 month • 16 sessions</div>
-          </div>
-          <div class="p-price">5,500</div>
-        </div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="IELTS HOPE • 5,500">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20HOPE%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
-      </div>
-
-      <!-- STEP-UP -->
-      <div class="p-card" data-row="stepup">
-        <div class="p-top">
-          <div>
-            <p class="p-name">IELTS STEP-UP</p>
-            <div class="p-tag">1 month • 16 sessions</div>
-          </div>
-          <div class="p-price">6,200</div>
-        </div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="IELTS STEP-UP • 6,200">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20STEP-UP%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
-      </div>
-
-      <!-- DESPERATE -->
-      <div class="p-card" data-row="desperate">
-        <div class="p-top">
-          <div>
-            <p class="p-name">IELTS DESPERATE</p>
-            <div class="p-tag">1 month • 28 sessions</div>
-          </div>
-          <div class="p-price">7,500</div>
-        </div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="IELTS DESPERATE • 7,500">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20DESPERATE%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="hr"></div>
-
-    <div class="section-h">Combos</div>
-    <div class="grid2">
-      <div class="p-card">
-        <div class="p-top"><div><p class="p-name">ZERO + HOPE</p><div class="p-tag">Foundation + Reset</div></div><div class="p-price">6,790</div></div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="Combo • ZERO + HOPE • 6,790">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ZERO%20%2B%20HOPE%20combo%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
-      </div>
-
-      <div class="p-card">
-        <div class="p-top"><div><p class="p-name">HOPE + STEP-UP</p><div class="p-tag">Reset + Band jump</div></div><div class="p-price">8,190</div></div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="Combo • HOPE + STEP-UP • 8,190">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20HOPE%20%2B%20STEP-UP%20combo%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
-      </div>
-
-      <div class="p-card">
-        <div class="p-top"><div><p class="p-name">STEP-UP + DESPERATE</p><div class="p-tag">Band jump + Near exam</div></div><div class="p-price">9,590</div></div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="Combo • STEP-UP + DESPERATE • 9,590">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20STEP-UP%20%2B%20DESPERATE%20combo%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
-      </div>
-
-      <div class="p-card">
-        <div class="p-top"><div><p class="p-name">ZERO + HOPE + STEP-UP</p><div class="p-tag">Build → Reset → Band jump</div></div><div class="p-price">9,540</div></div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="Combo • ZERO + HOPE + STEP-UP • 9,540">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ZERO%20%2B%20HOPE%20%2B%20STEP-UP%20combo%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
-      </div>
-
-      <div class="p-card">
-        <div class="p-top"><div><p class="p-name">HOPE + STEP-UP + DESPERATE</p><div class="p-tag">Reset → Band jump → Final eval</div></div><div class="p-price">11,520</div></div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="Combo • HOPE + STEP-UP + DESPERATE • 11,520">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20HOPE%20%2B%20STEP-UP%20%2B%20DESPERATE%20combo%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
-      </div>
-
-      <div class="p-card best">
-        <div class="p-top">
-          <div>
-            <span class="best-badge">BEST VALUE • N2F</span>
-            <p class="p-name" style="margin-top:8px;">N2F — Now to Fly (All 4)</p>
-            <div class="p-tag">ZERO + HOPE + STEP-UP + DESPERATE</div>
-          </div>
-          <div class="p-price">12,700</div>
-        </div>
-        <div class="p-actions">
-          <button class="tiny primary" type="button" data-pay="N2F (All 4) • 12,700">Pay</button>
-          <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20N2F%20(All%204)%20niye%20Help%20chai." target="_blank" rel="noopener">Help</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="hr"></div>
-
-    <!-- ✅ Replaced payment placeholder with module buttons -->
-    <div class="section-h">Practice Modules</div>
-    <div class="mods">
-      <a class="tiny" href="ielts-reading.html">Reading</a>
-      <a class="tiny" href="ielts-listening.html">Listening</a>
-      <a class="tiny" href="ielts-writing.html">Writing</a>
-      <a class="tiny" href="ielts-speaking.html">Speaking</a>
-    </div>
-
-    <div class="hr"></div>
-
-    <div class="p-actions">
-      <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20course%20choose%20korte%20Help%20chai." target="_blank" rel="noopener">Talk with LizOn</a>
-      <button class="tiny" type="button" id="pricingClose2">Close</button>
     </div>
   </div>
-</div>
 
-<!-- =========================
-     PAYMENT SHEET
-========================= -->
-<div class="wrap" id="payWrap" aria-hidden="true">
-  <div class="back" id="payBack"></div>
-  <div class="sheet" role="dialog" aria-modal="true" aria-label="Payment options">
-    <div class="sheet-top">
-      <div>
-        <h3 class="sheet-title" id="payTitle">Payment Options</h3>
-        <p class="sheet-sub">After payment, send Transaction ID / Screenshot on WhatsApp.</p>
+  <!-- ROUTINE MODAL -->
+  <div class="modal-wrap" id="routineWrap" aria-hidden="true">
+    <div class="back" data-close="routine"></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Routine">
+      <div class="sheet-top">
+        <div>
+          <h3 id="routineTitle">Weekly Routine</h3>
+          <p id="routineHint">Tapped course will highlight in the routine.</p>
+        </div>
+        <div class="x" data-close="routine">✕</div>
       </div>
-      <button class="x" id="payClose" type="button" aria-label="Close">✕</button>
-    </div>
-
-    <div class="tabs" style="margin-top:12px;">
-      <details open>
-        <summary>Bkash Merchant (Make Payment) <span class="chev">▾</span></summary>
-        <div class="pane"><b>01611611139</b></div>
-      </details>
-
-      <details>
-        <summary>Bkash Personal (Send Money) <span class="chev">▾</span></summary>
-        <div class="pane"><b>01337533979</b></div>
-      </details>
-
-      <details>
-        <summary>Rocket Personal (Send Money) <span class="chev">▾</span></summary>
-        <div class="pane"><b>01337533979</b></div>
-      </details>
-
-      <details>
-        <summary>Nagad Personal (Send Money) <span class="chev">▾</span></summary>
-        <div class="pane"><b>01337533979</b></div>
-      </details>
-
-      <details>
-        <summary>Upay Personal (Send Money) <span class="chev">▾</span></summary>
-        <div class="pane"><b>01889993896</b></div>
-      </details>
-
-      <details>
-        <summary>Bank Account (DBBL) <span class="chev">▾</span></summary>
-        <div class="pane">
-          <div><b>DBBL (Dutch Bangla Bank Limited)</b></div>
-          <div style="margin-top:8px;">
-            Account No: <b>2211510117789</b><br/>
-            Account Name: <b>SHUVA SARKER JOY</b><br/>
-            Branch: <b>Manda</b><br/>
-            Routing Number: <b>090262874</b>
+      <div class="sheet-body">
+        <div class="routine" id="routineTable">
+          <div class="rt-row rt-head">
+            <div class="rt-cell">Day</div>
+            <div class="rt-cell">8 PM</div>
+            <div class="rt-cell">9 PM</div>
+            <div class="rt-cell">10 PM</div>
+          </div>
+          <div class="rt-row">
+            <div class="rt-cell rt-day">Sun</div>
+            <div class="rt-cell rt-slot" data-course="hope">HOPE<small>Reset</small></div>
+            <div class="rt-cell rt-slot" data-course="zero">ZERO<small>Foundation</small></div>
+            <div class="rt-cell rt-slot" data-course="desperate">DESPERATE<small>Near exam</small></div>
+          </div>
+          <div class="rt-row">
+            <div class="rt-cell rt-day">Mon</div>
+            <div class="rt-cell rt-slot" data-course="desperate">DESPERATE<small>Evaluation</small></div>
+            <div class="rt-cell rt-slot" data-course="hope">HOPE<small>Reset</small></div>
+            <div class="rt-cell rt-slot" data-course="stepup">STEP-UP<small>Band jump</small></div>
+          </div>
+          <div class="rt-row">
+            <div class="rt-cell rt-day">Tue</div>
+            <div class="rt-cell rt-slot" data-course="stepup">STEP-UP<small>Band jump</small></div>
+            <div class="rt-cell rt-slot" data-course="zero">ZERO<small>Foundation</small></div>
+            <div class="rt-cell rt-slot" data-course="desperate">DESPERATE<small>Evaluation</small></div>
+          </div>
+          <div class="rt-row">
+            <div class="rt-cell rt-day">Wed</div>
+            <div class="rt-cell rt-slot" data-course="desperate">DESPERATE<small>Evaluation</small></div>
+            <div class="rt-cell rt-slot" data-course="hope">HOPE<small>Reset</small></div>
+            <div class="rt-cell rt-slot" data-course="stepup">STEP-UP<small>Band jump</small></div>
+          </div>
+          <div class="rt-row">
+            <div class="rt-cell rt-day">Thu</div>
+            <div class="rt-cell rt-slot" data-course="desperate">DESPERATE<small>Evaluation</small></div>
+            <div class="rt-cell rt-slot" data-course="zero">ZERO<small>Foundation</small></div>
+            <div class="rt-cell rt-slot" data-course="desperate">DESPERATE<small>Evaluation</small></div>
+          </div>
+          <div class="rt-row">
+            <div class="rt-cell rt-day">Fri</div>
+            <div class="rt-cell rt-slot" data-course="desperate">DESPERATE<small>Evaluation</small></div>
+            <div class="rt-cell rt-slot" data-course="hope">HOPE<small>Reset</small></div>
+            <div class="rt-cell rt-slot" data-course="stepup">STEP-UP<small>Band jump</small></div>
           </div>
         </div>
-      </details>
-
-      <details>
-        <summary>Visa Card Transfer (Brac Bank) <span class="chev">▾</span></summary>
-        <div class="pane">
-          Visa Card No: <b>4777920004855617</b>
+        <div style="height:12px;"></div>
+        <div class="price-actions">
+          <button class="tiny" id="clearRoutine">Clear highlight</button>
+          <button class="tiny gold" id="goPricingFromRoutine">Go Pricing</button>
         </div>
-      </details>
-    </div>
-
-    <div class="hr"></div>
-
-    <div class="p-actions">
-      <a class="tiny primary" id="paidBtn"
-         href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20ami%20payment%20korechi.%20Course%3A%20(Write%20course%20name)%20%7C%20Amount%3A%20(Write%20amount)%20%7C%20Method%3A%20(bKash%2FRocket%2FNagad%2FUpay%2FBank%2FCard)%20%7C%20TxnID%3A%20(Write%20TxnID)%20%7C%20Screenshot%20ami%20pathacchi."
-         target="_blank" rel="noopener">I Have Paid (WhatsApp)</a>
-
-      <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20payment%20niye%20Help%20chai."
-         target="_blank" rel="noopener">Help</a>
-
-      <button class="tiny" type="button" id="payClose2">Close</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- =========================
-     ROUTINE SHEET (from your old page style)
-========================= -->
-<div class="wrap" id="routineWrap" aria-hidden="true">
-  <div class="back" id="routineBack"></div>
-  <div class="sheet" role="dialog" aria-modal="true" aria-label="Routine">
-    <div class="sheet-top">
-      <div>
-        <h3 class="sheet-title" id="routineTitle">Class Routine (Weekly)</h3>
-        <p class="sheet-sub">Tap Routine from any course to highlight that course.</p>
-      </div>
-      <button class="x" id="routineClose" type="button" aria-label="Close">✕</button>
-    </div>
-
-    <div style="margin-top:12px;border:1px solid var(--stroke);border-radius:var(--radius-lg);overflow:hidden;background:rgba(255,255,255,.02);">
-      <div style="display:grid;grid-template-columns:110px 1fr 1fr 1fr;">
-        <div style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;background:rgba(255,255,255,.03);">Day</div>
-        <div style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;background:rgba(255,255,255,.03);">8 PM</div>
-        <div style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;background:rgba(255,255,255,.03);">9 PM</div>
-        <div style="padding:10px;border-bottom:1px solid var(--stroke);font-weight:950;background:rgba(255,255,255,.03);">10 PM</div>
-
-        <!-- Sun -->
-        <div class="rt-day" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">Sun</div>
-        <div class="rt-slot" data-course="hope" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">HOPE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Reset</small></div>
-        <div class="rt-slot" data-course="zero" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">ZERO <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Foundation</small></div>
-        <div class="rt-slot" data-course="desperate" style="padding:10px;border-bottom:1px solid var(--stroke);font-weight:950;">DESPERATE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Near exam</small></div>
-
-        <!-- Mon -->
-        <div class="rt-day" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">Mon</div>
-        <div class="rt-slot" data-course="desperate" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">DESPERATE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Evaluation</small></div>
-        <div class="rt-slot" data-course="hope" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">HOPE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Reset</small></div>
-        <div class="rt-slot" data-course="stepup" style="padding:10px;border-bottom:1px solid var(--stroke);font-weight:950;">STEP-UP <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Band jump</small></div>
-
-        <!-- Tue -->
-        <div class="rt-day" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">Tue</div>
-        <div class="rt-slot" data-course="stepup" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">STEP-UP <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Band jump</small></div>
-        <div class="rt-slot" data-course="zero" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">ZERO <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Foundation</small></div>
-        <div class="rt-slot" data-course="desperate" style="padding:10px;border-bottom:1px solid var(--stroke);font-weight:950;">DESPERATE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Evaluation</small></div>
-
-        <!-- Wed -->
-        <div class="rt-day" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">Wed</div>
-        <div class="rt-slot" data-course="desperate" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">DESPERATE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Evaluation</small></div>
-        <div class="rt-slot" data-course="hope" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">HOPE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Reset</small></div>
-        <div class="rt-slot" data-course="stepup" style="padding:10px;border-bottom:1px solid var(--stroke);font-weight:950;">STEP-UP <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Band jump</small></div>
-
-        <!-- Thu -->
-        <div class="rt-day" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">Thu</div>
-        <div class="rt-slot" data-course="desperate" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">DESPERATE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Evaluation</small></div>
-        <div class="rt-slot" data-course="zero" style="padding:10px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke);font-weight:950;">ZERO <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Foundation</small></div>
-        <div class="rt-slot" data-course="desperate" style="padding:10px;border-bottom:1px solid var(--stroke);font-weight:950;">DESPERATE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Evaluation</small></div>
-
-        <!-- Fri -->
-        <div class="rt-day" style="padding:10px;border-right:1px solid var(--stroke);font-weight:950;">Fri</div>
-        <div class="rt-slot" data-course="desperate" style="padding:10px;border-right:1px solid var(--stroke);font-weight:950;">DESPERATE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Evaluation</small></div>
-        <div class="rt-slot" data-course="hope" style="padding:10px;border-right:1px solid var(--stroke);font-weight:950;">HOPE <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Reset</small></div>
-        <div class="rt-slot" data-course="stepup" style="padding:10px;font-weight:950;">STEP-UP <small style="display:block;color:var(--muted);font-weight:900;margin-top:2px;">Band jump</small></div>
-      </div>
-    </div>
-
-    <div class="hr"></div>
-    <div class="p-actions">
-      <button class="tiny" id="routineClear" type="button">Clear highlight</button>
-      <button class="tiny" id="routineClose2" type="button">Close</button>
-    </div>
-  </div>
-</div>
-
-<!-- =========================
-     DETAILS SHEET (tap-only sections)
-========================= -->
-<div class="wrap" id="detailsWrap" aria-hidden="true">
-  <div class="back" id="detailsBack"></div>
-  <div class="sheet" role="dialog" aria-modal="true" aria-label="Course details">
-    <div class="sheet-top">
-      <div>
-        <h3 class="sheet-title" id="detailsTitle">Course Details</h3>
-        <p class="sheet-sub">Tap sections. No jumping to bottom.</p>
-      </div>
-      <button class="x" id="detailsClose" type="button" aria-label="Close">✕</button>
-    </div>
-
-    <!-- NOTE: You told “options already added”. If you want exact text from screenshots later,
-         replace these contents without changing headings. -->
-    <div class="tabs" id="detailsTabs">
-
-      <details>
-        <summary>Skills Covered <span class="chev">▾</span></summary>
-        <div class="pane" id="skillsPane">Content will be shown here.</div>
-      </details>
-
-      <details>
-        <summary>Benefited Modules <span class="chev">▾</span></summary>
-        <div class="pane" id="benefitPane">
-          <div class="mods" style="margin-top:0;">
-            <a class="tiny" href="ielts-reading.html">Reading</a>
-            <a class="tiny" href="ielts-listening.html">Listening</a>
-            <a class="tiny" href="ielts-writing.html">Writing</a>
-            <a class="tiny" href="ielts-speaking.html">Speaking</a>
-          </div>
+  <!-- PAY MODAL -->
+  <div class="modal-wrap" id="payWrap" aria-hidden="true">
+    <div class="back" data-close="pay"></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Payment options">
+      <div class="sheet-top">
+        <div>
+          <h3 id="payTitle">Payment Options</h3>
+          <p>After payment, send Transaction ID / Screenshot on WhatsApp.</p>
         </div>
-      </details>
-
-      <details>
-        <summary>Aim of the Module <span class="chev">▾</span></summary>
-        <div class="pane" id="aimPane">Content will be shown here.</div>
-      </details>
-
-      <details>
-        <summary>What You Will Become After This <span class="chev">▾</span></summary>
-        <div class="pane" id="afterPane">Content will be shown here.</div>
-      </details>
-
-      <details>
-        <summary>Who Must Take This <span class="chev">▾</span></summary>
-        <div class="pane" id="whoPane">Content will be shown here.</div>
-      </details>
-
-      <details>
-        <summary>This Course Comes With <span class="chev">▾</span></summary>
-        <div class="pane" id="withPane">Content will be shown here.</div>
-      </details>
-
-    </div>
-
-    <div class="hr"></div>
-    <div class="p-actions">
-      <button class="tiny primary" type="button" id="detailsAdmitBtn">Admit / Pricing</button>
-      <a class="tiny" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20course%20details%20niye%20Help%20chai."
-         target="_blank" rel="noopener">Help</a>
-      <button class="tiny" type="button" id="detailsClose2">Close</button>
+        <div class="x" data-close="pay">✕</div>
+      </div>
+      <div class="sheet-body" id="payBody">
+        <!-- injected -->
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-  /* =========================
-     THEME
-  ========================= */
-  const body = document.body;
-  const logoImg = document.getElementById('logoImg');
-  const topbar = document.getElementById('topbar');
+  <script>
+    (function(){
+      // --------- Utilities (safe, no crash) ----------
+      const $ = (sel, root=document) => root.querySelector(sel);
+      const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-  function setTheme(mode){
-    const isLight = mode === 'light';
-    body.classList.toggle('theme-light', isLight);
-    localStorage.setItem('lizon-theme', isLight ? 'light' : 'dark');
-    logoImg.src = isLight ? 'assets/logo-light.png' : 'assets/logo-dark.png';
-  }
-  setTheme(localStorage.getItem('lizon-theme') || 'dark');
-  document.getElementById('btnTheme').addEventListener('click', ()=>{
-    const isLight = body.classList.contains('theme-light');
-    setTheme(isLight ? 'dark' : 'light');
-  });
+      const body = document.body;
 
-  function handleTopbar(){
-    if(window.scrollY > 8) topbar.classList.add('scrolled');
-    else topbar.classList.remove('scrolled');
-  }
-  window.addEventListener('scroll', handleTopbar, {passive:true});
-  handleTopbar();
+      // --------- Theme ----------
+      const logoImg = $('#logoImg');
+      const themeBtn = $('#themeBtn');
 
-  /* =========================
-     UTIL: LOCK SCROLL while modal open
-  ========================= */
-  let openCount = 0;
-  function lockBody(){
-    openCount++;
-    body.style.overflow = 'hidden';
-  }
-  function unlockBody(){
-    openCount = Math.max(0, openCount - 1);
-    if(openCount === 0) body.style.overflow = 'hidden'; // keep no-scroll main page
-  }
-
-  function showWrap(id){
-    const w = document.getElementById(id);
-    w.classList.add('show');
-    w.setAttribute('aria-hidden','false');
-    lockBody();
-  }
-  function hideWrap(id){
-    const w = document.getElementById(id);
-    w.classList.remove('show');
-    w.setAttribute('aria-hidden','true');
-    unlockBody();
-  }
-
-  /* =========================
-     VIDEO MODAL (tap image)
-  ========================= */
-  const videoWrap = document.getElementById('videoWrap');
-  const videoBack = document.getElementById('videoBack');
-  const videoClose = document.getElementById('videoClose');
-  const videoFrame = document.getElementById('videoFrame');
-  const videoTitle = document.getElementById('videoTitle');
-
-  function openVideo(title, url){
-    videoTitle.textContent = title || 'Video';
-    videoFrame.src = url || '';
-    showWrap('videoWrap');
-  }
-  function closeVideo(){
-    videoFrame.src = ''; // stop playback
-    hideWrap('videoWrap');
-  }
-  videoBack.addEventListener('click', closeVideo);
-  videoClose.addEventListener('click', closeVideo);
-
-  document.querySelectorAll('[data-video-url]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      openVideo(btn.getAttribute('data-video-title'), btn.getAttribute('data-video-url'));
-    });
-  });
-
-  /* =========================
-     PRICING + PAY
-  ========================= */
-  const pricingWrap = document.getElementById('pricingWrap');
-  const pricingBack = document.getElementById('pricingBack');
-  const pricingClose = document.getElementById('pricingClose');
-  const pricingClose2 = document.getElementById('pricingClose2');
-  const btnPricing = document.getElementById('btnPricing');
-
-  function openPricing(focusCourse){
-    showWrap('pricingWrap');
-
-    // highlight row
-    document.querySelectorAll('.p-card').forEach(c=>{
-      c.style.outline = 'none';
-      c.style.outlineOffset = '0';
-    });
-    if(focusCourse){
-      const row = document.querySelector(`.p-card[data-row="${focusCourse}"]`);
-      if(row){
-        row.style.outline = '2px solid rgba(214,179,90,.45)';
-        row.style.outlineOffset = '2px';
-        row.scrollIntoView({behavior:'smooth', block:'nearest'});
+      function setTheme(mode){
+        const light = mode === 'light';
+        body.classList.toggle('theme-light', light);
+        localStorage.setItem('lizon-theme', light ? 'light' : 'dark');
+        if(logoImg){
+          // keep same filename if you only have dark logo
+          // If you also have assets/logo-light.png, it will use it:
+          const lightSrc = 'assets/logo-light.png';
+          const darkSrc  = 'assets/logo-dark.png';
+          logoImg.src = light ? lightSrc : darkSrc;
+          // If logo-light.png doesn't exist, browser will fail silently — still no JS crash.
+        }
       }
-    }
-  }
+      setTheme(localStorage.getItem('lizon-theme') || 'dark');
+      if(themeBtn){
+        themeBtn.addEventListener('click', ()=>{
+          const isLight = body.classList.contains('theme-light');
+          setTheme(isLight ? 'dark' : 'light');
+        });
+      }
 
-  function closePricing(){
-    hideWrap('pricingWrap');
-  }
+      // --------- Smooth go pricing ----------
+      const goPricingBtn = $('#goPricingBtn');
+      function goPricing(){
+        const el = $('#pricing');
+        if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+      if(goPricingBtn) goPricingBtn.addEventListener('click', goPricing);
 
-  btnPricing.addEventListener('click', ()=> openPricing());
-  pricingBack.addEventListener('click', closePricing);
-  pricingClose.addEventListener('click', closePricing);
-  pricingClose2.addEventListener('click', closePricing);
+      // --------- Modals core ----------
+      function openWrap(id){
+        const wrap = $(id);
+        if(!wrap) return;
+        wrap.classList.add('show');
+        wrap.setAttribute('aria-hidden','false');
+        // lock scroll only while a modal is open
+        body.style.overflow = 'hidden';
+      }
+      function closeWrap(id){
+        const wrap = $(id);
+        if(!wrap) return;
+        wrap.classList.remove('show');
+        wrap.setAttribute('aria-hidden','true');
+        // restore scroll
+        body.style.overflow = '';
+      }
+      // generic close
+      $$('[data-close]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const which = btn.getAttribute('data-close');
+          closeWrap('#'+which+'Wrap');
+          // stop video if closing video
+          if(which === 'video'){
+            const iframe = $('#videoIframe');
+            if(iframe) iframe.src = '';
+          }
+        });
+      });
+      document.addEventListener('keydown', (e)=>{
+        if(e.key !== 'Escape') return;
+        ['#videoWrap','#detailsWrap','#routineWrap','#payWrap'].forEach(id=>{
+          const w = $(id);
+          if(w && w.classList.contains('show')) closeWrap(id);
+        });
+        const iframe = $('#videoIframe');
+        if(iframe) iframe.src = '';
+      });
 
-  document.querySelectorAll('[data-open-pricing]').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      openPricing(b.getAttribute('data-focus') || null);
-    });
-  });
+      // --------- Video modal ----------
+      const videoWrap = $('#videoWrap');
+      const videoIframe = $('#videoIframe');
+      const videoTitle = $('#videoTitle');
 
-  /* Payment sheet */
-  const payWrap = document.getElementById('payWrap');
-  const payBack = document.getElementById('payBack');
-  const payClose = document.getElementById('payClose');
-  const payClose2 = document.getElementById('payClose2');
-  const payTitle = document.getElementById('payTitle');
-  const paidBtn = document.getElementById('paidBtn');
+      function openVideo(courseName, videoUrl){
+        if(videoTitle) videoTitle.textContent = courseName + ' — Video';
+        if(videoIframe) videoIframe.src = videoUrl || '';
+        openWrap('#videoWrap');
+      }
 
-  function openPay(label){
-    payTitle.textContent = label ? `Payment Options — ${label}` : 'Payment Options';
-    // update WhatsApp template with course + amount in message
-    const msg = encodeURIComponent(
-      `Assalamu Alaikum, ami payment korechi.\nCourse: ${label || '(Write course name)'}\nMethod: (bKash/Rocket/Nagad/Upay/Bank/Card)\nTxnID: (Write TxnID)\nScreenshot ami pathacchi.`
-    );
-    paidBtn.href = `https://wa.me/8801611611139?text=${msg}`;
-    showWrap('payWrap');
-  }
+      // --------- Details modal (tap-only dropdowns) ----------
+      const detailsBody = $('#detailsBody');
+      const detailsTitle = $('#detailsTitle');
 
-  function closePay(){
-    hideWrap('payWrap');
-  }
+      // NOTE: Replace these texts later with your exact final wording if you want.
+      // I kept them short and practical. No auto-template vibe.
+      const DETAILS = {
+        zero: {
+          title: 'IELTS ZERO',
+          items: [
+            { h:'Skills Covered', t:['Grammar foundation','Sentence building','Basic Speaking flow','Basic Writing structure','Reading without translate','Listening without subtitles'] },
+            { h:'Benefited Modules', t:['Listening','Reading','Writing','Speaking'] },
+            { h:'Aim', t:['Remove confusion. Build a followable system. Make you “start” properly.'] },
+            { h:'After ZERO, who will you become?', t:['You can build correct sentences','You can start speaking without blank','You stop relying on Bangla translation','You can follow a weekly routine confidently'] },
+            { h:'Who should take this?', t:['Absolute beginner','Grammar fear','Speaking/writing not starting','Reading/listening weak without support'] },
+            { h:'This course comes with', t:['Guided classes','Homework + checking','Practice direction','Mentor support'] },
+          ]
+        },
+        hope: {
+          title: 'IELTS HOPE',
+          items: [
+            { h:'Skills Covered', t:['Reading speed + strategy','Listening trap control','Writing coherence + idea building','Speaking opinion development'] },
+            { h:'Benefited Modules', t:['Listening','Reading','Writing','Speaking'] },
+            { h:'Aim', t:['Break the “stuck score” loop. Turn basics into score.'] },
+            { h:'After HOPE, who will you become?', t:['Faster reader with control','Less listening misses','Stronger writing structure','Smoother speaking answers'] },
+            { h:'Who should take this?', t:['Basics exist but score doesn’t convert','Reading slow','Listening mistakes repeat','Writing/speaking inconsistent'] },
+            { h:'This course comes with', t:['Strategy by question type','Timed drills','Feedback direction','Mentor guidance'] },
+          ]
+        },
+        stepup: {
+          title: 'IELTS STEP-UP',
+          items: [
+            { h:'Skills Covered', t:['Accuracy under time pressure','Writing band-descriptor alignment','Speaking Part 2/3 depth','Stable reading/listening accuracy'] },
+            { h:'Benefited Modules', t:['Listening','Reading','Writing','Speaking'] },
+            { h:'Aim', t:['Move beyond 6.0 with control + accuracy.'] },
+            { h:'After STEP-UP, who will you become?', t:['More accurate under pressure','Better writing arguments','Deeper speaking answers','Fewer repeated mistakes'] },
+            { h:'Who should take this?', t:['Band 5.5–6.0 stuck','Pressure makes you collapse','Writing/speaking weak in exam style'] },
+            { h:'This course comes with', t:['Exam-standard drills','Targeted correction','Upgrading plan','Mentor support'] },
+          ]
+        },
+        desperate: {
+          title: 'IELTS DESPERATE',
+          items: [
+            { h:'Skills Covered', t:['Test → correction loop','Fast weakness detection','Speaking/Writing feedback heavy','Timed accuracy control'] },
+            { h:'Benefited Modules', t:['Listening','Reading','Writing','Speaking'] },
+            { h:'Aim', t:['Final push: maximum evaluation before exam.'] },
+            { h:'After DESPERATE, who will you become?', t:['You know your exact weak points','You stop repeating the same mistakes','You perform better under exam pressure'] },
+            { h:'Who should take this?', t:['Exam is near','Repeat attempts failed','Mock ok but exam drops','Need heavy evaluation'] },
+            { h:'This course comes with', t:['Practice + evaluation sessions','Correction cycles','Mentor feedback','Performance tracking'] },
+          ]
+        }
+      };
 
-  payBack.addEventListener('click', closePay);
-  payClose.addEventListener('click', closePay);
-  payClose2.addEventListener('click', closePay);
+      function renderDetails(key){
+        const data = DETAILS[key];
+        if(!data || !detailsBody) return;
+        if(detailsTitle) detailsTitle.textContent = data.title + ' — Details';
 
-  document.querySelectorAll('[data-pay]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      openPay(btn.getAttribute('data-pay'));
-    });
-  });
+        detailsBody.innerHTML = data.items.map(x=>{
+          const list = x.t.map(line=>`<li>${escapeHtml(line)}</li>`).join('');
+          return `
+            <details>
+              <summary>${escapeHtml(x.h)}</summary>
+              <div class="dtext">
+                <ul>${list}</ul>
+              </div>
+            </details>
+          `;
+        }).join('');
 
-  /* =========================
-     ROUTINE
-  ========================= */
-  const routineWrap = document.getElementById('routineWrap');
-  const routineBack = document.getElementById('routineBack');
-  const routineClose = document.getElementById('routineClose');
-  const routineClose2 = document.getElementById('routineClose2');
-  const routineClear = document.getElementById('routineClear');
-  const allSlots = Array.from(document.querySelectorAll('.rt-slot'));
+        openWrap('#detailsWrap');
+      }
 
-  function clearRoutineHighlight(){
-    allSlots.forEach(s=>{
-      s.style.outline = 'none';
-      s.style.outlineOffset = '0';
-      s.style.background = '';
-    });
-  }
-  function highlightCourse(course){
-    clearRoutineHighlight();
-    if(!course || course === 'all') return;
-    allSlots.filter(s=> s.dataset.course === course).forEach(s=>{
-      s.style.outline = '2px solid rgba(214,179,90,.45)';
-      s.style.outlineOffset = '-2px';
-      s.style.background = 'rgba(214,179,90,.10)';
-    });
-  }
-  function openRoutine(course){
-    showWrap('routineWrap');
-    highlightCourse(course);
-  }
-  function closeRoutine(){
-    clearRoutineHighlight();
-    hideWrap('routineWrap');
-  }
+      function escapeHtml(str){
+        return String(str)
+          .replaceAll('&','&amp;')
+          .replaceAll('<','&lt;')
+          .replaceAll('>','&gt;')
+          .replaceAll('"','&quot;')
+          .replaceAll("'","&#039;");
+      }
 
-  routineBack.addEventListener('click', closeRoutine);
-  routineClose.addEventListener('click', closeRoutine);
-  routineClose2.addEventListener('click', closeRoutine);
-  routineClear.addEventListener('click', clearRoutineHighlight);
+      // --------- Routine modal ----------
+      const routineSlots = $$('.rt-slot');
+      function clearRoutine(){
+        routineSlots.forEach(s=> s.classList.remove('hl'));
+      }
+      function highlight(courseKey){
+        clearRoutine();
+        if(!courseKey) return;
+        routineSlots.filter(s=> (s.dataset.course||'') === courseKey)
+          .forEach(s=> s.classList.add('hl'));
+      }
+      const clearRoutineBtn = $('#clearRoutine');
+      if(clearRoutineBtn) clearRoutineBtn.addEventListener('click', clearRoutine);
+      const goPricingFromRoutine = $('#goPricingFromRoutine');
+      if(goPricingFromRoutine) goPricingFromRoutine.addEventListener('click', ()=>{
+        closeWrap('#routineWrap');
+        goPricing();
+      });
 
-  document.querySelectorAll('[data-open-routine]').forEach(btn=>{
-    btn.addEventListener('click', ()=> openRoutine(btn.getAttribute('data-open-routine')));
-  });
-  document.getElementById('btnRoutineAll').addEventListener('click', ()=> openRoutine('all'));
+      function openRoutine(courseKey){
+        highlight(courseKey);
+        openWrap('#routineWrap');
+      }
 
-  /* =========================
-     DETAILS (tap-only)
-     NOTE: Placeholder content. Replace later with exact screenshot text.
-  ========================= */
-  const detailsWrap = document.getElementById('detailsWrap');
-  const detailsBack = document.getElementById('detailsBack');
-  const detailsClose = document.getElementById('detailsClose');
-  const detailsClose2 = document.getElementById('detailsClose2');
-  const detailsTitle = document.getElementById('detailsTitle');
-  const detailsAdmitBtn = document.getElementById('detailsAdmitBtn');
+      // --------- Pay modal ----------
+      const payBody = $('#payBody');
+      const payTitle = $('#payTitle');
 
-  const skillsPane = document.getElementById('skillsPane');
-  const aimPane = document.getElementById('aimPane');
-  const afterPane = document.getElementById('afterPane');
-  const whoPane = document.getElementById('whoPane');
-  const withPane = document.getElementById('withPane');
+      const PAYMENT_HTML = `
+        <div style="border:1px solid var(--stroke);border-radius:18px;padding:12px;background:rgba(255,255,255,.03);">
+          <b>Bkash Merchant (Make Payment)</b>
+          <div style="color:var(--muted);margin-top:4px;">01611611139</div>
+        </div>
 
-  const detailData = {
-    zero: {
-      title: "IELTS ZERO — Details",
-      skills: "Basic English foundation: grammar control, sentence building, basic speaking confidence, reading/listening understanding system, writing structure basics.",
-      aim: "Remove confusion, build foundation, make learning consistent.",
-      after: "You become a student who can start properly: grammar less fear, speaking starts, writing has structure.",
-      who: "First-time learners, foundation weak, grammar confusion, speaking/writing cannot start.",
-      with: "Mentor guidance, practice tasks, feedback loops (as per LizOn course delivery)."
-    },
-    hope: {
-      title: "IELTS HOPE — Details",
-      skills: "Reset level: reading speed strategy, listening trap control, writing coherence + upgrading, speaking opinion-building.",
-      aim: "Break the stuck loop and convert practice into score.",
-      after: "You become stable: accuracy improves, performance becomes consistent.",
-      who: "Basics exist but score doesn’t move; reading slow; listening misses; writing flow breaks; speaking repeats.",
-      with: "Mentor guidance, structured tasks, feedback loops."
-    },
-    stepup: {
-      title: "IELTS STEP-UP — Details",
-      skills: "Band jump focus: accuracy + timing, stronger writing arguments, better speaking depth, smarter reading control, faster listening adaptation.",
-      aim: "Push beyond 6.0 into 6.5–7+ direction.",
-      after: "You become controlled under pressure: fewer slips, better delivery, better time control.",
-      who: "Band 5.5–6.0 stuck; exam pressure mistakes; speaking Part 3 weak; writing descriptors not met.",
-      with: "Mentor guidance, exam-standard drills, feedback loops."
-    },
-    desperate: {
-      title: "IELTS DESPERATE — Details",
-      skills: "Evaluation heavy: test → correction → fix weak points, speaking/writing feedback cycles, timed reading/listening with diagnosis.",
-      aim: "Fast final push with maximum evaluation before exam.",
-      after: "You become exam-ready: panic reduces, corrections are targeted, performance stabilizes.",
-      who: "Exam near; repeated attempts; score drops on real day; repeat mistakes in writing/speaking.",
-      with: "Mentor guidance, frequent evaluation, targeted correction."
-    }
-  };
+        <div style="height:10px;"></div>
 
-  function openDetails(course){
-    const c = detailData[course] || null;
-    detailsTitle.textContent = c ? c.title : "Course Details";
-    skillsPane.textContent = c ? c.skills : "Content will be shown here.";
-    aimPane.textContent = c ? c.aim : "Content will be shown here.";
-    afterPane.textContent = c ? c.after : "Content will be shown here.";
-    whoPane.textContent = c ? c.who : "Content will be shown here.";
-    withPane.textContent = c ? c.with : "Content will be shown here.";
+        <div style="border:1px solid var(--stroke);border-radius:18px;padding:12px;background:rgba(255,255,255,.03);">
+          <b>Bkash Personal (Send Money)</b>
+          <div style="color:var(--muted);margin-top:4px;">01337533979</div>
+        </div>
 
-    // collapse all, open first by default
-    document.querySelectorAll('#detailsTabs details').forEach((d,i)=>{
-      d.open = (i===0);
-    });
+        <div style="height:10px;"></div>
 
-    detailsAdmitBtn.onclick = ()=>{
-      closeDetails();
-      openPricing(course || null);
-    };
+        <div style="border:1px solid var(--stroke);border-radius:18px;padding:12px;background:rgba(255,255,255,.03);">
+          <b>Rocket Personal (Send Money)</b>
+          <div style="color:var(--muted);margin-top:4px;">01337533979</div>
+        </div>
 
-    showWrap('detailsWrap');
-  }
+        <div style="height:10px;"></div>
 
-  function closeDetails(){
-    hideWrap('detailsWrap');
-  }
+        <div style="border:1px solid var(--stroke);border-radius:18px;padding:12px;background:rgba(255,255,255,.03);">
+          <b>Nagad Personal (Send Money)</b>
+          <div style="color:var(--muted);margin-top:4px;">01337533979</div>
+        </div>
 
-  detailsBack.addEventListener('click', closeDetails);
-  detailsClose.addEventListener('click', closeDetails);
-  detailsClose2.addEventListener('click', closeDetails);
-  document.getElementById('btnDetailsAll').addEventListener('click', ()=> openDetails('zero'));
+        <div style="height:10px;"></div>
 
-  document.querySelectorAll('[data-open-details]').forEach(btn=>{
-    btn.addEventListener('click', ()=> openDetails(btn.getAttribute('data-course')));
-  });
+        <div style="border:1px solid var(--stroke);border-radius:18px;padding:12px;background:rgba(255,255,255,.03);">
+          <b>Upay Personal (Send Money)</b>
+          <div style="color:var(--muted);margin-top:4px;">01889993896</div>
+        </div>
 
-  /* =========================
-     ESC to close top-most
-  ========================= */
-  document.addEventListener('keydown', (e)=>{
-    if(e.key !== 'Escape') return;
+        <div style="height:12px;"></div>
 
-    if(document.getElementById('videoWrap').classList.contains('show')) return closeVideo();
-    if(document.getElementById('payWrap').classList.contains('show')) return closePay();
-    if(document.getElementById('pricingWrap').classList.contains('show')) return closePricing();
-    if(document.getElementById('detailsWrap').classList.contains('show')) return closeDetails();
-    if(document.getElementById('routineWrap').classList.contains('show')) return closeRoutine();
-  });
-</script>
+        <div style="border:1px solid rgba(214,179,90,.35);border-radius:18px;padding:12px;background:linear-gradient(180deg, rgba(214,179,90,.10), rgba(255,255,255,.03));">
+          <b>Bank Account (DBBL — Dutch Bangla Bank Limited)</b>
+          <div style="color:var(--muted);margin-top:6px;">
+            <div><b>Account No:</b> 2211510117789</div>
+            <div><b>Account Name:</b> SHUVA SARKER JOY</div>
+            <div><b>Branch:</b> Manda</div>
+            <div><b>Routing Number:</b> 090262874</div>
+          </div>
+        </div>
 
+        <div style="height:12px;"></div>
+
+        <div style="border:1px solid var(--stroke);border-radius:18px;padding:12px;background:rgba(255,255,255,.03);">
+          <b>Visa Card Transfer (Brac Bank)</b>
+          <div style="color:var(--muted);margin-top:4px;">4777920004855617</div>
+        </div>
+
+        <div style="height:14px;"></div>
+
+        <a style="display:block;text-align:center;border-radius:999px;border:1px solid rgba(214,179,90,.55);background:rgba(214,179,90,.14);padding:12px 14px;font-weight:950;"
+           target="_blank" rel="noopener"
+           href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20I%20have%20completed%20payment.%20Here%20is%20my%20Transaction%20ID%20%2F%20Screenshot.">
+          Send Transaction ID / Screenshot
+        </a>
+      `;
+
+      function openPay(context){
+        if(payTitle) payTitle.textContent = `Payment Options — ${context || 'Course'}`;
+        if(payBody) payBody.innerHTML = PAYMENT_HTML;
+        openWrap('#payWrap');
+      }
+
+      // Pay buttons in pricing
+      $$('[data-pay]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const label = btn.getAttribute('data-pay') || 'Course';
+          openPay(label);
+        });
+      });
+
+      // --------- Course cards wiring ----------
+      $$('.course').forEach(card=>{
+        // tap anywhere on the card opens video (except button clicks)
+        card.addEventListener('click', (e)=>{
+          const action = e.target && e.target.getAttribute && e.target.getAttribute('data-action');
+          if(action) return; // buttons handle separately
+          const nameMap = { zero:'IELTS ZERO', hope:'IELTS HOPE', stepup:'IELTS STEP-UP', desperate:'IELTS DESPERATE' };
+          const key = card.getAttribute('data-course') || '';
+          const url = card.getAttribute('data-video') || '';
+          openVideo(nameMap[key] || 'Video', url);
+        });
+
+        // buttons
+        $$('.btn3', card).forEach(btn=>{
+          btn.addEventListener('click', (e)=>{
+            e.stopPropagation();
+            const action = btn.getAttribute('data-action');
+            const target = btn.getAttribute('data-target');
+
+            if(action === 'admit'){
+              goPricing();
+              // optional: open pay immediately? you said Admit → pricing segment.
+              // If you want auto-open pay modal too, uncomment:
+              // setTimeout(()=> openPay((target||'').toUpperCase()), 450);
+            }
+            if(action === 'details'){
+              renderDetails(target);
+            }
+            if(action === 'routine'){
+              openRoutine(target);
+            }
+          });
+        });
+      });
+
+      // extra: topbar "Admit/Pricing" should never lock scroll
+      // (nothing else needed)
+
+      // Safety: if any modal backdrop is clicked, close happens via [data-close]
+      // Ensure we never leave body overflow hidden on navigation away
+      window.addEventListener('pageshow', ()=>{ if(!$('.modal-wrap.show')) body.style.overflow=''; });
+
+    })();
+  </script>
 </body>
 </html>

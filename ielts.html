@@ -598,6 +598,45 @@
   .theme-light .icon-sun{ display:block; }
   .theme-light .icon-moon{ display:none; }
 
+  /* ===== NEW: Language toggle (right-bottom text corner) ===== */
+  .lang-fab{
+    position:fixed;
+    right:14px;
+    bottom:116px;            /* sits above theme button, below scroll dock */
+    z-index:2400;
+    border:1px solid var(--border);
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    border-radius:999px;
+    height:46px;
+    padding:0 12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+    backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    color: var(--text);
+    font-weight:950;
+    font-size:12px;
+    letter-spacing:.2px;
+  }
+  .lang-fab .pill{
+    border:none;
+    background: rgba(255,255,255,.02);
+    padding:6px 10px;
+    border-radius:999px;
+    color: var(--text);
+    font-weight:950;
+  }
+  .lang-fab .hint{
+    color: var(--muted);
+    font-weight:900;
+    font-size:11px;
+  }
+  .lang-fab:hover{ border-color: var(--border2); }
+
   .sticky-bar{
     position:fixed; left:0; right:0; bottom:12px; z-index:2200;
     display:flex; justify-content:center;
@@ -661,6 +700,8 @@
     .rt-row{ grid-template-columns: 86px 1fr 1fr 1fr; }
     .rt-cell{ padding:9px; font-size:11px; }
     .opt-grid{ grid-template-columns: 1fr; }
+    .lang-fab{ bottom:112px; height:44px; }
+    .lang-fab .hint{ display:none; } /* small phones: keep compact */
   }
 </style>
 </head>
@@ -676,16 +717,16 @@
           <img class="logo-img" id="logoImg" src="assets/logo-dark.png" alt="LizOn Education Logo" />
           <div class="brand-text">
             <b>LizOn Education</b>
-            <span>IELTS Journey (4 Levels)</span>
+            <span data-i18n="brand_sub">IELTS Journey (4 Levels)</span>
           </div>
         </a>
       </div>
 
       <nav class="desktop-nav" aria-label="Top navigation">
-        <a class="chip" href="index.html">Home</a>
-        <a class="chip" href="about.html">About</a>
-        <a class="chip" href="#pricing">Pricing</a>
-        <a class="chip" href="#modules">Modules</a>
+        <a class="chip" href="index.html" data-i18n="nav_home">Home</a>
+        <a class="chip" href="about.html" data-i18n="nav_about">About</a>
+        <a class="chip" href="#pricing" data-i18n="nav_pricing">Pricing</a>
+        <a class="chip" href="#modules" data-i18n="nav_modules">Modules</a>
       </nav>
     </div>
   </div>
@@ -695,25 +736,25 @@
 <div class="backdrop" id="backdrop"></div>
 <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
   <div class="drawer-top">
-    <h3>Navigate</h3>
-    <button class="xbtn" id="closeDrawer" type="button" aria-label="Close">✕</button>
+    <h3 data-i18n="drawer_title">Navigate</h3>
+    <button class="xbtn" id="closeDrawer" type="button" aria-label="Close" data-i18n="btn_close">✕</button>
   </div>
 
-  <div class="drawer-sub">Core</div>
+  <div class="drawer-sub" data-i18n="drawer_core">Core</div>
   <div class="drawer-grid">
-    <a class="full" href="index.html">Home</a>
-    <a class="full" href="about.html">About</a>
+    <a class="full" href="index.html" data-i18n="nav_home">Home</a>
+    <a class="full" href="about.html" data-i18n="nav_about">About</a>
     <a href="#zero">ZERO</a>
     <a href="#hope">HOPE</a>
     <a href="#stepup">STEP-UP</a>
     <a href="#desperate">DESPERATE</a>
-    <a class="full" href="#pricing">Pricing + Combos</a>
-    <a class="full" href="#modules">Practice Modules</a>
+    <a class="full" href="#pricing" data-i18n="drawer_pricing">Pricing + Combos</a>
+    <a class="full" href="#modules" data-i18n="drawer_practice">Practice Modules</a>
   </div>
 
-  <div class="drawer-sub">IELTS Pages</div>
+  <div class="drawer-sub" data-i18n="drawer_ielts_pages">IELTS Pages</div>
   <div class="drawer-grid">
-    <a class="full" href="ielts.html">IELTS Journey</a>
+    <a class="full" href="ielts.html" data-i18n="drawer_ielts_journey">IELTS Journey</a>
     <a class="full" href="ielts-roadmap.html">IELTS Roadmap</a>
     <a class="full" href="ielts-choose-level.html">Choose Level</a>
     <a class="full" href="ielts-band-improvement.html">Band Improvement</a>
@@ -722,7 +763,7 @@
     <a class="full" href="ielts-faq-bangladesh.html">IELTS FAQ (Bangladesh)</a>
   </div>
 
-  <div class="drawer-sub">Practice</div>
+  <div class="drawer-sub" data-i18n="drawer_practice_only">Practice</div>
   <div class="drawer-grid">
     <a class="full" href="ielts-listening.html">IELTS Listening</a>
     <a class="full" href="ielts-reading.html">IELTS Reading</a>
@@ -730,7 +771,7 @@
     <a class="full" href="ielts-speaking.html">IELTS Speaking</a>
   </div>
 
-  <div class="drawer-sub">Other</div>
+  <div class="drawer-sub" data-i18n="drawer_other">Other</div>
   <div class="drawer-grid">
     <a class="full" href="pte.html">PTE</a>
     <a class="full" href="studyabroad.html">Study Abroad</a>
@@ -739,7 +780,7 @@
   <div style="margin-top:12px;">
     <a class="btn-tiny" style="display:block;text-align:center;"
        href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
-       target="_blank" rel="noopener">Talk with LizOn</a>
+       target="_blank" rel="noopener" data-i18n="btn_talk_lizon">Talk with LizOn</a>
   </div>
 </div>
 
@@ -747,9 +788,11 @@
 <header>
   <div class="container">
     <div class="hero-card">
-      <span class="badge">Designed for Desired Score</span>
-      <h1>IELTS Journey — clear level, clean direction.</h1>
-      <p class="lead">
+      <span class="badge" data-i18n="badge_designed">Designed for Desired Score</span>
+
+      <h1 data-i18n="hero_title">IELTS Journey — clear level, clean direction.</h1>
+
+      <p class="lead" data-i18n="hero_lead" data-i18n-html="1">
         LizOn e “random package” nai. Apnar current level bujhe step-by-step journey:
         <b>ZERO → HOPE → STEP-UP → DESPERATE</b>. Confusion kombe. Progress hobe.
       </p>
@@ -764,13 +807,13 @@
       <div class="cta-row">
         <a class="btn btn-primary"
            href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20guidance%20chai.%20Amar%20level%20bujhte%20help%20korben%3F"
-           target="_blank" rel="noopener">Talk with LizOn</a>
-        <button class="btn btn-ghost" id="openAskFromHero" type="button">Help Me Choose</button>
-        <a class="btn btn-ghost" href="about.html">About</a>
+           target="_blank" rel="noopener" data-i18n="btn_talk_lizon">Talk with LizOn</a>
+        <button class="btn btn-ghost" id="openAskFromHero" type="button" data-i18n="btn_help_choose">Help Me Choose</button>
+        <a class="btn btn-ghost" href="about.html" data-i18n="nav_about">About</a>
       </div>
 
       <div class="cta-row" style="margin-top:10px;">
-        <span class="muted">Practice modules:</span>
+        <span class="muted" data-i18n="practice_modules_label">Practice modules:</span>
         <a class="module-link m-listening" href="ielts-listening.html">Listening</a>
         <a class="module-link m-reading" href="ielts-reading.html">Reading</a>
         <a class="module-link m-writing" href="ielts-writing.html">Writing</a>
@@ -783,27 +826,27 @@
 <!-- ZERO -->
 <section id="zero">
   <div class="container">
-    <p class="badge">Level 1</p>
+    <p class="badge" data-i18n="level_1">Level 1</p>
     <h2 class="section-title">ZERO</h2>
 
     <div class="meta-row">
-      <span class="pill">Duration: <strong>1 Month</strong></span>
-      <span class="pill">Sessions: <strong>12</strong></span>
-      <span class="pill">Time: <strong>9 pm</strong></span>
-      <span class="pill">Days: <strong>Sun | Tue | Thu</strong></span>
+      <span class="pill" data-i18n="zero_duration" data-i18n-html="1">Duration: <strong>1 Month</strong></span>
+      <span class="pill" data-i18n="zero_sessions" data-i18n-html="1">Sessions: <strong>12</strong></span>
+      <span class="pill" data-i18n="zero_time" data-i18n-html="1">Time: <strong>9 pm</strong></span>
+      <span class="pill" data-i18n="zero_days" data-i18n-html="1">Days: <strong>Sun | Tue | Thu</strong></span>
     </div>
 
     <div class="cta-row">
       <a class="btn btn-primary"
          href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20ZERO%20e%20admission%20nite%20chai.%20Details%20diben%3F"
-         target="_blank" rel="noopener">Admit Now</a>
-      <a class="btn btn-ghost" href="#pricing">See Price</a>
-      <button class="btn btn-ghost" data-open-routine="zero" type="button">See Routine</button>
+         target="_blank" rel="noopener" data-i18n="btn_admit">Admit Now</a>
+      <a class="btn btn-ghost" href="#pricing" data-i18n="btn_see_price">See Price</a>
+      <button class="btn btn-ghost" data-open-routine="zero" type="button" data-i18n="btn_see_routine">See Routine</button>
     </div>
 
     <div class="grid-2" style="margin-top:14px;">
       <div class="card">
-        <h3>Skilled Covered :</h3>
+        <h3 data-i18n="card_skills">Skills Covered :</h3>
         <ul class="list">
           <li>Grammar</li>
           <li>Basic Spoken</li>
@@ -813,7 +856,7 @@
       </div>
 
       <div class="card">
-        <h3>Benefited Modules :</h3>
+        <h3 data-i18n="card_modules">Benefited Modules :</h3>
         <ul class="list">
           <li>Speaking</li>
           <li>Writing</li>
@@ -821,14 +864,14 @@
       </div>
 
       <div class="card">
-        <h3>Aim of Zero :</h3>
-        <p style="margin:0;">
+        <h3 data-i18n="zero_aim_title">Aim of Zero :</h3>
+        <p style="margin:0;" data-i18n="zero_aim_text">
           Help you learn basic English clearly - grammar, sentence making, pronunciation - so English feels easier and less scary.
         </p>
       </div>
 
       <div class="card">
-        <h3>After ZERO, Who will You Become</h3>
+        <h3 data-i18n="zero_after_title">After ZERO, Who will You Become</h3>
         <ul class="list">
           <li>You understand basic grammar</li>
           <li>You can make correct sentences.</li>
@@ -838,7 +881,7 @@
       </div>
 
       <div class="card">
-        <h3>Who should Take ZERO</h3>
+        <h3 data-i18n="zero_who_title">Who should Take ZERO</h3>
         <ul class="list">
           <li>Beginners in English.</li>
           <li>students who feel weak in grammar or speaking.</li>
@@ -848,7 +891,7 @@
       </div>
 
       <div class="card">
-        <h3>This Course Comes With :</h3>
+        <h3 data-i18n="card_comes_with">This Course Comes With :</h3>
         <ul class="list">
           <li>Live Classes By, Band 8+ Instructors</li>
           <li>Mentorship By SHUVO SARKER JOY</li>
@@ -866,28 +909,28 @@
 <!-- HOPE -->
 <section id="hope">
   <div class="container">
-    <p class="badge">Level 2</p>
+    <p class="badge" data-i18n="level_2">Level 2</p>
     <h2 class="section-title">HOPE</h2>
 
     <div class="meta-row">
-      <span class="pill">Sessions: <strong>16 sessions</strong></span>
-      <span class="pill">12 classes: <strong>9 pm</strong></span>
-      <span class="pill">Days: <strong>Mon | Wed | Thu</strong></span>
-      <span class="pill">4 Evaluation Classes: <strong>8 pm</strong></span>
-      <span class="pill">Days: <strong>Sun | Tue</strong></span>
+      <span class="pill" data-i18n="hope_sessions" data-i18n-html="1">Sessions: <strong>16 sessions</strong></span>
+      <span class="pill" data-i18n="hope_class_time" data-i18n-html="1">12 classes: <strong>9 pm</strong></span>
+      <span class="pill" data-i18n="hope_class_days" data-i18n-html="1">Days: <strong>Mon | Wed | Thu</strong></span>
+      <span class="pill" data-i18n="hope_eval_time" data-i18n-html="1">4 Evaluation Classes: <strong>8 pm</strong></span>
+      <span class="pill" data-i18n="hope_eval_days" data-i18n-html="1">Days: <strong>Sun | Tue</strong></span>
     </div>
 
     <div class="cta-row">
       <a class="btn btn-primary"
          href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20HOPE%20niye%20details%20chai."
-         target="_blank" rel="noopener">Admit Now</a>
-      <a class="btn btn-ghost" href="#pricing">See Price</a>
-      <button class="btn btn-ghost" data-open-routine="hope" type="button">See Routine</button>
+         target="_blank" rel="noopener" data-i18n="btn_admit">Admit Now</a>
+      <a class="btn btn-ghost" href="#pricing" data-i18n="btn_see_price">See Price</a>
+      <button class="btn btn-ghost" data-open-routine="hope" type="button" data-i18n="btn_see_routine">See Routine</button>
     </div>
 
     <div class="grid-2" style="margin-top:14px;">
       <div class="card">
-        <h3>Skilled Covered :</h3>
+        <h3 data-i18n="card_skills">Skills Covered :</h3>
         <ul class="list">
           <li>Reading Speed</li>
           <li>Listening Power</li>
@@ -898,7 +941,7 @@
       </div>
 
       <div class="card">
-        <h3>Benefited Modules :</h3>
+        <h3 data-i18n="card_modules">Benefited Modules :</h3>
         <ul class="list">
           <li>Reading</li>
           <li>Listening</li>
@@ -908,25 +951,25 @@
       </div>
 
       <div class="card">
-        <h3>AIM of HOPE :</h3>
-        <p style="margin:0 0 10px;">
+        <h3 data-i18n="hope_aim_title">AIM of HOPE :</h3>
+        <p style="margin:0 0 10px;" data-i18n="hope_aim_p1">
           Hope helps you fix the skills that- block your IELTS score.
         </p>
-        <p style="margin:0 0 8px;"><b>You will learn to:</b></p>
-        <p style="margin:0;">
+        <p style="margin:0 0 8px;"><b data-i18n="you_will_learn">You will learn to:</b></p>
+        <p style="margin:0;" data-i18n="hope_aim_list" data-i18n-html="1">
           → Read faster<br/>
           → Understand listening more clearly<br/>
           → Write without memorizing templates.<br/>
           → Speak with clear ideas.
         </p>
-        <p style="margin:10px 0 0;">
+        <p style="margin:10px 0 0;" data-i18n="hope_aim_p2">
           HOPE prepares you with the real skill needed for IELTS modules.
         </p>
       </div>
 
       <div class="card">
-        <h3>After HOPE, Who will You Become:</h3>
-        <p style="margin:0 0 8px;"><b>After HOPE, you will :</b></p>
+        <h3 data-i18n="hope_after_title">After HOPE, Who will You Become:</h3>
+        <p style="margin:0 0 8px;"><b data-i18n="after_hope_you_will">After HOPE, you will :</b></p>
         <ul class="list">
           <li>Read without translating</li>
           <li>Catch answers confidently in listening</li>
@@ -937,8 +980,8 @@
       </div>
 
       <div class="card">
-        <h3>Who should take HOPE:</h3>
-        <p style="margin:0;">
+        <h3 data-i18n="hope_who_title">Who should take HOPE:</h3>
+        <p style="margin:0;" data-i18n="hope_who_text" data-i18n-html="1">
           → IELTS feels difficult even after practice.<br/>
           → Your reading and understanding is slow.<br/>
           → Listening accents confuse you at times.<br/>
@@ -947,7 +990,7 @@
       </div>
 
       <div class="card">
-        <h3>This Course Comes With :</h3>
+        <h3 data-i18n="card_comes_with">This Course Comes With :</h3>
         <ul class="list">
           <li>Live Classes By, Band 8+ Instructors</li>
           <li>Mentorship By SHUVO SARKER JOY</li>
@@ -966,28 +1009,28 @@
 <!-- STEP-UP -->
 <section id="stepup">
   <div class="container">
-    <p class="badge">Level 3</p>
+    <p class="badge" data-i18n="level_3">Level 3</p>
     <h2 class="section-title">STEP-UP</h2>
 
     <div class="meta-row">
-      <span class="pill">12 classes: <strong>10 pm</strong></span>
-      <span class="pill">Days: <strong>Mon | Wed | Fri</strong></span>
-      <span class="pill">+ Tuesday</span>
-      <span class="pill">4 Evaluation Classes</span>
-      <span class="pill">Total: <strong>16 sessions</strong></span>
+      <span class="pill" data-i18n="step_time" data-i18n-html="1">12 classes: <strong>10 pm</strong></span>
+      <span class="pill" data-i18n="step_days" data-i18n-html="1">Days: <strong>Mon | Wed | Fri</strong></span>
+      <span class="pill" data-i18n="step_plus_tue">+ Tuesday</span>
+      <span class="pill" data-i18n="step_eval">4 Evaluation Classes</span>
+      <span class="pill" data-i18n="step_total" data-i18n-html="1">Total: <strong>16 sessions</strong></span>
     </div>
 
     <div class="cta-row">
       <a class="btn btn-primary"
          href="https://wa.me/8801611611139?text=IELTS%20STEP-UP%20admission%20info%20please."
-         target="_blank" rel="noopener">Admit Now</a>
-      <a class="btn btn-ghost" href="#pricing">See Price</a>
-      <button class="btn btn-ghost" data-open-routine="stepup" type="button">See Routine</button>
+         target="_blank" rel="noopener" data-i18n="btn_admit">Admit Now</a>
+      <a class="btn btn-ghost" href="#pricing" data-i18n="btn_see_price">See Price</a>
+      <button class="btn btn-ghost" data-open-routine="stepup" type="button" data-i18n="btn_see_routine">See Routine</button>
     </div>
 
     <div class="grid-2" style="margin-top:14px;">
       <div class="card">
-        <h3>Skilled Covered :</h3>
+        <h3 data-i18n="card_skills">Skills Covered :</h3>
 
         <p style="margin:0 0 8px;"><b>Listening :</b> Part 1 → Part 4</p>
 
@@ -1017,7 +1060,7 @@
       </div>
 
       <div class="card">
-        <h3>Benefited Modules :</h3>
+        <h3 data-i18n="card_modules">Benefited Modules :</h3>
         <ul class="list">
           <li>Listening</li>
           <li>Reading</li>
@@ -1027,43 +1070,43 @@
       </div>
 
       <div class="card">
-        <h3>AIM of STEP-UP :</h3>
-        <p style="margin:0 0 8px;">STEP-UP helps you cross the Band-6 skill barrier.</p>
-        <p style="margin:0;">
+        <h3 data-i18n="step_aim_title">AIM of STEP-UP :</h3>
+        <p style="margin:0 0 8px;" data-i18n="step_aim_p1">STEP-UP helps you cross the Band-6 skill barrier.</p>
+        <p style="margin:0;" data-i18n="step_aim_list" data-i18n-html="1">
           → Learn important question Types of Listening & Reading<br/>
           → Build structure of right Writing<br/>
           → 2 mins Fluent Speaking Capability
         </p>
-        <p style="margin:10px 0 0;">
+        <p style="margin:10px 0 0;" data-i18n="step_aim_p2">
           STEP-UP builds the core IELTS skills that take you in around Band 6 in each module.
         </p>
       </div>
 
       <div class="card">
-        <h3>After STEP-UP, Who will You Become :</h3>
-        <p style="margin:0;">
+        <h3 data-i18n="step_after_title">After STEP-UP, Who will You Become :</h3>
+        <p style="margin:0;" data-i18n="step_after_text" data-i18n-html="1">
           → No panic in listening<br/>
           → Get proven improvement- and confidence gainers<br/>
           → Write with clean structure<br/>
           → Speak smoothly for 100 seconds on all IELTS Speaking Topic.
         </p>
-        <p style="margin:10px 0 0;">
+        <p style="margin:10px 0 0;" data-i18n="step_after_p2">
           You will feel stable, organized, and exam ready - not confused.
         </p>
       </div>
 
       <div class="card">
-        <h3>Who should take STEP-UP</h3>
+        <h3 data-i18n="step_who_title">Who should take STEP-UP</h3>
         <ul class="list">
           <li>You are not yet sure about - band 6 in each module.</li>
           <li>Facing accuracy problems in important module Listening and Reading question Types.</li>
           <li>Idea Generate Problems in Speaking & Writing.</li>
         </ul>
-        <p style="margin:10px 0 0;">If you want to move up seriously, STEP-UP is your stage.</p>
+        <p style="margin:10px 0 0;" data-i18n="step_who_note">If you want to move up seriously, STEP-UP is your stage.</p>
       </div>
 
       <div class="card">
-        <h3>This Course Comes With :</h3>
+        <h3 data-i18n="card_comes_with">This Course Comes With :</h3>
         <ul class="list">
           <li>Live Classes By Band 8+ Instructors</li>
           <li>Mentorship By SHUVO SARKER JOY</li>
@@ -1083,28 +1126,28 @@
 <!-- DESPERATE -->
 <section id="desperate">
   <div class="container">
-    <p class="badge">Level 4</p>
+    <p class="badge" data-i18n="level_4">Level 4</p>
     <h2 class="section-title">DESPERATE</h2>
 
     <div class="meta-row">
-      <span class="pill">12 Classes +</span>
-      <span class="pill">Days: <strong>Sun | Tue | Thu</strong></span>
-      <span class="pill">16 Evaluations</span>
-      <span class="pill">Days: <strong>Mon | Wed | Thu | Fri</strong></span>
-      <span class="pill">Total: <strong>28 sessions</strong></span>
+      <span class="pill" data-i18n="desp_12plus">12 Classes +</span>
+      <span class="pill" data-i18n="desp_days" data-i18n-html="1">Days: <strong>Sun | Tue | Thu</strong></span>
+      <span class="pill" data-i18n="desp_eval">16 Evaluations</span>
+      <span class="pill" data-i18n="desp_eval_days" data-i18n-html="1">Days: <strong>Mon | Wed | Thu | Fri</strong></span>
+      <span class="pill" data-i18n="desp_total" data-i18n-html="1">Total: <strong>28 sessions</strong></span>
     </div>
 
     <div class="cta-row">
       <a class="btn btn-primary"
          href="https://wa.me/8801611611139?text=IELTS%20DESPERATE%20admission%20info%20please."
-         target="_blank" rel="noopener">Admit Now</a>
-      <a class="btn btn-ghost" href="#pricing">See Price</a>
-      <button class="btn btn-ghost" data-open-routine="desperate" type="button">See Routine</button>
+         target="_blank" rel="noopener" data-i18n="btn_admit">Admit Now</a>
+      <a class="btn btn-ghost" href="#pricing" data-i18n="btn_see_price">See Price</a>
+      <button class="btn btn-ghost" data-open-routine="desperate" type="button" data-i18n="btn_see_routine">See Routine</button>
     </div>
 
     <div class="grid-2" style="margin-top:14px;">
       <div class="card">
-        <h3>Skilled Covered :</h3>
+        <h3 data-i18n="card_skills">Skills Covered :</h3>
 
         <p style="margin:0 0 10px;"><b>Listening</b><br/>
           → Part 1<br/>
@@ -1141,7 +1184,7 @@
       </div>
 
       <div class="card">
-        <h3>Benefited Modules :</h3>
+        <h3 data-i18n="card_modules">Benefited Modules :</h3>
         <ul class="list">
           <li>Reading</li>
           <li>Listening</li>
@@ -1151,11 +1194,11 @@
       </div>
 
       <div class="card">
-        <h3>AIM of DESPERATE :</h3>
-        <p style="margin:0 0 8px;">
+        <h3 data-i18n="desp_aim_title">AIM of DESPERATE :</h3>
+        <p style="margin:0 0 8px;" data-i18n="desp_aim_p1">
           Desperate is designed to help you learn, test, practice, and fix your IELTS skills accurately.
         </p>
-        <p style="margin:0;">
+        <p style="margin:0;" data-i18n="desp_aim_p2" data-i18n-html="1">
           The aims is to:<br/>
           → Teach you all question types of all modules<br/>
           → Test you continuously<br/>
@@ -1165,8 +1208,8 @@
       </div>
 
       <div class="card">
-        <h3>After DESPERATE, Who will You Become :</h3>
-        <p style="margin:0 0 8px;"><b>After DESPERATE, you will feel Ready</b></p>
+        <h3 data-i18n="desp_after_title">After DESPERATE, Who will You Become :</h3>
+        <p style="margin:0 0 8px;"><b data-i18n="desp_after_ready">After DESPERATE, you will feel Ready</b></p>
         <ul class="list">
           <li>Understand IELTS all questions clearly</li>
           <li>Know exactly where to focus during the exam</li>
@@ -1179,19 +1222,19 @@
       </div>
 
       <div class="card">
-        <h3>Who should take DESPERATE</h3>
-        <p style="margin:0;">
+        <h3 data-i18n="desp_who_title">Who should take DESPERATE</h3>
+        <p style="margin:0;" data-i18n="desp_who_text" data-i18n-html="1">
           → You will take IELTS test in 1 - 2 months time<br/>
           → You can't achieve your desired score<br/>
           → You want to invest- your final push for next 28 sessions.
         </p>
-        <p style="margin:10px 0 0;">
+        <p style="margin:10px 0 0;" data-i18n="desp_who_note">
           This course is for students who want proper preparation, not random practice.
         </p>
       </div>
 
       <div class="card">
-        <h3>This Course Comes With :</h3>
+        <h3 data-i18n="card_comes_with">This Course Comes With :</h3>
         <ul class="list">
           <li>Live Classes By Band 8+ Instructors</li>
           <li>Mentorship By SHUVO SARKER JOY</li>
@@ -1213,15 +1256,15 @@
 <section id="pricing">
   <div class="container">
     <div class="card">
-      <h2 class="section-title">Pricing + Combos</h2>
-      <p class="muted">Simple pricing. Clean combos. Decide fast.</p>
+      <h2 class="section-title" data-i18n="pricing_title">Pricing + Combos</h2>
+      <p class="muted" data-i18n="pricing_sub">Simple pricing. Clean combos. Decide fast.</p>
 
       <div class="price-grid" aria-label="Individual course pricing">
         <div class="price-card">
           <div class="price-top">
             <div>
               <p class="price-name">IELTS ZERO</p>
-              <div class="price-tag">1 month • 12 sessions</div>
+              <div class="price-tag" data-i18n="price_tag_zero">1 month • 12 sessions</div>
             </div>
             <div class="price-value">4,200</div>
           </div>
@@ -1231,7 +1274,7 @@
           <div class="price-top">
             <div>
               <p class="price-name">IELTS HOPE</p>
-              <div class="price-tag">1 month • 16 sessions</div>
+              <div class="price-tag" data-i18n="price_tag_hope">1 month • 16 sessions</div>
             </div>
             <div class="price-value">5,500</div>
           </div>
@@ -1241,7 +1284,7 @@
           <div class="price-top">
             <div>
               <p class="price-name">IELTS STEP-UP</p>
-              <div class="price-tag">1 month • 16 sessions</div>
+              <div class="price-tag" data-i18n="price_tag_step">1 month • 16 sessions</div>
             </div>
             <div class="price-value">6,200</div>
           </div>
@@ -1251,7 +1294,7 @@
           <div class="price-top">
             <div>
               <p class="price-name">IELTS DESPERATE</p>
-              <div class="price-tag">1 month • 28 sessions</div>
+              <div class="price-tag" data-i18n="price_tag_desp">1 month • 28 sessions</div>
             </div>
             <div class="price-value">7,500</div>
           </div>
@@ -1260,23 +1303,23 @@
 
       <div class="rule"></div>
 
-      <h3 style="margin:0 0 8px;">Combos</h3>
+      <h3 style="margin:0 0 8px;" data-i18n="combos_title">Combos</h3>
       <div class="price-grid" aria-label="Combo pricing">
-        <div class="price-card"><div class="price-top"><div><p class="price-name">ZERO + HOPE</p><div class="price-tag">Foundation + Reset</div></div><div class="price-value">6,790</div></div></div>
-        <div class="price-card"><div class="price-top"><div><p class="price-name">HOPE + STEP-UP</p><div class="price-tag">Reset + Band jump</div></div><div class="price-value">8,190</div></div></div>
-        <div class="price-card"><div class="price-top"><div><p class="price-name">STEP-UP + DESPERATE</p><div class="price-tag">Band jump + Near exam</div></div><div class="price-value">9,590</div></div></div>
-        <div class="price-card"><div class="price-top"><div><p class="price-name">ZERO + HOPE + STEP-UP</p><div class="price-tag">Build → Reset → Band jump</div></div><div class="price-value">9,540</div></div></div>
-        <div class="price-card"><div class="price-top"><div><p class="price-name">HOPE + STEP-UP + DESPERATE</p><div class="price-tag">Reset → Band jump → Final eval</div></div><div class="price-value">11,520</div></div></div>
-        <div class="price-card combo-card"><div class="price-top"><div><span class="best-badge">BEST VALUE • N2F</span><p class="price-name" style="margin-top:8px;">N2F — Now to Fly (All 4)</p><div class="price-tag">ZERO + HOPE + STEP-UP + DESPERATE</div></div><div class="price-value">12,700</div></div></div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">ZERO + HOPE</p><div class="price-tag" data-i18n="combo_tag_zh">Foundation + Reset</div></div><div class="price-value">6,790</div></div></div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">HOPE + STEP-UP</p><div class="price-tag" data-i18n="combo_tag_hs">Reset + Band jump</div></div><div class="price-value">8,190</div></div></div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">STEP-UP + DESPERATE</p><div class="price-tag" data-i18n="combo_tag_sd">Band jump + Near exam</div></div><div class="price-value">9,590</div></div></div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">ZERO + HOPE + STEP-UP</p><div class="price-tag" data-i18n="combo_tag_zhs">Build → Reset → Band jump</div></div><div class="price-value">9,540</div></div></div>
+        <div class="price-card"><div class="price-top"><div><p class="price-name">HOPE + STEP-UP + DESPERATE</p><div class="price-tag" data-i18n="combo_tag_hsd">Reset → Band jump → Final eval</div></div><div class="price-value">11,520</div></div></div>
+        <div class="price-card combo-card"><div class="price-top"><div><span class="best-badge" data-i18n="best_value">BEST VALUE • N2F</span><p class="price-name" style="margin-top:8px;" data-i18n="n2f_title">N2F — Now to Fly (All 4)</p><div class="price-tag" data-i18n="n2f_tag">ZERO + HOPE + STEP-UP + DESPERATE</div></div><div class="price-value">12,700</div></div></div>
       </div>
 
       <div class="highlight" style="margin-top:14px;">
-        <span class="badge">Not sure?</span>
-        <h3 style="margin:10px 0 6px;">Use AskLizOn selector</h3>
-        <p class="muted" style="margin:0;">Tap-only questions. Recommendation shows price + combo.</p>
+        <span class="badge" data-i18n="not_sure">Not sure?</span>
+        <h3 style="margin:10px 0 6px;" data-i18n="use_ask_title">Use AskLizOn selector</h3>
+        <p class="muted" style="margin:0;" data-i18n="use_ask_sub">Tap-only questions. Recommendation shows price + combo.</p>
         <div class="cta-row">
-          <button class="btn btn-primary" data-open-ask type="button">Open AskLizOn</button>
-          <a class="btn btn-ghost" href="about.html">About</a>
+          <button class="btn btn-primary" data-open-ask type="button" data-i18n="btn_open_ask">Open AskLizOn</button>
+          <a class="btn btn-ghost" href="about.html" data-i18n="nav_about">About</a>
         </div>
       </div>
 
@@ -1287,14 +1330,14 @@
 <!-- MODULES -->
 <section id="modules">
   <div class="container">
-    <p class="badge">Practice</p>
-    <h2 class="section-title">Practice Modules</h2>
+    <p class="badge" data-i18n="practice_badge">Practice</p>
+    <h2 class="section-title" data-i18n="practice_title">Practice Modules</h2>
     <div class="highlight" style="margin-top:14px;">
       <div class="grid-2" style="margin-top:12px;">
-        <a class="card" style="text-decoration:none;" href="ielts-listening.html"><h3 style="margin:0 0 6px;">IELTS Listening</h3><p class="muted" style="margin:0;">Prediction, focus, traps.</p></a>
-        <a class="card" style="text-decoration:none;" href="ielts-reading.html"><h3 style="margin:0 0 6px;">IELTS Reading</h3><p class="muted" style="margin:0;">Speed, scanning — stop translating.</p></a>
-        <a class="card" style="text-decoration:none;" href="ielts-writing.html"><h3 style="margin:0 0 6px;">IELTS Writing</h3><p class="muted" style="margin:0;">Ideas + structure + control.</p></a>
-        <a class="card" style="text-decoration:none;" href="ielts-speaking.html"><h3 style="margin:0 0 6px;">IELTS Speaking</h3><p class="muted" style="margin:0;">Flow + confidence + control.</p></a>
+        <a class="card" style="text-decoration:none;" href="ielts-listening.html"><h3 style="margin:0 0 6px;">IELTS Listening</h3><p class="muted" style="margin:0;" data-i18n="mod_listening_sub">Prediction, focus, traps.</p></a>
+        <a class="card" style="text-decoration:none;" href="ielts-reading.html"><h3 style="margin:0 0 6px;">IELTS Reading</h3><p class="muted" style="margin:0;" data-i18n="mod_reading_sub">Speed, scanning — stop translating.</p></a>
+        <a class="card" style="text-decoration:none;" href="ielts-writing.html"><h3 style="margin:0 0 6px;">IELTS Writing</h3><p class="muted" style="margin:0;" data-i18n="mod_writing_sub">Ideas + structure + control.</p></a>
+        <a class="card" style="text-decoration:none;" href="ielts-speaking.html"><h3 style="margin:0 0 6px;">IELTS Speaking</h3><p class="muted" style="margin:0;" data-i18n="mod_speaking_sub">Flow + confidence + control.</p></a>
       </div>
     </div>
   </div>
@@ -1305,18 +1348,18 @@
   <div class="container">
     <div class="footer-card">
 
-      <h3 class="footer-title">All Options</h3>
+      <h3 class="footer-title" data-i18n="footer_all_options">All Options</h3>
       <div class="footer-links" style="margin-bottom:10px;">
-        <a class="btn btn-ghost" href="index.html">Home</a>
-        <a class="btn btn-ghost" href="about.html">About</a>
-        <a class="btn btn-ghost" href="ielts.html">IELTS Journey</a>
+        <a class="btn btn-ghost" href="index.html" data-i18n="nav_home">Home</a>
+        <a class="btn btn-ghost" href="about.html" data-i18n="nav_about">About</a>
+        <a class="btn btn-ghost" href="ielts.html" data-i18n="drawer_ielts_journey">IELTS Journey</a>
         <a class="btn btn-ghost" href="pte.html">PTE</a>
         <a class="btn btn-ghost" href="studyabroad.html">Study Abroad</a>
       </div>
 
       <div class="footer-columns">
         <div>
-          <h3 class="footer-title">IELTS Pages</h3>
+          <h3 class="footer-title" data-i18n="footer_ielts_pages">IELTS Pages</h3>
           <div class="footer-links">
             <a class="btn-tiny" href="ielts-roadmap.html">Roadmap</a>
             <a class="btn-tiny" href="ielts-choose-level.html">Choose Level</a>
@@ -1328,7 +1371,7 @@
         </div>
 
         <div>
-          <h3 class="footer-title">Practice</h3>
+          <h3 class="footer-title" data-i18n="footer_practice">Practice</h3>
           <div class="footer-links">
             <a class="btn-tiny" href="ielts-listening.html">Listening</a>
             <a class="btn-tiny" href="ielts-reading.html">Reading</a>
@@ -1338,20 +1381,20 @@
         </div>
 
         <div>
-          <h3 class="footer-title">Contact & Location</h3>
-          <p class="footer-small" style="margin:0 0 10px;">
+          <h3 class="footer-title" data-i18n="footer_contact">Contact & Location</h3>
+          <p class="footer-small" style="margin:0 0 10px;" data-i18n="footer_contact_text" data-i18n-html="1">
             <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
             <b>IELTS/PTE Helpline:</b> 01611611139<br/>
             <b>Study Abroad/Visa Processing:</b> 01608881545
           </p>
           <div class="footer-links">
-            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+            <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener" data-i18n="btn_open_map">Open Map</a>
             <a class="btn btn-primary"
                href="https://wa.me/8801611611139?text=Need%20guidance%20about%20IELTS%20or%20Study%20Abroad"
-               target="_blank" rel="noopener">Chat Now</a>
+               target="_blank" rel="noopener" data-i18n="btn_chat_now">Chat Now</a>
           </div>
 
-          <h3 class="footer-title" style="margin-top:14px;">Social Media</h3>
+          <h3 class="footer-title" style="margin-top:14px;" data-i18n="footer_social">Social Media</h3>
           <div class="socials">
             <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
             <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
@@ -1367,12 +1410,12 @@
   <div class="sticky-bar" aria-label="Guidance bar">
     <div class="bar">
       <span class="dot"></span>
-      <span><b>Need guidance?</b></span>
+      <span data-i18n="need_guidance"><b>Need guidance?</b></span>
       <a class="btn-tiny"
          href="https://wa.me/8801611611139?text=Hi%2C%20need%20guidance%20for%20IELTS%20Journey."
-         target="_blank" rel="noopener">Chat Now</a>
-      <button class="btn-tiny" data-open-ask type="button">Help Me Choose</button>
-      <a class="btn-tiny" href="about.html">About</a>
+         target="_blank" rel="noopener" data-i18n="btn_chat_now">Chat Now</a>
+      <button class="btn-tiny" data-open-ask type="button" data-i18n="btn_help_choose">Help Me Choose</button>
+      <a class="btn-tiny" href="about.html" data-i18n="nav_about">About</a>
     </div>
   </div>
 </footer>
@@ -1403,6 +1446,12 @@
   </div>
 </div>
 
+<!-- ✅ NEW: Language toggle (right-bottom text corner) -->
+<button class="lang-fab" id="langFab" type="button" aria-label="Change language" title="Language">
+  <span class="pill" id="langPill">BNG</span>
+  <span class="hint" id="langHint">Banglish</span>
+</button>
+
 <!-- Theme toggle (icon only, tiny) -->
 <div class="theme-fab" id="themeFab" role="button" tabindex="0" aria-label="Toggle theme" title="Toggle theme">
   <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1420,15 +1469,15 @@
   <div class="modal" role="dialog" aria-modal="true" aria-label="Routine">
     <div class="modal-top">
       <div>
-        <h4 id="routineTitle">Class Routine (Weekly)</h4>
-        <p id="routineHint">Tap “See Routine” from any course to highlight. Each course duration: 1 month.</p>
+        <h4 id="routineTitle" data-i18n="routine_title">Class Routine (Weekly)</h4>
+        <p id="routineHint" data-i18n="routine_hint">Tap “See Routine” from any course to highlight. Each course duration: 1 month.</p>
       </div>
       <button class="modal-x" id="routineClose" aria-label="Close routine">✕</button>
     </div>
 
     <div class="routine" id="routineTable">
       <div class="rt-row rt-head">
-        <div class="rt-cell">Day</div>
+        <div class="rt-cell" data-i18n="rt_day">Day</div>
         <div class="rt-cell">8 PM</div>
         <div class="rt-cell">9 PM</div>
         <div class="rt-cell">10 PM</div>
@@ -1478,9 +1527,9 @@
     </div>
 
     <div class="modal-actions">
-      <button class="btn-tiny" id="routineClear" type="button">Clear highlight</button>
-      <a class="btn-tiny" href="#pricing">Go Pricing</a>
-      <a class="btn-tiny" href="about.html">About</a>
+      <button class="btn-tiny" id="routineClear" type="button" data-i18n="btn_clear_highlight">Clear highlight</button>
+      <a class="btn-tiny" href="#pricing" data-i18n="btn_go_pricing">Go Pricing</a>
+      <a class="btn-tiny" href="about.html" data-i18n="nav_about">About</a>
     </div>
   </div>
 </div>
@@ -1493,8 +1542,8 @@
       <div class="ask-title">
         <div class="ask-badge">LZ</div>
         <div>
-          <h4>AskLizOn — Course Selector</h4>
-          <p>Tap-only questions. No typing. Recommendation shows price + combo.</p>
+          <h4 data-i18n="ask_title">AskLizOn — Course Selector</h4>
+          <p data-i18n="ask_sub">Tap-only questions. No typing. Recommendation shows price + combo.</p>
         </div>
       </div>
       <button class="modal-x" id="askClose" aria-label="Close AskLizOn">✕</button>
@@ -1517,10 +1566,10 @@
       <div class="why" id="resWhy"></div>
 
       <div class="ask-actions">
-        <a class="btn btn-primary" id="resCta" href="#" target="_blank" rel="noopener">Talk with LizOn</a>
-        <a class="btn btn-ghost" href="#pricing">See Pricing</a>
-        <button class="btn btn-ghost" id="askRestart" type="button">Reset</button>
-        <a class="btn btn-ghost" href="about.html">About</a>
+        <a class="btn btn-primary" id="resCta" href="#" target="_blank" rel="noopener" data-i18n="btn_talk_lizon">Talk with LizOn</a>
+        <a class="btn btn-ghost" href="#pricing" data-i18n="btn_see_price">See Pricing</a>
+        <button class="btn btn-ghost" id="askRestart" type="button" data-i18n="btn_reset">Reset</button>
+        <a class="btn btn-ghost" href="about.html" data-i18n="nav_about">About</a>
       </div>
     </div>
   </div>
@@ -1772,6 +1821,213 @@
     const msg = encodeURIComponent(`Assalamu Alaikum, AskLizOn recommend: ${rec.name}. Price ${money(rec.price)}. Goal:${state.goal}, Pain:${state.pain}, Time:${state.time}. Details + admission process bolben?`);
     resCta.href = `https://wa.me/8801611611139?text=${msg}`;
   }
+
+  /* ===== NEW: 3-language toggle (Banglish / English / বাংলা) ===== */
+  const langFab = document.getElementById('langFab');
+  const langPill = document.getElementById('langPill');
+  const langHint = document.getElementById('langHint');
+
+  const LANGS = ['banglish','english','bangla'];
+  const langUI = {
+    banglish: { pill:'BNG', hint:'Banglish' },
+    english:  { pill:'EN',  hint:'English'  },
+    bangla:   { pill:'বাংলা', hint:'Bangla' }
+  };
+
+  const t = {
+    english: {
+      brand_sub: 'IELTS Journey (4 Levels)',
+      nav_home: 'Home',
+      nav_about: 'About',
+      nav_pricing: 'Pricing',
+      nav_modules: 'Modules',
+      drawer_title: 'Navigate',
+      drawer_core: 'Core',
+      drawer_pricing: 'Pricing + Combos',
+      drawer_practice: 'Practice Modules',
+      drawer_ielts_pages: 'IELTS Pages',
+      drawer_ielts_journey: 'IELTS Journey',
+      drawer_practice_only: 'Practice',
+      drawer_other: 'Other',
+      badge_designed: 'Designed for Desired Score',
+      hero_title: 'IELTS Journey — clear level, clean direction.',
+      hero_lead: 'No “random package” at LizOn. Based on your current level, your step-by-step journey: <b>ZERO → HOPE → STEP-UP → DESPERATE</b>. Less confusion. More progress.',
+      btn_talk_lizon: 'Talk with LizOn',
+      btn_help_choose: 'Help Me Choose',
+      practice_modules_label: 'Practice modules:',
+      level_1: 'Level 1',
+      level_2: 'Level 2',
+      level_3: 'Level 3',
+      level_4: 'Level 4',
+      btn_admit: 'Admit Now',
+      btn_see_price: 'See Price',
+      btn_see_routine: 'See Routine',
+      card_skills: 'Skills Covered :',
+      card_modules: 'Benefited Modules :',
+      card_comes_with: 'This Course Comes With :',
+      zero_aim_title: 'Aim of ZERO :',
+      zero_aim_text: 'Help you learn basic English clearly—grammar, sentence making, pronunciation—so English feels easier and less scary.',
+      zero_after_title: 'After ZERO, who will you become?',
+      zero_who_title: 'Who should take ZERO?',
+      hope_aim_title: 'Aim of HOPE :',
+      you_will_learn: 'You will learn to:',
+      hope_aim_p1: 'HOPE fixes the skills that block your IELTS score.',
+      hope_aim_list: '→ Read faster<br/>→ Understand listening more clearly<br/>→ Write without memorizing templates<br/>→ Speak with clear ideas',
+      hope_aim_p2: 'HOPE prepares you with real skills needed for IELTS modules.',
+      hope_after_title: 'After HOPE, who will you become?',
+      after_hope_you_will: 'After HOPE, you will:',
+      hope_who_title: 'Who should take HOPE?',
+      hope_who_text: '→ IELTS still feels difficult even after practice<br/>→ Reading is slow<br/>→ Accents confuse you in Listening<br/>→ You can’t write structured Writing',
+      step_aim_title: 'Aim of STEP-UP :',
+      step_aim_p1: 'STEP-UP helps you cross the Band-6 skill barrier.',
+      step_aim_list: '→ Learn key Listening & Reading question types<br/>→ Build the right Writing structure<br/>→ Build 2-minute fluent speaking capability',
+      step_aim_p2: 'STEP-UP builds core IELTS skills to take you around Band 6 in each module.',
+      step_after_title: 'After STEP-UP, who will you become?',
+      step_after_text: '→ No panic in Listening<br/>→ Proven improvement + confidence gainers<br/>→ Write with clean structure<br/>→ Speak smoothly for 100 seconds on IELTS topics',
+      step_after_p2: 'You will feel stable, organized, and exam-ready—not confused.',
+      step_who_title: 'Who should take STEP-UP?',
+      step_who_note: 'If you want to move up seriously, STEP-UP is your stage.',
+      desp_aim_title: 'Aim of DESPERATE :',
+      desp_aim_p1: 'DESPERATE is designed to help you learn, test, practice, and fix IELTS skills accurately.',
+      desp_aim_p2: 'The aim is to:<br/>→ Teach all question types<br/>→ Test you continuously<br/>→ Improve you through evaluation<br/>→ Create a score-achieving environment',
+      desp_after_title: 'After DESPERATE, who will you become?',
+      desp_after_ready: 'After DESPERATE, you will feel ready',
+      desp_who_title: 'Who should take DESPERATE?',
+      desp_who_text: '→ IELTS test in 1–2 months<br/>→ Can’t achieve desired score<br/>→ Want the final push for next 28 sessions',
+      desp_who_note: 'This course is for students who want proper preparation—not random practice.',
+      pricing_title: 'Pricing + Combos',
+      pricing_sub: 'Simple pricing. Clean combos. Decide fast.',
+      combos_title: 'Combos',
+      best_value: 'BEST VALUE • N2F',
+      n2f_title: 'N2F — Now to Fly (All 4)',
+      n2f_tag: 'ZERO + HOPE + STEP-UP + DESPERATE',
+      not_sure: 'Not sure?',
+      use_ask_title: 'Use AskLizOn selector',
+      use_ask_sub: 'Tap-only questions. Recommendation shows price + combo.',
+      btn_open_ask: 'Open AskLizOn',
+      practice_badge: 'Practice',
+      practice_title: 'Practice Modules',
+      mod_listening_sub: 'Prediction, focus, traps.',
+      mod_reading_sub: 'Speed, scanning — stop translating.',
+      mod_writing_sub: 'Ideas + structure + control.',
+      mod_speaking_sub: 'Flow + confidence + control.',
+      footer_all_options: 'All Options',
+      footer_ielts_pages: 'IELTS Pages',
+      footer_practice: 'Practice',
+      footer_contact: 'Contact & Location',
+      btn_open_map: 'Open Map',
+      btn_chat_now: 'Chat Now',
+      footer_social: 'Social Media',
+      need_guidance: '<b>Need guidance?</b>',
+      routine_title: 'Class Routine (Weekly)',
+      routine_hint: 'Tap “See Routine” from any course to highlight. Each course duration: 1 month.',
+      rt_day: 'Day',
+      btn_clear_highlight: 'Clear highlight',
+      btn_go_pricing: 'Go Pricing',
+      ask_title: 'AskLizOn — Course Selector',
+      ask_sub: 'Tap-only questions. No typing. Recommendation shows price + combo.',
+      btn_reset: 'Reset'
+    },
+
+    bangla: {
+      brand_sub: 'আইইএলটিএস জার্নি (৪ লেভেল)',
+      nav_home: 'হোম',
+      nav_about: 'এবাউট',
+      nav_pricing: 'প্রাইসিং',
+      nav_modules: 'মডিউলস',
+      drawer_title: 'মেনু',
+      drawer_core: 'কোর',
+      drawer_pricing: 'প্রাইসিং + কম্বো',
+      drawer_practice: 'প্র্যাকটিস মডিউল',
+      drawer_ielts_pages: 'IELTS পেজ',
+      drawer_ielts_journey: 'IELTS জার্নি',
+      drawer_practice_only: 'প্র্যাকটিস',
+      drawer_other: 'অন্যান্য',
+      badge_designed: 'Designed for Desired Score',
+      hero_title: 'IELTS Journey — লেভেল ক্লিয়ার, দিকনির্দেশ ক্লিন।',
+      hero_lead: 'LizOn এ “random package” নাই। আপনার current level অনুযায়ী step-by-step journey: <b>ZERO → HOPE → STEP-UP → DESPERATE</b>। Confusion কমবে, progress হবে।',
+      btn_talk_lizon: 'LizOn এর সাথে কথা বলুন',
+      btn_help_choose: 'Help Me Choose',
+      practice_modules_label: 'প্র্যাকটিস মডিউল:',
+      level_1: 'লেভেল ১',
+      level_2: 'লেভেল ২',
+      level_3: 'লেভেল ৩',
+      level_4: 'লেভেল ৪',
+      btn_admit: 'এডমিট নাও',
+      btn_see_price: 'প্রাইস দেখুন',
+      btn_see_routine: 'রুটিন দেখুন',
+      card_skills: 'Skills Covered :',
+      card_modules: 'Benefited Modules :',
+      card_comes_with: 'This Course Comes With :',
+      zero_aim_title: 'ZERO এর লক্ষ্য :',
+      zero_aim_text: 'Grammar, sentence making, pronunciation—এই basic গুলো পরিষ্কার করে শেখানো, যাতে English সহজ লাগে এবং ভয় কমে।',
+      hope_aim_title: 'HOPE এর লক্ষ্য :',
+      you_will_learn: 'আপনি শিখবেন:',
+      hope_aim_list: '→ দ্রুত পড়া<br/>→ Listening আরও পরিষ্কারভাবে বোঝা<br/>→ Template না মুখস্থ করে লেখা<br/>→ স্পষ্ট আইডিয়া দিয়ে কথা বলা',
+      step_aim_title: 'STEP-UP এর লক্ষ্য :',
+      desp_aim_title: 'DESPERATE এর লক্ষ্য :',
+      pricing_title: 'প্রাইসিং + কম্বো',
+      pricing_sub: 'সিম্পল প্রাইসিং। ক্লিন কম্বো। দ্রুত সিদ্ধান্ত।',
+      combos_title: 'কম্বো',
+      best_value: 'BEST VALUE • N2F',
+      n2f_title: 'N2F — Now to Fly (সব ৪টি)',
+      not_sure: 'নিশ্চিত না?',
+      use_ask_title: 'AskLizOn সিলেক্টর ব্যবহার করুন',
+      use_ask_sub: 'শুধু ট্যাপ। রেকমেন্ডেশনে প্রাইস + কম্বো দেখাবে।',
+      btn_open_ask: 'Open AskLizOn',
+      practice_badge: 'প্র্যাকটিস',
+      practice_title: 'প্র্যাকটিস মডিউল',
+      mod_listening_sub: 'Prediction, focus, traps.',
+      mod_reading_sub: 'Speed, scanning — stop translating.',
+      mod_writing_sub: 'Ideas + structure + control.',
+      mod_speaking_sub: 'Flow + confidence + control.',
+      footer_all_options: 'সব অপশন',
+      footer_ielts_pages: 'IELTS পেজ',
+      footer_practice: 'প্র্যাকটিস',
+      footer_contact: 'কন্টাক্ট & লোকেশন',
+      btn_open_map: 'ম্যাপ ওপেন',
+      btn_chat_now: 'চ্যাট নাও',
+      footer_social: 'সোশ্যাল মিডিয়া',
+      need_guidance: '<b>Need guidance?</b>',
+      routine_title: 'ক্লাস রুটিন (সাপ্তাহিক)',
+      routine_hint: 'যেকোনো কোর্স থেকে “See Routine” চাপলে highlight হবে। প্রতিটি কোর্স: ১ মাস।',
+      rt_day: 'দিন',
+      btn_clear_highlight: 'Highlight ক্লিয়ার',
+      btn_go_pricing: 'প্রাইসিং এ যান',
+      ask_title: 'AskLizOn — Course Selector',
+      ask_sub: 'শুধু ট্যাপ। টাইপিং নাই। রেকমেন্ডেশনে প্রাইস + কম্বো।',
+      btn_reset: 'রিসেট'
+    }
+  };
+
+  function applyLang(lang){
+    const pack = langUI[lang] || langUI.banglish;
+    langPill.textContent = pack.pill;
+    langHint.textContent = pack.hint;
+    document.documentElement.setAttribute('data-lang', lang);
+    localStorage.setItem('lizon-lang', lang);
+
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      const val = (t[lang] && t[lang][key]) ? t[lang][key] : null;
+      if(!val) return; // fallback: keep original (Banglish)
+      if(el.getAttribute('data-i18n-html') === '1') el.innerHTML = val;
+      else el.textContent = val;
+    });
+  }
+
+  function cycleLang(){
+    const current = localStorage.getItem('lizon-lang') || 'banglish';
+    const idx = LANGS.indexOf(current);
+    const next = LANGS[(idx + 1 + LANGS.length) % LANGS.length];
+    applyLang(next);
+  }
+
+  // init
+  applyLang(localStorage.getItem('lizon-lang') || 'banglish');
+
+  langFab.addEventListener('click', cycleLang);
+  langFab.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') cycleLang(); });
 </script>
 
 </body>

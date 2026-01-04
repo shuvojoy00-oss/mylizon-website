@@ -159,10 +159,12 @@
     background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.32));
   }
 
-  /* ✅ CHANGE #1: image frame fixed (no crop, keep full thumbnail) */
+  /* ✅ ONLY CHANGE: enforce 16:9 (YouTube thumbnail) frame behavior for images */
   .imgwrap{
     position:absolute; inset:0;
-    display:grid; place-items:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     background:
       radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.14), transparent 55%),
       linear-gradient(180deg, rgba(6,43,31,.78), rgba(4,31,22,.95));
@@ -172,13 +174,22 @@
       radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.12), transparent 55%),
       linear-gradient(180deg, rgba(255,255,255,.92), rgba(238,246,243,.98));
   }
+
   .cardimg{
-    width:100%;
-    height:100%;
-    object-fit:contain;     /* <- no crop */
-    object-position:center; /* <- centered */
-    padding: 10px;          /* <- breathing space */
+    /* 16:9 frame (1280x720) */
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+
+    /* keep image clean + centered without stretching */
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+
+    padding: 10px;
     filter: saturate(1.02);
+    display:block;
   }
 
   .card-content{
@@ -242,7 +253,6 @@
 
   .sub-actions{ display:flex; gap:8px; flex-wrap:wrap; }
 
-  /* ✅ CHANGE #3: buttons look like real buttons (color improved) */
   .mini{
     display:inline-flex;
     align-items:center;
@@ -343,7 +353,6 @@
   }
   .btn.ghost{ background: transparent; color: var(--muted); }
 
-  /* ✅ CHANGE #2: video frame ratio fixed (Shorts-style, looks like real size) */
   .videoShell{
     width:100%;
     display:grid;
@@ -356,8 +365,8 @@
   .theme-light .videoShell{ background: rgba(10,32,22,.06); }
 
   .videoFrame{
-    width:min(420px, 100%);        /* phone-friendly */
-    aspect-ratio: 9 / 16;          /* vertical video frame */
+    width:min(420px, 100%);
+    aspect-ratio: 9 / 16;
     border:0;
     display:block;
     background: transparent;
@@ -459,17 +468,12 @@
     box-shadow: 0 0 0 4px rgba(0,210,106,.14);
   }
 
-  /* ✅ bottom-left hamburger */
   .menu-fab{ left:14px; bottom:54px; }
   .menu-fab b{ letter-spacing:.3px; }
 
-  /* ✅ bottom-right scroll-to-top */
   .top-fab{ right:14px; bottom:108px; }
-
-  /* ✅ bottom-right theme toggle (light/green) */
   .theme-fab{ right:14px; bottom:162px; }
 
-  /* ✅ top-right hamburger inside header */
   .topHamburger{
     width:44px; height:44px;
     border-radius: 999px;
@@ -481,7 +485,6 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* MENU SHEET */
   .menuList{
     display:grid;
     gap:10px;
@@ -1023,7 +1026,6 @@
 
   videoOverlay.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', closeVideo));
 
-  /* Card taps open video */
   function bindCard(card, key, label){
     card.addEventListener('click', ()=> openVideo(key, label));
     card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openVideo(key, label); });
@@ -1034,19 +1036,16 @@
   bindCard(document.getElementById('cardStepup'), 'stepup', 'IELTS STEP-UP');
   bindCard(document.getElementById('cardDesperate'), 'desperate', 'IELTS DESPERATE');
 
-  /* Stop propagation for buttons inside cards */
   document.querySelectorAll('.mini').forEach(btn=>{
     btn.addEventListener('click', (e)=> e.stopPropagation());
   });
 
-  /* Admit -> pricing */
   document.querySelectorAll('[data-admit]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
     });
   });
 
-  /* ===== Routine modal ===== */
   const routineOverlay = document.getElementById('routineOverlay');
   function openRoutine(){
     lastScrollY = window.scrollY;
@@ -1063,7 +1062,6 @@
   routineOverlay.querySelectorAll('[data-close-routine]').forEach(el=> el.addEventListener('click', closeRoutine));
   document.querySelectorAll('[data-routine]').forEach(btn=> btn.addEventListener('click', openRoutine));
 
-  /* ===== Details modal (tap-only) ===== */
   const detailsOverlay = document.getElementById('detailsOverlay');
   const detailsTitle = document.getElementById('detailsTitle');
   const detailsMenu = document.getElementById('detailsMenu');
@@ -1172,7 +1170,6 @@
     });
   });
 
-  /* ===== Pay modal ===== */
   const payOverlay = document.getElementById('payOverlay');
   const sendScreenshotBtn = document.getElementById('sendScreenshotBtn');
 
@@ -1196,12 +1193,10 @@
   payOverlay.querySelectorAll('[data-close-pay]').forEach(el=> el.addEventListener('click', closePay));
   document.querySelectorAll('[data-open-pay]').forEach(btn=> btn.addEventListener('click', openPay));
 
-  /* Help buttons */
   document.querySelectorAll('[data-open-help]').forEach(btn=>{
     btn.addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
   });
 
-  /* Escape close */
   document.addEventListener('keydown', (e)=>{
     if(e.key==='Escape'){
       if(videoOverlay.classList.contains('show')) closeVideo();
@@ -1212,7 +1207,6 @@
     }
   });
 
-  /* ===== Menu overlay (top-right + bottom-left) ===== */
   const menuOverlay = document.getElementById('menuOverlay');
   const fabMenu = document.getElementById('fabMenu');
   const btnMenuTop = document.getElementById('btnMenuTop');
@@ -1247,4 +1241,3 @@
 </script>
 </body>
 </html>
-```0

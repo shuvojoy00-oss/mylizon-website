@@ -19,11 +19,17 @@
     --muted:rgba(255,255,255,.72);
     --gold:#d6b35a;
     --gold2:#caa64a;
+
+    /* NEW accents for requested change */
+    --titleAccent: rgba(214,179,90,.95);   /* different color for modal titles */
+    --tagAccent: rgba(54,210,139,.95);     /* important markers */
+
     --shadow: 0 18px 60px rgba(0,0,0,.40);
     --radius-xl: 22px;
     --radius-lg: 18px;
     --radius-md: 14px;
     --topbar-h: 64px;
+    --footerbar-h: 64px;
   }
 
   .theme-light{
@@ -35,6 +41,9 @@
     --text:rgba(10,32,22,.92);
     --muted:rgba(10,32,22,.70);
     --shadow: 0 18px 60px rgba(0,0,0,.12);
+
+    --titleAccent: rgba(138,98,0,.95);
+    --tagAccent: rgba(11,122,74,.95);
   }
 
   *{ box-sizing:border-box; }
@@ -49,6 +58,7 @@
     color:var(--text);
     line-height:1.35;
     overflow-x:hidden;
+    padding-bottom: calc(var(--footerbar-h) + 18px); /* NEW: space for footer buttons */
   }
 
   a{ color:inherit; }
@@ -176,11 +186,13 @@
       radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.12), transparent 55%),
       linear-gradient(180deg, rgba(255,255,255,.92), rgba(238,246,243,.98));
   }
+
+  /* unchanged card image sizing */
   .cardimg{
     width:100%;
     max-width:100%;
     max-height:100%;
-    aspect-ratio: 16 / 9;     /* YouTube thumbnail frame */
+    aspect-ratio: 16 / 9;
     height:auto;
     object-fit:contain;
     object-position:center;
@@ -272,7 +284,7 @@
     box-shadow: 0 10px 26px rgba(0,0,0,.08);
   }
 
-  /* ✅ FIX #1: Mobile layout so Tap-to-Play never overlaps action buttons */
+  /* ✅ FIX: Mobile layout so Tap-to-Play never overlaps action buttons */
   @media (max-width: 560px){
     .card-content{
       flex-direction:column;
@@ -319,7 +331,17 @@
     display:flex; align-items:flex-start; justify-content:space-between;
     gap:10px; margin-bottom:10px;
   }
-  .sheet-top h3{ margin:0; font-size:16px; line-height:1.2; }
+
+  /* NEW: different color for modal titles (requested) */
+  .sheet-top h3{
+    margin:0;
+    font-size:16px;
+    line-height:1.2;
+    color: var(--titleAccent);
+    font-weight: 950;
+    letter-spacing:.2px;
+  }
+
   .sheet-top p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
 
   .x{
@@ -343,7 +365,6 @@
     padding: 12px;
   }
   .opt b{ display:block; margin-bottom:6px; }
-  .opt .row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
@@ -363,6 +384,34 @@
     background: rgba(214,179,90,.16);
   }
   .btn.ghost{ background: transparent; color: var(--muted); }
+
+  /* NEW: make "Tap to view" look like button inside Details option cards */
+  .viewbtn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border:1px solid rgba(214,179,90,.38);
+    background: rgba(214,179,90,.12);
+    color: rgba(255,255,255,.92);
+    font-weight:950;
+    font-size:13px;
+    width: fit-content;
+    box-shadow: 0 12px 30px rgba(0,0,0,.18);
+  }
+  .theme-light .viewbtn{
+    color: rgba(10,32,22,.92);
+    background: rgba(214,179,90,.20);
+    border-color: rgba(214,179,90,.48);
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+  }
+  .viewbtn .dot{
+    width:10px; height:10px; border-radius:50%;
+    background: var(--tagAccent);
+    box-shadow: 0 0 0 4px rgba(54,210,139,.12);
+  }
 
   .videoShell{
     width:100%;
@@ -471,7 +520,7 @@
     backdrop-filter: blur(10px);
   }
 
-  .help-fab{ right:14px; bottom:54px; }
+  .help-fab{ right:14px; bottom: calc(var(--footerbar-h) + 12px); }
   .help-fab .dot{
     width:10px; height:10px;
     border-radius:50%;
@@ -479,11 +528,11 @@
     box-shadow: 0 0 0 4px rgba(0,210,106,.14);
   }
 
-  .menu-fab{ left:14px; bottom:54px; }
+  .menu-fab{ left:14px; bottom: calc(var(--footerbar-h) + 12px); }
   .menu-fab b{ letter-spacing:.3px; }
 
-  .top-fab{ right:14px; bottom:108px; }
-  .theme-fab{ right:14px; bottom:162px; }
+  .top-fab{ right:14px; bottom: calc(var(--footerbar-h) + 66px); }
+  .theme-fab{ right:14px; bottom: calc(var(--footerbar-h) + 120px); }
 
   .topHamburger{
     width:44px; height:44px;
@@ -557,6 +606,63 @@
   .theme-light .tagZero{ color:#0b7a4a; }
   .theme-light .tagStep{ color:#b06a00; }
   .theme-light .tagDes{ color:#0b7a4a; }
+
+  /* ===== NEW: Details body highlighting ===== */
+  .detailsBody{ white-space:pre-line; }
+  .hl-hdr{ color: var(--titleAccent); font-weight: 950; }
+  .hl-imp{ color: var(--tagAccent); font-weight: 950; }
+  .hl-gold{ color: var(--gold); font-weight: 950; }
+  .hl-soft{ color: rgba(255,255,255,.88); font-weight: 900; }
+  .theme-light .hl-soft{ color: rgba(10,32,22,.92); }
+
+  /* ===== NEW: Sticky Footer Buttons Bar (requested) ===== */
+  .footerbar{
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: var(--footerbar-h);
+    z-index: 2600;
+    backdrop-filter: blur(12px);
+    background: rgba(4,31,22,.78);
+    border-top: 1px solid var(--stroke);
+  }
+  .theme-light .footerbar{ background: rgba(255,255,255,.82); }
+
+  .footerbar-inner{
+    height: 100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 12px;
+    width: min(1100px, 92vw);
+    margin: 0 auto;
+  }
+
+  .footerbtn{
+    flex: 1 1 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.04);
+    text-decoration:none;
+    font-weight: 950;
+    color: var(--text);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .footerbtn.primary{
+    border-color: rgba(214,179,90,.42);
+    background: rgba(214,179,90,.16);
+  }
+  .footerbtn .ic{
+    width:28px; height:28px;
+    border-radius: 10px;
+    display:grid; place-items:center;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.04);
+  }
 </style>
 </head>
 
@@ -592,7 +698,11 @@
         <!-- TOP CARD -->
         <div class="card topcard" id="cardTop" role="button" tabindex="0" aria-label="Play IELTS Journey top video">
           <div class="imgwrap">
-            <img class="cardimg" src="assets/ielts-journey-top.png" alt="IELTS Journey Top" />
+            <!-- NEW: desktop/mobile image frame different -->
+            <picture>
+              <source media="(max-width:560px)" srcset="assets/m/ielts-journey-top.png">
+              <img class="cardimg" src="assets/d/ielts-journey-top.png" alt="IELTS Journey Top" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -608,7 +718,10 @@
         <!-- ZERO -->
         <div class="card" id="cardZero" role="button" tabindex="0" aria-label="Play IELTS ZERO video">
           <div class="imgwrap">
-            <img class="cardimg" src="assets/ielts-zero.png" alt="IELTS ZERO" />
+            <picture>
+              <source media="(max-width:560px)" srcset="assets/m/ielts-zero.png">
+              <img class="cardimg" src="assets/d/ielts-zero.png" alt="IELTS ZERO" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -628,7 +741,10 @@
         <!-- HOPE -->
         <div class="card" id="cardHope" role="button" tabindex="0" aria-label="Play IELTS HOPE video">
           <div class="imgwrap">
-            <img class="cardimg" src="assets/ielts-hope.png" alt="IELTS HOPE" />
+            <picture>
+              <source media="(max-width:560px)" srcset="assets/m/ielts-hope.png">
+              <img class="cardimg" src="assets/d/ielts-hope.png" alt="IELTS HOPE" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -648,7 +764,10 @@
         <!-- STEP-UP -->
         <div class="card" id="cardStepup" role="button" tabindex="0" aria-label="Play IELTS STEP-UP video">
           <div class="imgwrap">
-            <img class="cardimg" src="assets/ielts-stepup.png" alt="IELTS STEP-UP" />
+            <picture>
+              <source media="(max-width:560px)" srcset="assets/m/ielts-stepup.png">
+              <img class="cardimg" src="assets/d/ielts-stepup.png" alt="IELTS STEP-UP" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -668,7 +787,10 @@
         <!-- DESPERATE -->
         <div class="card" id="cardDesperate" role="button" tabindex="0" aria-label="Play IELTS DESPERATE video">
           <div class="imgwrap">
-            <img class="cardimg" src="assets/ielts-desperate.png" alt="IELTS DESPERATE" />
+            <picture>
+              <source media="(max-width:560px)" srcset="assets/m/ielts-desperate.png">
+              <img class="cardimg" src="assets/d/ielts-desperate.png" alt="IELTS DESPERATE" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -841,6 +963,18 @@
     <span class="dot"></span><b>Help</b>
   </div>
 
+  <!-- NEW: Footer buttons bar -->
+  <div class="footerbar" role="contentinfo" aria-label="Quick actions">
+    <div class="footerbar-inner">
+      <a class="footerbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">
+        <span class="ic">🗺️</span> Open Map
+      </a>
+      <a class="footerbtn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20help%20chai." target="_blank" rel="noopener">
+        <span class="ic">💬</span> Chat Now
+      </a>
+    </div>
+  </div>
+
   <!-- VIDEO MODAL -->
   <div class="overlay" id="videoOverlay" aria-hidden="true">
     <div class="back" data-close></div>
@@ -884,7 +1018,7 @@
 
       <div class="opt" id="detailsView" style="display:none; margin-top:10px;">
         <b id="detailsViewTitle"></b>
-        <div id="detailsViewBody" style="color:var(--muted); font-size:13px; line-height:1.55; white-space:pre-line;"></div>
+        <div id="detailsViewBody" class="detailsBody" style="color:var(--muted); font-size:13px; line-height:1.55;"></div>
         <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
           <button class="btn" type="button" id="detailsBack">Back</button>
           <button class="btn ghost" type="button" data-close-details>Close</button>
@@ -1130,8 +1264,8 @@
   bindCard(document.getElementById('cardStepup'), 'stepup', 'IELTS STEP-UP');
   bindCard(document.getElementById('cardDesperate'), 'desperate', 'IELTS DESPERATE');
 
-  /* ✅ FIX #2: Stop buttons from triggering card video */
-  document.querySelectorAll('.mini, .btn, .chip, .iconbtn, .topHamburger, .menuItem').forEach(el=>{
+  /* Stop buttons from triggering card video */
+  document.querySelectorAll('.mini, .btn, .chip, .iconbtn, .topHamburger, .menuItem, .footerbtn').forEach(el=>{
     el.addEventListener('click', (e)=> e.stopPropagation());
     el.addEventListener('pointerdown', (e)=> e.stopPropagation());
   });
@@ -1175,6 +1309,7 @@
     { key:'with', title:'This Course Comes With' }
   ];
 
+  /* Keep your exact text (unchanged) */
   const DETAILS = {
     zero:{
       skills:
@@ -1452,6 +1587,7 @@ This course is for students who want proper preparation, not random practice`,
     unlockScroll();
   }
 
+  /* NEW: render "Tap to view" as button */
   function renderDetailsMenu(courseKey){
     detailsMenu.innerHTML = '';
     detailsMenu.style.display = '';
@@ -1461,11 +1597,59 @@ This course is for students who want proper preparation, not random practice`,
       const div = document.createElement('div');
       div.className = 'opt';
       div.tabIndex = 0;
-      div.innerHTML = `<b>${sec.title}</b><span style="color:var(--muted);font-size:12px;">Tap to view</span>`;
+      div.innerHTML = `
+        <b>${sec.title}</b>
+        <div class="viewbtn" aria-hidden="true"><span class="dot"></span>Tap to view</div>
+      `;
       div.addEventListener('click', ()=> showDetailsSection(courseKey, sec));
       div.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') showDetailsSection(courseKey, sec); });
       detailsMenu.appendChild(div);
     });
+  }
+
+  /* NEW: highlight important parts without changing original text */
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+
+  function highlightText(raw){
+    const safe = escapeHtml(raw);
+
+    // line-based highlights
+    const lines = safe.split('\n').map(line=>{
+      const t = line.trim();
+
+      // Headings like "Reading:" "Writing:" etc.
+      if(/^(Reading|Listening|Writing|Speaking|Mock)\s*:$/i.test(t)){
+        return `<span class="hl-hdr">${line}</span>`;
+      }
+
+      // Important totals / counts
+      if(/^Total\s*:\s*/i.test(t) || /^Total\s*-\s*/i.test(t)){
+        return `<span class="hl-gold">${line}</span>`;
+      }
+      if(/^12\s*Classes/i.test(t) || /^16\s*Evaluations/i.test(t) || /^4\s*Evaluation/i.test(t)){
+        return `<span class="hl-imp">${line}</span>`;
+      }
+
+      // "Who will you become" style lines
+      if(/^After\s+/i.test(t) || /^AIM\s+of/i.test(t) || /^Aim\s+of/i.test(t) || /^Who\s+should/i.test(t) || /^This\s+Course\s+Comes\s+With/i.test(t) || /^Benefited\s+Modules/i.test(t) || /^Skilled\s+Covered/i.test(t)){
+        return `<span class="hl-hdr">${line}</span>`;
+      }
+
+      // bullet lines (keep normal, but slightly stronger)
+      if(/^[•-]\s+/.test(t)){
+        return `<span class="hl-soft">${line}</span>`;
+      }
+
+      return line;
+    });
+
+    return lines.join('\n')
+      // make arrow tips slightly stronger
+      .replace(/→/g, `<span class="hl-gold">→</span>`);
   }
 
   function showDetailsSection(courseKey, sec){
@@ -1473,7 +1657,9 @@ This course is for students who want proper preparation, not random practice`,
     detailsMenu.style.display = 'none';
     detailsView.style.display = '';
     detailsViewTitle.textContent = sec.title;
-    detailsViewBody.textContent = data[sec.key] || "Coming soon.";
+
+    const raw = data[sec.key] || "Coming soon.";
+    detailsViewBody.innerHTML = highlightText(raw);
   }
 
   detailsBack.addEventListener('click', ()=>{
@@ -1557,6 +1743,17 @@ This course is for students who want proper preparation, not random practice`,
   document.getElementById('menuHelp').addEventListener('click', ()=>{
     window.open(HELP_WA, '_blank', 'noopener');
   });
+
+  /* ===== Scroll lock helpers (shared) ===== */
+  const videoOverlay = document.getElementById('videoOverlay');
+  function lockScroll(){
+    lastScrollY = window.scrollY;
+    document.body.style.overflow = 'hidden';
+  }
+  function unlockScroll(){
+    document.body.style.overflow = '';
+    window.scrollTo({ top: lastScrollY, behavior:'auto' });
+  }
 </script>
 </body>
 </html>

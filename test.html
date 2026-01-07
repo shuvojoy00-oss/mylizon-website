@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LizOn Education — IELTS Journey</title>
+  <title>IELTS Journey | LizOn Education</title>
+  <meta name="description" content="IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE. Clean structure, tap to play, and quick actions. LizOn Education." />
   <meta name="theme-color" content="#0b2a1f" />
 
   <style>
@@ -16,16 +17,21 @@
       --text:#e9f3ef;
       --muted:#b7c9c2;
       --gold:#d7b24a;
+      --gold2:#b8922f;
+      --gold-strong:#e2c26a;
+      --teal:#25a58a;
       --soft: 0 12px 40px rgba(0,0,0,.35);
-      --radius: 18px;
-      --max: 1120px;
+      --shadow2: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px; --radius2: 22px; --max: 1120px;
     }
-
+    [data-theme="light"]{
+      --bg1:#f3fbf7; --bg2:#e9f6f0; --card:#ffffffcc; --card2:#ffffffa6; --line:#cfe6dc;
+      --text:#0b2a1f; --muted:#335e52; --soft: 0 10px 28px rgba(0,0,0,.10); --shadow2: 0 16px 46px rgba(0,0,0,.14);
+    }
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
         radial-gradient(900px 500px at 15% 10%, rgba(215,178,74,.12), transparent 55%),
@@ -33,331 +39,316 @@
         linear-gradient(180deg, var(--bg1), var(--bg2));
       overflow-x:hidden;
     }
-
     a{ color:inherit; text-decoration:none; }
     img{ max-width:100%; display:block; }
     button{ font:inherit; }
-
-    .wrap{ width: min(var(--max), calc(100% - 32px)); margin:0 auto; }
+    .wrap{ width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
 
     /* Header */
-    .header{
-      position:sticky;
-      top:0;
-      z-index:30;
-      backdrop-filter: blur(12px);
+    .header{ position:sticky; top:0; z-index:30; backdrop-filter: blur(12px);
       background: linear-gradient(180deg, rgba(6,20,15,.82), rgba(6,20,15,.35));
       border-bottom: 1px solid rgba(255,255,255,.06);
     }
-    .head-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      padding:12px 0;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 220px;
-    }
-    .logo-box{
-      width:44px; height:44px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.30), rgba(37,165,138,.16));
-      border: 1px solid rgba(255,255,255,.10);
-      display:grid;
-      place-items:center;
-      box-shadow: var(--soft);
-      overflow:hidden;
-    }
+    [data-theme="light"] .header{ background: linear-gradient(180deg, rgba(243,251,247,.88), rgba(243,251,247,.55)); border-bottom: 1px solid rgba(0,0,0,.06);}
+    .head-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px 0; }
+    .brand{ display:flex; align-items:center; gap:12px; min-width:220px; }
+    .logo-box{ width:44px; height:44px; border-radius:12px; background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.30), rgba(37,165,138,.16)); border:1px solid rgba(255,255,255,.10); display:grid; place-items:center; box-shadow:var(--soft); overflow:hidden;}
     .logo-box img{ width:34px; height:34px; object-fit:contain; }
-
-    .brand-txt{ line-height:1.15; }
     .brand-txt b{ display:block; font-size:14px; letter-spacing:.2px; }
     .brand-txt span{ display:block; font-size:12px; color:var(--muted); margin-top:2px; }
-
-    .menu-btn{
-      width:44px; height:44px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      box-shadow: var(--soft);
-      flex: 0 0 auto;
-    }
+    .desktop-nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center; }
+    .chip{ padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); color:var(--text); font-size:13px; }
+    [data-theme="light"] .chip{ border:1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.72); }
+    .menu-btn{ width:44px; height:44px; border-radius:14px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); display:grid; place-items:center; cursor:pointer; box-shadow:var(--soft); }
     .menu-btn svg{ width:22px; height:22px; }
 
-    /* Cards area */
-    .cards{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      padding: 14px;
+    /* Top promo image */
+    .top-img{ width:100%; display:block; border-bottom:1px solid rgba(255,255,255,.06); background: rgba(0,0,0,.10); }
+    .top-img a{ display:block; }
+    .top-img img{ width:100%; height:auto; display:block; }
+
+    /* Sections */
+    section{ padding: 22px 0; }
+    .card{ border-radius: var(--radius2); border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); box-shadow: var(--shadow2); overflow:hidden; }
+    [data-theme="light"] .card{ border:1px solid rgba(0,0,0,.08); background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.76)); }
+    .card-pad{ padding:18px; }
+
+    .k-dot{ width:10px; height:10px; border-radius:999px; background: radial-gradient(circle at 30% 30%, rgba(215,178,74,1), rgba(37,165,138,1)); box-shadow: 0 0 0 3px rgba(215,178,74,.14); display:inline-block; margin-right:10px; vertical-align:middle; }
+    .title{ margin:10px 0 8px; font-size: clamp(24px, 3.2vw, 38px); line-height:1.1; letter-spacing:-.5px; }
+    .lead{ margin:0; font-size:14.5px; color:var(--muted); line-height:1.55; max-width:70ch; }
+
+    .btn{ padding:10px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04);
+      color:var(--text); font-weight:700; font-size:13.5px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:40px; box-shadow:var(--soft);}
+    .btn-primary{ border-color: rgba(215,178,74,.35); background: linear-gradient(180deg, rgba(215,178,74,.20), rgba(215,178,74,.10)); }
+    .btn-ghost{ box-shadow:none; background: transparent; border-color: rgba(255,255,255,.10); }
+
+    .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:14px; }
+    @media (max-width: 860px){ .grid-2{ grid-template-columns:1fr; } .wrap{ width:calc(100% - 24px);} .desktop-nav{ display:none;} }
+
+    /* Course cards */
+    .course-card{ display:grid; grid-template-columns: 1.1fr 1fr; gap:12px; padding:0; }
+    .course-left, .course-right{ padding:18px; }
+    .course-left{ border-right:1px solid rgba(255,255,255,.06); }
+    [data-theme="light"] .course-left{ border-right:1px solid rgba(0,0,0,.06); }
+
+    .course-title{ margin:0 0 8px; letter-spacing:.2px; font-weight:900; }
+    .pill-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .pill{ padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.14); font-size:13px; }
+    [data-theme="light"] .pill{ border:1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.78); }
+
+    /* Right/media column */
+    .media-box{ border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.14); }
+    .media-box img{ width:100%; height:auto; display:block; object-fit:cover; }
+    .play{ margin-top:12px; display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; border:1px solid rgba(215,178,74,.28); background: linear-gradient(180deg, rgba(215,178,74,.12), rgba(255,255,255,.01)); font-weight:900; }
+
+    /* Mobile: prevent Tap-to-Play from covering content */
+    @media (max-width: 860px){
+      .course-card{ grid-template-columns:1fr; }
+      .course-left{ order:1; border-right:0; padding-bottom:10px; }
+      .course-right{ order:2; margin-top:6px; padding-top:12px; border-top:1px solid rgba(255,255,255,.08); }
+      .play{ width:100%; justify-content:flex-start; padding:12px 14px; }
     }
 
-    .card{
-      position:relative;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.04);
-      box-shadow: var(--soft);
-      display:grid;
-      grid-template-columns: minmax(160px, 1.35fr) minmax(180px, 1fr) auto;
-      align-items:stretch;
-      min-height: clamp(108px, 16vw, 150px);
-    }
-    .topcard{
-      min-height: clamp(128px, 20vw, 190px);
-    }
+    /* Footer */
+    .footer{ padding:26px 0 96px; }
+    .footer-columns{ display:grid; grid-template-columns: 1.1fr 1.4fr 1fr; gap:14px; }
+    @media (max-width: 920px){ .footer-columns{ grid-template-columns:1fr; } }
+    .btn-tiny{ padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); font-size:12px; font-weight:800; box-shadow:var(--soft); display:inline-flex; align-items:center; justify-content:center; min-height:34px; }
+    .footer-small{ color:var(--muted); font-size:12.5px; line-height:1.6; }
+    .rule{ height:1px; background: rgba(255,255,255,.10); margin:14px 0; }
+    [data-theme="light"] .rule{ background: rgba(0,0,0,.10); }
 
-    @media (max-width: 720px){
-      .card{ grid-template-columns: 1fr; min-height: auto; }
-      .wrap{ width: calc(100% - 24px); }
-    }
-
-    .sub{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      padding: 14px 14px 14px 14px;
-      justify-content:center;
-    }
-    .kicker{
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing:.2px;
-      font-weight: 800;
-    }
-    .title{
-      margin:0;
-      font-size: 16px;
-      font-weight: 950;
-      letter-spacing:-.2px;
-    }
-
-    .sub-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-top:6px;
-    }
-    .mini{
-      padding: 9px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 900;
-      cursor:pointer;
-    }
-
-    .imgzone{
-      position:relative;
-      min-height: 100%;
-      border-left:1px solid rgba(255,255,255,.08);
-    }
-    @media (max-width: 720px){
-      .imgzone{ border-left:none; border-top:1px solid rgba(255,255,255,.08); }
-    }
-
-    .imgwrap{
-      position:absolute; inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 10px;
-      background:
-        radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.14), transparent 55%),
-        linear-gradient(180deg, rgba(6,43,31,.78), rgba(4,31,22,.95));
-    }
-
-    .cardimg-pic{
-      width:100%;
-      height:100%;
-      display:block;
-    }
-
-    .cardimg{
-      width:100%;
-      height:100%;
-      object-fit: contain;   /* no crop */
-      object-position:center;
-      filter: saturate(1.02);
-    }
-
-    .play{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 0 14px;
-      border-left:1px solid rgba(255,255,255,.08);
-      color: var(--muted);
-      font-weight: 900;
-      white-space: nowrap;
-    }
-    @media (max-width: 720px){
-      .play{ border-left:none; border-top:1px solid rgba(255,255,255,.08); padding: 12px 14px; justify-content:flex-start; }
-    }
-    .dot{
-      width:8px;height:8px;border-radius:99px;
-      background: var(--gold);
-      box-shadow: 0 0 0 3px rgba(215,178,74,.14);
-      display:inline-block;
-    }
+    /* Bottom bar */
+    .bottom-bar{ position:fixed; left:0; right:0; bottom:0; z-index:25; padding:10px 12px;
+      background: linear-gradient(180deg, rgba(6,20,15,0), rgba(6,20,15,.92)); backdrop-filter: blur(10px);
+      border-top:1px solid rgba(255,255,255,.08); }
+    .bottom-row{ width:min(var(--max), calc(100% - 24px)); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .discount-tiny{ padding:7px 10px; border-radius:999px; border:1px solid rgba(215,178,74,.32); background: linear-gradient(180deg, rgba(215,178,74,.14), rgba(215,178,74,.06)); font-size:11.5px; font-weight:900; box-shadow:var(--soft); display:inline-flex; align-items:center; gap:8px; min-height:32px; white-space:nowrap; }
+    .discount-tiny i{ width:8px; height:8px; border-radius:99px; background: var(--gold-strong); box-shadow: 0 0 0 3px rgba(215,178,74,.12); display:inline-block; }
   </style>
 </head>
-
 <body>
 
+  <!-- HEADER -->
   <header class="header">
     <div class="wrap">
       <div class="head-row">
         <a class="brand" href="index.html" aria-label="LizOn Education Home">
-          <div class="logo-box" aria-hidden="true">
-            <img src="assets/logo-dark.png" alt="LizOn Logo" />
-          </div>
+          <div class="logo-box"><img src="/assets/logo-dark.png" alt="LizOn Logo"></div>
           <div class="brand-txt">
             <b>LizOn Education</b>
             <span>IELTS Journey</span>
           </div>
         </a>
-
-        <button class="menu-btn" type="button" aria-label="Open menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 7h16M4 12h16M4 17h16"></path>
-          </svg>
+        <nav class="desktop-nav">
+          <a class="chip" href="index.html">Home</a>
+          <a class="chip" href="#journey">Journey</a>
+          <a class="chip" href="#zero">ZERO</a>
+          <a class="chip" href="#hope">HOPE</a>
+          <a class="chip" href="#stepup">STEP-UP</a>
+          <a class="chip" href="#desperate">DESPERATE</a>
+        </nav>
+        <button class="menu-btn" type="button" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <main class="wrap">
+  <!-- TOP BANNER (responsive) -->
+  <div class="top-img">
+    <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20details%20chai." target="_blank" rel="noopener">
+      <picture>
+        <source media="(max-width:860px)" srcset="/assets/ielts-journey-top-m.png">
+        <img src="/assets/ielts-journey-top-d.png" alt="IELTS Journey Top">
+      </picture>
+    </a>
+  </div>
 
-    <div class="cards">
-
-      <!-- TOP / JOURNEY -->
-      <div class="card topcard">
-        <div class="sub">
-          <div class="kicker">Designed for Desired Score</div>
-          <h2 class="title">IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</h2>
-        </div>
-
-        <div class="imgzone">
-          <div class="imgwrap">
-            <picture class="cardimg-pic">
-              <source media="(max-width: 640px)" srcset="assets/ielts-journey-top-m.png">
-              <img class="cardimg" src="assets/ielts-journey-top-d.png" alt="IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE" loading="eager">
-            </picture>
-          </div>
-        </div>
-
-        <div class="play"><span class="dot"></span> Tap to Play</div>
+  <main class="wrap" id="journey">
+    <!-- JOURNEY INTRO -->
+    <section class="card">
+      <div class="card-pad">
+        <div><span class="k-dot"></span>Designed for Desired Score</div>
+        <h1 class="title">IELTS Journey — <span style="color:var(--gold-strong)">ZERO → HOPE → STEP-UP → DESPERATE</span></h1>
+        <p class="lead">Short, clear, execution-first. Watch snippets, then decide. No duplication, no clutter.</p>
       </div>
+    </section>
 
-      <!-- ZERO -->
-      <div class="card">
-        <div class="sub">
-          <div class="kicker">IELTS ZERO</div>
-          <div class="sub-actions">
-            <button class="mini" type="button">Admit</button>
-            <button class="mini" type="button">Details</button>
-            <button class="mini" type="button">Routine</button>
-          </div>
+    <!-- COURSE: ZERO -->
+    <section id="zero" class="card course-card" aria-label="IELTS ZERO">
+      <div class="course-left">
+        <h2 class="course-title">IELTS ZERO</h2>
+        <p class="lead">Foundation clean-up: reading speed, listening focus, idea structure, grammar base.</p>
+        <div class="pill-row">
+          <span class="pill">Best for: New/Restart</span>
+          <span class="pill">Duration: Flexible</span>
         </div>
-
-        <div class="imgzone">
-          <div class="imgwrap">
-            <picture class="cardimg-pic">
-              <source media="(max-width: 640px)" srcset="assets/ielts-zero-m.png">
-              <img class="cardimg" src="assets/ielts-zero-d.png" alt="IELTS ZERO" loading="lazy">
-            </picture>
-          </div>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20ZERO%20admission%20details%20chai.">Admit</a>
+          <a class="btn btn-ghost" href="#journey">Details</a>
+          <a class="btn btn-ghost" href="#journey">Routine</a>
         </div>
-
-        <div class="play"><span class="dot"></span> Tap to Play</div>
       </div>
-
-      <!-- HOPE -->
-      <div class="card">
-        <div class="sub">
-          <div class="kicker">IELTS HOPE</div>
-          <div class="sub-actions">
-            <button class="mini" type="button">Admit</button>
-            <button class="mini" type="button">Details</button>
-            <button class="mini" type="button">Routine</button>
-          </div>
+      <div class="course-right">
+        <div class="media-box">
+          <picture>
+            <source media="(max-width:860px)" srcset="/assets/ielts-zero-m.png">
+            <img src="/assets/ielts-zero-d.png" alt="IELTS ZERO preview">
+          </picture>
         </div>
-
-        <div class="imgzone">
-          <div class="imgwrap">
-            <picture class="cardimg-pic">
-              <source media="(max-width: 640px)" srcset="assets/ielts-hope-m.png">
-              <img class="cardimg" src="assets/ielts-hope-d.png" alt="IELTS HOPE" loading="lazy">
-            </picture>
-          </div>
-        </div>
-
-        <div class="play"><span class="dot"></span> Tap to Play</div>
+        <button class="play" type="button">• Tap to Play</button>
       </div>
+    </section>
 
-      <!-- STEP-UP -->
-      <div class="card">
-        <div class="sub">
-          <div class="kicker">IELTS STEP-UP</div>
-          <div class="sub-actions">
-            <button class="mini" type="button">Admit</button>
-            <button class="mini" type="button">Details</button>
-            <button class="mini" type="button">Routine</button>
-          </div>
+    <!-- COURSE: HOPE -->
+    <section id="hope" class="card course-card" aria-label="IELTS HOPE">
+      <div class="course-left">
+        <h2 class="course-title">IELTS HOPE</h2>
+        <p class="lead">Reading speed & understanding, listening power, free-hand writing, speaking opinion build.</p>
+        <div class="pill-row">
+          <span class="pill">Best for: Basic→Intermediate</span>
+          <span class="pill">Focus: 4 pillars</span>
         </div>
-
-        <div class="imgzone">
-          <div class="imgwrap">
-            <picture class="cardimg-pic">
-              <source media="(max-width: 640px)" srcset="assets/ielts-stepup-m.png">
-              <img class="cardimg" src="assets/ielts-stepup-d.png" alt="IELTS STEP-UP" loading="lazy">
-            </picture>
-          </div>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20HOPE%20admission%20details%20chai.">Admit</a>
+          <a class="btn btn-ghost" href="#journey">Details</a>
+          <a class="btn btn-ghost" href="#journey">Routine</a>
         </div>
-
-        <div class="play"><span class="dot"></span> Tap to Play</div>
       </div>
-
-      <!-- DESPERATE -->
-      <div class="card">
-        <div class="sub">
-          <div class="kicker">IELTS DESPERATE</div>
-          <div class="sub-actions">
-            <button class="mini" type="button">Admit</button>
-            <button class="mini" type="button">Details</button>
-            <button class="mini" type="button">Routine</button>
-          </div>
+      <div class="course-right">
+        <div class="media-box">
+          <picture>
+            <source media="(max-width:860px)" srcset="/assets/ielts-hope-m.png">
+            <img src="/assets/ielts-hope-d.png" alt="IELTS HOPE preview">
+          </picture>
         </div>
-
-        <div class="imgzone">
-          <div class="imgwrap">
-            <picture class="cardimg-pic">
-              <source media="(max-width: 640px)" srcset="assets/ielts-desperate-m.png">
-              <img class="cardimg" src="assets/ielts-desperate-d.png" alt="IELTS DESPERATE" loading="lazy">
-            </picture>
-          </div>
-        </div>
-
-        <div class="play"><span class="dot"></span> Tap to Play</div>
+        <button class="play" type="button">• Tap to Play</button>
       </div>
+    </section>
 
-    </div>
+    <!-- COURSE: STEP-UP -->
+    <section id="stepup" class="card course-card" aria-label="IELTS STEP-UP">
+      <div class="course-left">
+        <h2 class="course-title">IELTS STEP-UP</h2>
+        <p class="lead">Fluency shaping, timing discipline, question-type executions tuned for band lift.</p>
+        <div class="pill-row">
+          <span class="pill">Best for: 5.5→6.5</span>
+          <span class="pill">Discipline: Time & structure</span>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20STEP-UP%20admission%20details%20chai.">Admit</a>
+          <a class="btn btn-ghost" href="#journey">Details</a>
+          <a class="btn btn-ghost" href="#journey">Routine</a>
+        </div>
+      </div>
+      <div class="course-right">
+        <div class="media-box">
+          <picture>
+            <source media="(max-width:860px)" srcset="/assets/ielts-stepup-m.png">
+            <img src="/assets/ielts-stepup-d.png" alt="IELTS STEP-UP preview">
+          </picture>
+        </div>
+        <button class="play" type="button">• Tap to Play</button>
+      </div>
+    </section>
 
+    <!-- COURSE: DESPERATE -->
+    <section id="desperate" class="card course-card" aria-label="IELTS DESPERATE">
+      <div class="course-left">
+        <h2 class="course-title">IELTS DESPERATE</h2>
+        <p class="lead">High-pressure retake mode. Tight routine, targeted evaluation, and exam-week execution.</p>
+        <div class="pill-row">
+          <span class="pill">Best for: urgent retake</span>
+          <span class="pill">Eval: test-practice-feedback loop</span>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20DESPERATE%20admission%20details%20chai.">Admit</a>
+          <a class="btn btn-ghost" href="#journey">Details</a>
+          <a class="btn btn-ghost" href="#journey">Routine</a>
+        </div>
+      </div>
+      <div class="course-right">
+        <div class="media-box">
+          <picture>
+            <source media="(max-width:860px)" srcset="/assets/ielts-desperate-m.png">
+            <img src="/assets/ielts-desperate-d.png" alt="IELTS DESPERATE preview">
+          </picture>
+        </div>
+        <button class="play" type="button">• Tap to Play</button>
+      </div>
+    </section>
   </main>
 
+  <!-- FOOTER -->
+  <section class="footer">
+    <div class="card">
+      <div class="card-pad">
+        <div class="footer-columns">
+          <div>
+            <h3 style="margin:0 0 10px; font-size:14px; letter-spacing:.2px; font-weight:950;">IELTS Quick Links</h3>
+            <div style="display:flex; flex-wrap:wrap; gap:10px;">
+              <a class="btn-tiny" href="#zero">ZERO</a>
+              <a class="btn-tiny" href="#hope">HOPE</a>
+              <a class="btn-tiny" href="#stepup">STEP-UP</a>
+              <a class="btn-tiny" href="#desperate">DESPERATE</a>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin:0 0 10px; font-size:14px; letter-spacing:.2px; font-weight:950;">Contact & Location</h3>
+            <p class="footer-small" style="margin:0 0 10px;">
+              <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
+              <b>IELTS/PTE Helpline:</b> 01611611139
+            </p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+              <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20Journey%20niye%20quick%20guidance%20chai.">Talk with LizOn</a>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin:0 0 10px; font-size:14px; letter-spacing:.2px; font-weight:950;">Social</h3>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+              <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
+              <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+            <div class="rule"></div>
+            <p class="footer-small" style="margin:0;">© 2026 myLizOn.com | LizOn Education</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <div class="bottom-row">
+      <div><b>Need guidance?</b> <span style="color:var(--muted)">Tap WhatsApp</span></div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a class="discount-tiny" target="_blank" rel="noopener"
+           href="https://wa.me/8801611611139?text=IELTS%20Journey%20niye%20discount%20/%20batch%20details%20chai.">
+          <i></i> Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple demo for Tap-to-Play (replace with real modal if needed)
+    document.querySelectorAll('.play').forEach(btn=>{
+      btn.addEventListener('click', ()=> alert('Play segment (hook to your video/modal here).'));
+    });
+    // Smooth hash scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const to = document.querySelector(a.getAttribute('href'));
+        if(!to) return;
+        e.preventDefault();
+        const headerOffset = 92;
+        window.scrollTo({ top: to.getBoundingClientRect().top + window.scrollY - headerOffset, behavior:'smooth' });
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,354 +1,1562 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IELTS Journey | LizOn Education</title>
-  <meta name="description" content="IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE. Clean structure, tap to play, and quick actions. LizOn Education." />
-  <meta name="theme-color" content="#0b2a1f" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LizOn Education — IELTS Journey</title>
+<meta name="description" content="IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Tap-only experience with videos, pricing, combos, and payment." />
+<meta name="theme-color" content="#062b1f" />
 
-  <style>
-    :root{
-      --bg1:#06140f;
-      --bg2:#0b2a1f;
-      --card:#0c2019cc;
-      --card2:#0a1a1480;
-      --line:#1d4a3a;
-      --text:#e9f3ef;
-      --muted:#b7c9c2;
-      --gold:#d7b24a;
-      --gold2:#b8922f;
-      --gold-strong:#e2c26a;
-      --teal:#25a58a;
-      --soft: 0 12px 40px rgba(0,0,0,.35);
-      --shadow2: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 18px; --radius2: 22px; --max: 1120px;
+<style>
+  :root{
+    /* Dark mode (NO pure black) */
+    --bg:#041f16;
+    --bg2:#062b1f;
+    --panel:rgba(255,255,255,.06);
+    --panel2:rgba(255,255,255,.08);
+    --stroke:rgba(255,255,255,.14);
+    --text:rgba(255,255,255,.92);
+    --muted:rgba(255,255,255,.72);
+    --gold:#d6b35a;
+    --gold2:#caa64a;
+    --shadow: 0 18px 60px rgba(0,0,0,.40);
+    --radius-xl: 22px;
+    --radius-lg: 18px;
+    --radius-md: 14px;
+    --topbar-h: 64px;
+  }
+
+  .theme-light{
+    --bg:#eef6f3;
+    --bg2:#ffffff;
+    --panel:rgba(10,32,22,.06);
+    --panel2:rgba(10,32,22,.08);
+    --stroke:rgba(10,32,22,.14);
+    --text:rgba(10,32,22,.92);
+    --muted:rgba(10,32,22,.70);
+    --shadow: 0 18px 60px rgba(0,0,0,.12);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:
+      radial-gradient(1200px 700px at 18% 0%, rgba(35,140,110,.18), transparent 55%),
+      radial-gradient(900px 650px at 85% 25%, rgba(214,179,90,.10), transparent 58%),
+      linear-gradient(180deg, var(--bg2), var(--bg));
+    color:var(--text);
+    line-height:1.35;
+    overflow-x:hidden;
+  }
+
+  a{ color:inherit; }
+  .container{ width:min(1100px, 92vw); margin:0 auto; }
+
+  /* ===== TOPBAR ===== */
+  .topbar{
+    position:sticky; top:0; z-index:9999;
+    backdrop-filter: blur(12px);
+    background: rgba(4,31,22,.72);
+    border-bottom:1px solid var(--stroke);
+  }
+  .theme-light .topbar{ background: rgba(255,255,255,.78); }
+
+  .topbar-inner{
+    height: var(--topbar-h);
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px; padding: 10px 0;
+  }
+
+  .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+  .logo-link{
+    display:flex; align-items:center; gap:10px;
+    text-decoration:none; min-width:0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .logo-img{
+    width:44px; height:44px;
+    border-radius:14px;
+    object-fit:contain;
+    background: rgba(255,255,255,.06);
+    border:1px solid var(--stroke);
+    box-shadow: var(--shadow);
+    flex: 0 0 auto;
+  }
+
+  .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
+  .brand-text b{
+    font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    max-width: 200px;
+  }
+  .brand-text span{
+    font-size:12px; color:var(--muted);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    max-width: 220px;
+  }
+
+  .top-actions{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
+
+  .chip{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    color: var(--text);
+    text-decoration:none;
+    font-weight:900;
+    font-size:13px;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .iconbtn{
+    width:44px; height:44px;
+    border-radius: 999px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    color: var(--text);
+    display:grid; place-items:center;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ===== FIRST SCREEN (5 cards visible) ===== */
+  .screen{
+    padding: 14px 0 18px;
+    min-height: calc(100vh - var(--topbar-h));
+    min-height: calc(100svh - var(--topbar-h));
+  }
+
+  .cards{
+    display:grid;
+    gap:12px;
+    grid-template-rows: 1.18fr 1fr 1fr 1fr 1fr;
+    height: calc(100vh - var(--topbar-h) - 26px);
+    height: calc(100svh - var(--topbar-h) - 26px);
+  }
+
+  .card{
+    position:relative;
+    border-radius: var(--radius-xl);
+    border:1px solid var(--stroke);
+    overflow:hidden;
+    box-shadow: var(--shadow);
+    background: rgba(255,255,255,.03);
+    transform: translateZ(0);
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .card::after{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.55));
+    pointer-events:none;
+  }
+  .theme-light .card::after{
+    background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.32));
+  }
+
+  /* ✅ Image frame: force 16:9 thumbnail rendering inside each card */
+  .imgwrap{
+    position:absolute; inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.14), transparent 55%),
+      linear-gradient(180deg, rgba(6,43,31,.78), rgba(4,31,22,.95));
+  }
+  .theme-light .imgwrap{
+    background:
+      radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.12), transparent 55%),
+      linear-gradient(180deg, rgba(255,255,255,.92), rgba(238,246,243,.98));
+  }
+  .cardimg{
+    width:100%;
+    max-width:100%;
+    max-height:100%;
+    aspect-ratio: 16 / 9;     /* YouTube thumbnail frame */
+    height:auto;
+    object-fit:contain;
+    object-position:center;
+    padding: 0;
+    filter: saturate(1.02);
+  }
+
+  .card-content{
+    position:relative; z-index:2;
+    height:100%;
+    padding: 12px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:10px;
+  }
+
+  .left-stack{ display:flex; flex-direction:column; gap:8px; min-width:0; }
+
+  .pill{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    border:1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.06);
+    width: fit-content;
+    font-weight:900;
+    font-size:12px;
+    color: rgba(255,255,255,.88);
+  }
+  .theme-light .pill{
+    border-color: rgba(10,32,22,.18);
+    background: rgba(255,255,255,.70);
+    color: rgba(10,32,22,.88);
+  }
+
+  .title{
+    font-weight:950;
+    font-size: 16px;
+    line-height:1.15;
+    letter-spacing:.2px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width: 75vw;
+  }
+
+  .tap{
+    display:inline-flex; align-items:center; gap:10px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.06);
+    font-weight:950;
+    font-size:13px;
+    user-select:none;
+    -webkit-tap-highlight-color: transparent;
+    white-space:nowrap;
+  }
+  .tap .dot{
+    width:10px; height:10px;
+    border-radius:50%;
+    background: rgba(214,179,90,.92);
+    box-shadow: 0 0 0 4px rgba(214,179,90,.14);
+  }
+
+  .sub-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+
+  .mini{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border:1px solid rgba(214,179,90,.42);
+    background: rgba(214,179,90,.18);
+    color: rgba(255,255,255,.96);
+    font-weight:950;
+    font-size:12px;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 10px 26px rgba(0,0,0,.18);
+  }
+  .mini:hover{ filter: brightness(1.05); }
+  .theme-light .mini{
+    color: rgba(10,32,22,.92);
+    background: rgba(214,179,90,.28);
+    border-color: rgba(214,179,90,.55);
+    box-shadow: 0 10px 26px rgba(0,0,0,.08);
+  }
+
+  /* ✅ FIX #1: Mobile layout so Tap-to-Play never overlaps action buttons */
+  @media (max-width: 560px){
+    .card-content{
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:flex-end;
+      gap:10px;
     }
-    [data-theme="light"]{
-      --bg1:#f3fbf7; --bg2:#e9f6f0; --card:#ffffffcc; --card2:#ffffffa6; --line:#cfe6dc;
-      --text:#0b2a1f; --muted:#335e52; --soft: 0 10px 28px rgba(0,0,0,.10); --shadow2: 0 16px 46px rgba(0,0,0,.14);
+    .tap{
+      width:100%;
+      justify-content:flex-start;
     }
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(900px 500px at 15% 10%, rgba(215,178,74,.12), transparent 55%),
-        radial-gradient(700px 520px at 85% 0%, rgba(37,165,138,.14), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      overflow-x:hidden;
-    }
-    a{ color:inherit; text-decoration:none; }
-    img{ max-width:100%; display:block; }
-    button{ font:inherit; }
-    .wrap{ width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
+    .sub-actions{ width:100%; }
+  }
 
-    /* Header */
-    .header{ position:sticky; top:0; z-index:30; backdrop-filter: blur(12px);
-      background: linear-gradient(180deg, rgba(6,20,15,.82), rgba(6,20,15,.35));
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    [data-theme="light"] .header{ background: linear-gradient(180deg, rgba(243,251,247,.88), rgba(243,251,247,.55)); border-bottom: 1px solid rgba(0,0,0,.06);}
-    .head-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px 0; }
-    .brand{ display:flex; align-items:center; gap:12px; min-width:220px; }
-    .logo-box{ width:44px; height:44px; border-radius:12px; background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.30), rgba(37,165,138,.16)); border:1px solid rgba(255,255,255,.10); display:grid; place-items:center; box-shadow:var(--soft); overflow:hidden;}
-    .logo-box img{ width:34px; height:34px; object-fit:contain; }
-    .brand-txt b{ display:block; font-size:14px; letter-spacing:.2px; }
-    .brand-txt span{ display:block; font-size:12px; color:var(--muted); margin-top:2px; }
-    .desktop-nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center; }
-    .chip{ padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); color:var(--text); font-size:13px; }
-    [data-theme="light"] .chip{ border:1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.72); }
-    .menu-btn{ width:44px; height:44px; border-radius:14px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); display:grid; place-items:center; cursor:pointer; box-shadow:var(--soft); }
-    .menu-btn svg{ width:22px; height:22px; }
+  /* ===== MODALS ===== */
+  .overlay{
+    position:fixed; inset:0;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    padding: 16px;
+    z-index: 12050;
+  }
+  .overlay.show{ display:flex; }
 
-    /* Top promo image */
-    .top-img{ width:100%; display:block; border-bottom:1px solid rgba(255,255,255,.06); background: rgba(0,0,0,.10); }
-    .top-img a{ display:block; }
-    .top-img img{ width:100%; height:auto; display:block; }
+  .back{ position:absolute; inset:0; background: rgba(0,0,0,.52); }
 
-    /* Sections */
-    section{ padding: 22px 0; }
-    .card{ border-radius: var(--radius2); border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); box-shadow: var(--shadow2); overflow:hidden; }
-    [data-theme="light"] .card{ border:1px solid rgba(0,0,0,.08); background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.76)); }
-    .card-pad{ padding:18px; }
+  .sheet{
+    position:relative;
+    width:min(860px, 100%);
+    border-radius: var(--radius-xl);
+    border:1px solid var(--stroke);
+    background: rgba(4,31,22,.92);
+    box-shadow: var(--shadow);
+    padding: 14px;
+    backdrop-filter: blur(10px);
+    transform: translateY(10px);
+    animation: in .14s ease-out forwards;
+  }
+  .theme-light .sheet{ background: rgba(255,255,255,.92); }
+  @keyframes in{ from{ opacity:.0; transform: translateY(18px);} to{ opacity:1; transform: translateY(0);} }
 
-    .k-dot{ width:10px; height:10px; border-radius:999px; background: radial-gradient(circle at 30% 30%, rgba(215,178,74,1), rgba(37,165,138,1)); box-shadow: 0 0 0 3px rgba(215,178,74,.14); display:inline-block; margin-right:10px; vertical-align:middle; }
-    .title{ margin:10px 0 8px; font-size: clamp(24px, 3.2vw, 38px); line-height:1.1; letter-spacing:-.5px; }
-    .lead{ margin:0; font-size:14.5px; color:var(--muted); line-height:1.55; max-width:70ch; }
+  .sheet-top{
+    display:flex; align-items:flex-start; justify-content:space-between;
+    gap:10px; margin-bottom:10px;
+  }
+  .sheet-top h3{ margin:0; font-size:16px; line-height:1.2; }
+  .sheet-top p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
 
-    .btn{ padding:10px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04);
-      color:var(--text); font-weight:700; font-size:13.5px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:40px; box-shadow:var(--soft);}
-    .btn-primary{ border-color: rgba(215,178,74,.35); background: linear-gradient(180deg, rgba(215,178,74,.20), rgba(215,178,74,.10)); }
-    .btn-ghost{ box-shadow:none; background: transparent; border-color: rgba(255,255,255,.10); }
+  .x{
+    width:44px; height:44px;
+    border-radius: 16px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.04);
+    color: var(--text);
+    display:grid; place-items:center;
+    cursor:pointer;
+    font-weight:950;
+  }
 
-    .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:14px; }
-    @media (max-width: 860px){ .grid-2{ grid-template-columns:1fr; } .wrap{ width:calc(100% - 24px);} .desktop-nav{ display:none;} }
+  .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+  @media (max-width:560px){ .grid2{ grid-template-columns: 1fr; } }
 
-    /* Course cards */
-    .course-card{ display:grid; grid-template-columns: 1.1fr 1fr; gap:12px; padding:0; }
-    .course-left, .course-right{ padding:18px; }
-    .course-left{ border-right:1px solid rgba(255,255,255,.06); }
-    [data-theme="light"] .course-left{ border-right:1px solid rgba(0,0,0,.06); }
+  .opt{
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    border-radius: 18px;
+    padding: 12px;
+  }
+  .opt b{ display:block; margin-bottom:6px; }
+  .opt .row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
 
-    .course-title{ margin:0 0 8px; letter-spacing:.2px; font-weight:900; }
-    .pill-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .pill{ padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.14); font-size:13px; }
-    [data-theme="light"] .pill{ border:1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.78); }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.04);
+    color: var(--text);
+    font-weight:950;
+    font-size:13px;
+    cursor:pointer;
+    text-decoration:none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn.primary{
+    border-color: rgba(214,179,90,.40);
+    background: rgba(214,179,90,.16);
+  }
+  .btn.ghost{ background: transparent; color: var(--muted); }
 
-    /* Right/media column */
-    .media-box{ border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.14); }
-    .media-box img{ width:100%; height:auto; display:block; object-fit:cover; }
-    .play{ margin-top:12px; display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; border:1px solid rgba(215,178,74,.28); background: linear-gradient(180deg, rgba(215,178,74,.12), rgba(255,255,255,.01)); font-weight:900; }
+  .videoShell{
+    width:100%;
+    display:grid;
+    place-items:center;
+    border-radius: 18px;
+    overflow:hidden;
+    border:1px solid var(--stroke);
+    background: rgba(0,0,0,.20);
+  }
+  .theme-light .videoShell{ background: rgba(10,32,22,.06); }
 
-    /* Mobile: prevent Tap-to-Play from covering content */
-    @media (max-width: 860px){
-      .course-card{ grid-template-columns:1fr; }
-      .course-left{ order:1; border-right:0; padding-bottom:10px; }
-      .course-right{ order:2; margin-top:6px; padding-top:12px; border-top:1px solid rgba(255,255,255,.08); }
-      .play{ width:100%; justify-content:flex-start; padding:12px 14px; }
-    }
+  .videoFrame{
+    width:min(420px, 100%);
+    aspect-ratio: 9 / 16;
+    border:0;
+    display:block;
+    background: transparent;
+  }
+  @media (min-width:900px){
+    .videoFrame{ width: 420px; }
+  }
 
-    /* Footer */
-    .footer{ padding:26px 0 96px; }
-    .footer-columns{ display:grid; grid-template-columns: 1.1fr 1.4fr 1fr; gap:14px; }
-    @media (max-width: 920px){ .footer-columns{ grid-template-columns:1fr; } }
-    .btn-tiny{ padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); font-size:12px; font-weight:800; box-shadow:var(--soft); display:inline-flex; align-items:center; justify-content:center; min-height:34px; }
-    .footer-small{ color:var(--muted); font-size:12.5px; line-height:1.6; }
-    .rule{ height:1px; background: rgba(255,255,255,.10); margin:14px 0; }
-    [data-theme="light"] .rule{ background: rgba(0,0,0,.10); }
+  /* ===== PRICING ===== */
+  .section{ padding: 10px 0 120px; }
 
-    /* Bottom bar */
-    .bottom-bar{ position:fixed; left:0; right:0; bottom:0; z-index:25; padding:10px 12px;
-      background: linear-gradient(180deg, rgba(6,20,15,0), rgba(6,20,15,.92)); backdrop-filter: blur(10px);
-      border-top:1px solid rgba(255,255,255,.08); }
-    .bottom-row{ width:min(var(--max), calc(100% - 24px)); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; }
-    .discount-tiny{ padding:7px 10px; border-radius:999px; border:1px solid rgba(215,178,74,.32); background: linear-gradient(180deg, rgba(215,178,74,.14), rgba(215,178,74,.06)); font-size:11.5px; font-weight:900; box-shadow:var(--soft); display:inline-flex; align-items:center; gap:8px; min-height:32px; white-space:nowrap; }
-    .discount-tiny i{ width:8px; height:8px; border-radius:99px; background: var(--gold-strong); box-shadow: 0 0 0 3px rgba(215,178,74,.12); display:inline-block; }
-  </style>
+  .panel{
+    border:1px solid var(--stroke);
+    border-radius: var(--radius-xl);
+    background: rgba(255,255,255,.03);
+    box-shadow: var(--shadow);
+    overflow:hidden;
+  }
+
+  .panel-head{ padding: 16px; border-bottom: 1px solid var(--stroke); }
+  .panel-head h2{ margin:0; font-size:18px; }
+  .panel-head p{ margin:8px 0 0; color:var(--muted); font-size:13px; }
+
+  .list{ padding: 14px 14px 8px; display:grid; gap:10px; }
+
+  .rowitem{
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    border-radius: 18px;
+    padding: 12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+
+  .rowitem .meta{ min-width:0; }
+  .rowitem .meta b{ display:block; font-size:14px; }
+  .rowitem .meta span{ display:block; margin-top:4px; color: var(--muted); font-size:12px; }
+
+  .rowitem .actions{ display:flex; gap:10px; flex: 0 0 auto; }
+
+  .divider{ height:1px; background: var(--stroke); margin: 8px 0 0; }
+
+  .subhead{
+    padding: 14px 16px 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .subhead h3{ margin:0; font-size:15px; }
+
+  /* ===== FOOTER ===== */
+  footer{ padding: 0 0 160px; }
+  .footer-card{
+    border:1px solid var(--stroke);
+    border-radius: var(--radius-xl);
+    background: rgba(255,255,255,.03);
+    box-shadow: var(--shadow);
+    padding: 16px;
+  }
+  .footer-cols{
+    display:grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap:14px;
+    margin-top:10px;
+  }
+  @media (max-width:820px){ .footer-cols{ grid-template-columns: 1fr; } }
+  .ft-title{ margin:0 0 8px; font-weight:950; font-size:13px; }
+  .ft-text{ margin:0; color: var(--muted); font-size:13px; line-height:1.5; }
+  .ft-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+
+  /* ===== Floating Buttons ===== */
+  .fab{
+    position:fixed;
+    z-index: 2400;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.04);
+    color: var(--text);
+    box-shadow: var(--shadow);
+    border-radius: 999px;
+    padding: 10px 12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+    user-select:none;
+    -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(10px);
+  }
+
+  .help-fab{ right:14px; bottom:54px; }
+  .help-fab .dot{
+    width:10px; height:10px;
+    border-radius:50%;
+    background:#00d26a;
+    box-shadow: 0 0 0 4px rgba(0,210,106,.14);
+  }
+
+  .menu-fab{ left:14px; bottom:54px; }
+  .menu-fab b{ letter-spacing:.3px; }
+
+  .top-fab{ right:14px; bottom:108px; }
+  .theme-fab{ right:14px; bottom:162px; }
+
+  .topHamburger{
+    width:44px; height:44px;
+    border-radius: 999px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    color: var(--text);
+    display:grid; place-items:center;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .menuList{ display:grid; gap:10px; }
+  .menuItem{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding: 12px;
+    border-radius: 18px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration:none;
+  }
+  .menuItem span{ color: var(--muted); font-size:12px; }
+
+  /* ===== Routine table ===== */
+  .routineWrap{
+    border:1px solid var(--stroke);
+    border-radius: 18px;
+    overflow:hidden;
+    background: rgba(255,255,255,.03);
+  }
+  .routineGrid{
+    width:100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .routineGrid th,
+  .routineGrid td{
+    border:1px solid rgba(255,255,255,.10);
+    padding: 10px 8px;
+    text-align:center;
+    font-weight:900;
+    font-size:12px;
+  }
+  .routineGrid th{
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.88);
+  }
+  .routineGrid td{
+    color: rgba(255,255,255,.92);
+    background: rgba(255,255,255,.02);
+  }
+  .theme-light .routineGrid th{
+    background: rgba(10,32,22,.06);
+    color: rgba(10,32,22,.88);
+  }
+  .theme-light .routineGrid td{
+    background: rgba(255,255,255,.70);
+    color: rgba(10,32,22,.90);
+  }
+  .tagHope{ color: #ff5b5b; }
+  .tagZero{ color: #36d28b; }
+  .tagStep{ color: #f3b04a; }
+  .tagDes{ color: #36d28b; }
+
+  .theme-light .tagHope{ color:#c62828; }
+  .theme-light .tagZero{ color:#0b7a4a; }
+  .theme-light .tagStep{ color:#b06a00; }
+  .theme-light .tagDes{ color:#0b7a4a; }
+</style>
 </head>
-<body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="wrap">
-      <div class="head-row">
-        <a class="brand" href="index.html" aria-label="LizOn Education Home">
-          <div class="logo-box"><img src="/assets/logo-dark.png" alt="LizOn Logo"></div>
-          <div class="brand-txt">
-            <b>LizOn Education</b>
-            <span>IELTS Journey</span>
-          </div>
-        </a>
-        <nav class="desktop-nav">
-          <a class="chip" href="index.html">Home</a>
-          <a class="chip" href="#journey">Journey</a>
-          <a class="chip" href="#zero">ZERO</a>
-          <a class="chip" href="#hope">HOPE</a>
-          <a class="chip" href="#stepup">STEP-UP</a>
-          <a class="chip" href="#desperate">DESPERATE</a>
-        </nav>
-        <button class="menu-btn" type="button" aria-label="Menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        </button>
+<body>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand">
+          <a class="logo-link" href="index.html" aria-label="Go to Home" title="Go to Home">
+            <img class="logo-img" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+            <div class="brand-text">
+              <b>LizOn Education</b>
+              <span>IELTS Journey</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="top-actions">
+          <button class="chip" id="btnPricing" type="button" aria-label="Go to Pricing">Admit / Pricing</button>
+          <button class="topHamburger" id="btnMenuTop" type="button" aria-label="Menu" title="Menu">≡</button>
+          <button class="iconbtn" id="btnTheme" type="button" aria-label="Toggle theme" title="Toggle theme">🌓</button>
+        </div>
       </div>
     </div>
-  </header>
-
-  <!-- TOP BANNER (responsive) -->
-  <div class="top-img">
-    <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20details%20chai." target="_blank" rel="noopener">
-      <picture>
-        <source media="(max-width:860px)" srcset="/assets/ielts-journey-top-m.png">
-        <img src="/assets/ielts-journey-top-d.png" alt="IELTS Journey Top">
-      </picture>
-    </a>
   </div>
 
-  <main class="wrap" id="journey">
-    <!-- JOURNEY INTRO -->
-    <section class="card">
-      <div class="card-pad">
-        <div><span class="k-dot"></span>Designed for Desired Score</div>
-        <h1 class="title">IELTS Journey — <span style="color:var(--gold-strong)">ZERO → HOPE → STEP-UP → DESPERATE</span></h1>
-        <p class="lead">Short, clear, execution-first. Watch snippets, then decide. No duplication, no clutter.</p>
-      </div>
-    </section>
+  <!-- FIRST SCREEN: 5 cards must appear -->
+  <main class="screen">
+    <div class="container">
+      <div class="cards">
 
-    <!-- COURSE: ZERO -->
-    <section id="zero" class="card course-card" aria-label="IELTS ZERO">
-      <div class="course-left">
-        <h2 class="course-title">IELTS ZERO</h2>
-        <p class="lead">Foundation clean-up: reading speed, listening focus, idea structure, grammar base.</p>
-        <div class="pill-row">
-          <span class="pill">Best for: New/Restart</span>
-          <span class="pill">Duration: Flexible</span>
+        <!-- TOP CARD -->
+        <div class="card topcard" id="cardTop" role="button" tabindex="0" aria-label="Play IELTS Journey top video">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-journey-top.png" alt="IELTS Journey Top" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">Designed for Desired Score</div>
+              <div class="title">IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
         </div>
-        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20ZERO%20admission%20details%20chai.">Admit</a>
-          <a class="btn btn-ghost" href="#journey">Details</a>
-          <a class="btn btn-ghost" href="#journey">Routine</a>
-        </div>
-      </div>
-      <div class="course-right">
-        <div class="media-box">
-          <picture>
-            <source media="(max-width:860px)" srcset="/assets/ielts-zero-m.png">
-            <img src="/assets/ielts-zero-d.png" alt="IELTS ZERO preview">
-          </picture>
-        </div>
-        <button class="play" type="button">• Tap to Play</button>
-      </div>
-    </section>
 
-    <!-- COURSE: HOPE -->
-    <section id="hope" class="card course-card" aria-label="IELTS HOPE">
-      <div class="course-left">
-        <h2 class="course-title">IELTS HOPE</h2>
-        <p class="lead">Reading speed & understanding, listening power, free-hand writing, speaking opinion build.</p>
-        <div class="pill-row">
-          <span class="pill">Best for: Basic→Intermediate</span>
-          <span class="pill">Focus: 4 pillars</span>
+        <!-- ZERO -->
+        <div class="card" id="cardZero" role="button" tabindex="0" aria-label="Play IELTS ZERO video">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-zero.png" alt="IELTS ZERO" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">IELTS ZERO</div>
+              <div class="sub-actions">
+                <button class="mini" data-admit="IELTS ZERO" type="button">Admit</button>
+                <button class="mini" data-details="zero" type="button">Details</button>
+                <button class="mini" data-routine type="button">Routine</button>
+              </div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
         </div>
-        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20HOPE%20admission%20details%20chai.">Admit</a>
-          <a class="btn btn-ghost" href="#journey">Details</a>
-          <a class="btn btn-ghost" href="#journey">Routine</a>
-        </div>
-      </div>
-      <div class="course-right">
-        <div class="media-box">
-          <picture>
-            <source media="(max-width:860px)" srcset="/assets/ielts-hope-m.png">
-            <img src="/assets/ielts-hope-d.png" alt="IELTS HOPE preview">
-          </picture>
-        </div>
-        <button class="play" type="button">• Tap to Play</button>
-      </div>
-    </section>
 
-    <!-- COURSE: STEP-UP -->
-    <section id="stepup" class="card course-card" aria-label="IELTS STEP-UP">
-      <div class="course-left">
-        <h2 class="course-title">IELTS STEP-UP</h2>
-        <p class="lead">Fluency shaping, timing discipline, question-type executions tuned for band lift.</p>
-        <div class="pill-row">
-          <span class="pill">Best for: 5.5→6.5</span>
-          <span class="pill">Discipline: Time & structure</span>
+        <!-- HOPE -->
+        <div class="card" id="cardHope" role="button" tabindex="0" aria-label="Play IELTS HOPE video">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-hope.png" alt="IELTS HOPE" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">IELTS HOPE</div>
+              <div class="sub-actions">
+                <button class="mini" data-admit="IELTS HOPE" type="button">Admit</button>
+                <button class="mini" data-details="hope" type="button">Details</button>
+                <button class="mini" data-routine type="button">Routine</button>
+              </div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
         </div>
-        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20STEP-UP%20admission%20details%20chai.">Admit</a>
-          <a class="btn btn-ghost" href="#journey">Details</a>
-          <a class="btn btn-ghost" href="#journey">Routine</a>
-        </div>
-      </div>
-      <div class="course-right">
-        <div class="media-box">
-          <picture>
-            <source media="(max-width:860px)" srcset="/assets/ielts-stepup-m.png">
-            <img src="/assets/ielts-stepup-d.png" alt="IELTS STEP-UP preview">
-          </picture>
-        </div>
-        <button class="play" type="button">• Tap to Play</button>
-      </div>
-    </section>
 
-    <!-- COURSE: DESPERATE -->
-    <section id="desperate" class="card course-card" aria-label="IELTS DESPERATE">
-      <div class="course-left">
-        <h2 class="course-title">IELTS DESPERATE</h2>
-        <p class="lead">High-pressure retake mode. Tight routine, targeted evaluation, and exam-week execution.</p>
-        <div class="pill-row">
-          <span class="pill">Best for: urgent retake</span>
-          <span class="pill">Eval: test-practice-feedback loop</span>
+        <!-- STEP-UP -->
+        <div class="card" id="cardStepup" role="button" tabindex="0" aria-label="Play IELTS STEP-UP video">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-stepup.png" alt="IELTS STEP-UP" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">IELTS STEP-UP</div>
+              <div class="sub-actions">
+                <button class="mini" data-admit="IELTS STEP-UP" type="button">Admit</button>
+                <button class="mini" data-details="stepup" type="button">Details</button>
+                <button class="mini" data-routine type="button">Routine</button>
+              </div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
         </div>
-        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20DESPERATE%20admission%20details%20chai.">Admit</a>
-          <a class="btn btn-ghost" href="#journey">Details</a>
-          <a class="btn btn-ghost" href="#journey">Routine</a>
+
+        <!-- DESPERATE -->
+        <div class="card" id="cardDesperate" role="button" tabindex="0" aria-label="Play IELTS DESPERATE video">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-desperate.png" alt="IELTS DESPERATE" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">IELTS DESPERATE</div>
+              <div class="sub-actions">
+                <button class="mini" data-admit="IELTS DESPERATE" type="button">Admit</button>
+                <button class="mini" data-details="desperate" type="button">Details</button>
+                <button class="mini" data-routine type="button">Routine</button>
+              </div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
         </div>
+
       </div>
-      <div class="course-right">
-        <div class="media-box">
-          <picture>
-            <source media="(max-width:860px)" srcset="/assets/ielts-desperate-m.png">
-            <img src="/assets/ielts-desperate-d.png" alt="IELTS DESPERATE preview">
-          </picture>
-        </div>
-        <button class="play" type="button">• Tap to Play</button>
-      </div>
-    </section>
+    </div>
   </main>
 
-  <!-- FOOTER -->
-  <section class="footer">
-    <div class="card">
-      <div class="card-pad">
-        <div class="footer-columns">
-          <div>
-            <h3 style="margin:0 0 10px; font-size:14px; letter-spacing:.2px; font-weight:950;">IELTS Quick Links</h3>
-            <div style="display:flex; flex-wrap:wrap; gap:10px;">
-              <a class="btn-tiny" href="#zero">ZERO</a>
-              <a class="btn-tiny" href="#hope">HOPE</a>
-              <a class="btn-tiny" href="#stepup">STEP-UP</a>
-              <a class="btn-tiny" href="#desperate">DESPERATE</a>
+  <!-- PRICING + COMBOS -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Pricing + Combos</h2>
+          <p>Tap <b>Pay</b> to see payment options. Tap <b>Help</b> for WhatsApp support.</p>
+        </div>
+
+        <!-- Course Prices -->
+        <div class="list" aria-label="Course pricing list">
+          <div class="rowitem">
+            <div class="meta"><b>IELTS ZERO — 4,200</b><span>Course fee</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
             </div>
           </div>
-          <div>
-            <h3 style="margin:0 0 10px; font-size:14px; letter-spacing:.2px; font-weight:950;">Contact & Location</h3>
-            <p class="footer-small" style="margin:0 0 10px;">
-              <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
-              <b>IELTS/PTE Helpline:</b> 01611611139
-            </p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <a class="btn btn-ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
-              <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/8801611611139?text=IELTS%20Journey%20niye%20quick%20guidance%20chai.">Talk with LizOn</a>
+
+          <div class="rowitem">
+            <div class="meta"><b>IELTS HOPE — 5,500</b><span>Course fee</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
             </div>
           </div>
-          <div>
-            <h3 style="margin:0 0 10px; font-size:14px; letter-spacing:.2px; font-weight:950;">Social</h3>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <a class="btn btn-ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-              <a class="btn btn-ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
-              <a class="btn btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+
+          <div class="rowitem">
+            <div class="meta"><b>IELTS STEP-UP — 6,200</b><span>Course fee</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
             </div>
-            <div class="rule"></div>
-            <p class="footer-small" style="margin:0;">© 2026 myLizOn.com | LizOn Education</p>
+          </div>
+
+          <div class="rowitem">
+            <div class="meta"><b>IELTS DESPERATE — 7,500</b><span>Course fee</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
+            </div>
           </div>
         </div>
+
+        <div class="divider"></div>
+
+        <!-- Combos -->
+        <div class="subhead"><h3>Combos</h3></div>
+
+        <div class="list" aria-label="Combo pricing list">
+          <div class="rowitem">
+            <div class="meta"><b>ZERO + HOPE — 6,790</b><span>Foundation + Reset</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
+            </div>
+          </div>
+
+          <div class="rowitem">
+            <div class="meta"><b>HOPE + STEP-UP — 8,190</b><span>Reset + Band jump</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
+            </div>
+          </div>
+
+          <div class="rowitem">
+            <div class="meta"><b>STEP-UP + DESPERATE — 9,590</b><span>Band jump + Final eval</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
+            </div>
+          </div>
+
+          <div class="rowitem">
+            <div class="meta"><b>ZERO + HOPE + STEP-UP — 9,540</b><span>Build → Reset → Band jump</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
+            </div>
+          </div>
+
+          <div class="rowitem">
+            <div class="meta"><b>HOPE + STEP-UP + DESPERATE — 11,520</b><span>Reset → Band jump → Final eval</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
+            </div>
+          </div>
+
+          <div class="rowitem" style="border-color: rgba(214,179,90,.35); background: rgba(214,179,90,.08);">
+            <div class="meta"><b>N2F (All 4) — 12,700</b><span>BEST VALUE • Now to Fly</span></div>
+            <div class="actions">
+              <button class="btn primary" data-open-pay type="button">Pay</button>
+              <button class="btn" data-open-help type="button">Help</button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Bottom bar -->
-  <div class="bottom-bar">
-    <div class="bottom-row">
-      <div><b>Need guidance?</b> <span style="color:var(--muted)">Tap WhatsApp</span></div>
-      <div style="display:flex; gap:10px; align-items:center;">
-        <a class="discount-tiny" target="_blank" rel="noopener"
-           href="https://wa.me/8801611611139?text=IELTS%20Journey%20niye%20discount%20/%20batch%20details%20chai.">
-          <i></i> Chat on WhatsApp
-        </a>
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-card">
+        <div class="footer-cols">
+          <div>
+            <h3 class="ft-title">Contact & Location</h3>
+            <p class="ft-text">
+              <b>Address:</b> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
+              <b>IELTS/PTE Helpline:</b> 01611611139<br/>
+              <b>Study Abroad/Visa Processing:</b> 01608881545
+            </p>
+            <div class="ft-links">
+              <a class="btn ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
+              <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20help%20chai." target="_blank" rel="noopener">Chat Now</a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="ft-title">Social Media</h3>
+            <div class="ft-links">
+              <a class="btn ghost" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
+              <a class="btn ghost" href="https://www.youtube.com/@AskJoyNowQ" target="_blank" rel="noopener">YouTube</a>
+              <a class="btn ghost" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+            <p class="ft-text" style="margin-top:12px;">© 2026 myLizOn.com | LizOn Education</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Buttons -->
+  <div class="fab menu-fab" id="fabMenu" role="button" tabindex="0" aria-label="Menu">
+    <b>≡</b><span style="color:var(--muted);font-size:12px;">Menu</span>
+  </div>
+
+  <div class="fab top-fab" id="fabTop" role="button" tabindex="0" aria-label="Back to top">
+    <b>↑</b><span style="color:var(--muted);font-size:12px;">Top</span>
+  </div>
+
+  <div class="fab theme-fab" id="fabTheme" role="button" tabindex="0" aria-label="Toggle theme">
+    <b>🌓</b><span style="color:var(--muted);font-size:12px;">Theme</span>
+  </div>
+
+  <div class="fab help-fab" id="fabHelp" role="button" tabindex="0" aria-label="WhatsApp help">
+    <span class="dot"></span><b>Help</b>
+  </div>
+
+  <!-- VIDEO MODAL -->
+  <div class="overlay" id="videoOverlay" aria-hidden="true">
+    <div class="back" data-close></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Video player">
+      <div class="sheet-top">
+        <div>
+          <h3 id="videoTitle">Video</h3>
+          <p>Tap outside or press ✕ to close.</p>
+        </div>
+        <button class="x" type="button" data-close aria-label="Close">✕</button>
+      </div>
+
+      <div class="videoShell">
+        <iframe id="videoFrame" class="videoFrame"
+          src=""
+          title="YouTube video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <a class="btn primary" id="openYouTube" href="#" target="_blank" rel="noopener">Open in YouTube</a>
+        <button class="btn" type="button" data-close>Close</button>
       </div>
     </div>
   </div>
 
-  <script>
-    // Simple demo for Tap-to-Play (replace with real modal if needed)
-    document.querySelectorAll('.play').forEach(btn=>{
-      btn.addEventListener('click', ()=> alert('Play segment (hook to your video/modal here).'));
+  <!-- DETAILS MODAL -->
+  <div class="overlay" id="detailsOverlay" aria-hidden="true">
+    <div class="back" data-close-details></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Course details">
+      <div class="sheet-top">
+        <div>
+          <h3 id="detailsTitle">Details</h3>
+          <p>Tap an option to view. Tap again to go back.</p>
+        </div>
+        <button class="x" type="button" data-close-details aria-label="Close">✕</button>
+      </div>
+
+      <div class="grid2" id="detailsMenu"></div>
+
+      <div class="opt" id="detailsView" style="display:none; margin-top:10px;">
+        <b id="detailsViewTitle"></b>
+        <div id="detailsViewBody" style="color:var(--muted); font-size:13px; line-height:1.55; white-space:pre-line;"></div>
+        <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <button class="btn" type="button" id="detailsBack">Back</button>
+          <button class="btn ghost" type="button" data-close-details>Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROUTINE MODAL -->
+  <div class="overlay" id="routineOverlay" aria-hidden="true">
+    <div class="back" data-close-routine></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Routine">
+      <div class="sheet-top">
+        <div>
+          <h3>Routine (Weekly)</h3>
+          <p>Based on the official schedule chart.</p>
+        </div>
+        <button class="x" type="button" data-close-routine aria-label="Close">✕</button>
+      </div>
+
+      <div class="routineWrap">
+        <table class="routineGrid" aria-label="Routine Table">
+          <thead>
+            <tr>
+              <th style="width:22%;">Day</th>
+              <th>8 PM</th>
+              <th>9 PM</th>
+              <th>10 PM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sun</td>
+              <td class="tagHope">HOPE</td>
+              <td class="tagZero">ZERO</td>
+              <td class="tagDes">DESPERATE</td>
+            </tr>
+            <tr>
+              <td>Mon</td>
+              <td class="tagDes">DESPERATE</td>
+              <td class="tagHope">HOPE</td>
+              <td class="tagStep">STEP-UP</td>
+            </tr>
+            <tr>
+              <td>Tue</td>
+              <td class="tagStep">STEP-UP</td>
+              <td class="tagZero">ZERO</td>
+              <td class="tagDes">DESPERATE</td>
+            </tr>
+            <tr>
+              <td>Wed</td>
+              <td class="tagDes">DESPERATE</td>
+              <td class="tagHope">HOPE</td>
+              <td class="tagStep">STEP-UP</td>
+            </tr>
+            <tr>
+              <td>Thu</td>
+              <td class="tagDes">DESPERATE</td>
+              <td class="tagZero">ZERO</td>
+              <td class="tagDes">DESPERATE</td>
+            </tr>
+            <tr>
+              <td>Fri</td>
+              <td class="tagDes">DESPERATE</td>
+              <td class="tagHope">HOPE</td>
+              <td class="tagStep">STEP-UP</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <button class="btn" type="button" data-close-routine>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAY MODAL -->
+  <div class="overlay" id="payOverlay" aria-hidden="true">
+    <div class="back" data-close-pay></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Payment options">
+      <div class="sheet-top">
+        <div>
+          <h3>Payment Options</h3>
+          <p>Choose a method. Then send payment screenshot on WhatsApp.</p>
+        </div>
+        <button class="x" type="button" data-close-pay aria-label="Close">✕</button>
+      </div>
+
+      <div class="grid2">
+        <div class="opt"><b>bKash Merchant (Make Payment)</b><div style="color:var(--muted); font-size:13px;">01611611139</div></div>
+        <div class="opt"><b>bKash Personal (Send Money)</b><div style="color:var(--muted); font-size:13px;">01337533979</div></div>
+        <div class="opt"><b>Rocket Personal (Send Money)</b><div style="color:var(--muted); font-size:13px;">01337533979</div></div>
+        <div class="opt"><b>Nagad Personal (Send Money)</b><div style="color:var(--muted); font-size:13px;">01337533979</div></div>
+        <div class="opt"><b>Upay Personal (Send Money)</b><div style="color:var(--muted); font-size:13px;">01889993896</div></div>
+        <div class="opt">
+          <b>DBBL (Dutch Bangla Bank Ltd.)</b>
+          <div style="color:var(--muted); font-size:13px; line-height:1.55;">
+            Account No: 2211510117789<br/>
+            Account Name: SHUVA SARKER JOY<br/>
+            Branch: Manda<br/>
+            Routing: 090262874
+          </div>
+        </div>
+        <div class="opt"><b>Visa Card Transfer (Brac Bank)</b><div style="color:var(--muted); font-size:13px;">4777920004855617</div></div>
+      </div>
+
+      <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <a class="btn primary" id="sendScreenshotBtn" href="#" target="_blank" rel="noopener">Send Screenshot</a>
+        <button class="btn" type="button" data-close-pay>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU OVERLAY -->
+  <div class="overlay" id="menuOverlay" aria-hidden="true">
+    <div class="back" data-close-menu></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="sheet-top">
+        <div>
+          <h3>Menu</h3>
+          <p>Quick navigation. Tap to go.</p>
+        </div>
+        <button class="x" type="button" data-close-menu aria-label="Close">✕</button>
+      </div>
+
+      <div class="menuList">
+        <a class="menuItem" href="index.html"><b>Home</b><span>mylizon.com</span></a>
+        <a class="menuItem" href="ielts.html"><b>IELTS</b><span>Journey + skills</span></a>
+        <a class="menuItem" href="pte.html"><b>PTE</b><span>Course + guidance</span></a>
+        <a class="menuItem" href="studyabroad.html"><b>Study Abroad</b><span>Country wise</span></a>
+        <button class="menuItem" type="button" id="menuGoPricing"><b>Pricing</b><span>Jump to section</span></button>
+        <button class="menuItem" type="button" id="menuHelp"><b>Help</b><span>WhatsApp</span></button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  /* ===== Theme (persist) ===== */
+  const body = document.body;
+  function setTheme(mode){
+    const isLight = mode === 'light';
+    body.classList.toggle('theme-light', isLight);
+    localStorage.setItem('lizon-theme', isLight ? 'light' : 'dark');
+  }
+  setTheme(localStorage.getItem('lizon-theme') || 'dark');
+
+  function toggleTheme(){
+    const isLight = body.classList.contains('theme-light');
+    setTheme(isLight ? 'dark' : 'light');
+  }
+
+  document.getElementById('btnTheme').addEventListener('click', toggleTheme);
+  document.getElementById('fabTheme').addEventListener('click', toggleTheme);
+
+  /* Smooth to pricing */
+  document.getElementById('btnPricing').addEventListener('click', ()=>{
+    document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+
+  /* WhatsApp help */
+  const HELP_WA = "https://wa.me/8801611611139?text=" + encodeURIComponent("Assalamu Alaikum, IELTS Journey niye help chai.");
+  const fabHelp = document.getElementById('fabHelp');
+  fabHelp.addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
+  fabHelp.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') window.open(HELP_WA, '_blank', 'noopener'); });
+
+  /* Scroll to top button */
+  const fabTop = document.getElementById('fabTop');
+  fabTop.addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
+  fabTop.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') window.scrollTo({ top:0, behavior:'smooth' }); });
+
+  /* ===== Video mapping ===== */
+  const VIDEOS = {
+    top: "https://youtube.com/shorts/faPi5s_NdxI",
+    zero: "https://youtube.com/shorts/OlKhqCLJyDY",
+    hope: "https://youtu.be/0QLW0Q0KSSU",
+    stepup: "https://youtu.be/IddqP4Vf13I",
+    desperate: "https://youtu.be/MQMfTazOCnc"
+  };
+
+  function toEmbed(url){
+    try{
+      const u = new URL(url);
+      if(u.hostname.includes('youtu.be')){
+        const id = u.pathname.replace('/','').trim();
+        return "https://www.youtube.com/embed/" + id;
+      }
+      if(u.pathname.startsWith('/shorts/')){
+        const id = u.pathname.split('/shorts/')[1].split(/[?&#]/)[0];
+        return "https://www.youtube.com/embed/" + id;
+      }
+      if(u.searchParams.get('v')){
+        return "https://www.youtube.com/embed/" + u.searchParams.get('v');
+      }
+      return url;
+    }catch(e){
+      return url;
+    }
+  }
+
+  /* ===== Video modal ===== */
+  const videoOverlay = document.getElementById('videoOverlay');
+  const videoFrame = document.getElementById('videoFrame');
+  const videoTitle = document.getElementById('videoTitle');
+  const openYouTube = document.getElementById('openYouTube');
+  let lastScrollY = 0;
+
+  function lockScroll(){
+    lastScrollY = window.scrollY;
+    document.body.style.overflow = 'hidden';
+  }
+  function unlockScroll(){
+    document.body.style.overflow = '';
+    window.scrollTo({ top: lastScrollY, behavior:'auto' });
+  }
+
+  function openVideo(key, label){
+    lockScroll();
+    const url = VIDEOS[key];
+    videoTitle.textContent = label || "Video";
+    openYouTube.href = url;
+    videoFrame.src = toEmbed(url) + "?autoplay=1&rel=0";
+    videoOverlay.classList.add('show');
+    videoOverlay.setAttribute('aria-hidden','false');
+  }
+
+  function closeVideo(){
+    videoOverlay.classList.remove('show');
+    videoOverlay.setAttribute('aria-hidden','true');
+    videoFrame.src = "";
+    unlockScroll();
+  }
+
+  videoOverlay.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', closeVideo));
+
+  function bindCard(card, key, label){
+    card.addEventListener('click', ()=> openVideo(key, label));
+    card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openVideo(key, label); });
+  }
+  bindCard(document.getElementById('cardTop'), 'top', 'IELTS Journey');
+  bindCard(document.getElementById('cardZero'), 'zero', 'IELTS ZERO');
+  bindCard(document.getElementById('cardHope'), 'hope', 'IELTS HOPE');
+  bindCard(document.getElementById('cardStepup'), 'stepup', 'IELTS STEP-UP');
+  bindCard(document.getElementById('cardDesperate'), 'desperate', 'IELTS DESPERATE');
+
+  /* ✅ FIX #2: Stop buttons from triggering card video */
+  document.querySelectorAll('.mini, .btn, .chip, .iconbtn, .topHamburger, .menuItem').forEach(el=>{
+    el.addEventListener('click', (e)=> e.stopPropagation());
+    el.addEventListener('pointerdown', (e)=> e.stopPropagation());
+  });
+
+  document.querySelectorAll('[data-admit]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
     });
-    // Smooth hash scroll
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        const to = document.querySelector(a.getAttribute('href'));
-        if(!to) return;
-        e.preventDefault();
-        const headerOffset = 92;
-        window.scrollTo({ top: to.getBoundingClientRect().top + window.scrollY - headerOffset, behavior:'smooth' });
-      });
+  });
+
+  /* ===== Routine modal ===== */
+  const routineOverlay = document.getElementById('routineOverlay');
+  function openRoutine(){
+    lockScroll();
+    routineOverlay.classList.add('show');
+    routineOverlay.setAttribute('aria-hidden','false');
+  }
+  function closeRoutine(){
+    routineOverlay.classList.remove('show');
+    routineOverlay.setAttribute('aria-hidden','true');
+    unlockScroll();
+  }
+  routineOverlay.querySelectorAll('[data-close-routine]').forEach(el=> el.addEventListener('click', closeRoutine));
+  document.querySelectorAll('[data-routine]').forEach(btn=> btn.addEventListener('click', openRoutine));
+
+  /* ===== Details modal (tap-only) ===== */
+  const detailsOverlay = document.getElementById('detailsOverlay');
+  const detailsTitle = document.getElementById('detailsTitle');
+  const detailsMenu = document.getElementById('detailsMenu');
+  const detailsView = document.getElementById('detailsView');
+  const detailsViewTitle = document.getElementById('detailsViewTitle');
+  const detailsViewBody = document.getElementById('detailsViewBody');
+  const detailsBack = document.getElementById('detailsBack');
+
+  const DETAIL_SECTIONS = [
+    { key:'skills', title:'Skills Covered' },
+    { key:'modules', title:'Benefited Modules' },
+    { key:'aim', title:'Aim' },
+    { key:'after', title:'After This Course' },
+    { key:'who', title:'Who Should Take This' },
+    { key:'with', title:'This Course Comes With' }
+  ];
+
+  const DETAILS = {
+    zero:{
+      skills:
+`Skilled Covered:
+• Grammar
+• Basic Spoken
+• Pronunciation
+
+12 classes
+1 Month
+weekly 3 classes
+9 pm
+Sun Tue Thu`,
+      modules:
+`Benefited Modules:
+• Speaking
+• Writing`,
+      aim:
+`Aim of Zero:
+Help you learn basic English clearly - grammar, sentence making, pronunciation - so English feels easier and less scary.`,
+      after:
+`After ZERO,
+Who will You Become
+• You understand basic grammar
+• You can make correct sentences
+• You can speak simple English
+• You feel ready to start IELTS`,
+      who:
+`Who should Take ZERO
+• Beginners in English.
+• students who feel weak in grammar or speaking.
+• IELTS starters who feel confused.
+• Anyone who wants to learn-start.`,
+      with:
+`This Course Comes With:
+• Live Classes By
+  Band 8+ Instructors
+• Mentorship By
+  SHUVO SARKER JOY
+• Get Points For
+  Abroad Job Opportunity
+• Private Discord Channel
+• Scholarship Process`
+    },
+
+    hope:{
+      skills:
+`Skilled Covered:
+• Reading Speed
+• Listening Power
+• Free Hand Writing
+• Speaking (Opinion)
+
+12 classes -> 9 pm
+Mon Wed Thu
+4 Evaluation classes
+Sun Tue
+Total: 16 sessions`,
+      modules:
+`Benefited Modules:
+• Reading
+• Listening
+• Speaking
+• Writing`,
+      aim:
+`AIM of HOPE:
+Hope helps you fix the skills that block your IELTS score.
+
+You will learn to:
+→ Read faster
+→ Understand listening more clearly
+→ Write without memorizing templates.
+→ Speak with clear ideas.
+
+HOPE prepares you with the real skill needed for IELTS modules.`,
+      after:
+`After HOPE,
+Who will You Become:
+• Read without translating
+• Catch answers confidently in listening
+• Write freely with your own ideas
+• Speak Confidently with your own opinion
+• You will feel ready, not confused`,
+      who:
+`Who should take HOPE:
+→ IELTS feels difficult even after practice.
+→ Your reading and understanding is slow.
+→ Listening accents confuse you at times.
+→ Can't write structured Writing`,
+      with:
+`This Course Comes With:
+• Live Classes By
+  Band 8+ Instructors
+• Mentorship By
+  SHUVO SARKER JOY
+• Get Points for
+  Abroad Job Opportunity
+• Private Discord Channel
+• Scholarship Plan (Personalized)
+• Abroad Job Process`
+    },
+
+    stepup:{
+      skills:
+`Skilled Covered:
+• Listening : Part 1 → Part 4
+• Reading : True, False, NG (Yes, No, NG)
+          → Fill in the Gaps
+            (All types of fill in the Gaps)
+• Writing :
+  Task 1 : Overall
+         # Comparison Sentence Making.
+  Task 2 :
+         # Main Idea Find Out-
+         # What to Cover
+         # Body Segmentation
+           (which points/notes to write in which body paragraph)
+         # Topic Sentence
+• Speaking :
+  Topic Based Presentation
+  (100 seconds - so that students can handle Cue Card)
+
+12 classes + 10 pm
+Mon Wed Fri
+4 Evaluation classes
+Tuesday
+Total: 16 sessions`,
+      modules:
+`Benefited Modules:
+• Listening
+• Reading
+• Speaking
+• Writing`,
+      aim:
+`AIM of STEP-UP:
+STEP-UP helps you cross the Band-6 skill barrier.
+
+→ Learn Important Question Types of Listening & Reading
+→ Build structure of right Writing
+→ 2 mins Fluent Speaking Capability
+
+STEP-UP builds the core IELTS skills that take you in around Band 6 in each module.`,
+      after:
+`After STEP-UP,
+Who will You Become:
+→ No panic in listening
+→ Get proven improvement and confidence gains
+→ Write with clean structure
+→ Speak smoothly for 100 seconds on all IELTS Speaking Topic.
+
+You will feel stable, organized, and focused - exam ready - not confused.`,
+      who:
+`Who should take STEP-UP
+• You are not yet sure about - band 6 in each module.
+• Facing accuracy problems in important module Listening and Reading question types.
+• Idea Generate problems in Speaking & Writing.
+
+If you want to move up seriously, STEP-UP is your stage.`,
+      with:
+`This Course Comes With:
+• Live Classes By
+  Band 8+ Instructors
+• Mentorship By
+  SHUVO SARKER JOY
+• Get Points For
+  Abroad Job Opportunity
+• Private Discord Channel
+• Scholarship Preparation
+• Abroad Job
+  Personalize Plan & Preparation
+• Documentation Guidelines`
+    },
+
+    desperate:{
+      skills:
+`Skilled Covered:
+
+Listening:
+- Part 1
+- Part 4
+- MCQ
+- MAPS
+- Matching
+
+Reading:
+- Passage 1
+- Passage 2
+- Passage 3
+- Other Question Types
+
+Writing:
+- Task 1 Graph
+- Task 1 Flow chart
+- Task 2 (All types)
+
+Speaking:
+- Part 1
+- Part 2
+- Part 3
+
+Mock
+- Speaking Evaluation
+- Writing Evaluation
+
+12 Classes +
+Sun | Tue | Thu
+16 Evaluations
+Mon | Wed | Fri
+Total: 28 Sessions`,
+      modules:
+`Benefited Modules:
+- Reading
+- Listening
+- Writing
+- Speaking`,
+      aim:
+`AIM of DESPERATE:
+Desperate is designed to help you learn, test, practice, and fix your IELTS skills accurately.
+
+The aim is to:
+- Teach you all question types of all modules
+- Test you continuously
+- Make you better through Evaluation
+- Live Evaluation and provide you an Score Achiving Environment
+
+When pressure is high and time is less, you need the right plan.`,
+      after:
+`After DESPERATE, Who Will You Become:
+After DESPERATE, you will feel Ready.
+
+- Understand IELTS all questions clearly
+- Know exactly where to focus during the exam
+- No panic in Reading
+- Listening improves with the right strategy
+- Write with clean structures
+- Speak with more control and confidence
+- Exam-Ready`,
+      who:
+`Who should take DESPERATE:
+- You will take IELTS test in 1 - 2 months time
+- You can't achieve your desired score
+- You want to invest your final push for next 28 sessions.
+- You need walking with and personalize live evaluation
+
+This course is for students who want proper preparation, not random practice`,
+      with:
+`This Course Comes With:
+- Live Classes By
+  Band 8+ Instructors
+- Mentorship By
+  SHUVO SARKER JOY
+- Get Points For
+  Abroad Job Opportunity
+- Private Discord Channel
+- Scholarship Approach
+- Secret Suggestions 1 on 1
+- Abroad Job Approach
+- Ambassador Application`
+    }
+  };
+
+  function openDetails(courseKey){
+    lockScroll();
+    detailsTitle.textContent = `Details — ${courseKey.toUpperCase()}`;
+    detailsOverlay.classList.add('show');
+    detailsOverlay.setAttribute('aria-hidden','false');
+    renderDetailsMenu(courseKey);
+  }
+
+  function closeDetails(){
+    detailsOverlay.classList.remove('show');
+    detailsOverlay.setAttribute('aria-hidden','true');
+    detailsMenu.style.display = '';
+    detailsView.style.display = 'none';
+    unlockScroll();
+  }
+
+  function renderDetailsMenu(courseKey){
+    detailsMenu.innerHTML = '';
+    detailsMenu.style.display = '';
+    detailsView.style.display = 'none';
+
+    DETAIL_SECTIONS.forEach(sec=>{
+      const div = document.createElement('div');
+      div.className = 'opt';
+      div.tabIndex = 0;
+      div.innerHTML = `<b>${sec.title}</b><span style="color:var(--muted);font-size:12px;">Tap to view</span>`;
+      div.addEventListener('click', ()=> showDetailsSection(courseKey, sec));
+      div.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') showDetailsSection(courseKey, sec); });
+      detailsMenu.appendChild(div);
     });
-  </script>
+  }
+
+  function showDetailsSection(courseKey, sec){
+    const data = DETAILS[courseKey] || {};
+    detailsMenu.style.display = 'none';
+    detailsView.style.display = '';
+    detailsViewTitle.textContent = sec.title;
+    detailsViewBody.textContent = data[sec.key] || "Coming soon.";
+  }
+
+  detailsBack.addEventListener('click', ()=>{
+    const t = (detailsTitle.textContent || '').toLowerCase();
+    const key = t.includes('zero') ? 'zero' : t.includes('hope') ? 'hope' : t.includes('step') ? 'stepup' : 'desperate';
+    renderDetailsMenu(key);
+  });
+
+  detailsOverlay.querySelectorAll('[data-close-details]').forEach(el=> el.addEventListener('click', closeDetails));
+  document.querySelectorAll('[data-details]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.getAttribute('data-details');
+      openDetails(key);
+    });
+  });
+
+  /* ===== Pay modal ===== */
+  const payOverlay = document.getElementById('payOverlay');
+  const sendScreenshotBtn = document.getElementById('sendScreenshotBtn');
+
+  function openPay(){
+    lockScroll();
+    payOverlay.classList.add('show');
+    payOverlay.setAttribute('aria-hidden','false');
+
+    const msg = encodeURIComponent("Assalamu Alaikum, ami payment korechi. Screenshot attach korchi. Please confirm my admission.");
+    sendScreenshotBtn.href = `https://wa.me/8801611611139?text=${msg}`;
+  }
+
+  function closePay(){
+    payOverlay.classList.remove('show');
+    payOverlay.setAttribute('aria-hidden','true');
+    unlockScroll();
+  }
+
+  payOverlay.querySelectorAll('[data-close-pay]').forEach(el=> el.addEventListener('click', closePay));
+  document.querySelectorAll('[data-open-pay]').forEach(btn=> btn.addEventListener('click', openPay));
+
+  document.querySelectorAll('[data-open-help]').forEach(btn=>{
+    btn.addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
+  });
+
+  /* Escape close */
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape'){
+      if(videoOverlay.classList.contains('show')) closeVideo();
+      if(detailsOverlay.classList.contains('show')) closeDetails();
+      if(routineOverlay.classList.contains('show')) closeRoutine();
+      if(payOverlay.classList.contains('show')) closePay();
+      if(menuOverlay.classList.contains('show')) closeMenu();
+    }
+  });
+
+  /* ===== Menu overlay ===== */
+  const menuOverlay = document.getElementById('menuOverlay');
+  const fabMenu = document.getElementById('fabMenu');
+  const btnMenuTop = document.getElementById('btnMenuTop');
+
+  function openMenu(){
+    lockScroll();
+    menuOverlay.classList.add('show');
+    menuOverlay.setAttribute('aria-hidden','false');
+  }
+  function closeMenu(){
+    menuOverlay.classList.remove('show');
+    menuOverlay.setAttribute('aria-hidden','true');
+    unlockScroll();
+  }
+  function bindOpen(el){
+    el.addEventListener('click', openMenu);
+    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openMenu(); });
+  }
+  bindOpen(fabMenu);
+  bindOpen(btnMenuTop);
+
+  menuOverlay.querySelectorAll('[data-close-menu]').forEach(el=> el.addEventListener('click', closeMenu));
+  document.getElementById('menuGoPricing').addEventListener('click', ()=>{
+    closeMenu();
+    document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+  document.getElementById('menuHelp').addEventListener('click', ()=>{
+    window.open(HELP_WA, '_blank', 'noopener');
+  });
+</script>
 </body>
 </html>

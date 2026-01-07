@@ -19,17 +19,13 @@
     --muted:rgba(255,255,255,.72);
     --gold:#d6b35a;
     --gold2:#caa64a;
-
-    /* NEW accents for requested change */
-    --titleAccent: rgba(214,179,90,.95);   /* different color for modal titles */
-    --tagAccent: rgba(54,210,139,.95);     /* important markers */
-
     --shadow: 0 18px 60px rgba(0,0,0,.40);
     --radius-xl: 22px;
     --radius-lg: 18px;
     --radius-md: 14px;
     --topbar-h: 64px;
-    --footerbar-h: 64px;
+    --sheet-bg: rgba(4,31,22,.92);
+    --sheet-bg-light: rgba(255,255,255,.92);
   }
 
   .theme-light{
@@ -41,9 +37,6 @@
     --text:rgba(10,32,22,.92);
     --muted:rgba(10,32,22,.70);
     --shadow: 0 18px 60px rgba(0,0,0,.12);
-
-    --titleAccent: rgba(138,98,0,.95);
-    --tagAccent: rgba(11,122,74,.95);
   }
 
   *{ box-sizing:border-box; }
@@ -58,7 +51,6 @@
     color:var(--text);
     line-height:1.35;
     overflow-x:hidden;
-    padding-bottom: calc(var(--footerbar-h) + 18px); /* NEW: space for footer buttons */
   }
 
   a{ color:inherit; }
@@ -134,6 +126,17 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  .topHamburger{
+    width:44px; height:44px;
+    border-radius: 999px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    color: var(--text);
+    display:grid; place-items:center;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   /* ===== FIRST SCREEN (5 cards visible) ===== */
   .screen{
     padding: 14px 0 18px;
@@ -158,59 +161,90 @@
     background: rgba(255,255,255,.03);
     transform: translateZ(0);
     cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
   }
 
-  .card::after{
-    content:"";
+  /* ===== Desktop layout: left content + right image ===== */
+  .card-layout{
     position:absolute; inset:0;
-    background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.55));
-    pointer-events:none;
-  }
-  .theme-light .card::after{
-    background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.32));
+    display:grid;
+    grid-template-columns: 1.2fr .8fr;
+    height:100%;
   }
 
-  /* ✅ Image frame: force 16:9 thumbnail rendering inside each card */
-  .imgwrap{
-    position:absolute; inset:0;
+  .card-left{
+    position:relative;
+    z-index:3;
+    padding: 12px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:10px;
+  }
+
+  .card-right{
+    position:relative;
+    z-index:2;
     display:flex;
     align-items:center;
     justify-content:center;
+    padding: 10px 12px 10px 0;
+  }
+
+  .thumbFrame{
+    width:100%;
+    height:100%;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.14);
     background:
       radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.14), transparent 55%),
-      linear-gradient(180deg, rgba(6,43,31,.78), rgba(4,31,22,.95));
+      linear-gradient(180deg, rgba(6,43,31,.70), rgba(4,31,22,.92));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
   }
-  .theme-light .imgwrap{
+
+  .theme-light .thumbFrame{
     background:
       radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.12), transparent 55%),
       linear-gradient(180deg, rgba(255,255,255,.92), rgba(238,246,243,.98));
   }
 
-  /* unchanged card image sizing */
-  .cardimg{
+  .thumbFrame img{
     width:100%;
-    max-width:100%;
-    max-height:100%;
-    aspect-ratio: 16 / 9;
-    height:auto;
-    object-fit:contain;
-    object-position:center;
-    padding: 0;
-    filter: saturate(1.02);
-  }
-
-  .card-content{
-    position:relative; z-index:2;
     height:100%;
-    padding: 12px;
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:10px;
+    object-fit:contain; /* no crop */
+    object-position:center;
+    display:block;
   }
 
-  .left-stack{ display:flex; flex-direction:column; gap:8px; min-width:0; }
+  /* ===== Mobile layout: stacked (image on top) ===== */
+  @media (max-width: 760px){
+    .cards{
+      grid-template-rows: none;
+      height: auto;
+    }
+    .card{
+      height: auto;
+      min-height: 150px;
+    }
+    .card-layout{
+      position:relative;
+      grid-template-columns: 1fr;
+    }
+    .card-right{
+      padding: 12px;
+      order: 0;
+    }
+    .card-left{
+      order: 1;
+      padding-top: 0;
+    }
+    .thumbFrame{
+      aspect-ratio: 16 / 9;
+      height:auto;
+    }
+  }
 
   .pill{
     display:inline-flex; align-items:center; gap:8px;
@@ -234,29 +268,6 @@
     font-size: 16px;
     line-height:1.15;
     letter-spacing:.2px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width: 75vw;
-  }
-
-  .tap{
-    display:inline-flex; align-items:center; gap:10px;
-    padding: 10px 12px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.06);
-    font-weight:950;
-    font-size:13px;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-    white-space:nowrap;
-  }
-  .tap .dot{
-    width:10px; height:10px;
-    border-radius:50%;
-    background: rgba(214,179,90,.92);
-    box-shadow: 0 0 0 4px rgba(214,179,90,.14);
   }
 
   .sub-actions{ display:flex; gap:8px; flex-wrap:wrap; }
@@ -284,19 +295,25 @@
     box-shadow: 0 10px 26px rgba(0,0,0,.08);
   }
 
-  /* ✅ FIX: Mobile layout so Tap-to-Play never overlaps action buttons */
-  @media (max-width: 560px){
-    .card-content{
-      flex-direction:column;
-      align-items:flex-start;
-      justify-content:flex-end;
-      gap:10px;
-    }
-    .tap{
-      width:100%;
-      justify-content:flex-start;
-    }
-    .sub-actions{ width:100%; }
+  /* Tap button: always above everything */
+  .tap{
+    display:inline-flex; align-items:center; gap:10px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.08);
+    font-weight:950;
+    font-size:13px;
+    cursor:pointer;
+    user-select:none;
+    -webkit-tap-highlight-color: transparent;
+    align-self:flex-end;
+  }
+  .tap .dot{
+    width:10px; height:10px;
+    border-radius:50%;
+    background: rgba(214,179,90,.92);
+    box-shadow: 0 0 0 4px rgba(214,179,90,.14);
   }
 
   /* ===== MODALS ===== */
@@ -317,14 +334,14 @@
     width:min(860px, 100%);
     border-radius: var(--radius-xl);
     border:1px solid var(--stroke);
-    background: rgba(4,31,22,.92);
+    background: var(--sheet-bg);
     box-shadow: var(--shadow);
     padding: 14px;
     backdrop-filter: blur(10px);
     transform: translateY(10px);
     animation: in .14s ease-out forwards;
   }
-  .theme-light .sheet{ background: rgba(255,255,255,.92); }
+  .theme-light .sheet{ background: var(--sheet-bg-light); }
   @keyframes in{ from{ opacity:.0; transform: translateY(18px);} to{ opacity:1; transform: translateY(0);} }
 
   .sheet-top{
@@ -332,15 +349,16 @@
     gap:10px; margin-bottom:10px;
   }
 
-  /* NEW: different color for modal titles (requested) */
+  /* Different color for title (requested) */
   .sheet-top h3{
     margin:0;
     font-size:16px;
     line-height:1.2;
-    color: var(--titleAccent);
-    font-weight: 950;
+    color: var(--gold);
     letter-spacing:.2px;
+    font-weight:950;
   }
+  .theme-light .sheet-top h3{ color: rgba(10,32,22,.92); }
 
   .sheet-top p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
 
@@ -366,6 +384,32 @@
   }
   .opt b{ display:block; margin-bottom:6px; }
 
+  /* Tap to view -> button style (requested) */
+  .viewbtn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border:1px solid rgba(214,179,90,.35);
+    background: rgba(214,179,90,.12);
+    color: rgba(255,255,255,.92);
+    font-weight:950;
+    font-size:12px;
+    width: fit-content;
+    margin-top: 8px;
+  }
+  .theme-light .viewbtn{
+    color: rgba(10,32,22,.92);
+    background: rgba(214,179,90,.22);
+  }
+  .viewbtn .dot{
+    width:10px; height:10px;
+    border-radius:50%;
+    background: rgba(214,179,90,.95);
+    box-shadow: 0 0 0 4px rgba(214,179,90,.14);
+  }
+
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
     padding: 10px 12px;
@@ -384,34 +428,6 @@
     background: rgba(214,179,90,.16);
   }
   .btn.ghost{ background: transparent; color: var(--muted); }
-
-  /* NEW: make "Tap to view" look like button inside Details option cards */
-  .viewbtn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    padding: 10px 12px;
-    border-radius: 14px;
-    border:1px solid rgba(214,179,90,.38);
-    background: rgba(214,179,90,.12);
-    color: rgba(255,255,255,.92);
-    font-weight:950;
-    font-size:13px;
-    width: fit-content;
-    box-shadow: 0 12px 30px rgba(0,0,0,.18);
-  }
-  .theme-light .viewbtn{
-    color: rgba(10,32,22,.92);
-    background: rgba(214,179,90,.20);
-    border-color: rgba(214,179,90,.48);
-    box-shadow: 0 12px 30px rgba(0,0,0,.08);
-  }
-  .viewbtn .dot{
-    width:10px; height:10px; border-radius:50%;
-    background: var(--tagAccent);
-    box-shadow: 0 0 0 4px rgba(54,210,139,.12);
-  }
 
   .videoShell{
     width:100%;
@@ -436,7 +452,7 @@
   }
 
   /* ===== PRICING ===== */
-  .section{ padding: 10px 0 120px; }
+  .section{ padding: 10px 0 130px; }
 
   .panel{
     border:1px solid var(--stroke);
@@ -482,7 +498,7 @@
   .subhead h3{ margin:0; font-size:15px; }
 
   /* ===== FOOTER ===== */
-  footer{ padding: 0 0 160px; }
+  footer{ padding: 0 0 170px; }
   .footer-card{
     border:1px solid var(--stroke);
     border-radius: var(--radius-xl);
@@ -500,6 +516,14 @@
   .ft-title{ margin:0 0 8px; font-weight:950; font-size:13px; }
   .ft-text{ margin:0; color: var(--muted); font-size:13px; line-height:1.5; }
   .ft-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+
+  /* Footer buttons (requested) */
+  .footerBtns{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top: 12px;
+  }
 
   /* ===== Floating Buttons ===== */
   .fab{
@@ -520,7 +544,7 @@
     backdrop-filter: blur(10px);
   }
 
-  .help-fab{ right:14px; bottom: calc(var(--footerbar-h) + 12px); }
+  .help-fab{ right:14px; bottom:54px; }
   .help-fab .dot{
     width:10px; height:10px;
     border-radius:50%;
@@ -528,38 +552,11 @@
     box-shadow: 0 0 0 4px rgba(0,210,106,.14);
   }
 
-  .menu-fab{ left:14px; bottom: calc(var(--footerbar-h) + 12px); }
+  .menu-fab{ left:14px; bottom:54px; }
   .menu-fab b{ letter-spacing:.3px; }
 
-  .top-fab{ right:14px; bottom: calc(var(--footerbar-h) + 66px); }
-  .theme-fab{ right:14px; bottom: calc(var(--footerbar-h) + 120px); }
-
-  .topHamburger{
-    width:44px; height:44px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    color: var(--text);
-    display:grid; place-items:center;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .menuList{ display:grid; gap:10px; }
-  .menuItem{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    padding: 12px;
-    border-radius: 18px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-    text-decoration:none;
-  }
-  .menuItem span{ color: var(--muted); font-size:12px; }
+  .top-fab{ right:14px; bottom:108px; }
+  .theme-fab{ right:14px; bottom:162px; }
 
   /* ===== Routine table ===== */
   .routineWrap{
@@ -601,67 +598,42 @@
   .tagZero{ color: #36d28b; }
   .tagStep{ color: #f3b04a; }
   .tagDes{ color: #36d28b; }
-
   .theme-light .tagHope{ color:#c62828; }
   .theme-light .tagZero{ color:#0b7a4a; }
   .theme-light .tagStep{ color:#b06a00; }
   .theme-light .tagDes{ color:#0b7a4a; }
 
-  /* ===== NEW: Details body highlighting ===== */
-  .detailsBody{ white-space:pre-line; }
-  .hl-hdr{ color: var(--titleAccent); font-weight: 950; }
-  .hl-imp{ color: var(--tagAccent); font-weight: 950; }
-  .hl-gold{ color: var(--gold); font-weight: 950; }
-  .hl-soft{ color: rgba(255,255,255,.88); font-weight: 900; }
-  .theme-light .hl-soft{ color: rgba(10,32,22,.92); }
+  /* ===== Details highlight styling (requested: mark important points) ===== */
+  #detailsViewBody{ white-space:pre-line; }
+  .hl-hdr{ font-weight:950; color: var(--gold); }
+  .hl-imp{ font-weight:950; color: rgba(255,255,255,.95); }
+  .theme-light .hl-imp{ color: rgba(10,32,22,.92); }
+  .hl-gold{ font-weight:950; color: var(--gold); }
+  .hl-soft{ color: var(--muted); }
 
-  /* ===== NEW: Sticky Footer Buttons Bar (requested) ===== */
-  .footerbar{
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    height: var(--footerbar-h);
-    z-index: 2600;
+  /* ===== Bottom guidance bar ===== */
+  .bottomBar{
+    position:fixed;
+    left:0; right:0; bottom:0;
+    z-index: 3000;
+    border-top:1px solid var(--stroke);
+    background: rgba(4,31,22,.88);
     backdrop-filter: blur(12px);
-    background: rgba(4,31,22,.78);
-    border-top: 1px solid var(--stroke);
+    padding: 10px 12px;
   }
-  .theme-light .footerbar{ background: rgba(255,255,255,.82); }
-
-  .footerbar-inner{
-    height: 100%;
+  .theme-light .bottomBar{ background: rgba(255,255,255,.86); }
+  .bottomBarInner{
+    width:min(1100px, 92vw);
+    margin:0 auto;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap: 12px;
-    width: min(1100px, 92vw);
-    margin: 0 auto;
-  }
-
-  .footerbtn{
-    flex: 1 1 0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
     gap:10px;
-    padding: 12px 14px;
-    border-radius: 16px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.04);
-    text-decoration:none;
-    font-weight: 950;
-    color: var(--text);
-    -webkit-tap-highlight-color: transparent;
   }
-  .footerbtn.primary{
-    border-color: rgba(214,179,90,.42);
-    background: rgba(214,179,90,.16);
-  }
-  .footerbtn .ic{
-    width:28px; height:28px;
-    border-radius: 10px;
-    display:grid; place-items:center;
-    border:1px solid rgba(255,255,255,.14);
-    background: rgba(255,255,255,.04);
+  .bottomBarInner span{
+    font-weight:900;
+    font-size:13px;
+    color: var(--muted);
   }
 </style>
 </head>
@@ -690,119 +662,114 @@
     </div>
   </div>
 
-  <!-- FIRST SCREEN: 5 cards must appear -->
+  <!-- FIRST SCREEN -->
   <main class="screen">
     <div class="container">
       <div class="cards">
 
         <!-- TOP CARD -->
-        <div class="card topcard" id="cardTop" role="button" tabindex="0" aria-label="Play IELTS Journey top video">
-          <div class="imgwrap">
-            <!-- NEW: desktop/mobile image frame different -->
-            <picture>
-              <source media="(max-width:560px)" srcset="assets/m/ielts-journey-top.png">
-              <img class="cardimg" src="assets/d/ielts-journey-top.png" alt="IELTS Journey Top" />
-            </picture>
-          </div>
-          <div class="card-content">
-            <div class="left-stack">
-              <div class="pill">Designed for Desired Score</div>
-              <div class="title">IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</div>
+        <div class="card" id="cardTop" role="button" tabindex="0" aria-label="Play IELTS Journey top video">
+          <div class="card-layout">
+            <div class="card-left">
+              <div>
+                <div class="pill">Designed for Desired Score</div>
+                <div class="title">IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</div>
+              </div>
+              <div class="tap" aria-hidden="true"><span class="dot"></span><span>Tap to Play</span></div>
             </div>
-            <div class="tap" aria-hidden="true">
-              <span class="dot"></span><span>Tap to Play</span>
+            <div class="card-right">
+              <div class="thumbFrame">
+                <!-- Desktop thumbnail (put your desktop image here) -->
+                <img src="assets/ielts-journey-top-desktop.png" alt="IELTS Journey Top" />
+              </div>
             </div>
           </div>
         </div>
 
         <!-- ZERO -->
         <div class="card" id="cardZero" role="button" tabindex="0" aria-label="Play IELTS ZERO video">
-          <div class="imgwrap">
-            <picture>
-              <source media="(max-width:560px)" srcset="assets/m/ielts-zero.png">
-              <img class="cardimg" src="assets/d/ielts-zero.png" alt="IELTS ZERO" />
-            </picture>
-          </div>
-          <div class="card-content">
-            <div class="left-stack">
-              <div class="pill">IELTS ZERO</div>
-              <div class="sub-actions">
-                <button class="mini" data-admit="IELTS ZERO" type="button">Admit</button>
-                <button class="mini" data-details="zero" type="button">Details</button>
-                <button class="mini" data-routine type="button">Routine</button>
+          <div class="card-layout">
+            <div class="card-left">
+              <div>
+                <div class="pill">IELTS ZERO</div>
+                <div class="sub-actions">
+                  <button class="mini" data-admit="IELTS ZERO" type="button">Admit</button>
+                  <button class="mini" data-details="zero" type="button">Details</button>
+                  <button class="mini" data-routine type="button">Routine</button>
+                </div>
               </div>
+              <div class="tap" aria-hidden="true"><span class="dot"></span><span>Tap to Play</span></div>
             </div>
-            <div class="tap" aria-hidden="true">
-              <span class="dot"></span><span>Tap to Play</span>
+            <div class="card-right">
+              <div class="thumbFrame">
+                <img src="assets/ielts-zero-desktop.png" alt="IELTS ZERO" />
+              </div>
             </div>
           </div>
         </div>
 
         <!-- HOPE -->
         <div class="card" id="cardHope" role="button" tabindex="0" aria-label="Play IELTS HOPE video">
-          <div class="imgwrap">
-            <picture>
-              <source media="(max-width:560px)" srcset="assets/m/ielts-hope.png">
-              <img class="cardimg" src="assets/d/ielts-hope.png" alt="IELTS HOPE" />
-            </picture>
-          </div>
-          <div class="card-content">
-            <div class="left-stack">
-              <div class="pill">IELTS HOPE</div>
-              <div class="sub-actions">
-                <button class="mini" data-admit="IELTS HOPE" type="button">Admit</button>
-                <button class="mini" data-details="hope" type="button">Details</button>
-                <button class="mini" data-routine type="button">Routine</button>
+          <div class="card-layout">
+            <div class="card-left">
+              <div>
+                <div class="pill">IELTS HOPE</div>
+                <div class="sub-actions">
+                  <button class="mini" data-admit="IELTS HOPE" type="button">Admit</button>
+                  <button class="mini" data-details="hope" type="button">Details</button>
+                  <button class="mini" data-routine type="button">Routine</button>
+                </div>
               </div>
+              <div class="tap" aria-hidden="true"><span class="dot"></span><span>Tap to Play</span></div>
             </div>
-            <div class="tap" aria-hidden="true">
-              <span class="dot"></span><span>Tap to Play</span>
+            <div class="card-right">
+              <div class="thumbFrame">
+                <img src="assets/ielts-hope-desktop.png" alt="IELTS HOPE" />
+              </div>
             </div>
           </div>
         </div>
 
         <!-- STEP-UP -->
         <div class="card" id="cardStepup" role="button" tabindex="0" aria-label="Play IELTS STEP-UP video">
-          <div class="imgwrap">
-            <picture>
-              <source media="(max-width:560px)" srcset="assets/m/ielts-stepup.png">
-              <img class="cardimg" src="assets/d/ielts-stepup.png" alt="IELTS STEP-UP" />
-            </picture>
-          </div>
-          <div class="card-content">
-            <div class="left-stack">
-              <div class="pill">IELTS STEP-UP</div>
-              <div class="sub-actions">
-                <button class="mini" data-admit="IELTS STEP-UP" type="button">Admit</button>
-                <button class="mini" data-details="stepup" type="button">Details</button>
-                <button class="mini" data-routine type="button">Routine</button>
+          <div class="card-layout">
+            <div class="card-left">
+              <div>
+                <div class="pill">IELTS STEP-UP</div>
+                <div class="sub-actions">
+                  <button class="mini" data-admit="IELTS STEP-UP" type="button">Admit</button>
+                  <button class="mini" data-details="stepup" type="button">Details</button>
+                  <button class="mini" data-routine type="button">Routine</button>
+                </div>
               </div>
+              <div class="tap" aria-hidden="true"><span class="dot"></span><span>Tap to Play</span></div>
             </div>
-            <div class="tap" aria-hidden="true">
-              <span class="dot"></span><span>Tap to Play</span>
+            <div class="card-right">
+              <div class="thumbFrame">
+                <img src="assets/ielts-stepup-desktop.png" alt="IELTS STEP-UP" />
+              </div>
             </div>
           </div>
         </div>
 
         <!-- DESPERATE -->
         <div class="card" id="cardDesperate" role="button" tabindex="0" aria-label="Play IELTS DESPERATE video">
-          <div class="imgwrap">
-            <picture>
-              <source media="(max-width:560px)" srcset="assets/m/ielts-desperate.png">
-              <img class="cardimg" src="assets/d/ielts-desperate.png" alt="IELTS DESPERATE" />
-            </picture>
-          </div>
-          <div class="card-content">
-            <div class="left-stack">
-              <div class="pill">IELTS DESPERATE</div>
-              <div class="sub-actions">
-                <button class="mini" data-admit="IELTS DESPERATE" type="button">Admit</button>
-                <button class="mini" data-details="desperate" type="button">Details</button>
-                <button class="mini" data-routine type="button">Routine</button>
+          <div class="card-layout">
+            <div class="card-left">
+              <div>
+                <div class="pill">IELTS DESPERATE</div>
+                <div class="sub-actions">
+                  <button class="mini" data-admit="IELTS DESPERATE" type="button">Admit</button>
+                  <button class="mini" data-details="desperate" type="button">Details</button>
+                  <button class="mini" data-routine type="button">Routine</button>
+                </div>
               </div>
+              <div class="tap" aria-hidden="true"><span class="dot"></span><span>Tap to Play</span></div>
             </div>
-            <div class="tap" aria-hidden="true">
-              <span class="dot"></span><span>Tap to Play</span>
+            <div class="card-right">
+              <div class="thumbFrame">
+                <img src="assets/ielts-desperate-desktop.png" alt="IELTS DESPERATE" />
+              </div>
             </div>
           </div>
         </div>
@@ -926,7 +893,7 @@
               <b>IELTS/PTE Helpline:</b> 01611611139<br/>
               <b>Study Abroad/Visa Processing:</b> 01608881545
             </p>
-            <div class="ft-links">
+            <div class="footerBtns">
               <a class="btn ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
               <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20help%20chai." target="_blank" rel="noopener">Chat Now</a>
             </div>
@@ -963,18 +930,6 @@
     <span class="dot"></span><b>Help</b>
   </div>
 
-  <!-- NEW: Footer buttons bar -->
-  <div class="footerbar" role="contentinfo" aria-label="Quick actions">
-    <div class="footerbar-inner">
-      <a class="footerbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">
-        <span class="ic">🗺️</span> Open Map
-      </a>
-      <a class="footerbtn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20help%20chai." target="_blank" rel="noopener">
-        <span class="ic">💬</span> Chat Now
-      </a>
-    </div>
-  </div>
-
   <!-- VIDEO MODAL -->
   <div class="overlay" id="videoOverlay" aria-hidden="true">
     <div class="back" data-close></div>
@@ -995,7 +950,7 @@
           allowfullscreen></iframe>
       </div>
 
-      <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
         <a class="btn primary" id="openYouTube" href="#" target="_blank" rel="noopener">Open in YouTube</a>
         <button class="btn" type="button" data-close>Close</button>
       </div>
@@ -1018,8 +973,8 @@
 
       <div class="opt" id="detailsView" style="display:none; margin-top:10px;">
         <b id="detailsViewTitle"></b>
-        <div id="detailsViewBody" class="detailsBody" style="color:var(--muted); font-size:13px; line-height:1.55;"></div>
-        <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <div id="detailsViewBody" style="color:var(--muted); font-size:13px; line-height:1.55;"></div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
           <button class="btn" type="button" id="detailsBack">Back</button>
           <button class="btn ghost" type="button" data-close-details>Close</button>
         </div>
@@ -1090,7 +1045,7 @@
         </table>
       </div>
 
-      <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
         <button class="btn" type="button" data-close-routine>Close</button>
       </div>
     </div>
@@ -1126,7 +1081,7 @@
         <div class="opt"><b>Visa Card Transfer (Brac Bank)</b><div style="color:var(--muted); font-size:13px;">4777920004855617</div></div>
       </div>
 
-      <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
         <a class="btn primary" id="sendScreenshotBtn" href="#" target="_blank" rel="noopener">Send Screenshot</a>
         <button class="btn" type="button" data-close-pay>Close</button>
       </div>
@@ -1145,20 +1100,42 @@
         <button class="x" type="button" data-close-menu aria-label="Close">✕</button>
       </div>
 
-      <div class="menuList">
-        <a class="menuItem" href="index.html"><b>Home</b><span>mylizon.com</span></a>
-        <a class="menuItem" href="ielts.html"><b>IELTS</b><span>Journey + skills</span></a>
-        <a class="menuItem" href="pte.html"><b>PTE</b><span>Course + guidance</span></a>
-        <a class="menuItem" href="studyabroad.html"><b>Study Abroad</b><span>Country wise</span></a>
-        <button class="menuItem" type="button" id="menuGoPricing"><b>Pricing</b><span>Jump to section</span></button>
-        <button class="menuItem" type="button" id="menuHelp"><b>Help</b><span>WhatsApp</span></button>
+      <div style="display:grid; gap:10px;">
+        <a class="btn" style="justify-content:space-between;" href="index.html"><b>Home</b><span style="color:var(--muted);font-size:12px;">mylizon.com</span></a>
+        <a class="btn" style="justify-content:space-between;" href="ielts.html"><b>IELTS</b><span style="color:var(--muted);font-size:12px;">Journey + skills</span></a>
+        <a class="btn" style="justify-content:space-between;" href="pte.html"><b>PTE</b><span style="color:var(--muted);font-size:12px;">Course + guidance</span></a>
+        <a class="btn" style="justify-content:space-between;" href="studyabroad.html"><b>Study Abroad</b><span style="color:var(--muted);font-size:12px;">Country wise</span></a>
+        <button class="btn primary" type="button" id="menuGoPricing" style="justify-content:space-between;"><b>Pricing</b><span style="color:var(--muted);font-size:12px;">Jump to section</span></button>
+        <button class="btn" type="button" id="menuHelp" style="justify-content:space-between;"><b>Help</b><span style="color:var(--muted);font-size:12px;">WhatsApp</span></button>
       </div>
     </div>
   </div>
 
+  <!-- Bottom guidance bar -->
+  <div class="bottomBar">
+    <div class="bottomBarInner">
+      <span>Need guidance? Chat on WhatsApp</span>
+      <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20help%20chai." target="_blank" rel="noopener">Chat</a>
+    </div>
+  </div>
+
 <script>
-  /* ===== Theme (persist) ===== */
+  /* =========================
+     NO DUPLICATES. One script.
+  ========================== */
   const body = document.body;
+  let lastScrollY = 0;
+
+  function lockScroll(){
+    lastScrollY = window.scrollY || 0;
+    document.body.style.overflow = 'hidden';
+  }
+  function unlockScroll(){
+    document.body.style.overflow = '';
+    window.scrollTo({ top: lastScrollY, behavior:'auto' });
+  }
+
+  /* Theme (persist) */
   function setTheme(mode){
     const isLight = mode === 'light';
     body.classList.toggle('theme-light', isLight);
@@ -1175,22 +1152,25 @@
   document.getElementById('fabTheme').addEventListener('click', toggleTheme);
 
   /* Smooth to pricing */
+  const pricingEl = document.getElementById('pricing');
   document.getElementById('btnPricing').addEventListener('click', ()=>{
-    document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
+    pricingEl.scrollIntoView({ behavior:'smooth', block:'start' });
   });
 
   /* WhatsApp help */
   const HELP_WA = "https://wa.me/8801611611139?text=" + encodeURIComponent("Assalamu Alaikum, IELTS Journey niye help chai.");
-  const fabHelp = document.getElementById('fabHelp');
-  fabHelp.addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
-  fabHelp.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') window.open(HELP_WA, '_blank', 'noopener'); });
+  document.getElementById('fabHelp').addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
 
-  /* Scroll to top button */
-  const fabTop = document.getElementById('fabTop');
-  fabTop.addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
-  fabTop.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') window.scrollTo({ top:0, behavior:'smooth' }); });
+  /* Scroll to top */
+  document.getElementById('fabTop').addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
 
-  /* ===== Video mapping ===== */
+  /* Stop mini/button click from triggering card play */
+  document.querySelectorAll('.mini, .btn, .chip, .iconbtn, .topHamburger').forEach(btn=>{
+    btn.addEventListener('click', (e)=> e.stopPropagation());
+    btn.addEventListener('pointerdown', (e)=> e.stopPropagation());
+  });
+
+  /* Video mapping */
   const VIDEOS = {
     top: "https://youtube.com/shorts/faPi5s_NdxI",
     zero: "https://youtube.com/shorts/OlKhqCLJyDY",
@@ -1219,21 +1199,11 @@
     }
   }
 
-  /* ===== Video modal ===== */
+  /* Video modal */
   const videoOverlay = document.getElementById('videoOverlay');
   const videoFrame = document.getElementById('videoFrame');
   const videoTitle = document.getElementById('videoTitle');
   const openYouTube = document.getElementById('openYouTube');
-  let lastScrollY = 0;
-
-  function lockScroll(){
-    lastScrollY = window.scrollY;
-    document.body.style.overflow = 'hidden';
-  }
-  function unlockScroll(){
-    document.body.style.overflow = '';
-    window.scrollTo({ top: lastScrollY, behavior:'auto' });
-  }
 
   function openVideo(key, label){
     lockScroll();
@@ -1254,29 +1224,25 @@
 
   videoOverlay.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', closeVideo));
 
-  function bindCard(card, key, label){
+  function bindCard(cardId, key, label){
+    const card = document.getElementById(cardId);
     card.addEventListener('click', ()=> openVideo(key, label));
     card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openVideo(key, label); });
   }
-  bindCard(document.getElementById('cardTop'), 'top', 'IELTS Journey');
-  bindCard(document.getElementById('cardZero'), 'zero', 'IELTS ZERO');
-  bindCard(document.getElementById('cardHope'), 'hope', 'IELTS HOPE');
-  bindCard(document.getElementById('cardStepup'), 'stepup', 'IELTS STEP-UP');
-  bindCard(document.getElementById('cardDesperate'), 'desperate', 'IELTS DESPERATE');
+  bindCard('cardTop', 'top', 'IELTS Journey');
+  bindCard('cardZero', 'zero', 'IELTS ZERO');
+  bindCard('cardHope', 'hope', 'IELTS HOPE');
+  bindCard('cardStepup', 'stepup', 'IELTS STEP-UP');
+  bindCard('cardDesperate', 'desperate', 'IELTS DESPERATE');
 
-  /* Stop buttons from triggering card video */
-  document.querySelectorAll('.mini, .btn, .chip, .iconbtn, .topHamburger, .menuItem, .footerbtn').forEach(el=>{
-    el.addEventListener('click', (e)=> e.stopPropagation());
-    el.addEventListener('pointerdown', (e)=> e.stopPropagation());
-  });
-
+  /* Admit -> pricing */
   document.querySelectorAll('[data-admit]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
+      pricingEl.scrollIntoView({ behavior:'smooth', block:'start' });
     });
   });
 
-  /* ===== Routine modal ===== */
+  /* Routine modal */
   const routineOverlay = document.getElementById('routineOverlay');
   function openRoutine(){
     lockScroll();
@@ -1291,7 +1257,7 @@
   routineOverlay.querySelectorAll('[data-close-routine]').forEach(el=> el.addEventListener('click', closeRoutine));
   document.querySelectorAll('[data-routine]').forEach(btn=> btn.addEventListener('click', openRoutine));
 
-  /* ===== Details modal (tap-only) ===== */
+  /* Details modal */
   const detailsOverlay = document.getElementById('detailsOverlay');
   const detailsTitle = document.getElementById('detailsTitle');
   const detailsMenu = document.getElementById('detailsMenu');
@@ -1309,7 +1275,6 @@
     { key:'with', title:'This Course Comes With' }
   ];
 
-  /* Keep your exact text (unchanged) */
   const DETAILS = {
     zero:{
       skills:
@@ -1571,8 +1536,35 @@ This course is for students who want proper preparation, not random practice`,
     }
   };
 
+  function escapeHtml(s){
+    return (s||"").replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+
+  function highlightText(raw){
+    const safe = escapeHtml(raw);
+    const lines = safe.split('\n').map(line=>{
+      const t = line.trim();
+
+      if(/^(Reading|Listening|Writing|Speaking|Mock)\s*:$/i.test(t)) return `<span class="hl-hdr">${line}</span>`;
+      if(/^Total\s*:\s*/i.test(t) || /^Total\s*-\s*/i.test(t)) return `<span class="hl-gold">${line}</span>`;
+      if(/^12\s*Classes/i.test(t) || /^16\s*Evaluations/i.test(t) || /^4\s*Evaluation/i.test(t) || /^Total:\s*\d+/i.test(t)) return `<span class="hl-imp">${line}</span>`;
+      if(/^After\s+/i.test(t) || /^AIM\s+of/i.test(t) || /^Aim\s+of/i.test(t) ||
+         /^Who\s+should/i.test(t) || /^This\s+Course\s+Comes\s+With/i.test(t) ||
+         /^Benefited\s+Modules/i.test(t) || /^Skilled\s+Covered/i.test(t) || /^Skills\s+Covered/i.test(t)){
+        return `<span class="hl-hdr">${line}</span>`;
+      }
+      if(/^[•-]\s+/.test(t)) return `<span class="hl-soft">${line}</span>`;
+      return line;
+    });
+
+    return lines.join('\n').replace(/→/g, `<span class="hl-gold">→</span>`);
+  }
+
   function openDetails(courseKey){
     lockScroll();
+    detailsOverlay.dataset.courseKey = courseKey;
     detailsTitle.textContent = `Details — ${courseKey.toUpperCase()}`;
     detailsOverlay.classList.add('show');
     detailsOverlay.setAttribute('aria-hidden','false');
@@ -1587,7 +1579,6 @@ This course is for students who want proper preparation, not random practice`,
     unlockScroll();
   }
 
-  /* NEW: render "Tap to view" as button */
   function renderDetailsMenu(courseKey){
     detailsMenu.innerHTML = '';
     detailsMenu.style.display = '';
@@ -1597,59 +1588,11 @@ This course is for students who want proper preparation, not random practice`,
       const div = document.createElement('div');
       div.className = 'opt';
       div.tabIndex = 0;
-      div.innerHTML = `
-        <b>${sec.title}</b>
-        <div class="viewbtn" aria-hidden="true"><span class="dot"></span>Tap to view</div>
-      `;
+      div.innerHTML = `<b>${sec.title}</b><div class="viewbtn"><span class="dot"></span>Tap to view</div>`;
       div.addEventListener('click', ()=> showDetailsSection(courseKey, sec));
       div.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') showDetailsSection(courseKey, sec); });
       detailsMenu.appendChild(div);
     });
-  }
-
-  /* NEW: highlight important parts without changing original text */
-  function escapeHtml(s){
-    return s.replace(/[&<>"']/g, c => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[c]));
-  }
-
-  function highlightText(raw){
-    const safe = escapeHtml(raw);
-
-    // line-based highlights
-    const lines = safe.split('\n').map(line=>{
-      const t = line.trim();
-
-      // Headings like "Reading:" "Writing:" etc.
-      if(/^(Reading|Listening|Writing|Speaking|Mock)\s*:$/i.test(t)){
-        return `<span class="hl-hdr">${line}</span>`;
-      }
-
-      // Important totals / counts
-      if(/^Total\s*:\s*/i.test(t) || /^Total\s*-\s*/i.test(t)){
-        return `<span class="hl-gold">${line}</span>`;
-      }
-      if(/^12\s*Classes/i.test(t) || /^16\s*Evaluations/i.test(t) || /^4\s*Evaluation/i.test(t)){
-        return `<span class="hl-imp">${line}</span>`;
-      }
-
-      // "Who will you become" style lines
-      if(/^After\s+/i.test(t) || /^AIM\s+of/i.test(t) || /^Aim\s+of/i.test(t) || /^Who\s+should/i.test(t) || /^This\s+Course\s+Comes\s+With/i.test(t) || /^Benefited\s+Modules/i.test(t) || /^Skilled\s+Covered/i.test(t)){
-        return `<span class="hl-hdr">${line}</span>`;
-      }
-
-      // bullet lines (keep normal, but slightly stronger)
-      if(/^[•-]\s+/.test(t)){
-        return `<span class="hl-soft">${line}</span>`;
-      }
-
-      return line;
-    });
-
-    return lines.join('\n')
-      // make arrow tips slightly stronger
-      .replace(/→/g, `<span class="hl-gold">→</span>`);
   }
 
   function showDetailsSection(courseKey, sec){
@@ -1657,26 +1600,23 @@ This course is for students who want proper preparation, not random practice`,
     detailsMenu.style.display = 'none';
     detailsView.style.display = '';
     detailsViewTitle.textContent = sec.title;
-
     const raw = data[sec.key] || "Coming soon.";
     detailsViewBody.innerHTML = highlightText(raw);
   }
 
   detailsBack.addEventListener('click', ()=>{
-    const t = (detailsTitle.textContent || '').toLowerCase();
-    const key = t.includes('zero') ? 'zero' : t.includes('hope') ? 'hope' : t.includes('step') ? 'stepup' : 'desperate';
+    const key = detailsOverlay.dataset.courseKey || 'zero';
     renderDetailsMenu(key);
   });
 
   detailsOverlay.querySelectorAll('[data-close-details]').forEach(el=> el.addEventListener('click', closeDetails));
   document.querySelectorAll('[data-details]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const key = btn.getAttribute('data-details');
-      openDetails(key);
+      openDetails(btn.getAttribute('data-details'));
     });
   });
 
-  /* ===== Pay modal ===== */
+  /* Pay modal */
   const payOverlay = document.getElementById('payOverlay');
   const sendScreenshotBtn = document.getElementById('sendScreenshotBtn');
 
@@ -1688,36 +1628,17 @@ This course is for students who want proper preparation, not random practice`,
     const msg = encodeURIComponent("Assalamu Alaikum, ami payment korechi. Screenshot attach korchi. Please confirm my admission.");
     sendScreenshotBtn.href = `https://wa.me/8801611611139?text=${msg}`;
   }
-
   function closePay(){
     payOverlay.classList.remove('show');
     payOverlay.setAttribute('aria-hidden','true');
     unlockScroll();
   }
-
   payOverlay.querySelectorAll('[data-close-pay]').forEach(el=> el.addEventListener('click', closePay));
   document.querySelectorAll('[data-open-pay]').forEach(btn=> btn.addEventListener('click', openPay));
+  document.querySelectorAll('[data-open-help]').forEach(btn=> btn.addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener')));
 
-  document.querySelectorAll('[data-open-help]').forEach(btn=>{
-    btn.addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
-  });
-
-  /* Escape close */
-  document.addEventListener('keydown', (e)=>{
-    if(e.key==='Escape'){
-      if(videoOverlay.classList.contains('show')) closeVideo();
-      if(detailsOverlay.classList.contains('show')) closeDetails();
-      if(routineOverlay.classList.contains('show')) closeRoutine();
-      if(payOverlay.classList.contains('show')) closePay();
-      if(menuOverlay.classList.contains('show')) closeMenu();
-    }
-  });
-
-  /* ===== Menu overlay ===== */
+  /* Menu overlay */
   const menuOverlay = document.getElementById('menuOverlay');
-  const fabMenu = document.getElementById('fabMenu');
-  const btnMenuTop = document.getElementById('btnMenuTop');
-
   function openMenu(){
     lockScroll();
     menuOverlay.classList.add('show');
@@ -1728,32 +1649,22 @@ This course is for students who want proper preparation, not random practice`,
     menuOverlay.setAttribute('aria-hidden','true');
     unlockScroll();
   }
-  function bindOpen(el){
-    el.addEventListener('click', openMenu);
-    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openMenu(); });
-  }
-  bindOpen(fabMenu);
-  bindOpen(btnMenuTop);
 
+  document.getElementById('fabMenu').addEventListener('click', openMenu);
+  document.getElementById('btnMenuTop').addEventListener('click', openMenu);
   menuOverlay.querySelectorAll('[data-close-menu]').forEach(el=> el.addEventListener('click', closeMenu));
-  document.getElementById('menuGoPricing').addEventListener('click', ()=>{
-    closeMenu();
-    document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
-  });
-  document.getElementById('menuHelp').addEventListener('click', ()=>{
-    window.open(HELP_WA, '_blank', 'noopener');
-  });
+  document.getElementById('menuGoPricing').addEventListener('click', ()=>{ closeMenu(); pricingEl.scrollIntoView({ behavior:'smooth', block:'start' }); });
+  document.getElementById('menuHelp').addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
 
-  /* ===== Scroll lock helpers (shared) ===== */
-  const videoOverlay = document.getElementById('videoOverlay');
-  function lockScroll(){
-    lastScrollY = window.scrollY;
-    document.body.style.overflow = 'hidden';
-  }
-  function unlockScroll(){
-    document.body.style.overflow = '';
-    window.scrollTo({ top: lastScrollY, behavior:'auto' });
-  }
+  /* ESC close */
+  document.addEventListener('keydown', (e)=>{
+    if(e.key !== 'Escape') return;
+    if(videoOverlay.classList.contains('show')) closeVideo();
+    if(detailsOverlay.classList.contains('show')) closeDetails();
+    if(routineOverlay.classList.contains('show')) closeRoutine();
+    if(payOverlay.classList.contains('show')) closePay();
+    if(menuOverlay.classList.contains('show')) closeMenu();
+  });
 </script>
 </body>
 </html>

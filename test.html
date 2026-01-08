@@ -19,8 +19,6 @@
     --muted:rgba(255,255,255,.72);
     --gold:#d6b35a;
     --gold2:#caa64a;
-    --accent:#36d28b;
-    --danger:#ff5b5b;
     --shadow: 0 18px 60px rgba(0,0,0,.40);
     --radius-xl: 22px;
     --radius-lg: 18px;
@@ -126,17 +124,6 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .topHamburger{
-    width:44px; height:44px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    color: var(--text);
-    display:grid; place-items:center;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-
   /* ===== FIRST SCREEN (5 cards visible) ===== */
   .screen{
     padding: 14px 0 18px;
@@ -160,69 +147,55 @@
     box-shadow: var(--shadow);
     background: rgba(255,255,255,.03);
     transform: translateZ(0);
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
   }
 
-  /* overlay shading */
   .card::after{
     content:"";
     position:absolute; inset:0;
     background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.55));
     pointer-events:none;
-    z-index: 2;
+    z-index:1;
   }
   .theme-light .card::after{
     background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.32));
   }
 
-  /* Image layer (never blocked by Tap UI) */
+  /* Image area */
   .imgwrap{
     position:absolute; inset:0;
     display:flex;
     align-items:center;
     justify-content:center;
-    z-index: 1;
     background:
       radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.14), transparent 55%),
       linear-gradient(180deg, rgba(6,43,31,.78), rgba(4,31,22,.95));
+    z-index:0;
   }
   .theme-light .imgwrap{
     background:
       radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.12), transparent 55%),
       linear-gradient(180deg, rgba(255,255,255,.92), rgba(238,246,243,.98));
   }
-
+  .imgwrap picture{ width:100%; height:100%; display:block; }
   .cardimg{
     width:100%;
     height:100%;
+    object-fit: cover;  /* desktop looks like desktop */
     object-position:center;
+    display:block;
     filter: saturate(1.02);
-    /* DESKTOP frame default */
-    object-fit: contain;
-    padding: 0;
-  }
-
-  /* MOBILE frame differs (requested) */
-  @media (max-width: 720px){
-    .cardimg{
-      object-fit: cover;            /* different frame than desktop */
-      transform: scale(1.02);
-    }
   }
 
   .card-content{
     position:relative;
-    z-index: 3; /* above overlay shading */
+    z-index:2;
     height:100%;
     padding: 12px;
     display:flex;
     align-items:flex-end;
     justify-content:space-between;
     gap:10px;
-    pointer-events:none; /* card click works */
   }
-  .card-content *{ pointer-events:auto; } /* but buttons still clickable */
 
   .left-stack{ display:flex; flex-direction:column; gap:8px; min-width:0; }
 
@@ -233,9 +206,9 @@
     border:1px solid rgba(255,255,255,.16);
     background: rgba(255,255,255,.06);
     width: fit-content;
-    font-weight:950;
+    font-weight:900;
     font-size:12px;
-    color: rgba(255,255,255,.90);
+    color: rgba(255,255,255,.88);
   }
   .theme-light .pill{
     border-color: rgba(10,32,22,.18);
@@ -243,30 +216,39 @@
     color: rgba(10,32,22,.88);
   }
 
+  /* Title color (different) */
   .title{
-    font-weight:980;
+    font-weight:950;
     font-size: 16px;
     line-height:1.15;
     letter-spacing:.2px;
+    color: rgba(214,179,90,.98);
+    text-shadow: 0 10px 26px rgba(0,0,0,.25);
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
     max-width: 75vw;
   }
+  .theme-light .title{ color: rgba(10,32,22,.92); text-shadow:none; }
 
-  /* Tap to Play (fixed: never covers the image weirdly on mobile) */
+  /* Tap-to-Play: keep above image & readable on mobile */
   .tap{
     display:inline-flex; align-items:center; gap:10px;
     padding: 10px 12px;
     border-radius: 999px;
     border:1px solid var(--stroke);
-    background: rgba(255,255,255,.10);
+    background: rgba(4,31,22,.55);
     font-weight:950;
     font-size:13px;
+    cursor:pointer;
     user-select:none;
-    box-shadow: 0 10px 26px rgba(0,0,0,.18);
+    -webkit-tap-highlight-color: transparent;
     backdrop-filter: blur(10px);
+    box-shadow: 0 10px 26px rgba(0,0,0,.22);
+    flex: 0 0 auto;
   }
+  .theme-light .tap{ background: rgba(255,255,255,.68); }
+
   .tap .dot{
     width:10px; height:10px;
     border-radius:50%;
@@ -309,7 +291,6 @@
     z-index: 12050;
   }
   .overlay.show{ display:flex; }
-
   .back{ position:absolute; inset:0; background: rgba(0,0,0,.52); }
 
   .sheet{
@@ -331,8 +312,7 @@
     display:flex; align-items:flex-start; justify-content:space-between;
     gap:10px; margin-bottom:10px;
   }
-  .sheet-top h3{ margin:0; font-size:16px; line-height:1.2; color: var(--gold); }
-  .theme-light .sheet-top h3{ color: rgba(10,32,22,.92); }
+  .sheet-top h3{ margin:0; font-size:16px; line-height:1.2; }
   .sheet-top p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
 
   .x{
@@ -356,23 +336,26 @@
     padding: 12px;
   }
 
-  /* Tap-to-view looks like a real button now */
-  .tapbtn{
+  /* "Tap to view" -> looks like a button */
+  .tapview{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    padding: 8px 10px;
-    border-radius: 999px;
+    margin-top:10px;
+    padding: 10px 12px;
+    border-radius: 14px;
     border:1px solid rgba(214,179,90,.42);
-    background: rgba(214,179,90,.14);
+    background: rgba(214,179,90,.16);
+    color: rgba(255,255,255,.95);
     font-weight:950;
     font-size:12px;
-    margin-top:8px;
     width: fit-content;
   }
-
-  .opt b{ display:block; margin-bottom:2px; font-size:14px; color: var(--gold); }
-  .theme-light .opt b{ color: rgba(10,32,22,.92); }
+  .theme-light .tapview{
+    color: rgba(10,32,22,.92);
+    background: rgba(214,179,90,.28);
+    border-color: rgba(214,179,90,.55);
+  }
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
@@ -415,6 +398,13 @@
     .videoFrame{ width: 420px; }
   }
 
+  /* Details content highlighting */
+  .detailsBody{ color:var(--muted); font-size:13px; line-height:1.55; white-space:pre-line; }
+  .detailsBody .hl{ color: rgba(214,179,90,.98); font-weight:950; }
+  .detailsBody .k{ color: rgba(255,255,255,.92); font-weight:900; }
+  .theme-light .detailsBody .k{ color: rgba(10,32,22,.92); }
+  .theme-light .detailsBody .hl{ color: rgba(176,106,0,.98); }
+
   /* ===== PRICING ===== */
   .section{ padding: 10px 0 120px; }
 
@@ -427,8 +417,7 @@
   }
 
   .panel-head{ padding: 16px; border-bottom: 1px solid var(--stroke); }
-  .panel-head h2{ margin:0; font-size:18px; color: var(--gold); }
-  .theme-light .panel-head h2{ color: rgba(10,32,22,.92); }
+  .panel-head h2{ margin:0; font-size:18px; }
   .panel-head p{ margin:8px 0 0; color:var(--muted); font-size:13px; }
 
   .list{ padding: 14px 14px 8px; display:grid; gap:10px; }
@@ -460,8 +449,7 @@
     gap:10px;
     flex-wrap:wrap;
   }
-  .subhead h3{ margin:0; font-size:15px; color: var(--gold); }
-  .theme-light .subhead h3{ color: rgba(10,32,22,.92); }
+  .subhead h3{ margin:0; font-size:15px; }
 
   /* ===== FOOTER ===== */
   footer{ padding: 0 0 160px; }
@@ -479,10 +467,17 @@
     margin-top:10px;
   }
   @media (max-width:820px){ .footer-cols{ grid-template-columns: 1fr; } }
-  .ft-title{ margin:0 0 8px; font-weight:950; font-size:13px; color: var(--gold); }
-  .theme-light .ft-title{ color: rgba(10,32,22,.92); }
+  .ft-title{ margin:0 0 8px; font-weight:950; font-size:13px; }
   .ft-text{ margin:0; color: var(--muted); font-size:13px; line-height:1.5; }
   .ft-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+
+  /* extra footer quick buttons (requested) */
+  .footerQuick{
+    margin-top:12px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
 
   /* ===== Floating Buttons ===== */
   .fab{
@@ -517,7 +512,21 @@
   .top-fab{ right:14px; bottom:108px; }
   .theme-fab{ right:14px; bottom:162px; }
 
-  .menuList{ display:grid; gap:10px; }
+  .topHamburger{
+    width:44px; height:44px;
+    border-radius: 999px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.03);
+    color: var(--text);
+    display:grid; place-items:center;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .menuList{
+    display:grid;
+    gap:10px;
+  }
   .menuItem{
     display:flex;
     align-items:center;
@@ -577,37 +586,6 @@
   .theme-light .tagZero{ color:#0b7a4a; }
   .theme-light .tagStep{ color:#b06a00; }
   .theme-light .tagDes{ color:#0b7a4a; }
-
-  /* ===== Details highlight formatting ===== */
-  .details-body{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.6;
-  }
-  .hl-title{
-    color: var(--gold);
-    font-weight: 980;
-  }
-  .hl-strong{
-    color: rgba(255,255,255,.92);
-    font-weight: 980;
-  }
-  .theme-light .hl-strong{
-    color: rgba(10,32,22,.92);
-  }
-  .hl-badge{
-    display:inline-block;
-    padding: 2px 8px;
-    border-radius: 999px;
-    border: 1px solid rgba(214,179,90,.42);
-    background: rgba(214,179,90,.14);
-    color: rgba(255,255,255,.95);
-    font-weight: 980;
-    margin: 2px 0;
-  }
-  .theme-light .hl-badge{
-    color: rgba(10,32,22,.92);
-  }
 </style>
 </head>
 
@@ -635,7 +613,7 @@
     </div>
   </div>
 
-  <!-- FIRST SCREEN: 5 cards must appear -->
+  <!-- FIRST SCREEN -->
   <main class="screen">
     <div class="container">
       <div class="cards">
@@ -643,7 +621,10 @@
         <!-- TOP CARD -->
         <div class="card topcard" id="cardTop" role="button" tabindex="0" aria-label="Play IELTS Journey top video">
           <div class="imgwrap">
-            <img class="cardimg" src="/assets/ielts-journey-top.png" alt="IELTS Journey Top" />
+            <picture>
+              <source media="(max-width: 720px)" srcset="/assets/ielts-journey-top-mobile.png">
+              <img class="cardimg" src="/assets/ielts-journey-top-desktop.png" alt="IELTS Journey Top" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -659,7 +640,10 @@
         <!-- ZERO -->
         <div class="card" id="cardZero" role="button" tabindex="0" aria-label="Play IELTS ZERO video">
           <div class="imgwrap">
-            <img class="cardimg" src="/assets/ielts-zero.png" alt="IELTS ZERO" />
+            <picture>
+              <source media="(max-width: 720px)" srcset="/assets/ielts-zero-mobile.png">
+              <img class="cardimg" src="/assets/ielts-zero-desktop.png" alt="IELTS ZERO" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -679,7 +663,10 @@
         <!-- HOPE -->
         <div class="card" id="cardHope" role="button" tabindex="0" aria-label="Play IELTS HOPE video">
           <div class="imgwrap">
-            <img class="cardimg" src="/assets/ielts-hope.png" alt="IELTS HOPE" />
+            <picture>
+              <source media="(max-width: 720px)" srcset="/assets/ielts-hope-mobile.png">
+              <img class="cardimg" src="/assets/ielts-hope-desktop.png" alt="IELTS HOPE" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -699,7 +686,10 @@
         <!-- STEP-UP -->
         <div class="card" id="cardStepup" role="button" tabindex="0" aria-label="Play IELTS STEP-UP video">
           <div class="imgwrap">
-            <img class="cardimg" src="/assets/ielts-stepup.png" alt="IELTS STEP-UP" />
+            <picture>
+              <source media="(max-width: 720px)" srcset="/assets/ielts-stepup-mobile.png">
+              <img class="cardimg" src="/assets/ielts-stepup-desktop.png" alt="IELTS STEP-UP" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -719,7 +709,10 @@
         <!-- DESPERATE -->
         <div class="card" id="cardDesperate" role="button" tabindex="0" aria-label="Play IELTS DESPERATE video">
           <div class="imgwrap">
-            <img class="cardimg" src="/assets/ielts-desperate.png" alt="IELTS DESPERATE" />
+            <picture>
+              <source media="(max-width: 720px)" srcset="/assets/ielts-desperate-mobile.png">
+              <img class="cardimg" src="/assets/ielts-desperate-desktop.png" alt="IELTS DESPERATE" />
+            </picture>
           </div>
           <div class="card-content">
             <div class="left-stack">
@@ -749,7 +742,6 @@
           <p>Tap <b>Pay</b> to see payment options. Tap <b>Help</b> for WhatsApp support.</p>
         </div>
 
-        <!-- Course Prices -->
         <div class="list" aria-label="Course pricing list">
           <div class="rowitem">
             <div class="meta"><b>IELTS ZERO — 4,200</b><span>Course fee</span></div>
@@ -786,7 +778,6 @@
 
         <div class="divider"></div>
 
-        <!-- Combos -->
         <div class="subhead"><h3>Combos</h3></div>
 
         <div class="list" aria-label="Combo pricing list">
@@ -855,9 +846,16 @@
               <b>IELTS/PTE Helpline:</b> 01611611139<br/>
               <b>Study Abroad/Visa Processing:</b> 01608881545
             </p>
+
             <div class="ft-links">
               <a class="btn ghost" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">Open Map</a>
               <a class="btn primary" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20IELTS%20Journey%20niye%20help%20chai." target="_blank" rel="noopener">Chat Now</a>
+            </div>
+
+            <div class="footerQuick">
+              <a class="btn" href="tel:+8801611611139">Call IELTS</a>
+              <a class="btn" href="tel:+8801608881545">Call Study Abroad</a>
+              <a class="btn primary" href="#pricing">Go Pricing</a>
             </div>
           </div>
 
@@ -934,10 +932,8 @@
       <div class="grid2" id="detailsMenu"></div>
 
       <div class="opt" id="detailsView" style="display:none; margin-top:10px;">
-        <b id="detailsViewTitle"></b>
-        <div id="detailsViewBody" class="details-body" style="white-space:normal;"></div>
-
-        <!-- footer buttons (already) -->
+        <b id="detailsViewTitle" style="color: rgba(214,179,90,.98);"></b>
+        <div id="detailsViewBody" class="detailsBody"></div>
         <div class="row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
           <button class="btn" type="button" id="detailsBack">Back</button>
           <button class="btn ghost" type="button" data-close-details>Close</button>
@@ -1059,6 +1055,7 @@
     const isLight = body.classList.contains('theme-light');
     setTheme(isLight ? 'dark' : 'light');
   }
+
   document.getElementById('btnTheme').addEventListener('click', toggleTheme);
   document.getElementById('fabTheme').addEventListener('click', toggleTheme);
 
@@ -1132,6 +1129,7 @@
     document.body.style.overflow = '';
     window.scrollTo({ top: lastScrollY, behavior:'instant' });
   }
+
   videoOverlay.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', closeVideo));
 
   function bindCard(card, key, label){
@@ -1144,11 +1142,12 @@
   bindCard(document.getElementById('cardStepup'), 'stepup', 'IELTS STEP-UP');
   bindCard(document.getElementById('cardDesperate'), 'desperate', 'IELTS DESPERATE');
 
-  /* Stop card click when pressing mini buttons */
+  /* stop card click when pressing mini buttons */
   document.querySelectorAll('.mini').forEach(btn=>{
     btn.addEventListener('click', (e)=> e.stopPropagation());
   });
 
+  /* Admit buttons -> pricing */
   document.querySelectorAll('[data-admit]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
@@ -1190,7 +1189,6 @@
     { key:'with', title:'This Course Comes With' }
   ];
 
-  /* DETAILS (as-is) */
   const DETAILS = {
     zero:{
       skills:
@@ -1452,39 +1450,10 @@ This course is for students who want proper preparation, not random practice`,
     }
   };
 
-  function escapeHtml(s){
-    return (s || "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;");
-  }
-
-  function formatDetails(text){
-    let t = escapeHtml(text);
-
-    // highlight headings like "Reading:" "Writing:" "Speaking:" "Mock" etc
-    t = t.replaceAll(/(^|\n)(Reading:|Listening:|Writing:|Speaking:|Mock)\s*:?/g, (m,p1,word)=> `${p1}<span class="hl-title">${word}:</span>`);
-
-    // highlight "12 Classes", "16 Evaluations", "Total: 28 Sessions", "Total: 16 sessions"
-    t = t.replaceAll(/(12\s*Classes?(\s*\+)?)/gi, '<span class="hl-badge">$1</span>');
-    t = t.replaceAll(/(16\s*Evaluations?)/gi, '<span class="hl-badge">$1</span>');
-    t = t.replaceAll(/(Total\s*:\s*\d+\s*Sessions?)/gi, '<span class="hl-badge">$1</span>');
-    t = t.replaceAll(/(Total\s*:\s*\d+\s*sessions?)/gi, '<span class="hl-badge">$1</span>');
-
-    // bullets look stronger
-    t = t.replaceAll(/•\s*/g, '• <span class="hl-strong">');
-    // close the strong span at line end (simple but effective)
-    t = t.replaceAll(/(\n|$)/g, '</span>$1');
-
-    // convert new lines to <br>
-    t = t.replaceAll("\n","<br/>");
-
-    return t;
-  }
-
   function openDetails(courseKey){
     lastScrollY = window.scrollY;
-    detailsTitle.textContent = `Details — ${courseKey.toUpperCase()}`;
+    const label = courseKey === 'stepup' ? 'STEP-UP' : courseKey.toUpperCase();
+    detailsTitle.textContent = `Details — ${label}`;
     detailsOverlay.classList.add('show');
     detailsOverlay.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
@@ -1509,11 +1478,39 @@ This course is for students who want proper preparation, not random practice`,
       const div = document.createElement('div');
       div.className = 'opt';
       div.tabIndex = 0;
-      div.innerHTML = `<b>${sec.title}</b><div class="tapbtn">Tap to view</div>`;
+
+      div.innerHTML = `
+        <b style="font-size:15px; color: rgba(214,179,90,.98);">${sec.title}</b>
+        <div class="tapview">Tap to View</div>
+      `;
+
       div.addEventListener('click', ()=> showDetailsSection(courseKey, sec));
       div.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') showDetailsSection(courseKey, sec); });
       detailsMenu.appendChild(div);
     });
+  }
+
+  function highlightText(txt){
+    // highlight key words / important points (simple, deterministic)
+    const lines = (txt || "").split('\n').map(l=>{
+      let s = l;
+
+      // key labels
+      s = s.replace(/^([A-Za-z ]+):/g, '<span class="hl">$1:</span>');
+      s = s.replace(/^(Mock)/g, '<span class="hl">$1</span>');
+      s = s.replace(/^(Reading|Writing|Speaking|Listening)/g, '<span class="hl">$1</span>');
+
+      // important numbers
+      s = s.replace(/\b(12 classes|16 Evaluations|Total: 28 Sessions|Total: 16 sessions)\b/g, '<span class="k">$1</span>');
+
+      // day/time patterns
+      s = s.replace(/\b(Sun|Mon|Tue|Wed|Thu|Fri)\b/g, '<span class="k">$1</span>');
+      s = s.replace(/\b(8 pm|9 pm|10 pm)\b/gi, '<span class="k">$1</span>');
+
+      return s;
+    });
+
+    return lines.join('<br/>');
   }
 
   function showDetailsSection(courseKey, sec){
@@ -1521,7 +1518,9 @@ This course is for students who want proper preparation, not random practice`,
     detailsMenu.style.display = 'none';
     detailsView.style.display = '';
     detailsViewTitle.textContent = sec.title;
-    detailsViewBody.innerHTML = formatDetails(data[sec.key] || "Coming soon.");
+
+    const raw = data[sec.key] || "Coming soon.";
+    detailsViewBody.innerHTML = highlightText(raw);
   }
 
   detailsBack.addEventListener('click', ()=>{
@@ -1560,9 +1559,20 @@ This course is for students who want proper preparation, not random practice`,
   }
 
   payOverlay.querySelectorAll('[data-close-pay]').forEach(el=> el.addEventListener('click', closePay));
-  document.querySelectorAll('[data-open-pay]').forEach(btn=> btn.addEventListener('click', (e)=>{ e.stopPropagation(); openPay(); }));
+  document.querySelectorAll('[data-open-pay]').forEach(btn=> btn.addEventListener('click', openPay));
   document.querySelectorAll('[data-open-help]').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{ e.stopPropagation(); window.open(HELP_WA, '_blank', 'noopener'); });
+    btn.addEventListener('click', ()=> window.open(HELP_WA, '_blank', 'noopener'));
+  });
+
+  /* Escape close */
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape'){
+      if(videoOverlay.classList.contains('show')) closeVideo();
+      if(detailsOverlay.classList.contains('show')) closeDetails();
+      if(routineOverlay.classList.contains('show')) closeRoutine();
+      if(payOverlay.classList.contains('show')) closePay();
+      if(menuOverlay.classList.contains('show')) closeMenu();
+    }
   });
 
   /* ===== Menu overlay ===== */
@@ -1588,25 +1598,14 @@ This course is for students who want proper preparation, not random practice`,
   }
   bindOpen(fabMenu);
   bindOpen(btnMenuTop);
-  menuOverlay.querySelectorAll('[data-close-menu]').forEach(el=> el.addEventListener('click', closeMenu));
 
+  menuOverlay.querySelectorAll('[data-close-menu]').forEach(el=> el.addEventListener('click', closeMenu));
   document.getElementById('menuGoPricing').addEventListener('click', ()=>{
     closeMenu();
     document.getElementById('pricing').scrollIntoView({ behavior:'smooth', block:'start' });
   });
   document.getElementById('menuHelp').addEventListener('click', ()=>{
     window.open(HELP_WA, '_blank', 'noopener');
-  });
-
-  /* ===== Escape close ===== */
-  document.addEventListener('keydown', (e)=>{
-    if(e.key==='Escape'){
-      if(videoOverlay.classList.contains('show')) closeVideo();
-      if(detailsOverlay.classList.contains('show')) closeDetails();
-      if(routineOverlay.classList.contains('show')) closeRoutine();
-      if(payOverlay.classList.contains('show')) closePay();
-      if(menuOverlay.classList.contains('show')) closeMenu();
-    }
   });
 </script>
 </body>

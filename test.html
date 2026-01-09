@@ -1,456 +1,104 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LizOn Education — IELTS Journey</title>
-  <meta name="description" content="IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Tap-only experience with videos, pricing, combos, and payment." />
-  <meta name="theme-color" content="#062b1f" />
-  <style>
-    :root {
-      /* Dark mode (NO pure black) */
-      --bg: #041f16;
-      --bg2: #062b1f;
-      --panel: rgba(255, 255, 255, .06);
-      --panel2: rgba(255, 255, 255, .08);
-      --stroke: rgba(255, 255, 255, .14);
-      --text: rgba(255, 255, 255, .92);
-      --muted: rgba(255, 255, 255, .72);
-      --gold: #d6b35a;
-      --gold2: #caa64a;
-      --shadow: 0 18px 60px rgba(0, 0, 0, .40);
-      --radius-xl: 22px;
-      --radius-lg: 18px;
-      --radius-md: 14px;
-      --topbar-h: 64px;
-    }
+<!-- First Screen (5 cards visible) -->
+<main class="screen">
+  <div class="container">
+    <div class="cards">
 
-    .theme-light {
-      --bg: #eef6f3;
-      --bg2: #ffffff;
-      --panel: rgba(10, 32, 22, .06);
-      --panel2: rgba(10, 32, 22, .08);
-      --stroke: rgba(10, 32, 22, .14);
-      --text: rgba(10, 32, 22, .92);
-      --muted: rgba(10, 32, 22, .70);
-      --shadow: 0 18px 60px rgba(0, 0, 0, .12);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      height: 100%;
-    }
-
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 700px at 18% 0%, rgba(35, 140, 110, .18), transparent 55%),
-        radial-gradient(900px 650px at 85% 25%, rgba(214, 179, 90, .10), transparent 58%),
-        linear-gradient(180deg, var(--bg2), var(--bg));
-      color: var(--text);
-      line-height: 1.35;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    .container {
-      width: min(1100px, 92vw);
-      margin: 0 auto;
-    }
-
-    /* ===== TOPBAR ===== */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 9999;
-      backdrop-filter: blur(12px);
-      background: rgba(4, 31, 22, .72);
-      border-bottom: 1px solid var(--stroke);
-    }
-
-    .theme-light .topbar {
-      background: rgba(255, 255, 255, .78);
-    }
-
-    .topbar-inner {
-      height: var(--topbar-h);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .logo-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      min-width: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .logo-img {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      object-fit: contain;
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid var(--stroke);
-      box-shadow: var(--shadow);
-      flex: 0 0 auto;
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.15;
-      min-width: 0;
-    }
-
-    .brand-text b {
-      font-size: 16px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 200px;
-    }
-
-    .brand-text span {
-      font-size: 12px;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 220px;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 0 0 auto;
-    }
-
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255, 255, 255, .03);
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 900;
-      font-size: 13px;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .iconbtn {
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255, 255, 255, .03);
-      color: var(--text);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* ===== FIRST SCREEN (5 cards visible) ===== */
-    .screen {
-      padding: 14px 0 18px;
-      min-height: calc(100vh - var(--topbar-h));
-      min-height: calc(100svh - var(--topbar-h));
-    }
-
-    .cards {
-      display: grid;
-      gap: 12px;
-      grid-template-rows: 1.18fr 1fr 1fr 1fr 1fr;
-      height: calc(100vh - var(--topbar-h) - 26px);
-      height: calc(100svh - var(--topbar-h) - 26px);
-    }
-
-    .card {
-      position: relative;
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--stroke);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      background: rgba(255, 255, 255, .03);
-      transform: translateZ(0);
-      padding-bottom: 25px;
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, .06), rgba(0, 0, 0, .55));
-      pointer-events: none;
-    }
-
-    .theme-light .card::after {
-      background: linear-gradient(180deg, rgba(0, 0, 0, .04), rgba(0, 0, 0, .32));
-    }
-
-    /* Image frame */
-    .imgwrap {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(180deg, rgba(6, 43, 31, .78), rgba(4, 31, 22, .95));
-    }
-
-    .theme-light .imgwrap {
-      background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(238, 246, 243, .98));
-    }
-
-    .cardimg {
-      width: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      aspect-ratio: 16 / 9;
-      height: auto;
-      object-fit: contain;
-      object-position: center;
-      padding: 0;
-      filter: saturate(1.02);
-    }
-
-    .card-content {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      padding: 12px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .left-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, .16);
-      background: rgba(255, 255, 255, .06);
-      width: fit-content;
-      font-weight: 900;
-      font-size: 12px;
-      color: rgba(255, 255, 255, .88);
-    }
-
-    .theme-light .pill {
-      border-color: rgba(10, 32, 22, .18);
-      background: rgba(255, 255, 255, .70);
-      color: rgba(10, 32, 22, .88);
-    }
-
-    .title {
-      font-weight: 950;
-      font-size: 16px;
-      line-height: 1.15;
-      letter-spacing: .2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 75vw;
-    }
-
-    .tap {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255, 255, 255, .06);
-      font-weight: 950;
-      font-size: 13px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .tap .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(214, 179, 90, .92);
-      box-shadow: 0 0 0 4px rgba(214, 179, 90, .14);
-    }
-
-    .sub-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 12px;
-    }
-
-    .mini {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(214, 179, 90, .42);
-      background: rgba(214, 179, 90, .18);
-      color: rgba(255, 255, 255, .96);
-      font-weight: 950;
-      font-size: 12px;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      box-shadow: 0 10px 26px rgba(0, 0, 0, .18);
-    }
-
-    .mini:hover {
-      filter: brightness(1.05);
-    }
-
-    .theme-light .mini {
-      color: rgba(10, 32, 22, .92);
-      background: rgba(214, 179, 90, .28);
-      border-color: rgba(214, 179, 90, .55);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, .08);
-    }
-  </style>
-</head>
-
-<body>
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div class="container">
-      <div class="topbar-inner">
-        <div class="brand">
-          <a class="logo-link" href="index.html" aria-label="Go to Home" title="Go to Home">
-            <img class="logo-img" src="assets/logo-dark.png" alt="LizOn Education Logo" />
-            <div class="brand-text">
-              <b>LizOn Education</b>
-              <span>IELTS Journey</span>
-            </div>
-          </a>
+      <!-- Hero Card -->
+      <div class="card topcard" id="cardTop" role="button" tabindex="0" aria-label="Play IELTS Journey top video">
+        <div class="imgwrap">
+          <img class="cardimg" src="assets/ielts-journey-top.png" alt="IELTS Journey Top" />
         </div>
-
-        <div class="top-actions">
-          <button class="chip" id="btnPricing" type="button" aria-label="Go to Pricing">Admit / Pricing</button>
-          <button class="topHamburger" id="btnMenuTop" type="button" aria-label="Menu" title="Menu">≡</button>
-          <button class="iconbtn" id="btnTheme" type="button" aria-label="Toggle theme" title="Toggle theme">🌓</button>
+        <div class="card-content">
+          <div class="left-stack">
+            <div class="pill">Designed for Desired Score</div>
+            <div class="title">IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</div>
+          </div>
+          <div class="tap" aria-hidden="true">
+            <span class="dot"></span><span>Tap to Play</span>
+          </div>
         </div>
       </div>
+
+      <!-- ZERO -->
+      <div class="card" id="cardZero" role="button" tabindex="0" aria-label="Play IELTS ZERO video">
+        <div class="imgwrap">
+          <img class="cardimg" src="assets/ielts-zero.png" alt="IELTS ZERO" />
+        </div>
+        <div class="card-content">
+          <div class="left-stack">
+            <div class="pill">IELTS ZERO</div>
+            <div class="sub-actions">
+              <button class="mini" data-admit="IELTS ZERO" type="button">Admit</button>
+              <button class="mini" data-details="zero" type="button">Details</button>
+              <button class="mini" data-routine type="button">Routine</button>
+            </div>
+          </div>
+          <div class="tap" aria-hidden="true">
+            <span class="dot"></span><span>Tap to Play</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOPE -->
+      <div class="card" id="cardHope" role="button" tabindex="0" aria-label="Play IELTS HOPE video">
+        <div class="imgwrap">
+          <img class="cardimg" src="assets/ielts-hope.png" alt="IELTS HOPE" />
+        </div>
+        <div class="card-content">
+          <div class="left-stack">
+            <div class="pill">IELTS HOPE</div>
+            <div class="sub-actions">
+              <button class="mini" data-admit="IELTS HOPE" type="button">Admit</button>
+              <button class="mini" data-details="hope" type="button">Details</button>
+              <button class="mini" data-routine type="button">Routine</button>
+            </div>
+          </div>
+          <div class="tap" aria-hidden="true">
+            <span class="dot"></span><span>Tap to Play</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP-UP -->
+      <div class="card" id="cardStepup" role="button" tabindex="0" aria-label="Play IELTS STEP-UP video">
+        <div class="imgwrap">
+          <img class="cardimg" src="assets/ielts-stepup.png" alt="IELTS STEP-UP" />
+        </div>
+        <div class="card-content">
+          <div class="left-stack">
+            <div class="pill">IELTS STEP-UP</div>
+            <div class="sub-actions">
+              <button class="mini" data-admit="IELTS STEP-UP" type="button">Admit</button>
+              <button class="mini" data-details="stepup" type="button">Details</button>
+              <button class="mini" data-routine type="button">Routine</button>
+            </div>
+          </div>
+          <div class="tap" aria-hidden="true">
+            <span class="dot"></span><span>Tap to Play</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESPERATE -->
+      <div class="card" id="cardDesperate" role="button" tabindex="0" aria-label="Play IELTS DESPERATE video">
+        <div class="imgwrap">
+          <img class="cardimg" src="assets/ielts-desperate.png" alt="IELTS DESPERATE" />
+        </div>
+        <div class="card-content">
+          <div class="left-stack">
+            <div class="pill">IELTS DESPERATE</div>
+            <div class="sub-actions">
+              <button class="mini" data-admit="IELTS DESPERATE" type="button">Admit</button>
+              <button class="mini" data-details="desperate" type="button">Details</button>
+              <button class="mini" data-routine type="button">Routine</button>
+            </div>
+          </div>
+          <div class="tap" aria-hidden="true">
+            <span class="dot"></span><span>Tap to Play</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-
-  <!-- FIRST SCREEN: 5 cards -->
-  <main class="screen">
-    <div class="container">
-      <div class="cards">
-        <!-- Hero Card -->
-        <div class="card topcard" id="cardTop" role="button" tabindex="0" aria-label="Play IELTS Journey top video">
-          <div class="imgwrap">
-            <img class="cardimg" src="assets/ielts-journey-top.png" alt="IELTS Journey Top" />
-          </div>
-          <div class="card-content">
-            <div class="left-stack">
-              <div class="pill">Designed for Desired Score</div>
-              <div class="title">IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</div>
-            </div>
-            <div class="tap" aria-hidden="true">
-              <span class="dot"></span><span>Tap to Play</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- ZERO -->
-        <div class="card" id="cardZero" role="button" tabindex="0" aria-label="Play IELTS ZERO video">
-          <div class="imgwrap">
-            <img class="cardimg" src="assets/ielts-zero.png" alt="IELTS ZERO" />
-          </div>
-          <div class="card-content">
-            <div class="left-stack">
-              <div class="pill">IELTS ZERO</div>
-              <div class="sub-actions">
-                <button class="mini" data-admit="IELTS ZERO" type="button">Admit</button>
-                <button class="mini" data-details="zero" type="button">Details</button>
-                <button class="mini" data-routine type="button">Routine</button>
-              </div>
-            </div>
-            <div class="tap" aria-hidden="true">
-              <span class="dot"></span><span>Tap to Play</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- HOPE -->
-        <div class="card" id="cardHope" role="button" tabindex="0" aria-label="Play IELTS HOPE video">
-          <div class="imgwrap">
-            <img class="cardimg" src="assets/ielts-hope.png" alt="IELTS HOPE" />
-          </div>
-          <div class="card-content">
-            <div class="left-stack">
-              <div class="pill">IELTS HOPE</div>
-              <div class="sub-actions">
-                <button class="mini" data-admit="IELTS HOPE" type="button">Admit</button>
-                <button class="mini" data-details="hope" type="button">Details</button>
-                <button class="mini" data-routine type="button">Routine</button>
-              </div>
-            </div>
-            <div class="tap" aria-hidden="true">
-              <span class="dot"></span><span>Tap to Play</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- STEP-UP -->
-        <div class="card" id="cardStepup" role="button" tabindex="0" aria-label="Play IELTS STEP-UP video">
-          <div class="imgwrap">
-            <img class="cardimg" src="assets/ielts-stepup.png" alt="IELTS STEP-UP" />
-          </div>
-          <div class="card-content">
-            <div class="left-stack">
-              <div class="pill">IELTS STEP-UP</div>
-              <div class="sub-actions">
-                <button class="mini" data-admit="IELTS STEP-UP" type="button">Admit</button>
-                <button class="mini" data-details="stepup" type="button">Details</button>
-                <button class="mini" data-routine type="button">Routine</button>
-              </div>
-            </div>
-            <div class="tap" aria-hidden="true">
-              <span class="dot"></span><span>Tap to Play</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- DESPERATE -->
-        <div class="card" id="cardDesperate" role="button" tabindex="0" aria-label="Play IELTS DESPERATE video">
+</main>

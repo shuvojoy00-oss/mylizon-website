@@ -1,465 +1,379 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>LizOn Education — IELTS Journey</title>
-<meta name="description" content="IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Tap-only experience with videos, pricing, combos, and payment." />
-<meta name="theme-color" content="#062b1f" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LizOn Education — IELTS Journey</title>
+  <meta name="description" content="IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Tap-only experience with videos, pricing, combos, and payment." />
+  <meta name="theme-color" content="#062b1f" />
 
-<style>
-  :root{
+  <style>
     /* Dark mode (NO pure black) */
-    --bg:#041f16;
-    --bg2:#062b1f;
-    --panel:rgba(255,255,255,.06);
-    --panel2:rgba(255,255,255,.08);
-    --stroke:rgba(255,255,255,.14);
-    --text:rgba(255,255,255,.92);
-    --muted:rgba(255,255,255,.72);
-    --gold:#d6b35a;
-    --gold2:#caa64a;
-    --shadow: 0 18px 60px rgba(0,0,0,.40);
-    --radius-xl: 22px;
-    --radius-lg: 18px;
-    --radius-md: 14px;
-    --topbar-h: 64px;
-  }
+    :root {
+      --bg:#041f16;
+      --bg2:#062b1f;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.14);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
+      --gold:#d6b35a;
+      --gold2:#caa64a;
+      --shadow: 0 18px 60px rgba(0,0,0,.40);
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --topbar-h: 64px;
+    }
 
-  .theme-light{
-    --bg:#eef6f3;
-    --bg2:#ffffff;
-    --panel:rgba(10,32,22,.06);
-    --panel2:rgba(10,32,22,.08);
-    --stroke:rgba(10,32,22,.14);
-    --text:rgba(10,32,22,.92);
-    --muted:rgba(10,32,22,.70);
-    --shadow: 0 18px 60px rgba(0,0,0,.12);
-  }
+    /* Light mode */
+    .theme-light {
+      --bg: #eef6f3;
+      --bg2: #ffffff;
+      --panel: rgba(10,32,22,.06);
+      --panel2: rgba(10,32,22,.08);
+      --stroke: rgba(10,32,22,.14);
+      --text: rgba(10,32,22,.92);
+      --muted: rgba(10,32,22,.70);
+      --shadow: 0 18px 60px rgba(0,0,0,.12);
+    }
 
-  *{ box-sizing:border-box; }
-  html,body{ height:100%; }
-  body{
-    margin:0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background:
-      radial-gradient(1200px 700px at 18% 0%, rgba(35,140,110,.18), transparent 55%),
-      radial-gradient(900px 650px at 85% 25%, rgba(214,179,90,.10), transparent 58%),
-      linear-gradient(180deg, var(--bg2), var(--bg));
-    color:var(--text);
-    line-height:1.35;
-    overflow-x:hidden;
-  }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg2); color: var(--text); line-height: 1.35; }
+    .container { width: min(1100px, 92vw); margin: 0 auto; }
 
-  a{ color:inherit; }
-  .container{ width:min(1100px, 92vw); margin:0 auto; }
+    /* Topbar */
+    .topbar {
+      position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); background: rgba(4,31,22,.72); border-bottom: 1px solid var(--stroke);
+    }
+    .topbar .topbar-inner { height: var(--topbar-h); display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; }
+    .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-img { width: 44px; height: 44px; border-radius: 14px; object-fit: contain; border: 1px solid var(--stroke); box-shadow: var(--shadow); }
 
-  /* ===== TOPBAR ===== */
-  .topbar{
-    position:sticky; top:0; z-index:9999;
-    backdrop-filter: blur(12px);
-    background: rgba(4,31,22,.72);
-    border-bottom:1px solid var(--stroke);
-  }
-  .theme-light .topbar{ background: rgba(255,255,255,.78); }
+    .brand-text b { font-size: 16px; max-width: 200px; }
+    .brand-text span { font-size: 12px; color: var(--muted); max-width: 220px; }
 
-  .topbar-inner{
-    height: var(--topbar-h);
-    display:flex; align-items:center; justify-content:space-between;
-    gap:10px; padding: 10px 0;
-  }
+    /* Hero Card */
+    .screen {
+      padding: 14px 0 18px;
+      min-height: calc(100vh - var(--topbar-h));
+    }
+    .cards {
+      display: grid;
+      gap: 12px;
+      grid-template-rows: 1.18fr 1fr 1fr 1fr 1fr;
+      height: calc(100vh - var(--topbar-h) - 26px);
+    }
+    .card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--stroke);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.03);
+    }
+    .card::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.55));
+      pointer-events: none;
+    }
+    .cardimg {
+      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      aspect-ratio: 16/9;
+      height: auto;
+      object-fit: contain;
+      filter: saturate(1.02);
+    }
 
-  .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
-  .logo-link{
-    display:flex; align-items:center; gap:10px;
-    text-decoration:none; min-width:0;
-    -webkit-tap-highlight-color: transparent;
-  }
+    .card-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 12px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .left-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      font-weight: 900;
+      font-size: 12px;
+      color: rgba(255,255,255,.88);
+    }
+    .tap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      font-weight: 950;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%; background: rgba(214,179,90,.92); box-shadow: 0 0 0 4px rgba(214,179,90,.14);
+    }
 
-  .logo-img{
-    width:44px; height:44px;
-    border-radius:14px;
-    object-fit:contain;
-    background: rgba(255,255,255,.06);
-    border:1px solid var(--stroke);
-    box-shadow: var(--shadow);
-    flex: 0 0 auto;
-  }
+    .sub-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .mini {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(214,179,90,.18);
+      color: rgba(255,255,255,.96);
+      font-weight: 950;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+    }
 
-  .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
-  .brand-text b{
-    font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    max-width: 200px;
-  }
-  .brand-text span{
-    font-size:12px; color:var(--muted);
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    max-width: 220px;
-  }
+    /* Pricing + Combos Section */
+    .panel { border: 1px solid var(--stroke); border-radius: var(--radius-xl); background: rgba(255,255,255,.03); box-shadow: var(--shadow); }
+    .panel-head { padding: 16px; border-bottom: 1px solid var(--stroke); }
+    .list { padding: 14px 14px 8px; display: grid; gap: 10px; }
+    .rowitem { border: 1px solid var(--stroke); background: rgba(255,255,255,.03); border-radius: 18px; padding: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .rowitem .meta { min-width: 0; }
+    .btn.primary { background: rgba(214,179,90,.16); color: var(--text); }
 
-  .top-actions{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
+    /* Footer */
+    footer { padding: 0 0 160px; }
+    .footer-card { padding: 16px; box-shadow: var(--shadow); border-radius: var(--radius-xl); background: rgba(255,255,255,.03); }
+    .footer-cols { display: grid; gap: 14px; }
+  </style>
+</head>
 
-  .chip{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding: 10px 14px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    color: var(--text);
-    text-decoration:none;
-    font-weight:900;
-    font-size:13px;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand">
+          <a class="logo-link" href="index.html">
+            <img class="logo-img" src="assets/logo-dark.png" alt="LizOn Education Logo" />
+            <div class="brand-text">
+              <b>LizOn Education</b>
+              <span>IELTS Journey</span>
+            </div>
+          </a>
+        </div>
+        <div class="top-actions">
+          <button class="chip" id="btnPricing" type="button">Admit / Pricing</button>
+          <button class="topHamburger" id="btnMenuTop" type="button">≡</button>
+          <button class="iconbtn" id="btnTheme" type="button">🌓</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  .iconbtn{
-    width:44px; height:44px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    color: var(--text);
-    display:grid; place-items:center;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
+  <!-- Hero Card -->
+  <main class="screen">
+    <div class="container">
+      <div class="cards">
+        <!-- Hero Card -->
+        <div class="card topcard" id="cardTop" role="button" tabindex="0">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-journey-top.png" alt="IELTS Journey Top" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">Designed for Desired Score</div>
+              <div class="title">IELTS Journey — ZERO → HOPE → STEP-UP → DESPERATE</div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
+        </div>
 
-  /* ===== FIRST SCREEN (5 cards visible) ===== */
-  .screen{
-    padding: 14px 0 18px;
-    min-height: calc(100vh - var(--topbar-h));
-    min-height: calc(100svh - var(--topbar-h));
-  }
+        <!-- Course Cards -->
+        <!-- ZERO -->
+        <div class="card" id="cardZero">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-zero.png" alt="IELTS ZERO" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">IELTS ZERO</div>
+              <div class="sub-actions">
+                <button class="mini">Admit</button>
+                <button class="mini">Details</button>
+                <button class="mini">Routine</button>
+              </div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
+        </div>
 
-  .cards{
-    display:grid;
-    gap:12px;
-    grid-template-rows: 1.18fr 1fr 1fr 1fr 1fr;
-    height: calc(100vh - var(--topbar-h) - 26px);
-    height: calc(100svh - var(--topbar-h) - 26px);
-  }
+        <!-- HOPE -->
+        <div class="card" id="cardHope">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-hope.png" alt="IELTS HOPE" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">IELTS HOPE</div>
+              <div class="sub-actions">
+                <button class="mini">Admit</button>
+                <button class="mini">Details</button>
+                <button class="mini">Routine</button>
+              </div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
+        </div>
 
-  .card{
-    position:relative;
-    border-radius: var(--radius-xl);
-    border:1px solid var(--stroke);
-    overflow:hidden;
-    box-shadow: var(--shadow);
-    background: rgba(255,255,255,.03);
-    transform: translateZ(0);
-  }
+        <!-- STEP-UP -->
+        <div class="card" id="cardStepup">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-stepup.png" alt="IELTS STEP-UP" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">IELTS STEP-UP</div>
+              <div class="sub-actions">
+                <button class="mini">Admit</button>
+                <button class="mini">Details</button>
+                <button class="mini">Routine</button>
+              </div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
+        </div>
 
-  .card::after{
-    content:"";
-    position:absolute; inset:0;
-    background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.55));
-    pointer-events:none;
-  }
-  .theme-light .card::after{
-    background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.32));
-  }
+        <!-- DESPERATE -->
+        <div class="card" id="cardDesperate">
+          <div class="imgwrap">
+            <img class="cardimg" src="assets/ielts-desperate.png" alt="IELTS DESPERATE" />
+          </div>
+          <div class="card-content">
+            <div class="left-stack">
+              <div class="pill">IELTS DESPERATE</div>
+              <div class="sub-actions">
+                <button class="mini">Admit</button>
+                <button class="mini">Details</button>
+                <button class="mini">Routine</button>
+              </div>
+            </div>
+            <div class="tap" aria-hidden="true">
+              <span class="dot"></span><span>Tap to Play</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-  /* ✅ Image frame: force 16:9 thumbnail rendering inside each card */
-  .imgwrap{
-    position:absolute; inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:
-      radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.14), transparent 55%),
-      linear-gradient(180deg, rgba(6,43,31,.78), rgba(4,31,22,.95));
-  }
-  .theme-light .imgwrap{
-    background:
-      radial-gradient(1200px 400px at 20% 0%, rgba(214,179,90,.12), transparent 55%),
-      linear-gradient(180deg, rgba(255,255,255,.92), rgba(238,246,243,.98));
-  }
-  .cardimg{
-    width:100%;
-    max-width:100%;
-    max-height:100%;
-    aspect-ratio: 16 / 9;     /* <- YouTube thumbnail frame */
-    height:auto;              /* <- keep natural proportions */
-    object-fit:contain;       /* <- no crop */
-    object-position:center;
-    padding: 0;               /* <- clean frame */
-    filter: saturate(1.02);
-  }
+  <!-- Pricing + Combos Section -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Pricing + Combos</h2>
+          <p>Tap <b>Pay</b> to see payment options. Tap <b>Help</b> for WhatsApp support.</p>
+        </div>
+        <div class="list">
+          <div class="rowitem">
+            <div class="meta"><b>IELTS ZERO — 4,200</b><span>Course fee</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+          <div class="rowitem">
+            <div class="meta"><b>IELTS HOPE — 5,500</b><span>Course fee</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+          <div class="rowitem">
+            <div class="meta"><b>IELTS STEP-UP — 6,200</b><span>Course fee</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+          <div class="rowitem">
+            <div class="meta"><b>IELTS DESPERATE — 7,500</b><span>Course fee</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="subhead"><h3>Combos</h3></div>
+        <div class="list">
+          <div class="rowitem">
+            <div class="meta"><b>ZERO + HOPE — 6,790</b><span>Foundation + Reset</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+          <div class="rowitem">
+            <div class="meta"><b>HOPE + STEP-UP — 8,190</b><span>Reset + Band jump</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+          <div class="rowitem">
+            <div class="meta"><b>STEP-UP + DESPERATE — 9,590</b><span>Band jump + Final eval</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+          <div class="rowitem">
+            <div class="meta"><b>ZERO + HOPE + STEP-UP — 9,540</b><span>Build → Reset → Band jump</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+          <div class="rowitem">
+            <div class="meta"><b>HOPE + STEP-UP + DESPERATE — 11,520</b><span>Reset → Band jump → Final eval</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+          <div class="rowitem" style="border-color: rgba(214,179,90,.35); background: rgba(214,179,90,.08);">
+            <div class="meta"><b>N2F (All 4) — 12,700</b><span>BEST VALUE • Now to Fly</span></div>
+            <div class="actions">
+              <button class="btn primary">Pay</button>
+              <button class="btn">Help</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  .card-content{
-    position:relative; z-index:2;
-    height:100%;
-    padding: 12px;
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:10px;
-  }
-
-  .left-stack{ display:flex; flex-direction:column; gap:8px; min-width:0; }
-
-  .pill{
-    display:inline-flex; align-items:center; gap:8px;
-    padding: 8px 10px;
-    border-radius: 999px;
-    border:1px solid rgba(255,255,255,.16);
-    background: rgba(255,255,255,.06);
-    width: fit-content;
-    font-weight:900;
-    font-size:12px;
-    color: rgba(255,255,255,.88);
-  }
-  .theme-light .pill{
-    border-color: rgba(10,32,22,.18);
-    background: rgba(255,255,255,.70);
-    color: rgba(10,32,22,.88);
-  }
-
-  .title{
-    font-weight:950;
-    font-size: 16px;
-    line-height:1.15;
-    letter-spacing:.2px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width: 75vw;
-  }
-
-  .tap{
-    display:inline-flex; align-items:center; gap:10px;
-    padding: 10px 12px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.06);
-    font-weight:950;
-    font-size:13px;
-    cursor:pointer;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .tap .dot{
-    width:10px; height:10px;
-    border-radius:50%;
-    background: rgba(214,179,90,.92);
-    box-shadow: 0 0 0 4px rgba(214,179,90,.14);
-  }
-
-  .sub-actions{ display:flex; gap:8px; flex-wrap:wrap; }
-
-  .mini{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding: 10px 12px;
-    border-radius: 999px;
-    border:1px solid rgba(214,179,90,.42);
-    background: rgba(214,179,90,.18);
-    color: rgba(255,255,255,.96);
-    font-weight:950;
-    font-size:12px;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 10px 26px rgba(0,0,0,.18);
-  }
-  .mini:hover{ filter: brightness(1.05); }
-  .theme-light .mini{
-    color: rgba(10,32,22,.92);
-    background: rgba(214,179,90,.28);
-    border-color: rgba(214,179,90,.55);
-    box-shadow: 0 10px 26px rgba(0,0,0,.08);
-  }
-
-  /* ===== MODALS ===== */
-  .overlay{
-    position:fixed; inset:0;
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    padding: 16px;
-    z-index: 12050;
-  }
-  .overlay.show{ display:flex; }
-
-  .back{ position:absolute; inset:0; background: rgba(0,0,0,.52); }
-
-  .sheet{
-    position:relative;
-    width:min(860px, 100%);
-    border-radius: var(--radius-xl);
-    border:1px solid var(--stroke);
-    background: rgba(4,31,22,.92);
-    box-shadow: var(--shadow);
-    padding: 14px;
-    backdrop-filter: blur(10px);
-    transform: translateY(10px);
-    animation: in .14s ease-out forwards;
-  }
-  .theme-light .sheet{ background: rgba(255,255,255,.92); }
-  @keyframes in{ from{ opacity:.0; transform: translateY(18px);} to{ opacity:1; transform: translateY(0);} }
-
-  .sheet-top{
-    display:flex; align-items:flex-start; justify-content:space-between;
-    gap:10px; margin-bottom:10px;
-  }
-  .sheet-top h3{ margin:0; font-size:16px; line-height:1.2; }
-  .sheet-top p{ margin:6px 0 0; color: var(--muted); font-size:13px; }
-
-  .x{
-    width:44px; height:44px;
-    border-radius: 16px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.04);
-    color: var(--text);
-    display:grid; place-items:center;
-    cursor:pointer;
-    font-weight:950;
-  }
-
-  .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
-  @media (max-width:560px){ .grid2{ grid-template-columns: 1fr; } }
-
-  .opt{
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    border-radius: 18px;
-    padding: 12px;
-  }
-  .opt b{ display:block; margin-bottom:6px; }
-  .opt .row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding: 10px 12px;
-    border-radius: 14px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.04);
-    color: var(--text);
-    font-weight:950;
-    font-size:13px;
-    cursor:pointer;
-    text-decoration:none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .btn.primary{
-    border-color: rgba(214,179,90,.40);
-    background: rgba(214,179,90,.16);
-  }
-  .btn.ghost{ background: transparent; color: var(--muted); }
-
-  .videoShell{
-    width:100%;
-    display:grid;
-    place-items:center;
-    border-radius: 18px;
-    overflow:hidden;
-    border:1px solid var(--stroke);
-    background: rgba(0,0,0,.20);
-  }
-  .theme-light .videoShell{ background: rgba(10,32,22,.06); }
-
-  .videoFrame{
-    width:min(420px, 100%);
-    aspect-ratio: 9 / 16;
-    border:0;
-    display:block;
-    background: transparent;
-  }
-  @media (min-width:900px){
-    .videoFrame{ width: 420px; }
-  }
-
-  /* ===== PRICING ===== */
-  .section{ padding: 10px 0 120px; }
-
-  .panel{
-    border:1px solid var(--stroke);
-    border-radius: var(--radius-xl);
-    background: rgba(255,255,255,.03);
-    box-shadow: var(--shadow);
-    overflow:hidden;
-  }
-
-  .panel-head{ padding: 16px; border-bottom: 1px solid var(--stroke); }
-  .panel-head h2{ margin:0; font-size:18px; }
-  .panel-head p{ margin:8px 0 0; color:var(--muted); font-size:13px; }
-
-  .list{ padding: 14px 14px 8px; display:grid; gap:10px; }
-
-  .rowitem{
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    border-radius: 18px;
-    padding: 12px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-  }
-
-  .rowitem .meta{ min-width:0; }
-  .rowitem .meta b{ display:block; font-size:14px; }
-  .rowitem .meta span{ display:block; margin-top:4px; color: var(--muted); font-size:12px; }
-
-  .rowitem .actions{ display:flex; gap:10px; flex: 0 0 auto; }
-
-  .divider{ height:1px; background: var(--stroke); margin: 8px 0 0; }
-
-  .subhead{
-    padding: 14px 16px 0;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-  .subhead h3{ margin:0; font-size:15px; }
-
-  /* ===== FOOTER ===== */
-  footer{ padding: 0 0 160px; }
-  .footer-card{
-    border:1px solid var(--stroke);
-    border-radius: var(--radius-xl);
-    background: rgba(255,255,255,.03);
-    box-shadow: var(--shadow);
-    padding: 16px;
-  }
-  .footer-cols{
-    display:grid;
-    grid-template-columns: 1.15fr .85fr;
-    gap:14px;
-    margin-top:10px;
-  }
-  @media (max-width:820px){ .footer-cols{ grid-template-columns: 1fr; } }
-  .ft-title{ margin:0 0 8px; font-weight:950; font-size:13px; }
-  .ft-text{ margin:0; color: var(--muted); font-size:13px; line-height:1.5; }
-  .ft-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-
-  /* ===== Floating Buttons (requested) ===== */
-  .fab{
-    position:fixed;
-    z-index: 2400;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.04);
-    color: var(--text);
-    box-shadow: var(--shadow);
-    border-radius: 999px;
-    padding: 10px 12px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    cursor:pointer;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-    backdrop-filter: blur(10px);
-  }
-
-  .help-fab{ right:14px; bottom:54px; }
-  .help-fab .dot{
-    width:10px; height:10px;
-    border-radius:50%;
-    background:#00d26a;
-    box-shadow: 0 0 0 4px rgba(0,210,106,.14);
-  }
-
-  .menu-fab{ left:14px; bottom:54px; }
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-card">
+        <div class="footer-cols">
+          <div>
+            <h3 class="ft

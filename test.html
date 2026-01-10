@@ -1,415 +1,365 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>LizOn Education — IELTS Journey</title>
-<meta name="description" content="IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Tap-only experience with videos, pricing, combos, and payment." />
-<meta name="theme-color" content="#062b1f" />
-
-<style>
-  :root{
-    /* Dark mode (NO pure black) */
-    --bg:#041f16;
-    --bg2:#062b1f;
-    --panel:rgba(255,255,255,.06);
-    --panel2:rgba(255,255,255,.08);
-    --stroke:rgba(255,255,255,.14);
-    --text:rgba(255,255,255,.92);
-    --muted:rgba(255,255,255,.72);
-    --gold:#d6b35a;
-    --gold2:#caa64a;
-    --shadow: 0 18px 60px rgba(0,0,0,.40);
-    --radius-xl: 22px;
-    --radius-lg: 18px;
-    --radius-md: 14px;
-    --topbar-h: 64px;
-  }
-
-  .theme-light{
-    --bg:#eef6f3;
-    --bg2:#ffffff;
-    --panel:rgba(10,32,22,.06);
-    --panel2:rgba(10,32,22,.08);
-    --stroke:rgba(10,32,22,.14);
-    --text:rgba(10,32,22,.92);
-    --muted:rgba(10,32,22,.70);
-    --shadow: 0 18px 60px rgba(0,0,0,.12);
-  }
-
-  *{ box-sizing:border-box; }
-  html,body{ height:100%; }
-  body{
-    margin:0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background:
-      radial-gradient(1200px 700px at 18% 0%, rgba(35,140,110,.18), transparent 55%),
-      radial-gradient(900px 650px at 85% 25%, rgba(214,179,90,.10), transparent 58%),
-      linear-gradient(180deg, var(--bg2), var(--bg));
-    color:var(--text);
-    line-height:1.35;
-    overflow-x:hidden;
-  }
-
-  a{ color:inherit; }
-  .container{ width:min(1100px, 92vw); margin:0 auto; }
-
-  /* ===== TOPBAR ===== */
-  .topbar{
-    position:sticky; top:0; z-index:9999;
-    backdrop-filter: blur(12px);
-    background: rgba(4,31,22,.72);
-    border-bottom:1px solid var(--stroke);
-  }
-  .theme-light .topbar{ background: rgba(255,255,255,.80); }
-
-  .topbar-inner{
-    height: var(--topbar-h);
-    display:flex; align-items:center; justify-content:space-between;
-    gap:10px; padding: 10px 0;
-  }
-
-  .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
-  .logo-link{
-    display:flex; align-items:center; gap:10px;
-    text-decoration:none; min-width:0;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .logo-img{
-    width:44px; height:44px;
-    border-radius:14px;
-    object-fit:contain;
-    background: rgba(255,255,255,.06);
-    border:1px solid var(--stroke);
-    box-shadow: var(--shadow);
-    flex: 0 0 auto;
-  }
-  .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
-  .brand-text b{
-    font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    max-width: 220px;
-  }
-  .brand-text span{
-    font-size:12px; color:var(--muted);
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    max-width: 240px;
-  }
-
-  .top-actions{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
-
-  .chip{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding: 10px 14px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    color: var(--text);
-    text-decoration:none;
-    font-weight:950;
-    font-size:13px;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .iconbtn{
-    width:44px; height:44px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    color: var(--text);
-    display:grid; place-items:center;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .topHamburger{
-    width:44px; height:44px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.03);
-    color: var(--text);
-    display:grid; place-items:center;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* ===== PAGE SECTIONS ===== */
-  .section{ padding: 18px 0; }
-  .sectionTitle{
-    margin: 0 0 10px;
-    font-size: 18px;
-    font-weight: 950;
-    letter-spacing:.2px;
-  }
-  .sectionSub{
-    margin: 0 0 14px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.55;
-  }
-
-  /* ===== HERO + COURSES LAYOUT ===== */
-  .heroWrap{ padding: 14px 0 10px; }
-
-  /* Desktop: hero full width, courses in 2 columns */
-  .coursesGrid{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap:14px;
-    padding-bottom: 8px;
-  }
-
-  @media (min-width: 860px){
-    .coursesGrid{
-      grid-template-columns: 1fr 1fr;
-      align-items:start;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LizOn Education — Your IELTS Journey</title>
+  <meta name="description" content="IELTS Journey: ZERO, HOPE, STEP-UP, DESPERATE. Tap-only experience with videos, pricing, combos, and payment." />
+  <meta name="theme-color" content="#062b1f" />
+  <style>
+    :root{
+      /* Dark mode (NO pure black) */
+      --bg:#041f16;
+      --bg2:#062b1f;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.14);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
+      --gold:#d6b35a;
+      --gold2:#caa64a;
+      --shadow: 0 18px 60px rgba(0,0,0,.40);
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --topbar-h: 64px;
     }
-  }
-
-  .courseBlock{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-
-  .card{
-    position:relative;
-    border-radius: var(--radius-xl);
-    border:1px solid var(--stroke);
-    overflow:hidden;
-    box-shadow: var(--shadow);
-    background: rgba(255,255,255,.03);
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* consistent 16:9 card height (fixes ugly cropping / weird desktop look) */
-  .cardMedia{
-    width:100%;
-    aspect-ratio: 16 / 9;
-    display:block;
-    object-fit: cover;     /* looks premium */
-    object-position:center;
-    filter: saturate(1.02);
-    transform: translateZ(0);
-  }
-
-  /* soft overlay so text stays readable */
-  .card::after{
-    content:"";
-    position:absolute; inset:0;
-    background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.55));
-    pointer-events:none;
-  }
-  .theme-light .card::after{
-    background: linear-gradient(180deg, rgba(0,0,0,.03), rgba(0,0,0,.28));
-  }
-
-  .cardTopPillRow{
-    position:absolute;
-    left:12px;
-    right:12px;
-    top:12px;
-    z-index:3;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-  }
-
-  .pill{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding: 8px 10px;
-    border-radius: 999px;
-    border:1px solid rgba(255,255,255,.16);
-    background: rgba(0,0,0,.24);
-    backdrop-filter: blur(10px);
-    width: fit-content;
-    font-weight:950;
-    font-size:12px;
-    color: rgba(255,255,255,.92);
-  }
-  .theme-light .pill{
-    border-color: rgba(10,32,22,.18);
-    background: rgba(255,255,255,.70);
-    color: rgba(10,32,22,.90);
-  }
-
-  .tapPill{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding: 10px 12px;
-    border-radius: 999px;
-    border:1px solid rgba(255,255,255,.18);
-    background: rgba(0,0,0,.22);
-    backdrop-filter: blur(10px);
-    font-weight:950;
-    font-size:13px;
-    color: rgba(255,255,255,.95);
-    user-select:none;
-  }
-  .theme-light .tapPill{
-    background: rgba(255,255,255,.66);
-    color: rgba(10,32,22,.92);
-  }
-  .tapDot{
-    width:10px; height:10px; border-radius:50%;
-    background: rgba(214,179,90,.95);
-    box-shadow: 0 0 0 4px rgba(214,179,90,.14);
-  }
-
-  /* UNDER-CARD BUTTONS (your sketch) */
-  .underBtns{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-
-  .miniBtn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding: 12px 14px;
-    border-radius: 999px;
-    border:1px solid rgba(214,179,90,.45);
-    background: rgba(214,179,90,.18);
-    color: rgba(255,255,255,.96);
-    font-weight:950;
-    font-size:13px;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 10px 26px rgba(0,0,0,.18);
-    min-width: 92px;
-  }
-  .miniBtn:hover{ filter: brightness(1.06); }
-  .miniBtn:active{ transform: scale(.99); }
-
-  .theme-light .miniBtn{
-    color: rgba(10,32,22,.92);
-    background: rgba(214,179,90,.30);
-    border-color: rgba(214,179,90,.55);
-    box-shadow: 0 10px 26px rgba(0,0,0,.08);
-  }
-
-  .miniBtn.primary{
-    border-color: rgba(214,179,90,.70);
-    background: rgba(214,179,90,.28);
-  }
-
-  /* ===== PANELS / CARDS ===== */
-  .panel{
-    border:1px solid var(--stroke);
-    border-radius: var(--radius-xl);
-    background: rgba(255,255,255,.03);
-    box-shadow: var(--shadow);
-    overflow:hidden;
-  }
-  .panelInner{ padding: 16px; }
-
-  .gridCards{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap:12px;
-  }
-  @media (min-width:860px){
-    .gridCards{ grid-template-columns: 1fr 1fr; }
-  }
-
-  .smallCard{
-    border:1px solid var(--stroke);
-    border-radius: 18px;
-    background: rgba(255,255,255,.03);
-    padding: 14px;
-  }
-  .smallCard b{ display:block; font-size:14px; margin-bottom:8px; }
-  .smallCard p{ margin:0; color:var(--muted); font-size:13px; line-height:1.55; }
-
-  .tag{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding: 8px 10px;
-    border-radius: 999px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.04);
-    font-weight:950;
-    font-size:12px;
-    color: var(--text);
-    width: fit-content;
-  }
-
-  .btnRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
-
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding: 10px 12px;
-    border-radius: 14px;
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.04);
-    color: var(--text);
-    font-weight:950;
-    font-size:13px;
-    cursor:pointer;
-    text-decoration:none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .btn.primary{
-    border-color: rgba(214,179,90,.40);
-    background: rgba(214,179,90,.16);
-  }
-  .btn.ghost{ background: transparent; color: var(--muted); }
-
-  /* ===== Reviews section scrolling  ===== */
-  #reviewGrid {
-    height: 300px; 
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 10px;
-    scroll-behavior: smooth;
-  }
-  #reviewGrid .smallCard {
-    background: rgba(0,0,0,.15);
-    border-radius: 12px;
-    padding: 15px;
-  }
-</style>
-</head>
-<body>
-  <!-- Your sections here -->
-
-  <!-- REVIEWS -->
-  <section class="section" id="reviews">
-    <div class="container">
-      <h2 class="sectionTitle">Real Reviews (Bangladeshi Students)</h2>
-      <p class="sectionSub">Raw names + real feedback vibe. You can update names/text anytime inside the code (no design change needed).</p>
-
-      <div class="panel">
-        <div class="panelInner">
-          <div class="gridCards" id="reviewGrid">
-            <!-- Reviews will be inserted here automatically -->
+    .theme-light{
+      --bg:#eef6f3;
+      --bg2:#ffffff;
+      --panel:rgba(10,32,22,.06);
+      --panel2:rgba(10,32,22,.08);
+      --stroke:rgba(10,32,22,.14);
+      --text:rgba(10,32,22,.92);
+      --muted:rgba(10,32,22,.70);
+      --shadow: 0 18px 60px rgba(0,0,0,.12);
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 18% 0%, rgba(35,140,110,.18), transparent 55%),
+        radial-gradient(900px 650px at 85% 25%, rgba(214,179,90,.10), transparent 58%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      color:var(--text);
+      line-height:1.35;
+      overflow-x:hidden;
+    }
+    a{ color:inherit; }
+    .container{ width:min(1100px, 92vw); margin:0 auto; }
+    /* ===== TOPBAR ===== */
+    .topbar{
+      position:sticky; top:0; z-index:9999;
+      backdrop-filter: blur(12px);
+      background: rgba(4,31,22,.72);
+      border-bottom:1px solid var(--stroke);
+    }
+    .theme-light .topbar{ background: rgba(255,255,255,.80); }
+    .topbar-inner{
+      height: var(--topbar-h);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; padding: 10px 0;
+    }
+    .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+    .logo-link{
+      display:flex; align-items:center; gap:10px;
+      text-decoration:none; min-width:0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .logo-img{
+      width:44px; height:44px;
+      border-radius:14px;
+      object-fit:contain;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+    .brand-text{ display:flex; flex-direction:column; line-height:1.15; min-width:0; }
+    .brand-text b{
+      font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 220px;
+    }
+    .brand-text span{
+      font-size:12px; color:var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 240px;
+    }
+    .top-actions{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
+    .chip{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      text-decoration:none;
+      font-weight:950;
+      font-size:13px;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .iconbtn{
+      width:44px; height:44px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      display:grid; place-items:center;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .topHamburger{
+      width:44px; height:44px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      display:grid; place-items:center;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* ===== PAGE SECTIONS ===== */
+    .section{ padding: 18px 0; }
+    .sectionTitle{
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-weight: 950;
+      letter-spacing:.2px;
+    }
+    .sectionSub{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    /* ===== HERO + COURSES LAYOUT ===== */
+    .heroWrap{ padding: 14px 0 10px; }
+    .coursesGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      padding-bottom: 8px;
+    }
+    @media (min-width: 860px){
+      .coursesGrid{
+        grid-template-columns: 1fr 1fr;
+        align-items:start;
+      }
+    }
+    .courseBlock{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .card{
+      position:relative;
+      border-radius: var(--radius-xl);
+      border:1px solid var(--stroke);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.03);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cardMedia{
+      width:100%;
+      aspect-ratio: 16 / 9;
+      display:block;
+      object-fit: cover;
+      object-position:center;
+      filter: saturate(1.02);
+      transform: translateZ(0);
+    }
+    /* soft overlay so text stays readable */
+    .card::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.55));
+      pointer-events:none;
+    }
+    .theme-light .card::after{
+      background: linear-gradient(180deg, rgba(0,0,0,.03), rgba(0,0,0,.28));
+    }
+    .cardTopPillRow{
+      position:absolute;
+      left:12px;
+      right:12px;
+      top:12px;
+      z-index:3;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.24);
+      backdrop-filter: blur(10px);
+      width: fit-content;
+      font-weight:950;
+      font-size:12px;
+      color: rgba(255,255,255,.92);
+    }
+    .theme-light .pill{
+      border-color: rgba(10,32,22,.18);
+      background: rgba(255,255,255,.70);
+      color: rgba(10,32,22,.90);
+    }
+    .tapPill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.22);
+      backdrop-filter: blur(10px);
+      font-weight:950;
+      font-size:13px;
+      color: rgba(255,255,255,.95);
+      user-select:none;
+    }
+    .theme-light .tapPill{
+      background: rgba(255,255,255,.66);
+      color: rgba(10,32,22,.92);
+    }
+    .tapDot{
+      width:10px; height:10px; border-radius:50%;
+      background: rgba(214,179,90,.95);
+      box-shadow: 0 0 0 4px rgba(214,179,90,.14);
+    }
+    /* UNDER-CARD BUTTONS (your sketch) */
+    .underBtns{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .miniBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(214,179,90,.45);
+      background: rgba(214,179,90,.18);
+      color: rgba(255,255,255,.96);
+      font-weight:950;
+      font-size:13px;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+      min-width: 92px;
+    }
+    .miniBtn:hover{ filter: brightness(1.06); }
+    .miniBtn:active{ transform: scale(.99); }
+    .theme-light .miniBtn{
+      color: rgba(10,32,22,.92);
+      background: rgba(214,179,90,.30);
+      border-color: rgba(214,179,90,.55);
+      box-shadow: 0 10px 26px rgba(0,0,0,.08);
+    }
+    .miniBtn.primary{
+      border-color: rgba(214,179,90,.70);
+      background: rgba(214,179,90,.28);
+    }
+    /* ===== PANELS / CARDS ===== */
+    .panel{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panelInner{ padding: 16px; }
+    .gridCards{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    @media (min-width:860px){
+      .gridCards{ grid-template-columns: 1fr 1fr; }
+    }
+    .smallCard{
+      border:1px solid var(--stroke);
+      border-radius: 18px;
+      background: rgba(255,255,255,.03);
+      padding: 14px;
+    }
+    .smallCard b{ display:block; font-size:14px; margin-bottom:8px; }
+    .smallCard p{ margin:0; color:var(--muted); font-size:13px; line-height:1.55; }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      font-weight:950;
+      font-size:12px;
+      color: var(--text);
+      width: fit-content;
+    }
+    .btnRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight:950;
+      font-size:13px;
+      cursor:pointer;
+      text-decoration:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn.primary{
+      border-color: rgba(214,179,90,.40);
+      background: rgba(214,179,90,.16);
+    }
+    .btn.ghost{ background: transparent; color: var(--muted); }
+    /* ===== REVIEWS SECTION ===== */
+    <section class="section" id="reviews">
+      <div class="container">
+        <h2 class="sectionTitle">What Our Students Say</h2>
+        <p class="sectionSub">Real feedback from Bangladeshi students. You can update the names and reviews anytime directly in the code (without changing the design).</p>
+        <div class="panel">
+          <div class="panelInner">
+            <div class="gridCards" id="reviewGrid"></div>
+            <div class="btnRow">
+              <button class="btn primary" id="btnMoreHelp" type="button">Need guidance? Chat on WhatsApp</button>
+              <button class="btn" id="btnJumpPricing2" type="button">See Pricing</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <script>
-    const REVIEWS = [
-      { name: "Nusrat Jahan", text: "Ami age random practice kortam. Ekhon bujhe practice kori. Reading speed + writing structure improve hoyeche." },
-      { name: "Sabbir Hossain", text: "HOPE er por listening e panic kom. Answer catch kora easy hoye gese." },
-      { name: "Rafi Ahmed", text: "STEP-UP e important question types clear. Writing task 2 structure ekdom settled." },
-      { name: "Mim Akter", text: "DESPERATE evaluation loop ta game changer. Weak point dhore fix kore dise." },
-      { name: "Tanvir Khan", text: "ZERO course shuru kore grammar bhalo hoise. English bolte confidence peyechi." },
-      { name: "Samiha Noor", text: "HOPE course er por reading speed boro improvement hoise. Writing structure e better hoche." },
-      { name: "Arif Rahman", text: "STEP-UP er por listening er practice boro help koreche. Bujhte onek easy hoise." }
-    ];
-
-    const reviewGrid = document.getElementById('reviewGrid');
+    </section>
+<script>
+  // Automated scrolling behavior for the review section
+  let reviewIndex = 0;
+  const reviewGrid = document.getElementById('reviewGrid');
+  const REVIEWS = [
+    { name: "Nusrat Jahan", text: "Ami age random practice kortam. Ekhon bujhe practice kori. Reading speed + writing structure improve hoyeche." },
+    { name: "Sabbir Hossain", text: "HOPE er por listening e panic kom. Answer catch kora easy hoye gese." },
+    { name: "Rafi Ahmed", text: "STEP-UP e important question types clear. Writing task 2 structure ekdom settled." },
+    { name: "Mim Akter", text: "DESPERATE evaluation loop ta game changer. Weak point dhore fix kore dise." },
+    { name: "Sadia Rahman", text: "Ami initially confused chhilam. HOPE course e ami easy bujhbo pari. Confidence barse." },
+    { name: "Tanvir Hossain", text: "Zero course er grammar knowledge er por step-up er writing improve hoyeche. Abar fluent hoise." },
+    { name: "Shuvo Paul", text: "STEP-UP e reading r listening er important question types bujhbo pari, exam easily handle korte parbo." },
+    { name: "Fahim Uddin", text: "Desperate course e mock test ar feedback system ta extra. Writing evaluation onek help kore." },
+    { name: "Asma Akter", text: "I was struggling with speaking, but after DESPERATE, ami fluently bolte pari." },
+    { name: "Zahidul Islam", text: "IELTS exam e result er por, amader support ta helpful chhilo. ZERO to DESPERATE, full journey." }
+  ];
+  function renderReviews() {
     reviewGrid.innerHTML = REVIEWS.map(r => `
       <div class="smallCard">
         <div class="tag">Real Student</div>
@@ -417,35 +367,23 @@
         <p>${r.text}</p>
       </div>
     `).join('');
-
-    let reviewIndex = 0;
-
-    function autoScrollReviews() {
+  }
+  function autoScroll() {
+    if (reviewIndex < REVIEWS.length) {
+      reviewGrid.scrollTop += 1;
       reviewIndex++;
-      if (reviewIndex >= REVIEWS.length) reviewIndex = 0;
-
-      const reviewGrid = document.getElementById('reviewGrid');
-      reviewGrid.innerHTML = `
-        <div class="smallCard">
-          <div class="tag">Real Student</div>
-          <b style="margin-top:10px;">${REVIEWS[reviewIndex].name}</b>
-          <p>${REVIEWS[reviewIndex].text}</p>
-        </div>
-      `;
-
-      setTimeout(autoScrollReviews, 5000);
+    } else {
+      reviewIndex = 0;
+      reviewGrid.scrollTop = 0;
     }
+  }
+  renderReviews();
+  let scrollInterval = setInterval(autoScroll, 100);
+  reviewGrid.addEventListener('touchstart', () => clearInterval(scrollInterval));
+  reviewGrid.addEventListener('touchend', () => {
+    scrollInterval = setInterval(autoScroll, 100);
+  });
+</script>
 
-    autoScrollReviews();
-
-    const reviewGridElement = document.getElementById('reviewGrid');
-    reviewGridElement.addEventListener('mouseover', () => {
-      reviewIndex = -1;
-    });
-
-    reviewGridElement.addEventListener('mouseout', () => {
-      autoScrollReviews();
-    });
-  </script>
 </body>
 </html>

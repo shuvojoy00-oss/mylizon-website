@@ -573,7 +573,7 @@
             <img class="logo-img" src="assets/logo-dark.png" alt="LizOn Education Logo" />
             <div class="brand-text">
               <b>LizOn Education</b>
-              <span>IELTS Journey</span>
+              <span>Your IELTS Journey</span>
             </div>
           </a>
         </div>
@@ -678,23 +678,80 @@
     </div>
   </section>
 
-  <!-- REVIEWS -->
-  <section class="section" id="reviews">
-    <div class="container">
-      <h2 class="sectionTitle">Real Reviews (Bangladeshi Students)</h2>
-      <p class="sectionSub">Raw names + real feedback vibe. You can update names/text anytime inside the code (no design change needed).</p>
+   <!-- REVIEWS SECTION -->
+<section class="section" id="reviews">
+  <div class="container">
+    <h2 class="sectionTitle">What Our Students Say</h2>
+    <p class="sectionSub">Insallah, your name will be here too - one day.</p>
 
-      <div class="panel">
-        <div class="panelInner">
-          <div class="gridCards" id="reviewGrid"></div>
-          <div class="btnRow">
-            <button class="btn primary" id="btnMoreHelp" type="button">Need guidance? Chat on WhatsApp</button>
-            <button class="btn" id="btnJumpPricing2" type="button">See Pricing</button>
-          </div>
+    <div class="panel">
+      <div class="panelInner">
+        <!-- Automated Scrolling Reviews -->
+        <div class="gridCards" id="reviewGrid" style="overflow: hidden; max-height: 250px; display: flex; flex-direction: column; gap: 10px; overflow-y: scroll;">
+          <!-- Reviews will be injected here dynamically -->
+        </div>
+
+        <!-- Buttons below the reviews -->
+        <div class="btnRow">
+          <button class="btn primary" id="btnMoreHelp" type="button">Need guidance? Chat on WhatsApp</button>
+          <button class="btn" id="btnJumpPricing2" type="button">See Pricing</button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<script>
+  // Automated scrolling behavior for the review section
+  let reviewIndex = 0;
+  const reviewGrid = document.getElementById('reviewGrid');
+
+  // Array containing student feedback
+  const REVIEWS = [
+    { name: "Nusrat Jahan", text: "Ami age random practice kortam. Ekhon bujhe practice kori. Reading speed + writing structure improve hoyeche." },
+    { name: "Sabbir Hossain", text: "HOPE er por listening e panic onekta kom lage ekhn, credit shuld goes to Shiva mam.. Answer catch kora ekhn far more easy lage." },
+    { name: "Rafi Ahmed", text: "STEP-UP e important question types clear. Writing task 2 structure ekdom settled." },
+    { name: "Mim Akter", text: "DESPERATE evaluation loop ta game changer. Weak point dhore fix koratam, r sobchey valo lage onek pressure ey rakhe." },
+    { name: "Sadia Rahman", text: "6 lagto, hope r stepup nichilam, hoa gechilo." },
+    { name: "Tanvir Hossain", text: "Zero course er grammar knowledge er por step-up er writing improve hoyeche. Abar fluent hoise. but honestly hope ta miss kora thik hoi nai, noile r ektu better paitam" },
+    { name: "Shuvo Paul", text: "STEP-UP e reading r listening er important question types buji ekhn, valo e pari, but ami bolbo ey strategy tey jekono student der pora ucit, pressure ta onek komey jai." },
+    { name: "Fahim Uddin", text: "Desperate course e mock test ar feedback system ta extra. Writing evaluation onek help kore." },
+    { name: "Asma Akter", text: "I was struggling with nearly all modules, always felt like a near miss, after DESPERATE, i would say, it gave 2 things mainly, clarity and pressure, ami ektu fakibuj, really needed that" },
+    { name: "Zahidul Islam", text: "IELTS exam e result er por, apander support ta helpful chhilo. ZERO to DESPERATE, full journey." }
+  ];
+
+  // Inject reviews dynamically
+  function renderReviews() {
+    reviewGrid.innerHTML = REVIEWS.map(r => `
+      <div class="smallCard">
+        <div class="tag">LizOn Student</div>
+        <b style="margin-top:10px;">${r.name}</b>
+        <p>${r.text}</p>
+      </div>
+    `).join('');
+  }
+
+  // Function to scroll the review section automatically
+  function autoScroll() {
+    if (reviewIndex < REVIEWS.length) {
+      reviewGrid.scrollTop += 1; // Scroll down
+      reviewIndex++;
+    } else {
+      reviewIndex = 0; // Reset when end is reached
+      reviewGrid.scrollTop = 0; // Scroll back to top
+    }
+  }
+
+  // Initialize the reviews and start the auto-scrolling effect
+  renderReviews();
+  let scrollInterval = setInterval(autoScroll, 100);
+
+  // Stop the auto-scrolling when the user touches the review section
+  reviewGrid.addEventListener('touchstart', () => clearInterval(scrollInterval));
+  reviewGrid.addEventListener('touchend', () => {
+    scrollInterval = setInterval(autoScroll, 100); // Restart auto-scrolling after touch
+  });
+</script>
 
   <!-- INSTRUCTORS -->
   <section class="section" id="instructors">
@@ -743,11 +800,11 @@
           <div class="gridCards">
             <div class="smallCard">
               <b>Skill → Score System</b>
-              <p>We don’t sell dreams. We fix reading, listening, writing, speaking with structure.</p>
+              <p>We say, 'don’t just dream, Achieve! We fix reading, listening, writing, and speaking with structure and real-time notes.</p>
             </div>
             <div class="smallCard">
-              <b>Tap-only Simple UX</b>
-              <p>No confusion. Tap a card to play. Buttons are under the card for actions.</p>
+              <b>Abroad Environment in LizOn</b>
+              <p>A rare opportunity to meet, talk, and discuss with LizOnEx (ex-students of LizOn who are already living abroad).</p>
             </div>
             <div class="smallCard">
               <b>Evaluation Loop</b>
@@ -766,15 +823,15 @@
   <!-- TRUST -->
   <section class="section" id="trust">
     <div class="container">
-      <h2 class="sectionTitle">Trusted Since 2019</h2>
-      <p class="sectionSub">If you want a place you can rely on — not random Facebook advice — this is it.</p>
+      <h2 class="sectionTitle">Trusted Since 2019 by more than 2174+ Students and Counting</h2>
+      <p class="sectionSub">If you want a place you can rely on — not random Facebook advice — this is it. It's LizOn.</p>
 
       <div class="panel">
         <div class="panelInner">
           <div class="gridCards">
             <div class="smallCard">
               <b>Since 2019</b>
-              <p>Serving students with real outcomes, real improvement, and transparent guidance.</p>
+              <p>Teaching students with real outcomes, real improvement, and transparent guidance.</p>
             </div>
             <div class="smallCard">
               <b>Clarity Over Hype</b>
@@ -792,8 +849,8 @@
   <!-- LEARNING SEGMENT -->
   <section class="section" id="learning">
     <div class="container">
-      <h2 class="sectionTitle">Learning (Skills)</h2>
-      <p class="sectionSub">Tap to open skill pages. Keep improving even outside class.</p>
+      <h2 class="sectionTitle">Learning (Skills, Strategy & Confusions)</h2>
+      <p class="sectionSub">People scroll facebook, you keep learning in MyLizOn</p>
 
       <div class="panel">
         <div class="panelInner">
@@ -849,7 +906,7 @@
         <!-- Course Prices -->
         <div class="list" aria-label="Course pricing list">
           <div class="rowitem">
-            <div class="meta"><b>IELTS ZERO — 4,200</b><span>Course fee</span></div>
+            <div class="meta"><b>IELTS ZERO — 4,200 tk</b><span>Course fee</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -857,7 +914,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta"><b>IELTS HOPE — 5,500</b><span>Course fee</span></div>
+            <div class="meta"><b>IELTS HOPE — 5,500 tk</b><span>Course fee</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -865,7 +922,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta"><b>IELTS STEP-UP — 6,200</b><span>Course fee</span></div>
+            <div class="meta"><b>IELTS STEP-UP — 6,200 tk</b><span>Course fee</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -873,7 +930,7 @@
           </div>
 
           <div class="rowitem">
-            <div class="meta"><b>IELTS DESPERATE — 7,500</b><span>Course fee</span></div>
+            <div class="meta"><b>IELTS DESPERATE — 7,500 tk</b><span>Course fee</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
               <button class="btn" data-open-help type="button">Help</button>
@@ -888,42 +945,42 @@
 
         <div class="list" aria-label="Combo pricing list">
           <div class="rowitem">
-            <div class="meta"><b>ZERO + HOPE — 6,790</b><span>Foundation + Reset</span></div>
+            <div class="meta"><b>ZERO + HOPE — 6,790 tk</b><span>Foundation + Reset</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
-              <button class="btn" data-open-help type="button">Help</button>
+              <button class="btn" data-open-help type="button">Save 2910/-</button>
             </div>
           </div>
 
           <div class="rowitem">
-            <div class="meta"><b>HOPE + STEP-UP — 8,190</b><span>Reset + Band jump</span></div>
+            <div class="meta"><b>HOPE + STEP-UP — 8,190 tk</b><span>Reset + Band jump</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
-              <button class="btn" data-open-help type="button">Help</button>
+              <button class="btn" data-open-help type="button">Save 3510/-</button>
             </div>
           </div>
 
           <div class="rowitem">
-            <div class="meta"><b>STEP-UP + DESPERATE — 9,590</b><span>Band jump + Final eval</span></div>
+            <div class="meta"><b>STEP-UP + DESPERATE — 9,590 tk</b><span>Band jump + Final eval</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
-              <button class="btn" data-open-help type="button">Help</button>
+              <button class="btn" data-open-help type="button">Save 4110/-</button>
             </div>
           </div>
 
           <div class="rowitem">
-            <div class="meta"><b>ZERO + HOPE + STEP-UP — 9,540</b><span>Build → Reset → Band jump</span></div>
+            <div class="meta"><b>ZERO + HOPE + STEP-UP — 9,540 tk</b><span>Build → Reset → Band jump</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
-              <button class="btn" data-open-help type="button">Help</button>
+              <button class="btn" data-open-help type="button">Save 6360/-</button>
             </div>
           </div>
 
           <div class="rowitem">
-            <div class="meta"><b>HOPE + STEP-UP + DESPERATE — 11,520</b><span>Reset → Band jump → Final eval</span></div>
+            <div class="meta"><b>HOPE + STEP-UP + DESPERATE — 11,520 tk</b><span>Reset → Band jump → Final eval</span></div>
             <div class="actions">
               <button class="btn primary" data-open-pay type="button">Pay</button>
-              <button class="btn" data-open-help type="button">Help</button>
+              <button class="btn" data-open-help type="button">Save 7680/-</button>
             </div>
           </div>
 

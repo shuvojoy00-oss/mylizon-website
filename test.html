@@ -678,23 +678,80 @@
     </div>
   </section>
 
-  <!-- REVIEWS -->
-  <section class="section" id="reviews">
-    <div class="container">
-      <h2 class="sectionTitle">Real Reviews (Bangladeshi Students)</h2>
-      <p class="sectionSub">Raw names + real feedback vibe. You can update names/text anytime inside the code (no design change needed).</p>
+  <!-- REVIEWS SECTION -->
+<section class="section" id="reviews">
+  <div class="container">
+    <h2 class="sectionTitle">What Our Students Say</h2>
+    <p class="sectionSub">Real feedback from Bangladeshi students. You can update the names and reviews anytime directly in the code (without changing the design).</p>
 
-      <div class="panel">
-        <div class="panelInner">
-          <div class="gridCards" id="reviewGrid"></div>
-          <div class="btnRow">
-            <button class="btn primary" id="btnMoreHelp" type="button">Need guidance? Chat on WhatsApp</button>
-            <button class="btn" id="btnJumpPricing2" type="button">See Pricing</button>
-          </div>
+    <div class="panel">
+      <div class="panelInner">
+        <!-- Automated Scrolling Reviews -->
+        <div class="gridCards" id="reviewGrid" style="overflow: hidden; max-height: 250px; display: flex; flex-direction: column; gap: 10px; overflow-y: scroll;">
+          <!-- Reviews will be injected here dynamically -->
+        </div>
+
+        <!-- Buttons below the reviews -->
+        <div class="btnRow">
+          <button class="btn primary" id="btnMoreHelp" type="button">Need guidance? Chat on WhatsApp</button>
+          <button class="btn" id="btnJumpPricing2" type="button">See Pricing</button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<script>
+  // Automated scrolling behavior for the review section
+  let reviewIndex = 0;
+  const reviewGrid = document.getElementById('reviewGrid');
+
+  // Array containing student feedback
+  const REVIEWS = [
+    { name: "Nusrat Jahan", text: "Ami age random practice kortam. Ekhon bujhe practice kori. Reading speed + writing structure improve hoyeche." },
+    { name: "Sabbir Hossain", text: "HOPE er por listening e panic kom. Answer catch kora easy hoye gese." },
+    { name: "Rafi Ahmed", text: "STEP-UP e important question types clear. Writing task 2 structure ekdom settled." },
+    { name: "Mim Akter", text: "DESPERATE evaluation loop ta game changer. Weak point dhore fix kore dise." },
+    { name: "Sadia Rahman", text: "Ami initially confused chhilam. HOPE course e ami easy bujhbo pari. Confidence barse." },
+    { name: "Tanvir Hossain", text: "Zero course er grammar knowledge er por step-up er writing improve hoyeche. Abar fluent hoise." },
+    { name: "Shuvo Paul", text: "STEP-UP e reading r listening er important question types bujhbo pari, exam easily handle korte parbo." },
+    { name: "Fahim Uddin", text: "Desperate course e mock test ar feedback system ta extra. Writing evaluation onek help kore." },
+    { name: "Asma Akter", text: "I was struggling with speaking, but after DESPERATE, ami fluently bolte pari." },
+    { name: "Zahidul Islam", text: "IELTS exam e result er por, amader support ta helpful chhilo. ZERO to DESPERATE, full journey." }
+  ];
+
+  // Inject reviews dynamically
+  function renderReviews() {
+    reviewGrid.innerHTML = REVIEWS.map(r => `
+      <div class="smallCard">
+        <div class="tag">Real Student</div>
+        <b style="margin-top:10px;">${r.name}</b>
+        <p>${r.text}</p>
+      </div>
+    `).join('');
+  }
+
+  // Function to scroll the review section automatically
+  function autoScroll() {
+    if (reviewIndex < REVIEWS.length) {
+      reviewGrid.scrollTop += 1; // Scroll down
+      reviewIndex++;
+    } else {
+      reviewIndex = 0; // Reset when end is reached
+      reviewGrid.scrollTop = 0; // Scroll back to top
+    }
+  }
+
+  // Initialize the reviews and start the auto-scrolling effect
+  renderReviews();
+  let scrollInterval = setInterval(autoScroll, 100);
+
+  // Stop the auto-scrolling when the user touches the review section
+  reviewGrid.addEventListener('touchstart', () => clearInterval(scrollInterval));
+  reviewGrid.addEventListener('touchend', () => {
+    scrollInterval = setInterval(autoScroll, 100); // Restart auto-scrolling after touch
+  });
+</script>
 
   <!-- INSTRUCTORS -->
   <section class="section" id="instructors">

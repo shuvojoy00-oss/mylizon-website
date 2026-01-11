@@ -3,23 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IELTS ZERO — Student Portal | LizOn Education</title>
-  <meta name="description" content="IELTS ZERO portal: class notes, fully built classes, resources, and teacher training." />
-  <meta name="theme-color" content="#062b1f" />
+  <title>IELTS ZERO — Portal | LizOn Education</title>
+  <meta name="theme-color" content="#0b3b2a" />
 
   <style>
     :root{
-      /* Dark mode (NO pure black) */
-      --bg:#041f16;
-      --bg2:#062b1f;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.08);
-      --stroke:rgba(255,255,255,.14);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.70);
+      /* Brand */
+      --green:#062b1f;
+      --green2:#0b3b2a;
       --gold:#d6b35a;
-      --gold2:#caa64a;
-      --shadow: 0 14px 40px rgba(0,0,0,.35);
+
+      /* Light (iPhone-like) */
+      --bg:#f6f7f8;
+      --bg2:#ffffff;
+      --text:#0f172a;
+      --muted:rgba(15,23,42,.68);
+      --stroke:rgba(15,23,42,.10);
+      --stroke2:rgba(15,23,42,.14);
+
+      --glass: rgba(255,255,255,.72);
+      --glass2: rgba(255,255,255,.56);
+
+      --shadow: 0 18px 60px rgba(15,23,42,.10);
+      --shadow2: 0 10px 30px rgba(15,23,42,.08);
+
       --radius:18px;
       --radius2:24px;
     }
@@ -28,30 +35,32 @@
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
       background:
-        radial-gradient(900px 420px at 20% -10%, rgba(214,179,90,.18), transparent 60%),
-        radial-gradient(800px 380px at 90% 0%, rgba(255,255,255,.06), transparent 55%),
+        radial-gradient(900px 420px at 20% -10%, rgba(214,179,90,.18), transparent 55%),
+        radial-gradient(800px 380px at 90% 0%, rgba(6,43,31,.10), transparent 60%),
         linear-gradient(180deg, var(--bg2), var(--bg));
       min-height:100vh;
     }
 
     .wrap{
-      max-width:1100px;
+      max-width:1120px;
       margin:0 auto;
-      padding:22px 16px 96px;
+      padding:18px 14px 96px;
     }
 
     header{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
+      gap:12px;
       padding:14px 14px;
       border:1px solid var(--stroke);
       border-radius:var(--radius2);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      background:var(--glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       box-shadow:var(--shadow);
     }
 
@@ -68,10 +77,10 @@
       gap:8px;
       padding:10px 12px;
       border-radius:999px;
-      background:rgba(214,179,90,.12);
-      border:1px solid rgba(214,179,90,.35);
-      color:var(--gold);
-      font-weight:800;
+      background:rgba(6,43,31,.10);
+      border:1px solid rgba(6,43,31,.18);
+      color:var(--green2);
+      font-weight:900;
       letter-spacing:.2px;
       white-space:nowrap;
     }
@@ -107,31 +116,38 @@
 
     .pill{
       border:1px solid var(--stroke);
-      color:var(--text);
-      background:rgba(255,255,255,.04);
+      color:var(--green2);
+      background:rgba(255,255,255,.62);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-radius:999px;
       padding:9px 12px;
       font-size:13px;
       text-decoration:none;
       transition:transform .12s ease, background .12s ease, border-color .12s ease;
       white-space:nowrap;
+      box-shadow:var(--shadow2);
     }
     .pill:hover{
       transform:translateY(-1px);
-      background:rgba(255,255,255,.06);
-      border-color:rgba(255,255,255,.20);
+      background:rgba(255,255,255,.78);
+      border-color:var(--stroke2);
     }
 
     .hero{
-      margin-top:18px;
+      margin-top:14px;
       padding:16px 14px;
       border-radius:var(--radius2);
       border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);
+      background:var(--glass2);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow:var(--shadow2);
     }
     .hero h1{
       margin:0;
       font-size:18px;
+      letter-spacing:.2px;
     }
     .hero p{
       margin:8px 0 0;
@@ -141,7 +157,7 @@
     }
 
     .grid{
-      margin-top:16px;
+      margin-top:14px;
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap:12px;
@@ -151,7 +167,9 @@
       grid-column: span 6;
       border-radius:var(--radius2);
       border:1px solid var(--stroke);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      background:rgba(255,255,255,.70);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       box-shadow:var(--shadow);
       padding:14px;
       cursor:pointer;
@@ -160,8 +178,8 @@
     }
     .card:hover{
       transform:translateY(-2px);
-      border-color:rgba(214,179,90,.42);
-      background:linear-gradient(180deg, rgba(214,179,90,.08), rgba(255,255,255,.04));
+      border-color:rgba(6,43,31,.22);
+      background:rgba(255,255,255,.82);
     }
     .card .top{
       display:flex;
@@ -173,6 +191,7 @@
       margin:0;
       font-size:15px;
       letter-spacing:.2px;
+      color:var(--green2);
     }
     .card p{
       margin:8px 0 0;
@@ -180,27 +199,32 @@
       font-size:13px;
       line-height:1.5;
     }
+
     .tag{
       font-size:12px;
       padding:7px 10px;
       border-radius:999px;
       border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
+      background:rgba(6,43,31,.06);
+      color:rgba(6,43,31,.82);
       white-space:nowrap;
+      font-weight:700;
     }
     .tag.gold{
-      border-color:rgba(214,179,90,.38);
-      background:rgba(214,179,90,.10);
-      color:var(--gold);
-      font-weight:800;
+      border-color:rgba(214,179,90,.40);
+      background:rgba(214,179,90,.18);
+      color:#6a4c00;
+      font-weight:900;
     }
 
+    /* Viewer */
     .viewer{
-      margin-top:16px;
+      margin-top:14px;
       border-radius:var(--radius2);
       border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);
+      background:rgba(255,255,255,.74);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       overflow:hidden;
       box-shadow:var(--shadow);
       display:none;
@@ -212,7 +236,7 @@
       gap:10px;
       padding:12px 12px;
       border-bottom:1px solid var(--stroke);
-      background:rgba(255,255,255,.03);
+      background:rgba(255,255,255,.78);
       flex-wrap:wrap;
     }
     .viewerHead .left{
@@ -228,6 +252,7 @@
       overflow:hidden;
       text-overflow:ellipsis;
       max-width:520px;
+      color:var(--green2);
     }
     .viewerHead span{
       color:var(--muted);
@@ -242,8 +267,10 @@
 
     .btn{
       border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
+      background:rgba(255,255,255,.70);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      color:var(--green2);
       padding:9px 12px;
       border-radius:999px;
       font-size:13px;
@@ -251,20 +278,22 @@
       text-decoration:none;
       transition:transform .12s ease, background .12s ease, border-color .12s ease;
       white-space:nowrap;
+      box-shadow:var(--shadow2);
+      font-weight:800;
     }
     .btn:hover{
       transform:translateY(-1px);
-      background:rgba(255,255,255,.06);
-      border-color:rgba(255,255,255,.20);
+      background:rgba(255,255,255,.86);
+      border-color:var(--stroke2);
     }
     .btn.gold{
-      border-color:rgba(214,179,90,.42);
-      background:rgba(214,179,90,.10);
-      color:var(--gold);
+      border-color:rgba(214,179,90,.45);
+      background:rgba(214,179,90,.20);
+      color:#6a4c00;
       font-weight:900;
     }
 
-    /* sub-tabs (only for the 12-class section) */
+    /* Subtabs only for 12-class section */
     .subtabs{
       display:none;
       gap:8px;
@@ -272,12 +301,12 @@
       flex-wrap:wrap;
       padding:10px 12px;
       border-bottom:1px solid var(--stroke);
-      background:rgba(255,255,255,.02);
+      background:rgba(255,255,255,.62);
     }
     .chip{
       border:1px solid var(--stroke);
-      background:rgba(255,255,255,.03);
-      color:var(--text);
+      background:rgba(255,255,255,.72);
+      color:var(--green2);
       padding:8px 10px;
       border-radius:999px;
       font-size:12.5px;
@@ -285,38 +314,111 @@
       transition:transform .12s ease, background .12s ease, border-color .12s ease;
       user-select:none;
       white-space:nowrap;
-    }
-    .chip:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,.06);
-      border-color:rgba(255,255,255,.20);
-    }
-    .chip.active{
-      border-color:rgba(214,179,90,.48);
-      background:rgba(214,179,90,.12);
-      color:var(--gold);
       font-weight:800;
+      box-shadow:var(--shadow2);
+    }
+    .chip:hover{ transform:translateY(-1px); background:rgba(255,255,255,.90); border-color:var(--stroke2); }
+    .chip.active{
+      border-color:rgba(6,43,31,.24);
+      background:rgba(6,43,31,.10);
+      color:var(--green2);
+      font-weight:900;
+    }
+
+    /* In-site file list (for folder browsing without Drive UI) */
+    .fileList{
+      display:none;
+      padding:10px 12px 2px;
+      border-bottom:1px solid var(--stroke);
+      background:rgba(255,255,255,.62);
+    }
+    .fileListGrid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:10px;
+      padding-bottom:10px;
+    }
+    .fileItem{
+      grid-column: span 6;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.76);
+      border-radius:16px;
+      padding:10px 10px;
+      cursor:pointer;
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      box-shadow:var(--shadow2);
+    }
+    .fileItem:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.92);
+      border-color:var(--stroke2);
+    }
+    .fileName{
+      font-size:13px;
+      font-weight:900;
+      color:var(--green2);
+      line-height:1.25;
+      margin:0;
+    }
+    .fileMeta{
+      margin:6px 0 0;
+      font-size:12px;
+      color:var(--muted);
     }
 
     iframe{
       width:100%;
       height:72vh;
       border:0;
-      background:rgba(255,255,255,.02);
+      background:rgba(255,255,255,.50);
     }
 
-    .note{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:12.5px;
-      line-height:1.55;
+    /* Floating scroll buttons */
+    .fabCol{
+      position:fixed;
+      right:14px;
+      bottom:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:9998;
+    }
+    .fab{
+      width:48px;
+      height:48px;
+      border-radius:999px;
+      border:1px solid rgba(15,23,42,.12);
+      background:rgba(255,255,255,.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      color:var(--green2);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow:var(--shadow);
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      font-size:18px;
+      line-height:1;
+      font-weight:900;
+    }
+    .fab:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.90);
+      border-color:rgba(6,43,31,.22);
+    }
+    .fab.gold{
+      background:rgba(214,179,90,.22);
+      border-color:rgba(214,179,90,.50);
+      color:#6a4c00;
     }
 
-    /* Password Modal */
+    /* Modal */
     .modalBack{
       position:fixed;
       inset:0;
-      background:rgba(0,0,0,.55);
+      background:rgba(15,23,42,.45);
       display:none;
       align-items:center;
       justify-content:center;
@@ -326,14 +428,18 @@
     .modal{
       width:min(520px, 100%);
       border-radius:var(--radius2);
-      border:1px solid var(--stroke);
-      background:linear-gradient(180deg, rgba(6,43,31,.98), rgba(4,31,22,.98));
-      box-shadow:0 18px 70px rgba(0,0,0,.55);
+      border:1px solid rgba(15,23,42,.12);
+      background:rgba(255,255,255,.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow:0 22px 90px rgba(15,23,42,.22);
       padding:14px;
     }
     .modal h4{
       margin:0;
       font-size:15px;
+      color:var(--green2);
+      letter-spacing:.2px;
     }
     .modal p{
       margin:8px 0 0;
@@ -351,61 +457,25 @@
       flex:1;
       min-width:180px;
       padding:11px 12px;
-      border-radius:12px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.12);
+      background:rgba(255,255,255,.70);
       color:var(--text);
       outline:none;
       font-size:14px;
+      box-shadow:var(--shadow2);
     }
     .err{
       margin-top:10px;
-      color:#ffb4b4;
+      color:#b42318;
       font-size:12.5px;
       display:none;
-    }
-
-    /* Floating scroll buttons */
-    .fabCol{
-      position:fixed;
-      right:14px;
-      bottom:16px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      z-index:9998;
-    }
-    .fab{
-      width:48px;
-      height:48px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(6,43,31,.85);
-      backdrop-filter: blur(8px);
-      color:var(--text);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      box-shadow:0 18px 50px rgba(0,0,0,.40);
-      transition:transform .12s ease, background .12s ease, border-color .12s ease;
-      user-select:none;
-      font-size:18px;
-      line-height:1;
-    }
-    .fab:hover{
-      transform:translateY(-1px);
-      background:rgba(6,43,31,.92);
-      border-color:rgba(214,179,90,.40);
-    }
-    .fab.gold{
-      background:rgba(214,179,90,.18);
-      border-color:rgba(214,179,90,.45);
-      color:var(--gold);
-      font-weight:900;
+      font-weight:800;
     }
 
     @media (max-width:760px){
       .card{ grid-column: span 12; }
+      .fileItem{ grid-column: span 12; }
       iframe{ height:70vh; }
       .viewerHead strong{ max-width:100%; }
       .fabCol{ right:12px; bottom:14px; }
@@ -419,8 +489,8 @@
       <div class="brand">
         <div class="badge">IELTS ZERO</div>
         <div class="title">
-          <strong>Student Portal — LizOn Education</strong>
-          <span>Tap & read inside the site (no Drive browsing)</span>
+          <strong>Study Portal — LizOn Education</strong>
+          <span>Tap & read inside the site</span>
         </div>
       </div>
       <div class="mini">
@@ -430,9 +500,10 @@
     </header>
 
     <section class="hero">
-      <h1>Tap. Read. Done.</h1>
+      <h1>Tap & Go</h1>
       <p>
-        Browse, Learn, Move Forward
+        Open class notes, built classes, resources, and guides directly here.
+        Clean, scrollable, and simple.
       </p>
     </section>
 
@@ -442,7 +513,7 @@
           <h3>Class Notes</h3>
           <div class="tag">Student</div>
         </div>
-        <p>Class-by-class notes for students (12 classes) — exactly from your Drive folder.</p>
+        <p>Class-by-class notes (12 classes).</p>
       </div>
 
       <div class="card" data-key="built">
@@ -450,15 +521,15 @@
           <h3>Fully Built Classes</h3>
           <div class="tag">Student</div>
         </div>
-        <p>Full builds: Class 1 → Class 12</p>
+        <p>Class 1 → Class 12 builds (documents inside each class).</p>
       </div>
 
       <div class="card" data-key="resources">
         <div class="top">
           <h3>Resources (IELTS ZERO)</h3>
-          <div class="tag">Student</div>
+          <div class="tag gold">Locked</div>
         </div>
-        <p>Connectives, grammar, pronunciation, topic-based prep (30 topics), everything.</p>
+        <p>Tap to see resource files. Each file requires a password to open.</p>
       </div>
 
       <div class="card" data-key="training">
@@ -466,7 +537,7 @@
           <h3>Teacher Training Guide</h3>
           <div class="tag gold">Password</div>
         </div>
-        <p>Teacher-only guide (class-by-class) — opens only after password.</p>
+        <p>Teacher-only materials.</p>
       </div>
 
       <div class="card" data-key="twelve">
@@ -474,7 +545,7 @@
           <h3>12 Classes & Structure</h3>
           <div class="tag">Tap inside</div>
         </div>
-        <p>Inside this section you’ll get: “12-Class & Why” + “Class Structure (1 Month)”.</p>
+        <p>12-Class & Why + Class Structure (1 Month).</p>
       </div>
     </section>
 
@@ -482,29 +553,29 @@
       <div class="viewerHead">
         <div class="left">
           <strong id="viewerTitle">Viewer</strong>
-          <span id="viewerHint">Scroll here</span>
+          <span id="viewerHint">Tap a file to open</span>
         </div>
         <div class="actions">
           <button class="btn gold" id="closeViewer">Close</button>
         </div>
       </div>
 
-      <!-- sub-tabs only for 12-class section -->
+      <!-- 12-class subtabs -->
       <div class="subtabs" id="subtabs">
         <div class="chip active" data-sub="why">12-Class & Why</div>
-        <div class="chip" data-sub="structure">Class Structure (12 Classes + 1 Month)</div>
+        <div class="chip" data-sub="structure">Class Structure (1 Month)</div>
+      </div>
+
+      <!-- In-site file list (for folders via API) -->
+      <div class="fileList" id="fileList">
+        <div class="fileListGrid" id="fileListGrid"></div>
       </div>
 
       <iframe id="frame" loading="lazy" referrerpolicy="no-referrer"></iframe>
     </section>
-
-    <div class="note">
-      Note: Teacher Training password gate is a “website gate” (good for keeping students out casually).
-      For real security, keep that Drive folder restricted to teachers’ Google accounts.
-    </div>
   </div>
 
-  <!-- Floating scroll buttons (scrolls WEBSITE, not inside iframe) -->
+  <!-- Floating scroll buttons -->
   <div class="fabCol" aria-label="Scroll controls">
     <div class="fab gold" id="scrollUp" title="Scroll up">↑</div>
     <div class="fab" id="scrollDown" title="Scroll down">↓</div>
@@ -513,8 +584,8 @@
   <!-- Password Modal -->
   <div class="modalBack" id="modalBack">
     <div class="modal">
-      <h4>Teacher Training — Password Required</h4>
-      <p>Enter the password to open teacher-only materials.</p>
+      <h4 id="modalTitle">Password Required</h4>
+      <p id="modalDesc">Enter password to continue.</p>
       <div class="row">
         <input class="in" id="pw" type="password" placeholder="Enter password" autocomplete="current-password" />
         <button class="btn gold" id="pwGo">Unlock</button>
@@ -525,9 +596,21 @@
   </div>
 
   <script>
-    // ============
-    // YOUR LINKS (LOCKED)
-    // ============
+    // =========================
+    // 1) Add your Google Drive API key for FULL "in-site file list" browsing.
+    // If empty, folders fall back to Google’s folder embed.
+    // =========================
+    const DRIVE_API_KEY = ""; // <-- PASTE API KEY HERE (recommended)
+
+    // =========================
+    // 2) Passwords (different)
+    // =========================
+    const TEACHER_PASSWORD = "LIZON-TEACHER-0";
+    const RESOURCES_PASSWORD = "TOPIC-BASED-PREP-0";
+
+    // =========================
+    // Your Drive Links (LOCKED)
+    // =========================
     const DRIVE = {
       notes: "https://drive.google.com/drive/folders/1N9CSzzJMmNL9C-r5oYpm3MCpcR-nAepS?usp=sharing",
       built: "https://drive.google.com/drive/folders/1Zp9CJvU5AFh-YGXSvjxxWwrTx3R93-ss?usp=sharing",
@@ -541,105 +624,279 @@
       notes: "Class Notes (Student)",
       built: "Fully Built Classes (Student)",
       resources: "Resources (IELTS ZERO)",
-      training: "Teacher Training Guide (Teacher-only)",
+      training: "Teacher Training Guide",
       twelve: "12 Classes & Structure"
     };
 
-    // ============
-    // PASSWORD (CHANGE THIS)
-    // ============
-    // Basic front-end gate: stops casual students, not hackers.
-    const TEACHER_PASSWORD = "LIZON-TEACHER-0";
+    // =========================
+    // Helpers
+    // =========================
+    function extractFolderId(url){
+      const m = url.match(/drive\.google\.com\/drive\/folders\/([a-zA-Z0-9_-]+)/);
+      return m ? m[1] : "";
+    }
 
-    // ============
-    // Convert Drive link -> embed preview URL
-    // ============
     function toPreviewUrl(url){
       if(!url || typeof url !== "string") return "";
-
-      // Google Docs -> /preview
       if(url.includes("docs.google.com")){
         if(url.includes("/preview")) return url;
         return url.replace(/\/edit.*$/,"/preview");
       }
-
-      // Drive file
       const fileMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
       if(fileMatch){
         const id = fileMatch[1];
         return `https://drive.google.com/file/d/${id}/preview`;
       }
-
-      // Drive folder
-      const folderMatch = url.match(/drive\.google\.com\/drive\/folders\/([a-zA-Z0-9_-]+)/);
-      if(folderMatch){
-        const id = folderMatch[1];
-        return `https://drive.google.com/embeddedfolderview?id=${id}#list`;
+      const folderId = extractFolderId(url);
+      if(folderId){
+        return `https://drive.google.com/embeddedfolderview?id=${folderId}#list`;
       }
-
       return url;
     }
 
+    // For Drive API file preview: prefer /preview for Google Docs types too
+    function fileIdToPreview(id, mimeType){
+      // Google Docs/Sheets/Slides can be previewed via "https://drive.google.com/file/d/{id}/preview"
+      // and Google will render appropriately for viewers.
+      return `https://drive.google.com/file/d/${id}/preview`;
+    }
+
+    // =========================
+    // UI references
+    // =========================
     const viewer = document.getElementById("viewer");
     const frame = document.getElementById("frame");
     const viewerTitle = document.getElementById("viewerTitle");
     const subtabs = document.getElementById("subtabs");
+    const fileList = document.getElementById("fileList");
+    const fileListGrid = document.getElementById("fileListGrid");
 
-    function showViewer(title, link, showTabs=false){
+    function openViewer(title){
       viewer.style.display = "block";
       viewerTitle.textContent = title;
-      subtabs.style.display = showTabs ? "flex" : "none";
-
-      frame.src = toPreviewUrl(link);
-
-      // Smooth scroll to viewer
       viewer.scrollIntoView({behavior:"smooth", block:"start"});
     }
+    function setIframe(src){
+      frame.src = src;
+    }
+    function hideSubUI(){
+      subtabs.style.display = "none";
+      fileList.style.display = "none";
+      fileListGrid.innerHTML = "";
+    }
 
-    function activateChip(which){
-      const chips = subtabs.querySelectorAll(".chip");
-      chips.forEach(c => c.classList.toggle("active", c.dataset.sub === which));
+    // =========================
+    // Password Modal (reusable)
+    // =========================
+    const modalBack = document.getElementById("modalBack");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDesc");
+    const pw = document.getElementById("pw");
+    const pwErr = document.getElementById("pwErr");
+    let modalCheckFn = null;
 
-      if(which === "why"){
-        frame.src = toPreviewUrl(DRIVE.why12);
+    function openModal(title, desc, checkFn){
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
+      pw.value = "";
+      pwErr.style.display = "none";
+      modalCheckFn = checkFn;
+      modalBack.style.display = "flex";
+      setTimeout(()=>pw.focus(), 50);
+    }
+    function closeModal(){
+      modalBack.style.display = "none";
+      modalCheckFn = null;
+    }
+    function tryUnlock(){
+      pwErr.style.display = "none";
+      if(modalCheckFn && modalCheckFn(pw.value)){
+        closeModal();
       } else {
-        frame.src = toPreviewUrl(DRIVE.structure);
+        pwErr.style.display = "block";
       }
     }
 
-    // Cards click handler
-    document.getElementById("cards").addEventListener("click", (e)=>{
+    document.getElementById("pwGo").addEventListener("click", tryUnlock);
+    document.getElementById("pwCancel").addEventListener("click", closeModal);
+    modalBack.addEventListener("click", (e)=>{ if(e.target === modalBack) closeModal(); });
+    pw.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter") tryUnlock();
+      if(e.key === "Escape") closeModal();
+    });
+
+    // =========================
+    // Drive API: list files in a public folder
+    // =========================
+    async function listFolderFiles(folderId){
+      // Only files directly under folder; you can extend later for nested folders if needed.
+      const q = encodeURIComponent(`'${folderId}' in parents and trashed=false`);
+      const fields = encodeURIComponent("files(id,name,mimeType,modifiedTime,iconLink)");
+      const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=${fields}&pageSize=100&key=${encodeURIComponent(DRIVE_API_KEY)}`;
+
+      const res = await fetch(url);
+      if(!res.ok) throw new Error("Drive API error");
+      const data = await res.json();
+      return (data.files || []).sort((a,b)=> (a.name||"").localeCompare(b.name||""));
+    }
+
+    function renderFileList(files, { requirePassword=false, passwordLabel="Password Required", passwordValue="" } = {}){
+      fileListGrid.innerHTML = "";
+
+      if(!files.length){
+        fileListGrid.innerHTML = `
+          <div class="fileItem" style="grid-column:span 12; cursor:default;">
+            <p class="fileName">No files found</p>
+            <p class="fileMeta">This folder may contain only subfolders or requires API access.</p>
+          </div>
+        `;
+        return;
+      }
+
+      files.forEach(f=>{
+        const el = document.createElement("div");
+        el.className = "fileItem";
+        el.innerHTML = `
+          <p class="fileName">${escapeHtml(f.name || "Untitled")}</p>
+          <p class="fileMeta">${escapeHtml(niceType(f.mimeType))}</p>
+        `;
+        el.addEventListener("click", ()=>{
+          const openFile = ()=>{
+            setIframe(fileIdToPreview(f.id, f.mimeType));
+          };
+
+          if(requirePassword){
+            openModal(
+              passwordLabel,
+              "Enter password to open this file.",
+              (val)=> val === passwordValue
+            );
+            // If correct, modal closes, then open file
+            const prevCheck = modalCheckFn;
+            modalCheckFn = (val)=>{
+              const ok = prevCheck(val);
+              if(ok) openFile();
+              return ok;
+            };
+          } else {
+            openFile();
+          }
+        });
+        fileListGrid.appendChild(el);
+      });
+    }
+
+    function niceType(mime){
+      if(!mime) return "File";
+      if(mime.includes("folder")) return "Folder";
+      if(mime.includes("pdf")) return "PDF";
+      if(mime.includes("presentation")) return "Slides";
+      if(mime.includes("spreadsheet")) return "Sheet";
+      if(mime.includes("document")) return "Document";
+      if(mime.startsWith("image/")) return "Image";
+      return "File";
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, (c)=>({
+        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+      }[c]));
+    }
+
+    // =========================
+    // Card behavior
+    // =========================
+    document.getElementById("cards").addEventListener("click", async (e)=>{
       const card = e.target.closest(".card");
       if(!card) return;
       const key = card.dataset.key;
 
-      if(key === "training"){
-        openModal();
-        return;
-      }
+      hideSubUI();
+      openViewer(TITLES[key] || "Viewer");
 
       if(key === "twelve"){
-        // show tabs inside same viewer (still counts as one main button)
-        showViewer(TITLES.twelve, DRIVE.why12, true);
+        subtabs.style.display = "flex";
+        setIframe(toPreviewUrl(DRIVE.why12));
         activateChip("why");
         return;
       }
 
-      if(key === "notes"){
-        showViewer(TITLES.notes, DRIVE.notes, false);
+      if(key === "training"){
+        // teacher gate first
+        openModal(
+          "Teacher Training Guide",
+          "Enter password to open teacher materials.",
+          (val)=> val === TEACHER_PASSWORD
+        );
+        const prevCheck = modalCheckFn;
+        modalCheckFn = (val)=>{
+          const ok = prevCheck(val);
+          if(ok){
+            // If API key, show in-site list; else fallback embed
+            const folderId = extractFolderId(DRIVE.training);
+            if(DRIVE_API_KEY && folderId){
+              fileList.style.display = "block";
+              setIframe("about:blank");
+              listFolderFiles(folderId)
+                .then(files => renderFileList(files, { requirePassword:false }))
+                .catch(()=> setIframe(toPreviewUrl(DRIVE.training)));
+            } else {
+              setIframe(toPreviewUrl(DRIVE.training));
+            }
+          }
+          return ok;
+        };
         return;
       }
-      if(key === "built"){
-        showViewer(TITLES.built, DRIVE.built, false);
-        return;
-      }
+
       if(key === "resources"){
-        showViewer(TITLES.resources, DRIVE.resources, false);
+        // resources: open in-site list and require password PER FILE OPEN
+        const folderId = extractFolderId(DRIVE.resources);
+
+        if(DRIVE_API_KEY && folderId){
+          fileList.style.display = "block";
+          setIframe("about:blank");
+          try{
+            const files = await listFolderFiles(folderId);
+            renderFileList(files, {
+              requirePassword:true,
+              passwordLabel:"Resources Locked",
+              passwordValue:RESOURCES_PASSWORD
+            });
+          }catch(err){
+            // fallback if API fails
+            setIframe(toPreviewUrl(DRIVE.resources));
+          }
+        } else {
+          // fallback folder embed (Drive UI)
+          setIframe(toPreviewUrl(DRIVE.resources));
+        }
+        return;
+      }
+
+      // notes / built: best experience via API list; fallback to embed
+      if(key === "notes" || key === "built"){
+        const folderId = extractFolderId(DRIVE[key]);
+        if(DRIVE_API_KEY && folderId){
+          fileList.style.display = "block";
+          setIframe("about:blank");
+          listFolderFiles(folderId)
+            .then(files => renderFileList(files, { requirePassword:false }))
+            .catch(()=> setIframe(toPreviewUrl(DRIVE[key])));
+        } else {
+          setIframe(toPreviewUrl(DRIVE[key]));
+        }
         return;
       }
     });
 
-    // Subtabs click
+    // 12-class tabs
+    function activateChip(which){
+      const chips = subtabs.querySelectorAll(".chip");
+      chips.forEach(c => c.classList.toggle("active", c.dataset.sub === which));
+      if(which === "why") setIframe(toPreviewUrl(DRIVE.why12));
+      else setIframe(toPreviewUrl(DRIVE.structure));
+    }
     subtabs.addEventListener("click", (e)=>{
       const chip = e.target.closest(".chip");
       if(!chip) return;
@@ -650,46 +907,12 @@
     document.getElementById("closeViewer").addEventListener("click", ()=>{
       frame.src = "about:blank";
       viewer.style.display = "none";
+      hideSubUI();
       window.scrollTo({top:0, behavior:"smooth"});
     });
 
-    // Password Modal
-    const modalBack = document.getElementById("modalBack");
-    const pw = document.getElementById("pw");
-    const pwErr = document.getElementById("pwErr");
-
-    function openModal(){
-      pw.value = "";
-      pwErr.style.display = "none";
-      modalBack.style.display = "flex";
-      setTimeout(()=>pw.focus(), 50);
-    }
-    function closeModal(){
-      modalBack.style.display = "none";
-    }
-    function tryUnlock(){
-      pwErr.style.display = "none";
-      if(pw.value === TEACHER_PASSWORD){
-        closeModal();
-        showViewer(TITLES.training, DRIVE.training, false);
-      }else{
-        pwErr.style.display = "block";
-      }
-    }
-
-    document.getElementById("pwGo").addEventListener("click", tryUnlock);
-    document.getElementById("pwCancel").addEventListener("click", closeModal);
-    modalBack.addEventListener("click", (e)=>{
-      if(e.target === modalBack) closeModal();
-    });
-    pw.addEventListener("keydown", (e)=>{
-      if(e.key === "Enter") tryUnlock();
-      if(e.key === "Escape") closeModal();
-    });
-
-    // Floating Scroll Buttons (scrolls WEBSITE)
+    // Floating Scroll Buttons (site scroll)
     const scrollAmount = () => Math.max(280, Math.floor(window.innerHeight * 0.78));
-
     document.getElementById("scrollUp").addEventListener("click", ()=>{
       window.scrollBy({top: -scrollAmount(), behavior:"smooth"});
     });

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LizOn Education — IELTS ZERO Pack (0.stl.stll)</title>
-  <meta name="description" content="IELTS ZERO internal pack: 12-class blueprint, class-by-class student notes, class-by-class teacher training guides, 30 Part 1 topic charts, and resources." />
+  <title>IELTS ZERO — Student Portal | LizOn Education</title>
+  <meta name="description" content="IELTS ZERO portal: class notes, fully built classes, resources, and teacher training." />
   <meta name="theme-color" content="#062b1f" />
 
   <style>
@@ -16,1037 +16,687 @@
       --panel2:rgba(255,255,255,.08);
       --stroke:rgba(255,255,255,.14);
       --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.72);
+      --muted:rgba(255,255,255,.70);
       --gold:#d6b35a;
       --gold2:#caa64a;
       --shadow: 0 14px 40px rgba(0,0,0,.35);
-      --radius:16px;
-      --radius2:22px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
+      --radius:18px;
+      --radius2:24px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      font-family:var(--sans);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
-      background: radial-gradient(1200px 800px at 25% 0%, rgba(214,179,90,.10), transparent 60%),
-                  radial-gradient(900px 600px at 90% 10%, rgba(255,255,255,.06), transparent 55%),
-                  linear-gradient(180deg, var(--bg), var(--bg2));
-    }
-    a{color:var(--gold); text-decoration:none}
-    a:hover{text-decoration:underline}
-
-    header{
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(10px);
-      background: rgba(4,31,22,.68);
-      border-bottom: 1px solid var(--stroke);
-    }
-    .head{
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 14px 14px;
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-    }
-    .brand{
-      display:flex; gap:10px; align-items:center;
-      min-width: 260px;
-    }
-    .badge{
-      width:44px; height:44px;
-      border-radius: 14px;
-      background: linear-gradient(145deg, rgba(214,179,90,.18), rgba(255,255,255,.06));
-      border:1px solid var(--stroke);
-      display:flex; align-items:center; justify-content:center;
-      box-shadow: var(--shadow);
-      font-weight:900;
-      color:var(--gold);
-      letter-spacing:.5px;
-    }
-    .brand h1{
-      font-size: 15px;
-      margin:0;
-      line-height:1.2;
-    }
-    .brand .sub{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:2px;
-    }
-
-    .tabs{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .tabbtn{
-      cursor:pointer;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 12px;
-      letter-spacing:.2px;
-      transition: transform .08s ease, background .12s ease;
-      user-select:none;
-    }
-    .tabbtn:hover{background: rgba(255,255,255,.07)}
-    .tabbtn:active{transform: scale(.98)}
-    .tabbtn.active{
-      background: linear-gradient(145deg, rgba(214,179,90,.22), rgba(255,255,255,.06));
-      border-color: rgba(214,179,90,.35);
-      color: #fff;
+      background:
+        radial-gradient(900px 420px at 20% -10%, rgba(214,179,90,.18), transparent 60%),
+        radial-gradient(800px 380px at 90% 0%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      min-height:100vh;
     }
 
     .wrap{
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 18px 14px 90px;
+      max-width:1100px;
+      margin:0 auto;
+      padding:22px 16px 96px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 14px;
+      border:1px solid var(--stroke);
+      border-radius:var(--radius2);
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      box-shadow:var(--shadow);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(214,179,90,.12);
+      border:1px solid rgba(214,179,90,.35);
+      color:var(--gold);
+      font-weight:800;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.15;
+      min-width:0;
+    }
+    .title strong{
+      font-size:16px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .title span{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:4px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .mini{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      border:1px solid var(--stroke);
+      color:var(--text);
+      background:rgba(255,255,255,.04);
+      border-radius:999px;
+      padding:9px 12px;
+      font-size:13px;
+      text-decoration:none;
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      white-space:nowrap;
+    }
+    .pill:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.20);
+    }
+
+    .hero{
+      margin-top:18px;
+      padding:16px 14px;
+      border-radius:var(--radius2);
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+    }
+    .hero h1{
+      margin:0;
+      font-size:18px;
+    }
+    .hero p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:13.5px;
+      line-height:1.55;
     }
 
     .grid{
+      margin-top:16px;
       display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
-    @media(min-width: 980px){
-      .grid.two{grid-template-columns: 1.05fr .95fr;}
-      .grid.three{grid-template-columns: 1fr 1fr 1fr;}
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
     }
 
     .card{
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius2);
-      padding: 14px;
-      box-shadow: var(--shadow);
-    }
-    .card h2{
-      margin:0 0 10px;
-      font-size: 16px;
-      letter-spacing:.2px;
-    }
-    .muted{color:var(--muted)}
-    .pillrow{display:flex; gap:8px; flex-wrap:wrap}
-    .pill{
+      grid-column: span 6;
+      border-radius:var(--radius2);
       border:1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .gold{color:var(--gold)}
-    .hr{height:1px; background: var(--stroke); margin:12px 0}
-    .k{
-      font-family:var(--mono);
-      font-size: 12px;
-      color: rgba(255,255,255,.86);
-      background: rgba(0,0,0,.16);
-      border:1px solid var(--stroke);
-      padding: 10px 10px;
-      border-radius: 14px;
-      white-space: pre-wrap;
-      line-height:1.45;
-    }
-    .btn{
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      box-shadow:var(--shadow);
+      padding:14px;
       cursor:pointer;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      font-weight:800;
-      font-size: 12px;
-      transition: transform .08s ease, background .12s ease;
+      transition:transform .12s ease, border-color .12s ease, background .12s ease;
       user-select:none;
     }
-    .btn:hover{background: rgba(255,255,255,.07)}
-    .btn:active{transform: scale(.98)}
-
-    .searchbar{
+    .card:hover{
+      transform:translateY(-2px);
+      border-color:rgba(214,179,90,.42);
+      background:linear-gradient(180deg, rgba(214,179,90,.08), rgba(255,255,255,.04));
+    }
+    .card .top{
       display:flex;
-      gap:8px;
-      align-items:center;
-      margin-top: 10px;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
     }
-    .searchbar input{
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--stroke);
-      background: rgba(0,0,0,.18);
-      color: var(--text);
-      outline:none;
-      font-size: 13px;
-    }
-    .searchbar input::placeholder{color: rgba(255,255,255,.55)}
-
-    .tag{
-      display:inline-block;
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      color: var(--muted);
-      margin-left: 6px;
-    }
-
-    details{
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding: 10px 12px;
-      overflow:hidden;
-      margin: 10px 0;
-    }
-    summary{
-      cursor:pointer;
-      font-weight: 900;
+    .card h3{
+      margin:0;
+      font-size:15px;
       letter-spacing:.2px;
-      list-style:none;
+    }
+    .card p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+    .tag{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .tag.gold{
+      border-color:rgba(214,179,90,.38);
+      background:rgba(214,179,90,.10);
+      color:var(--gold);
+      font-weight:800;
+    }
+
+    .viewer{
+      margin-top:16px;
+      border-radius:var(--radius2);
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      display:none;
+    }
+    .viewerHead{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-    }
-    summary::-webkit-details-marker{display:none}
-    .sum-right{
-      display:flex; gap:8px; align-items:center;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight:800;
-    }
-    .topicBody{
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid var(--stroke);
-      line-height:1.6;
-      color: rgba(255,255,255,.90);
-      font-size: 13px;
-    }
-    .topicBody h3{
-      margin: 10px 0 6px;
-      font-size: 13px;
-      color: rgba(255,255,255,.92);
-    }
-    .topicBody ul{margin: 6px 0 0 18px}
-    .topicBody li{margin: 4px 0}
-
-    table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      overflow:hidden;
-      border-radius: 14px;
-      border:1px solid var(--stroke);
-      margin-top: 8px;
-      background: rgba(0,0,0,.12);
-    }
-    th,td{
-      padding: 10px 10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      vertical-align:top;
-      font-size: 13px;
-    }
-    th{
-      text-align:left;
-      color: rgba(255,255,255,.85);
-      background: rgba(255,255,255,.04);
-      font-size: 12px;
-      letter-spacing:.2px;
-    }
-    tr:last-child td{border-bottom:none}
-
-    .footerbar{
-      position: fixed;
-      left:0; right:0; bottom:0;
-      background: rgba(4,31,22,.82);
-      border-top:1px solid var(--stroke);
-      backdrop-filter: blur(10px);
-      padding: 10px 14px;
-      z-index: 25;
-    }
-    .footerbar .inner{
-      max-width: 1120px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
+      padding:12px 12px;
+      border-bottom:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
       flex-wrap:wrap;
     }
-    .small{font-size:12px; color: var(--muted)}
-    .warn{color: rgba(255,255,255,.92); background: rgba(214,179,90,.12); border:1px solid rgba(214,179,90,.25); padding:10px; border-radius:14px}
+    .viewerHead .left{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      min-width:0;
+      flex-wrap:wrap;
+    }
+    .viewerHead strong{
+      font-size:14px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:520px;
+    }
+    .viewerHead span{
+      color:var(--muted);
+      font-size:12.5px;
+    }
+    .viewerHead .actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      padding:9px 12px;
+      border-radius:999px;
+      font-size:13px;
+      cursor:pointer;
+      text-decoration:none;
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.20);
+    }
+    .btn.gold{
+      border-color:rgba(214,179,90,.42);
+      background:rgba(214,179,90,.10);
+      color:var(--gold);
+      font-weight:900;
+    }
+
+    /* sub-tabs (only for the 12-class section) */
+    .subtabs{
+      display:none;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+      padding:10px 12px;
+      border-bottom:1px solid var(--stroke);
+      background:rgba(255,255,255,.02);
+    }
+    .chip{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12.5px;
+      cursor:pointer;
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .chip:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.20);
+    }
+    .chip.active{
+      border-color:rgba(214,179,90,.48);
+      background:rgba(214,179,90,.12);
+      color:var(--gold);
+      font-weight:800;
+    }
+
+    iframe{
+      width:100%;
+      height:72vh;
+      border:0;
+      background:rgba(255,255,255,.02);
+    }
+
+    .note{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.55;
+    }
+
+    /* Password Modal */
+    .modalBack{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:9999;
+    }
+    .modal{
+      width:min(520px, 100%);
+      border-radius:var(--radius2);
+      border:1px solid var(--stroke);
+      background:linear-gradient(180deg, rgba(6,43,31,.98), rgba(4,31,22,.98));
+      box-shadow:0 18px 70px rgba(0,0,0,.55);
+      padding:14px;
+    }
+    .modal h4{
+      margin:0;
+      font-size:15px;
+    }
+    .modal p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      margin-top:12px;
+      flex-wrap:wrap;
+    }
+    .in{
+      flex:1;
+      min-width:180px;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+    }
+    .err{
+      margin-top:10px;
+      color:#ffb4b4;
+      font-size:12.5px;
+      display:none;
+    }
+
+    /* Floating scroll buttons */
+    .fabCol{
+      position:fixed;
+      right:14px;
+      bottom:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:9998;
+    }
+    .fab{
+      width:48px;
+      height:48px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(6,43,31,.85);
+      backdrop-filter: blur(8px);
+      color:var(--text);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow:0 18px 50px rgba(0,0,0,.40);
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      font-size:18px;
+      line-height:1;
+    }
+    .fab:hover{
+      transform:translateY(-1px);
+      background:rgba(6,43,31,.92);
+      border-color:rgba(214,179,90,.40);
+    }
+    .fab.gold{
+      background:rgba(214,179,90,.18);
+      border-color:rgba(214,179,90,.45);
+      color:var(--gold);
+      font-weight:900;
+    }
+
+    @media (max-width:760px){
+      .card{ grid-column: span 12; }
+      iframe{ height:70vh; }
+      .viewerHead strong{ max-width:100%; }
+      .fabCol{ right:12px; bottom:14px; }
+    }
   </style>
 </head>
 
 <body>
-<header>
-  <div class="head">
-    <div class="brand">
-      <div class="badge">0</div>
-      <div>
-        <h1>LizOn Education — IELTS ZERO Pack</h1>
-        <div class="sub">Save as: <span class="gold">0.stl.stll.html</span> • Blueprint • Class Packs • Student Notes • Resources • Teacher Guides</div>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="badge">IELTS ZERO</div>
+        <div class="title">
+          <strong>Student Portal — LizOn Education</strong>
+          <span>Tap & read inside the site (no Drive browsing)</span>
+        </div>
       </div>
-    </div>
+      <div class="mini">
+        <a class="pill" href="https://www.mylizon.com/ielts.html#levels">Back to IELTS Journey</a>
+        <a class="pill" href="https://www.mylizon.com">MyLizOn.com</a>
+      </div>
+    </header>
 
-    <div class="tabs" role="tablist" aria-label="Tabs">
-      <div class="tabbtn active" data-tab="front" role="tab" aria-selected="true">Front</div>
-      <div class="tabbtn" data-tab="blueprint" role="tab">12-Class Blueprint</div>
-      <div class="tabbtn" data-tab="classpacks" role="tab">Class-by-Class Packs</div>
-      <div class="tabbtn" data-tab="student" role="tab">Student Notes (30)</div>
-      <div class="tabbtn" data-tab="resources" role="tab">Resources</div>
-      <div class="tabbtn" data-tab="teacher" role="tab">Teacher Guides</div>
+    <section class="hero">
+      <h1>Tap. Read. Done.</h1>
+      <p>
+        This page loads your Google Drive materials inside the website. Students won’t need to “browse Drive” —
+        they’ll just tap a section and read everything here.
+      </p>
+    </section>
+
+    <section class="grid" id="cards">
+      <div class="card" data-key="notes">
+        <div class="top">
+          <h3>Class Notes</h3>
+          <div class="tag">Student</div>
+        </div>
+        <p>Class-by-class notes for students (12 classes) — exactly from your Drive folder.</p>
+      </div>
+
+      <div class="card" data-key="built">
+        <div class="top">
+          <h3>Fully Built Classes</h3>
+          <div class="tag">Student</div>
+        </div>
+        <p>Full builds: Class 1 → Class 12 with documents inside each class folder.</p>
+      </div>
+
+      <div class="card" data-key="resources">
+        <div class="top">
+          <h3>Resources (IELTS ZERO)</h3>
+          <div class="tag">Student</div>
+        </div>
+        <p>Connectives, grammar, pronunciation, topic-based prep (30 topics), everything.</p>
+      </div>
+
+      <div class="card" data-key="training">
+        <div class="top">
+          <h3>Teacher Training Guide</h3>
+          <div class="tag gold">Password</div>
+        </div>
+        <p>Teacher-only guide (class-by-class) — opens only after password.</p>
+      </div>
+
+      <div class="card" data-key="twelve">
+        <div class="top">
+          <h3>12 Classes & Structure</h3>
+          <div class="tag">Tap inside</div>
+        </div>
+        <p>Inside this section you’ll get: “12-Class & Why” + “Class Structure (1 Month)”.</p>
+      </div>
+    </section>
+
+    <section class="viewer" id="viewer">
+      <div class="viewerHead">
+        <div class="left">
+          <strong id="viewerTitle">Viewer</strong>
+          <span id="viewerHint">Scroll here</span>
+        </div>
+        <div class="actions">
+          <button class="btn gold" id="closeViewer">Close</button>
+        </div>
+      </div>
+
+      <!-- sub-tabs only for 12-class section -->
+      <div class="subtabs" id="subtabs">
+        <div class="chip active" data-sub="why">12-Class & Why</div>
+        <div class="chip" data-sub="structure">Class Structure (12 Classes + 1 Month)</div>
+      </div>
+
+      <iframe id="frame" loading="lazy" referrerpolicy="no-referrer"></iframe>
+    </section>
+
+    <div class="note">
+      Note: Teacher Training password gate is a “website gate” (good for keeping students out casually).
+      For real security, keep that Drive folder restricted to teachers’ Google accounts.
     </div>
   </div>
-</header>
 
-<div class="wrap">
+  <!-- Floating scroll buttons (scrolls WEBSITE, not inside iframe) -->
+  <div class="fabCol" aria-label="Scroll controls">
+    <div class="fab gold" id="scrollUp" title="Scroll up">↑</div>
+    <div class="fab" id="scrollDown" title="Scroll down">↓</div>
+  </div>
 
-  <!-- FRONT -->
-  <section class="tab" id="tab-front">
-    <div class="grid two">
-      <div class="card">
-        <h2>ZERO Outcome (Locked)</h2>
-        <div class="k"><b>After IELTS ZERO (12 classes / 1 month), a student can:</b>
-• Speak about basic Part 1 topics (self / family / routine / preferences)
-• Improve pronunciation (basic control, more clarity)
-• Make fewer grammar mistakes (accuracy improves)
-• Use simple connectives for flow (because / but / and / so)
-• Enter HOPE stage without panic</div>
-        <div class="hr"></div>
-        <div class="pillrow">
-          <div class="pill">12-class blueprint ✅</div>
-          <div class="pill">Class packs ✅</div>
-          <div class="pill">Student notes (30 topics) ✅</div>
-          <div class="pill">Resources ✅</div>
-          <div class="pill">Teacher guides ✅</div>
-        </div>
+  <!-- Password Modal -->
+  <div class="modalBack" id="modalBack">
+    <div class="modal">
+      <h4>Teacher Training — Password Required</h4>
+      <p>Enter the password to open teacher-only materials.</p>
+      <div class="row">
+        <input class="in" id="pw" type="password" placeholder="Enter password" autocomplete="current-password" />
+        <button class="btn gold" id="pwGo">Unlock</button>
+        <button class="btn" id="pwCancel">Cancel</button>
       </div>
-
-      <div class="card">
-        <h2>Quick Jump</h2>
-        <div class="pillrow">
-          <a class="btn" href="#bpTop" onclick="openTab('blueprint')">Open 12-Class Blueprint</a>
-          <a class="btn" href="#cpTop" onclick="openTab('classpacks')">Open Class-by-Class Packs</a>
-          <a class="btn" href="#studentTop" onclick="openTab('student')">Open Student Notes (30)</a>
-          <a class="btn" href="#resTop" onclick="openTab('resources')">Open Resources</a>
-          <a class="btn" href="#tgTop" onclick="openTab('teacher')">Open Teacher Guides</a>
-        </div>
-        <div class="hr"></div>
-        <div class="small">Publish this file as <span class="gold">/0.stl.stll.html</span>. Share link. No need to touch main website pages.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 12-CLASS BLUEPRINT -->
-  <section class="tab" id="tab-blueprint" style="display:none">
-    <div class="card" id="bpTop">
-      <h2>12-Class Blueprint (ZERO)</h2>
-      <div class="muted">Each class = 1 main speaking topic + micro grammar + micro pronunciation + controlled practice + homework (2 topics).</div>
-      <div class="hr"></div>
-
-      <div class="warn">
-        <b>Golden rule:</b> ZERO is not “theory class.” Students must speak. Grammar is delivered as <b>usable chunks</b>.
-      </div>
-
-      <div class="hr"></div>
-
-      <div id="blueprintTableWrap"></div>
-    </div>
-  </section>
-
-  <!-- CLASS PACKS -->
-  <section class="tab" id="tab-classpacks" style="display:none">
-    <div class="card" id="cpTop">
-      <h2>Class-by-Class Packs</h2>
-      <div class="muted">These are the “per-class” notes students receive + the teacher’s mini plan for that class (packed together).</div>
-      <div class="hr"></div>
-      <div id="classPacks"></div>
-    </div>
-  </section>
-
-  <!-- STUDENT NOTES (30) -->
-  <section class="tab" id="tab-student" style="display:none">
-    <div class="card" id="studentTop">
-      <h2>Student Notes — 30 IELTS Speaking Part 1 Topic Charts</h2>
-      <div class="muted">Search any topic fast. Each topic follows the same locked structure.</div>
-
-      <div class="searchbar">
-        <input id="topicSearch" type="text" placeholder="Search topics (e.g., Food, Routine, Technology, Travel)..." />
-        <button class="btn" onclick="clearSearch()">Clear</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <div id="topics"></div>
-    </div>
-  </section>
-
-  <!-- RESOURCES -->
-  <section class="tab" id="tab-resources" style="display:none">
-    <div class="card" id="resTop">
-      <h2>Resources (ZERO)</h2>
-      <div class="muted">Course-wide resources used across all classes and topics.</div>
-      <div class="hr"></div>
-
-      <details open>
-        <summary>1) Connectives Master Chart <span class="tag">Skill-wise</span></summary>
-        <div class="topicBody">
-          <h3>Speaking (Part 1 flow)</h3>
-          <ul>
-            <li><b>and</b> — add: I like tea <b>and</b> coffee.</li>
-            <li><b>but</b> — contrast: It’s hard <b>but</b> useful.</li>
-            <li><b>because</b> — reason: I like it <b>because</b> it helps me.</li>
-            <li><b>so</b> — result: I practiced, <b>so</b> I improved.</li>
-            <li><b>also</b> — extra: I <b>also</b> watch videos.</li>
-          </ul>
-
-          <h3>Writing Task 1 (data)</h3>
-          <ul>
-            <li><b>overall</b>, <b>whereas</b>, <b>while</b>, <b>in contrast</b>, <b>similarly</b>, <b>compared to</b></li>
-          </ul>
-
-          <h3>Writing Task 2 (argument)</h3>
-          <ul>
-            <li><b>however</b>, <b>therefore</b>, <b>as a result</b>, <b>moreover</b>, <b>furthermore</b>, <b>on the one hand / on the other hand</b></li>
-          </ul>
-
-          <h3>Reading signals</h3>
-          <ul>
-            <li><b>however</b> (contrast coming), <b>for example</b> (example follows), <b>overall</b> (summary), <b>finally</b> (ending)</li>
-          </ul>
-
-          <h3>Listening signals</h3>
-          <ul>
-            <li><b>but</b>, <b>however</b>, <b>actually</b>, <b>instead</b>, <b>finally</b> → often the real answer is near.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details>
-        <summary>2) Grammar Application Chart <span class="tag">Task-wise</span></summary>
-        <div class="topicBody">
-          <h3>Speaking</h3>
-          <ul>
-            <li>Part 1: Present tense + usually/sometimes + because.</li>
-            <li>Part 2: Past for stories + before/after/then.</li>
-            <li>Part 3: Degree (comparison), general present, basic passive awareness.</li>
-          </ul>
-
-          <h3>Writing Task 1</h3>
-          <ul>
-            <li>Degree (comparison), passive, correct tense for years, linkers (whereas/while/in contrast).</li>
-          </ul>
-
-          <h3>Writing Task 2</h3>
-          <ul>
-            <li>General present, simple complex sentences, connectors (however/therefore), degree when comparing.</li>
-          </ul>
-
-          <h3>Reading & Listening</h3>
-          <ul>
-            <li>Notice signals: contrast words, time phrases, comparisons, passive tone.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details>
-        <summary>3) Pronunciation Starter List <span class="tag">Banglish support</span></summary>
-        <div class="topicBody">
-          <div class="muted">Topic-level pronunciation tables are already included inside each topic chart. This is the class-wide starter list for daily drills.</div>
-          <table>
-            <thead><tr><th>Word</th><th>Banglish Pronunciation</th><th>Use in sentence</th></tr></thead>
-            <tbody id="pronList"></tbody>
-          </table>
-        </div>
-      </details>
-
-      <details>
-        <summary>4) Grammar Scope (ZERO) <span class="tag">What we cover</span></summary>
-        <div class="topicBody">
-          <ul>
-            <li><b>Sentence Structures:</b> simple → basic complex (because / but / and).</li>
-            <li><b>Degree:</b> comparatives & superlatives (better / best).</li>
-            <li><b>Tenses:</b> present (habits), past (simple story), future (plans).</li>
-            <li><b>Voice:</b> active vs passive (basic awareness).</li>
-            <li><b>Connectives:</b> speaking flow + writing-ready linkers.</li>
-          </ul>
-        </div>
-      </details>
-    </div>
-  </section>
-
-  <!-- TEACHER GUIDES -->
-  <section class="tab" id="tab-teacher" style="display:none">
-    <div class="card" id="tgTop">
-      <h2>Teacher Guides (ZERO)</h2>
-      <div class="muted">Delivery rules + correction rules + class-by-class guides.</div>
-
-      <div class="hr"></div>
-
-      <details open>
-        <summary>Teacher Golden Rules (Non-negotiable)</summary>
-        <div class="topicBody">
-          <ul>
-            <li><b>Confidence & speaking time</b> is the #1 KPI in ZERO.</li>
-            <li>Do <b>not</b> correct everything. Fix only <b>1–2 key errors</b> per student turn.</li>
-            <li>Follow the flow: <b>Read → Fill → Q/A → Expand</b>.</li>
-            <li>Use “soft correction”: repeat the student’s sentence correctly (modeling).</li>
-            <li>Never shame. Never compare. Never rush weak students.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details>
-        <summary>Correction Policy (Simple & Consistent)</summary>
-        <div class="topicBody">
-          <ul>
-            <li>Correct only these types in ZERO: <b>missing “is/are”</b>, <b>wrong tense for habit</b>, <b>major word order</b>, <b>meaning-breaking pronunciation</b>.</li>
-            <li>Ignore minor errors if student is flowing.</li>
-            <li>Correction style: “Good. Say it again like this…” → then model.</li>
-          </ul>
-        </div>
-      </details>
-
-      <div class="hr"></div>
-      <div id="teacherByClass"></div>
-    </div>
-  </section>
-
-</div>
-
-<div class="footerbar">
-  <div class="inner">
-    <div class="small">LizOn Education • IELTS ZERO • <span class="gold">0.stl.stll.html</span></div>
-    <div class="pillrow">
-      <button class="btn" onclick="openTab('front')">Front</button>
-      <button class="btn" onclick="openTab('blueprint')">Blueprint</button>
-      <button class="btn" onclick="openTab('classpacks')">Class Packs</button>
-      <button class="btn" onclick="openTab('student')">Student Notes</button>
-      <button class="btn" onclick="openTab('resources')">Resources</button>
-      <button class="btn" onclick="openTab('teacher')">Teacher</button>
+      <div class="err" id="pwErr">Wrong password.</div>
     </div>
   </div>
-</div>
 
-<script>
-  // ===== Tabs =====
-  function openTab(name){
-    const tabs = ['front','blueprint','classpacks','student','resources','teacher'];
-    tabs.forEach(t=>{
-      document.getElementById('tab-'+t).style.display = (t===name)?'block':'none';
-      document.querySelectorAll('.tabbtn').forEach(btn=>{
-        if(btn.dataset.tab===t){
-          btn.classList.toggle('active', t===name);
-          btn.setAttribute('aria-selected', t===name ? 'true' : 'false');
-        }
-      });
-    });
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
-  document.querySelectorAll('.tabbtn').forEach(btn=>{
-    btn.addEventListener('click', ()=> openTab(btn.dataset.tab));
-  });
-
-  // ===== Helpers =====
-  function escapeHtml(str){
-    return String(str).replace(/[&<>"']/g, s => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[s]));
-  }
-  function escapeAttr(str){ return String(str).replace(/"/g,'&quot;'); }
-
-  // ===== 12-Class Blueprint Data =====
-  const BLUEPRINT = [
-    {c:1,  topic:"Yourself", grammar:"Simple sentences + 'I am' + 'I like' + because", pron:"introduce, currently, confident", hw:["Family","Friends"]},
-    {c:2,  topic:"Food", grammar:"Present habits (I usually...) + and/but", pron:"favourite, restaurant, healthy", hw:["Shopping","Health"]},
-    {c:3,  topic:"Hometown/City", grammar:"Adjectives + there is/are", pron:"crowded, peaceful, facilities", hw:["Home","Transport"]},
-    {c:4,  topic:"Home/Accommodation", grammar:"Prepositions (in/on/near) + describing places", pron:"apartment, comfortable, neighbourhood", hw:["Neighbours/Community","Sleep"]},
-    {c:5,  topic:"Study/Education", grammar:"Reasons with because + basic complex structure", pron:"education, subject, useful", hw:["Reading","English Learning"]},
-    {c:6,  topic:"Daily Routine", grammar:"Usually/sometimes + time phrases", pron:"routine, usually, evening", hw:["Time Management","Health"]},
-    {c:7,  topic:"Free Time/Hobbies", grammar:"Like + V-ing (I like playing...)", pron:"hobby, enjoy, outdoor", hw:["Music","Movies/TV"]},
-    {c:8,  topic:"Friends", grammar:"He/She is... (3rd person) + adjectives", pron:"supportive, helpful, relationship", hw:["Family","Neighbours/Community"]},
-    {c:9,  topic:"Family", grammar:"My family has... / I live with...", pron:"siblings, supportive, caring", hw:["Festivals","Holidays/Weekends"]},
-    {c:10, topic:"English Learning", grammar:"Before/now + but (contrast)", pron:"practice, improve, confident", hw:["Future Plans","Study (rev)"]},
-    {c:11, topic:"Technology", grammar:"to + verb (to communicate) + but", pron:"technology, internet, information", hw:["Mobile Phones","Internet/Social Media"]},
-    {c:12, topic:"Future Plans", grammar:"Future (I want to...) + because", pron:"future, career, successful", hw:["Work/Future Work","Travel"]}
-  ];
-
-  // ===== Class Packs Data (Student Notes Pack per class) =====
-  // Each class pack = what students receive that day (tight, actionable).
-  const CLASS_PACKS = BLUEPRINT.map(row => ({
-    c: row.c,
-    title: `Class ${row.c} — ${row.topic}`,
-    student: {
-      goals: [
-        "Speak for 30–60 seconds without stopping",
-        "Use 1 reason sentence with 'because'",
-        "Use 2–3 vocabulary words from the topic list"
-      ],
-      grammarBite: row.grammar,
-      pronDrill: row.pron,
-      inClassSteps: [
-        "Read the topic overview aloud (teacher models once).",
-        "Fill the gap passage (students write 5–6 blanks).",
-        "Answer Part 1 questions (pair practice + teacher check).",
-        "Expansion: add 'because' / 'but' / 'usually'.",
-        "Mini pronunciation drill (10 words / 5 minutes)."
-      ],
-      homework: row.hw
-    }
-  }));
-
-  // ===== Teacher Guides by Class (Class-specific) =====
-  const TEACHER_GUIDES = BLUEPRINT.map(row => ({
-    c: row.c,
-    title: `Class ${row.c} — Teacher Guide (${row.topic})`,
-    materials: [
-      "This page open on phone OR printed class pack sheet",
-      "Whiteboard/marker or notes app",
-      "Timer (strict speaking turns)",
-      "Optional: small list of 10 pronunciation words on board"
-    ],
-    flow: [
-      "0–5 min: Warm-up (2 easy questions from the topic).",
-      "5–12 min: Teacher modeling + vocabulary quick meaning.",
-      "12–22 min: Fill-gap passage (students fill, then read).",
-      "22–40 min: Q/A rotation (pair → teacher checks).",
-      "40–48 min: Grammar bite (show 2 correct sentence patterns).",
-      "48–55 min: Pronunciation drill (repeat + sentence).",
-      "55–60 min: Homework assignment + confidence check."
-    ],
-    teacherScript: [
-      "Model: 'I will answer first. Then you will copy the structure with your own information.'",
-      "Correction: 'Good. Say it again like this…' (repeat correct version).",
-      "Control: 'Short answer first. Then add because.'"
-    ],
-    doDont: [
-      "DO keep students speaking. DO use simple English.",
-      "DO correct only 1–2 key mistakes per turn.",
-      "DON’T lecture grammar for 15 minutes.",
-      "DON’T shame weak students. DON’T compare students."
-    ],
-    focus: {
-      grammar: row.grammar,
-      pron: row.pron,
-      homework: row.hw
-    }
-  }));
-
-  // ===== Resources: Pronunciation Starter List =====
-  const PRON_STARTER = [
-    ["introduce","in-tro-DIUS","Let me introduce myself."],
-    ["currently","KA-ren-tli","I am currently a student."],
-    ["favourite","FEI-vo-rit","My favourite food is biryani."],
-    ["restaurant","RES-tro-rant","I sometimes eat at a restaurant."],
-    ["healthy","HEL-thi","Homemade food is healthy."],
-    ["crowded","KRAU-ded","Dhaka is crowded."],
-    ["peaceful","PIS-ful","My village is peaceful."],
-    ["comfortable","com-FOR-ta-ble","My home is comfortable."],
-    ["education","e-du-KE-shon","Education is important."],
-    ["practice","PRAK-tis","I practice English daily."],
-    ["improve","im-PROOV","I want to improve my speaking."],
-    ["technology","tek-NO-lo-ji","Technology is useful."],
-    ["internet","IN-ter-net","I use the internet daily."],
-    ["future","FYO-char","I have future plans."],
-    ["career","ka-RI-ar","I want a strong career."]
-  ];
-
-  // ===== Student Notes: 30 Topic Charts =====
-  // NOTE: Using the same structure you approved.
-  // For brevity of JS payload, topic content is included as prepared earlier.
-  const TOPICS = [
-    {n:1,title:"Yourself",tag:"In-class",overview:"Common starter topic. Builds confidence and smooth intro.",
-      vocab:[["background","personal information"],["currently","now"],["interested in","like"],["goal","future aim"],["improve","make better"],["confident","not afraid"]],
-      fill:["My name is _____.","I am from _____.","I am currently a _____.","I am interested in _____.","I decided to learn English because _____.","My goal is to _____ in the future.","Overall, I want to become more _____ in English."],
-      qs:["Can you introduce yourself?","Where are you from?","What do you do?","Why are you learning English?","What is your goal for the future?"],
-      samples:["My name is Rahim. I am from Dhaka. I am currently a student.","I am learning English because it is important for my education and future.","My future goal is to study abroad and become more confident in English."],
-      expand:"Use: because (reason), and (add). Example: I am learning English because it is important, and it helps my future.",
-      pron:[["introduce","in-tro-DIUS"],["currently","KA-ren-tli"],["interested","IN-te-res-ted"],["confident","KON-fi-dent"],["future","FYO-char"]],
-      mistakes:[["I am student","I am a student"],["I learning English","I am learning English"]],
-      hw:"Homework links: Family, Friends",
-      conf:["Introduce myself confidently","Answer basic Part 1 questions","Speak 30–60 seconds"]
-    },
-    {n:2,title:"Food",tag:"In-class",overview:"Very common. Easy topic to speak naturally.",
-      vocab:[["favourite","most liked"],["traditional food","local food"],["homemade food","cooked at home"],["restaurant","place to eat"],["spicy","hot"],["healthy","good for health"],["junk food","unhealthy"],["ingredients","items used"]],
-      fill:["My favourite food is _____.","It is a very _____ food in my country.","It is usually cooked with _____, _____ and _____.","I like this food because it is _____ and _____.","I usually eat this food at _____ with my _____.","Sometimes, I eat food from a _____, but I prefer _____ food because it is more _____."],
-      qs:["What kind of food do you like?","What is your favourite food?","Do you prefer homemade food or restaurant food?","Is traditional food popular in your country?","Do you think your food habits are healthy?"],
-      samples:["I like homemade food because it is healthy and fresh.","My favourite food is biryani. It is very popular and it tastes really good.","I prefer homemade food because it is healthier, but sometimes I eat restaurant food."],
-      expand:"Use: because (reason), but (contrast), sometimes (balance).",
-      pron:[["favourite","FEI-vo-rit"],["traditional","tra-DI-sho-nal"],["restaurant","RES-tro-rant"],["healthy","HEL-thi"],["ingredients","in-GRI-di-ents"]],
-      mistakes:[["My favourite food biryani","My favourite food is biryani"],["I like eat spicy food","I like eating spicy food"],["more better","better"]],
-      hw:"Homework links: Shopping, Health",
-      conf:["Talk about food easily","Use because and but","Speak 30–60 seconds"]
-    },
-    {n:3,title:"Hometown / City",tag:"In-class",overview:"High frequency. Builds description and place language.",
-      vocab:[["hometown","place you grew up"],["busy","many people"],["crowded","full of people"],["peaceful","quiet"],["facilities","services"],["lifestyle","way of living"]],
-      fill:["My hometown is _____.","It is a _____ city in _____.","The city is quite _____ and _____.","There are many facilities such as _____ and _____.","I like my hometown because _____.","Overall, it is a _____ place to live."],
-      qs:["Where is your hometown?","Can you describe your hometown?","Do you like living in your hometown? Why?","Is your hometown busy or quiet?","Would you like to live there in the future?"],
-      samples:["My hometown is Dhaka. It is a large and busy city.","I like my hometown because it has many facilities and opportunities.","It is quite crowded, but I enjoy living there."],
-      expand:"Use: because, and, but. Example: My hometown is busy, but it has many good facilities.",
-      pron:[["hometown","HOM-taun"],["crowded","KRAU-ded"],["peaceful","PIS-ful"],["facilities","fa-SI-li-tiz"]],
-      mistakes:[["My hometown Dhaka","My hometown is Dhaka"],["It very busy city","It is a very busy city"]],
-      hw:"Homework links: Home/Accommodation, Transport",
-      conf:["Describe my hometown","Use adjectives naturally","Speak 30–60 seconds"]
-    },
-    {n:4,title:"Home / Accommodation",tag:"In-class",overview:"Common. Builds simple place description.",
-      vocab:[["apartment","flat"],["house","independent home"],["comfortable","easy and relaxed"],["spacious","large inside"],["neighbourhood","area around home"]],
-      fill:["I live in a _____.","It is a _____ place in _____.","My home is quite _____ and _____.","There are _____ rooms in my home.","I like my home because _____.","Overall, it is a very _____ place for me."],
-      qs:["Where do you live?","Can you describe your home?","Do you live in a house or an apartment?","What do you like about your home?","Would you like to change your home in the future?"],
-      samples:["I live in an apartment in Dhaka. It is quite comfortable.","My home is small, but it is very comfortable and peaceful.","I like my home because it is close to my school."],
-      expand:"Use: because, and, but. Example: My home is small, but it is very comfortable.",
-      pron:[["apartment","a-PART-ment"],["comfortable","com-FOR-ta-ble"],["neighbourhood","NEI-bor-hood"],["spacious","SPEI-shas"]],
-      mistakes:[["I live apartment","I live in an apartment"],["There have three rooms","There are three rooms"]],
-      hw:"Homework links: Daily Routine, Neighbours/Community",
-      conf:["Describe my home","Use adjectives","Speak 30–60 seconds"]
-    },
-    {n:5,title:"Study / Education",tag:"In-class",overview:"Most common for students. Builds identity + reason language.",
-      vocab:[["subject","area of study"],["class","lesson"],["education","learning system"],["difficult","hard"],["useful","helpful"]],
-      fill:["I am currently a _____.","I study at _____.","My main subject is _____.","I like this subject because _____.","Sometimes, my study feels _____, but it is _____ for my future.","Overall, education is very _____ to me."],
-      qs:["Are you a student or do you work?","What do you study?","Do you like your subject? Why?","Is studying easy or difficult for you?","Why is education important?"],
-      samples:["I am a student and I study business.","I like my subject because it is useful for my future career.","Studying is sometimes difficult, but it is very important."],
-      expand:"Use: because, but, and. Example: I like my subject because it is useful, but sometimes it is difficult.",
-      pron:[["education","e-du-KE-shon"],["subject","SUB-jekt"],["useful","YUS-ful"],["difficult","DIF-i-cult"]],
-      mistakes:[["I am study","I am studying"],["Education are important","Education is important"]],
-      hw:"Homework links: Daily Routine, Future Plans",
-      conf:["Talk about study","Explain why I study","Speak calmly"]
-    },
-    {n:6,title:"Daily Routine",tag:"In-class",overview:"Very common. Builds present tense confidence.",
-      vocab:[["routine","daily activities"],["wake up","get up"],["usually","most days"],["sometimes","not always"],["busy","many tasks"],["relax","rest"]],
-      fill:["I usually wake up at _____.","In the morning, I _____ and _____.","During the day, I _____ or _____.","In the evening, I usually _____.","Sometimes, I _____ to relax.","Overall, my daily routine is quite _____."],
-      qs:["What is your daily routine like?","What do you usually do in the morning?","Are you busy during the day?","What do you do in the evening?","Do you like your daily routine?"],
-      samples:["I usually wake up early and go to class in the morning.","During the day, I am quite busy with my studies.","In the evening, I relax and spend time with my family."],
-      expand:"Use: usually/sometimes + because. Example: I usually wake up early because I have classes.",
-      pron:[["routine","ru-TIN"],["usually","YU-zu-a-li"],["evening","IIV-ning"],["relax","ri-LAX"]],
-      mistakes:[["I wake up usually at 7","I usually wake up at 7"],["I am wake up at 7","I wake up at 7"]],
-      hw:"Homework links: Sleep, Health",
-      conf:["Talk about daily life","Use usually/sometimes","Speak naturally"]
-    },
-    {n:7,title:"Free Time / Hobbies",tag:"In-class",overview:"High comfort topic. Builds likes/dislikes and extension.",
-      vocab:[["free time","not busy time"],["hobby","enjoy activity"],["enjoy","like"],["outdoor","outside"],["indoor","inside"],["relax","rest"]],
-      fill:["In my free time, I usually _____.","My favourite hobby is _____.","I enjoy this activity because _____.","Sometimes, I also like to _____.","This hobby helps me to _____.","Overall, I enjoy my free time very much."],
-      qs:["What do you do in your free time?","Do you have any hobbies?","What is your favourite hobby? Why?","Do you prefer indoor or outdoor activities?","Do you spend much time on your hobbies?"],
-      samples:["In my free time, I usually watch videos and listen to music.","My favourite hobby is playing football because it helps me relax.","I prefer outdoor activities, but sometimes I enjoy staying at home."],
-      expand:"Use: because + and + sometimes. Example: I like football because it is fun, and it keeps me active.",
-      pron:[["hobby","HO-bi"],["enjoy","en-JOY"],["outdoor","AUT-dor"],["relax","ri-LAX"]],
-      mistakes:[["I enjoy to play","I enjoy playing"],["My hobby is play","My hobby is playing"]],
-      hw:"Homework links: Music, Movies/TV",
-      conf:["Talk about hobbies","Extend answers","Speak comfortably"]
-    },
-    {n:8,title:"Friends",tag:"In-class",overview:"Common. Builds people description language.",
-      vocab:[["close friend","very good friend"],["friendly","nice"],["helpful","gives help"],["supportive","helps emotionally"],["trust","believe"],["relationship","connection"]],
-      fill:["I have _____ close friends.","My best friend’s name is _____.","We usually spend time _____ together.","My friend is very _____ and _____.","I like my friend because _____.","Overall, friendship is very _____ to me."],
-      qs:["Do you have many friends?","Who is your best friend?","What do you usually do with your friends?","What do you like about your friends?","Is friendship important to you? Why?"],
-      samples:["I have a few close friends, and we spend time together regularly.","My best friend is very helpful and friendly.","Friendship is important to me because friends support each other."],
-      expand:"Use: because + and + usually. Example: My friend is helpful because he supports me.",
-      pron:[["friendship","FREN-ship"],["helpful","HELP-ful"],["supportive","sa-POR-tiv"],["relationship","ri-LE-shon-ship"]],
-      mistakes:[["My friend very helpful","My friend is very helpful"],["We enjoy with friends","We enjoy time with friends"]],
-      hw:"Homework links: Family, Neighbours/Community",
-      conf:["Talk about friends","Describe people","Speak 30–60 seconds"]
-    },
-    {n:9,title:"Family",tag:"In-class",overview:"Very safe topic. Builds relationship + reason language.",
-      vocab:[["parents","mother & father"],["siblings","brothers & sisters"],["member","person"],["supportive","helps"],["caring","loving"],["close","strong relationship"]],
-      fill:["There are _____ members in my family.","I live with my _____.","My family is very _____ and _____.","We usually spend time together _____.","I like my family because _____.","Overall, my family is very _____ to me."],
-      qs:["How many people are there in your family?","Who do you live with?","What do you like about your family?","Do you spend much time with your family?","Is family important to you? Why?"],
-      samples:["There are five members in my family, and I live with my parents.","My family is very supportive and caring.","Family is important to me because they always support me."],
-      expand:"Use: because + usually.",
-      pron:[["family","FA-mi-li"],["parents","PE-rents"],["siblings","SI-blings"],["supportive","sa-POR-tiv"],["caring","KE-rin"]],
-      mistakes:[["My family have five members","My family has five members"],["My family very supportive","My family is very supportive"]],
-      hw:"Homework links: Neighbours/Community, Holidays/Weekends",
-      conf:["Talk about family easily","Use because","Speak calmly"]
-    },
-    {n:10,title:"English Learning",tag:"In-class",overview:"Common. Builds motivation + normalizes struggle.",
-      vocab:[["improve","make better"],["practice","repeat"],["difficult","hard"],["confident","not afraid"],["communication","talking"],["mistake","error"]],
-      fill:["I started learning English _____.","At first, English was _____ for me.","I mainly practice English by _____.","I am learning English because _____.","Now, I feel more _____ when I speak English.","Overall, learning English is _____ for my future."],
-      qs:["When did you start learning English?","Is English easy or difficult for you?","How do you practice English?","Why are you learning English?","Do you feel confident speaking English now?"],
-      samples:["I started learning English at school, but I practice it more seriously now.","English is sometimes difficult for me, but I am improving.","I am learning English because it is important for my future and studies."],
-      expand:"Use: before/now + but.",
-      pron:[["improve","im-PROOV"],["practice","PRAK-tis"],["confident","KON-fi-dent"],["communication","ko-miu-ni-KE-shon"],["mistake","mis-TEIK"]],
-      mistakes:[["I am improve my English","I am improving my English"],["I practice English for improve","I practice English to improve"]],
-      hw:"Homework links: Future Plans, Study (revision)",
-      conf:["Talk about my English journey","Use before/now","Speak without fear"]
-    },
-    {n:11,title:"Technology",tag:"In-class",overview:"Common modern-life topic. Gentle bridge toward Part 3 thinking.",
-      vocab:[["device","electronic tool"],["mobile phone","smartphone"],["internet","online"],["useful","helpful"],["daily life","everyday life"],["information","knowledge"]],
-      fill:["Technology is very _____ in my daily life.","I usually use a _____ and the _____.","I use technology mainly for _____ and _____.","Technology helps me because _____.","Sometimes, too much technology can be _____.","Overall, technology is very _____ for me."],
-      qs:["Do you use technology every day?","What kind of technology do you use most?","How does technology help you in daily life?","Do you think technology is useful for students?","Are there any disadvantages of technology?"],
-      samples:["Yes, I use technology every day, especially my mobile phone.","Technology helps me communicate and find information easily.","Technology is useful, but sometimes it can be distracting."],
-      expand:"Use: because + but.",
-      pron:[["technology","tek-NO-lo-ji"],["device","di-VAIS"],["internet","IN-ter-net"],["information","in-for-ME-shon"]],
-      mistakes:[["Technology are useful","Technology is useful"],["I use technology for communicate","I use technology to communicate"]],
-      hw:"Homework links: Mobile Phones, Internet/Social Media",
-      conf:["Talk about technology","Give simple opinions","Use because/but"]
-    },
-    {n:12,title:"Future Plans",tag:"In-class",overview:"Common. Closes ZERO with hope + direction.",
-      vocab:[["future","time after now"],["plan","something to do"],["goal","aim"],["career","job life"],["improve","make better"],["successful","do well"]],
-      fill:["In the future, I want to _____.","My main goal is to _____.","I hope to _____ after completing my studies.","I am working on my future by _____.","Learning English will help me because _____.","Overall, I feel _____ about my future."],
-      qs:["What are your future plans?","What is your main goal in life?","Do you want to study or work in the future?","How will English help your future?","Are you optimistic about your future?"],
-      samples:["In the future, I want to complete my studies and get a good job.","My main goal is to become successful in my career.","English will help my future because it is important for education and work."],
-      expand:"Use: because + and + after that.",
-      pron:[["future","FYO-char"],["goal","GOUL"],["career","ka-RI-ar"],["improve","im-PROOV"],["successful","suk-SES-ful"]],
-      mistakes:[["I will study abroad in future","I will study abroad in the future"],["My future plan is good job","My future plan is to get a good job"]],
-      hw:"Homework links: Study (revision), English Learning (revision)",
-      conf:["Talk about future plans","Explain goals","Connect English with future"]
-    }
-  ];
-
-  // Add Topics 13–30 (titles only + minimal consistent content)
-  // NOTE: You already approved 13–30 structure. This keeps the file lighter while staying consistent.
-  const TOPICS_13_30 = [
-    {n:13,title:"Shopping",tag:"Homework"},
-    {n:14,title:"Transport",tag:"Homework"},
-    {n:15,title:"Weather",tag:"Homework"},
-    {n:16,title:"Health",tag:"Homework"},
-    {n:17,title:"Exercise / Physical Activity",tag:"Homework"},
-    {n:18,title:"Sleep / Daily Schedule",tag:"Homework"},
-    {n:19,title:"Music",tag:"Homework"},
-    {n:20,title:"Movies / TV",tag:"Homework"},
-    {n:21,title:"Reading",tag:"Homework"},
-    {n:22,title:"Mobile Phones",tag:"Homework"},
-    {n:23,title:"Internet / Social Media",tag:"Homework"},
-    {n:24,title:"Travel",tag:"Homework"},
-    {n:25,title:"Festivals / Celebrations",tag:"Homework"},
-    {n:26,title:"Holidays / Weekends",tag:"Homework"},
-    {n:27,title:"Clothes / Fashion",tag:"Homework"},
-    {n:28,title:"Neighbours / Community",tag:"Homework"},
-    {n:29,title:"Time Management / Being Busy",tag:"Homework"},
-    {n:30,title:"Work / Future Work",tag:"Homework"},
-  ];
-
-  // Lightweight generator for topics 13–30 (same 10 sections, but concise to keep file size sane)
-  function buildLightTopic(t){
-    const base = {
-      overview: "Part 1 daily-life topic. Speak with simple examples and one reason (because).",
-      vocab: [["usually","most days"],["prefer","like more"],["important","valuable"],["because","reason"],["sometimes","not always"]],
-      fill: ["I usually _____.","I like _____ because _____.","Sometimes I _____, but usually I _____.","Overall, this topic is _____ for me."],
-      qs: [`Do you like ${t.title.toLowerCase()}?`,`How often do you talk about ${t.title.toLowerCase()}?`,`What do you usually do related to ${t.title.toLowerCase()}?`,`Why do you like it?`,`Is it important in your daily life?`],
-      samples: ["I like it because it is useful in my daily life.","Sometimes it is difficult, but I am improving."],
-      expand: "Use: because (reason), but (contrast), usually/sometimes (habit).",
-      pron: [["because","bi-KOJ"],["usually","YU-zu-a-li"],["prefer","pre-FAR"]],
-      mistakes: [["I like do it","I like doing it"],["It important","It is important"]],
-      hw: "Revise: previous 2 topics",
-      conf: ["Speak 30–60 seconds","Use because naturally"]
+  <script>
+    // ============
+    // YOUR LINKS (LOCKED)
+    // ============
+    const DRIVE = {
+      notes: "https://drive.google.com/drive/folders/1N9CSzzJMmNL9C-r5oYpm3MCpcR-nAepS?usp=sharing",
+      built: "https://drive.google.com/drive/folders/1Zp9CJvU5AFh-YGXSvjxxWwrTx3R93-ss?usp=sharing",
+      resources: "https://drive.google.com/drive/folders/1BJA-zWLG74rkqg6YPi5j93nHQnjrFxJr?usp=sharing",
+      training: "https://drive.google.com/drive/folders/1a5FdYxRSCDLQwXWCYu-v_46Hm6PU5SCy?usp=sharing",
+      why12: "https://docs.google.com/document/d/10wFDKYou84bdEJaeiBYSW2jzJQxCoGkaqa3ydqxdj30/edit?usp=sharing",
+      structure: "https://docs.google.com/document/d/1bAoXdcRC4zr6NEk1One21rrAZMEYi2x_eDXcijtLZQ4/edit?usp=sharing"
     };
-    return Object.assign({}, t, base);
-  }
 
-  const FULL_TOPICS = TOPICS.concat(TOPICS_13_30.map(buildLightTopic));
+    const TITLES = {
+      notes: "Class Notes (Student)",
+      built: "Fully Built Classes (Student)",
+      resources: "Resources (IELTS ZERO)",
+      training: "Teacher Training Guide (Teacher-only)",
+      twelve: "12 Classes & Structure"
+    };
 
-  // ===== Render: Blueprint Table =====
-  function renderBlueprint(){
-    const rows = BLUEPRINT.map(r => `
-      <tr>
-        <td><b>Class ${r.c}</b></td>
-        <td>${escapeHtml(r.topic)}</td>
-        <td>${escapeHtml(r.grammar)}</td>
-        <td>${escapeHtml(r.pron)}</td>
-        <td>${escapeHtml(r.hw.join(" + "))}</td>
-      </tr>
-    `).join('');
+    // ============
+    // PASSWORD (CHANGE THIS)
+    // ============
+    // Basic front-end gate: stops casual students, not hackers.
+    const TEACHER_PASSWORD = "LIZON-TEACHER-0";
 
-    const html = `
-      <table>
-        <thead>
-          <tr>
-            <th>Class</th>
-            <th>Main Speaking Topic</th>
-            <th>Grammar Bite</th>
-            <th>Pronunciation Drill</th>
-            <th>Homework (2 topics)</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    `;
-    document.getElementById('blueprintTableWrap').innerHTML = html;
-  }
+    // ============
+    // Convert Drive link -> embed preview URL
+    // ============
+    function toPreviewUrl(url){
+      if(!url || typeof url !== "string") return "";
 
-  // ===== Render: Class Packs =====
-  function renderClassPacks(){
-    const html = CLASS_PACKS.map(p => `
-      <details ${p.c===1 ? "open" : ""}>
-        <summary>
-          <div>${escapeHtml(p.title)} <span class="tag">Student Pack</span></div>
-          <div class="sum-right">Tap</div>
-        </summary>
-        <div class="topicBody">
-          <h3>Student Goals (today)</h3>
-          <ul>${p.student.goals.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>
+      // Google Docs -> /preview
+      if(url.includes("docs.google.com")){
+        if(url.includes("/preview")) return url;
+        return url.replace(/\/edit.*$/,"/preview");
+      }
 
-          <h3>Grammar Bite (today)</h3>
-          <div class="k">${escapeHtml(p.student.grammarBite)}</div>
+      // Drive file
+      const fileMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if(fileMatch){
+        const id = fileMatch[1];
+        return `https://drive.google.com/file/d/${id}/preview`;
+      }
 
-          <h3>Pronunciation Drill (today)</h3>
-          <div class="k">${escapeHtml(p.student.pronDrill)}</div>
+      // Drive folder
+      const folderMatch = url.match(/drive\.google\.com\/drive\/folders\/([a-zA-Z0-9_-]+)/);
+      if(folderMatch){
+        const id = folderMatch[1];
+        return `https://drive.google.com/embeddedfolderview?id=${id}#list`;
+      }
 
-          <h3>In-Class Steps</h3>
-          <ol style="margin:6px 0 0 18px">
-            ${p.student.inClassSteps.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}
-          </ol>
+      return url;
+    }
 
-          <h3>Homework (2 topics)</h3>
-          <div class="k">${escapeHtml(p.student.homework.join(" + "))}</div>
+    const viewer = document.getElementById("viewer");
+    const frame = document.getElementById("frame");
+    const viewerTitle = document.getElementById("viewerTitle");
+    const subtabs = document.getElementById("subtabs");
 
-          <div class="hr"></div>
-          <div class="muted">Teacher tip: keep students speaking. Short answer first → then add “because”.</div>
-        </div>
-      </details>
-    `).join('');
+    function showViewer(title, link, showTabs=false){
+      viewer.style.display = "block";
+      viewerTitle.textContent = title;
+      subtabs.style.display = showTabs ? "flex" : "none";
 
-    document.getElementById('classPacks').innerHTML = html;
-  }
+      frame.src = toPreviewUrl(link);
 
-  // ===== Render: Teacher Guides By Class =====
-  function renderTeacherByClass(){
-    const html = TEACHER_GUIDES.map(g => `
-      <details ${g.c===1 ? "open" : ""}>
-        <summary>
-          <div>${escapeHtml(g.title)} <span class="tag">Class Guide</span></div>
-          <div class="sum-right">Tap</div>
-        </summary>
-        <div class="topicBody">
-          <h3>Materials Needed</h3>
-          <ul>${g.materials.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>
+      // Smooth scroll to viewer
+      viewer.scrollIntoView({behavior:"smooth", block:"start"});
+    }
 
-          <h3>Class Flow (60 minutes)</h3>
-          <ul>${g.flow.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>
+    function activateChip(which){
+      const chips = subtabs.querySelectorAll(".chip");
+      chips.forEach(c => c.classList.toggle("active", c.dataset.sub === which));
 
-          <h3>Teacher Script Lines</h3>
-          <ul>${g.teacherScript.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>
+      if(which === "why"){
+        frame.src = toPreviewUrl(DRIVE.why12);
+      } else {
+        frame.src = toPreviewUrl(DRIVE.structure);
+      }
+    }
 
-          <h3>Do / Don’t</h3>
-          <ul>${g.doDont.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>
+    // Cards click handler
+    document.getElementById("cards").addEventListener("click", (e)=>{
+      const card = e.target.closest(".card");
+      if(!card) return;
+      const key = card.dataset.key;
 
-          <h3>Today’s Focus</h3>
-          <div class="k"><b>Grammar:</b> ${escapeHtml(g.focus.grammar)}
-<b>Pronunciation:</b> ${escapeHtml(g.focus.pron)}
-<b>Homework:</b> ${escapeHtml(g.focus.homework.join(" + "))}</div>
-        </div>
-      </details>
-    `).join('');
+      if(key === "training"){
+        openModal();
+        return;
+      }
 
-    document.getElementById('teacherByClass').innerHTML = html;
-  }
+      if(key === "twelve"){
+        // show tabs inside same viewer (still counts as one main button)
+        showViewer(TITLES.twelve, DRIVE.why12, true);
+        activateChip("why");
+        return;
+      }
 
-  // ===== Render: Pronunciation Starter List =====
-  function renderPronList(){
-    const rows = PRON_STARTER.map(([w,b,s]) => `
-      <tr>
-        <td><b>${escapeHtml(w)}</b></td>
-        <td>${escapeHtml(b)}</td>
-        <td>${escapeHtml(s)}</td>
-      </tr>
-    `).join('');
-    document.getElementById('pronList').innerHTML = rows;
-  }
-
-  // ===== Render: Student Topics =====
-  function topicHTML(t){
-    const vocabRows = (t.vocab||[]).map(([w,m])=>`<tr><td><b>${escapeHtml(w)}</b></td><td>${escapeHtml(m)}</td></tr>`).join('');
-    const fillLines = (t.fill||[]).map(line=>`<li>${escapeHtml(line)}</li>`).join('');
-    const qLines = (t.qs||[]).map(q=>`<li>${escapeHtml(q)}</li>`).join('');
-    const sampleLines = (t.samples||[]).map(s=>`<li>${escapeHtml(s)}</li>`).join('');
-    const pronRows = (t.pron||[]).map(([w,p])=>`<tr><td><b>${escapeHtml(w)}</b></td><td>${escapeHtml(p)}</td></tr>`).join('');
-    const misRows = (t.mistakes||[]).map(([w,c])=>`<tr><td>${escapeHtml(w)}</td><td>${escapeHtml(c)}</td></tr>`).join('');
-    const confLines = (t.conf||[]).map(x=>`<li>☐ ${escapeHtml(x)}</li>`).join('');
-
-    return `
-      <details class="topic" data-title="${escapeAttr((t.title+' '+t.tag+' topic '+t.n).toLowerCase())}">
-        <summary>
-          <div>Topic ${t.n} — ${escapeHtml(t.title)} <span class="tag">${escapeHtml(t.tag)}</span></div>
-          <div class="sum-right">Tap</div>
-        </summary>
-        <div class="topicBody">
-          <h3>🟦 Section 1: Topic Overview</h3>
-          <div>${escapeHtml(t.overview || "")}</div>
-
-          <h3>🟦 Section 2: Core Vocabulary</h3>
-          <table>
-            <thead><tr><th>Word / Phrase</th><th>Simple Meaning</th></tr></thead>
-            <tbody>${vocabRows}</tbody>
-          </table>
-
-          <h3>🟦 Section 3: Guided Reading + Fill in the Gaps</h3>
-          <ul>${fillLines}</ul>
-
-          <h3>🟦 Section 4: IELTS Speaking Part 1 Questions</h3>
-          <ul>${qLines}</ul>
-
-          <h3>🟦 Section 5: Sample Answers (Model, not memorization)</h3>
-          <ul>${sampleLines}</ul>
-
-          <h3>🟦 Section 6: Answer Expansion Support</h3>
-          <div>${escapeHtml(t.expand || "")}</div>
-
-          <h3>🟦 Section 7: Pronunciation Focus (Banglish)</h3>
-          <table>
-            <thead><tr><th>Word</th><th>Banglish Pronunciation</th></tr></thead>
-            <tbody>${pronRows}</tbody>
-          </table>
-
-          <h3>🟦 Section 8: Common Mistakes (Awareness)</h3>
-          <table>
-            <thead><tr><th>Wrong</th><th>Correct</th></tr></thead>
-            <tbody>${misRows}</tbody>
-          </table>
-
-          <h3>🟦 Section 9: Homework Connection</h3>
-          <div>${escapeHtml(t.hw || "")}</div>
-
-          <h3>🟦 Section 10: Confidence Check</h3>
-          <ul>${confLines}</ul>
-        </div>
-      </details>
-    `;
-  }
-
-  function renderTopics(list){
-    const el = document.getElementById('topics');
-    el.innerHTML = list.map(topicHTML).join('');
-  }
-
-  function filterTopics(q){
-    const val = (q || '').trim().toLowerCase();
-    document.querySelectorAll('.topic').forEach(d=>{
-      const hay = (d.getAttribute('data-title') || '');
-      d.style.display = hay.includes(val) ? 'block' : 'none';
+      if(key === "notes"){
+        showViewer(TITLES.notes, DRIVE.notes, false);
+        return;
+      }
+      if(key === "built"){
+        showViewer(TITLES.built, DRIVE.built, false);
+        return;
+      }
+      if(key === "resources"){
+        showViewer(TITLES.resources, DRIVE.resources, false);
+        return;
+      }
     });
-  }
 
-  function clearSearch(){
-    const inp = document.getElementById('topicSearch');
-    inp.value = '';
-    filterTopics('');
-  }
+    // Subtabs click
+    subtabs.addEventListener("click", (e)=>{
+      const chip = e.target.closest(".chip");
+      if(!chip) return;
+      activateChip(chip.dataset.sub);
+    });
 
-  // ===== Init =====
-  renderBlueprint();
-  renderClassPacks();
-  renderTeacherByClass();
-  renderPronList();
-  renderTopics(FULL_TOPICS);
+    // Close viewer
+    document.getElementById("closeViewer").addEventListener("click", ()=>{
+      frame.src = "about:blank";
+      viewer.style.display = "none";
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
 
-  const input = document.getElementById('topicSearch');
-  input.addEventListener('input', (e)=> filterTopics(e.target.value));
-</script>
+    // Password Modal
+    const modalBack = document.getElementById("modalBack");
+    const pw = document.getElementById("pw");
+    const pwErr = document.getElementById("pwErr");
+
+    function openModal(){
+      pw.value = "";
+      pwErr.style.display = "none";
+      modalBack.style.display = "flex";
+      setTimeout(()=>pw.focus(), 50);
+    }
+    function closeModal(){
+      modalBack.style.display = "none";
+    }
+    function tryUnlock(){
+      pwErr.style.display = "none";
+      if(pw.value === TEACHER_PASSWORD){
+        closeModal();
+        showViewer(TITLES.training, DRIVE.training, false);
+      }else{
+        pwErr.style.display = "block";
+      }
+    }
+
+    document.getElementById("pwGo").addEventListener("click", tryUnlock);
+    document.getElementById("pwCancel").addEventListener("click", closeModal);
+    modalBack.addEventListener("click", (e)=>{
+      if(e.target === modalBack) closeModal();
+    });
+    pw.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter") tryUnlock();
+      if(e.key === "Escape") closeModal();
+    });
+
+    // Floating Scroll Buttons (scrolls WEBSITE)
+    const scrollAmount = () => Math.max(280, Math.floor(window.innerHeight * 0.78));
+
+    document.getElementById("scrollUp").addEventListener("click", ()=>{
+      window.scrollBy({top: -scrollAmount(), behavior:"smooth"});
+    });
+    document.getElementById("scrollDown").addEventListener("click", ()=>{
+      window.scrollBy({top: scrollAmount(), behavior:"smooth"});
+    });
+  </script>
 </body>
 </html>

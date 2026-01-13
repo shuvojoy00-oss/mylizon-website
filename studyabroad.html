@@ -1043,8 +1043,6 @@
       masters_spouse: ["Australia","New Zealand","Canada","USA","Belgium","Netherlands","Denmark","Finland","Malaysia"]
     };
 
-    const BOOST = ["Australia","UK","New Zealand","Belgium"];
-
     let idx = 0;
     const state = Object.create(null);
 
@@ -1151,53 +1149,101 @@
       return POOLS.masters_alone.slice();
     }
 
+    /* ===================== FIX: COUNTRY SUGGESTION (NOT ALWAYS AUS/NZ) ===================== */
+    function seedFromPhone(phone){
+      const s = String(phone || "");
+      let h = 0;
+      for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+      return h || 123456789;
+    }
+    function seededPick(arr, seed){
+      if (!arr.length) return null;
+      return arr[seed % arr.length];
+    }
+
     function chooseCountries(){
       const pool = pickPool();
-      const score = new Map(pool.map(c => [c, 0]));
+      const score = new Map(pool.map(c => [c, 0])); // start equal (no hard priority)
 
-      // Business boost
-      for (const c of BOOST) if (score.has(c)) score.set(c, score.get(c) + 3);
-
-      // Light heuristics (keeps it “advisor-like”, not absolute)
       const budget = state.budgetRange;
       const timeline = state.timeline;
       const gap = state.studyGap;
       const pr = state.priority;
+      const english = state.englishTestStatus;
 
+      // Budget nudges (small, realistic)
       if (budget === "Tight") {
         ["Belgium","Hungary","Malta","Cyprus","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
-        ["USA"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
+        ["USA","Australia"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
+        ["Netherlands","Denmark","Finland"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
+      }
+      if (budget === "Moderate") {
+        ["UK","Belgium","Netherlands","Malaysia","Canada"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
       }
       if (budget === "Flexible") {
         ["Australia","UK","Canada","USA","New Zealand","Netherlands","Denmark","Finland","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
       }
+
+      // Timeline nudges
       if (timeline === "0–3 months") {
-        ["UK","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["UK","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
+        ["USA","Canada"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
       }
+      if (timeline === "3–6 months") {
+        ["UK","Ireland","Belgium"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+      }
+      if (timeline === "Just exploring") {
+        ["Belgium","Hungary","Cyprus","Malta","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+      }
+
+      // Study gap nudges
       if (gap === "5+ years") {
         ["USA"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
+        ["Malaysia","Cyprus","Malta","Belgium"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
       }
+
+      // Priority nudges
       if (pr === "PR / long-term stay") {
         ["Canada","Australia","New Zealand"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
+        ["UK"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
       }
       if (pr === "Best universities") {
-        ["UK","USA","Canada","Australia","Netherlands","Denmark","Finland","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["UK","USA","Canada","Australia","Netherlands","Denmark","Finland","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
       }
       if (pr === "Lowest cost") {
         ["Hungary","Malta","Cyprus","Belgium","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
       }
+      if (pr === "Faster visa") {
+        ["UK","Malaysia","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+      }
+      if (pr === "Part-time work") {
+        ["Australia","UK","Canada","New Zealand","Netherlands","Denmark","Finland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+      }
+
+      // English test status (light)
+      if (english === "Not taken yet" || english === "Not sure") {
+        ["Malaysia","Hungary","Cyprus","Malta","Belgium"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+      }
 
       const ranked = [...score.entries()].sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
-      const primary = ranked[0] || pool[0] || "Belgium";
-      const alt = ranked.find(c => c !== primary) || pool[1] || primary;
+
+      // Pick from top group using stable seed so results vary naturally (not always same)
+      const seed = seedFromPhone(state.phoneNumber);
+      const topPrimaryGroup = ranked.slice(0, Math.min(5, ranked.length));
+      const primary = seededPick(topPrimaryGroup, seed) || ranked[0] || pool[0] || "Belgium";
+
+      const topAltGroup = ranked.filter(c => c !== primary).slice(0, Math.min(6, ranked.length-1));
+      const alt = seededPick(topAltGroup, seed >>> 1) || ranked.find(c => c !== primary) || pool[1] || primary;
+
       return { primary, alt };
     }
+    /* ===================== END FIX ===================== */
 
     function buildAdvisorNotes(primary, alt){
       const parts = [];
       parts.push(`Primary direction: ${primary}. Alternative option: ${alt}.`);
-      parts.push(`Next step: confirm intake availability and shortlist based on documents (academics, gap explanation, and budget proof).`);
-      parts.push(`Counselor review is recommended before finalizing the country route.`);
+      parts.push(`This suggestion is based on quick answers only. Final suitability depends on documents, course alignment, and intake availability.`);
+      parts.push(`Next step: counselor will verify your academics, gap explanation, budget proof, and shortlist the safest route.`);
       return parts.join(" ");
     }
 

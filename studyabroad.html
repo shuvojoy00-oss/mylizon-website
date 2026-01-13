@@ -5,22 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Study Abroad — LizOn Education</title>
   <meta name="description" content="Study Abroad guidance by LizOn Education. Country-wise requirements, intakes, IELTS/PTE score guidance, documents, opportunities, and honest answers." />
-  <meta name="theme-color" content="#062b1f" />
+  <meta name="theme-color" content="#ffffff" />
 
   <style>
     :root{
-      --bg:#041f16;
-      --bg2:#062b1f;
-      --card:rgba(255,255,255,.05);
-      --card2:rgba(255,255,255,.07);
-      --stroke:rgba(255,255,255,.12);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.72);
-      --gold:#d6b35a;
-      --gold2:#caa64a;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      /* Light (ONLY) */
+      --bg:#ffffff;
+      --bg2:#f6fbf9;
+      --card: rgba(6,43,31,.06);
+      --card2: rgba(6,43,31,.08);
+      --stroke: rgba(6,43,31,.14);
+
+      --text: rgba(6,43,31,.92);
+      --muted: rgba(6,43,31,.68);
+
+      --green:#062b1f;
+      --green2:#0b3a2b;
+
+      --gold:#caa64a;
+      --gold2:#d6b35a;
+
+      --shadow: 0 18px 55px rgba(6,43,31,.10);
       --radius: 18px;
       --radius2: 22px;
+
+      /* “Apple glass” vibes */
+      --glass: rgba(255,255,255,.65);
+      --glass2: rgba(255,255,255,.78);
+      --glassStroke: rgba(6,43,31,.14);
+      --glassShadow: 0 16px 45px rgba(6,43,31,.14);
+      --glassBlur: blur(14px);
+
+      /* Highlight colors for important words */
+      --hl1:#0b3a2b;
+      --hl2:#caa64a;
+      --hl3:#145a42;
+      --hl4:#0f5132;
     }
 
     *{box-sizing:border-box}
@@ -30,8 +50,8 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
       color:var(--text);
       background:
-        radial-gradient(1100px 560px at 20% 10%, rgba(214,179,90,.10), transparent 55%),
-        radial-gradient(900px 520px at 85% 20%, rgba(31,120,92,.22), transparent 55%),
+        radial-gradient(1100px 560px at 18% 0%, rgba(202,166,74,.12), transparent 58%),
+        radial-gradient(900px 520px at 90% 10%, rgba(11,58,43,.10), transparent 60%),
         linear-gradient(180deg, var(--bg2), var(--bg));
       overflow-x:hidden;
     }
@@ -39,12 +59,70 @@
     a{color:inherit; text-decoration:none}
     .container{width:min(1100px, calc(100% - 40px)); margin:0 auto}
 
-    /* Header */
+    /* ---------- Premium “glass” button ---------- */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:11px 14px;
+      border-radius:999px;
+      border:1px solid var(--glassStroke);
+      background: linear-gradient(180deg, var(--glass2), var(--glass));
+      color: var(--green);
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease;
+      font-weight:850;
+      font-size:14px;
+      white-space:nowrap;
+      user-select:none;
+      backdrop-filter: var(--glassBlur);
+      box-shadow: 0 10px 25px rgba(6,43,31,.10);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(6,43,31,.22);
+      box-shadow: 0 14px 30px rgba(6,43,31,.14);
+    }
+    .btn:active{transform: translateY(0px) scale(.99)}
+
+    .btn-gold{
+      background: linear-gradient(180deg, rgba(214,179,90,.92), rgba(202,166,74,.90));
+      border-color: rgba(202,166,74,.35);
+      color:#102016;
+      box-shadow: 0 14px 30px rgba(202,166,74,.20);
+    }
+    .btn-gold:hover{background: linear-gradient(180deg, rgba(214,179,90,.98), rgba(202,166,74,.96));}
+
+    .btn-green{
+      background: linear-gradient(180deg, rgba(6,43,31,.92), rgba(6,43,31,.86));
+      border-color: rgba(6,43,31,.30);
+      color:#fff;
+      box-shadow: 0 14px 30px rgba(6,43,31,.18);
+    }
+    .btn-green:hover{background: linear-gradient(180deg, rgba(6,43,31,.98), rgba(6,43,31,.92));}
+
+    .miniBtn{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--glassStroke);
+      background: linear-gradient(180deg, var(--glass2), var(--glass));
+      font-weight:850;
+      font-size:13px;
+      cursor:pointer;
+      backdrop-filter: var(--glassBlur);
+      box-shadow: 0 10px 22px rgba(6,43,31,.10);
+      color: var(--green);
+    }
+
+    /* ---------- Icon ---------- */
+    .icon{width:18px;height:18px;display:inline-block;vertical-align:-3px}
+    .iconSm{width:16px;height:16px;display:inline-block;vertical-align:-3px}
+
+    /* ---------- Header ---------- */
     header{
       position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(6,43,31,.92), rgba(6,43,31,.55));
-      border-bottom:1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,.72);
+      border-bottom:1px solid rgba(6,43,31,.10);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
@@ -55,45 +133,17 @@
       display:flex; align-items:center; gap:12px; min-width:220px;
     }
     .brand img{
-      width:36px; height:36px; border-radius:10px;
-      background: rgba(0,0,0,.15);
+      width:36px; height:36px; border-radius:12px;
+      background: rgba(255,255,255,.85);
       padding:6px;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(6,43,31,.14);
       object-fit:contain;
+      box-shadow: 0 10px 22px rgba(6,43,31,.10);
     }
-    .brand .name{font-weight:900; letter-spacing:.2px; line-height:1.1}
+    .brand .name{font-weight:950; letter-spacing:.2px; line-height:1.1; color:var(--green)}
     .brand .tag{font-size:12px; color:var(--muted); margin-top:2px}
 
     .nav-actions{display:flex; align-items:center; gap:10px}
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:11px 14px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color:var(--text);
-      cursor:pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      font-weight:850;
-      font-size:14px;
-      white-space:nowrap;
-      user-select:none;
-    }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18)}
-    .btn-gold{
-      background: linear-gradient(180deg, rgba(214,179,90,.98), rgba(202,166,74,.92));
-      border-color: rgba(214,179,90,.42);
-      color:#122016;
-      box-shadow: 0 14px 30px rgba(214,179,90,.12);
-    }
-    .btn-gold:hover{background: linear-gradient(180deg, rgba(214,179,90,1), rgba(202,166,74,1))}
-    .btn-soft{
-      background: rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.14);
-    }
-
     .menuBtn{display:none}
 
     /* Mobile menu */
@@ -103,38 +153,40 @@
     .menuItem{
       padding:14px 14px;
       border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
+      border:1px solid rgba(6,43,31,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.62));
       display:flex; align-items:center; justify-content:space-between;
-      font-weight:900;
+      font-weight:950;
+      color: var(--green);
+      backdrop-filter: var(--glassBlur);
+      box-shadow: 0 12px 26px rgba(6,43,31,.10);
     }
-    .menuItem small{color:var(--muted); font-weight:650}
+    .menuItem small{color:rgba(6,43,31,.62); font-weight:700}
     .menuRow{display:flex; gap:10px; flex-wrap:wrap; padding:10px 0 0 0}
-    .miniBtn{
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      font-weight:850;
-      font-size:13px;
-      cursor:pointer;
-    }
 
-    /* Hero */
-    main{padding:22px 0 0}
-    .hero{padding:24px 0 12px}
+    /* ---------- Typography / highlights ---------- */
+    .titleColor{color: var(--green); font-weight: 950; letter-spacing: -.2px}
+    .accent{color: var(--hl2); font-weight: 950}
+    .hl{color: var(--hl3); font-weight: 950}
+    .hl2{color: var(--hl2); font-weight: 950}
+    .muted{color: var(--muted)}
     .pill{
       display:inline-flex; gap:10px; align-items:center;
       padding:8px 12px;
       border-radius:999px;
-      border:1px solid rgba(214,179,90,.28);
-      background: rgba(214,179,90,.08);
-      color: rgba(255,255,255,.90);
-      font-weight:900;
+      border:1px solid rgba(202,166,74,.30);
+      background: rgba(202,166,74,.10);
+      color: rgba(6,43,31,.85);
+      font-weight:950;
       font-size:12px;
       letter-spacing:.2px;
     }
-    .accent{color: var(--gold)}
+
+    /* ---------- Layout ---------- */
+    main{padding:18px 0 0}
+    section{padding:14px 0}
+
+    .hero{padding:18px 0 10px}
     .heroGrid{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
@@ -142,64 +194,67 @@
       margin-top:14px;
       align-items:stretch;
     }
+
     .panel{
       border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(6,43,31,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.62));
       box-shadow: var(--shadow);
+      backdrop-filter: var(--glassBlur);
     }
     .panel.pad{padding:20px}
+
     h1{
       margin:12px 0 10px;
       font-size: clamp(30px, 4.2vw, 46px);
       line-height:1.05;
-      letter-spacing:-.6px;
+      letter-spacing:-.8px;
+      color: var(--green);
     }
     .sub{
-      color: var(--muted);
+      color: rgba(6,43,31,.72);
       font-size: 15.5px;
       line-height:1.6;
       margin:0 0 14px;
     }
     .ctaRow{display:flex; gap:10px; flex-wrap:wrap}
+
     .note{
       margin-top:12px;
       padding:12px 14px;
       border-radius: 14px;
-      border:1px dashed rgba(255,255,255,.18);
-      background: rgba(0,0,0,.14);
-      color: rgba(255,255,255,.80);
+      border:1px dashed rgba(6,43,31,.18);
+      background: rgba(255,255,255,.60);
+      color: rgba(6,43,31,.78);
       font-size:13px;
+      backdrop-filter: var(--glassBlur);
     }
-    .note b{color:#fff}
+    .note b{color:var(--green)}
 
-    /* Small icon */
-    .icon{width:18px;height:18px;display:inline-block;vertical-align:-3px}
     .irow{display:flex;gap:10px;align-items:flex-start}
     .irow .iconWrap{
       width:34px;height:34px;border-radius:12px;
       display:flex;align-items:center;justify-content:center;
-      background:rgba(214,179,90,.10);
-      border:1px solid rgba(214,179,90,.22);
+      background: rgba(202,166,74,.14);
+      border:1px solid rgba(202,166,74,.22);
       flex:0 0 auto;
     }
 
-    /* Sections */
-    section{padding:14px 0}
     .sectionTitle{
       display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
       margin: 8px 0 12px;
     }
-    .sectionTitle h2{margin:0;font-size:18px;letter-spacing:.2px}
-    .sectionTitle p{margin:0;color:var(--muted);font-size:13px}
+    .sectionTitle h2{margin:0;font-size:18px;letter-spacing:.2px;color: var(--green); font-weight: 950}
+    .sectionTitle p{margin:0;color:rgba(6,43,31,.65);font-size:13px}
 
     .grid2{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
     .card{
       border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(6,43,31,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.62));
       padding:16px;
-      box-shadow: 0 18px 50px rgba(0,0,0,.30);
+      box-shadow: 0 18px 50px rgba(6,43,31,.10);
+      backdrop-filter: var(--glassBlur);
     }
 
     .list{
@@ -212,14 +267,15 @@
     .list li{
       padding:12px 12px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.10);
-      color: rgba(255,255,255,.82);
+      border:1px solid rgba(6,43,31,.10);
+      background: rgba(255,255,255,.62);
+      color: rgba(6,43,31,.80);
       font-size:13px;
+      backdrop-filter: var(--glassBlur);
     }
-    .list li b{color:#fff}
+    .list li b{color: var(--green)}
 
-    /* Country buttons + content */
+    /* Country tabs */
     .countryBar{
       display:flex; gap:10px; flex-wrap:wrap;
       margin: 10px 0 0;
@@ -227,18 +283,22 @@
     .countryBtn{
       padding:10px 12px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.04);
-      font-weight:900;
+      border:1px solid rgba(6,43,31,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.62));
+      font-weight:950;
       cursor:pointer;
       transition: .12s ease;
       user-select:none;
+      color: var(--green);
+      backdrop-filter: var(--glassBlur);
+      box-shadow: 0 10px 22px rgba(6,43,31,.10);
     }
-    .countryBtn:hover{transform: translateY(-1px); border-color: rgba(214,179,90,.35)}
+    .countryBtn:hover{transform: translateY(-1px); border-color: rgba(202,166,74,.40)}
     .countryBtn.active{
-      background: rgba(214,179,90,.16);
-      border-color: rgba(214,179,90,.38);
-      color:#fff;
+      background: rgba(202,166,74,.16);
+      border-color: rgba(202,166,74,.42);
+      color: var(--green);
+      box-shadow: 0 14px 30px rgba(202,166,74,.15);
     }
     .countryPane{display:none; margin-top:12px}
     .countryPane.active{display:block}
@@ -251,27 +311,28 @@
     }
     .kv{
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.10);
+      border:1px solid rgba(6,43,31,.10);
+      background: rgba(255,255,255,.62);
       padding:12px 12px;
+      backdrop-filter: var(--glassBlur);
     }
-    .kv small{color: var(--muted); display:block; margin-bottom:3px; font-weight:750}
-    .kv b{color:#fff}
+    .kv small{color: rgba(6,43,31,.62); display:block; margin-bottom:3px; font-weight:800}
+    .kv b{color:var(--green)}
 
     .bullets{
       margin:10px 0 0;
       padding-left:18px;
-      color: rgba(255,255,255,.78);
+      color: rgba(6,43,31,.78);
       line-height:1.6;
       font-size:14px;
     }
     .bullets li{margin-bottom:6px}
-    .muted{color: var(--muted)}
+
     .warn{
-      border-left:3px solid rgba(214,179,90,.85);
+      border-left:3px solid rgba(202,166,74,.95);
       padding-left:10px;
       margin:10px 0 0;
-      color: rgba(255,255,255,.78);
+      color: rgba(6,43,31,.76);
       font-size:13px;
     }
 
@@ -279,9 +340,11 @@
     .faq{display:grid; gap:10px}
     details{
       border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.10);
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.62);
       padding:12px 14px;
+      backdrop-filter: var(--glassBlur);
+      box-shadow: 0 12px 30px rgba(6,43,31,.08);
     }
     summary{
       cursor:pointer;
@@ -291,39 +354,44 @@
       align-items:center;
       justify-content:space-between;
       gap:10px;
+      color: var(--green);
     }
     summary::-webkit-details-marker{display:none}
-    .faq p{margin:10px 0 0; color: rgba(255,255,255,.78); font-size:14px; line-height:1.65}
+    .faq p{margin:10px 0 0; color: rgba(6,43,31,.76); font-size:14px; line-height:1.65}
     .caret{opacity:.8}
 
     /* N2F */
     .n2f{
-      border:1px solid rgba(214,179,90,.22);
-      background: radial-gradient(700px 220px at 20% 10%, rgba(214,179,90,.14), transparent 55%),
-                  rgba(0,0,0,.12);
+      border:1px solid rgba(202,166,74,.28);
+      background: radial-gradient(700px 220px at 20% 10%, rgba(202,166,74,.16), transparent 55%),
+                  rgba(255,255,255,.62);
     }
     .n2f .big{
       font-size:16px;
       font-weight:950;
       margin:0 0 6px;
+      color: var(--green);
     }
     .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
     .chip{
       padding:8px 10px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      font-weight:850;
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.62);
+      font-weight:900;
       font-size:12px;
-      color: rgba(255,255,255,.86);
+      color: rgba(6,43,31,.82);
+      backdrop-filter: var(--glassBlur);
     }
-    .chip b{color: var(--gold)}
+    .chip b{color: var(--hl2)}
 
     /* Footer */
     footer{
-      padding:26px 0 90px;
-      border-top:1px solid rgba(255,255,255,.08);
+      padding:26px 0 120px;
+      border-top:1px solid rgba(6,43,31,.10);
       margin-top: 14px;
+      background: rgba(255,255,255,.55);
+      backdrop-filter: var(--glassBlur);
     }
     .footGrid{
       display:grid;
@@ -333,106 +401,292 @@
     }
     .footCard{
       border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.62);
       padding:16px;
+      box-shadow: 0 12px 30px rgba(6,43,31,.08);
+      backdrop-filter: var(--glassBlur);
     }
-    .footCard h3{margin:0 0 10px; font-size:14px}
-    .footCard p{margin:0; color: var(--muted); line-height:1.55; font-size:13px}
+    .footCard h3{margin:0 0 10px; font-size:14px; color: var(--green); font-weight: 950}
+    .footCard p{margin:0; color: rgba(6,43,31,.72); line-height:1.55; font-size:13px}
     .socialRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
 
-    /* Floating WhatsApp */
-    .floatWA{
+    /* ---------- Floating controls ---------- */
+    .floatStack{
       position:fixed;
-      right:16px;
+      right:14px;
       bottom:16px;
       z-index:60;
       display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:flex-end;
+    }
+    .fab{
+      width:46px; height:46px;
+      border-radius:16px;
+      display:flex; align-items:center; justify-content:center;
+      border:1px solid var(--glassStroke);
+      background: linear-gradient(180deg, var(--glass2), var(--glass));
+      box-shadow: var(--glassShadow);
+      backdrop-filter: var(--glassBlur);
+      cursor:pointer;
+      color: var(--green);
+      font-weight: 950;
+      transition: transform .12s ease, box-shadow .12s ease;
+      user-select:none;
+    }
+    .fab:hover{transform: translateY(-1px); box-shadow: 0 18px 55px rgba(6,43,31,.18);}
+    .fabRow{display:flex; gap:10px}
+
+    /* Middle bottom “Instant Assessment” */
+    .floatMid{
+      position:fixed;
+      left:50%;
+      bottom:14px;
+      transform:translateX(-50%);
+      z-index:70;
+      width:min(520px, 92vw);
+      display:flex;
       gap:10px;
       align-items:center;
-      padding:12px 14px;
+      justify-content:center;
+      padding:10px;
       border-radius: 999px;
-      background: linear-gradient(180deg, rgba(214,179,90,.98), rgba(202,166,74,.92));
-      color:#122016;
-      border:1px solid rgba(214,179,90,.42);
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      border:1px solid rgba(6,43,31,.14);
+      background: rgba(255,255,255,.72);
+      backdrop-filter: var(--glassBlur);
+      box-shadow: 0 18px 55px rgba(6,43,31,.14);
+    }
+    .floatMid .midBtn{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid rgba(6,43,31,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.62));
       font-weight:950;
+      color: var(--green);
+      cursor:pointer;
+      user-select:none;
     }
-    .dot{
-      width:10px; height:10px; border-radius:50%;
-      background:#25D366;
-      box-shadow: 0 0 0 6px rgba(37,211,102,.12);
+    .floatMid .midBtn:hover{border-color: rgba(202,166,74,.40)}
+    .floatMid .langBtn{
+      width:58px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 12px;
+      border-radius:999px;
+      border:1px solid rgba(6,43,31,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.62));
+      font-weight:950;
+      color: var(--green);
+      cursor:pointer;
+      user-select:none;
     }
 
-    /* Responsive */
-    @media (max-width: 960px){
-      .heroGrid{grid-template-columns:1fr}
-      .grid2{grid-template-columns:1fr}
-      .kvs{grid-template-columns:1fr}
-      .footGrid{grid-template-columns:1fr}
-      .menuBtn{display:inline-flex}
-      .desktopOnly{display:none}
-      .brand{min-width:auto}
+    /* ---------- Video top ---------- */
+    .topVideoWrap{
+      margin-top:14px;
+      border-radius: var(--radius2);
+      overflow:hidden;
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.72);
+      box-shadow: var(--shadow);
+      backdrop-filter: var(--glassBlur);
+      cursor:pointer;
+      position:relative;
+    }
+    .topVideoWrap img{width:100%; display:block; height:auto}
+    .playBadge{
+      position:absolute;
+      inset:auto auto 14px 14px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.70);
+      background: rgba(6,43,31,.72);
+      color:#fff;
+      font-weight:950;
+      box-shadow: 0 14px 30px rgba(6,43,31,.25);
+      backdrop-filter: blur(10px);
     }
 
-    /* ====================== AskLizOn – Study Abroad (NEW) ====================== */
+    /* ---------- Partners marquee ---------- */
+    .marquee{
+      border-radius: var(--radius2);
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.62);
+      overflow:hidden;
+      box-shadow: 0 12px 30px rgba(6,43,31,.08);
+      backdrop-filter: var(--glassBlur);
+      padding:12px;
+    }
+    .marqueeTitle{
+      display:flex; align-items:center; gap:10px;
+      color: var(--green); font-weight: 950;
+      margin-bottom:10px;
+    }
+    .track{
+      display:flex;
+      gap:10px;
+      width:max-content;
+      animation: scrollLeft 28s linear infinite;
+    }
+    .uni{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.74);
+      font-weight:900;
+      font-size:12px;
+      color: rgba(6,43,31,.82);
+      white-space:nowrap;
+    }
+    @keyframes scrollLeft{
+      from{transform: translateX(0)}
+      to{transform: translateX(-50%)}
+    }
+
+    /* ---------- Reviews slider ---------- */
+    .reviewWrap{
+      border-radius: var(--radius2);
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.62);
+      box-shadow: 0 12px 30px rgba(6,43,31,.08);
+      backdrop-filter: var(--glassBlur);
+      overflow:hidden;
+    }
+    .reviewTop{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 14px 10px;
+      border-bottom:1px solid rgba(6,43,31,.10);
+    }
+    .reviewTitle{color: var(--green); font-weight: 950}
+    .reviewHint{color: rgba(6,43,31,.62); font-size:12px; font-weight: 800}
+    .reviewRow{
+      display:flex;
+      gap:12px;
+      padding:14px;
+      overflow:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .reviewRow::-webkit-scrollbar{height:10px}
+    .reviewRow::-webkit-scrollbar-thumb{background: rgba(6,43,31,.16); border-radius:999px}
+    .rev{
+      flex:0 0 min(360px, 86vw);
+      scroll-snap-align:start;
+      border-radius:18px;
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.76);
+      padding:14px;
+    }
+    .rev .n{font-weight:950; color: var(--green)}
+    .rev .m{margin-top:8px; color: rgba(6,43,31,.78); line-height:1.6; font-size:13.5px}
+    .rev .t{margin-top:10px; font-size:12px; color: rgba(6,43,31,.60); font-weight: 800}
+
+    /* ---------- Embassies ---------- */
+    .embGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .emb{
+      border-radius: 18px;
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.72);
+      padding:14px;
+      box-shadow: 0 12px 28px rgba(6,43,31,.08);
+      backdrop-filter: var(--glassBlur);
+    }
+    .emb h4{margin:0 0 6px; color: var(--green); font-size:14px}
+    .emb p{margin:0; color: rgba(6,43,31,.72); font-size:13px; line-height:1.55}
+
+    /* ---------- AskLizOn modal (existing + tuned for light) ---------- */
     .saModal{position:fixed; inset:0; display:none; z-index:9999;}
     .saModal[aria-hidden="false"]{display:block;}
-    .saBackdrop{position:absolute; inset:0; background:rgba(1,12,8,.55);}
+    .saBackdrop{position:absolute; inset:0; background:rgba(6,43,31,.22);}
     .saSheet{
       position:absolute; left:50%; bottom:16px; transform:translateX(-50%);
       width:min(560px,92vw);
-      background: rgba(6,43,31,.98);
-      border:1px solid rgba(214,179,90,.25);
+      background: rgba(255,255,255,.86);
+      border:1px solid rgba(6,43,31,.14);
       border-radius: 18px;
       overflow:hidden;
-      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+      box-shadow: 0 24px 70px rgba(6,43,31,.22);
+      backdrop-filter: blur(16px);
     }
-    .saTop{display:flex; align-items:flex-start; justify-content:space-between; padding:14px 14px 10px; border-bottom:1px solid rgba(214,179,90,.14);}
-    .saTitle{font-weight:950; letter-spacing:.2px}
-    .saStep{font-size:12px; opacity:.85; margin-top:2px}
+    .saTop{display:flex; align-items:flex-start; justify-content:space-between; padding:14px 14px 10px; border-bottom:1px solid rgba(6,43,31,.10);}
+    .saTitle{font-weight:950; letter-spacing:.2px; color: var(--green)}
+    .saStep{font-size:12px; color: rgba(6,43,31,.62); margin-top:2px; font-weight: 800}
     .saX{
-      background: rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.12);
-      color:var(--text);
+      background: rgba(255,255,255,.70);
+      border:1px solid rgba(6,43,31,.12);
+      color:var(--green);
       border-radius:12px;
       padding:7px 10px;
       cursor:pointer;
+      backdrop-filter: blur(12px);
     }
     .saBody{padding:14px; min-height:160px;}
-    .saBottom{display:flex; gap:10px; justify-content:space-between; padding:12px 14px; border-top:1px solid rgba(214,179,90,.14);}
-    .saQ{font-weight:950; margin:0 0 10px 0;}
+    .saBottom{display:flex; gap:10px; justify-content:space-between; padding:12px 14px; border-top:1px solid rgba(6,43,31,.10);}
+    .saQ{font-weight:950; margin:0 0 10px 0; color: var(--green)}
     .saChoices{display:flex; flex-direction:column; gap:10px;}
     .saChoice{
       display:flex; gap:10px; align-items:center;
       padding:12px;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(6,43,31,.12);
       border-radius:14px;
       cursor:pointer;
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.76);
+      backdrop-filter: blur(12px);
     }
-    .saChoice:hover{border-color: rgba(214,179,90,.25)}
+    .saChoice:hover{border-color: rgba(202,166,74,.40)}
     .saChoice input{transform:scale(1.05);}
     .saInput{
       width:100%;
       padding:12px;
       border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color:var(--text);
+      border:1px solid rgba(6,43,31,.12);
+      background: rgba(255,255,255,.76);
+      color:var(--green);
       outline:none;
+      backdrop-filter: blur(12px);
     }
-    .saHint{opacity:.85; font-size:12px; margin-top:8px}
+    .saHint{color: rgba(6,43,31,.62); font-size:12px; margin-top:8px; font-weight: 800}
     .saResult .box{
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(6,43,31,.12);
       border-radius:14px;
       padding:12px;
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.76);
       margin-top:10px;
+      backdrop-filter: blur(12px);
     }
-    .saResult .k{opacity:.9; font-size:13px;}
-    .saResult .v{font-weight:950; font-size:16px; margin-top:2px;}
+    .saResult .k{color: rgba(6,43,31,.66); font-size:13px; font-weight: 900}
+    .saResult .v{font-weight:950; font-size:16px; margin-top:2px; color: var(--green)}
     .saCTA{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 960px){
+      .heroGrid{grid-template-columns:1fr}
+      .grid2{grid-template-columns:1fr}
+      .kvs{grid-template-columns:1fr}
+      .footGrid{grid-template-columns:1fr}
+      .embGrid{grid-template-columns:1fr}
+      .menuBtn{display:inline-flex}
+      .desktopOnly{display:none}
+      .brand{min-width:auto}
+    }
+
+    /* Small helper */
+    .sep{height:10px}
   </style>
 </head>
 
@@ -445,60 +699,93 @@
         <img src="assets/logo-dark.png" alt="LizOn Education Logo" />
         <div>
           <div class="name">LizOn Education</div>
-          <div class="tag">Study Abroad • IELTS • PTE</div>
+          <div class="tag" data-i18n="brandTag">Study Abroad • IELTS • PTE</div>
         </div>
       </a>
 
       <div class="nav-actions">
-        <a class="btn desktopOnly" href="#countries">Countries</a>
-        <a class="btn desktopOnly" href="#questions">Student Questions</a>
-        <a class="btn btn-gold desktopOnly" id="waTop" href="#">Talk With an Expert Counselor</a>
+        <a class="btn desktopOnly" href="#countries" data-i18n="navCountries">Countries</a>
+        <a class="btn desktopOnly" href="#questions" data-i18n="navQuestions">Student Questions</a>
+        <a class="btn btn-green desktopOnly" id="waTop" href="#" data-i18n="navTalk">Talk With an Expert Counselor</a>
         <button class="btn menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">☰ Menu</button>
       </div>
     </div>
 
     <div class="menuPanel" id="menuPanel">
       <div class="menuGrid">
-        <a class="menuItem" href="#countries">Countries <small>Australia / UK / Canada / USA / Europe</small></a>
-        <a class="menuItem" href="#which">Which Country Needs What? <small>Docs + scores + intakes</small></a>
-        <a class="menuItem" href="#questions">Problems Students Face <small>PR? job? eligibility?</small></a>
-        <a class="menuItem" href="#n2f">N2F (Now to Fly) <small>We stay with you</small></a>
+        <a class="menuItem" href="#topVideo"><span data-i18n="navVideo">Video</span> <small data-i18n="navVideoSm">Tap to play inside</small></a>
+        <a class="menuItem" href="#countries"><span data-i18n="navCountries2">Countries</span> <small>Australia / UK / Canada / USA / Europe</small></a>
+        <a class="menuItem" href="#which"><span data-i18n="navReq">Which Country Needs What?</span> <small data-i18n="navReqSm">Docs + scores + intakes</small></a>
+        <a class="menuItem" href="#lesac"><span data-i18n="navLesac">Why LESAC</span> <small data-i18n="navLesacSm">Our expertise + support</small></a>
+        <a class="menuItem" href="#partners"><span data-i18n="navPartners">Partners with Universities</span> <small data-i18n="navPartnersSm">Auto scrolling list</small></a>
+        <a class="menuItem" href="#reviews"><span data-i18n="navReviews">Reviews</span> <small data-i18n="navReviewsSm">Real student vibe</small></a>
+        <a class="menuItem" href="#seo"><span data-i18n="navSeo">Study Abroad in Bangladesh</span> <small data-i18n="navSeoSm">SEO questions students search</small></a>
+        <a class="menuItem" href="#embassy"><span data-i18n="navEmbassy">Bangladesh Embassy</span> <small data-i18n="navEmbassySm">Important addresses</small></a>
+        <a class="menuItem" href="ielts.html"><span>IELTS</span> <small>ielts.html</small></a>
+        <a class="menuItem" href="pte.html"><span>PTE</span> <small>pte.html</small></a>
+        <a class="menuItem" href="computer.html"><span>Computer Skills</span> <small>computer.html</small></a>
+        <a class="menuItem" id="storyLinkMenu" href="#" target="_blank" rel="noopener"><span data-i18n="navStories">Student Stories</span> <small data-i18n="navStoriesSm">Google Drive</small></a>
       </div>
+
       <div class="menuRow">
         <a class="miniBtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
         <a class="miniBtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
         <a class="miniBtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
         <a class="miniBtn" id="waMenu" href="#">WhatsApp</a>
         <button class="miniBtn" id="saOpenMenu" type="button">AskLizOn</button>
+        <button class="miniBtn" id="langToggleMenu" type="button">BN</button>
       </div>
     </div>
   </div>
 </header>
 
 <main class="container">
+
+  <!-- TOP VIDEO (tap to play inside site) -->
+  <section id="topVideo">
+    <div class="sectionTitle">
+      <h2 data-i18n="videoTitle">A quick overview</h2>
+      <p data-i18n="videoSub">Tap the thumbnail → video plays inside the page</p>
+    </div>
+
+    <div class="topVideoWrap" id="topVideoWrap" role="button" tabindex="0" aria-label="Play video">
+      <img src="assets/studyabroadtop.png" alt="Study Abroad video thumbnail" />
+      <div class="playBadge">
+        <svg class="iconSm" viewBox="0 0 24 24" fill="none">
+          <path d="M9 7.5v9l8-4.5-8-4.5z" fill="#fff"/>
+          <path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10z" stroke="rgba(255,255,255,.9)" stroke-width="1.5"/>
+        </svg>
+        <span data-i18n="videoPlay">Tap to Play</span>
+      </div>
+    </div>
+  </section>
+
   <div class="hero">
-    <span class="pill">Study Abroad Guidance • <span class="accent">Make Your Family Proud</span></span>
+    <span class="pill" data-i18n="pill">Study Abroad Guidance • Make Your Family Proud</span>
 
     <div class="heroGrid">
       <div class="panel pad">
-        <h1>Study Abroad — <span class="accent">Clarity First</span>, Then Process</h1>
-        <p class="sub">
-          LizOn guides you with the real things students care about: <b>documents</b>, <b>IELTS/PTE score readiness</b>,
-          <b>intakes</b>, <b>work reality</b>, and <b>future opportunities</b> — without fake promises.
+        <h1 data-i18n="heroH1">Study Abroad — <span class="accent">Clarity First</span>, Then Process</h1>
+        <p class="sub" data-i18n="heroSub">
+          LizOn guides you with the real things students care about: documents, IELTS/PTE score readiness,
+          intake timing, work reality, and future opportunities — without unrealistic promises.
           <br /><br />
           Want the cleanest next step? Talk with an expert counselor and we’ll tell you what fits your profile.
         </p>
 
         <div class="ctaRow">
-          <a class="btn btn-gold" id="waHero" href="#">Talk With an Expert Counselor</a>
-          <a class="btn btn-soft" href="#countries">Explore Countries</a>
-          <a class="btn btn-soft" href="#which">Which Country Needs What?</a>
-          <button class="btn btn-soft" id="saOpen" type="button">AskLizOn – Study Abroad</button>
+          <a class="btn btn-green" id="waHero" href="#" data-i18n="ctaTalk">Talk With an Expert Counselor</a>
+          <a class="btn" href="#countries" data-i18n="ctaExplore">Explore Countries</a>
+          <a class="btn" href="#which" data-i18n="ctaReq">Which Country Needs What?</a>
+          <button class="btn" id="saOpen" type="button">AskLizOn – Study Abroad</button>
+          <a class="btn" id="storyLinkTop" href="#" target="_blank" rel="noopener" data-i18n="ctaStories">Student Stories</a>
         </div>
 
         <div class="note">
-          <b>Important:</b> For smoother admission and safer processing, you should have your <b class="accent">IELTS or PTE score ready</b>.
-          If not, we’ll guide you how to prepare first.
+          <b data-i18n="noteImp">Important:</b>
+          <span data-i18n="noteText">For smoother admission and safer processing, it helps to have your</span>
+          <b class="hl2">IELTS / PTE</b>
+          <span data-i18n="noteText2">score ready. If not, we’ll guide you how to prepare first.</span>
         </div>
       </div>
 
@@ -511,14 +798,14 @@
             </svg>
           </div>
           <div>
-            <div style="font-weight:950; margin-bottom:4px;">Real Location</div>
-            <div class="muted" style="font-size:13px;">
+            <div class="titleColor" style="margin-bottom:4px;" data-i18n="locTitle">Real Location</div>
+            <div class="muted" style="font-size:13px;" data-i18n="locSub">
               Basabo, Dhaka • In-person + online guidance
             </div>
           </div>
         </div>
 
-        <div style="height:10px"></div>
+        <div class="sep"></div>
 
         <div class="irow">
           <div class="iconWrap" aria-hidden="true">
@@ -528,21 +815,21 @@
             </svg>
           </div>
           <div>
-            <div style="font-weight:950; margin-bottom:4px;">Fast Guidance</div>
-            <div class="muted" style="font-size:13px;">
+            <div class="titleColor" style="margin-bottom:4px;" data-i18n="fastTitle">Fast Guidance</div>
+            <div class="muted" style="font-size:13px;" data-i18n="fastSub">
               WhatsApp counseling → correct country → correct intake → correct next step
             </div>
           </div>
         </div>
 
-        <div style="height:12px"></div>
+        <div class="sep"></div>
 
         <div class="ctaRow">
-          <a class="btn btn-gold" id="waQuick" href="#">Check Eligibility</a>
-          <a class="btn btn-soft" id="mapQuick" href="#">Open Map</a>
+          <a class="btn btn-gold" id="waQuick" href="#" data-i18n="ctaEligibility">Check Eligibility</a>
+          <a class="btn" id="mapQuick" href="#" data-i18n="ctaMap">Open Map</a>
         </div>
 
-        <div class="warn">
+        <div class="warn" data-i18n="warnText">
           We stay truthful: PR and job outcomes depend on your skills, planning, and policy — not shortcuts.
         </div>
       </div>
@@ -551,8 +838,8 @@
 
   <section id="which">
     <div class="sectionTitle">
-      <h2>Which Country Needs What?</h2>
-      <p>Documents + scores + intakes — simplified</p>
+      <h2 data-i18n="whichTitle">Which Country Needs What?</h2>
+      <p data-i18n="whichSub">Documents + scores + intakes — simplified</p>
     </div>
 
     <div class="grid2">
@@ -565,21 +852,21 @@
             </svg>
           </div>
           <div>
-            <div style="font-weight:950">Documents (general)</div>
-            <div class="muted" style="font-size:13px">Country + profile based, but core stays same</div>
+            <div class="titleColor" data-i18n="docsTitle">Documents (general)</div>
+            <div class="muted" style="font-size:13px" data-i18n="docsSub">Country + profile based, but core stays same</div>
           </div>
         </div>
 
         <ul class="list">
-          <li><b>Academic</b> transcripts + certificates</li>
-          <li><b>Passport</b> (valid)</li>
-          <li><b>IELTS / PTE</b> score report (recommended to be ready)</li>
-          <li><b>Financial</b> documents (depends on country + profile)</li>
-          <li><b>GS / SOP</b> (why you + why this country)</li>
+          <li><b class="hl">Academic</b> transcripts + certificates</li>
+          <li><b class="hl">Passport</b> (valid)</li>
+          <li><b class="hl">IELTS / PTE</b> score report (<span class="accent">recommended</span>)</li>
+          <li><b class="hl">Financial</b> documents (country + profile based)</li>
+          <li><b class="hl">GS / SOP</b> (why you + why this country)</li>
         </ul>
 
         <div style="margin-top:12px" class="ctaRow">
-          <a class="btn btn-gold" id="waDocs" href="#">Talk With an Expert Counselor</a>
+          <a class="btn btn-green" id="waDocs" href="#" data-i18n="ctaTalk2">Talk With an Expert Counselor</a>
         </div>
       </div>
 
@@ -594,109 +881,165 @@
             </svg>
           </div>
           <div>
-            <div style="font-weight:950">Are you eligible?</div>
-            <div class="muted" style="font-size:13px">Check your eligibility with an expert counselor</div>
+            <div class="titleColor" data-i18n="eligTitle">Are you eligible?</div>
+            <div class="muted" style="font-size:13px" data-i18n="eligSub">Quick screening → then counselor shortlists correctly</div>
           </div>
         </div>
 
         <ul class="list">
-          <li><b>Goal:</b> Study / work exposure / long-term settlement planning</li>
-          <li><b>Timeline:</b> Next 3–6 months vs 6–12 months</li>
-          <li><b>Budget:</b> Tuition + living + visa process</li>
-          <li><b>Score:</b> IELTS/PTE ready or not</li>
+          <li><b class="hl2" data-i18n="eligGoal">Goal:</b> Study / career / long-term planning</li>
+          <li><b class="hl2" data-i18n="eligTime">Timeline:</b> Next 3–6 months vs 6–12 months</li>
+          <li><b class="hl2" data-i18n="eligBudget">Budget:</b> Tuition + living + visa process</li>
+          <li><b class="hl2" data-i18n="eligScore">Score:</b> IELTS/PTE ready or not</li>
         </ul>
 
         <div style="margin-top:12px" class="ctaRow">
-          <a class="btn btn-gold" id="waEligibility" href="#">Check Eligibility on WhatsApp</a>
-          <a class="btn btn-soft" href="#countries">Pick a country</a>
+          <a class="btn btn-gold" id="waEligibility" href="#" data-i18n="ctaEligibility2">Check Eligibility</a>
+          <a class="btn" href="#countries" data-i18n="ctaPick">Pick a country</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- WHY LESAC -->
+  <section id="lesac">
+    <div class="sectionTitle">
+      <h2 data-i18n="lesacTitle">Why LESAC — LizOn Education Study Abroad & Consultation</h2>
+      <p data-i18n="lesacSub">The “why” that actually helps Bangladeshi students</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="irow">
+          <div class="iconWrap" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l8 4v6c0 5-3 9-8 10C7 21 4 17 4 12V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="titleColor" data-i18n="usp1Title">Clarity-first screening (no confusion)</div>
+            <div class="muted" style="font-size:13px" data-i18n="usp1Sub">We shortlist based on your documents, gap story, budget proof, and intake reality.</div>
+          </div>
+        </div>
+        <ul class="bullets">
+          <li><span class="hl">Country choice</span> is based on profile-fit, not hype.</li>
+          <li>We explain the <span class="hl2">risk points</span> early so you don’t waste time.</li>
+          <li>You get a <span class="hl">clean next-step plan</span> (what to fix, what to prepare).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="irow">
+          <div class="iconWrap" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <path d="M4 18V6a2 2 0 0 1 2-2h10l4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 4v4h4" stroke="currentColor" stroke-width="2"/>
+              <path d="M7.5 13h9M7.5 16h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="titleColor" data-i18n="usp2Title">Strong documentation support</div>
+            <div class="muted" style="font-size:13px" data-i18n="usp2Sub">Checklist + guidance so your file looks consistent, clear, and believable.</div>
+          </div>
+        </div>
+        <ul class="bullets">
+          <li>We focus on <span class="hl">consistency</span> across academics, finance, and statement.</li>
+          <li><span class="hl2">Gap explanation</span> and plan clarity is handled carefully.</li>
+          <li>After-visa support: what to do next, how to prepare, how to settle.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:12px" class="ctaRow">
+      <a class="btn btn-green" id="waLesac" href="#" data-i18n="ctaBook">Book a Live Meeting with Expert</a>
+      <a class="btn" id="storyLinkLesac" href="#" target="_blank" rel="noopener" data-i18n="ctaStories2">See Student Stories</a>
+    </div>
+  </section>
+
   <section id="questions">
     <div class="sectionTitle">
-      <h2>Problems Students Face</h2>
-      <p>Honest answers — no fake promises</p>
+      <h2 data-i18n="qTitle">Problems Students Face</h2>
+      <p data-i18n="qSub">Honest answers — no unrealistic promises</p>
     </div>
 
     <div class="faq">
       <details>
         <summary>
-          Why & which country should I choose?
+          <span data-i18n="faq1q">Why & which country should I choose?</span>
           <span class="caret">▾</span>
         </summary>
-        <p>
-          Country choice should match your <b>profile</b>, <b>budget</b>, <b>intake timing</b>, and <b>future plan</b>.
+        <p data-i18n="faq1a">
+          Country choice should match your profile, budget, intake timing, and future plan.
           Most people fail because they choose based on rumors. LizOn guides you with a clean shortlist.
         </p>
       </details>
 
       <details>
         <summary>
-          Will I get PR?
+          <span data-i18n="faq2q">Will I get PR?</span>
           <span class="caret">▾</span>
         </summary>
-        <p>
-          PR is not a “package”. It depends on <b>skill demand</b>, <b>policy</b>, <b>your course</b>, and <b>your work profile</b>.
-          We’ll explain realistic pathways (if applicable) — and what improves your chances.
+        <p data-i18n="faq2a">
+          PR depends on skill demand, policy, your course, and your work profile.
+          We explain realistic pathways (if applicable) — and what improves your chances.
         </p>
       </details>
 
       <details>
         <summary>
-          Job pabo tho?
+          <span data-i18n="faq3q">Job pabo tho?</span>
           <span class="caret">▾</span>
         </summary>
-        <p>
-          Jobs exist, but outcomes depend on <b>English</b>, <b>flexibility</b>, and <b>city</b>. We’ll guide you with work reality:
+        <p data-i18n="faq3a">
+          Jobs exist, but outcomes depend on English, flexibility, and city. We guide you with work reality:
           typical student jobs, cost differences, and what you must prepare before landing.
         </p>
       </details>
 
       <details>
         <summary>
-          I don’t have IELTS/PTE yet — what now?
+          <span data-i18n="faq4q">I don’t have IELTS/PTE yet — what now?</span>
           <span class="caret">▾</span>
         </summary>
-        <p>
-          Then your best move is to <b>prepare and get the score first</b>. Score readiness makes your application stronger and faster.
+        <p data-i18n="faq4a">
+          Then your best move is to prepare and get the score first. Score readiness makes your application stronger and faster.
           LizOn can guide you to IELTS or PTE based on your timeline.
         </p>
       </details>
 
       <details>
         <summary>
-          What documents will be needed for my country?
+          <span data-i18n="faq5q">What documents will be needed for my country?</span>
           <span class="caret">▾</span>
         </summary>
-        <p>
-          Core documents are similar, but each country has profile-based variations. Talk to our expert counselor and we’ll give you a clear checklist.
+        <p data-i18n="faq5a">
+          Core documents are similar, but each country has profile-based variations. Talk to our counselor and we’ll give you a clear checklist.
         </p>
       </details>
 
       <details>
         <summary>
-          I’m scared about visa refusal / weak profile
+          <span data-i18n="faq6q">I’m scared about visa refusal / weak profile</span>
           <span class="caret">▾</span>
         </summary>
-        <p>
-          Fear is normal. Most refusals happen due to <b>weak explanation</b>, <b>wrong planning</b>, or <b>document gaps</b>.
+        <p data-i18n="faq6a">
+          Fear is normal. Most refusals happen due to weak explanation, wrong planning, or document gaps.
           We guide you step-by-step so you don’t walk blind.
         </p>
       </details>
     </div>
 
     <div style="margin-top:12px" class="ctaRow">
-      <a class="btn btn-gold" id="waQuestions" href="#">Talk With an Expert Counselor</a>
-      <button class="btn btn-soft" id="saOpenQuestions" type="button">AskLizOn – Study Abroad</button>
+      <a class="btn btn-green" id="waQuestions" href="#" data-i18n="ctaTalk3">Talk With an Expert Counselor</a>
+      <button class="btn" id="saOpenQuestions" type="button">AskLizOn – Study Abroad</button>
     </div>
   </section>
 
   <section id="countries">
     <div class="sectionTitle">
-      <h2>Countries</h2>
-      <p>Click a country → see requirements, intakes, scores, mistakes</p>
+      <h2 data-i18n="countriesTitle">Countries</h2>
+      <p data-i18n="countriesSub">Click a country → see requirements, intakes, scores, mistakes</p>
     </div>
 
     <div class="countryBar" role="tablist" aria-label="Country tabs">
@@ -710,7 +1053,7 @@
     <div class="card" style="margin-top:12px;">
       <!-- AUSTRALIA -->
       <div id="au" class="countryPane active" role="tabpanel" aria-label="Australia">
-        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">Australia — opportunities + real planning</div>
+        <div class="titleColor" style="font-size:16px; margin-bottom:6px;">Australia — opportunities + real planning</div>
         <div class="muted" style="font-size:13px;">Good for: strong education, part-time work culture, post-study options (policy-based).</div>
 
         <div class="kvs">
@@ -721,21 +1064,21 @@
         </div>
 
         <ul class="bullets">
-          <li><b>Why choose:</b> recognised degrees, multicultural, strong student work environment.</li>
-          <li><b>After study:</b> options depend on demand + policy + your profile (no shortcuts).</li>
-          <li><b>Mistakes:</b> applying without score ready, wrong city budgeting, rushing due to agent pressure.</li>
+          <li><b class="hl">Why choose:</b> recognised degrees, multicultural, strong student work environment.</li>
+          <li><b class="hl">After study:</b> options depend on demand + policy + your profile.</li>
+          <li><b class="hl2">Mistakes:</b> applying without score ready, wrong city budgeting, rushing due to pressure.</li>
         </ul>
 
-        <div class="warn">We will explain the safest plan based on your profile, not rumors.</div>
+        <div class="warn">We explain the safest plan based on your profile, not rumors.</div>
 
         <div class="ctaRow" style="margin-top:12px;">
-          <a class="btn btn-gold" id="waAU" href="#">Talk With an Expert Counselor</a>
+          <a class="btn btn-green" id="waAU" href="#">Talk With an Expert Counselor</a>
         </div>
       </div>
 
       <!-- UK -->
       <div id="uk" class="countryPane" role="tabpanel" aria-label="UK">
-        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">UK — faster degrees + strong global value</div>
+        <div class="titleColor" style="font-size:16px; margin-bottom:6px;">UK — faster degrees + strong global value</div>
         <div class="muted" style="font-size:13px;">Good for: shorter duration, top universities, structured graduate route (policy-based).</div>
 
         <div class="kvs">
@@ -746,19 +1089,19 @@
         </div>
 
         <ul class="bullets">
-          <li><b>Why choose:</b> shorter courses, strong reputation, global exposure.</li>
-          <li><b>After study:</b> graduate route depends on rules + your planning.</li>
-          <li><b>Mistakes:</b> late application, weak SOP/GS, choosing course without alignment.</li>
+          <li><b class="hl">Why choose:</b> shorter courses, strong reputation, global exposure.</li>
+          <li><b class="hl">After study:</b> graduate route depends on rules + your planning.</li>
+          <li><b class="hl2">Mistakes:</b> late application, weak SOP/GS, choosing course without alignment.</li>
         </ul>
 
         <div class="ctaRow" style="margin-top:12px;">
-          <a class="btn btn-gold" id="waUK" href="#">Talk With an Expert Counselor</a>
+          <a class="btn btn-green" id="waUK" href="#">Talk With an Expert Counselor</a>
         </div>
       </div>
 
       <!-- CANADA -->
       <div id="ca" class="countryPane" role="tabpanel" aria-label="Canada">
-        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">Canada — planning-heavy, profile-sensitive</div>
+        <div class="titleColor" style="font-size:16px; margin-bottom:6px;">Canada — planning-heavy, profile-sensitive</div>
         <div class="muted" style="font-size:13px;">Good for: quality education, multicultural environment, post-study options (policy-based).</div>
 
         <div class="kvs">
@@ -769,19 +1112,19 @@
         </div>
 
         <ul class="bullets">
-          <li><b>Why choose:</b> long-term value if planning is strong.</li>
-          <li><b>After study:</b> depends on rules + your program + location.</li>
-          <li><b>Mistakes:</b> wrong college selection, weak financial plan, rushing without clarity.</li>
+          <li><b class="hl">Why choose:</b> long-term value if planning is strong.</li>
+          <li><b class="hl">After study:</b> depends on rules + your program + location.</li>
+          <li><b class="hl2">Mistakes:</b> wrong selection, weak financial plan, rushing without clarity.</li>
         </ul>
 
         <div class="ctaRow" style="margin-top:12px;">
-          <a class="btn btn-gold" id="waCA" href="#">Talk With an Expert Counselor</a>
+          <a class="btn btn-green" id="waCA" href="#">Talk With an Expert Counselor</a>
         </div>
       </div>
 
       <!-- USA -->
       <div id="us" class="countryPane" role="tabpanel" aria-label="USA">
-        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">USA — highest options, needs strongest preparation</div>
+        <div class="titleColor" style="font-size:16px; margin-bottom:6px;">USA — highest options, needs strongest preparation</div>
         <div class="muted" style="font-size:13px;">Good for: broad universities, strong research/career exposure, long-term skill value.</div>
 
         <div class="kvs">
@@ -792,19 +1135,19 @@
         </div>
 
         <ul class="bullets">
-          <li><b>Why choose:</b> maximum options and high-value exposure.</li>
-          <li><b>After study:</b> policy-based pathways; plan realistically.</li>
-          <li><b>Mistakes:</b> late preparation, weak alignment, unrealistic expectations.</li>
+          <li><b class="hl">Why choose:</b> maximum options and high-value exposure.</li>
+          <li><b class="hl">After study:</b> policy-based pathways; plan realistically.</li>
+          <li><b class="hl2">Mistakes:</b> late preparation, weak alignment, unrealistic expectations.</li>
         </ul>
 
         <div class="ctaRow" style="margin-top:12px;">
-          <a class="btn btn-gold" id="waUS" href="#">Talk With an Expert Counselor</a>
+          <a class="btn btn-green" id="waUS" href="#">Talk With an Expert Counselor</a>
         </div>
       </div>
 
       <!-- EUROPE -->
       <div id="eu" class="countryPane" role="tabpanel" aria-label="Europe">
-        <div style="font-weight:950; font-size:16px; margin-bottom:6px;">Europe — smart options if you choose correctly</div>
+        <div class="titleColor" style="font-size:16px; margin-bottom:6px;">Europe — smart options if you choose correctly</div>
         <div class="muted" style="font-size:13px;">Hungary • Netherlands • Denmark • Ireland • and more (country rules vary a lot).</div>
 
         <div class="kvs">
@@ -815,21 +1158,288 @@
         </div>
 
         <ul class="bullets">
-          <li><b>Why choose:</b> some affordable routes + English-taught programs.</li>
-          <li><b>Reality:</b> rules vary; you must choose country + course carefully.</li>
-          <li><b>Mistakes:</b> assuming all Europe is same, ignoring costs, not understanding rules.</li>
+          <li><b class="hl">Why choose:</b> some affordable routes + English-taught programs.</li>
+          <li><b class="hl">Reality:</b> rules vary; choose country + course carefully.</li>
+          <li><b class="hl2">Mistakes:</b> assuming all Europe is same, ignoring costs, not understanding rules.</li>
         </ul>
 
         <div class="ctaRow" style="margin-top:12px;">
-          <a class="btn btn-gold" id="waEU" href="#">Talk With an Expert Counselor</a>
+          <a class="btn btn-green" id="waEU" href="#">Talk With an Expert Counselor</a>
         </div>
       </div>
     </div>
 
     <div class="ctaRow" style="margin-top:12px;">
-      <a class="btn btn-gold" id="waCountries" href="#">Talk With an Expert Counselor</a>
-      <a class="btn btn-soft" href="#n2f">See N2F (Now to Fly)</a>
-      <button class="btn btn-soft" id="saOpenCountries" type="button">AskLizOn – Study Abroad</button>
+      <a class="btn btn-green" id="waCountries" href="#" data-i18n="ctaTalk4">Talk With an Expert Counselor</a>
+      <a class="btn" href="#n2f" data-i18n="ctaN2F">See N2F (Now to Fly)</a>
+      <button class="btn" id="saOpenCountries" type="button">AskLizOn – Study Abroad</button>
+    </div>
+  </section>
+
+  <!-- PARTNERS MARQUEE -->
+  <section id="partners">
+    <div class="sectionTitle">
+      <h2 data-i18n="partnersTitle">Partners with Universities</h2>
+      <p data-i18n="partnersSub">Quick auto scroll (right → left)</p>
+    </div>
+
+    <div class="marquee">
+      <div class="marqueeTitle">
+        <svg class="iconSm" viewBox="0 0 24 24" fill="none">
+          <path d="M4 7l8-4 8 4-8 4-8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M4 7v7l8 4 8-4V7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <span class="titleColor" data-i18n="partnersTitle2">Universities we work with / familiar with</span>
+      </div>
+
+      <!-- Duplicate track content to make seamless scroll -->
+      <div style="overflow:hidden">
+        <div class="track" id="uniTrack">
+          <!-- Set A -->
+          <div class="uni">University of Sydney (AU)</div>
+          <div class="uni">Monash University (AU)</div>
+          <div class="uni">University of Melbourne (AU)</div>
+          <div class="uni">RMIT University (AU)</div>
+          <div class="uni">Deakin University (AU)</div>
+
+          <div class="uni">University of Auckland (NZ)</div>
+          <div class="uni">University of Otago (NZ)</div>
+          <div class="uni">Victoria University of Wellington (NZ)</div>
+
+          <div class="uni">University of Toronto (CA)</div>
+          <div class="uni">University of British Columbia (CA)</div>
+          <div class="uni">York University (CA)</div>
+          <div class="uni">University of Alberta (CA)</div>
+
+          <div class="uni">Arizona State University (USA)</div>
+          <div class="uni">Northeastern University (USA)</div>
+          <div class="uni">University of Illinois (USA)</div>
+
+          <div class="uni">University of Manchester (UK)</div>
+          <div class="uni">University of Birmingham (UK)</div>
+          <div class="uni">University of Leeds (UK)</div>
+          <div class="uni">University of Glasgow (UK)</div>
+
+          <div class="uni">Trinity College Dublin (IE)</div>
+          <div class="uni">University College Dublin (IE)</div>
+
+          <div class="uni">University of Amsterdam (NL)</div>
+          <div class="uni">Erasmus University Rotterdam (NL)</div>
+          <div class="uni">TU Delft (NL)</div>
+
+          <div class="uni">KU Leuven (BE)</div>
+          <div class="uni">Ghent University (BE)</div>
+
+          <div class="uni">University of Copenhagen (DK)</div>
+          <div class="uni">Aalto University (FI)</div>
+          <div class="uni">University of Helsinki (FI)</div>
+
+          <div class="uni">Eötvös Loránd University (HU)</div>
+          <div class="uni">University of Malta (MT)</div>
+          <div class="uni">University of Cyprus (CY)</div>
+
+          <div class="uni">University of Malaya (MY)</div>
+          <div class="uni">Taylor’s University (MY)</div>
+
+          <!-- Set B (duplicate) -->
+          <div class="uni">University of Sydney (AU)</div>
+          <div class="uni">Monash University (AU)</div>
+          <div class="uni">University of Melbourne (AU)</div>
+          <div class="uni">RMIT University (AU)</div>
+          <div class="uni">Deakin University (AU)</div>
+
+          <div class="uni">University of Auckland (NZ)</div>
+          <div class="uni">University of Otago (NZ)</div>
+          <div class="uni">Victoria University of Wellington (NZ)</div>
+
+          <div class="uni">University of Toronto (CA)</div>
+          <div class="uni">University of British Columbia (CA)</div>
+          <div class="uni">York University (CA)</div>
+          <div class="uni">University of Alberta (CA)</div>
+
+          <div class="uni">Arizona State University (USA)</div>
+          <div class="uni">Northeastern University (USA)</div>
+          <div class="uni">University of Illinois (USA)</div>
+
+          <div class="uni">University of Manchester (UK)</div>
+          <div class="uni">University of Birmingham (UK)</div>
+          <div class="uni">University of Leeds (UK)</div>
+          <div class="uni">University of Glasgow (UK)</div>
+
+          <div class="uni">Trinity College Dublin (IE)</div>
+          <div class="uni">University College Dublin (IE)</div>
+
+          <div class="uni">University of Amsterdam (NL)</div>
+          <div class="uni">Erasmus University Rotterdam (NL)</div>
+          <div class="uni">TU Delft (NL)</div>
+
+          <div class="uni">KU Leuven (BE)</div>
+          <div class="uni">Ghent University (BE)</div>
+
+          <div class="uni">University of Copenhagen (DK)</div>
+          <div class="uni">Aalto University (FI)</div>
+          <div class="uni">University of Helsinki (FI)</div>
+
+          <div class="uni">Eötvös Loránd University (HU)</div>
+          <div class="uni">University of Malta (MT)</div>
+          <div class="uni">University of Cyprus (CY)</div>
+
+          <div class="uni">University of Malaya (MY)</div>
+          <div class="uni">Taylor’s University (MY)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="sectionTitle">
+      <h2 data-i18n="reviewsTitle">Reviews</h2>
+      <p data-i18n="reviewsSub">Swipe/scroll → raw, real student vibe</p>
+    </div>
+
+    <div class="reviewWrap">
+      <div class="reviewTop">
+        <div>
+          <div class="reviewTitle" data-i18n="reviewsTopTitle">What students say</div>
+          <div class="reviewHint" data-i18n="reviewsTopHint">Each review is short & practical</div>
+        </div>
+        <a class="miniBtn" id="waReviews" href="#" data-i18n="reviewsBtn">Talk Now</a>
+      </div>
+
+      <div class="reviewRow">
+        <div class="rev">
+          <div class="n">Farzana S.</div>
+          <div class="m">“Ami age just ‘Australia’ shune jaitam. But ekhane amar gap + budget mile 2–3ta option shortlist kore dise. Confusion komse.”</div>
+          <div class="t">Shortlist + gap plan</div>
+        </div>
+
+        <div class="rev">
+          <div class="n">Rafiul H.</div>
+          <div class="m">“SOP/GS er kotha shune bhoy lagto. LESAC step by step bujhaise — ki bolbo, ki bolbo na. File ta clean hoise.”</div>
+          <div class="t">Statement support</div>
+        </div>
+
+        <div class="rev">
+          <div class="n">Nusrat J.</div>
+          <div class="m">“Amar case-e spouse niye jabo. Onno jaygay clear answer pay nai. Ekhane direct bolse kon country realistic.”</div>
+          <div class="t">Spouse clarity</div>
+        </div>
+
+        <div class="rev">
+          <div class="n">Mehedi A.</div>
+          <div class="m">“Budget tight chilo, tai Europe er kichu option dekhay dise. I mean, ekhon at least ami bujhi ki possible.”</div>
+          <div class="t">Budget-based options</div>
+        </div>
+
+        <div class="rev">
+          <div class="n">Sadia T.</div>
+          <div class="m">“IELTS score nai bole age agent ra pressure dito. LizOn bolse score plan first, tarpor apply. Eita actually sensible.”</div>
+          <div class="t">Score-first planning</div>
+        </div>
+
+        <div class="rev">
+          <div class="n">Hasib M.</div>
+          <div class="m">“Intake timeline niye confusion chilo. 3–6 months e ki realistic, ki na — straight bole dise.”</div>
+          <div class="t">Timeline reality</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO / EVERYTHING STUDENTS SEARCH -->
+  <section id="seo">
+    <div class="sectionTitle">
+      <h2 data-i18n="seoTitle">Study Abroad in Bangladesh — Everything Students Search</h2>
+      <p data-i18n="seoSub">Practical answers (and what we check before advising)</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="titleColor" style="margin-bottom:8px;" data-i18n="seoBlock1Title">Most searched topics</div>
+        <ul class="bullets">
+          <li><span class="hl">Country selection</span> based on CGPA, gap, budget, intake</li>
+          <li><span class="hl">Tuition + living cost</span> planning (city-wise differences)</li>
+          <li><span class="hl2">IELTS vs PTE</span> — which one faster for your timeline</li>
+          <li><span class="hl">Bank statement / sponsor</span> — how to keep it consistent</li>
+          <li><span class="hl2">Scholarship</span> — realistic chances, what strengthens profile</li>
+          <li><span class="hl">Visa refusal reasons</span> — common mistakes, how to avoid</li>
+          <li><span class="hl">With spouse</span> — which countries are realistic</li>
+        </ul>
+
+        <div class="ctaRow" style="margin-top:10px;">
+          <a class="btn btn-green" id="waSeo" href="#" data-i18n="seoBtn">Get shortlist from counselor</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="titleColor" style="margin-bottom:8px;" data-i18n="seoBlock2Title">What we predict students will face next</div>
+        <ul class="bullets">
+          <li>More students will need <span class="hl">strong explanation</span> (gap + course alignment).</li>
+          <li>More importance on <span class="hl2">document consistency</span> across bank, sponsor, purpose.</li>
+          <li>Demand for <span class="hl">lower-cost smart routes</span> will grow (Europe/Malaysia pathways).</li>
+          <li><span class="hl2">English score readiness</span> will become a stronger filter for quick processing.</li>
+          <li>Students will win by doing <span class="hl">early planning</span>, not last-minute panic.</li>
+        </ul>
+
+        <div class="warn" data-i18n="seoNote">
+          This page gives direction. Final eligibility always depends on your documents and intake availability.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMBASSY SECTION -->
+  <section id="embassy">
+    <div class="sectionTitle">
+      <h2 data-i18n="embTitle">Bangladesh Embassy / Mission (Important Countries)</h2>
+      <p data-i18n="embSub">Basic address info (quick reference)</p>
+    </div>
+
+    <div class="embGrid">
+      <div class="emb">
+        <h4>Belgium (Brussels)</h4>
+        <p>29 Rue Jacques Jordaens, 1000 Brussels, Belgium</p>
+      </div>
+
+      <div class="emb">
+        <h4>Denmark (Copenhagen)</h4>
+        <p>Strandvejen 336, 2930 Klampenborg, Denmark</p>
+      </div>
+
+      <div class="emb">
+        <h4>Netherlands (The Hague)</h4>
+        <p>Parkstraat 99, 2514 JG, The Hague, Netherlands</p>
+      </div>
+
+      <div class="emb">
+        <h4>Canada (Ottawa)</h4>
+        <p>350 Sparks Street, Suite #1100, Ottawa, ON K1R 7S8, Canada</p>
+      </div>
+
+      <div class="emb">
+        <h4>New Zealand (Wellington)</h4>
+        <p>57 Upland Road, Kelburn, Wellington, New Zealand</p>
+      </div>
+
+      <div class="emb">
+        <h4>Cyprus (Larnaca)</h4>
+        <p>96–102 Zenonos Kitieos Street, P.O. Box 40189, 6301 Larnaca, Cyprus</p>
+      </div>
+
+      <div class="emb">
+        <h4>Malta (Valletta)</h4>
+        <p>Delf Buildings, Sliema Road, Gzira GZR 1637, Malta</p>
+      </div>
+
+      <div class="emb">
+        <h4>Malaysia (Kuala Lumpur)</h4>
+        <p>Bangladesh High Commission, Kuala Lumpur (official mission) — address varies by service point</p>
+      </div>
+    </div>
+
+    <div class="warn" style="margin-top:12px" data-i18n="embNote">
+      Embassy details can change. Always double-check before visiting.
     </div>
   </section>
 
@@ -843,7 +1453,7 @@
       <p class="big">Avail N2F: <span class="accent">LizOn Takes Care of Everything</span></p>
       <p class="muted" style="margin:0;">
         This is for students who want a complete, guided process — not confusion.
-        And yes: <b>LizOn serves you even after you get visa.</b>
+        And yes: <b class="hl">LizOn serves you even after you get visa.</b>
       </p>
 
       <div class="chips">
@@ -855,8 +1465,8 @@
       </div>
 
       <div class="ctaRow" style="margin-top:12px;">
-        <a class="btn btn-gold" id="waN2F" href="#">Talk With an Expert Counselor</a>
-        <button class="btn btn-soft" id="saOpenN2F" type="button">AskLizOn – Study Abroad</button>
+        <a class="btn btn-green" id="waN2F" href="#">Talk With an Expert Counselor</a>
+        <button class="btn" id="saOpenN2F" type="button">AskLizOn – Study Abroad</button>
       </div>
     </div>
   </section>
@@ -866,12 +1476,12 @@
   <div class="container">
     <div class="footGrid">
       <div class="footCard">
-        <h3>Visit LizOn Education</h3>
+        <h3 data-i18n="footVisit">Visit LizOn Education</h3>
         <p>
           51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
         </p>
         <div class="socialRow">
-          <a class="miniBtn" id="mapFooter" href="#">Open Location on Map</a>
+          <a class="miniBtn" id="mapFooter" href="#" data-i18n="footMap">Open Location on Map</a>
           <a class="miniBtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
           <a class="miniBtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
           <a class="miniBtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
@@ -879,22 +1489,23 @@
       </div>
 
       <div class="footCard">
-        <h3>Talk With an Expert Counselor</h3>
-        <p>
+        <h3 data-i18n="footTalk">Talk With an Expert Counselor</h3>
+        <p data-i18n="footText">
           WhatsApp us. We’ll ask 3–5 quick questions, then guide you with the safest next step.
           <br /><br />
-          <b class="accent">Goal:</b> clarity first → correct country → correct intake → smooth process.
+          Goal: clarity first → correct country → correct intake → smooth process.
         </p>
         <div class="socialRow">
-          <a class="miniBtn" href="#countries">Countries</a>
-          <a class="miniBtn" href="#which">Requirements</a>
-          <a class="miniBtn" href="#n2f">N2F</a>
+          <a class="miniBtn" href="#countries" data-i18n="footCountries">Countries</a>
+          <a class="miniBtn" href="#which" data-i18n="footReq">Requirements</a>
+          <a class="miniBtn" href="#embassy" data-i18n="footEmb">Embassy</a>
           <button class="miniBtn" id="saOpenFooter" type="button">AskLizOn</button>
+          <a class="miniBtn" id="storyLinkFooter" href="#" target="_blank" rel="noopener" data-i18n="footStories">Stories</a>
         </div>
       </div>
     </div>
 
-    <p style="margin:16px 0 0; color: rgba(255,255,255,.55); font-size:12px;">
+    <p style="margin:16px 0 0; color: rgba(6,43,31,.55); font-size:12px;">
       © <span id="year"></span> LizOn Education • mylizon.com
     </p>
   </div>
@@ -915,21 +1526,45 @@
     <div class="saBody" id="saBody"></div>
 
     <div class="saBottom">
-      <button class="btn btn-soft" id="saBack" type="button" disabled>Back</button>
-      <button class="btn btn-gold" id="saNext" type="button">Next</button>
+      <button class="btn" id="saBack" type="button" disabled>Back</button>
+      <button class="btn btn-green" id="saNext" type="button">Next</button>
     </div>
   </div>
 </div>
 
-<a class="floatWA" id="waFloat" href="#">
-  <span class="dot" aria-hidden="true"></span>
-  <span>Talk With an Expert Counselor</span>
-</a>
+<!-- Floating Right Controls: Up / Down -->
+<div class="floatStack" aria-label="Quick controls">
+  <div class="fabRow">
+    <button class="fab" id="scrollUp" type="button" aria-label="Scroll up">
+      <svg class="iconSm" viewBox="0 0 24 24" fill="none">
+        <path d="M12 6l-7 7h14l-7-7z" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="fab" id="scrollDown" type="button" aria-label="Scroll down">
+      <svg class="iconSm" viewBox="0 0 24 24" fill="none">
+        <path d="M12 18l7-7H5l7 7z" fill="currentColor"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- Middle Bottom: Instant Assessment + Language Toggle -->
+<div class="floatMid" aria-label="Instant actions">
+  <button class="midBtn" id="instantAssessment" type="button">
+    <svg class="iconSm" viewBox="0 0 24 24" fill="none">
+      <path d="M9 11l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <span>askLizOn- instant assesment</span>
+  </button>
+  <button class="langBtn" id="langToggle" type="button" aria-label="Toggle language">BN</button>
+</div>
 
 <script>
   // ===== SETTINGS =====
   const WA_LINK = "https://wa.me/8801608881545";
   const MAP_LINK = "https://maps.app.goo.gl/JC9sikzCiSsQrNnH9";
+  const STORY_LINK = "https://drive.google.com/drive/folders/1mH2B9ba0yCFpQkgafY_Mc1k2DfBEHIVq";
 
   // Mobile menu toggle
   const menuBtn = document.getElementById("menuBtn");
@@ -950,7 +1585,8 @@
   // Wire WhatsApp buttons
   [
     "waTop","waMenu","waHero","waQuick","waDocs","waEligibility","waQuestions",
-    "waAU","waUK","waCA","waUS","waEU","waCountries","waN2F","waFloat"
+    "waAU","waUK","waCA","waUS","waEU","waCountries","waN2F",
+    "waLesac","waSeo","waReviews"
   ].forEach(id => {
     const el = document.getElementById(id);
     if(el) el.href = WA_LINK;
@@ -962,10 +1598,15 @@
     if(el) el.href = MAP_LINK;
   });
 
+  // Wire story buttons
+  ["storyLinkTop","storyLinkLesac","storyLinkFooter","storyLinkMenu"].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.href = STORY_LINK;
+  });
+
   // Country tab switch
   const btns = Array.from(document.querySelectorAll(".countryBtn"));
   const panes = Array.from(document.querySelectorAll(".countryPane"));
-
   function activate(target){
     btns.forEach(b => {
       const isActive = b.dataset.target === target;
@@ -974,12 +1615,307 @@
     });
     panes.forEach(p => p.classList.toggle("active", p.id === target));
   }
-
   btns.forEach(b => b.addEventListener("click", () => activate(b.dataset.target)));
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  /* ===================== AskLizOn – Study Abroad (NEW SCRIPT) ===================== */
+  // Scroll up/down buttons
+  const scrollUp = document.getElementById("scrollUp");
+  const scrollDown = document.getElementById("scrollDown");
+  scrollUp?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  scrollDown?.addEventListener("click", () => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }));
+
+  // Top video: tap thumbnail -> replace with iframe
+  const topVideoWrap = document.getElementById("topVideoWrap");
+  const YT_ID = "-ZE8aowoiMc";
+  function loadTopVideo(){
+    if(!topVideoWrap) return;
+    topVideoWrap.innerHTML = `
+      <div style="position:relative; padding-top:56.25%; background:#000;">
+        <iframe
+          src="https://www.youtube.com/embed/${YT_ID}?autoplay=1&rel=0&modestbranding=1"
+          title="YouTube video"
+          style="position:absolute; inset:0; width:100%; height:100%; border:0;"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+    `;
+    topVideoWrap.style.cursor = "default";
+  }
+  topVideoWrap?.addEventListener("click", loadTopVideo);
+  topVideoWrap?.addEventListener("keydown", (e) => { if(e.key === "Enter" || e.key === " ") loadTopVideo(); });
+
+  /* ===================== Language Toggle (EN ↔ BN) ===================== */
+  const I18N = {
+    en: {
+      brandTag: "Study Abroad • IELTS • PTE",
+      navCountries: "Countries",
+      navQuestions: "Student Questions",
+      navTalk: "Talk With an Expert Counselor",
+      navVideo: "Video",
+      navVideoSm: "Tap to play inside",
+      navCountries2: "Countries",
+      navReq: "Which Country Needs What?",
+      navReqSm: "Docs + scores + intakes",
+      navLesac: "Why LESAC",
+      navLesacSm: "Our expertise + support",
+      navPartners: "Partners with Universities",
+      navPartnersSm: "Auto scrolling list",
+      navReviews: "Reviews",
+      navReviewsSm: "Real student vibe",
+      navSeo: "Study Abroad in Bangladesh",
+      navSeoSm: "SEO questions students search",
+      navEmbassy: "Bangladesh Embassy",
+      navEmbassySm: "Important addresses",
+      navStories: "Student Stories",
+      navStoriesSm: "Google Drive",
+
+      videoTitle: "A quick overview",
+      videoSub: "Tap the thumbnail → video plays inside the page",
+      videoPlay: "Tap to Play",
+
+      pill: "Study Abroad Guidance • Make Your Family Proud",
+      heroH1: "Study Abroad — <span class='accent'>Clarity First</span>, Then Process",
+      heroSub: "LizOn guides you with the real things students care about: documents, IELTS/PTE score readiness, intake timing, work reality, and future opportunities — without unrealistic promises.<br /><br />Want the cleanest next step? Talk with an expert counselor and we’ll tell you what fits your profile.",
+      ctaTalk: "Talk With an Expert Counselor",
+      ctaExplore: "Explore Countries",
+      ctaReq: "Which Country Needs What?",
+      ctaStories: "Student Stories",
+
+      noteImp: "Important:",
+      noteText: "For smoother admission and safer processing, it helps to have your",
+      noteText2: "score ready. If not, we’ll guide you how to prepare first.",
+
+      locTitle: "Real Location",
+      locSub: "Basabo, Dhaka • In-person + online guidance",
+      fastTitle: "Fast Guidance",
+      fastSub: "WhatsApp counseling → correct country → correct intake → correct next step",
+      ctaEligibility: "Check Eligibility",
+      ctaMap: "Open Map",
+      warnText: "We stay truthful: PR and job outcomes depend on your skills, planning, and policy — not shortcuts.",
+
+      whichTitle: "Which Country Needs What?",
+      whichSub: "Documents + scores + intakes — simplified",
+      docsTitle: "Documents (general)",
+      docsSub: "Country + profile based, but core stays same",
+      ctaTalk2: "Talk With an Expert Counselor",
+      eligTitle: "Are you eligible?",
+      eligSub: "Quick screening → then counselor shortlists correctly",
+      eligGoal: "Goal:",
+      eligTime: "Timeline:",
+      eligBudget: "Budget:",
+      eligScore: "Score:",
+      ctaEligibility2: "Check Eligibility",
+      ctaPick: "Pick a country",
+
+      lesacTitle: "Why LESAC — LizOn Education Study Abroad & Consultation",
+      lesacSub: "The “why” that actually helps Bangladeshi students",
+      usp1Title: "Clarity-first screening (no confusion)",
+      usp1Sub: "We shortlist based on your documents, gap story, budget proof, and intake reality.",
+      usp2Title: "Strong documentation support",
+      usp2Sub: "Checklist + guidance so your file looks consistent, clear, and believable.",
+      ctaBook: "Book a Live Meeting with Expert",
+      ctaStories2: "See Student Stories",
+
+      qTitle: "Problems Students Face",
+      qSub: "Honest answers — no unrealistic promises",
+      faq1q: "Why & which country should I choose?",
+      faq1a: "Country choice should match your profile, budget, intake timing, and future plan. Most people fail because they choose based on rumors. LizOn guides you with a clean shortlist.",
+      faq2q: "Will I get PR?",
+      faq2a: "PR depends on skill demand, policy, your course, and your work profile. We explain realistic pathways (if applicable) — and what improves your chances.",
+      faq3q: "Job pabo tho?",
+      faq3a: "Jobs exist, but outcomes depend on English, flexibility, and city. We guide you with work reality: typical student jobs, cost differences, and what you must prepare before landing.",
+      faq4q: "I don’t have IELTS/PTE yet — what now?",
+      faq4a: "Then your best move is to prepare and get the score first. Score readiness makes your application stronger and faster. LizOn can guide you to IELTS or PTE based on your timeline.",
+      faq5q: "What documents will be needed for my country?",
+      faq5a: "Core documents are similar, but each country has profile-based variations. Talk to our counselor and we’ll give you a clear checklist.",
+      faq6q: "I’m scared about visa refusal / weak profile",
+      faq6a: "Fear is normal. Most refusals happen due to weak explanation, wrong planning, or document gaps. We guide you step-by-step so you don’t walk blind.",
+      ctaTalk3: "Talk With an Expert Counselor",
+
+      countriesTitle: "Countries",
+      countriesSub: "Click a country → see requirements, intakes, scores, mistakes",
+      ctaTalk4: "Talk With an Expert Counselor",
+      ctaN2F: "See N2F (Now to Fly)",
+
+      partnersTitle: "Partners with Universities",
+      partnersSub: "Quick auto scroll (right → left)",
+      partnersTitle2: "Universities we work with / familiar with",
+
+      reviewsTitle: "Reviews",
+      reviewsSub: "Swipe/scroll → raw, real student vibe",
+      reviewsTopTitle: "What students say",
+      reviewsTopHint: "Each review is short & practical",
+      reviewsBtn: "Talk Now",
+
+      seoTitle: "Study Abroad in Bangladesh — Everything Students Search",
+      seoSub: "Practical answers (and what we check before advising)",
+      seoBlock1Title: "Most searched topics",
+      seoBtn: "Get shortlist from counselor",
+      seoBlock2Title: "What we predict students will face next",
+      seoNote: "This page gives direction. Final eligibility always depends on your documents and intake availability.",
+
+      embTitle: "Bangladesh Embassy / Mission (Important Countries)",
+      embSub: "Basic address info (quick reference)",
+      embNote: "Embassy details can change. Always double-check before visiting.",
+
+      footVisit: "Visit LizOn Education",
+      footMap: "Open Location on Map",
+      footTalk: "Talk With an Expert Counselor",
+      footText: "WhatsApp us. We’ll ask 3–5 quick questions, then guide you with the safest next step.<br /><br />Goal: clarity first → correct country → correct intake → smooth process.",
+      footCountries: "Countries",
+      footReq: "Requirements",
+      footEmb: "Embassy",
+      footStories: "Stories",
+    },
+    bn: {
+      brandTag: "Study Abroad • IELTS • PTE",
+      navCountries: "Country",
+      navQuestions: "Student Qs",
+      navTalk: "Counselor er sathe kotha bolun",
+      navVideo: "Video",
+      navVideoSm: "Tap korlei play hobe",
+      navCountries2: "Country",
+      navReq: "Kon country te ki lage?",
+      navReqSm: "Docs + score + intake",
+      navLesac: "Keno LESAC",
+      navLesacSm: "Expertise + support",
+      navPartners: "University Partners",
+      navPartnersSm: "Auto scrolling",
+      navReviews: "Review",
+      navReviewsSm: "Real vibe",
+      navSeo: "Bangladesh theke Study Abroad",
+      navSeoSm: "Students jeita search kore",
+      navEmbassy: "BD Embassy",
+      navEmbassySm: "Important address",
+      navStories: "Student Story",
+      navStoriesSm: "Google Drive",
+
+      videoTitle: "Ekta quick overview",
+      videoSub: "Thumbnail tap koren → page er moddhei video play hobe",
+      videoPlay: "Play koren",
+
+      pill: "Study Abroad Guidance • Make Your Family Proud",
+      heroH1: "Study Abroad — <span class='accent'>Clarity First</span>, Then Process",
+      heroSub: "LizOn apnake guidance dibe jeta students real-e care kore: documents, IELTS/PTE readiness, intake timing, work reality, future opportunity — unrealistic promise chara.<br /><br />Best next step? Counselor er sathe kotha bolun—apnar profile onujayi clean shortlist paben.",
+      ctaTalk: "Counselor er sathe kotha bolun",
+      ctaExplore: "Country dekhen",
+      ctaReq: "Kon country te ki lage?",
+      ctaStories: "Student Story",
+
+      noteImp: "Important:",
+      noteText: "Admission smooth korte helpful hoy jodi apnar",
+      noteText2: "score ready thake. Na thakle, amra preparation plan guide korbo.",
+
+      locTitle: "Real Location",
+      locSub: "Basabo, Dhaka • Offline + online guidance",
+      fastTitle: "Fast Guidance",
+      fastSub: "WhatsApp → correct country → correct intake → next step",
+      ctaEligibility: "Eligibility check",
+      ctaMap: "Map open",
+      warnText: "PR/job outcome depend kore skill, planning, policy er upor — shortcut er upor na.",
+
+      whichTitle: "Kon Country te ki lage?",
+      whichSub: "Docs + score + intake — simple vabe",
+      docsTitle: "Documents (general)",
+      docsSub: "Country + profile onujayi change hoy, but core same",
+      ctaTalk2: "Counselor er sathe kotha bolun",
+      eligTitle: "Apni eligible?",
+      eligSub: "Quick screening → tarpor counselor shortlist",
+      eligGoal: "Goal:",
+      eligTime: "Timeline:",
+      eligBudget: "Budget:",
+      eligScore: "Score:",
+      ctaEligibility2: "Eligibility check",
+      ctaPick: "Country pick",
+
+      lesacTitle: "Keno LESAC — LizOn Education Study Abroad & Consultation",
+      lesacSub: "Bangladeshi students der jonno practical reason",
+      usp1Title: "Clarity-first screening",
+      usp1Sub: "Documents, gap story, budget proof, intake reality diye shortlist.",
+      usp2Title: "Strong documentation support",
+      usp2Sub: "Checklist + guidance jate file clean & believable hoy.",
+      ctaBook: "Live meeting book korun",
+      ctaStories2: "Student Story dekhen",
+
+      qTitle: "Students er common problem",
+      qSub: "Honest answer — unrealistic promise chara",
+      faq1q: "Kon country choose korbo?",
+      faq1a: "Profile, budget, intake timing, future plan diye decide korte hoy. Rumor diye choose korle problem hoy. LizOn clean shortlist dey.",
+      faq2q: "PR hobe?",
+      faq2a: "PR depend kore skill demand, policy, course, work profile er upor. Amra realistic pathway explain করি (jodi applicable).",
+      faq3q: "Job pabo?",
+      faq3a: "Jobs thake, but depend kore English, flexibility, city. Amra work reality guide করি.",
+      faq4q: "IELTS/PTE nai — ki korbo?",
+      faq4a: "Score plan first. Score readiness application stronger kore. Timeline onujayi IELTS/PTE guide dibe.",
+      faq5q: "Ki ki documents lagbe?",
+      faq5a: "Core documents similar, but country + profile based variation thake. Counselor clear checklist dibe.",
+      faq6q: "Visa refusal niye bhoy",
+      faq6a: "Bhoy normal. Most refusal hoy weak explanation, wrong planning, doc gaps e. Step-by-step guide paben.",
+      ctaTalk3: "Counselor er sathe kotha bolun",
+
+      countriesTitle: "Countries",
+      countriesSub: "Country click koren → requirement, intake, score, mistake",
+      ctaTalk4: "Counselor er sathe kotha bolun",
+      ctaN2F: "N2F dekhen",
+
+      partnersTitle: "Partners with Universities",
+      partnersSub: "Auto scrolling list",
+      partnersTitle2: "University list (quick view)",
+
+      reviewsTitle: "Reviews",
+      reviewsSub: "Swipe/scroll → real vibe",
+      reviewsTopTitle: "Students ki bolse",
+      reviewsTopHint: "Short & practical",
+      reviewsBtn: "Talk now",
+
+      seoTitle: "Bangladesh theke Study Abroad — Students ja search kore",
+      seoSub: "Practical answers + amra ki check করি",
+      seoBlock1Title: "Most searched topics",
+      seoBtn: "Shortlist নিন",
+      seoBlock2Title: "Samne ki challenges barbe",
+      seoNote: "Eita direction dey. Final eligibility depend kore documents + intake availability er upor.",
+
+      embTitle: "Bangladesh Embassy / Mission (Important Countries)",
+      embSub: "Address reference",
+      embNote: "Embassy details change hote pare. যাওয়ার age double-check korun.",
+
+      footVisit: "LizOn Education visit",
+      footMap: "Map open",
+      footTalk: "Counselor er sathe kotha bolun",
+      footText: "WhatsApp korun. 3–5 ta quick question er por safest next step guide paben.<br /><br />Goal: clarity → correct country → correct intake → smooth process.",
+      footCountries: "Countries",
+      footReq: "Requirements",
+      footEmb: "Embassy",
+      footStories: "Stories",
+    }
+  };
+
+  function applyLang(lang){
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const k = el.getAttribute("data-i18n");
+      const val = (I18N[lang] && I18N[lang][k]) ? I18N[lang][k] : null;
+      if(!val) return;
+      el.innerHTML = val;
+    });
+    localStorage.setItem("sa_lang", lang);
+    const label = (lang === "bn") ? "EN" : "BN";
+    document.getElementById("langToggle").textContent = label;
+    document.getElementById("langToggleMenu").textContent = label;
+  }
+
+  let currentLang = localStorage.getItem("sa_lang") || "en";
+  applyLang(currentLang);
+
+  function toggleLang(){
+    currentLang = (currentLang === "en") ? "bn" : "en";
+    applyLang(currentLang);
+  }
+  document.getElementById("langToggle")?.addEventListener("click", toggleLang);
+  document.getElementById("langToggleMenu")?.addEventListener("click", toggleLang);
+
+  /* ===================== AskLizOn – Study Abroad (SCRIPT) ===================== */
   (() => {
     const modal = document.getElementById("saModal");
     const body = document.getElementById("saBody");
@@ -991,7 +1927,7 @@
     const btnNext = document.getElementById("saNext");
 
     const openButtons = [
-      "saOpen","saOpenMenu","saOpenQuestions","saOpenCountries","saOpenN2F","saOpenFooter"
+      "saOpen","saOpenMenu","saOpenQuestions","saOpenCountries","saOpenN2F","saOpenFooter","instantAssessment"
     ].map(id => document.getElementById(id)).filter(Boolean);
 
     // Google Form endpoint (silent submit)
@@ -1015,15 +1951,12 @@
       phoneNumber: "entry.1919103491"
     };
 
-    // Form expects degree like "PS - Post Grad" for Masters (based on your prefill)
-    const DEGREE_VALUE = {
-      "Bachelor": "Bachelor",
-      "Masters": "PS - Post Grad"
-    };
+    // Form expects "PS - Post Grad" for Masters
+    const DEGREE_VALUE = { "Bachelor": "Bachelor", "Masters": "PS - Post Grad" };
 
     const steps = [
-      { key:"goingStatus", label:"Are you planning to go:", type:"choice", required:true, options:["Alone","With Spouse"] },
-      { key:"degreePlan", label:"You are planning for:", type:"choice", required:true, options:["Bachelor","Masters"] },
+      { key:"goingStatus", label:"Alone or With Spouse?", type:"choice", required:true, options:["Alone","With Spouse"] },
+      { key:"degreePlan", label:"For Bachelor or Masters?", type:"choice", required:true, options:["Bachelor","Masters"] },
       { key:"timeline", label:"Preferred intake timeline", type:"choice", required:true, options:["0–3 months","3–6 months","6–12 months","Just exploring"] },
       { key:"lastEducation", label:"Last completed education", type:"choice", required:true, options:["SSC","HSC","Diploma","Bachelor","Masters"] },
       { key:"academicStanding", label:"Academic standing", type:"choice", required:true, options:["Strong","Average","Needs Improvement"] },
@@ -1031,17 +1964,21 @@
       { key:"englishTestStatus", label:"English test status", type:"choice", required:true, options:["Not taken yet","IELTS","PTE","Duolingo","Not sure"] },
       { key:"scoreStatus", label:"Score status", type:"choice", required:false, options:["Targeting","Booked","Have score"] },
       { key:"budgetRange", label:"Budget range", type:"choice", required:true, options:["Tight","Moderate","Flexible"] },
-      { key:"priority", label:"Primary study priority", type:"choice", required:true, options:["Lowest cost","Faster visa","PR / long-term stay","Part-time work","Best universities"] },
+      { key:"priority", label:"Primary priority", type:"choice", required:true, options:["Lowest cost","Faster visa","PR / long-term stay","Part-time work","Best universities"] },
       { key:"phoneNumber", label:"Phone number", type:"phone", required:true, placeholder:"01XXXXXXXXX" }
     ];
 
-    // Country pools + spouse rules (as locked with you)
+    // Pools + spouse rules (LOCKED with you)
     const POOLS = {
       bachelor_alone: ["Australia","New Zealand","UK","Canada","Belgium","Netherlands","Denmark","Finland","Hungary","Malta","Cyprus"],
       masters_alone: ["Australia","New Zealand","UK","Canada","USA","Belgium","Netherlands","Ireland","Denmark","Finland","Hungary","Malta","Cyprus","Malaysia"],
       bachelor_spouse: ["Finland","Netherlands","Belgium"],
       masters_spouse: ["Australia","New Zealand","Canada","USA","Belgium","Netherlands","Denmark","Finland","Malaysia"]
     };
+
+    // IMPORTANT CHANGE:
+    // We keep a *light* “signal” for AU/NZ etc, but not a heavy bias.
+    const LIGHT_SIGNAL = ["Australia","New Zealand","UK","Canada","USA","Netherlands","Denmark","Finland","Belgium","Ireland","Malaysia","Hungary","Malta","Cyprus"];
 
     let idx = 0;
     const state = Object.create(null);
@@ -1062,6 +1999,11 @@
     openButtons.forEach(b => b.addEventListener("click", openModal));
     btnClose.addEventListener("click", closeModal);
     btnX.addEventListener("click", closeModal);
+
+    // Close on ESC
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") closeModal();
+    });
 
     function renderStep(){
       const total = steps.length;
@@ -1149,101 +2091,124 @@
       return POOLS.masters_alone.slice();
     }
 
-    /* ===================== FIX: COUNTRY SUGGESTION (NOT ALWAYS AUS/NZ) ===================== */
-    function seedFromPhone(phone){
-      const s = String(phone || "");
-      let h = 0;
-      for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-      return h || 123456789;
-    }
-    function seededPick(arr, seed){
-      if (!arr.length) return null;
-      return arr[seed % arr.length];
+    // Small randomness helper (stable-ish per phone)
+    function seededRand(seedStr){
+      let h = 2166136261;
+      for (let i=0;i<seedStr.length;i++){
+        h ^= seedStr.charCodeAt(i);
+        h += (h<<1) + (h<<4) + (h<<7) + (h<<8) + (h<<24);
+      }
+      return () => {
+        h += 0x6D2B79F5;
+        let t = Math.imul(h ^ (h >>> 15), 1 | h);
+        t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
     }
 
+    // FIXED: diversify suggestions across many countries
     function chooseCountries(){
       const pool = pickPool();
-      const score = new Map(pool.map(c => [c, 0])); // start equal (no hard priority)
+      const score = new Map(pool.map(c => [c, 0]));
 
+      // Very light signal (NOT a hard push)
+      for (const c of LIGHT_SIGNAL){
+        if(score.has(c)) score.set(c, score.get(c) + 0.6);
+      }
+
+      // Heuristics (still “advisor-like”, not absolute)
       const budget = state.budgetRange;
       const timeline = state.timeline;
       const gap = state.studyGap;
       const pr = state.priority;
       const english = state.englishTestStatus;
 
-      // Budget nudges (small, realistic)
+      // Budget
       if (budget === "Tight") {
-        ["Belgium","Hungary","Malta","Cyprus","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
-        ["USA","Australia"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
-        ["Netherlands","Denmark","Finland"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
+        ["Hungary","Malta","Cyprus","Malaysia","Belgium"].forEach(c => score.has(c) && score.set(c, score.get(c)+2.0));
+        ["USA","Netherlands","Denmark","Finland"].forEach(c => score.has(c) && score.set(c, score.get(c)-0.5));
       }
       if (budget === "Moderate") {
-        ["UK","Belgium","Netherlands","Malaysia","Canada"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["UK","Ireland","Belgium","Netherlands","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+0.8));
       }
       if (budget === "Flexible") {
-        ["Australia","UK","Canada","USA","New Zealand","Netherlands","Denmark","Finland","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["Australia","UK","Canada","USA","New Zealand","Netherlands","Denmark","Finland","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1.2));
       }
 
-      // Timeline nudges
+      // Timeline
       if (timeline === "0–3 months") {
-        ["UK","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
-        ["USA","Canada"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
-      }
-      if (timeline === "3–6 months") {
-        ["UK","Ireland","Belgium"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["UK","Malaysia","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1.0));
       }
       if (timeline === "Just exploring") {
-        ["Belgium","Hungary","Cyprus","Malta","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["Belgium","Netherlands","Hungary","Malta","Cyprus"].forEach(c => score.has(c) && score.set(c, score.get(c)+0.7));
       }
 
-      // Study gap nudges
+      // Study gap
       if (gap === "5+ years") {
-        ["USA"].forEach(c => score.has(c) && score.set(c, score.get(c)-1));
-        ["Malaysia","Cyprus","Malta","Belgium"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["USA"].forEach(c => score.has(c) && score.set(c, score.get(c)-1.0));
+        ["Malaysia","Hungary","Belgium","Cyprus","Malta"].forEach(c => score.has(c) && score.set(c, score.get(c)+0.7));
       }
 
-      // Priority nudges
+      // Priority
       if (pr === "PR / long-term stay") {
-        ["Canada","Australia","New Zealand"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
-        ["UK"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["Canada","Australia","New Zealand"].forEach(c => score.has(c) && score.set(c, score.get(c)+1.8));
+        ["UK"].forEach(c => score.has(c) && score.set(c, score.get(c)+0.4));
       }
       if (pr === "Best universities") {
-        ["UK","USA","Canada","Australia","Netherlands","Denmark","Finland","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
+        ["UK","USA","Canada","Australia","Netherlands","Denmark","Finland","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1.3));
       }
       if (pr === "Lowest cost") {
-        ["Hungary","Malta","Cyprus","Belgium","Malaysia"].forEach(c => score.has(c) && score.set(c, score.get(c)+2));
+        ["Hungary","Malta","Cyprus","Malaysia","Belgium"].forEach(c => score.has(c) && score.set(c, score.get(c)+1.9));
       }
       if (pr === "Faster visa") {
-        ["UK","Malaysia","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["UK","Malaysia","Ireland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1.2));
       }
       if (pr === "Part-time work") {
-        ["Australia","UK","Canada","New Zealand","Netherlands","Denmark","Finland"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["Australia","Canada","UK","New Zealand"].forEach(c => score.has(c) && score.set(c, score.get(c)+1.0));
       }
 
-      // English test status (light)
+      // English readiness nudge (very light)
       if (english === "Not taken yet" || english === "Not sure") {
-        ["Malaysia","Hungary","Cyprus","Malta","Belgium"].forEach(c => score.has(c) && score.set(c, score.get(c)+1));
+        ["USA"].forEach(c => score.has(c) && score.set(c, score.get(c)-0.6));
+        ["Malaysia","Hungary","Belgium","Cyprus","Malta"].forEach(c => score.has(c) && score.set(c, score.get(c)+0.4));
       }
 
+      // Rank
       const ranked = [...score.entries()].sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
 
-      // Pick from top group using stable seed so results vary naturally (not always same)
-      const seed = seedFromPhone(state.phoneNumber);
-      const topPrimaryGroup = ranked.slice(0, Math.min(5, ranked.length));
-      const primary = seededPick(topPrimaryGroup, seed) || ranked[0] || pool[0] || "Belgium";
+      // Diversification: pick from top 6 with a seeded random (stable per phone)
+      const seed = String(state.phoneNumber || "seed") + "|" + String(state.degreePlan||"") + "|" + String(state.goingStatus||"");
+      const rnd = seededRand(seed);
 
-      const topAltGroup = ranked.filter(c => c !== primary).slice(0, Math.min(6, ranked.length-1));
-      const alt = seededPick(topAltGroup, seed >>> 1) || ranked.find(c => c !== primary) || pool[1] || primary;
+      const top = ranked.slice(0, Math.min(6, ranked.length));
+      const pickIndex = () => Math.floor(rnd() * top.length);
 
-      return { primary, alt };
+      // Primary: weighted-ish by position
+      let primary = top[0] || pool[0] || "Belgium";
+      if (top.length >= 3){
+        const r = rnd();
+        if (r > 0.55) primary = top[pickIndex()];
+      }
+
+      // Alternative: ensure different + meaningful
+      let altCandidates = top.filter(c => c !== primary);
+      let alt = altCandidates[0] || ranked.find(c => c !== primary) || primary;
+
+      // Final guard: don’t always keep AU+NZ together unless they truly rank top 2
+      if ((primary === "Australia" && alt === "New Zealand") || (primary === "New Zealand" && alt === "Australia")){
+        const third = altCandidates[1] || altCandidates[0];
+        if (third) alt = third;
+      }
+
+      return { primary, alt, rankedTop: top };
     }
-    /* ===================== END FIX ===================== */
 
-    function buildAdvisorNotes(primary, alt){
+    function buildAdvisorNotes(primary, alt, rankedTop){
       const parts = [];
       parts.push(`Primary direction: ${primary}. Alternative option: ${alt}.`);
-      parts.push(`This suggestion is based on quick answers only. Final suitability depends on documents, course alignment, and intake availability.`);
-      parts.push(`Next step: counselor will verify your academics, gap explanation, budget proof, and shortlist the safest route.`);
+      parts.push(`We used limited info — for the final route, a counselor should check your documents and intake availability.`);
+      parts.push(`Shortlist pool (not final): ${rankedTop.slice(0,4).join(", ")}.`);
+      parts.push(`Next step: confirm intake timeline + budget proof + gap explanation, then finalize the country & course.`);
       return parts.join(" ");
     }
 
@@ -1271,7 +2236,6 @@
       fd.append(ENTRY.alternativeCountry, alt);
       fd.append(ENTRY.advisorNotes, notes);
 
-      // Degree plan conversion to match form labels
       const degreeVal = DEGREE_VALUE[state.degreePlan] || state.degreePlan || "";
       fd.append(ENTRY.degreePlan, degreeVal);
 
@@ -1293,10 +2257,10 @@
       titleEl.textContent = "Your Study Direction";
       stepEl.textContent = "Completed";
 
-      const { primary, alt } = chooseCountries();
-      const notes = buildAdvisorNotes(primary, alt);
+      const { primary, alt, rankedTop } = chooseCountries();
+      const notes = buildAdvisorNotes(primary, alt, rankedTop);
 
-      // Silent submit first
+      // Silent submit
       submitToGoogleForm(primary, alt, notes);
 
       const snapshot = `${state.degreePlan || ""} • ${state.goingStatus || ""} • ${state.timeline || ""} • ${state.budgetRange || ""}`;
@@ -1304,8 +2268,8 @@
 
       body.innerHTML = `
         <div class="saResult">
-          <div style="opacity:.9; font-size:13px;">Profile snapshot</div>
-          <div style="font-weight:950; margin-top:4px;">${snapshot}</div>
+          <div style="opacity:.85; font-size:13px; color: rgba(6,43,31,.70); font-weight: 800;">Profile snapshot</div>
+          <div style="font-weight:950; margin-top:4px; color: var(--green);">${snapshot}</div>
 
           <div class="box">
             <div class="k">Primary Country Direction</div>
@@ -1318,16 +2282,16 @@
           </div>
 
           <div class="box">
-            <div class="k">Advisor Notes / Initial Guidance</div>
-            <div style="margin-top:6px; opacity:.92; line-height:1.55;">${notes}</div>
+            <div class="k">Initial Guidance</div>
+            <div style="margin-top:6px; opacity:.92; line-height:1.55; color: rgba(6,43,31,.78);">${notes}</div>
           </div>
 
           <div class="saCTA">
-            <a class="btn btn-gold" href="${wa}" target="_blank" rel="noopener">Book a Live Meeting with Expert</a>
-            <button class="btn btn-soft" id="saDone" type="button">Close</button>
+            <a class="btn btn-green" href="${wa}" target="_blank" rel="noopener">Book a Live Meeting with Expert</a>
+            <button class="btn" id="saDone" type="button">Close</button>
           </div>
 
-          <div style="opacity:.78; font-size:12px; margin-top:10px;">
+          <div style="opacity:.72; font-size:12px; margin-top:10px; color: rgba(6,43,31,.65); font-weight: 800;">
             Note: Final eligibility depends on documents and intake availability.
           </div>
         </div>

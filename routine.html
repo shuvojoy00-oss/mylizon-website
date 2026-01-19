@@ -1,0 +1,1206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LizOn Education — Routine Generator (IELTS/PTE)</title>
+  <meta name="description" content="Tap-only routine generator for IELTS & PTE by LizOn Education. Create a personalized study routine card and print/save as PDF." />
+  <meta name="theme-color" content="#062b1f" />
+
+  <style>
+    :root{
+      /* Light (iPhone-like) */
+      --bg:#f4fbf8;
+      --bg2:#ffffff;
+      --text:rgba(10,32,22,.92);
+      --muted:rgba(10,32,22,.68);
+      --stroke:rgba(10,32,22,.14);
+      --glass:rgba(255,255,255,.72);
+      --glass2:rgba(255,255,255,.55);
+
+      /* Brand */
+      --green:#062b1f;
+      --green2:#0b3a2a;
+      --gold:#d6b35a;
+
+      --shadow: 0 18px 60px rgba(2, 24, 16, .12);
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --topbar-h: 64px;
+    }
+
+    /* Reading Mode (softer contrast) */
+    .reading{
+      --bg:#fffdf6;
+      --bg2:#ffffff;
+      --text:rgba(25,25,25,.92);
+      --muted:rgba(25,25,25,.65);
+      --stroke:rgba(25,25,25,.12);
+      --glass:rgba(255,255,255,.82);
+      --glass2:rgba(255,255,255,.65);
+      --shadow: 0 18px 60px rgba(0,0,0,.10);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 18% 0%, rgba(11,58,42,.12), transparent 58%),
+        radial-gradient(900px 650px at 85% 25%, rgba(214,179,90,.10), transparent 58%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      overflow-x:hidden;
+    }
+    a{ color:inherit; }
+    .container{ width:min(1120px, 92vw); margin:0 auto; }
+
+    /* ===== Topbar ===== */
+    .topbar{
+      position:sticky; top:0; z-index:9999;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.72);
+      border-bottom:1px solid var(--stroke);
+    }
+    .topbar-inner{
+      height: var(--topbar-h);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; padding: 10px 0;
+    }
+    .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+    .logo{
+      width:44px; height:44px;
+      border-radius:14px;
+      display:grid; place-items:center;
+      background: linear-gradient(180deg, rgba(6,43,31,.10), rgba(6,43,31,.04));
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+      overflow:hidden;
+    }
+    .logo svg{ width:26px; height:26px; opacity:.92; }
+    .brand-text{ display:flex; flex-direction:column; line-height:1.12; min-width:0; }
+    .brand-text b{
+      font-size:16px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 220px;
+      letter-spacing:.2px;
+    }
+    .brand-text span{
+      font-size:12px; color:var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 260px;
+    }
+
+    .top-actions{ display:flex; align-items:center; gap:10px; }
+    .chip, .iconbtn{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(2,24,16,.08);
+      color: var(--text);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .chip{
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 13px;
+    }
+    .iconbtn{
+      width:44px; height:44px;
+      border-radius: 999px;
+      display:grid; place-items:center;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    /* ===== Layout ===== */
+    .hero{
+      padding: 16px 0 10px;
+    }
+
+    .heroCard{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      background: linear-gradient(180deg, var(--glass), var(--glass2));
+      backdrop-filter: blur(12px);
+      overflow:hidden;
+      position:relative;
+    }
+    .heroTop{
+      padding: 16px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .titleWrap{ min-width: 220px; }
+    .heroTop h1{
+      margin:0;
+      font-size: 18px;
+      font-weight: 950;
+      letter-spacing:.2px;
+    }
+    .heroTop p{
+      margin:8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .badgeRow{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.55);
+      font-size:12px;
+      font-weight: 950;
+      color: rgba(6,43,31,.92);
+      white-space:nowrap;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: rgba(11,58,42,.85);
+      box-shadow: 0 0 0 4px rgba(11,58,42,.12);
+    }
+    .badge.gold .dot{ background: rgba(214,179,90,.95); box-shadow: 0 0 0 4px rgba(214,179,90,.14); }
+
+    .content{
+      padding: 12px 0 120px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media (min-width: 980px){
+      .content{
+        grid-template-columns: .95fr 1.05fr;
+        align-items:start;
+      }
+    }
+
+    .panel{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      background: linear-gradient(180deg, var(--glass), var(--glass2));
+      backdrop-filter: blur(12px);
+      overflow:hidden;
+    }
+    .panelHead{
+      padding: 16px;
+      border-bottom: 1px solid var(--stroke);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .panelHead h2{
+      margin:0;
+      font-size: 15px;
+      font-weight: 950;
+      letter-spacing:.2px;
+    }
+    .panelHead p{
+      margin:6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      max-width: 62ch;
+    }
+    .panelBody{ padding: 14px; }
+
+    /* ===== Tap-only options ===== */
+    .group{ margin-bottom: 12px; }
+    .labelRow{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; margin: 0 0 8px;
+    }
+    .labelRow b{
+      font-size: 13px;
+      font-weight: 950;
+    }
+    .hint{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .chips{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .optChip{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.62);
+      backdrop-filter: blur(10px);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-weight: 950;
+      font-size: 13px;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 10px 26px rgba(0,0,0,.06);
+      user-select:none;
+    }
+    .optChip small{
+      display:block;
+      font-weight: 900;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top:2px;
+      letter-spacing:.1px;
+    }
+    .optChip.active{
+      border-color: rgba(11,58,42,.35);
+      background: rgba(11,58,42,.10);
+    }
+
+    .btnRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 12px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.62);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 30px rgba(2,24,16,.08);
+      color: var(--text);
+      font-weight: 950;
+      font-size: 13px;
+      cursor:pointer;
+      text-decoration:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn.primary{
+      border-color: rgba(11,58,42,.35);
+      background: rgba(11,58,42,.12);
+    }
+    .btn.gold{
+      border-color: rgba(214,179,90,.40);
+      background: rgba(214,179,90,.16);
+    }
+    .btn.ghost{
+      background: transparent;
+      color: var(--muted);
+      box-shadow:none;
+    }
+
+    /* ===== Routine Card ===== */
+    .routineCard{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      background: rgba(255,255,255,.70);
+    }
+    .routineHead{
+      padding: 14px;
+      border-bottom: 1px solid var(--stroke);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .routineHead .meta{
+      min-width: 220px;
+    }
+    .routineHead .meta b{
+      display:block;
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing:.2px;
+    }
+    .routineHead .meta span{
+      display:block;
+      margin-top:6px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .metaTags{ display:flex; gap:10px; flex-wrap:wrap; }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.75);
+      font-size: 12px;
+      font-weight: 950;
+      color: rgba(6,43,31,.92);
+      white-space:nowrap;
+    }
+    .tag .miniDot{
+      width:8px; height:8px; border-radius:50%;
+      background: rgba(214,179,90,.95);
+      box-shadow: 0 0 0 4px rgba(214,179,90,.12);
+    }
+
+    .tableWrap{
+      padding: 14px;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      table-layout: fixed;
+      border-radius: 14px;
+      overflow:hidden;
+    }
+    th, td{
+      border:1px solid rgba(10,32,22,.10);
+      padding: 10px 10px;
+      text-align:center;
+      font-size: 12px;
+      font-weight: 900;
+      vertical-align: top;
+      background: rgba(255,255,255,.70);
+    }
+    th{
+      background: rgba(11,58,42,.08);
+      color: rgba(6,43,31,.92);
+      font-size: 12px;
+      letter-spacing:.2px;
+    }
+
+    .cell{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      align-items:center;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 7px 9px;
+      border-radius: 999px;
+      border:1px solid rgba(10,32,22,.12);
+      background: rgba(255,255,255,.75);
+      font-size: 11px;
+      font-weight: 950;
+      white-space:nowrap;
+    }
+    .pill.green{ border-color: rgba(11,58,42,.20); background: rgba(11,58,42,.10); }
+    .pill.gold{ border-color: rgba(214,179,90,.26); background: rgba(214,179,90,.18); }
+    .pill.muted{ color: var(--muted); font-weight: 900; }
+
+    .phase{
+      padding: 14px;
+      border-top: 1px solid var(--stroke);
+      display:grid;
+      gap:10px;
+    }
+    .phaseItem{
+      border:1px solid rgba(10,32,22,.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,.72);
+      padding: 12px;
+    }
+    .phaseItem b{
+      display:block;
+      font-size: 13px;
+      font-weight: 950;
+      margin-bottom:6px;
+    }
+    .phaseItem p{
+      margin:0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 850;
+    }
+
+    /* ===== Modal (tap-only + outside close) ===== */
+    .overlay{
+      position:fixed; inset:0;
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      padding: 16px;
+      z-index: 12050;
+    }
+    .overlay.show{ display:flex; }
+    .back{ position:absolute; inset:0; background: rgba(0,0,0,.30); }
+
+    .sheet{
+      position:relative;
+      width:min(920px, 100%);
+      border-radius: var(--radius-xl);
+      border:1px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.88);
+      box-shadow: 0 18px 60px rgba(0,0,0,.16);
+      backdrop-filter: blur(12px);
+      padding: 14px;
+      transform: translateY(10px);
+      animation: in .14s ease-out forwards;
+    }
+    @keyframes in{ from{ opacity:0; transform: translateY(18px);} to{ opacity:1; transform: translateY(0);} }
+
+    .sheetTop{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:10px; margin-bottom:10px;
+    }
+    .sheetTop h3{ margin:0; font-size:15px; font-weight:950; }
+    .sheetTop p{ margin:6px 0 0; color: var(--muted); font-size: 13px; line-height:1.5; }
+    .x{
+      width:44px; height:44px;
+      border-radius: 16px;
+      border:1px solid rgba(10,32,22,.14);
+      background: rgba(255,255,255,.72);
+      cursor:pointer;
+      display:grid; place-items:center;
+      font-weight: 950;
+    }
+
+    /* ===== Floating buttons ===== */
+    .fab{
+      position:fixed;
+      z-index: 9999;
+      border:1px solid rgba(10,32,22,.14);
+      background: rgba(255,255,255,.70);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 60px rgba(2,24,16,.14);
+      border-radius: 999px;
+      padding: 10px 12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fab b{ font-weight: 950; }
+    .fab span{ color: var(--muted); font-size: 12px; font-weight: 900; }
+
+    .fabTop{ right:14px; bottom:112px; display:none; }
+    .fabDown{ right:14px; bottom:58px; display:none; }
+    .fabRead{ left:14px; bottom:58px; display:none; }
+
+    /* Print styles (Save as PDF) */
+    @media print{
+      .topbar, .leftPanel, .fab, .noPrint { display:none !important; }
+      body{ background:#ffffff !important; }
+      .container{ width: 100% !important; margin:0 !important; }
+      .panel{ box-shadow:none !important; border:1px solid #ddd !important; background:#fff !important; }
+      .routineCard{ border:1px solid #ddd !important; }
+      table{ min-width: 0 !important; }
+      th, td{ font-size: 11px !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- TOPBAR -->
+  <div class="topbar noPrint">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <!-- Simple L mark (no external asset needed) -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 5v14h10" stroke="#062b1f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.5 7.2v11h7.3" stroke="#d6b35a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <b>LizOn Education</b>
+            <span>Tap-only Routine Generator (IELTS / PTE)</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button class="chip" id="btnPrintTop" type="button" aria-label="Print or Save PDF">Print / PDF</button>
+          <button class="iconbtn" id="btnReading" type="button" aria-label="Reading Mode" title="Reading Mode">Aa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="heroCard">
+        <div class="heroTop">
+          <div class="titleWrap">
+            <h1>Build your routine in 30 seconds.</h1>
+            <p>
+              Tap your level + target + available time + weak module — and get a clean routine card with a weekly table chart.
+              Then hit <b>Print / PDF</b> to save it.
+            </p>
+          </div>
+          <div class="badgeRow">
+            <div class="badge"><span class="dot"></span>Tap-only</div>
+            <div class="badge gold"><span class="dot"></span>Print to PDF</div>
+            <div class="badge"><span class="dot"></span>Made for BD students</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="content">
+    <div class="container" style="display:contents;">
+      <!-- LEFT: Controls -->
+      <div class="panel leftPanel noPrint">
+        <div class="panelHead">
+          <div>
+            <h2>Step 1 — Choose (Tap only)</h2>
+            <p>
+              No typing. Tap selections only. Routine updates instantly.
+            </p>
+          </div>
+        </div>
+        <div class="panelBody">
+          <!-- Exam -->
+          <div class="group">
+            <div class="labelRow">
+              <b>Exam</b>
+              <span class="hint">Pick one</span>
+            </div>
+            <div class="chips" id="examChips"></div>
+          </div>
+
+          <!-- IELTS level -->
+          <div class="group" id="ieltsLevelGroup">
+            <div class="labelRow">
+              <b>IELTS current level</b>
+              <span class="hint">Your starting stage</span>
+            </div>
+            <div class="chips" id="levelChips"></div>
+          </div>
+
+          <!-- Target -->
+          <div class="group">
+            <div class="labelRow">
+              <b>Target score</b>
+              <span class="hint">Choose goal</span>
+            </div>
+            <div class="chips" id="targetChips"></div>
+          </div>
+
+          <!-- Time available -->
+          <div class="group">
+            <div class="labelRow">
+              <b>Daily study time</b>
+              <span class="hint">Realistic</span>
+            </div>
+            <div class="chips" id="hoursChips"></div>
+          </div>
+
+          <!-- Preferred time -->
+          <div class="group">
+            <div class="labelRow">
+              <b>Preferred study window</b>
+              <span class="hint">When you can focus</span>
+            </div>
+            <div class="chips" id="windowChips"></div>
+          </div>
+
+          <!-- Weak module -->
+          <div class="group">
+            <div class="labelRow">
+              <b>Most problematic module</b>
+              <span class="hint">We’ll give it more time</span>
+            </div>
+            <div class="chips" id="weakChips"></div>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="btnRow">
+            <button class="btn primary" id="btnPrint" type="button">Print / Save PDF</button>
+            <button class="btn gold" id="btnShareTip" type="button">How to save PDF</button>
+            <a class="btn" id="btnWhatsApp" href="#" target="_blank" rel="noopener">WhatsApp Help</a>
+          </div>
+
+          <div class="btnRow" style="margin-top:10px;">
+            <button class="btn ghost" id="btnReset" type="button">Reset selections</button>
+            <a class="btn ghost" href="https://www.mylizon.com/ielts.html" style="text-decoration:none;">Back to IELTS Journey</a>
+            <a class="btn ghost" href="https://www.mylizon.com/pte.html" style="text-decoration:none;">Back to PTE</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Routine output -->
+      <div class="panel">
+        <div class="panelHead">
+          <div>
+            <h2>Step 2 — Your Routine Card</h2>
+            <p>
+              This is screenshot-friendly + PDF-friendly. It includes a weekly table chart and a simple phase plan.
+            </p>
+          </div>
+          <div class="badgeRow noPrint">
+            <div class="badge"><span class="dot"></span><span id="badgeExam">IELTS</span></div>
+            <div class="badge gold"><span class="dot"></span><span id="badgeDuration">1 month plan</span></div>
+          </div>
+        </div>
+
+        <div class="panelBody">
+          <div class="routineCard" id="routineCard">
+            <div class="routineHead">
+              <div class="meta">
+                <b id="routineTitle">LizOn Education — IELTS Routine</b>
+                <span id="routineSubtitle">Tap options on the left to generate your routine.</span>
+              </div>
+              <div class="metaTags">
+                <div class="tag"><span class="miniDot"></span><span id="tagWindow">Evening</span></div>
+                <div class="tag"><span class="miniDot"></span><span id="tagHours">2 hours/day</span></div>
+                <div class="tag"><span class="miniDot"></span><span id="tagWeak">Weak: Writing</span></div>
+              </div>
+            </div>
+
+            <div class="tableWrap">
+              <table aria-label="Routine Table Chart" id="routineTable">
+                <!-- JS builds this -->
+              </table>
+            </div>
+
+            <div class="phase" id="phasePlan">
+              <!-- JS builds this -->
+            </div>
+          </div>
+
+          <div class="btnRow noPrint" style="margin-top:12px;">
+            <button class="btn primary" id="btnPrint2" type="button">Print / Save PDF</button>
+            <button class="btn" id="btnScrollReviews" type="button">Jump: Tips</button>
+          </div>
+
+          <div class="panel" style="margin-top:14px;" id="tipsPanel">
+            <div class="panelHead">
+              <div>
+                <h2>Quick tips (Bangladeshi reality)</h2>
+                <p>
+                  You don’t need 8 hours/day. You need <b>repeatable</b> routine + <b>correction</b>.
+                  If your weak module is Writing or Speaking, don’t do “more practice” — do <b>feedback loops</b>.
+                </p>
+              </div>
+            </div>
+            <div class="panelBody">
+              <div class="phaseItem">
+                <b>Rule 1: Same time, same brain</b>
+                <p>Choose one daily window (Morning/Evening/Night) and stick to it for 14 days. Your focus becomes automatic.</p>
+              </div>
+              <div class="phaseItem">
+                <b>Rule 2: Weak module gets the premium slot</b>
+                <p>Weak module goes first when your mind is fresh. Don’t keep it “for later”. Later never comes.</p>
+              </div>
+              <div class="phaseItem">
+                <b>Rule 3: Save your routine as PDF</b>
+                <p>Tap Print / PDF → choose “Save as PDF” (Chrome) or “Save PDF” (iPhone share menu). Keep it on your phone lockscreen.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal: Help -->
+  <div class="overlay" id="infoOverlay" aria-hidden="true">
+    <div class="back" data-close></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Info">
+      <div class="sheetTop">
+        <div>
+          <h3 id="infoTitle">Info</h3>
+          <p id="infoText">—</p>
+        </div>
+        <button class="x" type="button" data-close aria-label="Close">✕</button>
+      </div>
+      <div class="btnRow">
+        <button class="btn primary" id="infoOk" type="button">OK</button>
+        <a class="btn" id="infoWA" href="#" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating buttons -->
+  <div class="fab fabRead noPrint" id="fabRead" role="button" tabindex="0" aria-label="Reading Mode">
+    <b>Aa</b><span>Reading</span>
+  </div>
+  <div class="fab fabTop noPrint" id="fabTop" role="button" tabindex="0" aria-label="Scroll to top">
+    <b>↑</b><span>Top</span>
+  </div>
+  <div class="fab fabDown noPrint" id="fabDown" role="button" tabindex="0" aria-label="Scroll to routine card">
+    <b>↓</b><span>Routine</span>
+  </div>
+
+  <script>
+    /* ===== Links ===== */
+    const HELP_WA = "https://wa.me/8801611611139?text=" + encodeURIComponent("Assalamu Alaikum, Routine niye help chai. Amar routine generate hoyeche, ektu guide korben?");
+    document.getElementById('btnWhatsApp').href = HELP_WA;
+
+    /* ===== State ===== */
+    const state = {
+      exam: "IELTS",           // IELTS | PTE
+      level: "Intermediate",   // IELTS only
+      target: "6.5",
+      hours: 2,
+      window: "Evening",
+      weak: "Writing"
+    };
+
+    /* ===== Data ===== */
+    const EXAMS = [
+      { id:"IELTS", title:"IELTS", sub:"Level + target + time" },
+      { id:"PTE", title:"PTE", sub:"Target + time" }
+    ];
+
+    const IELTS_LEVELS = [
+      { id:"Zero", title:"Zero", sub:"~ 4 months" },
+      { id:"Basic", title:"Basic", sub:"~ 3 months" },
+      { id:"Intermediate", title:"Intermediate", sub:"~ 1 month" },
+      { id:"Advanced", title:"Advanced", sub:"~ 1 month" }
+    ];
+
+    const TARGETS = ["5.5","6.0","6.5","7.0","7.5","8.0"];
+    const HOURS = [
+      { h:1, sub:"Minimum" },
+      { h:2, sub:"Best balance" },
+      { h:3, sub:"Fast track" },
+      { h:4, sub:"Intense" }
+    ];
+
+    const WINDOWS = [
+      { id:"Morning", sub:"7:00–9:00" },
+      { id:"Evening", sub:"7:30–9:30" },
+      { id:"Night", sub:"10:00–12:00" },
+      { id:"Late Night", sub:"12:00–2:00" }
+    ];
+
+    const MODULES_BY_EXAM = {
+      IELTS: ["Listening","Reading","Writing","Speaking"],
+      PTE: ["Speaking","Writing","Reading","Listening"] // PTE flow (common focus order)
+    };
+
+    /* ===== Helpers ===== */
+    function el(id){ return document.getElementById(id); }
+
+    function setActive(groupEl, value){
+      groupEl.querySelectorAll('.optChip').forEach(c=>{
+        c.classList.toggle('active', c.dataset.value === value);
+      });
+    }
+
+    function buildChips(container, items, getValue, getTitle, getSub, onPick){
+      container.innerHTML = "";
+      items.forEach(item=>{
+        const v = getValue(item);
+        const btn = document.createElement('button');
+        btn.type = "button";
+        btn.className = "optChip";
+        btn.dataset.value = v;
+        btn.innerHTML = `${getTitle(item)}${getSub(item) ? `<small>${getSub(item)}</small>` : ""}`;
+        btn.addEventListener('click', ()=> onPick(v));
+        container.appendChild(btn);
+      });
+    }
+
+    /* ===== UI Build ===== */
+    const examChips = el("examChips");
+    const levelChips = el("levelChips");
+    const targetChips = el("targetChips");
+    const hoursChips = el("hoursChips");
+    const windowChips = el("windowChips");
+    const weakChips = el("weakChips");
+    const ieltsLevelGroup = el("ieltsLevelGroup");
+
+    function refreshControls(){
+      // Show/hide IELTS level group
+      ieltsLevelGroup.style.display = (state.exam === "IELTS") ? "" : "none";
+
+      // Weak module options depend on exam
+      const mods = MODULES_BY_EXAM[state.exam];
+      buildChips(
+        weakChips,
+        mods,
+        m=>m, m=>m, m=>"",
+        (v)=>{ state.weak = v; renderAll(); }
+      );
+
+      // Apply active state
+      setActive(examChips, state.exam);
+      if(state.exam === "IELTS") setActive(levelChips, state.level);
+      setActive(targetChips, state.target);
+      setActive(hoursChips, String(state.hours));
+      setActive(windowChips, state.window);
+      setActive(weakChips, state.weak);
+    }
+
+    function initControls(){
+      buildChips(
+        examChips,
+        EXAMS,
+        x=>x.id, x=>x.title, x=>x.sub,
+        (v)=>{ state.exam = v; // reset weak if mismatch
+               state.weak = MODULES_BY_EXAM[v][2] || MODULES_BY_EXAM[v][0];
+               renderAll(); }
+      );
+
+      buildChips(
+        levelChips,
+        IELTS_LEVELS,
+        x=>x.id, x=>x.title, x=>x.sub,
+        (v)=>{ state.level = v; renderAll(); }
+      );
+
+      buildChips(
+        targetChips,
+        TARGETS,
+        x=>x, x=>`Band ${x}`, x=>"",
+        (v)=>{ state.target = v; renderAll(); }
+      );
+
+      buildChips(
+        hoursChips,
+        HOURS,
+        x=>String(x.h), x=>`${x.h} hour`, x=>x.sub,
+        (v)=>{ state.hours = Number(v); renderAll(); }
+      );
+
+      buildChips(
+        windowChips,
+        WINDOWS,
+        x=>x.id, x=>x.id, x=>x.sub,
+        (v)=>{ state.window = v; renderAll(); }
+      );
+    }
+
+    /* ===== Routine Logic ===== */
+    function getDurationLabel(){
+      if(state.exam === "PTE"){
+        // For PTE: depend more on time + target (simple heuristic)
+        const t = Number(state.target);
+        if(state.hours >= 3) return "Fast Track (2–4 weeks)";
+        if(t >= 79) return "Strong Plan (4–6 weeks)";
+        return "Core Plan (3–5 weeks)";
+      }
+      // IELTS duration based on level mapping
+      const map = { Zero:"4 months plan", Basic:"3 months plan", Intermediate:"1 month plan", Advanced:"1 month plan" };
+      return map[state.level] || "1 month plan";
+    }
+
+    function windowSlots(){
+      // 3 blocks per day max, depending on hours
+      const w = state.window;
+      const base = {
+        "Morning": ["7:00–7:45","7:55–8:40","8:50–9:20"],
+        "Evening": ["7:30–8:15","8:25–9:10","9:15–9:40"],
+        "Night": ["10:00–10:45","10:55–11:40","11:45–12:10"],
+        "Late Night": ["12:00–12:45","12:55–1:40","1:45–2:10"]
+      }[w] || ["7:30–8:15","8:25–9:10","9:15–9:40"];
+
+      // Convert hours -> number of blocks
+      // 1h = 1 block, 2h = 2 blocks, 3h/4h = 3 blocks (with extra homework note)
+      const blocks = (state.hours <= 1) ? 1 : (state.hours === 2 ? 2 : 3);
+      return base.slice(0, blocks);
+    }
+
+    function extraHomeworkNote(){
+      if(state.hours >= 3){
+        return "Extra (15–25 min): review mistakes + repeat weak module micro-drill";
+      }
+      return "";
+    }
+
+    function buildWeeklyTemplate(){
+      // Core pattern (IELTS) with weak module priority + weekly mock touch
+      const mods = MODULES_BY_EXAM[state.exam].slice(); // copy
+      const weak = state.weak;
+
+      // Put weak first in rotation
+      const ordered = [weak, ...mods.filter(m=>m!==weak)];
+
+      // Days
+      const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+      // BD style: keep Saturday lighter / optional
+      const slots = windowSlots();
+
+      // Create per-day plan
+      const plan = {};
+      days.forEach((d, idx)=>{
+        const items = [];
+
+        if(idx === 6){ // Sat
+          // Light day
+          items.push({ type:"Review", label:"Light review + error log", cls:"muted" });
+          if(state.exam === "IELTS") items.push({ type:"Speaking", label:"Speaking practice (20 min)", cls:"green" });
+          else items.push({ type:"Speaking", label:"PTE Speaking drill (20 min)", cls:"green" });
+          plan[d] = items;
+          return;
+        }
+
+        // Primary slot = weak module (most days)
+        items.push({ type: ordered[0], label: `${ordered[0]} (core)`, cls:"gold" });
+
+        // Secondary slots based on number of blocks
+        if(slots.length >= 2){
+          // rotate module by day index
+          const m2 = ordered[1 + (idx % (ordered.length-1))] || ordered[1];
+          items.push({ type: m2, label: `${m2} (skill)`, cls:"green" });
+        }
+        if(slots.length >= 3){
+          // Add "Test/Correction" or another module
+          const add = (idx % 2 === 0) ? "Correction" : "Test";
+          const lbl = add === "Test"
+            ? (state.exam === "IELTS" ? "Mini test (timed)" : "Mini test (timed)")
+            : "Correction (fix mistakes)";
+          items.push({ type: add, label: lbl, cls:"muted" });
+        }
+
+        // Friday: mock touch
+        if(d === "Fri"){
+          items.unshift({ type:"Mock", label:"Weekly mock / section test", cls:"gold" });
+          // keep count manageable
+          if(items.length > slots.length) items.pop();
+        }
+
+        plan[d] = items;
+      });
+
+      return { days, slots, plan };
+    }
+
+    function buildPhasePlan(){
+      const duration = getDurationLabel();
+      const weak = state.weak;
+
+      if(state.exam === "PTE"){
+        const target = Number(state.target);
+        const items = [
+          {
+            title: "Phase 1 — Fix the scoring engines",
+            text: `Focus: ${weak} + templates (only where needed) + repeatable drills. Target: stable performance, no panic.`
+          },
+          {
+            title: "Phase 2 — Timed practice + correction loop",
+            text: "Every practice must produce a correction log. No log = no improvement."
+          },
+          {
+            title: "Phase 3 — Mock & final polish",
+            text: target >= 79 ? "Aim: minimize silly losses. Accuracy + speed + stamina." : "Aim: raise consistency and remove common errors."
+          }
+        ];
+        return { duration, items };
+      }
+
+      // IELTS
+      const map = {
+        Zero: [
+          { title:"Month 1 — Base English + confidence", text:"Grammar + basic speaking + pronunciation. Goal: speak simple English without fear." },
+          { title:"Month 2 — IELTS core skills start", text:"Reading/Listening foundation + simple writing structure + speaking Part 1 basics." },
+          { title:"Month 3 — Accuracy + speed build", text:`Weak module (${weak}) gets priority. Timed practice + correction habit.` },
+          { title:"Month 4 — Exam mode + mock rhythm", text:"Mock + feedback + final structure. Goal: stable score under pressure." }
+        ],
+        Basic: [
+          { title:"Month 1 — Fix weak base", text:`Weak module (${weak}) first. Build routines + core strategies.` },
+          { title:"Month 2 — Timed practice + correction", text:"Daily timed sets + correction log. No random practice." },
+          { title:"Month 3 — Mock + finalize", text:"Mock rhythm + speaking drills + writing polishing." }
+        ],
+        Intermediate: [
+          { title:"Week 1 — Diagnose & build plan", text:`Weak module (${weak}) + accuracy fixes + routine lock.` },
+          { title:"Week 2 — Speed + timed sets", text:"Timed practice (esp. reading/listening) + correction loop." },
+          { title:"Week 3 — Writing/Speaking sharpen", text:"Structure + coherence + ideas under time." },
+          { title:"Week 4 — Mock + final tune", text:"Mock rhythm + remove repeated errors." }
+        ],
+        Advanced: [
+          { title:"Week 1 — Precision fixes", text:`Only score-blockers. Weak module (${weak}) gets premium slot.` },
+          { title:"Week 2 — Mock & stability", text:"Mock + pressure handling + final adjustments." },
+          { title:"Week 3 — Extra buffer", text:"If exam is near, repeat Week 2. Otherwise push band jump drills." },
+          { title:"Week 4 — Final polish", text:"Sleep schedule + stamina + exam-day routine." }
+        ]
+      };
+      const items = map[state.level] || map.Intermediate;
+      return { duration, items };
+    }
+
+    function renderRoutine(){
+      // Badges
+      el("badgeExam").textContent = state.exam;
+      el("badgeDuration").textContent = getDurationLabel();
+
+      // Header text
+      el("routineTitle").textContent = `LizOn Education — ${state.exam} Routine`;
+      const levelLine = (state.exam === "IELTS") ? `Level: ${state.level} • Target: Band ${state.target}` : `Target: Score ${state.target} (approx)`;
+      el("routineSubtitle").textContent =
+        `${levelLine} • Window: ${state.window} • Time: ${state.hours}h/day • Weak: ${state.weak}`;
+
+      // Tags
+      el("tagWindow").textContent = state.window;
+      el("tagHours").textContent = `${state.hours} hour${state.hours>1?"s":""}/day`;
+      el("tagWeak").textContent = `Weak: ${state.weak}`;
+
+      // Build weekly table
+      const { days, slots, plan } = buildWeeklyTemplate();
+
+      const table = el("routineTable");
+      const thead = `
+        <tr>
+          <th style="width:110px;">Day</th>
+          ${slots.map(s=>`<th>${s}</th>`).join("")}
+        </tr>
+      `;
+
+      const rows = days.map(d=>{
+        const items = plan[d] || [];
+        const cells = slots.map((_, i)=>{
+          const item = items[i] || { label:"—", cls:"muted" };
+          const cls = item.cls || "muted";
+          const pillClass =
+            cls === "gold" ? "pill gold" :
+            cls === "green" ? "pill green" : "pill muted";
+
+          return `
+            <td>
+              <div class="cell">
+                <div class="${pillClass}">${item.label}</div>
+                ${i === slots.length-1 && extraHomeworkNote() ? `<div class="pill muted">${extraHomeworkNote()}</div>` : ``}
+              </div>
+            </td>
+          `;
+        }).join("");
+
+        return `<tr><th>${d}</th>${cells}</tr>`;
+      }).join("");
+
+      table.innerHTML = thead + rows;
+
+      // Phase plan
+      const phase = buildPhasePlan();
+      el("phasePlan").innerHTML = `
+        <div class="phaseItem">
+          <b>Plan length</b>
+          <p>${phase.duration}</p>
+        </div>
+        ${phase.items.map(x=>`
+          <div class="phaseItem">
+            <b>${x.title}</b>
+            <p>${x.text}</p>
+          </div>
+        `).join("")}
+        <div class="phaseItem">
+          <b>One rule (strict)</b>
+          <p>Practice without correction is entertainment. Routine + correction log = score.</p>
+        </div>
+      `;
+    }
+
+    function renderAll(){
+      refreshControls();
+      renderRoutine();
+    }
+
+    /* ===== Modal helpers ===== */
+    const overlay = el("infoOverlay");
+    const infoTitle = el("infoTitle");
+    const infoText = el("infoText");
+    const infoWA = el("infoWA");
+
+    function openInfo(title, text){
+      infoTitle.textContent = title;
+      infoText.textContent = text;
+      infoWA.href = HELP_WA;
+      overlay.classList.add("show");
+      overlay.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+    }
+    function closeInfo(){
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+    overlay.querySelectorAll("[data-close]").forEach(x=>x.addEventListener("click", closeInfo));
+    el("infoOk").addEventListener("click", closeInfo);
+
+    /* ===== Buttons ===== */
+    function doPrint(){
+      // Print routine card nicely
+      window.print();
+    }
+    el("btnPrint").addEventListener("click", doPrint);
+    el("btnPrint2").addEventListener("click", doPrint);
+    el("btnPrintTop").addEventListener("click", doPrint);
+
+    el("btnShareTip").addEventListener("click", ()=>{
+      openInfo(
+        "Save as PDF",
+        "Chrome: Print → Destination → Save as PDF.\n\niPhone: Share/Print → Save as PDF.\n\nTip: Save the PDF + set routine screenshot as lockscreen."
+      );
+    });
+
+    el("btnReset").addEventListener("click", ()=>{
+      state.exam = "IELTS";
+      state.level = "Intermediate";
+      state.target = "6.5";
+      state.hours = 2;
+      state.window = "Evening";
+      state.weak = "Writing";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    el("btnScrollReviews").addEventListener("click", ()=>{
+      el("tipsPanel").scrollIntoView({ behavior:"smooth", block:"start" });
+    });
+
+    /* Reading mode */
+    function toggleReading(){
+      document.body.classList.toggle("reading");
+    }
+    el("btnReading").addEventListener("click", toggleReading);
+
+    /* Floating buttons show after scroll */
+    const fabTop = el("fabTop");
+    const fabDown = el("fabDown");
+    const fabRead = el("fabRead");
+
+    function onScroll(){
+      const y = window.scrollY || 0;
+      const show = y > 80;
+      fabTop.style.display = show ? "flex" : "none";
+      fabDown.style.display = show ? "flex" : "none";
+      fabRead.style.display = show ? "flex" : "none";
+    }
+    window.addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
+
+    fabTop.addEventListener("click", ()=> window.scrollTo({ top:0, behavior:"smooth" }));
+    fabDown.addEventListener("click", ()=> el("routineCard").scrollIntoView({ behavior:"smooth", block:"start" }));
+    fabRead.addEventListener("click", toggleReading);
+
+    /* WhatsApp button */
+    el("btnWhatsApp").addEventListener("click", (e)=>{
+      // keep link behavior
+    });
+
+    /* Keyboard safety */
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape" && overlay.classList.contains("show")) closeInfo();
+    });
+
+    /* Init */
+    initControls();
+    renderAll();
+  </script>
+</body>
+</html>

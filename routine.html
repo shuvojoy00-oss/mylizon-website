@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LizOn Education — Study Routine Generator</title>
+<title>MyLizOn Routine — IELTS | PTE</title>
 <meta name="theme-color" content="#062b1f">
 
 <style>
@@ -11,66 +11,78 @@
   --bg:#f4fbf8;
   --card:#ffffff;
   --text:#0a2016;
-  --muted:#5f6f67;
+  --muted:#60726a;
   --green:#062b1f;
   --green2:#0b3a2a;
   --gold:#d6b35a;
   --blue:#2563eb;
   --red:#dc2626;
   --radius:18px;
-  --shadow:0 20px 60px rgba(0,0,0,.12);
+  --shadow:0 18px 55px rgba(0,0,0,.12);
 }
 
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:linear-gradient(180deg,#ffffff,#f0f7f4);
+  background:linear-gradient(180deg,#ffffff,#eef7f3);
   color:var(--text);
 }
 
-.container{width:min(1100px,92vw);margin:auto}
+.container{width:min(1120px,92vw);margin:auto}
 
 /* ===== Top Bar ===== */
 .topbar{
   position:sticky;top:0;z-index:99;
   background:rgba(255,255,255,.75);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid #ddd;
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid #e5e7eb;
 }
 .topbar .row{
-  height:64px;display:flex;align-items:center;justify-content:space-between
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
-.brand{font-weight:900}
+.brand{
+  font-weight:900;
+  letter-spacing:.3px;
+}
 .menuBtn{
-  border:1px solid #ddd;
-  background:#fff;
+  border:1px solid #d1d5db;
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(8px);
   border-radius:999px;
   padding:10px 14px;
   font-weight:800;
   cursor:pointer;
 }
 
-/* ===== Form Card ===== */
+/* ===== Cards ===== */
 .card{
   background:var(--card);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
-  padding:18px;
-  margin-top:16px;
+  padding:20px;
+  margin-top:18px;
 }
 
-.section{margin-bottom:18px}
-.section b{display:block;margin-bottom:8px}
+.section{margin-bottom:20px}
+.section b{display:block;margin-bottom:10px;font-size:14px}
 
-.options{display:flex;gap:10px;flex-wrap:wrap}
+.options{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
 .opt{
   padding:10px 14px;
   border-radius:999px;
-  border:1px solid #ddd;
+  border:1px solid #d1d5db;
   background:#fff;
   cursor:pointer;
   font-weight:800;
+  font-size:13px;
 }
 .opt.active{
   background:rgba(11,58,42,.12);
@@ -79,25 +91,33 @@ body{
 
 /* ===== Routine Card ===== */
 .routine{
-  margin-top:22px;
-  border-radius:20px;
+  margin-top:26px;
+  border-radius:22px;
   overflow:hidden;
-  border:1px solid #ddd;
+  border:1px solid #d1d5db;
+  background:#fff;
 }
 .rHead{
-  background:linear-gradient(135deg,var(--green),var(--green2));
+  background:linear-gradient(135deg,#062b1f,#0b3a2a);
   color:#fff;
-  padding:16px;
+  padding:18px;
 }
 .rHead b{font-size:16px}
-.rHead span{display:block;font-size:13px;opacity:.9}
-
+.rHead span{
+  display:block;
+  margin-top:6px;
+  font-size:13px;
+  opacity:.9;
+}
 .rMeta{
-  display:flex;gap:10px;flex-wrap:wrap;margin-top:8px
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:10px;
 }
 .tag{
-  background:rgba(255,255,255,.2);
-  padding:6px 10px;
+  background:rgba(255,255,255,.18);
+  padding:6px 12px;
   border-radius:999px;
   font-size:12px;
   font-weight:800;
@@ -108,21 +128,23 @@ body{
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:700px;
+  min-width:760px;
 }
 th,td{
-  border:1px solid #ddd;
-  padding:10px;
+  border:1px solid #e5e7eb;
+  padding:12px;
   text-align:center;
   font-size:12px;
   font-weight:800;
 }
-th{background:#f0f7f4}
-
+th{
+  background:#ecfdf5;
+  color:#065f46;
+}
 .pill{
-  padding:6px 10px;
-  border-radius:999px;
   display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
   font-size:11px;
   font-weight:900;
 }
@@ -131,19 +153,38 @@ th{background:#f0f7f4}
 .blue{background:#dbeafe;color:#1e40af}
 .red{background:#fee2e2;color:#7f1d1d}
 
+/* ===== Guidance ===== */
+.guidance{
+  padding:16px;
+  border-top:1px solid #e5e7eb;
+  background:#f9fafb;
+}
+.guidance b{display:block;margin-bottom:6px}
+.guidance ul{
+  margin:6px 0 0;
+  padding-left:18px;
+  font-size:12px;
+  color:var(--muted);
+}
+
 /* ===== Footer ===== */
 footer{
-  margin-top:30px;
-  padding:20px;
+  margin-top:36px;
+  padding:24px;
   background:#062b1f;
-  color:#fff;
+  color:#e5e7eb;
   font-size:13px;
 }
-footer a{color:#d6b35a;text-decoration:none;font-weight:800}
+footer b{color:#fff}
+footer a{
+  color:#d6b35a;
+  text-decoration:none;
+  font-weight:800;
+}
 
 /* ===== Print ===== */
 @media print{
-  .topbar,.noPrint{display:none}
+  .topbar,.noPrint{display:none!important}
   body{background:#fff}
 }
 </style>
@@ -151,10 +192,10 @@ footer a{color:#d6b35a;text-decoration:none;font-weight:800}
 
 <body>
 
-<!-- TOP -->
+<!-- TOP BAR -->
 <div class="topbar noPrint">
   <div class="container row">
-    <div class="brand">LizOn Education</div>
+    <div class="brand">MyLizOn Routine</div>
     <button class="menuBtn">☰ Menu</button>
   </div>
 </div>
@@ -169,7 +210,7 @@ footer a{color:#d6b35a;text-decoration:none;font-weight:800}
     <div class="options" id="exam"></div>
   </div>
 
-  <div class="section" id="ieltsLevelSec">
+  <div class="section" id="ieltsLevelWrap">
     <b>Current Level (IELTS)</b>
     <div class="options" id="level"></div>
   </div>
@@ -195,7 +236,7 @@ footer a{color:#d6b35a;text-decoration:none;font-weight:800}
   </div>
 
   <div class="section">
-    <b>Typing Speed</b>
+    <b>Typing / Computer Readiness</b>
     <div class="options" id="typing"></div>
   </div>
 
@@ -204,15 +245,18 @@ footer a{color:#d6b35a;text-decoration:none;font-weight:800}
 
 <!-- ROUTINE -->
 <div class="routine" id="routine">
+
   <div class="rHead">
-    <b id="rTitle">LizOn Education — Study Routine</b>
-    <span id="rSub"></span>
-    <div class="rMeta" id="rTags"></div>
+    <b id="title">Your Routine — Created by MyLizOn Routine Creator</b>
+    <span id="subtitle"></span>
+    <div class="rMeta" id="tags"></div>
   </div>
 
   <div class="tableWrap">
     <table id="table"></table>
   </div>
+
+  <div class="guidance" id="guidance"></div>
 </div>
 
 </div>
@@ -220,97 +264,147 @@ footer a{color:#d6b35a;text-decoration:none;font-weight:800}
 <footer>
   <b>LizOn Education</b><br>
   51, Buddha Mandir Basabo (Beside Morning Bell School & BRAC), Dhaka 1214<br>
-  Helpline: <b>01611-611139</b><br>
-  Website: <a href="https://www.mylizon.com">MyLizOn.com</a>
+  Helpline: <b>016-116-111-39</b><br>
+  Website: <a href="https://www.mylizon.com">MyLizOn.com</a><br>
+  Provided by MyLizOn.com
 </footer>
 
 <script>
 const state={
  exam:"IELTS",
  level:"Intermediate",
- target:"6.5",
+ target:"",
  hours:"2",
  window:"Evening",
  weak:[],
- typing:"30+"
+ typing:"30+ WPM"
 };
 
 const exams=["IELTS","PTE"];
 const levels=["Zero","Basic","Intermediate","Advanced"];
 const ieltsTargets=["5.5","6.0","6.5","7.0","7.5","8.0"];
-const pteTargets=["40-50","50-60","60-70","70-80","80+"];
+const pteTargets=["40–50","50–60","60–67","60–70","70–80","80+"];
 const hours=["1","2","3","4","5","6","6+"];
-const windows=["Morning (7-9)","Late Morning (9-11)","Noon (11-1)","Evening (6-8)","Night (8-10)","Late Night (10-12)"];
-const modulesIELTS=["Listening","Reading","Writing","Speaking"];
-const typing=["Below 30 wpm","30+ wpm"];
+const windows=[
+ "Morning (7–9)",
+ "Late Morning (9–11)",
+ "Noon (11–1)",
+ "Evening (6–8)",
+ "Night (8–10)",
+ "Late Night (10–12)"
+];
+const modules=["Listening","Reading","Writing","Speaking"];
+const typing=["Below 30 WPM","30+ WPM"];
 
-function build(id,arr,cb,multi=false){
- const el=document.getElementById(id);el.innerHTML="";
+function build(id,arr,cb){
+ const el=document.getElementById(id);
+ el.innerHTML="";
  arr.forEach(v=>{
-  const b=document.createElement("div");
-  b.className="opt";
-  b.textContent=v;
-  b.onclick=()=>cb(v,b,multi);
-  el.appendChild(b);
+  const d=document.createElement("div");
+  d.className="opt";
+  d.textContent=v;
+  d.onclick=()=>cb(v,d);
+  el.appendChild(d);
  });
 }
 
-function single(key,val){
+function selectSingle(key,val,btn){
  state[key]=val;
+ document.querySelectorAll(`#${btn.parentElement.id} .opt`).forEach(o=>o.classList.remove("active"));
+ btn.classList.add("active");
  render();
 }
 
-function multiWeak(val,btn){
+function selectWeak(val,btn){
  if(state.weak.includes(val)){
   state.weak=state.weak.filter(x=>x!==val);
   btn.classList.remove("active");
- }else{
-  if(state.weak.length<2){
-   state.weak.push(val);
-   btn.classList.add("active");
-  }
+ }else if(state.weak.length<2){
+  state.weak.push(val);
+  btn.classList.add("active");
  }
  render();
 }
 
 function render(){
- document.getElementById("ieltsLevelSec").style.display=state.exam==="IELTS"?"block":"none";
+ document.getElementById("ieltsLevelWrap").style.display = state.exam==="IELTS"?"block":"none";
 
- document.getElementById("rTitle").textContent=`LizOn Education — ${state.exam} Routine`;
- document.getElementById("rSub").textContent=
+ document.getElementById("subtitle").textContent =
   state.exam==="IELTS"
-   ?`Level: ${state.level} | Target Band: ${state.target}`
-   :`Target Score: ${state.target} / 90`;
+   ? `IELTS • Level: ${state.level} • Target Band: ${state.target}`
+   : `PTE • Target Score: ${state.target} / 90`;
 
- const tags=document.getElementById("rTags");
+ const tags=document.getElementById("tags");
  tags.innerHTML="";
- [state.window,`${state.hours}h/day`,...state.weak].forEach(t=>{
+ [`${state.hours}h/day`,state.window,...state.weak,state.typing].forEach(t=>{
+  if(!t)return;
   const s=document.createElement("span");
-  s.className="tag";s.textContent=t;
+  s.className="tag";
+  s.textContent=t;
   tags.appendChild(s);
  });
 
  buildTable();
+ buildGuidance();
 }
 
 function buildTable(){
  const t=document.getElementById("table");
  const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
- t.innerHTML="<tr><th>Day</th><th>Focus</th></tr>";
+ t.innerHTML="<tr><th>Day</th><th>Main Focus</th><th>Support</th></tr>";
  days.forEach(d=>{
   const w=state.weak[0]||"Core Practice";
-  t.innerHTML+=`<tr><th>${d}</th><td><span class="pill gold">${w}</span> + <span class="pill green">Revision</span></td></tr>`;
+  t.innerHTML+=`
+   <tr>
+    <th>${d}</th>
+    <td><span class="pill gold">${w}</span></td>
+    <td><span class="pill green">Revision + Correction</span></td>
+   </tr>`;
  });
 }
 
+function buildGuidance(){
+ const g=document.getElementById("guidance");
+ if(state.exam==="IELTS"){
+  g.innerHTML=`
+   <b>IELTS Focus Guidance</b>
+   <ul>
+    <li>Zero/Basic: Spoken English, Grammar, Pronunciation</li>
+    <li>Reading: Speed + Understanding</li>
+    <li>Listening: Listening Power + Accuracy</li>
+    <li>Writing & Speaking: Idea generation, structure, opinion building</li>
+    <li>Practice with correction — not random practice</li>
+    <li>Study links: listening.html, reading.html, speaking.html, writing.html</li>
+   </ul>`;
+ }else{
+  g.innerHTML=`
+   <b>PTE Focus Guidance</b>
+   <ul>
+    <li>Note-taking ability → sentence making</li>
+    <li>Listening + Reading strength</li>
+    <li>Typing & computer speed is critical</li>
+    <li>Use correction logs after every test</li>
+    <li>Study links: listening.html, reading.html, speaking.html</li>
+   </ul>`;
+ }
+}
+
 /* INIT */
-build("exam",exams,(v,b)=>single("exam",v));
-build("level",levels,(v,b)=>single("level",v));
-build("target",ieltsTargets,(v,b)=>single("target",v));
-build("hours",hours,(v,b)=>single("hours",v));
-build("window",windows,(v,b)=>single("window",v));
-build("weak",modulesIELTS,(v,b)=>multiWeak(v,b),true);
-build("typing",typing,(v,b)=>single("typing",v));
+build("exam",exams,(v,b)=>selectSingle("exam",v,b));
+build("level",levels,(v,b)=>selectSingle("level",v,b));
+build("target",ieltsTargets,(v,b)=>selectSingle("target",v,b));
+build("hours",hours,(v,b)=>selectSingle("hours",v,b));
+build("window",windows,(v,b)=>selectSingle("window",v,b));
+build("weak",modules,(v,b)=>selectWeak(v,b));
+build("typing",typing,(v,b)=>selectSingle("typing",v,b));
+
+document.querySelector("#exam .opt").classList.add("active");
+document.querySelector("#level .opt:nth-child(3)").classList.add("active");
+document.querySelector("#hours .opt:nth-child(2)").classList.add("active");
+document.querySelector("#window .opt:nth-child(4)").classList.add("active");
+document.querySelector("#typing .opt:nth-child(2)").classList.add("active");
+
+state.target="6.5";
 render();
 </script>
 

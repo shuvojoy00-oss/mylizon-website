@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ask Cambridge IELTS (7–20) | LizOn Education</title>
+  <meta name="description" content="Ask Cambridge IELTS 7–20 questions with clear explanations (English + Bangla). Powered by LizOn Education." />
+
+  <style>
+    :root{
+      --bg:#f6f8f7;
+      --card:#ffffff;
+      --text:#102018;
+      --muted:#5b6b62;
+      --brand:#0f3d2e;         /* Dark Green */
+      --brand-2:#145a43;
+      --border:rgba(15,61,46,.14);
+      --shadow:0 10px 28px rgba(0,0,0,.08);
+      --danger:#b42318;
+      --warn:#9a6700;
+      --ok:#067647;
+
+      --chip:#eef5f2;
+      --chipText:#0f3d2e;
+
+      --msgUser:#0f3d2e;
+      --msgUserText:#ffffff;
+      --msgBot:#eef5f2;
+      --msgBotText:#102018;
+    }
+    [data-theme="dark"]{
+      /* No pure black */
+      --bg:#0b1511;
+      --card:#0f1f18;
+      --text:#e8f0eb;
+      --muted:#b3c2bb;
+      --brand:#2aa67a;
+      --brand-2:#37c28f;
+      --border:rgba(255,255,255,.10);
+      --shadow:0 14px 40px rgba(0,0,0,.45);
+
+      --chip:#12251d;
+      --chipText:#cfe9dd;
+
+      --msgUser:#2aa67a;
+      --msgUserText:#06110c;
+      --msgBot:#12251d;
+      --msgBotText:#e8f0eb;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.35;
+    }
+    a{color:inherit}
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:18px 14px 28px;
+    }
+
+    /* Header */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(15,61,46,.08), rgba(15,61,46,.02));
+      box-shadow:var(--shadow);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .logo{
+      width:38px;height:38px;
+      border-radius:12px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), rgba(255,255,255,0)),
+                  linear-gradient(135deg, var(--brand), var(--brand-2));
+      display:grid;place-items:center;
+      flex:0 0 auto;
+      border:1px solid var(--border);
+    }
+    .logo svg{width:20px;height:20px;opacity:.9}
+    .brand h1{
+      font-size:14.5px;
+      margin:0;
+      font-weight:800;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .brand p{
+      margin:0;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex:0 0 auto;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:12.5px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 1px 0 rgba(0,0,0,.03);
+      user-select:none;
+    }
+    .btn.primary{
+      background:linear-gradient(180deg, rgba(15,61,46,.12), rgba(15,61,46,.02));
+      border-color:rgba(15,61,46,.30);
+    }
+    .btn.solid{
+      background:linear-gradient(135deg, var(--brand), var(--brand-2));
+      color:#fff;
+      border-color:transparent;
+    }
+    [data-theme="dark"] .btn.solid{ color:#07120d; }
+    .btn:active{transform:translateY(1px)}
+    .pill{
+      padding:8px 10px;
+      border-radius:999px;
+      background:var(--chip);
+      color:var(--chipText);
+      border:1px solid var(--border);
+      font-size:12px;
+      font-weight:800;
+    }
+
+    /* Layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 360px 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns: 1fr; }
+    }
+
+    /* Cards */
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .card .hd h2{
+      margin:0;
+      font-size:13.5px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .card .bd{padding:14px}
+    .sub{
+      color:var(--muted);
+      font-size:12px;
+      margin:6px 0 0;
+    }
+
+    /* Form */
+    label{
+      display:block;
+      font-size:12px;
+      font-weight:800;
+      margin:12px 0 6px;
+      color:var(--text);
+    }
+    select, textarea, input[type="text"]{
+      width:100%;
+      padding:11px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:transparent;
+      color:var(--text);
+      outline:none;
+    }
+    textarea{min-height:120px; resize:vertical}
+    .row2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .row3{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 520px){
+      .row2,.row3{grid-template-columns:1fr}
+    }
+    .hint{
+      margin:8px 0 0;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .note{
+      border:1px dashed rgba(15,61,46,.35);
+      background:linear-gradient(180deg, rgba(15,61,46,.08), rgba(15,61,46,.02));
+      padding:10px 12px;
+      border-radius:14px;
+      margin-top:12px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    [data-theme="dark"] .note{
+      border-color:rgba(255,255,255,.14);
+      background:linear-gradient(180deg, rgba(42,166,122,.12), rgba(42,166,122,.03));
+    }
+
+    .checklist{
+      display:grid;
+      gap:8px;
+      margin-top:10px;
+    }
+    .check{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.02);
+    }
+    .check b{font-size:12.5px}
+    .check span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+
+    /* Upload */
+    .upload{
+      margin-top:10px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.02);
+    }
+    .upload .urow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .file{
+      width:100%;
+      border:1px dashed var(--border);
+      padding:12px;
+      border-radius:14px;
+    }
+    input[type="file"]{
+      width:100%;
+    }
+    .small{
+      font-size:11.5px;
+      color:var(--muted);
+      margin:8px 0 0;
+    }
+
+    /* Chat */
+    .chat{
+      display:flex;
+      flex-direction:column;
+      height: calc(100vh - 190px);
+      min-height:560px;
+    }
+    @media (max-width: 980px){
+      .chat{height:auto; min-height:520px}
+    }
+    .chatlog{
+      padding:14px;
+      overflow:auto;
+      flex:1 1 auto;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .msg{
+      max-width: 92%;
+      border-radius:18px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      white-space:pre-wrap;
+      word-wrap:break-word;
+    }
+    .msg.user{
+      align-self:flex-end;
+      background:var(--msgUser);
+      color:var(--msgUserText);
+      border-color:transparent;
+    }
+    .msg.bot{
+      align-self:flex-start;
+      background:var(--msgBot);
+      color:var(--msgBotText);
+    }
+    .meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+      opacity:.95;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      font-size:11.5px;
+      font-weight:800;
+      color:var(--muted);
+    }
+    [data-theme="dark"] .chip{
+      background:rgba(0,0,0,.10);
+    }
+
+    .composer{
+      border-top:1px solid var(--border);
+      padding:12px;
+      display:flex;
+      gap:10px;
+      align-items:flex-end;
+      background:linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.02));
+    }
+    .composer textarea{
+      min-height:54px;
+      max-height:160px;
+      resize:none;
+      flex:1 1 auto;
+    }
+    .composer .btn{
+      padding:12px 14px;
+      border-radius:16px;
+      font-size:12.5px;
+    }
+    .right-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    /* Bottom bar */
+    .bottom-bar{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:linear-gradient(135deg, rgba(15,61,46,.10), rgba(15,61,46,.02));
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .bottom-bar .txt{
+      font-size:12.5px;
+      color:var(--muted);
+      font-weight:700;
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      border:1px solid var(--border);
+      padding:4px 8px;
+      border-radius:10px;
+      background:rgba(255,255,255,.02);
+      font-size:12px;
+      color:var(--muted);
+      font-weight:800;
+    }
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:18px;
+      background:var(--card);
+      border:1px solid var(--border);
+      padding:10px 12px;
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      display:none;
+      gap:10px;
+      align-items:center;
+      z-index:50;
+      max-width: min(720px, calc(100% - 24px));
+    }
+    .toast.show{display:flex}
+    .toast b{font-size:12.5px}
+    .toast span{font-size:12px;color:var(--muted)}
+  </style>
+</head>
+
+<body>
+  <div class="wrap" id="app" data-theme="light">
+    <header class="topbar">
+      <div class="brand">
+        <a class="logo" href="/" title="Go Home" aria-label="LizOn Home">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2l8.5 5v10L12 22 3.5 17V7L12 2Z" stroke="rgba(255,255,255,.9)" stroke-width="1.6"/>
+            <path d="M8 12h8" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <div>
+          <h1>Ask Cambridge IELTS (7–20)</h1>
+          <p>LizOn Education • Answer + Explanation (English + Bangla)</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <span class="pill" id="langPill">EN</span>
+        <button class="btn primary" id="langBtn" type="button" title="Toggle language">Language</button>
+        <button class="btn" id="themeBtn" type="button" title="Toggle light/dark">Theme</button>
+        <a class="btn solid" id="waBtn" href="#" target="_blank" rel="noopener">Need guidance?</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: Controls -->
+      <section class="card">
+        <div class="hd">
+          <h2>Question Details</h2>
+          <button class="btn" id="resetBtn" type="button">Reset</button>
+        </div>
+        <div class="bd">
+          <div class="row2">
+            <div>
+              <label for="book">Book</label>
+              <select id="book" aria-label="Cambridge book">
+                <!-- filled by JS -->
+              </select>
+              <p class="hint" id="bookHint">Select Cambridge IELTS book number.</p>
+            </div>
+            <div>
+              <label for="test">Test</label>
+              <select id="test" aria-label="Test number">
+                <option value="1">Test 1</option>
+                <option value="2">Test 2</option>
+                <option value="3">Test 3</option>
+                <option value="4">Test 4</option>
+              </select>
+              <p class="hint">This helps match exact answers.</p>
+            </div>
+          </div>
+
+          <div class="row2">
+            <div>
+              <label for="module">Module</label>
+              <select id="module" aria-label="Module">
+                <option value="Reading">Reading</option>
+                <option value="Listening">Listening</option>
+                <option value="Writing">Writing</option>
+                <option value="Speaking">Speaking</option>
+              </select>
+              <p class="hint">Choose the skill area.</p>
+            </div>
+            <div>
+              <label for="qtype">Question Type (optional)</label>
+              <select id="qtype" aria-label="Question type">
+                <option value="">Auto detect</option>
+                <option>Multiple Choice</option>
+                <option>Matching</option>
+                <option>True/False/Not Given</option>
+                <option>Yes/No/Not Given</option>
+                <option>Sentence Completion</option>
+                <option>Summary Completion</option>
+                <option>Table/Flow-chart Completion</option>
+                <option>Short Answer Questions</option>
+                <option>Diagram Label Completion</option>
+                <option>Essay (Task 2)</option>
+                <option>Report/Letter (Task 1)</option>
+                <option>Speaking Part 1</option>
+                <option>Speaking Part 2</option>
+                <option>Speaking Part 3</option>
+              </select>
+              <p class="hint">Optional, but boosts accuracy.</p>
+            </div>
+          </div>
+
+          <label for="qno">Question No. (optional)</label>
+          <input id="qno" type="text" placeholder="e.g., Q 12–14 / Passage 2 / Section 3" />
+
+          <div class="note" id="contextNote">
+            <b>Accuracy rule:</b> Reading/Listening er jonno <b>related passage/audio context</b> na dile 100% accurate howa tough.
+            Best: question + passage paragraph / question + transcript line.
+          </div>
+
+          <div class="upload">
+            <div class="urow">
+              <b style="font-size:12.5px">Snap / Upload (optional)</b>
+              <span class="pill" id="uploadState">No file</span>
+            </div>
+            <div class="file" style="margin-top:10px">
+              <input id="img" type="file" accept="image/*" />
+              <div class="small">
+                Note: This page does <b>not</b> run OCR by itself. You’ll connect an OCR/API later.
+                For now, upload is just to store reference in UI.
+              </div>
+            </div>
+
+            <div class="checklist">
+              <div class="check">
+                <div class="pill" style="min-width:42px;text-align:center">1</div>
+                <div>
+                  <b>Question number clear rakho</b>
+                  <span>Q number + options/blank must be readable.</span>
+                </div>
+              </div>
+              <div class="check">
+                <div class="pill" style="min-width:42px;text-align:center">2</div>
+                <div>
+                  <b>Passage paragraph সহ snap</b>
+                  <span>Reading matching/completion er jonno paragraph needed.</span>
+                </div>
+              </div>
+              <div class="check">
+                <div class="pill" style="min-width:42px;text-align:center">3</div>
+                <div>
+                  <b>Blurry hole retake</b>
+                  <span>Dark/blur = wrong OCR = wrong answer.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom-bar">
+            <div class="txt">
+              Quick send: <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span>
+            </div>
+            <div class="right-actions">
+              <button class="btn" id="copyStateBtn" type="button">Copy details</button>
+              <button class="btn solid" id="demoBtn" type="button">Run Demo Answer</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: Chat -->
+      <section class="card chat">
+        <div class="hd">
+          <h2>Chat</h2>
+          <span class="pill" id="statusPill">Ready</span>
+        </div>
+
+        <div class="chatlog" id="chatlog" aria-live="polite" aria-label="Chat messages"></div>
+
+        <div class="composer">
+          <textarea id="prompt" placeholder="Type your question here… (include passage paragraph if possible)"></textarea>
+          <button class="btn solid" id="sendBtn" type="button">Send</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <div>
+        <b id="toastTitle">Copied</b><br/>
+        <span id="toastMsg">Done</span>
+      </div>
+      <button class="btn" id="toastClose" type="button">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // =========================
+    // Config
+    // =========================
+    const WHATSAPP_LINK = "https://wa.me/880000000000?text=" + encodeURIComponent("Hi LizOn Education, I need guidance for Cambridge IELTS 7–20 questions.");
+    // If you have a backend API endpoint, set it here:
+    // Example: const API_ENDPOINT = "https://mylizon.com/api/ask-cambridge";
+    const API_ENDPOINT = ""; // empty = demo mode
+
+    const state = {
+      lang: "EN",         // EN or BN
+      theme: "light",     // light or dark
+      fileName: "",
+      busy: false
+    };
+
+    // =========================
+    // Helpers
+    // =========================
+    const $ = (id) => document.getElementById(id);
+
+    function toast(title, msg){
+      $("toastTitle").textContent = title;
+      $("toastMsg").textContent = msg;
+      $("toast").classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(()=> $("toast").classList.remove("show"), 2200);
+    }
+
+    function setBusy(isBusy){
+      state.busy = isBusy;
+      $("statusPill").textContent = isBusy ? (state.lang==="EN" ? "Thinking" : "Chinta kortesi") : (state.lang==="EN" ? "Ready" : "Ready");
+      $("sendBtn").disabled = isBusy;
+      $("demoBtn").disabled = isBusy;
+    }
+
+    function escapeHtml(s){
+      return (s||"")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;");
+    }
+
+    function addMessage(role, text, metaObj){
+      const div = document.createElement("div");
+      div.className = "msg " + (role === "user" ? "user" : "bot");
+      div.innerHTML = escapeHtml(text);
+
+      if(metaObj){
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        Object.entries(metaObj).forEach(([k,v])=>{
+          const chip = document.createElement("span");
+          chip.className = "chip";
+          chip.textContent = `${k}: ${v}`;
+          meta.appendChild(chip);
+        });
+        div.appendChild(meta);
+      }
+
+      $("chatlog").appendChild(div);
+      $("chatlog").scrollTop = $("chatlog").scrollHeight;
+    }
+
+    function buildContext(){
+      const ctx = {
+        book: $("book").value,
+        test: $("test").value,
+        module: $("module").value,
+        qtype: $("qtype").value || "Auto",
+        qno: ($("qno").value || "").trim(),
+        lang: state.lang,
+        file: state.fileName || "None"
+      };
+      return ctx;
+    }
+
+    function buildSystemInstruction(){
+      // This is what you’d send to your backend/LLM for consistent formatting.
+      // Keep it strict to avoid "generic tutor" vibe.
+      const isBN = state.lang === "BN";
+      return isBN
+        ? `Tumi Cambridge IELTS 7–20 er ekjon strict solver. Student je Book/Test/Module select korse tar sathe match kore answer dibe.
+Format:
+1) Final Answer
+2) Why (1–3 line)
+3) Step-by-step explanation
+4) Exam strategy tip (1 line)
+5) Bangla explanation (short but clear)
+If passage/context missing hoy, prothome missing info bole dao, tarpor probable approach suggest koro.`
+        : `You are a strict Cambridge IELTS 7–20 solver. Match answers to the selected Book/Test/Module.
+Format:
+1) Final Answer
+2) Why (1–3 lines)
+3) Step-by-step explanation
+4) Exam strategy tip (1 line)
+5) Bangla explanation (short but clear)
+If passage/context is missing, say what is missing first, then give the best probable approach.`;
+    }
+
+    function seedBooks(){
+      const sel = $("book");
+      sel.innerHTML = "";
+      for(let i=7; i<=20; i++){
+        const opt = document.createElement("option");
+        opt.value = `Cambridge IELTS ${i}`;
+        opt.textContent = `Cambridge IELTS ${i}`;
+        sel.appendChild(opt);
+      }
+      sel.value = "Cambridge IELTS 7";
+    }
+
+    function syncLangUI(){
+      $("langPill").textContent = state.lang;
+      const isBN = state.lang === "BN";
+
+      $("langBtn").textContent = isBN ? "English/বাংলা" : "Language";
+      $("themeBtn").textContent = isBN ? "Theme" : "Theme";
+      $("waBtn").textContent = isBN ? "Need guidance?" : "Need guidance?";
+
+      // Labels / hints (minimal changes)
+      $("bookHint").textContent = isBN ? "Cambridge IELTS book select korun." : "Select Cambridge IELTS book number.";
+
+      $("contextNote").innerHTML = isBN
+        ? `<b>Accuracy rule:</b> Reading/Listening er jonno <b>related passage/audio context</b> na dile 100% accurate howa tough.
+           Best: question + passage paragraph / question + transcript line.`
+        : `<b>Accuracy rule:</b> For Reading/Listening, without <b>related passage/audio context</b> it’s hard to be 100% accurate.
+           Best: question + passage paragraph / question + transcript line.`;
+
+      $("prompt").placeholder = isBN
+        ? "Question type korun… (possible hole passage paragraph o din)"
+        : "Type your question here… (include passage paragraph if possible)";
+
+      $("sendBtn").textContent = isBN ? "Send" : "Send";
+      $("resetBtn").textContent = isBN ? "Reset" : "Reset";
+      $("copyStateBtn").textContent = isBN ? "Copy details" : "Copy details";
+      $("demoBtn").textContent = isBN ? "Run Demo Answer" : "Run Demo Answer";
+      $("statusPill").textContent = state.busy ? (isBN ? "Chinta kortesi" : "Thinking") : (isBN ? "Ready" : "Ready");
+    }
+
+    function syncTheme(){
+      const app = $("app");
+      app.setAttribute("data-theme", state.theme);
+    }
+
+    function initWelcome(){
+      addMessage("bot",
+        state.lang === "BN"
+          ? "Assalamu Alaikum! Ami Ask Cambridge IELTS (7–20). Book/Test/Module select kore question din — ami answer + explanation dibo."
+          : "Assalamu Alaikum! I’m Ask Cambridge IELTS (7–20). Select Book/Test/Module and send your question — I’ll reply with answer + explanation.",
+        { "Brand": "LizOn Education", "Mode": API_ENDPOINT ? "API" : "Demo" }
+      );
+      addMessage("bot",
+        state.lang === "BN"
+          ? "Tip: Reading/Listening er jonno question-er sathe passage paragraph (ba transcript line) dile accuracy beshi hobe."
+          : "Tip: For Reading/Listening, include the relevant passage paragraph (or transcript lines) for higher accuracy."
+      );
+    }
+
+    // =========================
+    // API / Demo
+    // =========================
+    async function askBackend(userText, context){
+      // If you add a backend endpoint, you can POST here:
+      // Expected response: { answer: "..." }
+      const payload = {
+        system: buildSystemInstruction(),
+        context,
+        user: userText
+      };
+
+      if(!API_ENDPOINT){
+        // Demo response (replace later)
+        const demo = state.lang === "BN"
+          ? `Final Answer: (DEMO) Passage/context chara exact answer deya risky.\n\nWhy: Tumi Reading/Listening er question diso, kintu related passage/line nai.\n\nStep-by-step:\n1) Prothome question type identify (e.g., T/F/NG).\n2) Passage-e keyword scan.\n3) Statement vs passage compare.\n\nExam strategy tip: Keyword na, meaning match koro.\n\nBangla explanation: Passage na thakle guess hobe; paragraph ta dile ami exact solve korte parbo.`
+          : `Final Answer: (DEMO) Without passage/context, an exact answer is risky.\n\nWhy: You shared a Reading/Listening style question but not the related passage/lines.\n\nStep-by-step:\n1) Identify question type (e.g., T/F/NG).\n2) Scan passage for keywords.\n3) Compare statement meaning vs passage.\n\nExam strategy tip: Match meaning, not just keywords.\n\nBangla explanation: Passage na thakle guess hobe; paragraph ta dile ami exact solve korte parbo.`;
+
+        // Slightly adapt based on selected module
+        const tag = `${context.book} • Test ${context.test} • ${context.module}`;
+        return { answer: `${demo}\n\n—\nSelected: ${tag}` };
+      }
+
+      const res = await fetch(API_ENDPOINT, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if(!res.ok){
+        throw new Error("API error: " + res.status);
+      }
+      return await res.json();
+    }
+
+    async function handleSend(isDemo=false){
+      const text = ($("prompt").value || "").trim();
+      if(!text && !isDemo){
+        toast("Empty", state.lang==="BN" ? "Question type korun." : "Type a question first.");
+        return;
+      }
+
+      const ctx = buildContext();
+      const userText = isDemo ? "Demo: Solve a sample Cambridge question with structure." : text;
+
+      addMessage("user", userText, {
+        Book: ctx.book,
+        Test: ctx.test,
+        Module: ctx.module,
+        Type: ctx.qtype
+      });
+
+      $("prompt").value = "";
+      setBusy(true);
+
+      try{
+        const out = await askBackend(userText, ctx);
+        const answerText = out?.answer || out?.message || "(No answer returned.)";
+        addMessage("bot", answerText, { "EN/BN": state.lang, "Source": API_ENDPOINT ? "API" : "Demo" });
+      }catch(e){
+        addMessage("bot",
+          state.lang==="BN"
+            ? `Problem: ${String(e.message || e)}\n\nFix idea: API endpoint set na thakle demo mode use hobe. Jodi backend ase, API_ENDPOINT set korun.`
+            : `Problem: ${String(e.message || e)}\n\nFix idea: If you have a backend, set API_ENDPOINT. Otherwise, demo mode will run.`,
+          { "Status": "Error" }
+        );
+      }finally{
+        setBusy(false);
+      }
+    }
+
+    // =========================
+    // Events
+    // =========================
+    function bind(){
+      $("waBtn").href = WHATSAPP_LINK;
+
+      $("themeBtn").addEventListener("click", ()=>{
+        state.theme = (state.theme === "light") ? "dark" : "light";
+        syncTheme();
+      });
+
+      $("langBtn").addEventListener("click", ()=>{
+        state.lang = (state.lang === "EN") ? "BN" : "EN";
+        syncLangUI();
+        toast("Language", state.lang === "BN" ? "বাংলা mode" : "English mode");
+      });
+
+      $("resetBtn").addEventListener("click", ()=>{
+        $("test").value = "1";
+        $("module").value = "Reading";
+        $("qtype").value = "";
+        $("qno").value = "";
+        $("img").value = "";
+        state.fileName = "";
+        $("uploadState").textContent = "No file";
+        $("chatlog").innerHTML = "";
+        initWelcome();
+        toast("Reset", state.lang==="BN" ? "Fresh start." : "Fresh start.");
+      });
+
+      $("img").addEventListener("change", (e)=>{
+        const f = e.target.files && e.target.files[0];
+        state.fileName = f ? f.name : "";
+        $("uploadState").textContent = f ? "File added" : "No file";
+        if(f) toast("Uploaded", f.name);
+      });
+
+      $("copyStateBtn").addEventListener("click", async ()=>{
+        const ctx = buildContext();
+        const txt =
+`Ask Cambridge IELTS Details
+- Book: ${ctx.book}
+- Test: ${ctx.test}
+- Module: ${ctx.module}
+- Type: ${ctx.qtype}
+- Q No: ${ctx.qno || "N/A"}
+- File: ${ctx.file}
+- Lang: ${ctx.lang}`;
+        try{
+          await navigator.clipboard.writeText(txt);
+          toast("Copied", "Details copied to clipboard.");
+        }catch{
+          toast("Copy failed", "Browser blocked clipboard. Copy manually.");
+        }
+      });
+
+      $("sendBtn").addEventListener("click", ()=>handleSend(false));
+      $("demoBtn").addEventListener("click", ()=>handleSend(true));
+
+      $("prompt").addEventListener("keydown", (e)=>{
+        if((e.ctrlKey || e.metaKey) && e.key === "Enter"){
+          e.preventDefault();
+          handleSend(false);
+        }
+      });
+
+      $("toastClose").addEventListener("click", ()=> $("toast").classList.remove("show"));
+    }
+
+    // =========================
+    // Boot
+    // =========================
+    seedBooks();
+    syncTheme();
+    syncLangUI();
+    bind();
+    initWelcome();
+  </script>
+</body>
+</html>

@@ -1,412 +1,1033 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MyLizOn Routine — IELTS | PTE</title>
-<meta name="theme-color" content="#062b1f">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MyLizOn Routine — IELTS | PTE</title>
+  <meta name="description" content="MyLizOn Routine Creator by LizOn Education — build a colorful weekly routine and print/save as PDF." />
+  <meta name="theme-color" content="#062b1f" />
 
-<style>
-:root{
-  --bg:#f4fbf8;
-  --card:#ffffff;
-  --text:#0a2016;
-  --muted:#60726a;
-  --green:#062b1f;
-  --green2:#0b3a2a;
-  --gold:#d6b35a;
-  --blue:#2563eb;
-  --red:#dc2626;
-  --radius:18px;
-  --shadow:0 18px 55px rgba(0,0,0,.12);
-}
+  <style>
+    :root{
+      --bg:#f4fbf8;
+      --card:#ffffff;
+      --text:#0a2016;
+      --muted:#60726a;
+      --stroke:rgba(10,32,22,.14);
 
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:linear-gradient(180deg,#ffffff,#eef7f3);
-  color:var(--text);
-}
+      --green:#062b1f;
+      --green2:#0b3a2a;
+      --gold:#d6b35a;
 
-.container{width:min(1120px,92vw);margin:auto}
+      --c1:#dcfce7; /* green soft */
+      --c2:#fef3c7; /* gold soft  */
+      --c3:#dbeafe; /* blue soft  */
+      --c4:#fee2e2; /* red soft   */
+      --c5:#e0e7ff; /* indigo soft*/
+      --c6:#fae8ff; /* purple soft*/
 
-/* ===== Top Bar ===== */
-.topbar{
-  position:sticky;top:0;z-index:99;
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid #e5e7eb;
-}
-.topbar .row{
-  height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.brand{
-  font-weight:900;
-  letter-spacing:.3px;
-}
-.menuBtn{
-  border:1px solid #d1d5db;
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(8px);
-  border-radius:999px;
-  padding:10px 14px;
-  font-weight:800;
-  cursor:pointer;
-}
+      --shadow: 0 18px 60px rgba(2,24,16,.12);
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+    }
 
-/* ===== Cards ===== */
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:20px;
-  margin-top:18px;
-}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 800px at 18% 0%, rgba(11,58,42,.10), transparent 60%),
+        radial-gradient(900px 650px at 85% 25%, rgba(214,179,90,.10), transparent 58%),
+        linear-gradient(180deg, #fff, var(--bg));
+      overflow-x:hidden;
+    }
 
-.section{margin-bottom:20px}
-.section b{display:block;margin-bottom:10px;font-size:14px}
+    .container{ width:min(1120px, 92vw); margin:0 auto; }
 
-.options{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.opt{
-  padding:10px 14px;
-  border-radius:999px;
-  border:1px solid #d1d5db;
-  background:#fff;
-  cursor:pointer;
-  font-weight:800;
-  font-size:13px;
-}
-.opt.active{
-  background:rgba(11,58,42,.12);
-  border-color:var(--green);
-}
+    /* ===== Topbar ===== */
+    .topbar{
+      position:sticky; top:0; z-index:9999;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.78);
+      border-bottom:1px solid var(--stroke);
+    }
+    .topbar-inner{
+      height: 64px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .brandMark{
+      width:42px;height:42px;border-radius:14px;
+      background: linear-gradient(180deg, rgba(6,43,31,.10), rgba(6,43,31,.04));
+      border:1px solid var(--stroke);
+      display:grid;place-items:center;
+      box-shadow: var(--shadow);
+    }
+    .brandMark svg{ width:24px;height:24px; }
+    .brand small{
+      display:block;
+      font-weight:850;
+      color:rgba(10,32,22,.62);
+      letter-spacing:0;
+      margin-top:2px;
+      font-size:12px;
+    }
 
-/* ===== Routine Card ===== */
-.routine{
-  margin-top:26px;
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid #d1d5db;
-  background:#fff;
-}
-.rHead{
-  background:linear-gradient(135deg,#062b1f,#0b3a2a);
-  color:#fff;
-  padding:18px;
-}
-.rHead b{font-size:16px}
-.rHead span{
-  display:block;
-  margin-top:6px;
-  font-size:13px;
-  opacity:.9;
-}
-.rMeta{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:10px;
-}
-.tag{
-  background:rgba(255,255,255,.18);
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:800;
-}
+    .btn{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.65);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 30px rgba(2,24,16,.08);
+      color: var(--text);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 950;
+      font-size: 13px;
+    }
+    .btn.primary{
+      border-color: rgba(11,58,42,.35);
+      background: rgba(11,58,42,.12);
+    }
 
-/* ===== Table ===== */
-.tableWrap{overflow:auto}
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:760px;
-}
-th,td{
-  border:1px solid #e5e7eb;
-  padding:12px;
-  text-align:center;
-  font-size:12px;
-  font-weight:800;
-}
-th{
-  background:#ecfdf5;
-  color:#065f46;
-}
-.pill{
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:900;
-}
-.green{background:#dcfce7;color:#14532d}
-.gold{background:#fef3c7;color:#92400e}
-.blue{background:#dbeafe;color:#1e40af}
-.red{background:#fee2e2;color:#7f1d1d}
+    /* ===== Cards ===== */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      padding: 16px 0 26px;
+    }
+    @media (min-width: 980px){
+      .grid{ grid-template-columns: .95fr 1.05fr; align-items:start; }
+    }
 
-/* ===== Guidance ===== */
-.guidance{
-  padding:16px;
-  border-top:1px solid #e5e7eb;
-  background:#f9fafb;
-}
-.guidance b{display:block;margin-bottom:6px}
-.guidance ul{
-  margin:6px 0 0;
-  padding-left:18px;
-  font-size:12px;
-  color:var(--muted);
-}
+    .panel{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(12px);
+      overflow:hidden;
+    }
+    .panelHead{
+      padding:16px;
+      border-bottom:1px solid var(--stroke);
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      flex-wrap:wrap;
+    }
+    .panelHead h2{
+      margin:0;
+      font-size: 15px;
+      font-weight: 950;
+      letter-spacing:.2px;
+    }
+    .panelHead p{
+      margin:6px 0 0;
+      color: rgba(10,32,22,.65);
+      font-size: 13px;
+      line-height: 1.55;
+      max-width: 62ch;
+    }
+    .panelBody{ padding: 16px; }
 
-/* ===== Footer ===== */
-footer{
-  margin-top:36px;
-  padding:24px;
-  background:#062b1f;
-  color:#e5e7eb;
-  font-size:13px;
-}
-footer b{color:#fff}
-footer a{
-  color:#d6b35a;
-  text-decoration:none;
-  font-weight:800;
-}
+    /* ===== Form (Dropdown UI) ===== */
+    .field{ margin-bottom: 14px; }
+    .labelRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
+    .labelRow b{ font-size: 13px; font-weight: 950; }
+    .labelRow span{ font-size: 12px; color: rgba(10,32,22,.62); font-weight: 850; }
 
-/* ===== Print ===== */
-@media print{
-  .topbar,.noPrint{display:none!important}
-  body{background:#fff}
-}
-</style>
+    .select{
+      width:100%;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.82);
+      border-radius: 16px;
+      padding: 12px 12px;
+      font-size: 14px;
+      font-weight: 850;
+      color: var(--text);
+      outline:none;
+      box-shadow: 0 12px 26px rgba(0,0,0,.06);
+      appearance:none;
+      -webkit-appearance:none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(10,32,22,.55) 50%),
+        linear-gradient(135deg, rgba(10,32,22,.55) 50%, transparent 50%),
+        linear-gradient(to right, transparent, transparent);
+      background-position:
+        calc(100% - 18px) calc(50% - 3px),
+        calc(100% - 12px) calc(50% - 3px),
+        calc(100% - 2.6em) 0.4em;
+      background-size: 6px 6px, 6px 6px, 1px 1.8em;
+      background-repeat: no-repeat;
+      cursor:pointer;
+    }
+    .select[multiple]{
+      height: 132px;
+      background-image:none;
+      cursor:default;
+    }
+
+    .helperNote{
+      margin:10px 0 0;
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid rgba(10,32,22,.10);
+      background: rgba(255,255,255,.78);
+      color: rgba(10,32,22,.68);
+      font-size: 12px;
+      font-weight: 850;
+      line-height:1.55;
+    }
+
+    .btnRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px; }
+
+    /* ===== Routine Card ===== */
+    .routineCard{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      background: rgba(255,255,255,.84);
+    }
+    .routineHead{
+      padding: 16px;
+      background: linear-gradient(135deg, rgba(6,43,31,.95), rgba(11,58,42,.92));
+      color:#fff;
+    }
+    .routineHead b{
+      display:block;
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing:.2px;
+    }
+    .routineHead span{
+      display:block;
+      margin-top:6px;
+      font-size: 13px;
+      opacity:.92;
+      line-height:1.35;
+    }
+    .metaTags{
+      margin-top:10px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.18);
+      font-size: 12px;
+      font-weight: 900;
+      white-space:nowrap;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(214,179,90,.18);
+    }
+
+    .tableWrap{
+      padding: 14px;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      table-layout: fixed;
+      border-radius: 14px;
+      overflow:hidden;
+    }
+    th, td{
+      border:1px solid rgba(10,32,22,.10);
+      padding: 10px 10px;
+      text-align:center;
+      font-size: 12px;
+      font-weight: 900;
+      vertical-align: top;
+      background:#fff;
+      word-wrap:break-word;
+      overflow-wrap:anywhere;
+    }
+    th{
+      background: rgba(11,58,42,.08);
+      color: rgba(6,43,31,.92);
+      font-size: 12px;
+      letter-spacing:.2px;
+    }
+
+    .cell{
+      display:flex; flex-direction:column; gap:7px; align-items:center;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(10,32,22,.10);
+      font-size: 11px;
+      font-weight: 950;
+      white-space:nowrap;
+    }
+    .p1{ background: var(--c2); color:#7a4b00; border-color: rgba(146,64,14,.18); }
+    .p2{ background: var(--c1); color:#14532d; border-color: rgba(20,83,45,.18); }
+    .p3{ background: var(--c3); color:#1e40af; border-color: rgba(30,64,175,.18); }
+    .p4{ background: var(--c6); color:#6b21a8; border-color: rgba(107,33,168,.18); }
+    .p5{ background: var(--c5); color:#3730a3; border-color: rgba(55,48,163,.18); }
+    .p6{ background: var(--c4); color:#7f1d1d; border-color: rgba(127,29,29,.18); }
+
+    .guidance{
+      padding: 14px;
+      border-top:1px solid var(--stroke);
+      background: rgba(255,255,255,.76);
+      display:grid;
+      gap:10px;
+    }
+    .gCard{
+      border:1px solid rgba(10,32,22,.10);
+      border-radius: 16px;
+      background: rgba(255,255,255,.82);
+      padding: 12px;
+    }
+    .gCard b{
+      display:block;
+      font-size: 13px;
+      font-weight: 950;
+      margin-bottom:6px;
+    }
+    .gCard ul{
+      margin:0;
+      padding-left:18px;
+      color: rgba(10,32,22,.68);
+      font-size: 12px;
+      line-height:1.55;
+      font-weight: 850;
+    }
+    .gLinks{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .linkPill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(10,32,22,.12);
+      background: rgba(255,255,255,.85);
+      font-size: 12px;
+      font-weight: 950;
+      text-decoration:none;
+      color: var(--text);
+    }
+
+    /* ===== Footer ===== */
+    .siteFooter{
+      margin-top:16px;
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      background: rgba(255,255,255,.72);
+      box-shadow: var(--shadow);
+    }
+    .siteFooter .inner{
+      padding: 16px;
+      display:grid;
+      gap:12px;
+    }
+    .siteFooter b{ font-weight:950; }
+    .siteFooter .muted{ color: rgba(10,32,22,.70); font-weight:850; font-size:13px; line-height:1.5; }
+    .socialRow{ display:flex; gap:10px; flex-wrap:wrap; }
+    .socialBtn{
+      border:1px solid rgba(10,32,22,.14);
+      background: rgba(255,255,255,.78);
+      padding:10px 12px;
+      border-radius: 999px;
+      font-weight: 950;
+      font-size: 13px;
+      text-decoration:none;
+      color: var(--text);
+      display:inline-flex; align-items:center; gap:8px;
+    }
+
+    /* ===== Menu Sheet ===== */
+    .overlay{
+      position:fixed; inset:0; z-index:12050;
+      display:none; align-items:flex-end; justify-content:center;
+      padding:16px;
+    }
+    .overlay.show{ display:flex; }
+    .back{ position:absolute; inset:0; background: rgba(0,0,0,.30); }
+    .sheet{
+      position:relative;
+      width:min(720px, 100%);
+      border-radius: var(--radius-xl);
+      border:1px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.90);
+      box-shadow: 0 18px 60px rgba(0,0,0,.16);
+      backdrop-filter: blur(12px);
+      padding: 14px;
+      animation: in .14s ease-out forwards;
+    }
+    @keyframes in{ from{ opacity:0; transform: translateY(18px);} to{ opacity:1; transform: translateY(0);} }
+    .sheetTop{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      padding: 6px 6px 10px;
+      border-bottom:1px solid rgba(10,32,22,.10);
+      margin-bottom:12px;
+    }
+    .sheetTop b{ font-size: 15px; font-weight: 950; }
+    .x{
+      width:44px;height:44px;border-radius:16px;
+      border:1px solid rgba(10,32,22,.14);
+      background: rgba(255,255,255,.78);
+      cursor:pointer;
+      display:grid; place-items:center;
+      font-weight: 950;
+    }
+    .menuGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width:520px){
+      .menuGrid{ grid-template-columns: 1fr; }
+    }
+
+    /* ===== Print (PDF) ===== */
+    @page{
+      size: A4 landscape;
+      margin: 10mm;
+    }
+    @media print{
+      .noPrint, .topbar { display:none !important; }
+      body{ background:#fff !important; }
+      .container{ width:100% !important; margin:0 !important; }
+      .panel{ box-shadow:none !important; }
+      .tableWrap{ overflow:visible !important; }
+      table{ width:100% !important; }
+      th, td{ font-size: 10.5px !important; padding:8px !important; }
+      .pill{ font-size: 10px !important; padding:6px 8px !important; }
+      .routineCard{ break-inside: avoid; page-break-inside: avoid; }
+      .gCard{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
 </head>
 
 <body>
-
-<!-- TOP BAR -->
-<div class="topbar noPrint">
-  <div class="container row">
-    <div class="brand">MyLizOn Routine</div>
-    <button class="menuBtn">☰ Menu</button>
-  </div>
-</div>
-
-<div class="container">
-
-<!-- FORM -->
-<div class="card noPrint">
-
-  <div class="section">
-    <b>Exam</b>
-    <div class="options" id="exam"></div>
-  </div>
-
-  <div class="section" id="ieltsLevelWrap">
-    <b>Current Level (IELTS)</b>
-    <div class="options" id="level"></div>
-  </div>
-
-  <div class="section">
-    <b>Target Score</b>
-    <div class="options" id="target"></div>
+  <!-- TOPBAR -->
+  <div class="topbar noPrint">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brandMark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 5v14h10" stroke="#062b1f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.5 7.2v11h7.3" stroke="#d6b35a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>
+            </svg>
+          </div>
+          <div>
+            MyLizOn Routine
+            <small>IELTS | PTE — Routine Creator</small>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button class="btn" id="btnMenu" type="button">Menu</button>
+          <button class="btn primary" id="btnPrintTop" type="button">Print / PDF</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="section">
-    <b>Daily Study Time</b>
-    <div class="options" id="hours"></div>
+  <main class="container">
+    <section class="grid">
+      <!-- LEFT: Dropdown form -->
+      <div class="panel noPrint">
+        <div class="panelHead">
+          <div>
+            <h2>Routine Setup</h2>
+            <p>Select your options. Your routine updates instantly.</p>
+          </div>
+        </div>
+
+        <div class="panelBody">
+          <div class="field">
+            <div class="labelRow">
+              <b>Choose Exam</b>
+              <span>Required</span>
+            </div>
+            <select class="select" id="examSelect">
+              <option value="" selected>Choose…</option>
+              <option value="IELTS">IELTS</option>
+              <option value="PTE">PTE</option>
+            </select>
+          </div>
+
+          <div class="field" id="ieltsLevelField" style="display:none;">
+            <div class="labelRow">
+              <b>IELTS Current Level</b>
+              <span>Required</span>
+            </div>
+            <select class="select" id="levelSelect">
+              <option value="" selected>Choose…</option>
+              <option value="Zero">Zero (≈ 4 months)</option>
+              <option value="Basic">Basic (≈ 3 months)</option>
+              <option value="Intermediate">Intermediate (≈ 1 month)</option>
+              <option value="Advanced">Advanced (≈ 1 month)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="labelRow">
+              <b id="targetLabel">Target Score</b>
+              <span>Required</span>
+            </div>
+            <select class="select" id="targetSelect">
+              <option value="" selected>Choose…</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="labelRow">
+              <b>Daily Study Time</b>
+              <span>Required</span>
+            </div>
+            <select class="select" id="hoursSelect">
+              <option value="" selected>Choose…</option>
+              <option value="1">1 hour</option>
+              <option value="2">2 hours</option>
+              <option value="3">3 hours</option>
+              <option value="4">4 hours</option>
+              <option value="5">5 hours</option>
+              <option value="6">6 hours</option>
+              <option value="6+">6+ hours</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="labelRow">
+              <b>Study Days per Week</b>
+              <span>Required</span>
+            </div>
+            <select class="select" id="daysSelect">
+              <option value="" selected>Choose…</option>
+              <option value="5">5 days/week</option>
+              <option value="6">6 days/week</option>
+              <option value="7">7 days/week</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="labelRow">
+              <b>Preferred Study Windows (Up to 3)</b>
+              <span>Multi-select</span>
+            </div>
+            <select class="select" id="windowsSelect" multiple>
+              <option value="Morning (7–9 AM)">Morning (7–9 AM)</option>
+              <option value="Late Morning (9–11 AM)">Late Morning (9–11 AM)</option>
+              <option value="Noon (11 AM–1 PM)">Noon (11 AM–1 PM)</option>
+              <option value="Afternoon (2–4 PM)">Afternoon (2–4 PM)</option>
+              <option value="Evening (6–8 PM)">Evening (6–8 PM)</option>
+              <option value="Night (8–10 PM)">Night (8–10 PM)</option>
+              <option value="Late Night (10 PM–12 AM)">Late Night (10 PM–12 AM)</option>
+              <option value="Midnight (12–2 AM)">Midnight (12–2 AM)</option>
+            </select>
+            <div class="helperNote">Tip: You can select 1, 2, or 3 windows (morning + evening + night). We’ll build sessions based on this.</div>
+          </div>
+
+          <div class="field">
+            <div class="labelRow">
+              <b>Most Problematic Modules (Up to 2)</b>
+              <span>Multi-select</span>
+            </div>
+            <select class="select" id="weakSelect" multiple>
+              <option value="Listening">Listening</option>
+              <option value="Reading">Reading</option>
+              <option value="Writing">Writing</option>
+              <option value="Speaking">Speaking</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="labelRow">
+              <b>Typing Speed (Computer-based readiness)</b>
+              <span>Required</span>
+            </div>
+            <select class="select" id="typingSelect">
+              <option value="" selected>Choose…</option>
+              <option value="Below 30 WPM">Below 30 WPM</option>
+              <option value="30+ WPM">30+ WPM (OK)</option>
+              <option value="40+ WPM">40+ WPM (Strong)</option>
+            </select>
+          </div>
+
+          <div class="btnRow">
+            <button class="btn primary" id="btnPrint" type="button">Print / Save PDF</button>
+            <button class="btn" id="btnReset" type="button">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Routine output -->
+      <div class="panel">
+        <div class="panelHead noPrint">
+          <div>
+            <h2>Your Routine</h2>
+            <p>Colorful, readable, and PDF-friendly. Built for computer-based exams.</p>
+          </div>
+        </div>
+
+        <div class="panelBody">
+          <div class="routineCard" id="routineCard">
+            <div class="routineHead">
+              <b id="rTitle">Your Routine — Created by MyLizOn Routine Creator</b>
+              <span id="rSub">Select options to generate your plan.</span>
+
+              <div class="metaTags" id="rTags"></div>
+            </div>
+
+            <div class="tableWrap">
+              <table id="routineTable" aria-label="Routine Table"></table>
+            </div>
+
+            <div class="guidance" id="guidanceArea">
+              <!-- JS builds guidance -->
+            </div>
+          </div>
+
+          <div class="siteFooter noPrint">
+            <div class="inner">
+              <b>LizOn Education</b>
+              <div class="muted">
+                51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214<br/>
+                Helpline: <b>016-116-111-39</b> • Website: <b>MyLizOn.com</b>
+              </div>
+              <div class="socialRow">
+                <a class="socialBtn" href="https://www.mylizon.com/ielts.html">IELTS Journey</a>
+                <a class="socialBtn" href="https://www.mylizon.com/pte.html">PTE</a>
+                <a class="socialBtn" href="https://www.mylizon.com">Home</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MENU OVERLAY -->
+  <div class="overlay noPrint" id="menuOverlay" aria-hidden="true">
+    <div class="back" id="menuBack"></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="sheetTop">
+        <div>
+          <b>Menu</b>
+          <div style="margin-top:6px;color:rgba(10,32,22,.65);font-weight:850;font-size:13px;line-height:1.4;">
+            Quick links to key pages.
+          </div>
+        </div>
+        <button class="x" id="menuClose" type="button">✕</button>
+      </div>
+
+      <div class="menuGrid">
+        <a class="linkPill" href="https://www.mylizon.com/ielts.html">IELTS Journey</a>
+        <a class="linkPill" href="https://www.mylizon.com/pte.html">PTE Page</a>
+        <a class="linkPill" href="https://www.mylizon.com/ielts-listening.html">Listening Page</a>
+        <a class="linkPill" href="https://www.mylizon.com/ielts-reading.html">Reading Page</a>
+        <a class="linkPill" href="https://www.mylizon.com/ielts-speaking.html">Speaking Page</a>
+        <a class="linkPill" href="https://www.mylizon.com/ielts-writing.html">Writing Page</a>
+      </div>
+
+      <div class="btnRow" style="margin-top:12px;">
+        <button class="btn primary" id="menuPrint" type="button">Print / PDF</button>
+        <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum,%20Routine%20niye%20help%20chai.%20Ektu%20guide%20korben%3F" target="_blank" rel="noopener">Helpline WhatsApp</a>
+      </div>
+    </div>
   </div>
 
-  <div class="section">
-    <b>Preferred Study Window</b>
-    <div class="options" id="window"></div>
-  </div>
+  <script>
+    // ===== Elements
+    const examSelect = document.getElementById('examSelect');
+    const ieltsLevelField = document.getElementById('ieltsLevelField');
+    const levelSelect = document.getElementById('levelSelect');
+    const targetSelect = document.getElementById('targetSelect');
+    const targetLabel = document.getElementById('targetLabel');
+    const hoursSelect = document.getElementById('hoursSelect');
+    const daysSelect = document.getElementById('daysSelect');
+    const windowsSelect = document.getElementById('windowsSelect');
+    const weakSelect = document.getElementById('weakSelect');
+    const typingSelect = document.getElementById('typingSelect');
 
-  <div class="section">
-    <b>Most Problematic Modules (choose up to 2)</b>
-    <div class="options" id="weak"></div>
-  </div>
+    const rSub = document.getElementById('rSub');
+    const rTags = document.getElementById('rTags');
+    const routineTable = document.getElementById('routineTable');
+    const guidanceArea = document.getElementById('guidanceArea');
 
-  <div class="section">
-    <b>Typing / Computer Readiness</b>
-    <div class="options" id="typing"></div>
-  </div>
+    // ===== Data
+    const IELTS_TARGETS = ["5.5","6.0","6.5","7.0","7.5","8.0"];
+    // PTE MUST be numeric /90
+    const PTE_TARGETS = ["40","45","50","55","60","65","70","75","80","85"];
 
-  <button class="menuBtn" onclick="window.print()">Print / Save PDF</button>
-</div>
+    const ALL_MODULES = ["Listening","Reading","Writing","Speaking"];
 
-<!-- ROUTINE -->
-<div class="routine" id="routine">
+    // ===== Helpers
+    function getMultiSelectValues(selectEl){
+      return Array.from(selectEl.selectedOptions).map(o => o.value);
+    }
 
-  <div class="rHead">
-    <b id="title">Your Routine — Created by MyLizOn Routine Creator</b>
-    <span id="subtitle"></span>
-    <div class="rMeta" id="tags"></div>
-  </div>
+    function enforceMaxSelections(selectEl, max){
+      const selected = getMultiSelectValues(selectEl);
+      if(selected.length <= max) return;
+      // If too many: unselect the last changed option by trimming extras
+      // We keep earliest selected; drop extras at the end.
+      const keep = selected.slice(0, max);
+      Array.from(selectEl.options).forEach(opt => {
+        opt.selected = keep.includes(opt.value);
+      });
+    }
 
-  <div class="tableWrap">
-    <table id="table"></table>
-  </div>
+    function setTargetOptions(exam){
+      targetSelect.innerHTML = '<option value="" selected>Choose…</option>';
+      if(exam === "IELTS"){
+        targetLabel.textContent = "Target Score (IELTS Band)";
+        IELTS_TARGETS.forEach(v=>{
+          const o = document.createElement('option');
+          o.value = v;
+          o.textContent = `Band ${v}`;
+          targetSelect.appendChild(o);
+        });
+      }else if(exam === "PTE"){
+        targetLabel.textContent = "Target Score (PTE / 90)";
+        PTE_TARGETS.forEach(v=>{
+          const o = document.createElement('option');
+          o.value = v;
+          o.textContent = `Score ${v} / 90`;
+          targetSelect.appendChild(o);
+        });
+      }else{
+        targetLabel.textContent = "Target Score";
+      }
+    }
 
-  <div class="guidance" id="guidance"></div>
-</div>
+    function daysList(daysPerWeek){
+      // BD-friendly: start Sunday
+      const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+      const n = Number(daysPerWeek || 0);
+      if(n === 5) return ["Sun","Mon","Tue","Wed","Thu"];
+      if(n === 6) return ["Sun","Mon","Tue","Wed","Thu","Fri"];
+      if(n === 7) return ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+      return ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]; // fallback
+    }
 
-</div>
+    function pickColorClass(i){
+      // Rotate colorful pills
+      const classes = ["p1","p2","p3","p4","p5","p6"];
+      return classes[i % classes.length];
+    }
 
-<footer>
-  <b>LizOn Education</b><br>
-  51, Buddha Mandir Basabo (Beside Morning Bell School & BRAC), Dhaka 1214<br>
-  Helpline: <b>016-116-111-39</b><br>
-  Website: <a href="https://www.mylizon.com">MyLizOn.com</a><br>
-  Provided by MyLizOn.com
-</footer>
+    function buildPlan(){
+      const exam = examSelect.value;
+      const level = levelSelect.value;
+      const target = targetSelect.value;
+      const hours = hoursSelect.value;
+      const daysPerWeek = daysSelect.value;
+      const windows = getMultiSelectValues(windowsSelect).slice(0,3);
+      const weak = getMultiSelectValues(weakSelect).slice(0,2);
+      const typing = typingSelect.value;
 
-<script>
-const state={
- exam:"IELTS",
- level:"Intermediate",
- target:"",
- hours:"2",
- window:"Evening",
- weak:[],
- typing:"30+ WPM"
-};
+      // Tags
+      rTags.innerHTML = "";
+      const tagValues = [];
+      if(exam) tagValues.push(exam);
+      if(exam==="IELTS" && level) tagValues.push(`Level: ${level}`);
+      if(exam==="IELTS" && target) tagValues.push(`Target: Band ${target}`);
+      if(exam==="PTE" && target) tagValues.push(`Target: ${target}/90`);
+      if(daysPerWeek) tagValues.push(`${daysPerWeek} days/week`);
+      if(hours) tagValues.push(`${hours}h/day`);
+      if(windows.length) tagValues.push(`Windows: ${windows.length}`);
+      if(weak.length) tagValues.push(`Weak: ${weak.join(" + ")}`);
+      if(typing) tagValues.push(`Typing: ${typing}`);
 
-const exams=["IELTS","PTE"];
-const levels=["Zero","Basic","Intermediate","Advanced"];
-const ieltsTargets=["5.5","6.0","6.5","7.0","7.5","8.0"];
-const pteTargets=["40–50","50–60","60–67","60–70","70–80","80+"];
-const hours=["1","2","3","4","5","6","6+"];
-const windows=[
- "Morning (7–9)",
- "Late Morning (9–11)",
- "Noon (11–1)",
- "Evening (6–8)",
- "Night (8–10)",
- "Late Night (10–12)"
-];
-const modules=["Listening","Reading","Writing","Speaking"];
-const typing=["Below 30 WPM","30+ WPM"];
+      tagValues.forEach(t=>{
+        const el = document.createElement('div');
+        el.className = "tag";
+        el.innerHTML = `<span class="dot"></span>${t}`;
+        rTags.appendChild(el);
+      });
 
-function build(id,arr,cb){
- const el=document.getElementById(id);
- el.innerHTML="";
- arr.forEach(v=>{
-  const d=document.createElement("div");
-  d.className="opt";
-  d.textContent=v;
-  d.onclick=()=>cb(v,d);
-  el.appendChild(d);
- });
-}
+      // Subtitle
+      if(!exam){
+        rSub.textContent = "Choose options to generate your plan.";
+      } else if(exam === "IELTS"){
+        const a = level ? `Level: ${level}` : "Level: —";
+        const b = target ? `Target Band: ${target}` : "Target Band: —";
+        rSub.textContent = `IELTS • ${a} • ${b} • Computer-based routine`;
+      } else {
+        const b = target ? `Target Score: ${target}/90` : "Target Score: —";
+        rSub.textContent = `PTE • ${b} • Computer-based routine`;
+      }
 
-function selectSingle(key,val,btn){
- state[key]=val;
- document.querySelectorAll(`#${btn.parentElement.id} .opt`).forEach(o=>o.classList.remove("active"));
- btn.classList.add("active");
- render();
-}
+      // Build schedule
+      const days = daysList(daysPerWeek || "7");
 
-function selectWeak(val,btn){
- if(state.weak.includes(val)){
-  state.weak=state.weak.filter(x=>x!==val);
-  btn.classList.remove("active");
- }else if(state.weak.length<2){
-  state.weak.push(val);
-  btn.classList.add("active");
- }
- render();
-}
+      // sessions per day = number of windows selected (min 1 if exam chosen)
+      const sessions = Math.max( (windows.length || 0), exam ? 1 : 0 );
 
-function render(){
- document.getElementById("ieltsLevelWrap").style.display = state.exam==="IELTS"?"block":"none";
+      // Order modules with weak priority first
+      const ordered = weak.length
+        ? [...weak, ...ALL_MODULES.filter(m => !weak.includes(m))]
+        : [...ALL_MODULES];
 
- document.getElementById("subtitle").textContent =
-  state.exam==="IELTS"
-   ? `IELTS • Level: ${state.level} • Target Band: ${state.target}`
-   : `PTE • Target Score: ${state.target} / 90`;
+      // Special: if typing below 30, add typing practice to rotation
+      const needsTyping = (typing === "Below 30 WPM");
 
- const tags=document.getElementById("tags");
- tags.innerHTML="";
- [`${state.hours}h/day`,state.window,...state.weak,state.typing].forEach(t=>{
-  if(!t)return;
-  const s=document.createElement("span");
-  s.className="tag";
-  s.textContent=t;
-  tags.appendChild(s);
- });
+      // Table header: Day + Session columns
+      const headers = [];
+      for(let i=0;i<sessions;i++){
+        const label = windows[i] ? windows[i] : `Session ${i+1}`;
+        headers.push(label);
+      }
 
- buildTable();
- buildGuidance();
-}
+      // Build table HTML
+      let thead = `<tr><th style="width:110px;">Day</th>${headers.map(h=>`<th>${h}</th>`).join("")}</tr>`;
 
-function buildTable(){
- const t=document.getElementById("table");
- const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
- t.innerHTML="<tr><th>Day</th><th>Main Focus</th><th>Support</th></tr>";
- days.forEach(d=>{
-  const w=state.weak[0]||"Core Practice";
-  t.innerHTML+=`
-   <tr>
-    <th>${d}</th>
-    <td><span class="pill gold">${w}</span></td>
-    <td><span class="pill green">Revision + Correction</span></td>
-   </tr>`;
- });
-}
+      let rows = "";
+      days.forEach((d, di)=>{
+        const cells = [];
+        for(let si=0; si<sessions; si++){
+          // choose content:
+          // slot 1 tends to be weak / priority
+          // slot 2 rotates other modules
+          // slot 3 can be test/correction or typing if needed
+          let pillText = "";
+          let cls = "";
 
-function buildGuidance(){
- const g=document.getElementById("guidance");
- if(state.exam==="IELTS"){
-  g.innerHTML=`
-   <b>IELTS Focus Guidance</b>
-   <ul>
-    <li>Zero/Basic: Spoken English, Grammar, Pronunciation</li>
-    <li>Reading: Speed + Understanding</li>
-    <li>Listening: Listening Power + Accuracy</li>
-    <li>Writing & Speaking: Idea generation, structure, opinion building</li>
-    <li>Practice with correction — not random practice</li>
-    <li>Study links: listening.html, reading.html, speaking.html, writing.html</li>
-   </ul>`;
- }else{
-  g.innerHTML=`
-   <b>PTE Focus Guidance</b>
-   <ul>
-    <li>Note-taking ability → sentence making</li>
-    <li>Listening + Reading strength</li>
-    <li>Typing & computer speed is critical</li>
-    <li>Use correction logs after every test</li>
-    <li>Study links: listening.html, reading.html, speaking.html</li>
-   </ul>`;
- }
-}
+          if(si === 0){
+            pillText = `${ordered[0]} (Priority)`;
+            cls = "p1";
+          } else if(si === 1){
+            const idx = 1 + (di % Math.max(ordered.length-1,1));
+            pillText = `${ordered[idx] || ordered[1] || ordered[0]} (Skill)`;
+            cls = "p2";
+          } else {
+            // session 3: correction/test/typing
+            if(needsTyping && (di % 2 === 0)){
+              pillText = "Typing Speed (20 min)";
+              cls = "p6";
+            } else {
+              pillText = (di % 2 === 0) ? "Timed Practice (Mini Test)" : "Correction (Fix Mistakes)";
+              cls = (di % 2 === 0) ? "p3" : "p4";
+            }
+          }
 
-/* INIT */
-build("exam",exams,(v,b)=>selectSingle("exam",v,b));
-build("level",levels,(v,b)=>selectSingle("level",v,b));
-build("target",ieltsTargets,(v,b)=>selectSingle("target",v,b));
-build("hours",hours,(v,b)=>selectSingle("hours",v,b));
-build("window",windows,(v,b)=>selectSingle("window",v,b));
-build("weak",modules,(v,b)=>selectWeak(v,b));
-build("typing",typing,(v,b)=>selectSingle("typing",v,b));
+          // Friday: mock highlight if exists in selected days
+          if(d === "Fri" && sessions >= 2 && si === 0){
+            pillText = (exam === "PTE") ? "Mock / Scored Practice" : "Mock / Section Test";
+            cls = "p5";
+          }
 
-document.querySelector("#exam .opt").classList.add("active");
-document.querySelector("#level .opt:nth-child(3)").classList.add("active");
-document.querySelector("#hours .opt:nth-child(2)").classList.add("active");
-document.querySelector("#window .opt:nth-child(4)").classList.add("active");
-document.querySelector("#typing .opt:nth-child(2)").classList.add("active");
+          // Saturday: lighter if included
+          if(d === "Sat"){
+            if(si === 0){
+              pillText = "Light Review + Error Log";
+              cls = "p4";
+            } else if(si === 1){
+              pillText = (exam === "PTE") ? "Speaking Drill (Short)" : "Speaking Practice (Short)";
+              cls = "p2";
+            } else {
+              pillText = needsTyping ? "Typing Speed (20 min)" : "Vocabulary / Shadowing";
+              cls = needsTyping ? "p6" : "p3";
+            }
+          }
 
-state.target="6.5";
-render();
-</script>
+          cells.push(`
+            <td>
+              <div class="cell">
+                <div class="pill ${cls}">${pillText}</div>
+              </div>
+            </td>
+          `);
+        }
 
+        rows += `<tr><th>${d}</th>${cells.join("")}</tr>`;
+      });
+
+      routineTable.innerHTML = thead + rows;
+
+      // Guidance cards (some instructions, not noisy)
+      guidanceArea.innerHTML = "";
+      const g1 = document.createElement('div');
+      g1.className = "gCard";
+
+      if(exam === "IELTS"){
+        const lvl = level || "—";
+        const typingLine = needsTyping
+          ? `<li><b style="color:#7f1d1d;">Typing below 30 WPM:</b> add daily typing practice. Minimum goal: <b>30+ WPM</b>.</li>`
+          : `<li>Typing speed is OK. Keep it stable (goal: 30+ WPM).</li>`;
+
+        g1.innerHTML = `
+          <b>How to study (IELTS)</b>
+          <ul>
+            <li><b>Zero/Basic</b>: Spoken + Grammar + Pronunciation first.</li>
+            <li><b>Reading</b>: speed + understanding (timed sets + review).</li>
+            <li><b>Listening</b>: listening power + accuracy (repeat + note mistakes).</li>
+            <li><b>Writing & Speaking</b>: idea generation + structure + opinion building.</li>
+            ${typingLine}
+            <li><b>Rule:</b> Practice without correction is entertainment. Keep an error log.</li>
+          </ul>
+          <div class="gLinks">
+            <a class="linkPill" href="https://www.mylizon.com/ielts-listening.html">listening.html</a>
+            <a class="linkPill" href="https://www.mylizon.com/ielts-reading.html">reading.html</a>
+            <a class="linkPill" href="https://www.mylizon.com/ielts-speaking.html">speaking.html</a>
+            <a class="linkPill" href="https://www.mylizon.com/ielts-writing.html">writing.html</a>
+          </div>
+        `;
+      } else if(exam === "PTE"){
+        const typingLine = needsTyping
+          ? `<li><b style="color:#7f1d1d;">Typing below 30 WPM:</b> daily typing practice is mandatory. Minimum: <b>30+ WPM</b>.</li>`
+          : `<li>Typing speed is OK. Keep it stable (goal: 30+ WPM).</li>`;
+
+        g1.innerHTML = `
+          <b>How to study (PTE)</b>
+          <ul>
+            <li>Build <b>note-taking ability</b>, then convert notes → sentences.</li>
+            <li>Strengthen <b>listening + reading</b> with timed practice + correction.</li>
+            <li>Use <b>repeatable templates</b> only when needed — avoid memorization overload.</li>
+            ${typingLine}
+            <li><b>Rule:</b> Every test must create a correction log (mistake → fix → repeat).</li>
+          </ul>
+          <div class="gLinks">
+            <a class="linkPill" href="https://www.mylizon.com/ielts-listening.html">listening.html</a>
+            <a class="linkPill" href="https://www.mylizon.com/ielts-reading.html">reading.html</a>
+            <a class="linkPill" href="https://www.mylizon.com/ielts-speaking.html">speaking.html</a>
+          </div>
+        `;
+      } else {
+        g1.innerHTML = `
+          <b>Next step</b>
+          <ul>
+            <li>Choose your exam first (IELTS or PTE).</li>
+            <li>Select your target, days/week, study time, and windows.</li>
+            <li>Then print/save as PDF.</li>
+          </ul>
+        `;
+      }
+
+      const g2 = document.createElement('div');
+      g2.className = "gCard";
+      g2.innerHTML = `
+        <b>PDF Tip (for phone)</b>
+        <ul>
+          <li>Use <b>Landscape</b> for best table fit (this page prints in A4 Landscape).</li>
+          <li>Save PDF and keep it in your phone for daily tracking.</li>
+        </ul>
+      `;
+
+      guidanceArea.appendChild(g1);
+      guidanceArea.appendChild(g2);
+    }
+
+    function refreshUI(){
+      const exam = examSelect.value;
+
+      // Toggle IELTS level
+      ieltsLevelField.style.display = (exam === "IELTS") ? "" : "none";
+
+      // Targets
+      setTargetOptions(exam);
+
+      // If exam changed, clear dependent selections
+      targetSelect.value = "";
+      if(exam !== "IELTS"){
+        levelSelect.value = "";
+      }
+      buildPlan();
+    }
+
+    // ===== Events
+    examSelect.addEventListener('change', ()=>{
+      refreshUI();
+    });
+
+    levelSelect.addEventListener('change', buildPlan);
+    targetSelect.addEventListener('change', buildPlan);
+    hoursSelect.addEventListener('change', buildPlan);
+    daysSelect.addEventListener('change', buildPlan);
+    typingSelect.addEventListener('change', buildPlan);
+
+    windowsSelect.addEventListener('change', ()=>{
+      enforceMaxSelections(windowsSelect, 3);
+      buildPlan();
+    });
+
+    weakSelect.addEventListener('change', ()=>{
+      enforceMaxSelections(weakSelect, 2);
+      buildPlan();
+    });
+
+    // Print buttons
+    function doPrint(){ window.print(); }
+    document.getElementById('btnPrint').addEventListener('click', doPrint);
+    document.getElementById('btnPrintTop').addEventListener('click', doPrint);
+
+    // Reset
+    document.getElementById('btnReset').addEventListener('click', ()=>{
+      examSelect.value = "";
+      ieltsLevelField.style.display = "none";
+      levelSelect.value = "";
+      setTargetOptions("");
+      targetSelect.value = "";
+      hoursSelect.value = "";
+      daysSelect.value = "";
+      typingSelect.value = "";
+
+      // clear multiselects
+      Array.from(windowsSelect.options).forEach(o=>o.selected=false);
+      Array.from(weakSelect.options).forEach(o=>o.selected=false);
+
+      buildPlan();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Menu overlay
+    const overlay = document.getElementById('menuOverlay');
+    const btnMenu = document.getElementById('btnMenu');
+    const menuClose = document.getElementById('menuClose');
+    const menuBack = document.getElementById('menuBack');
+    const menuPrint = document.getElementById('menuPrint');
+
+    function openMenu(){
+      overlay.classList.add('show');
+      overlay.setAttribute('aria-hidden','false');
+      document.body.style.overflow = "hidden";
+    }
+    function closeMenu(){
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden','true');
+      document.body.style.overflow = "";
+    }
+    btnMenu.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menuBack.addEventListener('click', closeMenu);
+    menuPrint.addEventListener('click', ()=>{ closeMenu(); doPrint(); });
+
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && overlay.classList.contains('show')) closeMenu();
+    });
+
+    // Init
+    setTargetOptions("");
+    buildPlan();
+  </script>
 </body>
 </html>

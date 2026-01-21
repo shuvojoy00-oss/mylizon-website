@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IELTS-Style Reading Mock Test 01 | LizOn Education</title>
+  <style>
+    :root{
+      --bg:#0f1412;
+      --panel:#141d19;
+      --panel2:#101816;
+      --text:#e7f1ec;
+      --muted:#a8b8b0;
+      --brand:#0b4d2b; /* Dark Green */
+      --brand2:#0e6a3b;
+      --line:rgba(255,255,255,.09);
+      --warn:#caa63a;
+      --bad:#e06666;
+      --good:#6fe39c;
+      --shadow: 0 12px 28px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 700px at 15% 0%, rgba(14,106,59,.20), transparent 55%),
+                 radial-gradient(900px 600px at 85% 15%, rgba(11,77,43,.18), transparent 60%),
+                 var(--bg);
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.45;
+    }
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background:rgba(15,20,18,.72);
+      border-bottom:1px solid var(--line);
+    }
+    .wrap{max-width:1200px;margin:0 auto;padding:14px 14px;}
+    .topbar{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      min-width:260px;
+    }
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background:linear-gradient(135deg, var(--brand2), var(--brand));
+      box-shadow: var(--shadow);
+      display:grid; place-items:center;
+      font-weight:800;
+    }
+    .titleblock .t1{font-weight:800; letter-spacing:.2px}
+    .titleblock .t2{color:var(--muted); font-size:12px}
+    .pill{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    .tag{
+      font-size:12px; color:var(--muted);
+      border:1px solid var(--line);
+      padding:6px 10px; border-radius:999px;
+      background:rgba(255,255,255,.03);
+    }
+    .timer{
+      font-variant-numeric: tabular-nums;
+      font-weight:800;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(202,166,58,.12);
+      border:1px solid rgba(202,166,58,.25);
+      color:#f6e7b7;
+    }
+    .btn{
+      cursor:pointer;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:700;
+      transition:.15s;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.06)}
+    .btn.primary{
+      background:linear-gradient(135deg, var(--brand2), var(--brand));
+      border-color: rgba(111,227,156,.25);
+      box-shadow: var(--shadow);
+    }
+    .btn.danger{
+      background:rgba(224,102,102,.14);
+      border-color:rgba(224,102,102,.28);
+      color:#ffd9d9;
+    }
+    main .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 980px){
+      main .grid{grid-template-columns: 1fr}
+    }
+    .card{
+      background:rgba(20,29,25,.78);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .head{
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--line);
+      background:rgba(16,24,22,.55);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .card .head h2{
+      margin:0;
+      font-size:14px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      color:#d7e7df;
+    }
+    .card .body{padding:14px}
+    .muted{color:var(--muted)}
+    .notice{
+      border:1px dashed rgba(111,227,156,.25);
+      background:rgba(111,227,156,.07);
+      padding:10px 12px; border-radius:14px;
+      color:#dff7ea;
+      font-size:13px;
+    }
+    .split{
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center; justify-content:flex-start;
+    }
+    .passage{
+      max-height: 58vh;
+      overflow:auto;
+      padding-right:6px;
+    }
+    .passage h3{margin:0 0 8px}
+    .passage p{margin:10px 0; color:#deebe5}
+    .passage .small{font-size:12px;color:var(--muted)}
+    .qnav{
+      display:grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap:6px;
+    }
+    @media (max-width: 420px){
+      .qnav{grid-template-columns: repeat(6, 1fr);}
+    }
+    .qbtn{
+      padding:8px 0;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      font-weight:800;
+      cursor:pointer;
+      font-variant-numeric: tabular-nums;
+    }
+    .qbtn.active{outline:2px solid rgba(111,227,156,.35); background:rgba(14,106,59,.18)}
+    .qbtn.answered{border-color: rgba(111,227,156,.30)}
+    .qbtn.flag{border-color: rgba(202,166,58,.35)}
+    .qpanel{
+      display:flex; gap:12px; flex-wrap:wrap;
+      align-items:center; justify-content:space-between;
+      margin-top:10px;
+    }
+    .qbox{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+    .qbox h3{margin:0 0 8px; font-size:15px}
+    .qmeta{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+    .badge{
+      font-size:12px; color:var(--muted);
+      padding:4px 8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.02);
+    }
+    .qtext{margin:10px 0 10px; color:#eaf6f0}
+    label.opt{
+      display:block;
+      padding:10px 10px;
+      margin:8px 0;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      cursor:pointer;
+    }
+    label.opt:hover{background:rgba(255,255,255,.04)}
+    input[type="radio"]{transform:translateY(1px)}
+    input[type="text"]{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      color:var(--text);
+      outline:none;
+      font-size:15px;
+    }
+    select{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      color:var(--text);
+      outline:none;
+      font-size:15px;
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between}
+    .row .left{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .mini{
+      font-size:12px; color:var(--muted);
+    }
+    .hr{height:1px; background:var(--line); margin:12px 0}
+    .resultBox{
+      display:none;
+    }
+    .scoreBig{
+      font-size:34px; font-weight:900; letter-spacing:.5px;
+      margin:6px 0;
+    }
+    .kpis{
+      display:grid; grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:10px;
+    }
+    @media(max-width: 700px){ .kpis{grid-template-columns: 1fr} }
+    .kpi{
+      padding:12px; border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+    .kpi .k{color:var(--muted); font-size:12px}
+    .kpi .v{font-weight:900; font-size:18px; margin-top:4px}
+    .reviewItem{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      background:rgba(255,255,255,.02);
+      margin:10px 0;
+    }
+    .ok{color:var(--good); font-weight:800}
+    .no{color:var(--bad); font-weight:800}
+    .exp{color:#dcebe4; margin-top:8px; font-size:14px}
+    .footer{
+      margin:18px 0 24px;
+      color:var(--muted);
+      text-align:center;
+      font-size:12px;
+    }
+    .tinyBrand{
+      font-size:12px; color:rgba(231,241,236,.85);
+      opacity:.9;
+      user-select:none;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">LZ</div>
+        <div class="titleblock">
+          <div class="t1">IELTS-Style Reading Mock Test 01</div>
+          <div class="t2">Original practice test (not official IELTS) • LizOn Education • IELTS ZERO</div>
+        </div>
+      </div>
+      <div class="pill">
+        <div class="tag">3 Passages • 40 Questions</div>
+        <div class="tag">Computer-based style</div>
+        <div id="timer" class="timer">60:00</div>
+        <button id="startBtn" class="btn primary">Start Test</button>
+        <button id="submitBtn" class="btn danger" style="display:none;">Submit</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="notice">
+    This is an <b>original IELTS-style</b> mock test made for practice. It is <b>not</b> from recent IELTS questions and is <b>not</b> affiliated with IELTS. The goal: simulate the feeling + score feedback.
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: Passage -->
+    <section class="card">
+      <div class="head">
+        <h2 id="passageTitle">Passage (locked until you start)</h2>
+        <div class="split">
+          <span class="tag" id="passageMeta">—</span>
+          <button id="highlightTip" class="btn" title="Simple tip">Highlight Tip</button>
+        </div>
+      </div>
+      <div class="body">
+        <div id="passageBox" class="passage muted">
+          Press <b>Start Test</b>. You will get 60 minutes for 3 passages (40 questions).
+          <div class="hr"></div>
+          <div class="tinyBrand">LizOn Education • IELTS ZERO</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Questions -->
+    <section class="card">
+      <div class="head">
+        <h2>Questions</h2>
+        <div class="split">
+          <span class="tag" id="progressTag">0 / 40 answered</span>
+          <button id="flagBtn" class="btn" style="display:none;">Flag</button>
+        </div>
+      </div>
+      <div class="body">
+        <div id="navBox" class="qnav muted">Start test to load questions.</div>
+
+        <div class="hr"></div>
+
+        <div id="qBox" class="qbox" style="display:none;">
+          <div class="row">
+            <div class="left">
+              <h3 id="qTitle" style="margin:0;">Q1</h3>
+              <div class="qmeta">
+                <span class="badge" id="qType">—</span>
+                <span class="badge" id="qPassage">—</span>
+              </div>
+            </div>
+            <div class="mini" id="qHint">Answer carefully.</div>
+          </div>
+
+          <div class="qtext" id="qText">—</div>
+          <div id="qInput"></div>
+
+          <div class="qpanel">
+            <button id="prevBtn" class="btn">◀ Prev</button>
+            <div class="left">
+              <button id="clearBtn" class="btn">Clear</button>
+              <button id="nextBtn" class="btn primary">Next ▶</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="resultBox" class="resultBox">
+          <div class="qbox">
+            <div class="badge">Result</div>
+            <div class="scoreBig" id="scoreLine">—</div>
+            <div class="muted" id="bandLine">—</div>
+
+            <div class="kpis">
+              <div class="kpi">
+                <div class="k">Strength signal</div>
+                <div class="v" id="strengthLine">—</div>
+              </div>
+              <div class="kpi">
+                <div class="k">Weak areas (by type)</div>
+                <div class="v" id="weakLine">—</div>
+              </div>
+              <div class="kpi">
+                <div class="k">Time used</div>
+                <div class="v" id="timeUsedLine">—</div>
+              </div>
+            </div>
+
+            <div class="hr"></div>
+            <button id="reviewBtn" class="btn primary">Show Full Review (Answers + Explanations)</button>
+            <button id="restartBtn" class="btn">Restart Test</button>
+          </div>
+
+          <div id="reviewBox" style="display:none; margin-top:12px;"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="footer">
+    LizOn Education • IELTS ZERO • Practice responsibly. Real exams are timed, stressful, and full of distractors—train like it.
+  </div>
+</main>
+
+<script>
+/* =========================
+   IELTS-STYLE READING MOCK
+   Original content by LizOn Education practice generator
+   Single-file: no dependencies
+   ========================= */
+
+const TEST = {
+  durationSec: 60 * 60,
+  passages: [
+    {
+      id: "P1",
+      title: "Passage 1 — The Library That Learned to Breathe",
+      meta: "General interest",
+      text: `
+      <div class="small">You should spend about 20 minutes on Questions 1–13, which are based on Passage 1.</div>
+      <h3>The Library That Learned to Breathe</h3>
+      <p>In the center of a crowded coastal city, a century-old public library was quietly failing. The building’s thick walls kept out heat and noise, but they also trapped humidity. Over time, books warped, wooden shelves swelled, and visitors complained that the air felt heavy. Repairs were proposed again and again, yet budgets were always swallowed by more visible needs: roads, flood defenses, schools.</p>
+      <p>Then a small team of engineers and librarians tried a different approach. Instead of replacing the entire ventilation system, they treated the library like a living body: it needed to “breathe” in response to the weather and the number of people inside. They installed sensors that measured temperature, humidity, and carbon dioxide. When the air grew stale, small rooftop vents opened a few centimeters. When rain arrived, the vents closed and the system redirected airflow through dry interior corridors.</p>
+      <p>The clever part was not the sensors themselves—it was how the team used old architecture. The library had tall central halls originally designed for daylight. Those halls became vertical “chimneys” that encouraged warm air to rise. By opening vents near the top and in shaded side rooms, the building created gentle movement without loud fans. Readers often did not notice the change, but they stopped describing the air as “sticky.”</p>
+      <p>Maintenance also improved. Previously, staff could only guess why certain rooms smelled musty. Now the sensor dashboard showed patterns: a popular study corner had poor airflow because students stacked bags against a low vent; a storage room stayed damp because a door was often left open after deliveries. Small behavioral changes—moving furniture, adjusting schedules—reduced moisture more than expensive machines ever had.</p>
+      <p>Unexpectedly, the project changed how people valued the library. A local newspaper called it “the city’s quiet climate lab.” School groups began visiting to learn how buildings can adapt without wasting energy. In a year, the library’s electricity use dropped by roughly a fifth compared with the old fan-heavy system. More importantly, rare books survived another monsoon season without new damage.</p>
+      <p>The lesson was simple but easy to ignore: sometimes the best upgrade is not a new device, but a new way of listening to what an old place is already telling you.</p>
+      `
+    },
+    {
+      id: "P2",
+      title: "Passage 2 — Microfactories and the Geography of Making",
+      meta: "Semi-academic",
+      text: `
+      <div class="small">You should spend about 20 minutes on Questions 14–26, which are based on Passage 2.</div>
+      <h3>Microfactories and the Geography of Making</h3>
+      <p>For much of the twentieth century, manufacturing followed a predictable rule: bigger factories produced goods more cheaply. Large plants could spread costs across huge volumes, negotiate lower prices for materials, and run specialized machines at maximum efficiency. As a result, production concentrated in a small number of industrial regions, while other areas became primarily consumers.</p>
+      <p>In the past decade, however, a new model has gained attention: the microfactory. A microfactory is not simply a small version of a traditional plant; it is a different way of organizing production. Rather than long assembly lines dedicated to one product, microfactories rely on flexible tools—computer-controlled cutters, modular molds, and software-driven workflows—that can switch between designs quickly. The aim is not to beat mega-factories on unit cost for a single item, but to compete on speed, customization, and reduced transport.</p>
+      <p>This shift is partly driven by consumer expectations. Customers increasingly want products tailored to their needs, delivered fast, and updated frequently. A regional workshop that can prototype, test, and revise within days may outperform a distant giant that requires months to retool. Microfactories also reduce risk: producing in smaller batches means companies are less likely to be stuck with warehouses of unsold inventory after trends change.</p>
+      <p>Yet microfactories introduce their own challenges. They often require workers with hybrid skills: someone who understands both the physical equipment and the digital design files controlling it. Training such staff can be difficult, especially in places where manufacturing has declined for decades. In addition, supply chains are not instantly localized. Even if final assembly happens nearby, microfactories may still depend on components produced elsewhere, limiting the benefits of “making closer to home.”</p>
+      <p>Researchers studying early microfactory networks have found that success depends on more than technology. Local regulations, access to reliable electricity, and collaboration with nearby universities or technical institutes all matter. Some cities have launched “maker districts” to share equipment and reduce the cost of entry for small firms. In these districts, one workshop may focus on materials testing while another specializes in finishing and packaging.</p>
+      <p>Whether microfactories will reshape global manufacturing remains uncertain. But they have already changed one assumption: production does not always need to be concentrated to be efficient. Sometimes, being smaller—and nearer—can be a strategic advantage.</p>
+      `
+    },
+    {
+      id: "P3",
+      title: "Passage 3 — The Psychology of Waiting",
+      meta: "Academic",
+      text: `
+      <div class="small">You should spend about 20 minutes on Questions 27–40, which are based on Passage 3.</div>
+      <h3>The Psychology of Waiting</h3>
+      <p>Waiting is an ordinary experience, yet it can trigger disproportionate frustration. People may tolerate a long task if they feel in control, but become irritated by a shorter delay that seems arbitrary. This contrast has led psychologists to examine waiting not only as a measure of time, but as a mental state shaped by expectation, fairness, and attention.</p>
+      <p>One classic finding is that “occupied time” feels shorter than “empty time.” A person who is asked to fill out a short form before an appointment may judge the delay as less painful than someone who sits with nothing to do. The difference is not necessarily enjoyment; it is the presence of structure. Structure reassures the mind that the system is working, and it reduces the sense that time is being wasted.</p>
+      <p>Another factor is uncertainty. When people do not know how long a wait will last, they tend to overestimate it and monitor it more intensely. This vigilance amplifies annoyance. By contrast, clear information—such as a queue estimate that is mostly accurate—can reduce anxiety even if the wait is not shortened. Interestingly, highly precise estimates are not always ideal. If a system promises “three minutes” and takes five, the perceived injustice can be worse than offering a broader range.</p>
+      <p>Perceived fairness also matters. People accept delays more readily when they believe the rules apply equally. A waiting room where late arrivals are served early can provoke anger even among patients who are not directly affected, because the violation signals disrespect. In public settings, this sensitivity to fairness can spread; frustration is contagious.</p>
+      <p>Technology has complicated waiting in modern life. On one hand, digital services can provide real-time tracking and allow users to multitask. On the other hand, constant updates can increase attention to the delay. Refreshing a delivery map every thirty seconds makes the wait feel larger, not smaller, because the mind repeatedly “restarts” the expectation cycle.</p>
+      <p>Designers who understand waiting psychology often focus on perception rather than raw speed. Small environmental changes—visible progress indicators, meaningful explanations for delays, and opportunities for engagement—can improve satisfaction. The uncomfortable truth is that people do not simply want speed; they want the feeling that their time is respected.</p>
+      `
+    }
+  ],
+  // 40 questions total.
+  questions: [
+    // Passage 1 (1–13)
+    {n:1, p:"P1", type:"MCQ", prompt:"Why was the library ‘quietly failing’ at the beginning?", options:["It was located too far from the city center","Its walls trapped humidity and stale air","Visitors disliked the architecture’s age","The staff refused modern technology"], answer:"B", exp:"The passage says thick walls kept out heat/noise but trapped humidity, damaging books and making air heavy."},
+    {n:2, p:"P1", type:"TFNG", prompt:"The team replaced the entire ventilation system with a new industrial fan setup.", options:["True","False","Not Given"], answer:"False", exp:"They explicitly did NOT replace the entire system; they used sensors + small vents + existing architecture."},
+    {n:3, p:"P1", type:"MCQ", prompt:"What did the sensors measure?", options:["Only temperature","Humidity and carbon dioxide (and temperature)","Noise levels and sunlight","Book weight and shelf pressure"], answer:"B", exp:"The text lists temperature, humidity, and carbon dioxide."},
+    {n:4, p:"P1", type:"MATCH (Dropdown)", prompt:"Match the problem to the insight: Popular study corner had poor airflow because…", options:["A door was often left open","Students blocked a low vent","Rooftop vents stayed closed","Rare books were moved"], answer:"Students blocked a low vent", exp:"The passage states students stacked bags against a low vent."},
+    {n:5, p:"P1", type:"MCQ", prompt:"The ‘chimneys’ in the library were created by…", options:["New metal pipes installed in walls","Tall central halls designed for daylight","Underground tunnels below shelves","A hidden mechanical shaft"], answer:"B", exp:"The old tall halls (for daylight) became vertical chimneys for airflow."},
+    {n:6, p:"P1", type:"SHORT", prompt:"Complete the sentence: Small behavioral changes reduced ______ more than expensive machines.", accept:["moisture"], exp:"It says small behavioral changes reduced moisture more than expensive machines."},
+    {n:7, p:"P1", type:"TFNG", prompt:"Readers often noticed loud fans after the changes were made.", options:["True","False","Not Given"], answer:"False", exp:"The text says gentle movement occurred without loud fans and readers often did not notice the change."},
+    {n:8, p:"P1", type:"MCQ", prompt:"What was an unexpected outcome of the project?", options:["The library stopped lending books","The library became a learning example for schools","Budgets increased due to fines","The city banned old buildings"], answer:"B", exp:"School groups visited; newspaper called it a ‘quiet climate lab.’"},
+    {n:9, p:"P1", type:"SHORT", prompt:"How much did electricity use drop (approximately)? (Write a fraction/phrase)", accept:["a fifth","one fifth","roughly a fifth","about a fifth","around a fifth","20%","twenty percent"], exp:"The passage says electricity use dropped by roughly a fifth."},
+    {n:10, p:"P1", type:"MCQ", prompt:"Which phrase best matches the author’s main lesson?", options:["Old buildings should be replaced","New devices always solve old problems","Listening to patterns can outperform expensive upgrades","Humidity is unavoidable in coastal cities"], answer:"C", exp:"The concluding lesson emphasizes listening to what the old place ‘is telling you’ and using it wisely."},
+    {n:11, p:"P1", type:"TFNG", prompt:"The library’s repair budgets were always approved quickly.", options:["True","False","Not Given"], answer:"False", exp:"Budgets were swallowed by more visible needs; proposals were repeated but not prioritized."},
+    {n:12, p:"P1", type:"MCQ", prompt:"Why did the system close vents when rain arrived?", options:["To increase airflow speed","To stop carbon dioxide from rising","To prevent humid air entering and redirect air through dry corridors","To reduce sunlight exposure"], answer:"C", exp:"It says when rain arrived, vents closed and airflow redirected through dry interior corridors."},
+    {n:13, p:"P1", type:"MATCH (Dropdown)", prompt:"Match the room issue: A storage room stayed damp because…", options:["Furniture was moved too often","A door was often left open after deliveries","Sensors failed in monsoon","The roof leaked constantly"], answer:"A door was often left open after deliveries", exp:"Directly stated in passage."},
+
+    // Passage 2 (14–26)
+    {n:14, p:"P2", type:"MCQ", prompt:"In the twentieth century, why were big factories cheaper per unit?", options:["They used only local materials","They spread costs across large volumes and ran specialized machines efficiently","They avoided training workers","They produced fewer goods"], answer:"B", exp:"The passage explains economies of scale and efficiency from specialization."},
+    {n:15, p:"P2", type:"TFNG", prompt:"A microfactory is simply a smaller version of a traditional factory.", options:["True","False","Not Given"], answer:"False", exp:"It states microfactory is not simply a small version; it’s a different organization model."},
+    {n:16, p:"P2", type:"MCQ", prompt:"Microfactories compete mainly on…", options:["Lowest unit cost for one item","Speed, customization, and reduced transport","Government subsidies only","Eliminating digital design"], answer:"B", exp:"The aim is speed/customization/reduced transport rather than beating mega-factories on unit cost."},
+    {n:17, p:"P2", type:"MATCH (Dropdown)", prompt:"Choose the best match: Producing in smaller batches reduces the risk of…", options:["Machine theft","Unsold inventory after trends change","Too much electricity","Worker overtraining"], answer:"Unsold inventory after trends change", exp:"The text mentions warehouses of unsold inventory if trends change."},
+    {n:18, p:"P2", type:"MCQ", prompt:"What kind of skills do microfactories often need?", options:["Only manual skills","Hybrid skills (physical equipment + digital files)","Only management skills","Only marketing skills"], answer:"B", exp:"Workers need to understand both equipment and digital design files."},
+    {n:19, p:"P2", type:"TFNG", prompt:"Microfactories always localize the entire supply chain immediately.", options:["True","False","Not Given"], answer:"False", exp:"The passage says supply chains aren’t instantly localized; components may still come from elsewhere."},
+    {n:20, p:"P2", type:"MCQ", prompt:"What is one reason a regional workshop may outperform a distant giant?", options:["It has unlimited raw materials","It can prototype, test, and revise within days","It avoids all regulations","It never changes designs"], answer:"B", exp:"Fast iteration is highlighted as an advantage."},
+    {n:21, p:"P2", type:"MATCH (Dropdown)", prompt:"Early microfactory success depends on more than technology; which is mentioned?", options:["Access to reliable electricity","Taller factory ceilings","Owning shipping companies","Higher advertising budgets"], answer:"Access to reliable electricity", exp:"Reliable electricity is explicitly listed among key factors."},
+    {n:22, p:"P2", type:"MCQ", prompt:"Maker districts exist mainly to…", options:["Ban small companies","Share equipment and reduce entry costs","Force one company to dominate","Replace universities"], answer:"B", exp:"They share equipment and reduce cost of entry for small firms."},
+    {n:23, p:"P2", type:"TFNG", prompt:"In maker districts, all workshops do exactly the same job.", options:["True","False","Not Given"], answer:"False", exp:"It says one may test materials while another finishes/packaging—specialization across workshops."},
+    {n:24, p:"P2", type:"SHORT", prompt:"Complete the idea: Microfactories focus on reduced transport and being closer to ______.", accept:["home","customers","the consumer","the market","buyers"], exp:"The passage frames it as making closer to home / nearer customers/market."},
+    {n:25, p:"P2", type:"MCQ", prompt:"What assumption has changed according to the passage?", options:["Production must always be concentrated to be efficient","Only mega-factories can innovate","Small factories are illegal","Transport costs are irrelevant"], answer:"A", exp:"Last paragraph: production does not always need to be concentrated to be efficient."},
+    {n:26, p:"P2", type:"MCQ", prompt:"Which statement best summarizes Passage 2?", options:["Microfactories have no challenges","Microfactories may be strategic due to flexibility and proximity, but require skills and supportive local systems","Mega-factories will disappear soon","Customization is impossible"], answer:"B", exp:"This captures both advantages and constraints described."},
+
+    // Passage 3 (27–40)
+    {n:27, p:"P3", type:"MCQ", prompt:"Why can a shorter delay feel worse than a longer task?", options:["Short delays are always unfair","Control and meaning shape frustration more than minutes","People dislike technology","Waiting rooms are noisy"], answer:"B", exp:"The passage explains waiting is a mental state influenced by control, expectation, fairness, attention."},
+    {n:28, p:"P3", type:"MCQ", prompt:"‘Occupied time’ feels shorter because…", options:["It is actually shorter","It provides structure and reduces the sense of wasted time","It increases uncertainty","It removes fairness concerns"], answer:"B", exp:"Structure reassures the mind the system is working."},
+    {n:29, p:"P3", type:"TFNG", prompt:"When people do not know how long a wait will last, they usually underestimate it.", options:["True","False","Not Given"], answer:"False", exp:"The passage says they tend to overestimate it and monitor it more intensely."},
+    {n:30, p:"P3", type:"MCQ", prompt:"Why can highly precise wait estimates backfire?", options:["They require expensive software","If the system misses the promise, perceived injustice increases","They make waits longer","They stop people multitasking"], answer:"B", exp:"Promising 3 minutes but taking 5 feels worse than a broader range."},
+    {n:31, p:"P3", type:"MATCH (Dropdown)", prompt:"Perceived fairness increases when…", options:["Rules apply equally","Only VIPs are served","Information is hidden","Delays are random"], answer:"Rules apply equally", exp:"The passage says equal rules improve acceptance of delays."},
+    {n:32, p:"P3", type:"MCQ", prompt:"What happens when late arrivals are served early?", options:["People relax","Anger can occur because it signals disrespect and unfairness","Waiting becomes shorter for everyone","It has no effect"], answer:"B", exp:"It provokes anger because it violates fairness norms."},
+    {n:33, p:"P3", type:"TFNG", prompt:"Frustration in public waiting settings can spread to others.", options:["True","False","Not Given"], answer:"True", exp:"The passage explicitly states frustration is contagious."},
+    {n:34, p:"P3", type:"MCQ", prompt:"How can technology increase attention to waiting?", options:["By removing updates","By encouraging constant refreshing which restarts expectation cycles","By hiding delivery progress","By making devices heavier"], answer:"B", exp:"Refreshing maps frequently makes the wait feel larger."},
+    {n:35, p:"P3", type:"SHORT", prompt:"Complete the sentence: Designers improve waiting by focusing on ______ rather than raw speed.", accept:["perception","experience","the perception"], exp:"The passage says designers often focus on perception rather than raw speed."},
+    {n:36, p:"P3", type:"MCQ", prompt:"Which is an example of a perception-improving change?", options:["Removing all progress indicators","Meaningful explanations for delays","Guaranteeing impossible times","Turning off all notifications"], answer:"B", exp:"Visible progress indicators and meaningful explanations are mentioned."},
+    {n:37, p:"P3", type:"TFNG", prompt:"Multitasking always makes waiting feel shorter.", options:["True","False","Not Given"], answer:"Not Given", exp:"The passage says digital services can allow multitask, but also can increase attention via constant updates. It does not say ‘always’ shorter."},
+    {n:38, p:"P3", type:"MCQ", prompt:"The ‘uncomfortable truth’ in the final line is that people want…", options:["Only shorter waits","The feeling their time is respected","More complicated queue rules","No information at all"], answer:"B", exp:"It states people want the feeling that their time is respected."},
+    {n:39, p:"P3", type:"MATCH (Dropdown)", prompt:"Uncertainty tends to cause people to…", options:["Monitor the wait more intensely","Forget they are waiting","Stop caring about fairness","Enjoy waiting"], answer:"Monitor the wait more intensely", exp:"The passage says uncertainty increases vigilance, amplifying annoyance."},
+    {n:40, p:"P3", type:"MCQ", prompt:"Best overall summary of Passage 3:", options:["Waiting is only about minutes","Waiting is psychological; structure, information, and fairness can reduce frustration even without shortening time","People dislike all queues equally","Progress indicators do not matter"], answer:"B", exp:"That is the central argument across the passage."},
+  ]
+};
+
+let state = {
+  started:false,
+  startTs: null,
+  remainingSec: TEST.durationSec,
+  timerInt: null,
+  currentQ: 1,
+  answers: {}, // {n: value}
+  flags: new Set(),
+  submitted:false
+};
+
+const el = (id)=>document.getElementById(id);
+
+function pad(n){return String(n).padStart(2,"0");}
+function formatTime(sec){
+  sec=Math.max(0, sec|0);
+  const m=Math.floor(sec/60), s=sec%60;
+  return `${pad(m)}:${pad(s)}`;
+}
+
+function passageById(pid){ return TEST.passages.find(x=>x.id===pid); }
+function qByN(n){ return TEST.questions.find(x=>x.n===n); }
+
+function answeredCount(){
+  return Object.keys(state.answers).filter(k=>{
+    const v = state.answers[k];
+    return v !== null && v !== undefined && String(v).trim() !== "";
+  }).length;
+}
+
+function updateProgress(){
+  el("progressTag").textContent = `${answeredCount()} / ${TEST.questions.length} answered`;
+}
+
+function renderNav(){
+  const nav = el("navBox");
+  nav.classList.remove("muted");
+  nav.innerHTML = "";
+  for(let i=1;i<=TEST.questions.length;i++){
+    const b=document.createElement("button");
+    b.className="qbtn";
+    b.textContent=i;
+    if(i===state.currentQ) b.classList.add("active");
+    const ans = state.answers[i];
+    if(ans!==undefined && String(ans).trim()!=="") b.classList.add("answered");
+    if(state.flags.has(i)) b.classList.add("flag");
+    b.onclick=()=>{ goToQ(i); };
+    nav.appendChild(b);
+  }
+}
+
+function renderPassage(pid){
+  const p = passageById(pid);
+  el("passageTitle").textContent = p.title;
+  el("passageMeta").textContent = p.meta;
+  el("passageBox").classList.remove("muted");
+  el("passageBox").innerHTML = p.text;
+}
+
+function setRadioValue(name, value){
+  const nodes = document.querySelectorAll(`input[name="${name}"]`);
+  nodes.forEach(n=>{ n.checked = (n.value===value); });
+}
+
+function normalizeText(s){
+  return String(s||"")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g," ");
+}
+
+function renderQuestion(n){
+  const q = qByN(n);
+  if(!q) return;
+
+  el("qTitle").textContent = `Q${q.n}`;
+  el("qType").textContent = q.type;
+  el("qPassage").textContent = `Passage ${q.p.replace("P","")}`;
+  el("qText").textContent = q.prompt;
+
+  // show relevant passage
+  renderPassage(q.p);
+
+  // flag button
+  el("flagBtn").style.display = "inline-block";
+  el("flagBtn").textContent = state.flags.has(n) ? "Unflag" : "Flag";
+  el("flagBtn").onclick = ()=>{
+    if(state.flags.has(n)) state.flags.delete(n);
+    else state.flags.add(n);
+    el("flagBtn").textContent = state.flags.has(n) ? "Unflag" : "Flag";
+    renderNav();
+  };
+
+  const container = el("qInput");
+  container.innerHTML = "";
+
+  const saved = state.answers[n];
+
+  if(q.type==="MCQ"){
+    const name = `q${n}`;
+    q.options.forEach((opt, idx)=>{
+      const letter = String.fromCharCode(65+idx);
+      const id = `${name}_${letter}`;
+      const lab = document.createElement("label");
+      lab.className="opt";
+      lab.innerHTML = `<input type="radio" name="${name}" value="${letter}" id="${id}"> <b>${letter}.</b> ${opt}`;
+      lab.onclick = ()=>{
+        state.answers[n] = letter;
+        updateProgress();
+        renderNav();
+      };
+      container.appendChild(lab);
+    });
+    if(saved) setRadioValue(`q${n}`, saved);
+
+  } else if(q.type==="TFNG"){
+    const name = `q${n}`;
+    q.options.forEach((opt)=>{
+      const id = `${name}_${opt}`;
+      const lab = document.createElement("label");
+      lab.className="opt";
+      lab.innerHTML = `<input type="radio" name="${name}" value="${opt}" id="${id}"> ${opt}`;
+      lab.onclick = ()=>{
+        state.answers[n] = opt;
+        updateProgress();
+        renderNav();
+      };
+      container.appendChild(lab);
+    });
+    if(saved) setRadioValue(`q${n}`, saved);
+
+  } else if(q.type==="SHORT"){
+    const input = document.createElement("input");
+    input.type="text";
+    input.placeholder="Type your answer (spelling matters).";
+    input.value = saved ?? "";
+    input.oninput = ()=>{
+      state.answers[n] = input.value;
+      updateProgress();
+      renderNav();
+    };
+    container.appendChild(input);
+    const note = document.createElement("div");
+    note.className="mini";
+    note.style.marginTop="8px";
+    note.textContent = "Tip: Keep it simple. No extra words.";
+    container.appendChild(note);
+
+  } else if(q.type==="MATCH (Dropdown)"){
+    const sel = document.createElement("select");
+    const blank = document.createElement("option");
+    blank.value=""; blank.textContent="Select an answer…";
+    sel.appendChild(blank);
+    q.options.forEach(opt=>{
+      const o=document.createElement("option");
+      o.value=opt; o.textContent=opt;
+      sel.appendChild(o);
+    });
+    sel.value = saved ?? "";
+    sel.onchange = ()=>{
+      state.answers[n] = sel.value;
+      updateProgress();
+      renderNav();
+    };
+    container.appendChild(sel);
+
+  } else {
+    container.innerHTML = `<div class="muted">Unsupported question type.</div>`;
+  }
+
+  el("qHint").textContent = state.flags.has(n) ? "Flagged for review." : "Answer carefully.";
+
+  // prev/next
+  el("prevBtn").disabled = (n===1);
+  el("nextBtn").textContent = (n===TEST.questions.length) ? "Finish ▶" : "Next ▶";
+}
+
+function goToQ(n){
+  state.currentQ = n;
+  renderNav();
+  renderQuestion(n);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function clearCurrent(){
+  const n = state.currentQ;
+  delete state.answers[n];
+  renderQuestion(n);
+  updateProgress();
+  renderNav();
+}
+
+function startTest(){
+  if(state.started) return;
+  state.started = true;
+  state.submitted = false;
+  state.startTs = Date.now();
+  state.remainingSec = TEST.durationSec;
+  state.currentQ = 1;
+  state.answers = {};
+  state.flags = new Set();
+
+  el("startBtn").style.display="none";
+  el("submitBtn").style.display="inline-block";
+  el("qBox").style.display="block";
+  el("resultBox").style.display="none";
+  el("reviewBox").style.display="none";
+
+  el("flagBtn").style.display="inline-block";
+
+  renderNav();
+  renderQuestion(1);
+  updateProgress();
+  tick();
+  state.timerInt = setInterval(tick, 1000);
+}
+
+function tick(){
+  if(!state.started || state.submitted) return;
+  el("timer").textContent = formatTime(state.remainingSec);
+  if(state.remainingSec<=0){
+    submitTest(true);
+    return;
+  }
+  state.remainingSec--;
+  // warn color under 5 minutes
+  if(state.remainingSec<=5*60) el("timer").style.background="rgba(224,102,102,.16)";
+}
+
+function estimateBand(raw){
+  // Rough estimate (not official). Works as a simple motivator + feedback.
+  // Typical academic reading conversion varies per test; we keep it transparent.
+  if(raw>=39) return "9.0";
+  if(raw>=37) return "8.5";
+  if(raw>=35) return "8.0";
+  if(raw>=33) return "7.5";
+  if(raw>=30) return "7.0";
+  if(raw>=27) return "6.5";
+  if(raw>=23) return "6.0";
+  if(raw>=19) return "5.5";
+  if(raw>=15) return "5.0";
+  if(raw>=10) return "4.5";
+  return "4.0 or below";
+}
+
+function scoreTest(){
+  let correct=0;
+  const wrongByType = {};
+  const rightByType = {};
+  const details = [];
+
+  for(const q of TEST.questions){
+    const user = state.answers[q.n];
+    let isCorrect=false;
+
+    if(q.type==="MCQ" || q.type==="TFNG"){
+      isCorrect = (String(user||"").trim() === q.answer);
+
+    } else if(q.type==="MATCH (Dropdown)"){
+      isCorrect = (normalizeText(user) === normalizeText(q.answer));
+
+    } else if(q.type==="SHORT"){
+      const u = normalizeText(user);
+      isCorrect = (q.accept || []).some(a => normalizeText(a)===u);
+    }
+
+    if(isCorrect) correct++;
+    const bucket = q.type;
+    if(isCorrect) rightByType[bucket]=(rightByType[bucket]||0)+1;
+    else wrongByType[bucket]=(wrongByType[bucket]||0)+1;
+
+    details.push({
+      n:q.n, p:q.p, type:q.type,
+      prompt:q.prompt,
+      correct:q.answer,
+      user: user ?? "",
+      isCorrect,
+      exp:q.exp
+    });
+  }
+
+  return {correct, total: TEST.questions.length, wrongByType, rightByType, details};
+}
+
+function bestType(rightByType){
+  let best = null, bestVal=-1;
+  for(const k in rightByType){
+    if(rightByType[k]>bestVal){
+      bestVal=rightByType[k]; best=k;
+    }
+  }
+  return best ? `${best} (${bestVal} correct)` : "—";
+}
+
+function worstType(wrongByType){
+  let worst = null, worstVal=-1;
+  for(const k in wrongByType){
+    if(wrongByType[k]>worstVal){
+      worstVal=wrongByType[k]; worst=k;
+    }
+  }
+  return worst ? `${worst} (${worstVal} wrong)` : "—";
+}
+
+function submitTest(auto=false){
+  if(!state.started || state.submitted) return;
+
+  state.submitted = true;
+  clearInterval(state.timerInt);
+  el("submitBtn").style.display="none";
+  el("flagBtn").style.display="none";
+  el("qBox").style.display="none";
+
+  const {correct,total,wrongByType,rightByType,details} = scoreTest();
+  const band = estimateBand(correct);
+
+  const used = TEST.durationSec - Math.max(0, state.remainingSec);
+  const usedMin = Math.floor(used/60);
+  const usedSec = used%60;
+
+  el("resultBox").style.display="block";
+  el("scoreLine").textContent = `${correct} / ${total}`;
+  el("bandLine").textContent = `Estimated band (rough): ${band} — this is not an official IELTS conversion.`;
+  el("strengthLine").textContent = bestType(rightByType);
+  el("weakLine").textContent = worstType(wrongByType);
+  el("timeUsedLine").textContent = `${usedMin}m ${usedSec}s ${auto ? "(auto-submitted)" : ""}`;
+
+  el("reviewBtn").onclick = ()=>{
+    const box = el("reviewBox");
+    box.style.display="block";
+    box.innerHTML = `<div class="badge">Full Review</div>`;
+    details.forEach(d=>{
+      const q = qByN(d.n);
+      const userShow = (q.type==="MCQ") ? (d.user ? `${d.user}` : "—")
+                    : (q.type==="TFNG") ? (d.user || "—")
+                    : (d.user && String(d.user).trim()!=="" ? d.user : "—");
+
+      const correctShow = (q.type==="MCQ") ? `${d.correct}`
+                        : (q.type==="TFNG") ? d.correct
+                        : d.correct;
+
+      const ok = d.isCorrect;
+      const item = document.createElement("div");
+      item.className="reviewItem";
+      item.innerHTML = `
+        <div class="row" style="gap:8px;">
+          <div class="left" style="gap:8px;">
+            <b>Q${d.n}</b>
+            <span class="badge">${d.type}</span>
+            <span class="badge">Passage ${d.p.replace("P","")}</span>
+          </div>
+          <div>${ok ? `<span class="ok">Correct</span>` : `<span class="no">Wrong</span>`}</div>
+        </div>
+        <div class="qtext" style="margin:8px 0 6px;">${escapeHtml(d.prompt)}</div>
+        <div class="mini"><b>Your answer:</b> ${escapeHtml(String(userShow))}</div>
+        <div class="mini"><b>Correct answer:</b> ${escapeHtml(String(correctShow))}${q.type==="SHORT" ? ` <span class="muted">(accepted: ${escapeHtml(q.accept.join(", "))})</span>` : ""}</div>
+        <div class="exp"><b>Explanation:</b> ${escapeHtml(d.exp)}</div>
+      `;
+      box.appendChild(item);
+    });
+    window.scrollTo({top: document.body.scrollHeight, behavior:"smooth"});
+  };
+
+  el("restartBtn").onclick = ()=>{
+    // hard reset
+    state.started=false;
+    state.submitted=false;
+    state.remainingSec = TEST.durationSec;
+    el("timer").textContent = formatTime(TEST.durationSec);
+    el("timer").style.background="rgba(202,166,58,.12)";
+    el("startBtn").style.display="inline-block";
+    el("submitBtn").style.display="none";
+    el("resultBox").style.display="none";
+    el("navBox").classList.add("muted");
+    el("navBox").textContent="Start test to load questions.";
+    el("passageTitle").textContent="Passage (locked until you start)";
+    el("passageMeta").textContent="—";
+    el("passageBox").classList.add("muted");
+    el("passageBox").innerHTML=`Press <b>Start Test</b>. You will get 60 minutes for 3 passages (40 questions).
+      <div class="hr"></div><div class="tinyBrand">LizOn Education • IELTS ZERO</div>`;
+    updateProgress();
+    window.scrollTo({top:0, behavior:"smooth"});
+  };
+}
+
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+/* UI hooks */
+el("startBtn").onclick = startTest;
+el("submitBtn").onclick = ()=> submitTest(false);
+el("prevBtn").onclick = ()=>{ if(state.currentQ>1) goToQ(state.currentQ-1); };
+el("nextBtn").onclick = ()=>{
+  if(state.currentQ<TEST.questions.length) goToQ(state.currentQ+1);
+  else submitTest(false);
+};
+el("clearBtn").onclick = clearCurrent;
+
+el("highlightTip").onclick = ()=>{
+  alert("CBT Reading tip: stop hunting for exact words. Hunt for paraphrases. IELTS loves same meaning, different wording.");
+};
+
+updateProgress();
+</script>
+</body>
+</html>

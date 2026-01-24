@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin — LizOn Portal</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./assets/portal.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot"></div>
+        <div>
+          <div class="brandTitle">LizOn Education</div>
+          <div class="brandSub">Admin Dashboard</div>
+        </div>
+      </div>
+      <div class="actions">
+        <span class="badge">Name: <b id="topbarName">…</b></span>
+        <span class="badge">Role: <b id="topbarRole">…</b></span>
+        <button class="btn" id="btnInstall">Add to Home Screen</button>
+        <button class="btn btnDanger" id="btnLogout">Logout</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card half">
+        <div class="h1">Enroll Student / Create 1:1 Room</div>
+        <p class="p">
+          Admin must first create the user in Supabase Auth and insert a profile row.
+          Then enroll here.
+        </p>
+        <div class="hr"></div>
+
+        <form id="enrollForm">
+          <div class="field">
+            <label>Student Email</label>
+            <input class="input" id="studentEmail" placeholder="student@email.com" required />
+            <small>Student must exist in <span class="kbd">profiles</span> table.</small>
+          </div>
+
+          <div class="field">
+            <label>Course</label>
+            <select id="course"></select>
+          </div>
+
+          <div class="field">
+            <label>Batch Month (Group only)</label>
+            <input class="input" id="batch" placeholder="2026-01" />
+            <small>Required for group courses. Leave empty for 1:1.</small>
+          </div>
+
+          <div class="field">
+            <label>Assign Teacher (optional)</label>
+            <select id="teacher"></select>
+            <small>If empty, uses default mapping (Prince/Joy/Swapnil).</small>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="field">
+            <label>Google Meet Link</label>
+            <input class="input" id="meetLink" placeholder="https://meet.google.com/..." />
+          </div>
+          <div class="field">
+            <label>Notes Drive Folder Link</label>
+            <input class="input" id="notesLink" placeholder="https://drive.google.com/..." />
+          </div>
+          <div class="field">
+            <label>Homework Google Form Link</label>
+            <input class="input" id="hwLink" placeholder="https://forms.gle/..." />
+          </div>
+          <div class="field">
+            <label>Recordings Drive Folder Link</label>
+            <input class="input" id="recLink" placeholder="https://drive.google.com/..." />
+          </div>
+          <div class="field">
+            <label>Practice Link (optional)</label>
+            <input class="input" id="practiceLink" placeholder="https://meet.jit.si/..." />
+          </div>
+
+          <div class="row">
+            <button class="btn btnPrimary" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card half">
+        <div class="h1">Post Announcement</div>
+        <p class="p">Appears on student dashboard.</p>
+        <div class="hr"></div>
+        <form id="annForm">
+          <div class="field">
+            <label>Title</label>
+            <input class="input" id="annTitle" placeholder="Class time update" />
+          </div>
+          <div class="field">
+            <label>Body</label>
+            <input class="input" id="annBody" placeholder="Tonight class 10:15 PM. Join on time." />
+          </div>
+          <button class="btn btnPrimary" type="submit">Post</button>
+        </form>
+
+        <div class="hr"></div>
+        <div class="notice noticeWarn">
+          <div style="font-weight:800;">Super Admin plan</div>
+          <div class="mini">
+            You (Joy) = <b>super_admin</b><br/>
+            Sahil = <b>admin</b><br/>
+            Only super_admin should create/remove admins.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column: span 12;">
+        <div class="h1">Recent Group Enrollments</div>
+        <div class="hr"></div>
+        <table class="table">
+          <thead><tr><th>Course</th><th>Batch</th><th>Status</th><th>Teacher</th><th>Created</th></tr></thead>
+          <tbody id="enrollmentsTableBody"><tr><td colspan="5" class="mini">Loading…</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="card" style="grid-column: span 12;">
+        <div class="h1">Recent 1-on-1 Rooms</div>
+        <div class="hr"></div>
+        <table class="table">
+          <thead><tr><th>Label</th><th>Status</th><th>Teacher</th><th>Created</th></tr></thead>
+          <tbody id="oneOnOneTableBody"><tr><td colspan="4" class="mini">Loading…</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="card" style="grid-column: span 12;">
+        <div class="h1">Announcements</div>
+        <div class="hr"></div>
+        <table class="table">
+          <thead><tr><th>Message</th><th>Status</th><th>Created</th></tr></thead>
+          <tbody id="annTableBody"><tr><td colspan="3" class="mini">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script type="module">
+    import { requireAuth, bindTopbar, loadAdminDashboard } from "./assets/portal.js";
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js").catch(()=>{});
+    }
+
+    const auth = await requireAuth(["admin", "super_admin"]);
+    if (!auth) {} else {
+      bindTopbar(auth.profile);
+      await loadAdminDashboard(auth.profile);
+    }
+  </script>
+</body>
+</html>

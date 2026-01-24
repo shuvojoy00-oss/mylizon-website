@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LizOn Portal</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./assets/portal.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="h1">LizOn Portal</div>
+      <p class="p">Redirecting…</p>
+      <div class="hr"></div>
+      <div class="mini">If nothing happens, open <a href="./login.html"><b>Login</b></a>.</div>
+    </div>
+  </div>
+
+  <!-- Supabase CDN -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+  <script type="module">
+    import { createClient } from "./assets/supabase.js";
+
+    // register service worker (PWA)
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js").catch(()=>{});
+    }
+
+    const sb = createClient();
+    const { data } = await sb.auth.getSession();
+    const session = data.session;
+
+    if (!session) {
+      location.href = "./login.html";
+    } else {
+      // determine role
+      const { data: profile } = await sb.from("profiles").select("role").eq("id", session.user.id).single();
+      const role = profile?.role || "student";
+      if (role === "student") location.href = "./student.html";
+      else if (role === "teacher") location.href = "./teacher.html";
+      else location.href = "./admin.html";
+    }
+  </script>
+</body>
+</html>

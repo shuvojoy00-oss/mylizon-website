@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Student — LizOn Portal</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./assets/portal.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot"></div>
+        <div>
+          <div class="brandTitle">LizOn Education</div>
+          <div class="brandSub">Student Dashboard</div>
+        </div>
+      </div>
+      <div class="actions">
+        <span class="badge">Name: <b id="topbarName">…</b></span>
+        <span class="badge">Role: <b id="topbarRole">…</b></span>
+        <button class="btn" id="btnInstall">Add to Home Screen</button>
+        <button class="btn btnDanger" id="btnLogout">Logout</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card third">
+        <div class="h1">Announcements</div>
+        <p class="p">Updates from LizOn.</p>
+        <div class="hr"></div>
+        <div id="announcements" class="mini">Loading…</div>
+      </div>
+
+      <div class="card" style="grid-column: span 12;">
+        <div class="h1">My Courses</div>
+        <p class="p">Join class, open notes, submit homework, watch recordings.</p>
+      </div>
+
+      <div id="studentCards" class="grid" style="grid-column: span 12; margin-top:0;"></div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script type="module">
+    import { requireAuth, bindTopbar, loadStudentDashboard } from "./assets/portal.js";
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js").catch(()=>{});
+    }
+
+    const auth = await requireAuth(["student"]);
+    if (!auth) {} else {
+      bindTopbar(auth.profile);
+      await loadStudentDashboard(auth.profile);
+    }
+  </script>
+</body>
+</html>

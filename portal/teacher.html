@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Teacher — LizOn Portal</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./assets/portal.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot"></div>
+        <div>
+          <div class="brandTitle">LizOn Education</div>
+          <div class="brandSub">Teacher Dashboard</div>
+        </div>
+      </div>
+      <div class="actions">
+        <span class="badge">Name: <b id="topbarName">…</b></span>
+        <span class="badge">Role: <b id="topbarRole">…</b></span>
+        <button class="btn" id="btnInstall">Add to Home Screen</button>
+        <button class="btn btnDanger" id="btnLogout">Logout</button>
+      </div>
+    </div>
+
+    <div class="grid" id="teacherList">
+      <div class="card">
+        <div class="h1">Loading…</div>
+        <p class="p">Please wait.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script type="module">
+    import { requireAuth, bindTopbar, loadTeacherDashboard } from "./assets/portal.js";
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js").catch(()=>{});
+    }
+
+    const auth = await requireAuth(["teacher"]);
+    if (!auth) {} else {
+      bindTopbar(auth.profile);
+      await loadTeacherDashboard(auth.profile);
+    }
+  </script>
+</body>
+</html>

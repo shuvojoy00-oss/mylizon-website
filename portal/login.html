@@ -82,7 +82,101 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+  import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./assets/supabase.js";
+
+  // show real errors instead of silent reload
+  window.addEventListener("error", (e) => {
+    alert("JS Error: " + (e?.message || "Unknown error"));
+  });
+
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    }
+  });
+
+  // Service worker (optional)
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js").catch(()=>{});
+  }
+
+  // Install button logic
+  let deferredPrompt = null;
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  document.getElementById("btnInstall").addEventListener("click", async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+    } else {
+      alert("iPhone: Share → Add to Home Screen\nAndroid: Menu → Add to Home screen / Install app");
+    }
+  });
+
+  // If already logged in, redirect
+  const { data: sessData } = await sb.auth.getSession();
+  if (sessData.session) location.href = "./index.html";
+
+  // Google OAuth
+  document.getElementById("btnGoogle").addEventListener("click", async () => {
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: location.origin + "/portal/index.html" }
+    });
+    if (error) alert(error.message);
+  });
+
+  // Email + password login
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) return alert("Login failed: " + error.message);
+
+    // Check profile access (try by id, fallback by email)
+    let profile = null;
+
+    const res1 = await sb.from("profiles").select("role,status").eq("id", data.user.id).maybeSingle();
+    if (!res1.error && res1.data) profile = res1.data;
+
+    if (!profile) {
+      const res2 = await sb.from("profiles").select("role,status").eq("email", email).maybeSingle();
+      if (!res2.error && res2.data) profile = res2.data;
+    }
+
+    if (!profile || profile.status !== "active") {
+      alert("Your portal access is not active yet. Contact LizOn admin.");
+      await sb.auth.signOut();
+      return;
+    }
+
+    location.href = "./index.html";
+  });
+
+  // Reset password (email)
+  document.getElementById("btnReset").addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    if (!email) return alert("Enter your email first.");
+
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: location.origin + "/portal/login.html"
+    });
+
+    if (error) return alert("Reset failed: " + error.message);
+    alert("Password reset email sent. Check inbox/spam.");
+  });
+</script>
+
 
   <script type="module">
     import { createClient } from "./assets/supabase.js";
@@ -154,3 +248,4 @@
   </script>
 </body>
 </html>
+

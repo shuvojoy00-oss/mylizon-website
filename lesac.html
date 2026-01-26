@@ -1,327 +1,1295 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>LESAC | Study Abroad from Bangladesh</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LESAC — Study Abroad Guide | LizOn Education</title>
+  <meta name="description" content="LESAC Study Abroad guide from Bangladesh: where to study, budget ranges in BDT lakh, scholarships, and skill plan for part-time/odd jobs." />
 
   <style>
     :root{
-      --primary:#0f5132;
-      --secondary:#198754;
-      --accent:#ffc107;
-      --bg:#f8f9fa;
-      --card:#ffffff;
-      --text:#212529;
-      --muted:#6c757d;
+      --bg:#f6f8fb;
+      --card:#ffffffcc;
+      --card2:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --line:#e5e7eb;
+      --shadow: 0 14px 40px rgba(15, 23, 42, .10);
+      --shadow2: 0 10px 24px rgba(15, 23, 42, .10);
+      --glass: blur(14px) saturate(140%);
+      --brand:#0f5132;         /* Dark Green */
+      --brand2:#126b43;
+      --accent:#2563eb;
+      --warn:#f59e0b;
+      --ok:#16a34a;
+      --bad:#dc2626;
+      --chip:#eef2ff;
+      --radius:20px;
+      --radius2:26px;
+      --max:1100px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
-      background:var(--bg);
+      font-family:var(--font);
       color:var(--text);
-      line-height:1.6;
+      background:
+        radial-gradient(1100px 520px at 8% -10%, rgba(37,99,235,.12), transparent 60%),
+        radial-gradient(900px 520px at 92% 0%, rgba(15,81,50,.14), transparent 56%),
+        radial-gradient(900px 520px at 50% 110%, rgba(245,158,11,.12), transparent 55%),
+        var(--bg);
+      line-height:1.45;
     }
 
-    header{
-      position:sticky;
-      top:0;
-      z-index:100;
-      background:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 18px;
-      box-shadow:0 2px 8px rgba(0,0,0,.08);
-    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:18px 16px 110px}
 
+    /* Header */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background:linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.60));
+      border-bottom:1px solid rgba(229,231,235,.9);
+      backdrop-filter: var(--glass);
+      -webkit-backdrop-filter: var(--glass);
+    }
+    .topbarInner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:12px 14px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
     .brand{
-      display:flex;
-      align-items:center;
+      display:flex; align-items:center; gap:10px; min-width:180px;
+    }
+    .logo{
+      width:40px; height:40px; border-radius:12px;
+      background:#fff;
+      box-shadow: 0 10px 22px rgba(2,6,23,.08);
+      overflow:hidden;
+      display:grid; place-items:center;
+      border:1px solid rgba(229,231,235,.9);
+    }
+    .logo img{width:100%; height:100%; object-fit:contain; padding:6px}
+    .brandText{display:flex; flex-direction:column; line-height:1.05}
+    .brandText .t1{font-weight:900; letter-spacing:.2px}
+    .brandText .t2{font-size:12px; color:var(--muted); margin-top:2px}
+
+    .actions{display:flex; align-items:center; gap:10px}
+    .btn{
+      border:1px solid rgba(229,231,235,.9);
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.78));
+      box-shadow: 0 12px 26px rgba(2,6,23,.10);
+      border-radius:999px;
+      padding:10px 12px;
+      font-weight:800;
+      cursor:pointer;
+      display:inline-flex; align-items:center; gap:8px;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 16px 30px rgba(2,6,23,.12)}
+    .btn:active{transform: translateY(0px) scale(.99)}
+    .btnPrimary{
+      border-color: rgba(15,81,50,.25);
+      background:linear-gradient(180deg, rgba(18,107,67,.16), rgba(255,255,255,.82));
+    }
+    .btnAccent{
+      border-color: rgba(37,99,235,.28);
+      background:linear-gradient(180deg, rgba(37,99,235,.14), rgba(255,255,255,.82));
+    }
+    .icon{width:18px; height:18px; display:inline-block}
+
+    /* Drawer */
+    .backdrop{
+      position:fixed; inset:0; z-index:60;
+      background:rgba(2,6,23,.34);
+      opacity:0; pointer-events:none;
+      transition: opacity .18s ease;
+    }
+    .backdrop.show{opacity:1; pointer-events:auto}
+    .drawer{
+      position:fixed; top:0; right:0; z-index:70;
+      width:min(380px, 92vw);
+      height:100%;
+      background:rgba(255,255,255,.86);
+      border-left:1px solid rgba(229,231,235,.9);
+      backdrop-filter: var(--glass);
+      -webkit-backdrop-filter: var(--glass);
+      transform: translateX(102%);
+      transition: transform .22s ease;
+      box-shadow: -24px 0 60px rgba(2,6,23,.18);
+      display:flex; flex-direction:column;
+    }
+    .drawer.show{transform: translateX(0)}
+    .drawerHeader{
+      padding:14px 14px 10px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(229,231,235,.9);
+    }
+    .drawerHeader .h{font-weight:900}
+    .drawerBody{padding:14px; display:grid; gap:10px; overflow:auto}
+    .navItem{
+      text-decoration:none;
+      padding:12px 12px;
+      border:1px solid rgba(229,231,235,.9);
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
+      box-shadow: 0 10px 22px rgba(2,6,23,.08);
+      display:flex; align-items:center; justify-content:space-between;
+      font-weight:850;
+    }
+    .navItem small{display:block; font-weight:700; color:var(--muted); margin-top:2px}
+    .navLeft{display:flex; gap:10px; align-items:flex-start}
+    .pill{
+      font-size:12px; font-weight:900;
+      padding:6px 10px; border-radius:999px;
+      background:var(--chip);
+      border:1px solid rgba(99,102,241,.20);
+      color:#1e3a8a;
+      display:inline-flex; align-items:center; gap:6px;
+      white-space:nowrap;
+    }
+
+    /* Hero */
+    .hero{
+      margin-top:14px;
+      border:1px solid rgba(229,231,235,.9);
+      border-radius:var(--radius2);
+      background:linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.72));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .heroInner{padding:18px 16px; display:grid; gap:14px}
+    .kicker{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+    .kicker .tag{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(15,81,50,.22);
+      background:rgba(15,81,50,.08);
+      color:var(--brand);
+      font-weight:900;
+      font-size:12px;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(22px, 3.2vw, 34px);
+      line-height:1.12;
+      letter-spacing:-.2px;
+      font-weight:950;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-weight:650;
+      max-width:80ch;
+    }
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 860px){
+      .heroGrid{grid-template-columns:1fr}
+      .brand{min-width:auto}
+      .actions{gap:8px}
+      .btn{padding:10px 11px}
+    }
+
+    /* Cards */
+    .card{
+      border:1px solid rgba(229,231,235,.9);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.72));
+      backdrop-filter: var(--glass);
+      -webkit-backdrop-filter: var(--glass);
+      box-shadow: var(--shadow2);
+      padding:14px;
+    }
+    .cardTitle{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      margin-bottom:8px;
+    }
+    .cardTitle .left{display:flex; gap:10px; align-items:center}
+    .badgeIcon{
+      width:40px; height:40px; border-radius:14px;
+      display:grid; place-items:center;
+      background:rgba(37,99,235,.10);
+      border:1px solid rgba(37,99,235,.18);
+    }
+    .badgeIcon.g{background:rgba(15,81,50,.10); border-color:rgba(15,81,50,.18)}
+    .badgeIcon.y{background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.22)}
+    .badgeIcon.r{background:rgba(220,38,38,.10); border-color:rgba(220,38,38,.18)}
+    .cardTitle h2{
+      margin:0;
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:-.1px;
+    }
+    .muted{color:var(--muted)}
+    .fine{font-size:12px; color:var(--muted); margin-top:6px}
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 720px){ .grid2{grid-template-columns:1fr} }
+
+    /* Lists */
+    .ul{margin:10px 0 0; padding-left:18px; color:var(--text)}
+    .ul li{margin:7px 0}
+    .ul strong{font-weight:950}
+
+    /* Accordion */
+    details{
+      border:1px solid rgba(229,231,235,.9);
+      border-radius:16px;
+      background:rgba(255,255,255,.78);
+      box-shadow: 0 10px 20px rgba(2,6,23,.06);
+      overflow:hidden;
+    }
+    details + details{margin-top:10px}
+    summary{
+      cursor:pointer;
+      list-style:none;
+      padding:12px 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-weight:950;
+    }
+    summary::-webkit-details-marker{display:none}
+    .sumRight{display:flex; align-items:center; gap:8px}
+    .chev{transition: transform .15s ease}
+    details[open] .chev{transform: rotate(180deg)}
+    .detailBody{padding:0 12px 12px}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
+    .chip{
+      border:1px solid rgba(229,231,235,.9);
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.8);
+      font-size:12px;
+      font-weight:900;
+      color:#0b3b2a;
+    }
+
+    /* Table */
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid rgba(229,231,235,.9);
+      background:rgba(255,255,255,.84);
+      box-shadow: 0 10px 20px rgba(2,6,23,.06);
+      margin-top:10px;
+    }
+    th,td{
+      padding:11px 10px;
+      border-bottom:1px solid rgba(229,231,235,.9);
+      vertical-align:top;
+    }
+    th{
+      text-align:left;
+      font-size:12px;
+      letter-spacing:.25px;
+      text-transform:uppercase;
+      color:#0b3b2a;
+      background:linear-gradient(180deg, rgba(15,81,50,.10), rgba(255,255,255,.0));
+      font-weight:950;
+    }
+    tr:last-child td{border-bottom:none}
+    .range{font-weight:950; color:#0b3b2a}
+    .note{font-size:12px; color:var(--muted); margin-top:10px}
+
+    /* Mini tools */
+    .toolRow{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+      margin-top:10px;
+    }
+    .input{
+      flex:1;
+      min-width:220px;
+      border:1px solid rgba(229,231,235,.95);
+      border-radius:999px;
+      padding:10px 12px;
+      background:rgba(255,255,255,.88);
+      box-shadow: 0 10px 20px rgba(2,6,23,.06);
+      outline:none;
+      font-weight:800;
+      color:var(--text);
+    }
+    .hintPill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(245,158,11,.28);
+      background:rgba(245,158,11,.10);
+      color:#7c4a00;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    /* Sections */
+    .section{margin-top:14px}
+    .sectionHeader{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:10px;
+      margin:18px 0 10px;
+    }
+    .sectionHeader .title{
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:-.1px;
+      margin:0;
+    }
+    .sectionHeader .mini{
+      font-size:12px; color:var(--muted); font-weight:750;
+      text-align:right;
+    }
+
+    /* Floating buttons */
+    .fabStack{
+      position:fixed;
+      right:14px;
+      bottom:16px;
+      z-index:80;
+      display:grid;
       gap:10px;
     }
-
-    .brand img{
-      height:38px;
-    }
-
-    .menu-btn{
-      border:none;
-      background:var(--primary);
-      color:#fff;
-      padding:8px 14px;
-      border-radius:10px;
-      font-weight:600;
-      cursor:pointer;
-    }
-
-    .menu{
-      display:none;
-      position:absolute;
-      top:64px;
-      right:18px;
-      background:#fff;
-      border-radius:14px;
-      box-shadow:0 10px 30px rgba(0,0,0,.15);
-      overflow:hidden;
-      min-width:200px;
-    }
-
-    .menu a{
-      display:block;
-      padding:12px 16px;
-      text-decoration:none;
-      color:var(--text);
-      font-weight:500;
-    }
-
-    .menu a:hover{
-      background:var(--bg);
-    }
-
-    main{
-      max-width:1100px;
-      margin:auto;
-      padding:22px;
-    }
-
-    section{
-      margin-bottom:40px;
-    }
-
-    h1,h2,h3{
-      margin:0 0 14px;
-      font-weight:800;
-    }
-
-    h1{
-      font-size:32px;
-      color:var(--primary);
-    }
-
-    h2{
-      font-size:26px;
-      color:var(--secondary);
-    }
-
-    h3{
-      font-size:20px;
-    }
-
-    .card{
-      background:var(--card);
+    .fab{
+      width:52px; height:52px;
       border-radius:18px;
-      padding:22px;
-      box-shadow:0 6px 18px rgba(0,0,0,.08);
-      margin-bottom:20px;
-    }
-
-    ul{
-      padding-left:20px;
-    }
-
-    .tag{
-      display:inline-block;
-      background:var(--accent);
-      color:#000;
-      padding:4px 10px;
-      border-radius:999px;
-      font-weight:700;
-      font-size:13px;
-      margin-bottom:10px;
-    }
-
-    .country{
-      border-left:6px solid var(--secondary);
-      padding-left:14px;
-      margin-bottom:18px;
-    }
-
-    .amount{
-      font-weight:800;
-      color:var(--primary);
-    }
-
-    footer{
-      background:#fff;
-      padding:26px 18px;
-      text-align:center;
-      box-shadow:0 -2px 10px rgba(0,0,0,.08);
-    }
-
-    .scrollTop{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      border:none;
-      background:var(--primary);
-      color:#fff;
-      padding:12px 14px;
-      border-radius:50%;
-      font-size:18px;
+      border:1px solid rgba(229,231,235,.9);
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.78));
+      box-shadow: 0 18px 40px rgba(2,6,23,.18);
+      display:grid; place-items:center;
       cursor:pointer;
-      display:none;
-      box-shadow:0 8px 20px rgba(0,0,0,.2);
+      transition: transform .12s ease, opacity .12s ease;
+      opacity:.98;
+    }
+    .fab:hover{transform: translateY(-2px)}
+    .fab .icon{width:22px; height:22px}
+
+    /* Footer */
+    footer{margin-top:18px; padding:18px 0 0; color:var(--muted); font-size:13px}
+    .footerCard{
+      border:1px solid rgba(229,231,235,.9);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.78);
+      box-shadow: 0 10px 20px rgba(2,6,23,.06);
+      padding:14px;
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    }
+    .footLeft{display:grid; gap:3px}
+    .footLeft b{color:var(--text)}
+    .footRight{display:flex; flex-wrap:wrap; gap:10px}
+
+    /* Find highlight */
+    mark.findHit{
+      background: rgba(245,158,11,.35);
+      border-radius:6px;
+      padding:0 2px;
     }
   </style>
 </head>
 
 <body>
+  <!-- Header -->
+  <div class="topbar">
+    <div class="topbarInner">
+      <div class="brand" aria-label="LizOn Education brand">
+        <div class="logo" title="LizOn Education">
+          <img src="./assets/dark-logo.png" alt="LizOn Education Logo" />
+        </div>
+        <div class="brandText">
+          <div class="t1">LizOn Education</div>
+          <div class="t2">LESAC — Study Abroad (From Bangladesh)</div>
+        </div>
+      </div>
 
-<header>
-  <div class="brand">
-    <img src="./assets/dark-logo.png" alt="LizOn Education">
-    <strong>LESAC | Study Abroad</strong>
+      <div class="actions">
+        <button class="btn btnAccent" id="btnJumpBudget" type="button" title="Jump to Budget Range">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 1v22M5 8l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Budget
+        </button>
+        <button class="btn btnPrimary" id="btnMenu" type="button" aria-haspopup="dialog" aria-controls="drawer" title="Open Menu">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Menu
+        </button>
+      </div>
+    </div>
   </div>
 
-  <button class="menu-btn" onclick="toggleMenu()">Menu</button>
+  <!-- Drawer -->
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="drawerHeader">
+      <div class="h">Quick Menu</div>
+      <button class="btn" id="btnCloseMenu" type="button" title="Close Menu">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Close
+      </button>
+    </div>
 
-  <div class="menu" id="menu">
-    <a href="#where">Where to Study</a>
-    <a href="#cost">Cost Range</a>
-    <a href="#scholarship">Scholarship</a>
-    <a href="#jobs">Student Jobs</a>
+    <div class="drawerBody">
+      <a class="navItem" href="./ielts.html">
+        <span class="navLeft">
+          <span class="pill">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 19V5a2 2 0 0 1 2-2h10l4 4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M14 3v5h5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+            IELTS
+          </span>
+          <span>
+            IELTS Courses & Path
+            <small>ZERO → HOPE → STEP-UP → DESPERATE</small>
+          </span>
+        </span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <a class="navItem" href="./pte.html">
+        <span class="navLeft">
+          <span class="pill">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 21h8a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M7 7h10M7 11h10M7 15h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            PTE
+          </span>
+          <span>
+            PTE Practice & Courses
+            <small>Question Types + Strategy + Evaluation</small>
+          </span>
+        </span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <a class="navItem" href="#where">
+        <span class="navLeft">
+          <span class="pill">Where</span>
+          <span>
+            Where to Study?
+            <small>Bachelor / Masters • Profession • Fit</small>
+          </span>
+        </span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <a class="navItem" href="#budget">
+        <span class="navLeft">
+          <span class="pill">Budget</span>
+          <span>
+            Budget Range (BDT Lakh)
+            <small>Minimum → Maximum (planning)</small>
+          </span>
+        </span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <a class="navItem" href="#scholarship">
+        <span class="navLeft">
+          <span class="pill">Scholarship</span>
+          <span>
+            Criteria & Actions
+            <small>Minimum requirements + what to do now</small>
+          </span>
+        </span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <a class="navItem" href="#skills">
+        <span class="navLeft">
+          <span class="pill">Skills</span>
+          <span>
+            Odd Jobs + Skills
+            <small>Part-time readiness + fast start</small>
+          </span>
+        </span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <div class="card" style="margin-top:6px">
+        <div style="font-weight:950">Quick note</div>
+        <div class="fine">
+          All money is shown in <b>BDT lakh</b> as planning ranges. Final cost depends on <b>university</b>, <b>city</b>, <b>visa rules</b>, <b>exchange rate</b>, and <b>living style</b>.
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="wrap" id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="heroInner">
+        <div class="kicker">
+          <span class="tag">LESAC</span>
+          <span class="tag">Study Abroad</span>
+          <span class="tag">From Bangladesh</span>
+          <span class="tag">Budget • Scholarship • Skills</span>
+        </div>
+
+        <h1><b>Study Abroad Guide (From Bangladesh)</b></h1>
+        <p class="sub">
+          A practical roadmap: <b>where to study</b> (Bachelor/Masters & profession-fit), a <b>budget range in BDT lakh</b>
+          (minimum → maximum), <b>scholarship criteria</b>, and the <b>skills + part-time job plan</b> you can start building now.
+        </p>
+
+        <div class="heroGrid">
+          <div class="card">
+            <div class="cardTitle">
+              <div class="left">
+                <div class="badgeIcon g">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h2><b>Start with clarity</b></h2>
+                  <div class="muted" style="font-size:13px;font-weight:700">
+                    Choose country + program like a plan, not like a trend.
+                  </div>
+                </div>
+              </div>
+              <span class="hintPill" title="Smooth scrolling">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Smooth
+              </span>
+            </div>
+
+            <ul class="ul">
+              <li><strong>Degree:</strong> Bachelor or Masters?</li>
+              <li><strong>Profession-fit:</strong> Background + future job market alignment.</li>
+              <li><strong>Budget reality:</strong> Minimum you can manage without stress.</li>
+              <li><strong>Scholarship plan:</strong> Actions that increase acceptance & funding chance.</li>
+              <li><strong>Skill plan:</strong> Part-time readiness + fast earning capability.</li>
+            </ul>
+
+            <div class="toolRow">
+              <input class="input" id="searchBox" placeholder="Search on this page (ex: Canada, scholarship, part-time)" />
+              <button class="btn btnAccent" id="btnFind" type="button" title="Find">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Find
+              </button>
+            </div>
+            <div class="fine" id="findResult">Type a keyword and press <b>Find</b>.</div>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">
+              <div class="left">
+                <div class="badgeIcon y">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h2><b>Golden rule</b></h2>
+                  <div class="muted" style="font-size:13px;font-weight:700">
+                    You don’t “pick a country.” You pick a <b>plan</b>.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ul class="ul">
+              <li><strong>Low risk plan:</strong> strong profile + realistic budget + clean paperwork.</li>
+              <li><strong>High risk plan:</strong> weak profile + “somehow manage” budget + no clear story.</li>
+              <li><strong>Fix:</strong> make a consistent story: academics → program → career outcome.</li>
+            </ul>
+
+            <div class="fine">
+              This page keeps numbers <b>practical</b> (not scary), but still realistic enough to avoid surprises later.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHERE TO STUDY -->
+    <section class="section" id="where">
+      <div class="sectionHeader">
+        <h3 class="title"><b>1) Where to study?</b></h3>
+        <div class="mini">Bachelor / Masters • Profession-fit (not “trend-fit”)</div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="cardTitle">
+            <div class="left">
+              <div class="badgeIcon">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 10l9-6 9 6-9 6-9-6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M6 12v6c0 1.7 3 3 6 3s6-1.3 6-3v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h2><b>Bachelor vs Masters</b></h2>
+                <div class="muted" style="font-size:13px;font-weight:700">Choose based on timeline + profile + outcome</div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="ul">
+            <li><strong>Bachelor</strong> suits students who want a long runway (study + part-time + strong career setup).</li>
+            <li><strong>Masters</strong> suits students who want a faster outcome (if background matches the field).</li>
+            <li><strong>Field mismatch</strong> is possible, but you need stronger proof: projects, work, or a clear explanation.</li>
+          </ul>
+
+          <div class="fine">
+            Outcome-focused choice means: “This degree + country leads to a realistic career path.”
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardTitle">
+            <div class="left">
+              <div class="badgeIcon g">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 9a2.5 2.5 0 1 0 0 .1Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div>
+                <h2><b>Profession-fit checklist</b></h2>
+                <div class="muted" style="font-size:13px;font-weight:700">Pick based on your track</div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="ul">
+            <li><strong>Your profile:</strong> GPA/CGPA, gap, backlogs, work experience.</li>
+            <li><strong>Your field:</strong> Business / IT / Engineering / Health / Arts.</li>
+            <li><strong>City factor:</strong> bigger city = more opportunities, usually more cost.</li>
+            <li><strong>Post-study plan:</strong> internships + job demand + legal work options.</li>
+          </ul>
+
+          <div class="chips">
+            <span class="chip">Bachelor</span>
+            <span class="chip">Masters</span>
+            <span class="chip">Profession-fit</span>
+            <span class="chip">Budget-fit</span>
+            <span class="chip">Scholarship-fit</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <div class="cardTitle">
+          <div class="left">
+            <div class="badgeIcon r">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 9v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 17h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <path d="M10.3 3.4 2.1 19a2 2 0 0 0 1.8 3h16.2a2 2 0 0 0 1.8-3L13.7 3.4a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <h2><b>Common mistake (Bangladesh)</b></h2>
+              <div class="muted" style="font-size:13px;font-weight:700">Country-first without program logic</div>
+            </div>
+          </div>
+        </div>
+
+        <ul class="ul">
+          <li><strong>Risky:</strong> “Australia jabo / Canada jabo” but no plan.</li>
+          <li><strong>Better:</strong> “I will study X because it connects to my Y background and leads to Z career.”</li>
+          <li><strong>Best:</strong> You can explain your plan in 30 seconds without sounding confused.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- BUDGET -->
+    <section class="section" id="budget">
+      <div class="sectionHeader">
+        <h3 class="title"><b>2) Budget range (Minimum → Maximum) in BDT lakh</b></h3>
+        <div class="mini">Planning range • practical + clear</div>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">
+          <div class="left">
+            <div class="badgeIcon y">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 1v22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <h2><b>Country-wise budget snapshot (BDT lakh)</b></h2>
+              <div class="muted" style="font-size:13px;font-weight:700">
+                Typical first-year planning (tuition + living buffer). City and university can change this a lot.
+              </div>
+            </div>
+          </div>
+          <span class="hintPill" title="All amounts are in BDT lakh">BDT Lakh</span>
+        </div>
+
+        <table aria-label="Budget range in BDT lakh">
+          <thead>
+            <tr>
+              <th style="width:22%">Country</th>
+              <th style="width:22%">Typical Minimum</th>
+              <th style="width:22%">Typical Maximum</th>
+              <th>Why it changes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Australia</b></td>
+              <td class="range">30–38 lakh</td>
+              <td class="range">45–60 lakh</td>
+              <td class="muted">City choice, tuition band, rent + deposits, living style.</td>
+            </tr>
+            <tr>
+              <td><b>UK</b></td>
+              <td class="range">22–30 lakh</td>
+              <td class="range">35–50 lakh</td>
+              <td class="muted">Course length, London vs outside, accommodation cost.</td>
+            </tr>
+            <tr>
+              <td><b>Canada</b></td>
+              <td class="range">28–35 lakh</td>
+              <td class="range">40–58 lakh</td>
+              <td class="muted">Province, tuition, rent market, proof-of-funds structure.</td>
+            </tr>
+            <tr>
+              <td><b>Ireland</b></td>
+              <td class="range">25–32 lakh</td>
+              <td class="range">36–52 lakh</td>
+              <td class="muted">Dublin vs outside, housing availability, tuition band.</td>
+            </tr>
+            <tr>
+              <td><b>Hungary</b></td>
+              <td class="range">12–18 lakh</td>
+              <td class="range">20–28 lakh</td>
+              <td class="muted">Scholarship coverage, program type, city living cost.</td>
+            </tr>
+            <tr>
+              <td><b>Netherlands</b></td>
+              <td class="range">22–28 lakh</td>
+              <td class="range">32–48 lakh</td>
+              <td class="muted">Non-EU tuition, housing market, city cost level.</td>
+            </tr>
+            <tr>
+              <td><b>Denmark</b></td>
+              <td class="range">24–30 lakh</td>
+              <td class="range">35–50 lakh</td>
+              <td class="muted">Housing deposit, living cost, tuition structure.</td>
+            </tr>
+            <tr>
+              <td><b>Sweden</b></td>
+              <td class="range">22–28 lakh</td>
+              <td class="range">32–48 lakh</td>
+              <td class="muted">Tuition band, housing, scholarship coverage level.</td>
+            </tr>
+            <tr>
+              <td><b>Other EU options</b></td>
+              <td class="range">14–22 lakh</td>
+              <td class="range">24–40 lakh</td>
+              <td class="muted">Country rules, tuition level, housing deposits.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          These are <b>planning ranges</b> in <b>BDT lakh</b>. Use them to plan confidently and avoid surprises.
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="card">
+          <div class="cardTitle">
+            <div class="left">
+              <div class="badgeIcon g">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 7l-8 8-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3 7h4M3 12h4M3 17h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h2><b>How to stay near “minimum”</b></h2>
+                <div class="muted" style="font-size:13px;font-weight:700">Smart choices, not risky shortcuts</div>
+              </div>
+            </div>
+          </div>
+          <ul class="ul">
+            <li><strong>City selection:</strong> outside mega-cities can reduce rent heavily.</li>
+            <li><strong>Early planning:</strong> better scholarship and housing options.</li>
+            <li><strong>Controlled lifestyle:</strong> track spending for the first 3 months.</li>
+            <li><strong>Part-time readiness:</strong> skills + confidence = faster income.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="cardTitle">
+            <div class="left">
+              <div class="badgeIcon r">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div>
+                <h2><b>What pushes you to “maximum”</b></h2>
+                <div class="muted" style="font-size:13px;font-weight:700">Silent budget killers</div>
+              </div>
+            </div>
+          </div>
+          <ul class="ul">
+            <li><strong>Premium city + premium uni</strong> together.</li>
+            <li><strong>Late application</strong> → fewer funding options.</li>
+            <li><strong>Housing crisis zones</strong> → higher rent + larger deposits.</li>
+            <li><strong>No skill plan</strong> → slower part-time start.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHOLARSHIP -->
+    <section class="section" id="scholarship">
+      <div class="sectionHeader">
+        <h3 class="title"><b>3) Scholarship criteria — minimum requirements + what to do now</b></h3>
+        <div class="mini">Clear checklist + action plan</div>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">
+          <div class="left">
+            <div class="badgeIcon">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2l8 4v6c0 5-3.5 9.4-8 10-4.5-.6-8-5-8-10V6l8-4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <h2><b>Scholarship usually looks at</b></h2>
+              <div class="muted" style="font-size:13px;font-weight:700">Not only GPA — also your consistency and purpose</div>
+            </div>
+          </div>
+        </div>
+
+        <details open>
+          <summary>
+            <span>Minimum requirements (typical)</span>
+            <span class="sumRight">
+              <span class="pill">Baseline</span>
+              <svg class="icon chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="detailBody">
+            <ul class="ul">
+              <li><strong>Academic strength:</strong> GPA/CGPA matters (higher = easier funding).</li>
+              <li><strong>English score:</strong> IELTS/PTE helps both admission and funding confidence.</li>
+              <li><strong>Consistency:</strong> fewer unexplained gaps/backlogs is better (but can be explained).</li>
+              <li><strong>Professional documents:</strong> SOP, CV, LOR and transcripts must be clean and aligned.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>What students can do now (from Bangladesh)</span>
+            <span class="sumRight">
+              <span class="pill">Action</span>
+              <svg class="icon chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="detailBody">
+            <ul class="ul">
+              <li><strong>Build one strong proof:</strong> project, case study, research, or work sample.</li>
+              <li><strong>Leadership/volunteer:</strong> responsibility-based activities show seriousness.</li>
+              <li><strong>Upgrade SOP:</strong> clear story: past → program → career outcome.</li>
+              <li><strong>Improve English:</strong> higher score = better overall confidence.</li>
+              <li><strong>Apply early:</strong> early rounds often have more scholarship availability.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Fast checklist before applying</span>
+            <span class="sumRight">
+              <span class="pill">Ready</span>
+              <svg class="icon chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="detailBody">
+            <ul class="ul">
+              <li><strong>Program match:</strong> your previous study and proposed subject connect clearly.</li>
+              <li><strong>Career plan:</strong> one realistic target job/track after graduation.</li>
+              <li><strong>Document quality:</strong> formatting, language, and consistency are strong.</li>
+              <li><strong>Budget plan:</strong> your minimum plan is safe even if part-time takes time.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- SKILLS + ODD JOBS -->
+    <section class="section" id="skills">
+      <div class="sectionHeader">
+        <h3 class="title"><b>4) Skills + Part-time (odd jobs) — what to learn and how to start</b></h3>
+        <div class="mini">Potential jobs • skills needed • preparation from Bangladesh</div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="cardTitle">
+            <div class="left">
+              <div class="badgeIcon g">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M4 7h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M9 12h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h2><b>Potential student jobs (first year)</b></h2>
+                <div class="muted" style="font-size:13px;font-weight:700">Common starter roles</div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="ul">
+            <li><strong>Retail assistant</strong> (store, supermarket)</li>
+            <li><strong>Restaurant/café staff</strong> (front/back)</li>
+            <li><strong>Warehouse helper</strong> (packing, sorting)</li>
+            <li><strong>Cleaner/support staff</strong> (commercial/residential)</li>
+            <li><strong>Delivery support</strong> (depends on legal rules & city)</li>
+          </ul>
+
+          <div class="fine">
+            The first goal is not “dream job.” The first goal is <b>stable part-time income + routine + confidence</b>.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardTitle">
+            <div class="left">
+              <div class="badgeIcon y">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2l3 6 6 3-6 3-3 6-3-6-6-3 6-3 3-6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h2><b>Skills you need (simple but powerful)</b></h2>
+                <div class="muted" style="font-size:13px;font-weight:700">These make you employable fast</div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="ul">
+            <li><strong>Spoken English basics:</strong> greeting, confirming, clarifying, apologizing, helping.</li>
+            <li><strong>Customer handling:</strong> calm tone, quick solutions, polite confidence.</li>
+            <li><strong>Time discipline:</strong> punctuality and shift reliability.</li>
+            <li><strong>Team communication:</strong> short, clear messages with coworkers.</li>
+            <li><strong>Basic digital skills:</strong> email, forms, simple apps, POS familiarity.</li>
+          </ul>
+
+          <div class="chips">
+            <span class="chip">Communication</span>
+            <span class="chip">Confidence</span>
+            <span class="chip">Punctuality</span>
+            <span class="chip">Teamwork</span>
+            <span class="chip">Basic tech</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="card">
+          <div class="cardTitle">
+            <div class="left">
+              <div class="badgeIcon">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 4h16v16H4V4Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M7 8h10M7 12h7M7 16h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h2><b>What to start learning in Bangladesh</b></h2>
+                <div class="muted" style="font-size:13px;font-weight:700">So you don’t feel lost after landing</div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="ul">
+            <li><strong>English routine:</strong> 15 minutes daily speaking practice (topic-based).</li>
+            <li><strong>CV readiness:</strong> one clean CV + one simple cover letter template.</li>
+            <li><strong>Interview basics:</strong> introduce yourself, availability, strengths, and shift preference.</li>
+            <li><strong>Work etiquette:</strong> professionalism, hygiene, respectful behavior, responsibility.</li>
+            <li><strong>Confidence drills:</strong> practice small talk + asking for help + giving short answers.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="cardTitle">
+            <div class="left">
+              <div class="badgeIcon r">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M12 21h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M5 21h14a2 2 0 0 0 2-2v-5a6 6 0 0 0-6-6H9a6 6 0 0 0-6 6v5a2 2 0 0 0 2 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h2><b>Common mistakes (part-time)</b></h2>
+                <div class="muted" style="font-size:13px;font-weight:700">Avoid these for a smooth start</div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="ul">
+            <li><strong>Waiting for “perfect job”</strong> and losing time.</li>
+            <li><strong>Not improving English</strong> then struggling with customers.</li>
+            <li><strong>Irregular routine</strong> (sleep schedule, class, work balance).</li>
+            <li><strong>No documentation readiness</strong> (CV, basic certificates).</li>
+            <li><strong>Overconfidence</strong> without skill → workplace conflict.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <div class="cardTitle">
+          <div class="left">
+            <div class="badgeIcon g">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <h2><b>Simple 30-day preparation plan</b></h2>
+              <div class="muted" style="font-size:13px;font-weight:700">Small steps, big confidence</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <ul class="ul">
+              <li><strong>Day 1–10:</strong> speaking basics + daily self-intro + job vocabulary.</li>
+              <li><strong>Day 11–20:</strong> CV + mock interviews + customer handling lines.</li>
+              <li><strong>Day 21–30:</strong> routine building + confidence drills + roleplay practice.</li>
+            </ul>
+          </div>
+          <div>
+            <ul class="ul">
+              <li><strong>Daily:</strong> 15 minutes speaking + 10 minutes reading/listening.</li>
+              <li><strong>Weekly:</strong> 2 interview roleplays + 1 CV review.</li>
+              <li><strong>Outcome:</strong> you become employable faster after landing.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footerCard">
+        <div class="footLeft">
+          <b>LizOn Education — LESAC</b>
+          <div>Study Abroad Guidance • Budget Planning • Scholarship Strategy • Skill Readiness</div>
+        </div>
+        <div class="footRight">
+          <a class="btn btnPrimary" href="#top" style="text-decoration:none">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 5v14M5 8l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Top
+          </a>
+          <a class="btn btnAccent" href="#budget" style="text-decoration:none">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 1v22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Budget
+          </a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Floating buttons -->
+  <div class="fabStack" aria-label="Quick actions">
+    <button class="fab" id="fabTop" type="button" title="Scroll to top" style="display:none">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 19V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <button class="fab" id="fabMenu" type="button" title="Menu">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
   </div>
-</header>
 
-<main>
+  <script>
+    // Drawer
+    const drawer = document.getElementById('drawer');
+    const backdrop = document.getElementById('backdrop');
+    const btnMenu = document.getElementById('btnMenu');
+    const btnClose = document.getElementById('btnCloseMenu');
+    const fabMenu = document.getElementById('fabMenu');
 
-  <section class="card">
-    <h1>Study Abroad from Bangladesh</h1>
-    <p>
-      This guide is designed for Bangladeshi students who want to study abroad with clarity.
-      It explains country selection, cost ranges, scholarships, and job opportunities in a realistic way.
-    </p>
-  </section>
+    function openDrawer(){
+      drawer.classList.add('show');
+      backdrop.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('show');
+      backdrop.classList.remove('show');
+      document.body.style.overflow = '';
+    }
 
-  <section id="where">
-    <h2>Where to Study</h2>
+    btnMenu.addEventListener('click', openDrawer);
+    fabMenu.addEventListener('click', openDrawer);
+    btnClose.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDrawer(); });
 
-    <div class="card">
-      <ul>
-        <li><strong>Bachelor’s Degree</strong> – Ideal after HSC or A Levels</li>
-        <li><strong>Master’s Degree</strong> – For graduates aiming career growth</li>
-        <li><strong>By Profession</strong> – Business, IT, Engineering, Health, Arts</li>
-      </ul>
-    </div>
-  </section>
+    // Close drawer on internal nav click (only hash links)
+    drawer.addEventListener('click', (e)=>{
+      const a = e.target.closest('a');
+      if(!a) return;
+      const href = a.getAttribute('href') || '';
+      if(href.startsWith('#')) closeDrawer();
+    });
 
-  <section id="cost">
-    <h2>Cost Range (Minimum to Maximum)</h2>
+    // Smooth scroll for hash links
+    document.addEventListener('click', (e)=>{
+      const a = e.target.closest('a[href^="#"]');
+      if(!a) return;
+      const id = a.getAttribute('href');
+      const el = document.querySelector(id);
+      if(!el) return;
+      e.preventDefault();
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+      history.pushState(null, '', id);
+    });
 
-    <div class="card country">
-      <span class="tag">Australia</span>
-      <p>Tuition + Living: <span class="amount">28 – 45 BDT Lac / year</span></p>
-    </div>
+    // Jump button
+    document.getElementById('btnJumpBudget').addEventListener('click', ()=>{
+      const el = document.getElementById('budget');
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
 
-    <div class="card country">
-      <span class="tag">United Kingdom</span>
-      <p>Tuition + Living: <span class="amount">22 – 35 BDT Lac / year</span></p>
-    </div>
+    // Scroll-to-top FAB
+    const fabTop = document.getElementById('fabTop');
+    function toggleTop(){
+      if(window.scrollY > 420){
+        fabTop.style.display = 'grid';
+      }else{
+        fabTop.style.display = 'none';
+      }
+    }
+    window.addEventListener('scroll', toggleTop);
+    toggleTop();
+    fabTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
 
-    <div class="card country">
-      <span class="tag">Canada</span>
-      <p>Tuition + Living: <span class="amount">20 – 32 BDT Lac / year</span></p>
-    </div>
+    // Find on page (first match)
+    const findBtn = document.getElementById('btnFind');
+    const findBox = document.getElementById('searchBox');
+    const findResult = document.getElementById('findResult');
 
-    <div class="card country">
-      <span class="tag">Ireland</span>
-      <p>Tuition + Living: <span class="amount">18 – 28 BDT Lac / year</span></p>
-    </div>
+    function clearFindMarks(){
+      document.querySelectorAll('mark.findHit').forEach(m=>{
+        const t = document.createTextNode(m.textContent);
+        m.replaceWith(t);
+      });
+    }
 
-    <div class="card country">
-      <span class="tag">Hungary</span>
-      <p>Tuition + Living: <span class="amount">10 – 16 BDT Lac / year</span></p>
-    </div>
+    function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
-    <div class="card country">
-      <span class="tag">Netherlands / Denmark / Sweden</span>
-      <p>Tuition + Living: <span class="amount">20 – 30 BDT Lac / year</span></p>
-    </div>
-  </section>
+    function findFirst(keyword){
+      clearFindMarks();
+      const k = (keyword || '').trim();
+      if(!k){
+        findResult.textContent = 'Type a keyword and press Find.';
+        return;
+      }
 
-  <section id="scholarship">
-    <h2>Scholarship Criteria</h2>
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode(node){
+          if(!node.nodeValue) return NodeFilter.FILTER_REJECT;
+          const parent = node.parentElement;
+          if(!parent) return NodeFilter.FILTER_REJECT;
+          if(['SCRIPT','STYLE','NOSCRIPT'].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+          if(parent.closest('.drawer')) return NodeFilter.FILTER_REJECT;
+          if(node.nodeValue.toLowerCase().includes(k.toLowerCase())) return NodeFilter.FILTER_ACCEPT;
+          return NodeFilter.FILTER_SKIP;
+        }
+      });
 
-    <div class="card">
-      <ul>
-        <li>Academic results (GPA / CGPA)</li>
-        <li>English proficiency (IELTS / PTE)</li>
-        <li>Strong SOP and academic consistency</li>
-        <li>Relevant background for the chosen subject</li>
-      </ul>
+      const node = walker.nextNode();
+      if(!node){
+        findResult.textContent = 'No match found.';
+        return;
+      }
 
-      <p>
-        What students can do now:
-      </p>
+      const text = node.nodeValue;
+      const re = new RegExp(escapeRegExp(k), 'i');
+      const m = text.match(re);
+      if(!m){
+        findResult.textContent = 'No match found.';
+        return;
+      }
 
-      <ul>
-        <li>Improve English score</li>
-        <li>Build academic profile</li>
-        <li>Gain relevant skills and certifications</li>
-      </ul>
-    </div>
-  </section>
+      const idx = m.index;
+      const before = document.createTextNode(text.slice(0, idx));
+      const hit = document.createElement('mark');
+      hit.className = 'findHit';
+      hit.textContent = text.slice(idx, idx + m[0].length);
+      const after = document.createTextNode(text.slice(idx + m[0].length));
 
-  <section id="jobs">
-    <h2>Student Jobs & Skills</h2>
+      const parent = node.parentNode;
+      parent.insertBefore(before, node);
+      parent.insertBefore(hit, node);
+      parent.insertBefore(after, node);
+      parent.removeChild(node);
 
-    <div class="card">
-      <h3>Common Part-Time Jobs</h3>
-      <ul>
-        <li>Retail assistant</li>
-        <li>Restaurant & café staff</li>
-        <li>Warehouse worker</li>
-        <li>Cleaner / support staff</li>
-      </ul>
-    </div>
+      hit.scrollIntoView({behavior:'smooth', block:'center'});
+      findResult.textContent = `Found: "${k}"`;
+    }
 
-    <div class="card">
-      <h3>Skills That Help</h3>
-      <ul>
-        <li>Communication & customer handling</li>
-        <li>Basic computer & POS usage</li>
-        <li>Time management</li>
-        <li>Adaptability in multicultural environment</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Before Going Abroad</h3>
-      <ul>
-        <li>Learn basic work etiquette</li>
-        <li>Improve spoken English</li>
-        <li>Understand local job culture</li>
-      </ul>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <strong>LizOn Education – LESAC Study Abroad</strong><br>
-  Guidance • Clarity • Career
-</footer>
-
-<button class="scrollTop" id="scrollTop" onclick="scrollToTop()">↑</button>
-
-<script>
-  function toggleMenu(){
-    const m=document.getElementById('menu');
-    m.style.display = m.style.display === 'block' ? 'none' : 'block';
-  }
-
-  window.addEventListener('scroll',()=>{
-    const btn=document.getElementById('scrollTop');
-    btn.style.display = window.scrollY > 300 ? 'block' : 'none';
-  });
-
-  function scrollToTop(){
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-</script>
-
+    findBtn.addEventListener('click', ()=> findFirst(findBox.value));
+    findBox.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter') findFirst(findBox.value);
+    });
+  </script>
 </body>
 </html>

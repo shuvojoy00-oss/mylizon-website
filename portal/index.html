@@ -1,47 +1,44 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LizOn Portal</title>
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/portal.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Portal — LizOn</title>
+  <link rel="stylesheet" href="./assets/portal.css"/>
 </head>
 <body>
   <div class="wrap">
-    <div class="card">
-      <div class="h1">LizOn Portal</div>
-      <p class="p">Redirecting…</p>
-      <div class="hr"></div>
-      <div class="mini">If nothing happens, open <a href="./login.html"><b>Login</b></a>.</div>
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot"></div>
+        <div>
+          <div class="brandTitle">LizOn Education</div>
+          <div class="brandSub">Redirecting…</div>
+        </div>
+      </div>
+      <div class="rightPills">
+        <span class="badge">Please wait</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <div class="h1">Loading your dashboard…</div>
+      <p class="p">Checking your role and access.</p>
     </div>
   </div>
 
-  <!-- Supabase CDN -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
   <script type="module">
-    import { createClient } from "./assets/supabase.js";
+    import { getMyProfileOrLogout } from "./assets/portal.js";
 
-    // register service worker (PWA)
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./sw.js").catch(()=>{});
-    }
+    const pack = await getMyProfileOrLogout();
+    if(!pack) throw new Error("No session");
 
-    const sb = createClient();
-    const { data } = await sb.auth.getSession();
-    const session = data.session;
+    const role = pack.profile.role;
 
-    if (!session) {
-      location.href = "./login.html";
-    } else {
-      // determine role
-      const { data: profile } = await sb.from("profiles").select("role").eq("id", session.user.id).single();
-      const role = profile?.role || "student";
-      if (role === "student") location.href = "./student.html";
-      else if (role === "teacher") location.href = "./teacher.html";
-      else location.href = "./admin.html";
-    }
+    if(role === "student") location.href = "./student.html";
+    else if(role === "teacher") location.href = "./teacher.html";
+    else if(role === "admin" || role === "super_admin") location.href = "./admin.html";
+    else location.href = "./login.html";
   </script>
 </body>
 </html>

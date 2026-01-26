@@ -1,11 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Teacher — LizOn Portal</title>
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/portal.css" />
+  <link rel="stylesheet" href="./assets/portal.css"/>
 </head>
 <body>
   <div class="wrap">
@@ -17,35 +16,29 @@
           <div class="brandSub">Teacher Dashboard</div>
         </div>
       </div>
-      <div class="actions">
-        <span class="badge">Name: <b id="topbarName">…</b></span>
-        <span class="badge">Role: <b id="topbarRole">…</b></span>
-        <button class="btn" id="btnInstall">Add to Home Screen</button>
-        <button class="btn btnDanger" id="btnLogout">Logout</button>
+      <div class="rightPills">
+        <span class="badge" id="pillName">Name: …</span>
+        <span class="badge" id="pillRole">Role: …</span>
+        <button class="btn" id="btnLogout">Logout</button>
       </div>
     </div>
 
-    <div class="grid" id="teacherList">
-      <div class="card">
-        <div class="h1">Loading…</div>
-        <p class="p">Please wait.</p>
-      </div>
+    <div class="card" style="margin-top:14px;">
+      <div class="h1">Teacher Panel</div>
+      <p class="p">This is the teacher dashboard. (We’ll add student list + class links next.)</p>
     </div>
   </div>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script type="module">
-    import { requireAuth, bindTopbar, loadTeacherDashboard } from "./assets/portal.js";
+    import { getMyProfileOrLogout, requireRole, logout } from "./assets/portal.js";
+    document.getElementById("btnLogout").addEventListener("click", logout);
 
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./sw.js").catch(()=>{});
-    }
+    const pack = await getMyProfileOrLogout();
+    if(!pack) throw new Error("No access");
+    if(!requireRole(pack.profile.role, ["teacher","admin","super_admin"])) throw new Error("Not allowed");
 
-    const auth = await requireAuth(["teacher"]);
-    if (!auth) {} else {
-      bindTopbar(auth.profile);
-      await loadTeacherDashboard(auth.profile);
-    }
+    document.getElementById("pillName").textContent = "Name: " + (pack.profile.full_name || "Teacher");
+    document.getElementById("pillRole").textContent = "Role: " + pack.profile.role;
   </script>
 </body>
 </html>

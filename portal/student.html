@@ -1,11 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Student — LizOn Portal</title>
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/portal.css" />
+  <link rel="stylesheet" href="./assets/portal.css"/>
 </head>
 <body>
   <div class="wrap">
@@ -17,43 +16,106 @@
           <div class="brandSub">Student Dashboard</div>
         </div>
       </div>
-      <div class="actions">
-        <span class="badge">Name: <b id="topbarName">…</b></span>
-        <span class="badge">Role: <b id="topbarRole">…</b></span>
+      <div class="rightPills">
+        <span class="badge" id="pillName">Name: …</span>
+        <span class="badge" id="pillRole">Role: …</span>
         <button class="btn" id="btnInstall">Add to Home Screen</button>
-        <button class="btn btnDanger" id="btnLogout">Logout</button>
+        <button class="btn" id="btnLogout">Logout</button>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="card third">
-        <div class="h1">Announcements</div>
-        <p class="p">Updates from LizOn.</p>
-        <div class="hr"></div>
-        <div id="announcements" class="mini">Loading…</div>
-      </div>
+    <div class="card" style="margin-top:14px;">
+      <div class="h1">Announcements</div>
+      <p class="p">Updates from LizOn.</p>
+      <div class="hr"></div>
+      <div id="annBox" class="mini">Loading…</div>
+    </div>
 
-      <div class="card" style="grid-column: span 12;">
-        <div class="h1">My Courses</div>
-        <p class="p">Join class, open notes, submit homework, watch recordings.</p>
-      </div>
-
-      <div id="studentCards" class="grid" style="grid-column: span 12; margin-top:0;"></div>
+    <div class="card" style="margin-top:14px;">
+      <div class="h1">My Courses</div>
+      <p class="p">Join class, open notes, submit homework, watch recordings.</p>
+      <div class="hr"></div>
+      <div id="coursesBox" class="empty">Loading…</div>
     </div>
   </div>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script type="module">
-    import { requireAuth, bindTopbar, loadStudentDashboard } from "./assets/portal.js";
+    import { sb, getMyProfileOrLogout, requireRole, logout, openNew } from "./assets/portal.js";
 
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./sw.js").catch(()=>{});
+    // Install
+    let deferredPrompt=null;
+    window.addEventListener("beforeinstallprompt",(e)=>{e.preventDefault();deferredPrompt=e;});
+    document.getElementById("btnInstall").addEventListener("click", async ()=>{
+      if(deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;}
+      else alert("iPhone: Share → Add to Home Screen\nAndroid: Menu → Add to Home screen / Install app");
+    });
+
+    document.getElementById("btnLogout").addEventListener("click", logout);
+
+    const pack = await getMyProfileOrLogout();
+    if(!pack) throw new Error("No access");
+    if(!requireRole(pack.profile.role, ["student"])) throw new Error("Not student");
+
+    document.getElementById("pillName").textContent = "Name: " + (pack.profile.full_name || "Student");
+    document.getElementById("pillRole").textContent = "Role: " + pack.profile.role;
+
+    // Announcements (safe if table missing / blocked)
+    const annBox = document.getElementById("annBox");
+    try{
+      const res = await sb.from("announcements").select("title,body,created_at").order("created_at",{ascending:false}).limit(3);
+      if(res.error) throw res.error;
+      const rows = res.data || [];
+      if(!rows.length){ annBox.textContent = "No announcements right now."; }
+      else{
+        annBox.innerHTML = rows.map(a=>`
+          <div style="margin:10px 0;">
+            <div style="font-weight:900;">${escapeHtml(a.title||"Update")}</div>
+            <div class="mini" style="margin-top:4px;">${escapeHtml(a.body||"")}</div>
+          </div>
+        `).join("");
+      }
+    }catch(e){
+      annBox.textContent = "No announcements right now.";
     }
 
-    const auth = await requireAuth(["student"]);
-    if (!auth) {} else {
-      bindTopbar(auth.profile);
-      await loadStudentDashboard(auth.profile);
+    // Enrollments by student_id
+    const coursesBox = document.getElementById("coursesBox");
+    const { data: enrollRes, error } = await sb
+      .from("enrollments")
+      .select("course,batch_month,meet_link,notes_link,homework_link,recordings_link,status")
+      .eq("student_id", pack.user.id)
+      .order("batch_month",{ascending:false});
+
+    if(error){
+      coursesBox.textContent = "Could not load courses. Contact admin.";
+    }else{
+      const items = enrollRes || [];
+      if(!items.length){
+        coursesBox.textContent = "No courses assigned yet. Contact LizOn admin.";
+      }else{
+        coursesBox.innerHTML = items.map(c=>`
+          <div class="courseCard" style="margin:10px 0;">
+            <div>
+              <div class="courseTitle">${escapeHtml(c.course||"Course")}</div>
+              <div class="courseMeta">Batch: ${escapeHtml(c.batch_month||"-")} • Status: ${escapeHtml(c.status||"-")}</div>
+            </div>
+            <div class="courseBtns">
+              <button class="btn btnPrimary btnSm" data-link="${c.meet_link||""}">Join Class</button>
+              <button class="btn btnSm" data-link="${c.notes_link||""}">Notes</button>
+              <button class="btn btnSm" data-link="${c.homework_link||""}">Homework</button>
+              <button class="btn btnSm" data-link="${c.recordings_link||""}">Recordings</button>
+            </div>
+          </div>
+        `).join("");
+
+        coursesBox.querySelectorAll("button[data-link]").forEach(btn=>{
+          btn.addEventListener("click", ()=> openNew(btn.getAttribute("data-link")));
+        });
+      }
+    }
+
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     }
   </script>
 </body>

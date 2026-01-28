@@ -87,7 +87,8 @@
     // Enrollments by student_id
     const { data: enrolls, error: eErr } = await sb
       .from("enrollments")
-      .select("course,batch_month,meet_link,notes_link,homework_link,recordings_link,status")
+      .select("student_name,course,batch_month,meet_link,notes_link,homework_link,recordings_link,status")
+
       .eq("student_id", pack.user.id)
       .order("created_at", { ascending: false });
 
@@ -117,3 +118,4 @@
   </script>
 </body>
 </html>
+

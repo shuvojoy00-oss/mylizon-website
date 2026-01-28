@@ -24,12 +24,18 @@
     </div>
 
     <div class="card" style="margin-top:16px;">
-      Teacher panel can be expanded next: student lists, class links, notes, evaluations.
+      <div class="sectionTitle">Assigned Students</div>
+      <div class="mini">These students are assigned to you by admin.</div>
+      <div class="hr"></div>
+
+      <div id="list" class="courseGrid"></div>
+      <div id="empty" class="mini" style="display:none;">No students assigned yet.</div>
     </div>
   </div>
 
   <script type="module">
-    import { requireActiveProfile, logout } from "./assets/portal.js";
+    import { sb, requireActiveProfile, logout } from "./assets/portal.js";
+
     document.getElementById("btnLogout").addEventListener("click", logout);
 
     const pack = await requireActiveProfile();
@@ -40,6 +46,36 @@
 
     document.getElementById("pillName").textContent = "Name: " + (pack.profile.full_name || "Teacher");
     document.getElementById("pillRole").textContent = "Role: " + (pack.profile.role || "teacher");
+
+    // Fetch assigned enrollments
+    const { data, error } = await sb
+      .from("enrollments")
+      .select("student_name,course,batch_month,meet_link,notes_link,homework_link,recordings_link,status")
+      .eq("teacher_id", pack.user.id)
+      .order("created_at", { ascending: false });
+
+    const list = document.getElementById("list");
+    const empty = document.getElementById("empty");
+
+    if (error || !data || data.length === 0) {
+      empty.style.display = "block";
+    } else {
+      empty.style.display = "none";
+      list.innerHTML = data.map(r => `
+        <div class="courseCard">
+          <div class="courseName">${r.student_name || "Student"}</div>
+          <div class="courseMeta">
+            Course: ${r.course || "—"} • Batch: ${r.batch_month || "—"} • Status: ${r.status || "active"}
+          </div>
+          <div class="courseBtns">
+            <a class="primary" href="${r.meet_link || "#"}" target="_blank" rel="noopener">Join Class</a>
+            <a href="${r.notes_link || "#"}" target="_blank" rel="noopener">Notes</a>
+            <a href="${r.homework_link || "#"}" target="_blank" rel="noopener">Homework</a>
+            <a href="${r.recordings_link || "#"}" target="_blank" rel="noopener">Recordings</a>
+          </div>
+        </div>
+      `).join("");
+    }
   </script>
 </body>
 </html>

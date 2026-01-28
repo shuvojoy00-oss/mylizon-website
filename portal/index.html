@@ -16,29 +16,31 @@
           <div class="brandSub">Redirecting…</div>
         </div>
       </div>
-      <div class="rightPills">
-        <span class="badge">Please wait</span>
+      <div class="pills">
+        <span class="pill">Portal</span>
       </div>
     </div>
 
-    <div class="card" style="margin-top:14px;">
-      <div class="h1">Loading your dashboard…</div>
-      <p class="p">Checking your role and access.</p>
+    <div class="card" style="margin-top:16px;">
+      Loading your dashboard…
     </div>
   </div>
 
   <script type="module">
-    import { getMyProfileOrLogout } from "./assets/portal.js";
+    import { requireActiveProfile } from "./assets/portal.js";
 
-    const pack = await getMyProfileOrLogout();
-    if(!pack) throw new Error("No session");
+    const pack = await requireActiveProfile();
+    if (!pack) throw new Error("No session");
 
-    const role = pack.profile.role;
+    const role = (pack.profile.role || "").toLowerCase();
 
-    if(role === "student") location.href = "./student.html";
-    else if(role === "teacher") location.href = "./teacher.html";
-    else if(role === "admin" || role === "super_admin") location.href = "./admin.html";
-    else location.href = "./login.html";
+    if (role === "student") location.href = "./student.html";
+    else if (role === "teacher") location.href = "./teacher.html";
+    else if (role === "admin" || role === "super_admin") location.href = "./admin.html";
+    else {
+      alert("Unknown role. Contact LizOn admin.");
+      location.href = "./login.html";
+    }
   </script>
 </body>
 </html>

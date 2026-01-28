@@ -2,41 +2,41 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./supabase.js";
 
 export const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
+  }
 });
 
-export function qs(id){ return document.getElementById(id); }
-export function openNew(url){
-  if(!url) return alert("Link not set yet.");
-  window.open(url, "_blank", "noopener,noreferrer");
+export async function getSessionUser() {
+  const { data, error } = await sb.auth.getSession();
+  if (error) throw error;
+  return data.session?.user || null;
 }
 
-export async function getSessionOrRedirect(){
-  const { data } = await sb.auth.getSession();
-  if(!data.session){
+export async function getMyProfile(user) {
+  // primary: id match (recommended)
+  let res = await sb.from("profiles").select("id,email,full_name,role,status").eq("id", user.id).maybeSingle();
+  if (!res.error && res.data) return res.data;
+
+  // fallback: email match (for migration / mismatch)
+  res = await sb.from("profiles").select("id,email,full_name,role,status").eq("email", user.email).maybeSingle();
+  if (!res.error && res.data) return res.data;
+
+  return null;
+}
+
+export async function requireActiveProfile() {
+  const user = await getSessionUser();
+  if (!user) {
     location.href = "./login.html";
     return null;
   }
-  return data.session;
-}
 
-export async function getMyProfileOrLogout(){
-  const session = await getSessionOrRedirect();
-  if(!session) return null;
-
-  const user = session.user;
-
-  // Try by id (preferred)
-  let res = await sb.from("profiles").select("full_name,role,status,email").eq("id", user.id).maybeSingle();
-  let profile = (!res.error && res.data) ? res.data : null;
-
-  // fallback by email
-  if(!profile){
-    res = await sb.from("profiles").select("full_name,role,status,email").eq("email", user.email).maybeSingle();
-    profile = (!res.error && res.data) ? res.data : null;
-  }
-
-  if(!profile || profile.status !== "active"){
+  const profile = await getMyProfile(user);
+  if (!profile || profile.status !== "active") {
+    alert("Your portal access is not active yet. Contact LizOn admin.");
     await sb.auth.signOut();
     location.href = "./login.html";
     return null;
@@ -45,15 +45,7 @@ export async function getMyProfileOrLogout(){
   return { user, profile };
 }
 
-export function requireRole(profileRole, allowed){
-  if(!allowed.includes(profileRole)){
-    location.href = "./index.html";
-    return false;
-  }
-  return true;
-}
-
-export async function logout(){
+export async function logout() {
   await sb.auth.signOut();
   location.href = "./login.html";
 }

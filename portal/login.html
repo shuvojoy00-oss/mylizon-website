@@ -17,7 +17,7 @@
           <div class="brandSub">Student Portal</div>
         </div>
       </div>
-      <div class="rightPills">
+      <div class="actions">
         <button class="btn" id="btnInstall">Add to Home Screen</button>
       </div>
     </div>
@@ -48,11 +48,15 @@
           </div>
 
           <div class="hr"></div>
-          <div class="notice">
+          <div class="notice noticeWarn">
             <div style="font-weight:900;">Important</div>
             <div class="mini">
               This portal is invite-only. If your email is not added by LizOn admin, you won’t get access even if you try to login.
             </div>
+          </div>
+
+          <div class="mini" style="margin-top:10px;">
+            Tip: Your phone can save password automatically after first login.
           </div>
         </form>
       </div>
@@ -74,14 +78,13 @@
   </div>
 
   <script type="module">
-    import { sb } from "./assets/portal.js";
+    import { sb, getMyProfile } from "./assets/portal.js";
 
-    // SW
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./sw.js").catch(()=>{});
-    }
+    window.addEventListener("error", (e) => {
+      alert("JS Error: " + (e?.message || "Unknown error"));
+    });
 
-    // Install
+    // PWA install
     let deferredPrompt = null;
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
@@ -96,9 +99,9 @@
       }
     });
 
-    // Already logged in?
-    const { data } = await sb.auth.getSession();
-    if (data.session) location.href = "./index.html";
+    // If already logged in, go index
+    const { data: sess } = await sb.auth.getSession();
+    if (sess.session) location.href = "./index.html";
 
     // Google OAuth
     document.getElementById("btnGoogle").addEventListener("click", async () => {
@@ -109,19 +112,28 @@
       if (error) alert(error.message);
     });
 
-    // Password login
+    // Email+password login
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const email = document.getElementById("email").value.trim().toLowerCase();
       const password = document.getElementById("password").value;
 
-      const { error } = await sb.auth.signInWithPassword({ email, password });
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
       if (error) return alert("Login failed: " + error.message);
+
+      // invite-only check
+      const profile = await getMyProfile(data.user);
+      if (!profile || profile.status !== "active") {
+        alert("Your portal access is not active yet. Contact LizOn admin.");
+        await sb.auth.signOut();
+        return;
+      }
 
       location.href = "./index.html";
     });
 
-    // Reset password
+    // Reset password email
     document.getElementById("btnReset").addEventListener("click", async () => {
       const email = document.getElementById("email").value.trim().toLowerCase();
       if (!email) return alert("Enter your email first.");
@@ -129,6 +141,7 @@
       const { error } = await sb.auth.resetPasswordForEmail(email, {
         redirectTo: location.origin + "/portal/login.html"
       });
+
       if (error) return alert("Reset failed: " + error.message);
       alert("Password reset email sent. Check inbox/spam.");
     });

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Teacher — LizOn Portal</title>
+  <title>Teacher Dashboard — LizOn</title>
   <link rel="stylesheet" href="./assets/portal.css"/>
 </head>
 <body>
@@ -16,29 +16,30 @@
           <div class="brandSub">Teacher Dashboard</div>
         </div>
       </div>
-      <div class="rightPills">
-        <span class="badge" id="pillName">Name: …</span>
-        <span class="badge" id="pillRole">Role: …</span>
-        <button class="btn" id="btnLogout">Logout</button>
+      <div class="pills">
+        <span class="pill" id="pillName">Name: …</span>
+        <span class="pill" id="pillRole">Role: …</span>
+        <button class="btn btnDanger" id="btnLogout">Logout</button>
       </div>
     </div>
 
-    <div class="card" style="margin-top:14px;">
-      <div class="h1">Teacher Panel</div>
-      <p class="p">This is the teacher dashboard. (We’ll add student list + class links next.)</p>
+    <div class="card" style="margin-top:16px;">
+      Teacher panel can be expanded next: student lists, class links, notes, evaluations.
     </div>
   </div>
 
   <script type="module">
-    import { getMyProfileOrLogout, requireRole, logout } from "./assets/portal.js";
+    import { requireActiveProfile, logout } from "./assets/portal.js";
     document.getElementById("btnLogout").addEventListener("click", logout);
 
-    const pack = await getMyProfileOrLogout();
-    if(!pack) throw new Error("No access");
-    if(!requireRole(pack.profile.role, ["teacher","admin","super_admin"])) throw new Error("Not allowed");
+    const pack = await requireActiveProfile();
+    if (!pack) throw new Error("No session");
+
+    const role = (pack.profile.role || "").toLowerCase();
+    if (role !== "teacher") location.href = "./index.html";
 
     document.getElementById("pillName").textContent = "Name: " + (pack.profile.full_name || "Teacher");
-    document.getElementById("pillRole").textContent = "Role: " + pack.profile.role;
+    document.getElementById("pillRole").textContent = "Role: " + (pack.profile.role || "teacher");
   </script>
 </body>
 </html>

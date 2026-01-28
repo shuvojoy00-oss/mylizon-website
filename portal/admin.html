@@ -31,12 +31,6 @@
 
         <form id="enrollForm">
           <div class="field">
-  <label>Assign Teacher (optional)</label>
-  <select class="input" id="teacher"></select>
-  <div class="mini" style="margin-top:6px;">If empty, student won’t appear on any teacher dashboard.</div>
-</div>
-
-          <div class="field">
             <label>Student Email</label>
             <input class="input" id="studentEmail" type="email" placeholder="student@email.com" required />
           </div>
@@ -44,6 +38,13 @@
           <div class="field">
             <label>Course</label>
             <select class="input" id="course"></select>
+          </div>
+
+          <!-- ✅ NEW: Teacher assign -->
+          <div class="field">
+            <label>Assign Teacher (optional)</label>
+            <select class="input" id="teacher"></select>
+            <div class="mini" style="margin-top:6px;">If empty, student won’t appear on any teacher dashboard.</div>
           </div>
 
           <div class="field">
@@ -113,6 +114,26 @@
 
     const msg = document.getElementById("msg");
 
+    // ✅ NEW: Load teachers into dropdown (role=teacher)
+    const tSel = document.getElementById("teacher");
+    tSel.innerHTML = `<option value="">-- No teacher assigned --</option>`;
+
+    const { data: teachers, error: tErr } = await sb
+      .from("profiles")
+      .select("id,full_name,email")
+      .eq("role", "teacher")
+      .eq("status", "active")
+      .order("full_name", { ascending: true });
+
+    if (tErr) {
+      // If teachers fetch fails, keep dropdown with default option
+      console.warn("Teacher load failed:", tErr.message);
+    } else if (teachers && teachers.length) {
+      tSel.innerHTML += teachers.map(t =>
+        `<option value="${t.id}">${(t.full_name || t.email)}</option>`
+      ).join("");
+    }
+
     document.getElementById("enrollForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       msg.textContent = "Saving...";
@@ -125,12 +146,16 @@
       const homework = document.getElementById("homework").value.trim();
       const recordings = document.getElementById("recordings").value.trim();
 
+      // ✅ NEW: Teacher selection
+      const teacherId = document.getElementById("teacher").value || null;
+      const teacherObj = teacherId ? (teachers?.find(t => t.id === teacherId)) : null;
+      const teacherName = teacherObj ? (teacherObj.full_name || teacherObj.email) : null;
+
       // Find student profile by email
       const { data: prof, error: pErr } = await sb.from("profiles")
-  .select("id,email,full_name,status")
-  .eq("email", email)
-  .maybeSingle();
-
+        .select("id,email,full_name,status")
+        .eq("email", email)
+        .maybeSingle();
 
       if (pErr || !prof) {
         msg.textContent = "Student not found in profiles. Add to profiles first.";
@@ -141,19 +166,22 @@
         return;
       }
 
-      // Insert enrollment (student_id only)
-    const { error } = await sb.from("enrollments").insert([{
-  student_id: prof.id,
-  student_name: prof.full_name || null,
-  course,
-  batch_month: batch || null,
-  meet_link: meet || null,
-  notes_link: notes || null,
-  homework_link: homework || null,
-  recordings_link: recordings || null,
-  status: "active"
-}]);
+      // Insert enrollment (student_id only) + student_name + teacher_id + teacher_name
+      const { error } = await sb.from("enrollments").insert([{
+        student_id: prof.id,
+        student_name: prof.full_name || null,
 
+        teacher_id: teacherId,
+        teacher_name: teacherName,
+
+        course,
+        batch_month: batch || null,
+        meet_link: meet || null,
+        notes_link: notes || null,
+        homework_link: homework || null,
+        recordings_link: recordings || null,
+        status: "active"
+      }]);
 
       if (error) {
         msg.textContent = "Failed: " + error.message;
@@ -162,10 +190,10 @@
 
       msg.textContent = "Enrollment saved ✅";
       e.target.reset();
+
+      // Keep teacher dropdown populated after reset
+      document.getElementById("teacher").value = "";
     });
   </script>
 </body>
 </html>
-
-
-

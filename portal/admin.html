@@ -13,162 +13,147 @@
         <div class="logoDot"></div>
         <div>
           <div class="brandTitle">LizOn Education</div>
-          <div class="brandSub">Admin Dashboard</div>
+          <div class="brandSub">Admin Panel</div>
         </div>
       </div>
-      <div class="rightPills">
-        <span class="badge" id="pillName">Name: …</span>
-        <span class="badge" id="pillRole">Role: …</span>
-        <button class="btn" id="btnLogout">Logout</button>
+      <div class="pills">
+        <span class="pill" id="pillName">Name: …</span>
+        <span class="pill" id="pillRole">Role: …</span>
+        <button class="btn btnDanger" id="btnLogout">Logout</button>
       </div>
     </div>
 
-    <div class="card" style="margin-top:14px;">
-      <div class="h1">Enroll a Student</div>
-      <p class="p">Student must exist in <b>profiles</b> table.</p>
-      <div class="hr"></div>
+    <div class="grid">
+      <div class="card">
+        <div class="sectionTitle">Enroll a Student</div>
+        <div class="mini">Student must exist in <b>profiles</b> table.</div>
+        <div class="hr"></div>
 
-      <form id="enrollForm">
-        <div class="field">
-          <label>Student Email</label>
-          <input class="input" id="studentEmail" type="email" placeholder="student@email.com" required />
+        <form id="enrollForm">
+          <div class="field">
+            <label>Student Email</label>
+            <input class="input" id="studentEmail" type="email" placeholder="student@email.com" required />
+          </div>
+
+          <div class="field">
+            <label>Course</label>
+            <select class="input" id="course"></select>
+          </div>
+
+          <div class="field">
+            <label>Batch Month (Group only)</label>
+            <input class="input" id="batch" placeholder="2026-01" />
+            <div class="mini" style="margin-top:6px;">Required for group courses. Leave empty for 1:1.</div>
+          </div>
+
+          <div class="field">
+            <label>Meet Link</label>
+            <input class="input" id="meet" placeholder="https://meet.google.com/xxx-xxxx-xxx" />
+          </div>
+
+          <div class="field">
+            <label>Notes Link</label>
+            <input class="input" id="notes" placeholder="https://drive.google.com/..." />
+          </div>
+
+          <div class="field">
+            <label>Homework Link</label>
+            <input class="input" id="homework" placeholder="https://forms.gle/..." />
+          </div>
+
+          <div class="field">
+            <label>Recordings Link</label>
+            <input class="input" id="recordings" placeholder="https://drive.google.com/..." />
+          </div>
+
+          <div class="row">
+            <button class="btn btnPrimary" type="submit">Save Enrollment</button>
+          </div>
+        </form>
+
+        <div class="hr"></div>
+        <div id="msg" class="mini"></div>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">Quick Checks</div>
+        <div class="mini">If student sees empty courses: enrollments row missing OR status not active.</div>
+        <div class="hr"></div>
+        <div class="mini">
+          Recommended: keep Meet/Notes/Homework/Recordings as Google Drive / Forms links per batch.
         </div>
-
-        <div class="field">
-          <label>Course</label>
-          <select id="courseSelect" required></select>
-        </div>
-
-        <div class="field">
-          <label>Batch Month (Group only)</label>
-          <input class="input" id="batchMonth" placeholder="2026-01" />
-          <div class="mini">Required for group courses. Leave empty for 1:1.</div>
-        </div>
-
-        <div class="field">
-          <label>Meet Link</label>
-          <input class="input" id="meetLink" placeholder="https://meet.google.com/..." />
-        </div>
-
-        <div class="field">
-          <label>Notes Link</label>
-          <input class="input" id="notesLink" placeholder="https://drive.google.com/..." />
-        </div>
-
-        <div class="field">
-          <label>Homework Link</label>
-          <input class="input" id="homeworkLink" placeholder="https://forms.gle/..." />
-        </div>
-
-        <div class="field">
-          <label>Recordings Link</label>
-          <input class="input" id="recordingsLink" placeholder="https://drive.google.com/..." />
-        </div>
-
-        <div class="row">
-          <button class="btn btnPrimary" type="submit">Save Enrollment</button>
-          <span class="mini" id="statusTxt"></span>
-        </div>
-      </form>
-    </div>
-
-    <div class="card" style="margin-top:14px;">
-      <div class="h1">Recent Enrollments</div>
-      <p class="p">Last 10 enrollments (by student_id).</p>
-      <div class="hr"></div>
-      <div id="listBox" class="empty">Loading…</div>
+      </div>
     </div>
   </div>
 
   <script type="module">
-    import { sb, getMyProfileOrLogout, requireRole, logout } from "./assets/portal.js";
+    import { sb, requireActiveProfile, logout } from "./assets/portal.js";
     import { COURSES } from "./config.js";
 
     document.getElementById("btnLogout").addEventListener("click", logout);
 
-    const pack = await getMyProfileOrLogout();
-    if(!pack) throw new Error("No access");
-    if(!requireRole(pack.profile.role, ["admin","super_admin"])) throw new Error("Not allowed");
+    const pack = await requireActiveProfile();
+    if (!pack) throw new Error("No session");
+
+    const role = (pack.profile.role || "").toLowerCase();
+    if (role !== "admin" && role !== "super_admin") location.href = "./index.html";
 
     document.getElementById("pillName").textContent = "Name: " + (pack.profile.full_name || "Admin");
-    document.getElementById("pillRole").textContent = "Role: " + pack.profile.role;
+    document.getElementById("pillRole").textContent = "Role: " + (pack.profile.role || "admin");
 
-    // Populate courses ALWAYS (no empty dropdown problem)
-    const courseSel = document.getElementById("courseSelect");
-    courseSel.innerHTML = COURSES.map(c => `<option value="${c.id}">${c.label}</option>`).join("");
+    // Fill course dropdown (never empty)
+    const sel = document.getElementById("course");
+    sel.innerHTML = COURSES.map(c => `<option value="${c.id}">${c.label}</option>`).join("");
 
-    const statusTxt = document.getElementById("statusTxt");
-    const listBox = document.getElementById("listBox");
+    const msg = document.getElementById("msg");
 
-    async function refreshList(){
-      const res = await sb.from("enrollments")
-        .select("student_id,course,batch_month,status")
-        .order("created_at",{ascending:false})
-        .limit(10);
-
-      if(res.error){
-        listBox.textContent = "Could not load enrollments.";
-        return;
-      }
-      const rows = res.data || [];
-      if(!rows.length){ listBox.textContent = "No enrollments yet."; return; }
-
-      listBox.innerHTML = rows.map(r=>`
-        <div class="courseCard" style="margin:10px 0;">
-          <div>
-            <div class="courseTitle">${escapeHtml(r.course||"-")}</div>
-            <div class="courseMeta">student_id: ${escapeHtml(r.student_id||"-")}</div>
-          </div>
-          <div class="courseMeta">Batch: ${escapeHtml(r.batch_month||"-")} • ${escapeHtml(r.status||"-")}</div>
-        </div>
-      `).join("");
-    }
-
-    await refreshList();
-
-    document.getElementById("enrollForm").addEventListener("submit", async (e)=>{
+    document.getElementById("enrollForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      statusTxt.textContent = "Saving…";
+      msg.textContent = "Saving...";
 
       const email = document.getElementById("studentEmail").value.trim().toLowerCase();
-      const course = courseSel.value;
-      const batch_month = document.getElementById("batchMonth").value.trim() || null;
+      const course = document.getElementById("course").value;
+      const batch = document.getElementById("batch").value.trim();
+      const meet = document.getElementById("meet").value.trim();
+      const notes = document.getElementById("notes").value.trim();
+      const homework = document.getElementById("homework").value.trim();
+      const recordings = document.getElementById("recordings").value.trim();
 
-      // lookup student profile by email to get student_id
-      const p = await sb.from("profiles").select("id,email,status").eq("email", email).maybeSingle();
-      if(p.error || !p.data){
-        statusTxt.textContent = "";
-        return alert("Student not found in profiles. Add student first.");
+      // Find student profile by email
+      const { data: prof, error: pErr } = await sb.from("profiles")
+        .select("id,email,status")
+        .eq("email", email)
+        .maybeSingle();
+
+      if (pErr || !prof) {
+        msg.textContent = "Student not found in profiles. Add to profiles first.";
+        return;
       }
-      if(p.data.status !== "active"){
-        statusTxt.textContent = "";
-        return alert("Student status not active.");
+      if (prof.status !== "active") {
+        msg.textContent = "Student profile is not active.";
+        return;
       }
 
-      const payload = {
-        student_id: p.data.id,
+      // Insert enrollment (student_id only)
+      const { error } = await sb.from("enrollments").insert([{
+        student_id: prof.id,
         course,
-        batch_month,
-        meet_link: document.getElementById("meetLink").value.trim() || null,
-        notes_link: document.getElementById("notesLink").value.trim() || null,
-        homework_link: document.getElementById("homeworkLink").value.trim() || null,
-        recordings_link: document.getElementById("recordingsLink").value.trim() || null,
+        batch_month: batch || null,
+        meet_link: meet || null,
+        notes_link: notes || null,
+        homework_link: homework || null,
+        recordings_link: recordings || null,
         status: "active"
-      };
+      }]);
 
-      const ins = await sb.from("enrollments").insert(payload);
-      if(ins.error){
-        statusTxt.textContent = "";
-        return alert("Insert failed: " + ins.error.message);
+      if (error) {
+        msg.textContent = "Failed: " + error.message;
+        return;
       }
 
-      statusTxt.textContent = "Saved ✅";
-      await refreshList();
+      msg.textContent = "Enrollment saved ✅";
+      e.target.reset();
     });
-
-    function escapeHtml(str){
-      return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-    }
   </script>
 </body>
 </html>

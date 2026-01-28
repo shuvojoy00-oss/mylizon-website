@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Student — LizOn Portal</title>
+  <title>Student Dashboard — LizOn</title>
   <link rel="stylesheet" href="./assets/portal.css"/>
 </head>
 <body>
@@ -16,33 +16,36 @@
           <div class="brandSub">Student Dashboard</div>
         </div>
       </div>
-      <div class="rightPills">
-        <span class="badge" id="pillName">Name: …</span>
-        <span class="badge" id="pillRole">Role: …</span>
+      <div class="pills">
+        <span class="pill" id="pillName">Name: …</span>
+        <span class="pill" id="pillRole">Role: …</span>
         <button class="btn" id="btnInstall">Add to Home Screen</button>
-        <button class="btn" id="btnLogout">Logout</button>
+        <button class="btn btnDanger" id="btnLogout">Logout</button>
       </div>
     </div>
 
-    <div class="card" style="margin-top:14px;">
-      <div class="h1">Announcements</div>
-      <p class="p">Updates from LizOn.</p>
-      <div class="hr"></div>
-      <div id="annBox" class="mini">Loading…</div>
-    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="sectionTitle">Announcements</div>
+        <div class="mini">Updates from LizOn.</div>
+        <div class="hr"></div>
+        <div id="annBox" class="mini">Loading…</div>
+      </div>
 
-    <div class="card" style="margin-top:14px;">
-      <div class="h1">My Courses</div>
-      <p class="p">Join class, open notes, submit homework, watch recordings.</p>
-      <div class="hr"></div>
-      <div id="coursesBox" class="empty">Loading…</div>
+      <div class="card">
+        <div class="sectionTitle">My Courses</div>
+        <div class="mini">Join class, open notes, submit homework, watch recordings.</div>
+        <div class="hr"></div>
+        <div id="courses" class="courseGrid"></div>
+        <div id="emptyCourses" class="mini" style="display:none;">No active course found. Contact LizOn admin.</div>
+      </div>
     </div>
   </div>
 
   <script type="module">
-    import { sb, getMyProfileOrLogout, requireRole, logout, openNew } from "./assets/portal.js";
+    import { sb, requireActiveProfile, logout } from "./assets/portal.js";
 
-    // Install
+    // install prompt
     let deferredPrompt=null;
     window.addEventListener("beforeinstallprompt",(e)=>{e.preventDefault();deferredPrompt=e;});
     document.getElementById("btnInstall").addEventListener("click", async ()=>{
@@ -52,25 +55,28 @@
 
     document.getElementById("btnLogout").addEventListener("click", logout);
 
-    const pack = await getMyProfileOrLogout();
-    if(!pack) throw new Error("No access");
-    if(!requireRole(pack.profile.role, ["student"])) throw new Error("Not student");
+    const pack = await requireActiveProfile();
+    if (!pack) throw new Error("No session");
 
     document.getElementById("pillName").textContent = "Name: " + (pack.profile.full_name || "Student");
-    document.getElementById("pillRole").textContent = "Role: " + pack.profile.role;
+    document.getElementById("pillRole").textContent = "Role: " + (pack.profile.role || "student");
 
-    // Announcements (safe if table missing / blocked)
+    // Announcements (optional table)
     const annBox = document.getElementById("annBox");
     try{
-      const res = await sb.from("announcements").select("title,body,created_at").order("created_at",{ascending:false}).limit(3);
-      if(res.error) throw res.error;
-      const rows = res.data || [];
-      if(!rows.length){ annBox.textContent = "No announcements right now."; }
-      else{
-        annBox.innerHTML = rows.map(a=>`
-          <div style="margin:10px 0;">
-            <div style="font-weight:900;">${escapeHtml(a.title||"Update")}</div>
-            <div class="mini" style="margin-top:4px;">${escapeHtml(a.body||"")}</div>
+      const { data, error } = await sb.from("announcements")
+        .select("title,body,created_at")
+        .order("created_at",{ascending:false})
+        .limit(3);
+
+      if(error) throw error;
+      if(!data || data.length===0){
+        annBox.textContent = "No announcements right now.";
+      } else {
+        annBox.innerHTML = data.map(a => `
+          <div style="margin-bottom:10px;">
+            <div style="font-weight:900;">${a.title || "Update"}</div>
+            <div class="mini">${a.body || ""}</div>
           </div>
         `).join("");
       }
@@ -79,43 +85,34 @@
     }
 
     // Enrollments by student_id
-    const coursesBox = document.getElementById("coursesBox");
-    const { data: enrollRes, error } = await sb
+    const { data: enrolls, error: eErr } = await sb
       .from("enrollments")
       .select("course,batch_month,meet_link,notes_link,homework_link,recordings_link,status")
       .eq("student_id", pack.user.id)
-      .order("batch_month",{ascending:false});
+      .order("created_at", { ascending: false });
 
-    if(error){
-      coursesBox.textContent = "Could not load courses. Contact admin.";
-    }else{
-      const items = enrollRes || [];
-      if(!items.length){
-        coursesBox.textContent = "No courses assigned yet. Contact LizOn admin.";
-      }else{
-        coursesBox.innerHTML = items.map(c=>`
-          <div class="courseCard" style="margin:10px 0;">
-            <div>
-              <div class="courseTitle">${escapeHtml(c.course||"Course")}</div>
-              <div class="courseMeta">Batch: ${escapeHtml(c.batch_month||"-")} • Status: ${escapeHtml(c.status||"-")}</div>
-            </div>
+    const grid = document.getElementById("courses");
+    const empty = document.getElementById("emptyCourses");
+
+    if (eErr || !enrolls || enrolls.length === 0) {
+      empty.style.display = "block";
+    } else {
+      empty.style.display = "none";
+      grid.innerHTML = enrolls.map(c => {
+        const active = (c.status || "active") === "active";
+        return `
+          <div class="courseCard">
+            <div class="courseName">${c.course || "Course"}</div>
+            <div class="courseMeta">Batch: ${c.batch_month || "—"} • Status: ${c.status || "active"}</div>
             <div class="courseBtns">
-              <button class="btn btnPrimary btnSm" data-link="${c.meet_link||""}">Join Class</button>
-              <button class="btn btnSm" data-link="${c.notes_link||""}">Notes</button>
-              <button class="btn btnSm" data-link="${c.homework_link||""}">Homework</button>
-              <button class="btn btnSm" data-link="${c.recordings_link||""}">Recordings</button>
+              <a class="${active ? "primary" : ""}" href="${c.meet_link || "#"}" target="_blank" rel="noopener">Join Class</a>
+              <a href="${c.notes_link || "#"}" target="_blank" rel="noopener">Notes</a>
+              <a href="${c.homework_link || "#"}" target="_blank" rel="noopener">Homework</a>
+              <a href="${c.recordings_link || "#"}" target="_blank" rel="noopener">Recordings</a>
             </div>
           </div>
-        `).join("");
-
-        coursesBox.querySelectorAll("button[data-link]").forEach(btn=>{
-          btn.addEventListener("click", ()=> openNew(btn.getAttribute("data-link")));
-        });
-      }
-    }
-
-    function escapeHtml(str){
-      return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+        `;
+      }).join("");
     }
   </script>
 </body>

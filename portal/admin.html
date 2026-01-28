@@ -135,16 +135,18 @@
       }
 
       // Insert enrollment (student_id only)
-      const { error } = await sb.from("enrollments").insert([{
-        student_id: prof.id,
-        course,
-        batch_month: batch || null,
-        meet_link: meet || null,
-        notes_link: notes || null,
-        homework_link: homework || null,
-        recordings_link: recordings || null,
-        status: "active"
-      }]);
+    const { error } = await sb.from("enrollments").insert([{
+  student_id: prof.id,
+  student_name: prof.full_name || null,
+  course,
+  batch_month: batch || null,
+  meet_link: meet || null,
+  notes_link: notes || null,
+  homework_link: homework || null,
+  recordings_link: recordings || null,
+  status: "active"
+}]);
+
 
       if (error) {
         msg.textContent = "Failed: " + error.message;
@@ -157,3 +159,4 @@
   </script>
 </body>
 </html>
+

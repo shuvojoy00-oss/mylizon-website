@@ -121,9 +121,10 @@
 
       // Find student profile by email
       const { data: prof, error: pErr } = await sb.from("profiles")
-        .select("id,email,status")
-        .eq("email", email)
-        .maybeSingle();
+  .select("id,email,full_name,status")
+  .eq("email", email)
+  .maybeSingle();
+
 
       if (pErr || !prof) {
         msg.textContent = "Student not found in profiles. Add to profiles first.";
@@ -159,4 +160,5 @@
   </script>
 </body>
 </html>
+
 

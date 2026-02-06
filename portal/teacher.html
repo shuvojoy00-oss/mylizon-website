@@ -23,13 +23,50 @@
       </div>
     </div>
 
-    <div class="card" style="margin-top:16px;">
-      <div class="sectionTitle">Assigned Students</div>
-      <div class="mini">These students are assigned to you by admin.</div>
-      <div class="hr"></div>
+    <div class="grid" style="margin-top:16px;">
+      <!-- Announcement panel -->
+      <div class="card">
+        <div class="sectionTitle">Post Announcement</div>
+        <div class="mini">Students will see this in their dashboard.</div>
+        <div class="hr"></div>
 
-      <div id="list" class="courseGrid"></div>
-      <div id="empty" class="mini" style="display:none;">No students assigned yet.</div>
+        <div class="field">
+          <label>Course</label>
+          <select class="input" id="aCourse"></select>
+        </div>
+
+        <div class="field">
+          <label>Batch Month (optional)</label>
+          <input class="input" id="aBatch" placeholder="2026-01 (leave empty to post for all batches)" />
+        </div>
+
+        <div class="field">
+          <label>Title</label>
+          <input class="input" id="aTitle" placeholder="Class moved to 9:00 PM" />
+        </div>
+
+        <div class="field">
+          <label>Message</label>
+          <textarea class="input" id="aBody" rows="5" placeholder="Write the announcement details..."></textarea>
+        </div>
+
+        <div class="row">
+          <button class="btn btnPrimary" id="btnPost">Post</button>
+        </div>
+
+        <div class="hr"></div>
+        <div class="mini" id="aMsg"></div>
+      </div>
+
+      <!-- Assigned students panel -->
+      <div class="card">
+        <div class="sectionTitle">Assigned Students</div>
+        <div class="mini">These students are assigned to you by admin.</div>
+        <div class="hr"></div>
+
+        <div id="list" class="courseGrid"></div>
+        <div id="empty" class="mini" style="display:none;">No students assigned yet.</div>
+      </div>
     </div>
   </div>
 
@@ -44,24 +81,35 @@
     const role = (pack.profile.role || "").toLowerCase();
     if (role !== "teacher") location.href = "./index.html";
 
-    document.getElementById("pillName").textContent = "Name: " + (pack.profile.full_name || "Teacher");
+    const teacherName = pack.profile.full_name || "Teacher";
+
+    document.getElementById("pillName").textContent = "Name: " + teacherName;
     document.getElementById("pillRole").textContent = "Role: " + (pack.profile.role || "teacher");
 
-    // Fetch assigned enrollments
-    const { data, error } = await sb
+    // Load teacher assigned enrollments
+    const { data: enrolls } = await sb
       .from("enrollments")
       .select("student_name,course,batch_month,meet_link,notes_link,homework_link,recordings_link,status")
       .eq("teacher_id", pack.user.id)
       .order("created_at", { ascending: false });
 
+    // Fill course dropdown from assigned enrollments (unique)
+    const aCourse = document.getElementById("aCourse");
+    const coursesUnique = Array.from(new Set((enrolls || []).map(e => e.course).filter(Boolean)));
+
+    aCourse.innerHTML = coursesUnique.length
+      ? coursesUnique.map(c => `<option value="${c}">${c}</option>`).join("")
+      : `<option value="">No course assigned</option>`;
+
+    // Show assigned students cards
     const list = document.getElementById("list");
     const empty = document.getElementById("empty");
 
-    if (error || !data || data.length === 0) {
+    if (!enrolls || enrolls.length === 0) {
       empty.style.display = "block";
     } else {
       empty.style.display = "none";
-      list.innerHTML = data.map(r => `
+      list.innerHTML = enrolls.map(r => `
         <div class="courseCard">
           <div class="courseName">${r.student_name || "Student"}</div>
           <div class="courseMeta">
@@ -76,6 +124,39 @@
         </div>
       `).join("");
     }
+
+    // Post announcement
+    const aMsg = document.getElementById("aMsg");
+    document.getElementById("btnPost").addEventListener("click", async () => {
+      const course = document.getElementById("aCourse").value;
+      const batch = document.getElementById("aBatch").value.trim() || null;
+      const title = document.getElementById("aTitle").value.trim();
+      const body = document.getElementById("aBody").value.trim();
+
+      if (!course) return alert("No course assigned to post.");
+      if (!title || !body) return alert("Title and Message are required.");
+
+      aMsg.textContent = "Posting...";
+
+      const { error } = await sb.from("announcements").insert([{
+        teacher_id: pack.user.id,
+        teacher_name: teacherName,
+        course,
+        batch_month: batch,
+        title,
+        body
+      }]);
+
+      if (error) {
+        aMsg.textContent = "Failed: " + error.message;
+        return;
+      }
+
+      aMsg.textContent = "Announcement posted ✅";
+      document.getElementById("aTitle").value = "";
+      document.getElementById("aBody").value = "";
+      document.getElementById("aBatch").value = "";
+    });
   </script>
 </body>
 </html>

@@ -45,62 +45,74 @@
   <script type="module">
     import { sb, requireActiveProfile, logout } from "./assets/portal.js";
 
-    // install prompt
-    let deferredPrompt=null;
-    window.addEventListener("beforeinstallprompt",(e)=>{e.preventDefault();deferredPrompt=e;});
-    document.getElementById("btnInstall").addEventListener("click", async ()=>{
-      if(deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;}
-      else alert("iPhone: Share → Add to Home Screen\nAndroid: Menu → Add to Home screen / Install app");
+    // Install prompt
+    let deferredPrompt = null;
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+    document.getElementById("btnInstall").addEventListener("click", async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt = null;
+      } else {
+        alert("iPhone: Share → Add to Home Screen\nAndroid: Menu → Add to Home screen / Install app");
+      }
     });
 
+    // Logout
     document.getElementById("btnLogout").addEventListener("click", logout);
 
+    // Require session + active profile
     const pack = await requireActiveProfile();
     if (!pack) throw new Error("No session");
 
     document.getElementById("pillName").textContent = "Name: " + (pack.profile.full_name || "Student");
     document.getElementById("pillRole").textContent = "Role: " + (pack.profile.role || "student");
 
-    // ✅ UPDATED: Announcements (with teacher_name)
-    const annBox = document.getElementById("annBox");
-
+    // Time-ago helper
     const timeAgo = (iso) => {
       if (!iso) return "";
       const t = new Date(iso).getTime();
       if (Number.isNaN(t)) return "";
       const diff = Date.now() - t;
-      const mins = Math.floor(diff/60000);
+      const mins = Math.floor(diff / 60000);
       if (mins < 1) return "just now";
       if (mins < 60) return mins + " min ago";
-      const hrs = Math.floor(mins/60);
+      const hrs = Math.floor(mins / 60);
       if (hrs < 24) return hrs + " hr ago";
-      const days = Math.floor(hrs/24);
-      return days + " day" + (days>1 ? "s" : "") + " ago";
+      const days = Math.floor(hrs / 24);
+      return days + " day" + (days > 1 ? "s" : "") + " ago";
     };
 
-    try{
-      const { data, error } = await sb.from("announcements")
+    // ✅ Announcements (shows real Supabase errors + console log)
+    const annBox = document.getElementById("annBox");
+    try {
+      const { data, error } = await sb
+        .from("announcements")
         .select("title,body,teacher_name,created_at")
-        .order("created_at",{ascending:false})
+        .order("created_at", { ascending: false })
         .limit(5);
 
-      if(error) throw error;
-
-      if(!data || data.length===0){
+      if (error) {
+        annBox.textContent = "Announcements error: " + error.message;
+        console.error("Announcements error:", error);
+      } else if (!data || data.length === 0) {
         annBox.textContent = "No announcements right now.";
       } else {
         annBox.innerHTML = data.map(a => `
           <div style="margin-bottom:12px;">
             <div style="font-weight:900;">${a.title || "Update"}</div>
-            <div class="mini" style="margin-top:4px;">${a.body || ""}</div>
-            <div class="mini" style="margin-top:6px; opacity:.8;">
+            <div style="margin-top:4px;">${a.body || ""}</div>
+            <div style="margin-top:6px; opacity:.8;">
               By ${a.teacher_name || "LizOn"} • ${timeAgo(a.created_at)}
             </div>
           </div>
         `).join("");
       }
-    }catch(e){
-       annBox.textContent = "Announcements error: " + (e?.message || e);
+    } catch (e) {
+      annBox.textContent = "Announcements error: " + (e?.message || String(e));
+      console.error("Announcements catch error:", e);
     }
 
     // Enrollments by student_id
@@ -112,6 +124,10 @@
 
     const grid = document.getElementById("courses");
     const empty = document.getElementById("emptyCourses");
+
+    if (eErr) {
+      console.error("Enrollments error:", eErr);
+    }
 
     if (eErr || !enrolls || enrolls.length === 0) {
       empty.style.display = "block";
@@ -137,4 +153,3 @@
   </script>
 </body>
 </html>
-

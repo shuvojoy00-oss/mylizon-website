@@ -15,39 +15,115 @@
       --btn:#19b37a;
       --btn2:#0ea56f;
       --danger:#ff6b6b;
+      --warn:#ffd166;
+      --ok:#6ee7b7;
     }
-    body{margin:0;font-family:system-ui,Arial;background:radial-gradient(900px 600px at 50% 0%, #1a4a3a 0%, var(--bg) 60%);color:var(--text);}
+    body{
+      margin:0;
+      font-family:system-ui,Arial;
+      background:radial-gradient(900px 600px at 50% 0%, #1a4a3a 0%, var(--bg) 60%);
+      color:var(--text);
+    }
     .wrap{max-width:1100px;margin:0 auto;padding:18px;}
     .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:10px}
     .pill{border:1px solid var(--line);padding:7px 10px;border-radius:999px;color:var(--muted);font-size:12px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:14px;}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      margin-top:14px;
+    }
     h1{margin:0 0 10px;font-size:18px}
     h2{margin:0 0 10px;font-size:13px;color:var(--muted);font-weight:650}
-    input{
-      width:100%;box-sizing:border-box;
-      padding:12px;border-radius:12px;border:1px solid var(--line);
-      background:rgba(0,0,0,.15);color:var(--text);outline:none;
+    input, select{
+      width:100%;
+      box-sizing:border-box;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.15);
+      color:var(--text);
+      outline:none;
+      font-size:14px;
     }
     button{
       border:none;border-radius:12px;
-      padding:12px 14px;
-      font-weight:850;cursor:pointer;
+      padding:10px 12px;
+      font-weight:850;
+      cursor:pointer;
+      font-size:14px;
     }
     .btn{background:linear-gradient(180deg,var(--btn),var(--btn2));color:#062016;}
     .btnGhost{background:rgba(0,0,0,.12);border:1px solid var(--line);color:var(--text)}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media(max-width:800px){.grid2{grid-template-columns:1fr}}
-    .msg{margin-top:10px;font-size:13px;color:var(--muted)}
+    @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+    .msg{margin-top:12px;font-size:13px;color:var(--muted)}
     .err{color:var(--danger)}
     table{width:100%;border-collapse:separate;border-spacing:0 10px}
-    th{font-size:12px;color:var(--muted);text-align:left;font-weight:700;padding:8px}
-    td{padding:12px 8px;background:rgba(0,0,0,.12);border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:13px}
+    th{font-size:12px;color:var(--muted);text-align:left;font-weight:800;padding:8px}
+    td{
+      padding:12px 8px;
+      background:rgba(0,0,0,.12);
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      font-size:13px;
+      vertical-align:middle;
+      white-space:nowrap;
+    }
     td:first-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px}
     td:last-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}
     .hide{display:none}
     .badge{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .editBtn{
+      padding:8px 10px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,209,102,.12);
+      color:var(--warn);
+      font-weight:900;
+    }
+    .delBtn{
+      padding:8px 10px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,0,0,.12);
+      color:#ffd1d1;
+      font-weight:900;
+    }
+    .editBtn:hover{background:rgba(255,209,102,.18)}
+    .delBtn:hover{background:rgba(255,0,0,.18)}
+
+    /* Modal */
+    .modalBack{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,.55);
+      display:flex;align-items:center;justify-content:center;
+      padding:16px;
+      z-index:9999;
+    }
+    .modal{
+      width:min(720px, 96vw);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      box-shadow:0 20px 50px rgba(0,0,0,.5);
+    }
+    .modalTop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .modalTop b{font-size:15px}
+    .closeBtn{
+      background:rgba(0,0,0,.2);
+      border:1px solid var(--line);
+      color:var(--text);
+      padding:8px 10px;border-radius:12px;
+      cursor:pointer;font-weight:900;
+    }
+    .modalActions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+    .saveBtn{background:linear-gradient(180deg,var(--btn),var(--btn2));color:#062016;}
+    .cancelBtn{background:rgba(0,0,0,.12);border:1px solid var(--line);color:var(--text)}
+    .small{font-size:12px;color:var(--muted)}
   </style>
 </head>
 
@@ -64,9 +140,9 @@
       </div>
     </div>
 
-    <!-- LOGIN -->
+    <!-- LOGIN VIEW -->
     <div class="card" id="loginView">
-      <h1>Admin Login</h1>
+      <h1>Staff Login</h1>
       <div class="grid2">
         <div>
           <h2>Email</h2>
@@ -83,12 +159,12 @@
       </div>
     </div>
 
-    <!-- DASHBOARD -->
+    <!-- DASH VIEW -->
     <div class="card hide" id="dashView">
       <div class="row" style="justify-content:space-between">
         <div>
           <h1>Placement Attempts</h1>
-          <div class="msg">If table is empty, students haven’t submitted yet OR RLS is blocking read.</div>
+          <div class="msg">Edit or delete attempts. Delete is permanent.</div>
         </div>
         <button class="btnGhost" id="refreshBtn" type="button">Refresh</button>
       </div>
@@ -109,6 +185,7 @@
               <th>Timeline</th>
               <th>Stage</th>
               <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -119,10 +196,89 @@
     </div>
   </div>
 
-  <!-- ✅ Correct Supabase UMD -->
+  <!-- EDIT MODAL -->
+  <div class="modalBack hide" id="editBack">
+    <div class="modal">
+      <div class="modalTop">
+        <b>Edit Attempt</b>
+        <button class="closeBtn" id="closeEdit" type="button">Close</button>
+      </div>
+      <div class="small" id="editMeta"></div>
+
+      <div class="grid2" style="margin-top:10px">
+        <div>
+          <h2>Full Name</h2>
+          <input id="e_full_name" placeholder="Full name">
+        </div>
+        <div>
+          <h2>Phone</h2>
+          <input id="e_phone" placeholder="01XXXXXXXXX">
+        </div>
+
+        <div>
+          <h2>Target</h2>
+          <select id="e_target">
+            <option value="">—</option>
+            <option>5.5</option>
+            <option>6.0</option>
+            <option>6.5</option>
+            <option>7.0</option>
+            <option>7.5+</option>
+          </select>
+        </div>
+
+        <div>
+          <h2>Timeline</h2>
+          <select id="e_timeline">
+            <option value="">—</option>
+            <option>2–4 weeks</option>
+            <option>1–2 months</option>
+            <option>2–3 months</option>
+            <option>3+ months</option>
+            <option>Not fixed</option>
+          </select>
+        </div>
+
+        <div>
+          <h2>Stage</h2>
+          <select id="e_stage">
+            <option value="">—</option>
+            <option>FOUNDATION</option>
+            <option>CORE</option>
+            <option>STRATEGY</option>
+            <option>EXAM-KNOCKING</option>
+          </select>
+        </div>
+
+        <div>
+          <h2>Status</h2>
+          <select id="e_status">
+            <option value="">—</option>
+            <option>NEW</option>
+            <option>CONTACTED</option>
+            <option>FOLLOW-UP</option>
+            <option>ADMITTED</option>
+            <option>CLOSED</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="msg" id="editMsg"></div>
+
+      <div class="modalActions">
+        <button class="cancelBtn" id="cancelEdit" type="button">Cancel</button>
+        <button class="saveBtn" id="saveEdit" type="button">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Supabase UMD -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
   <script>
+    // ==========================
+    // SUPABASE CONFIG
+    // ==========================
     const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
 
@@ -130,19 +286,34 @@
       auth: { persistSession:true, autoRefreshToken:true, detectSessionInUrl:true, storage: window.localStorage }
     });
 
+    // UI refs
     const who = document.getElementById("who");
     const logoutBtn = document.getElementById("logoutBtn");
-
     const loginView = document.getElementById("loginView");
     const dashView = document.getElementById("dashView");
-
     const loginBtn = document.getElementById("loginBtn");
     const loginMsg = document.getElementById("loginMsg");
-
     const refreshBtn = document.getElementById("refreshBtn");
     const tbody = document.getElementById("tbody");
     const count = document.getElementById("count");
     const dashErr = document.getElementById("dashErr");
+
+    // Modal refs
+    const editBack = document.getElementById("editBack");
+    const closeEdit = document.getElementById("closeEdit");
+    const cancelEdit = document.getElementById("cancelEdit");
+    const saveEdit = document.getElementById("saveEdit");
+    const editMsg = document.getElementById("editMsg");
+    const editMeta = document.getElementById("editMeta");
+
+    const e_full_name = document.getElementById("e_full_name");
+    const e_phone = document.getElementById("e_phone");
+    const e_target = document.getElementById("e_target");
+    const e_timeline = document.getElementById("e_timeline");
+    const e_stage = document.getElementById("e_stage");
+    const e_status = document.getElementById("e_status");
+
+    let currentEditId = null;
 
     function fmt(ts){
       try { return new Date(ts).toLocaleString(); } catch(e){ return ts; }
@@ -174,7 +345,7 @@
 
       const { data, error } = await supabaseClient
         .from("ielts_placement_attempts")
-        .select("created_at, full_name, phone, target_score, exam_timeline, stage, status")
+        .select("id, created_at, full_name, phone, target_score, exam_timeline, stage, status")
         .order("created_at", { ascending: false })
         .limit(100);
 
@@ -187,7 +358,7 @@
       count.textContent = "Loaded: " + (data?.length || 0);
 
       if(!data || data.length===0){
-        tbody.innerHTML = `<tr><td colspan="7">No attempts yet.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8">No attempts yet.</td></tr>`;
         return;
       }
 
@@ -200,10 +371,119 @@
           <td>${safe(r.exam_timeline)}</td>
           <td>${safe(r.stage)}</td>
           <td>${safe(r.status)}</td>
+          <td>
+            <div class="actions">
+              <button class="editBtn" type="button" data-id="${r.id}">Edit</button>
+              <button class="delBtn" type="button" data-id="${r.id}">Delete</button>
+            </div>
+          </td>
         </tr>
       `).join("");
+
+      // bind actions
+      tbody.querySelectorAll(".delBtn").forEach(btn=>{
+        btn.addEventListener("click", ()=> deleteAttempt(btn.dataset.id));
+      });
+
+      tbody.querySelectorAll(".editBtn").forEach(btn=>{
+        btn.addEventListener("click", ()=> openEdit(btn.dataset.id));
+      });
     }
 
+    async function deleteAttempt(id){
+      const ok = confirm("Delete this attempt permanently? This cannot be undone.");
+      if(!ok) return;
+
+      const { error } = await supabaseClient
+        .from("ielts_placement_attempts")
+        .delete()
+        .eq("id", id);
+
+      if(error){
+        alert("Delete failed: " + error.message);
+        return;
+      }
+      await loadAttempts();
+    }
+
+    function openModal(){
+      editBack.classList.remove("hide");
+      editMsg.textContent = "";
+      editMsg.classList.remove("err");
+    }
+    function closeModal(){
+      editBack.classList.add("hide");
+      currentEditId = null;
+    }
+
+    async function openEdit(id){
+      currentEditId = id;
+      openModal();
+      editMeta.textContent = "Loading attempt...";
+
+      const { data, error } = await supabaseClient
+        .from("ielts_placement_attempts")
+        .select("id, created_at, full_name, phone, target_score, exam_timeline, stage, status")
+        .eq("id", id)
+        .single();
+
+      if(error){
+        editMsg.textContent = "Cannot open: " + error.message;
+        editMsg.classList.add("err");
+        editMeta.textContent = "";
+        return;
+      }
+
+      editMeta.textContent = `ID: ${data.id} • Created: ${fmt(data.created_at)}`;
+
+      e_full_name.value = data.full_name || "";
+      e_phone.value = data.phone || "";
+      e_target.value = data.target_score || "";
+      e_timeline.value = data.exam_timeline || "";
+      e_stage.value = data.stage || "";
+      e_status.value = data.status || "";
+    }
+
+    async function saveEditChanges(){
+      if(!currentEditId) return;
+
+      saveEdit.disabled = true;
+      saveEdit.textContent = "Saving...";
+
+      editMsg.textContent = "";
+      editMsg.classList.remove("err");
+
+      const updates = {
+        full_name: e_full_name.value.trim() || null,
+        phone: e_phone.value.trim() || null,
+        target_score: e_target.value || null,
+        exam_timeline: e_timeline.value || null,
+        stage: e_stage.value || null,
+        status: e_status.value || null
+      };
+
+      const { error } = await supabaseClient
+        .from("ielts_placement_attempts")
+        .update(updates)
+        .eq("id", currentEditId);
+
+      saveEdit.disabled = false;
+      saveEdit.textContent = "Save Changes";
+
+      if(error){
+        editMsg.textContent = "Update failed: " + error.message;
+        editMsg.classList.add("err");
+        return;
+      }
+
+      editMsg.textContent = "Saved ✓";
+      editMsg.style.color = "rgba(110,231,183,.95)";
+
+      await loadAttempts();
+      setTimeout(closeModal, 400);
+    }
+
+    // Events
     loginBtn.addEventListener("click", async ()=>{
       loginMsg.textContent = "";
       loginMsg.classList.remove("err");
@@ -241,6 +521,15 @@
     });
 
     refreshBtn.addEventListener("click", loadAttempts);
+
+    closeEdit.addEventListener("click", closeModal);
+    cancelEdit.addEventListener("click", closeModal);
+    saveEdit.addEventListener("click", saveEditChanges);
+
+    // Close modal when clicking outside
+    editBack.addEventListener("click", (e)=>{
+      if(e.target === editBack) closeModal();
+    });
 
     // initial
     showUI();

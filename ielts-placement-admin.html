@@ -1,126 +1,249 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LizOn Placement Admin</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f2a22;
-      color: #e8fff5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    :root{
+      --bg:#0f2a22;
+      --card:#153b30;
+      --text:#e8fff5;
+      --muted:rgba(232,255,245,.75);
+      --line:rgba(232,255,245,.14);
+      --btn:#19b37a;
+      --btn2:#0ea56f;
+      --danger:#ff6b6b;
     }
-
-    .card {
-      background: #153b30;
-      padding: 30px;
-      border-radius: 12px;
-      width: 340px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    body{margin:0;font-family:system-ui,Arial;background:radial-gradient(900px 600px at 50% 0%, #1a4a3a 0%, var(--bg) 60%);color:var(--text);}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px;}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:10px}
+    .pill{border:1px solid var(--line);padding:7px 10px;border-radius:999px;color:var(--muted);font-size:12px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:14px;}
+    h1{margin:0 0 10px;font-size:18px}
+    h2{margin:0 0 10px;font-size:13px;color:var(--muted);font-weight:650}
+    input{
+      width:100%;box-sizing:border-box;
+      padding:12px;border-radius:12px;border:1px solid var(--line);
+      background:rgba(0,0,0,.15);color:var(--text);outline:none;
     }
-
-    h2 {
-      margin-top: 0;
-      text-align: center;
+    button{
+      border:none;border-radius:12px;
+      padding:12px 14px;
+      font-weight:850;cursor:pointer;
     }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border-radius: 6px;
-      border: none;
-      font-size: 14px;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      background: #19b37a;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    .message {
-      margin-top: 12px;
-      font-size: 14px;
-      text-align: center;
-    }
+    .btn{background:linear-gradient(180deg,var(--btn),var(--btn2));color:#062016;}
+    .btnGhost{background:rgba(0,0,0,.12);border:1px solid var(--line);color:var(--text)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:800px){.grid2{grid-template-columns:1fr}}
+    .msg{margin-top:10px;font-size:13px;color:var(--muted)}
+    .err{color:var(--danger)}
+    table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    th{font-size:12px;color:var(--muted);text-align:left;font-weight:700;padding:8px}
+    td{padding:12px 8px;background:rgba(0,0,0,.12);border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:13px}
+    td:first-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px}
+    td:last-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}
+    .hide{display:none}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
   </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <b>LizOn Education</b>
+        <span class="pill">Placement Admin</span>
+      </div>
+      <div class="row">
+        <span class="pill" id="who">Not logged in</span>
+        <button class="btnGhost hide" id="logoutBtn" type="button">Logout</button>
+      </div>
+    </div>
 
-  <div class="card">
-    <h2>Admin Login</h2>
+    <!-- LOGIN -->
+    <div class="card" id="loginView">
+      <h1>Admin Login</h1>
+      <div class="grid2">
+        <div>
+          <h2>Email</h2>
+          <input id="email" type="email" placeholder="Email" />
+        </div>
+        <div>
+          <h2>Password</h2>
+          <input id="password" type="password" placeholder="Password" />
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="loginBtn" type="button">Login</button>
+        <span class="msg" id="loginMsg"></span>
+      </div>
+    </div>
 
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button type="button" onclick="login()">Login</button>
+    <!-- DASHBOARD -->
+    <div class="card hide" id="dashView">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <h1>Placement Attempts</h1>
+          <div class="msg">If table is empty, students haven’t submitted yet OR RLS is blocking read.</div>
+        </div>
+        <button class="btnGhost" id="refreshBtn" type="button">Refresh</button>
+      </div>
 
-    <div class="message" id="message"></div>
+      <div class="row" style="gap:12px;margin-top:10px">
+        <span class="badge">Table: public.ielts_placement_attempts</span>
+        <span class="badge" id="count">Loaded: 0</span>
+      </div>
+
+      <div style="margin-top:12px;overflow:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Target</th>
+              <th>Timeline</th>
+              <th>Stage</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="msg err" id="dashErr"></div>
+    </div>
   </div>
 
-  <!-- Supabase UMD (MUST use this one) -->
+  <!-- ✅ Correct Supabase UMD -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
   <script>
-    // ==========================
-    // SUPABASE CONFIG
-    // ==========================
     const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
 
-    const supabaseClient = supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession:true, autoRefreshToken:true, detectSessionInUrl:true, storage: window.localStorage }
+    });
 
-    async function login() {
+    const who = document.getElementById("who");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    const loginView = document.getElementById("loginView");
+    const dashView = document.getElementById("dashView");
+
+    const loginBtn = document.getElementById("loginBtn");
+    const loginMsg = document.getElementById("loginMsg");
+
+    const refreshBtn = document.getElementById("refreshBtn");
+    const tbody = document.getElementById("tbody");
+    const count = document.getElementById("count");
+    const dashErr = document.getElementById("dashErr");
+
+    function fmt(ts){
+      try { return new Date(ts).toLocaleString(); } catch(e){ return ts; }
+    }
+    function safe(v){ return (v===null||v===undefined||v==="") ? "—" : v; }
+
+    async function showUI(){
+      const { data } = await supabaseClient.auth.getSession();
+      const session = data.session;
+
+      if(session){
+        who.textContent = session.user.email;
+        logoutBtn.classList.remove("hide");
+        loginView.classList.add("hide");
+        dashView.classList.remove("hide");
+        await loadAttempts();
+      }else{
+        who.textContent = "Not logged in";
+        logoutBtn.classList.add("hide");
+        loginView.classList.remove("hide");
+        dashView.classList.add("hide");
+      }
+    }
+
+    async function loadAttempts(){
+      dashErr.textContent = "";
+      tbody.innerHTML = "";
+      count.textContent = "Loading...";
+
+      const { data, error } = await supabaseClient
+        .from("ielts_placement_attempts")
+        .select("created_at, full_name, phone, target_score, exam_timeline, stage, status")
+        .order("created_at", { ascending: false })
+        .limit(100);
+
+      if(error){
+        dashErr.textContent = "Cannot load table: " + error.message;
+        count.textContent = "Loaded: 0";
+        return;
+      }
+
+      count.textContent = "Loaded: " + (data?.length || 0);
+
+      if(!data || data.length===0){
+        tbody.innerHTML = `<tr><td colspan="7">No attempts yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = data.map(r => `
+        <tr>
+          <td>${fmt(r.created_at)}</td>
+          <td>${safe(r.full_name)}</td>
+          <td>${safe(r.phone)}</td>
+          <td>${safe(r.target_score)}</td>
+          <td>${safe(r.exam_timeline)}</td>
+          <td>${safe(r.stage)}</td>
+          <td>${safe(r.status)}</td>
+        </tr>
+      `).join("");
+    }
+
+    loginBtn.addEventListener("click", async ()=>{
+      loginMsg.textContent = "";
+      loginMsg.classList.remove("err");
+
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
-      const message = document.getElementById("message");
 
-      if (!email || !password) {
-        message.textContent = "Enter email and password.";
-        message.style.color = "red";
+      if(!email || !password){
+        loginMsg.textContent = "Enter email + password.";
+        loginMsg.classList.add("err");
         return;
       }
 
-      message.textContent = "Logging in...";
-      message.style.color = "white";
+      loginBtn.disabled = true;
+      loginBtn.textContent = "Logging in...";
 
-      const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
-      if (error) {
-        message.textContent = error.message;
-        message.style.color = "red";
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Login";
+
+      if(error){
+        loginMsg.textContent = error.message;
+        loginMsg.classList.add("err");
         return;
       }
 
-      message.textContent = "Login successful!";
-      message.style.color = "lightgreen";
+      loginMsg.textContent = "Login successful!";
+      await showUI();
+    });
 
-      console.log("Logged in user:", data.user);
-    }
+    logoutBtn.addEventListener("click", async ()=>{
+      await supabaseClient.auth.signOut();
+      await showUI();
+    });
+
+    refreshBtn.addEventListener("click", loadAttempts);
+
+    // initial
+    showUI();
   </script>
-
 </body>
 </html>

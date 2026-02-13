@@ -1,494 +1,100 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LizOn Education — IELTS Placement Test</title>
+  <title>LizOn Placement Admin</title>
+
   <style>
-    :root{
-      --bg:#0f2a22;
-      --card:#12352b;
-      --text:#e8fff5;
-      --muted:rgba(232,255,245,.75);
-      --line:rgba(232,255,245,.12);
-      --btn:#19b37a;
-      --btn2:#0ea56f;
-      --danger:#ffb020;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f2a22;
+      color: #e8fff5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:radial-gradient(900px 600px at 50% 0%, #153b30 0%, var(--bg) 55%);color:var(--text);}
-    .wrap{max-width:780px;margin:0 auto;padding:18px;}
-    .brand{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 14px;}
-    .brand b{font-size:16px;letter-spacing:.2px}
-    .pill{border:1px solid var(--line);padding:8px 10px;border-radius:999px;color:var(--muted);font-size:12px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;}
-    h1{font-size:18px;margin:0 0 10px}
-    h2{font-size:15px;margin:0 0 10px;color:var(--muted);font-weight:600}
-    label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}
-    input,select,textarea{
-      width:100%;box-sizing:border-box;
-      background:rgba(0,0,0,.15);
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:12px;
-      color:var(--text);
-      outline:none;
+
+    .box {
+      background: #153b30;
+      padding: 30px;
+      border-radius: 12px;
+      width: 320px;
     }
-    textarea{min-height:120px;resize:vertical}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media(max-width:700px){.grid{grid-template-columns:1fr}}
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    .chip{
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.10);
-      padding:10px 12px;border-radius:999px;
-      font-size:13px;color:var(--muted);
-      cursor:pointer;user-select:none;
+
+    h2 { margin-top: 0; }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: none;
     }
-    .chip[data-on="1"]{border-color:rgba(25,179,122,.55);color:var(--text);background:rgba(25,179,122,.16)}
-    .btn{
-      width:100%;
-      border:none;border-radius:14px;
-      background:linear-gradient(180deg,var(--btn),var(--btn2));
-      color:#052015;
-      padding:14px 14px;
-      font-weight:800;
-      cursor:pointer;
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background: #19b37a;
+      font-weight: bold;
+      cursor: pointer;
     }
-    .btn:disabled{opacity:.6;cursor:not-allowed}
-    .note{font-size:12px;color:var(--muted);line-height:1.45}
-    .bar{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid var(--line)}
-    .bar > div{height:100%;width:0;background:linear-gradient(90deg,var(--btn),#6ee7b7)}
-    .resultBox{border:1px dashed rgba(110,231,183,.45);border-radius:16px;padding:14px}
-    .big{font-size:18px;font-weight:900}
-    .warn{color:var(--danger);font-weight:700}
-    .hide{display:none}
+
+    .msg {
+      margin-top: 12px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="brand">
-      <b>LizOn Education</b>
-      <div class="pill">IELTS Placement Test (Hybrid)</div>
-    </div>
 
-    <div class="card">
-      <h1>Placement Test (8–10 min)</h1>
-      <div class="bar" aria-label="progress"><div id="pbar"></div></div>
-      <p class="note" style="margin:10px 0 0">
-        You’ll get an instant stage + recommended path. Final confirmation happens on WhatsApp after your writing is reviewed.
-      </p>
-    </div>
+<div class="box">
+  <h2>Admin Login</h2>
 
-    <form id="ptForm" class="card">
-      <h2>Basic Info (Optional, but helps counselor)</h2>
-      <div class="grid">
-        <div>
-          <label>Full Name</label>
-          <input id="full_name" placeholder="Your name" />
-        </div>
-        <div>
-          <label>WhatsApp Number</label>
-          <input id="phone" placeholder="01XXXXXXXXX" />
-        </div>
-        <div>
-          <label>Email</label>
-          <input id="email" placeholder="you@email.com" />
-        </div>
-        <div>
-          <label>City, Country</label>
-          <input id="city_country" placeholder="Dhaka, Bangladesh" />
-        </div>
-      </div>
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
+  <button onclick="login()">Login</button>
 
-      <h2 style="margin-top:18px">A) Goal & Timeline (Required)</h2>
-      <div class="grid">
-        <div>
-          <label>Target IELTS Score</label>
-          <select id="target_score" required>
-            <option value="" selected disabled>Select</option>
-            <option>5.5</option>
-            <option>6.0</option>
-            <option>6.5</option>
-            <option>7.0</option>
-            <option>7.5+</option>
-          </select>
-        </div>
-        <div>
-          <label>Exam Timeline</label>
-          <select id="exam_timeline" required>
-            <option value="" selected disabled>Select</option>
-            <option>2–4 weeks</option>
-            <option>1–2 months</option>
-            <option>2–3 months</option>
-            <option>3+ months</option>
-            <option>Not fixed</option>
-          </select>
-        </div>
-        <div>
-          <label>Have you taken IELTS before?</label>
-          <select id="taken_before" required>
-            <option value="" selected disabled>Select</option>
-            <option>No</option>
-            <option>Yes (once)</option>
-            <option>Yes (2+ times)</option>
-          </select>
-        </div>
-        <div>
-          <label>Last Overall Band (if any)</label>
-          <select id="last_band">
-            <option value="" selected>Not applicable</option>
-            <option>4.0–4.5</option>
-            <option>5.0</option>
-            <option>5.5</option>
-            <option>6.0</option>
-            <option>6.5</option>
-            <option>7.0+</option>
-          </select>
-        </div>
-      </div>
+  <div class="msg" id="message"></div>
+</div>
 
-      <h2 style="margin-top:18px">B) Grammar (5 Questions)</h2>
+<!-- IMPORTANT: UMD build -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
-      <label>G1) Choose the correct sentence</label>
-      <select id="g1" required>
-        <option value="" selected disabled>Select</option>
-        <option value="0">She have finished her homework.</option>
-        <option value="1">She has finished her homework.</option>
-      </select>
+<script>
+  const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
 
-      <label>G2) Choose the correct sentence</label>
-      <select id="g2" required>
-        <option value="" selected disabled>Select</option>
-        <option value="0">I am living in Dhaka since 2020.</option>
-        <option value="1">I have been living in Dhaka since 2020.</option>
-      </select>
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      <label>G3) Pick the best connector: “I was tired, ____ I finished the task.”</label>
-      <select id="g3" required>
-        <option value="" selected disabled>Select</option>
-        <option value="0">because</option>
-        <option value="1">but</option>
-        <option value="0">although</option>
-        <option value="0">so</option>
-      </select>
+  async function login() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const message = document.getElementById("message");
 
-      <label>G4) Identify the mistake: “Despite he was late, he joined the class.”</label>
-      <select id="g4" required>
-        <option value="" selected disabled>Select</option>
-        <option value="0">Despite</option>
-        <option value="1">he</option>
-        <option value="0">was</option>
-        <option value="0">joined</option>
-      </select>
+    message.textContent = "Logging in...";
 
-      <label>G5) Choose the correct preposition: “I’m interested ____ studying abroad.”</label>
-      <select id="g5" required>
-        <option value="" selected disabled>Select</option>
-        <option value="0">on</option>
-        <option value="1">in</option>
-        <option value="0">at</option>
-        <option value="0">for</option>
-      </select>
-
-      <h2 style="margin-top:18px">C) Writing Sample (Required)</h2>
-      <label>Write 80–120 words: Why do you want IELTS and what is your plan for the next 2–3 months?</label>
-      <textarea id="writing_text" required placeholder="Write here..."></textarea>
-      <div class="row" style="align-items:center;justify-content:space-between;margin-top:8px">
-        <div class="note">Word count: <b id="wc">0</b></div>
-        <label style="margin:0;display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px">
-          <input type="checkbox" id="no_translate" checked />
-          I wrote this without Google Translate
-        </label>
-      </div>
-
-      <h2 style="margin-top:18px">D) Speaking Reality Check</h2>
-      <label>Speaking comfort (1 weak → 5 confident)</label>
-      <select id="speaking_comfort" required>
-        <option value="" selected disabled>Select</option>
-        <option value="1">1 (very weak)</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5 (confident)</option>
-      </select>
-
-      <label>When you try speaking English, what happens most? (pick up to 2)</label>
-      <div class="row" id="issues">
-        <div class="chip" data-val="Bangla theke translate kori">Bangla theke translate kori</div>
-        <div class="chip" data-val="Words mone ashena">Words mone ashena</div>
-        <div class="chip" data-val="Sentence structure bhange">Sentence structure bhange</div>
-        <div class="chip" data-val="Pause beshi hoy">Pause beshi hoy</div>
-        <div class="chip" data-val="Confidence down hoy">Confidence down hoy</div>
-        <div class="chip" data-val="Comfortable">Comfortable</div>
-      </div>
-
-      <div style="margin-top:18px">
-        <button id="submitBtn" class="btn" type="submit">See My Result</button>
-        <p class="note" style="margin-top:10px">
-          By submitting, you agree LizOn may contact you to confirm your path.
-        </p>
-      </div>
-    </form>
-
-    <div id="resultCard" class="card hide">
-      <h1>Your Result (Preview)</h1>
-      <div class="resultBox">
-        <div class="big" id="stageLine"></div>
-        <div class="note" id="summaryLine" style="margin-top:6px"></div>
-        <div class="note" style="margin-top:10px">
-          Recommendation: <b id="pathLine"></b><br/>
-          Result ID: <b id="rid"></b>
-        </div>
-      </div>
-
-      <div style="margin-top:14px">
-        <a id="waBtn" class="btn" style="display:block;text-align:center;text-decoration:none" href="#" target="_blank" rel="noopener">
-          Get Confirmation on WhatsApp
-        </a>
-        <p class="note" style="margin-top:10px">
-          Counselor will review your writing and confirm the best course path.
-        </p>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Supabase JS (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script>
-    // ============================
-    // CONFIG (REPLACE THESE)
-    // ============================
-    const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
-
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    // UI helpers
-    const pbar = document.getElementById("pbar");
-    const wcEl = document.getElementById("wc");
-    const writing = document.getElementById("writing_text");
-    const issuesWrap = document.getElementById("issues");
-    const resultCard = document.getElementById("resultCard");
-    const form = document.getElementById("ptForm");
-    const submitBtn = document.getElementById("submitBtn");
-
-    // Chips selection (max 2)
-    const selectedIssues = new Set();
-    issuesWrap.addEventListener("click", (e) => {
-      const chip = e.target.closest(".chip");
-      if (!chip) return;
-      const v = chip.dataset.val;
-
-      const isOn = chip.dataset.on === "1";
-      if (isOn) {
-        chip.dataset.on = "0";
-        selectedIssues.delete(v);
-      } else {
-        if (selectedIssues.size >= 2) return;
-        chip.dataset.on = "1";
-        selectedIssues.add(v);
-      }
-      updateProgress();
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
     });
 
-    function wordCount(text){
-      return (text.trim().match(/\S+/g) || []).length;
+    if (error) {
+      message.textContent = "Error: " + error.message;
+      message.style.color = "red";
+      return;
     }
 
-    writing.addEventListener("input", () => {
-      wcEl.textContent = wordCount(writing.value);
-      updateProgress();
-    });
+    message.textContent = "Login successful!";
+    message.style.color = "lightgreen";
 
-    // Rough progress indicator
-    function updateProgress(){
-      const requiredIds = [
-        "target_score","exam_timeline","taken_before",
-        "g1","g2","g3","g4","g5",
-        "writing_text","speaking_comfort"
-      ];
-      let done = 0;
-      requiredIds.forEach(id=>{
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (el.tagName === "TEXTAREA") {
-          if (wordCount(el.value) >= 20) done++;
-        } else {
-          if (el.value) done++;
-        }
-      });
-      // small bonus
-      if (selectedIssues.size > 0) done += 0.5;
-      const pct = Math.min(100, Math.round((done / (requiredIds.length + 0.5)) * 100));
-      pbar.style.width = pct + "%";
-    }
-    updateProgress();
+    console.log("User:", data.user);
+  }
+</script>
 
-    // Scoring logic (Hybrid: auto + human verify)
-    function computeScores(){
-      const grammar_score =
-        (+document.getElementById("g1").value) +
-        (+document.getElementById("g2").value) +
-        (+document.getElementById("g3").value) +
-        (+document.getElementById("g4").value) +
-        (+document.getElementById("g5").value);
-
-      const exam_timeline = document.getElementById("exam_timeline").value;
-      let urgency_score = 0;
-      if (exam_timeline === "2–4 weeks") urgency_score = 3;
-      else if (exam_timeline === "1–2 months") urgency_score = 2;
-      else if (exam_timeline === "2–3 months") urgency_score = 1;
-      else urgency_score = 0;
-
-      const target_score = document.getElementById("target_score").value;
-      let target_pressure = 0;
-      if (target_score === "7.0" || target_score === "7.5+") target_pressure = 2;
-      else if (target_score === "6.5") target_pressure = 1;
-
-      const speaking_comfort = +document.getElementById("speaking_comfort").value;
-      let speaking_risk = 0;
-      if (speaking_comfort <= 2) speaking_risk = 2;
-      else if (speaking_comfort === 3) speaking_risk = 1;
-
-      return {grammar_score, urgency_score, target_pressure, speaking_risk};
-    }
-
-    function decideStageAndPath({grammar_score, urgency_score, target_pressure, speaking_risk}, wrote_without_translate, writing_wc, taken_before){
-      // Base stage from fundamentals
-      let stage = "CORE";
-      let recommended_path = "HOPE";
-
-      if (grammar_score <= 2 || !wrote_without_translate || writing_wc < 60){
-        stage = "FOUNDATION";
-        recommended_path = "ZERO → HOPE";
-      } else if (grammar_score === 3){
-        stage = "CORE";
-        recommended_path = "HOPE";
-      } else if (grammar_score >= 4){
-        stage = "STRATEGY";
-        recommended_path = "STEP-UP";
-      }
-
-      // Desperate override: exam close + pressure/retake signals
-      const retakeSignal = (taken_before !== "No");
-      if (urgency_score >= 2 && (target_pressure >= 1 || retakeSignal)){
-        stage = "EXAM-KNOCKING";
-        recommended_path = "DESPERATE";
-      }
-
-      // Speaking risk can nudge toward earlier structure
-      if (stage === "STRATEGY" && speaking_risk === 2){
-        recommended_path = "HOPE → STEP-UP";
-      }
-
-      const result_summary =
-        stage === "FOUNDATION" ? "Base e crack ache. Structure fix na kore shortcut dile score stable hobe na."
-      : stage === "CORE" ? "Core skill gulo stable korte hobe—especially writing structure + reading/listening control."
-      : stage === "STRATEGY" ? "You’re close. Now question-type strategy + time control matters."
-      : "Exam close. Preparation thakleo control na thakle score leak hoy. Pressure-handling + evaluation needed.";
-
-      return {stage, recommended_path, result_summary};
-    }
-
-    async function insertAttempt(payload){
-      // Insert and return ID
-      const { data, error } = await supabase
-        .from("ielts_placement_attempts")
-        .insert(payload)
-        .select("id")
-        .single();
-
-      if (error) throw error;
-      return data.id;
-    }
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Submitting...";
-
-      try {
-        const full_name = document.getElementById("full_name").value || null;
-        const phone = document.getElementById("phone").value || null;
-        const email = document.getElementById("email").value || null;
-        const city_country = document.getElementById("city_country").value || null;
-
-        const target_score = document.getElementById("target_score").value;
-        const exam_timeline = document.getElementById("exam_timeline").value;
-        const taken_ielts_before = document.getElementById("taken_before").value;
-        const last_overall_band = document.getElementById("last_band").value || null;
-
-        const writing_text = document.getElementById("writing_text").value.trim();
-        const writing_word_count = wordCount(writing_text);
-        const wrote_without_translate = document.getElementById("no_translate").checked;
-
-        const speaking_comfort = +document.getElementById("speaking_comfort").value;
-        const speaking_issues = Array.from(selectedIssues);
-
-        const scores = computeScores();
-        const decision = decideStageAndPath(
-          scores,
-          wrote_without_translate,
-          writing_word_count,
-          taken_ielts_before
-        );
-
-        const payload = {
-          full_name, phone, email, city_country,
-          target_score, exam_timeline, taken_ielts_before, last_overall_band,
-
-          grammar_score: scores.grammar_score,
-          urgency_score: scores.urgency_score,
-          target_pressure: scores.target_pressure,
-          speaking_risk: scores.speaking_risk,
-
-          speaking_comfort,
-          speaking_issues,
-
-          writing_text,
-          wrote_without_translate,
-          writing_word_count,
-
-          stage: decision.stage,
-          recommended_path: decision.recommended_path,
-          result_summary: decision.result_summary
-        };
-
-        const id = await insertAttempt(payload);
-
-        // Render result
-        document.getElementById("stageLine").textContent = `Stage: ${decision.stage}`;
-        document.getElementById("summaryLine").textContent = decision.result_summary;
-        document.getElementById("pathLine").textContent = decision.recommended_path;
-        document.getElementById("rid").textContent = id;
-
-        // WhatsApp prefill
-        const msg =
-          `Hi LizOn, ami placement test diyechi.\n` +
-          `Result ID: ${id}\n` +
-          `Stage: ${decision.stage}\n` +
-          `Recommended: ${decision.recommended_path}\n` +
-          `Target: ${target_score}, Exam: ${exam_timeline}\n` +
-          `Please amar writing review kore final confirm korun.`;
-
-        // Put your helpline number here (international format)
-        const WA_NUMBER = "8801XXXXXXXXX";
-        const waLink = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-        document.getElementById("waBtn").href = waLink;
-
-        // show result
-        resultCard.classList.remove("hide");
-        resultCard.scrollIntoView({behavior:"smooth", block:"start"});
-
-      } catch (err) {
-        alert("Submission failed. Please check config / internet / Supabase policies.\n\n" + (err?.message || err));
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "See My Result";
-      }
-    });
-  </script>
 </body>
 </html>

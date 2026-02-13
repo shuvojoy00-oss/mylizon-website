@@ -8,7 +8,6 @@
   <style>
     :root{
       --bg:#0f2a22;
-      --card:#153b30;
       --text:#e8fff5;
       --muted:rgba(232,255,245,.75);
       --line:rgba(232,255,245,.14);
@@ -18,12 +17,14 @@
       --warn:#ffd166;
       --ok:#6ee7b7;
     }
+
     body{
       margin:0;
       font-family:system-ui,Arial;
       background:radial-gradient(900px 600px at 50% 0%, #1a4a3a 0%, var(--bg) 60%);
       color:var(--text);
     }
+
     .wrap{max-width:1100px;margin:0 auto;padding:18px;}
     .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:10px}
@@ -37,6 +38,7 @@
     }
     h1{margin:0 0 10px;font-size:18px}
     h2{margin:0 0 10px;font-size:13px;color:var(--muted);font-weight:650}
+
     input, select{
       width:100%;
       box-sizing:border-box;
@@ -48,6 +50,7 @@
       outline:none;
       font-size:14px;
     }
+
     button{
       border:none;border-radius:12px;
       padding:10px 12px;
@@ -55,6 +58,7 @@
       cursor:pointer;
       font-size:14px;
     }
+
     .btn{background:linear-gradient(180deg,var(--btn),var(--btn2));color:#062016;}
     .btnGhost{background:rgba(0,0,0,.12);border:1px solid var(--line);color:var(--text)}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
@@ -75,7 +79,7 @@
     }
     td:first-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px}
     td:last-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}
-    .hide{display:none}
+    .hide{display:none !important;}
     .badge{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
     .actions{display:flex;gap:8px;flex-wrap:wrap}
     .editBtn{
@@ -92,16 +96,18 @@
       color:#ffd1d1;
       font-weight:900;
     }
-    .editBtn:hover{background:rgba(255,209,102,.18)}
-    .delBtn:hover{background:rgba(255,0,0,.18)}
 
     /* Modal */
     .modalBack{
-      position:fixed;inset:0;
+      position:fixed;
+      inset:0;
       background:rgba(0,0,0,.55);
-      display:flex;align-items:center;justify-content:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       padding:16px;
-      z-index:9999;
+      z-index:999999;
+      pointer-events:auto;
     }
     .modal{
       width:min(720px, 96vw);
@@ -110,6 +116,9 @@
       border-radius:18px;
       padding:16px;
       box-shadow:0 20px 50px rgba(0,0,0,.5);
+      position:relative;
+      z-index:1000000;
+      pointer-events:auto;
     }
     .modalTop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
     .modalTop b{font-size:15px}
@@ -196,13 +205,14 @@
     </div>
   </div>
 
-  <!-- EDIT MODAL -->
-  <div class="modalBack hide" id="editBack">
-    <div class="modal">
+  <!-- EDIT MODAL (HIDDEN BY DEFAULT) -->
+  <div class="modalBack hide" id="editBack" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Edit attempt">
       <div class="modalTop">
         <b>Edit Attempt</b>
         <button class="closeBtn" id="closeEdit" type="button">Close</button>
       </div>
+
       <div class="small" id="editMeta"></div>
 
       <div class="grid2" style="margin-top:10px">
@@ -272,13 +282,10 @@
     </div>
   </div>
 
-  <!-- ✅ Supabase UMD -->
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
   <script>
-    // ==========================
-    // SUPABASE CONFIG
-    // ==========================
     const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
 
@@ -320,7 +327,36 @@
     }
     function safe(v){ return (v===null||v===undefined||v==="") ? "—" : v; }
 
+    function openModal(){
+      editBack.classList.remove("hide");
+      editBack.setAttribute("aria-hidden","false");
+      editMsg.textContent = "";
+      editMsg.classList.remove("err");
+    }
+    function closeModal(){
+      editBack.classList.add("hide");
+      editBack.setAttribute("aria-hidden","true");
+      currentEditId = null;
+    }
+
+    // Hard-close safety: always works
+    closeEdit.onclick = closeModal;
+    cancelEdit.onclick = closeModal;
+
+    // Click outside closes
+    editBack.addEventListener("click", (e)=>{
+      if(e.target === editBack) closeModal();
+    });
+
+    // ESC closes
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape" && !editBack.classList.contains("hide")) closeModal();
+    });
+
     async function showUI(){
+      // Important: NEVER show modal on load
+      closeModal();
+
       const { data } = await supabaseClient.auth.getSession();
       const session = data.session;
 
@@ -382,11 +418,10 @@
 
       // bind actions
       tbody.querySelectorAll(".delBtn").forEach(btn=>{
-        btn.addEventListener("click", ()=> deleteAttempt(btn.dataset.id));
+        btn.onclick = ()=> deleteAttempt(btn.dataset.id);
       });
-
       tbody.querySelectorAll(".editBtn").forEach(btn=>{
-        btn.addEventListener("click", ()=> openEdit(btn.dataset.id));
+        btn.onclick = ()=> openEdit(btn.dataset.id);
       });
     }
 
@@ -406,22 +441,20 @@
       await loadAttempts();
     }
 
-    function openModal(){
-      editBack.classList.remove("hide");
-      editMsg.textContent = "";
-      editMsg.classList.remove("err");
-    }
-    function closeModal(){
-      editBack.classList.add("hide");
-      currentEditId = null;
-    }
-
     async function openEdit(id){
+      // Only open modal if logged in
+      const { data } = await supabaseClient.auth.getSession();
+      if(!data.session){
+        alert("Please login first.");
+        return;
+      }
+
       currentEditId = id;
       openModal();
       editMeta.textContent = "Loading attempt...";
+      editMsg.textContent = "";
 
-      const { data, error } = await supabaseClient
+      const { data: row, error } = await supabaseClient
         .from("ielts_placement_attempts")
         .select("id, created_at, full_name, phone, target_score, exam_timeline, stage, status")
         .eq("id", id)
@@ -434,14 +467,14 @@
         return;
       }
 
-      editMeta.textContent = `ID: ${data.id} • Created: ${fmt(data.created_at)}`;
+      editMeta.textContent = `ID: ${row.id} • Created: ${fmt(row.created_at)}`;
 
-      e_full_name.value = data.full_name || "";
-      e_phone.value = data.phone || "";
-      e_target.value = data.target_score || "";
-      e_timeline.value = data.exam_timeline || "";
-      e_stage.value = data.stage || "";
-      e_status.value = data.status || "";
+      e_full_name.value = row.full_name || "";
+      e_phone.value = row.phone || "";
+      e_target.value = row.target_score || "";
+      e_timeline.value = row.exam_timeline || "";
+      e_stage.value = row.stage || "";
+      e_status.value = row.status || "";
     }
 
     async function saveEditChanges(){
@@ -449,7 +482,6 @@
 
       saveEdit.disabled = true;
       saveEdit.textContent = "Saving...";
-
       editMsg.textContent = "";
       editMsg.classList.remove("err");
 
@@ -480,11 +512,11 @@
       editMsg.style.color = "rgba(110,231,183,.95)";
 
       await loadAttempts();
-      setTimeout(closeModal, 400);
+      setTimeout(closeModal, 250);
     }
 
     // Events
-    loginBtn.addEventListener("click", async ()=>{
+    loginBtn.onclick = async ()=>{
       loginMsg.textContent = "";
       loginMsg.classList.remove("err");
 
@@ -513,25 +545,18 @@
 
       loginMsg.textContent = "Login successful!";
       await showUI();
-    });
+    };
 
-    logoutBtn.addEventListener("click", async ()=>{
+    logoutBtn.onclick = async ()=>{
       await supabaseClient.auth.signOut();
       await showUI();
-    });
+    };
 
-    refreshBtn.addEventListener("click", loadAttempts);
+    refreshBtn.onclick = loadAttempts;
+    saveEdit.onclick = saveEditChanges;
 
-    closeEdit.addEventListener("click", closeModal);
-    cancelEdit.addEventListener("click", closeModal);
-    saveEdit.addEventListener("click", saveEditChanges);
-
-    // Close modal when clicking outside
-    editBack.addEventListener("click", (e)=>{
-      if(e.target === editBack) closeModal();
-    });
-
-    // initial
+    // On load: ALWAYS close modal
+    closeModal();
     showUI();
   </script>
 </body>

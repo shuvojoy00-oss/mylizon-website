@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LizOn Education — IELTS Placement Test</title>
+
   <style>
     :root{
       --bg:#0f2a22;
@@ -13,7 +14,14 @@
       --btn:#19b37a;
       --btn2:#0ea56f;
     }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:radial-gradient(900px 600px at 50% 0%, #153b30 0%, var(--bg) 55%);color:var(--text);}
+
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:radial-gradient(900px 600px at 50% 0%, #153b30 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+
     .wrap{max-width:780px;margin:0 auto;padding:18px;}
     .brand{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 14px;}
     .brand b{font-size:16px;letter-spacing:.2px}
@@ -22,19 +30,24 @@
     h1{font-size:18px;margin:0 0 10px}
     h2{font-size:15px;margin:0 0 10px;color:var(--muted);font-weight:600}
     label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}
-    input,select,textarea{
-      width:100%;box-sizing:border-box;
+
+    input, select, textarea{
+      width:100%;
+      box-sizing:border-box;
       background:rgba(0,0,0,.15);
       border:1px solid var(--line);
       border-radius:12px;
       padding:12px;
       color:var(--text);
       outline:none;
+      font-size:14px;
     }
+
     textarea{min-height:120px;resize:vertical}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     @media(max-width:700px){.grid{grid-template-columns:1fr}}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
     .chip{
       border:1px solid var(--line);
       background:rgba(0,0,0,.10);
@@ -42,7 +55,12 @@
       font-size:13px;color:var(--muted);
       cursor:pointer;user-select:none;
     }
-    .chip[data-on="1"]{border-color:rgba(25,179,122,.55);color:var(--text);background:rgba(25,179,122,.16)}
+    .chip[data-on="1"]{
+      border-color:rgba(25,179,122,.55);
+      color:var(--text);
+      background:rgba(25,179,122,.16)
+    }
+
     .btn{
       width:100%;
       border:none;border-radius:14px;
@@ -51,16 +69,52 @@
       padding:14px 14px;
       font-weight:800;
       cursor:pointer;
+      display:inline-block;
+      text-align:center;
+      text-decoration:none;
     }
     .btn:disabled{opacity:.6;cursor:not-allowed}
+
     .note{font-size:12px;color:var(--muted);line-height:1.45}
     .bar{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid var(--line)}
     .bar > div{height:100%;width:0;background:linear-gradient(90deg,var(--btn),#6ee7b7)}
     .resultBox{border:1px dashed rgba(110,231,183,.45);border-radius:16px;padding:14px}
     .big{font-size:18px;font-weight:900}
     .hide{display:none}
+
+    /* =========================
+       DARK THEME SELECT FIX ✅
+       ========================= */
+    select{
+      background-color:#153b30;
+      color:#ffffff;
+      border:1px solid rgba(255,255,255,0.20);
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      cursor:pointer;
+      background-image:url("data:image/svg+xml;utf8,<svg fill='white' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+      background-repeat:no-repeat;
+      background-position:right 12px center;
+      background-size:16px;
+      padding-right:40px;
+    }
+    select option{
+      background-color:#0f2a22;
+      color:#ffffff;
+    }
+    select:focus{
+      outline:none;
+      border-color:#19b37a;
+      box-shadow:0 0 0 2px rgba(25,179,122,0.35);
+    }
+    select:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="brand">
@@ -110,6 +164,7 @@
             <option>7.5+</option>
           </select>
         </div>
+
         <div>
           <label>Exam Timeline</label>
           <select id="exam_timeline" required>
@@ -121,6 +176,7 @@
             <option>Not fixed</option>
           </select>
         </div>
+
         <div>
           <label>Have you taken IELTS before?</label>
           <select id="taken_before" required>
@@ -130,6 +186,7 @@
             <option>Yes (2+ times)</option>
           </select>
         </div>
+
         <div>
           <label>Last Overall Band (if any)</label>
           <select id="last_band">
@@ -190,6 +247,7 @@
       <h2 style="margin-top:18px">C) Writing Sample (Required)</h2>
       <label>Write 80–120 words: Why do you want IELTS and what is your plan for the next 2–3 months?</label>
       <textarea id="writing_text" required placeholder="Write here..."></textarea>
+
       <div class="row" style="justify-content:space-between;margin-top:8px">
         <div class="note">Word count: <b id="wc">0</b></div>
         <label style="margin:0;display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px">
@@ -239,7 +297,7 @@
       </div>
 
       <div style="margin-top:14px">
-        <a id="waBtn" class="btn" style="display:block;text-align:center;text-decoration:none" href="#" target="_blank" rel="noopener">
+        <a id="waBtn" class="btn" href="#" target="_blank" rel="noopener">
           Get Confirmation on WhatsApp
         </a>
         <p class="note" style="margin-top:10px">
@@ -247,24 +305,18 @@
         </p>
       </div>
     </div>
-
   </div>
 
   <!-- ✅ Supabase UMD build -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
   <script>
-    // ============================
-    // CONFIG (REPLACE THESE 3)
-    // ============================
     const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
-    const WA_NUMBER = "8801XXXXXXXXX"; // admissions WhatsApp (no +)
+    const WA_NUMBER = "8801XXXXXXXXX"; // ✅ REPLACE THIS (no +)
 
-    if (!window.supabase) alert("Supabase library not loaded. Check script src.");
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // UI
     const pbar = document.getElementById("pbar");
     const wcEl = document.getElementById("wc");
     const writing = document.getElementById("writing_text");
@@ -283,8 +335,8 @@
       const chip = e.target.closest(".chip");
       if (!chip) return;
       const v = chip.dataset.val;
-
       const isOn = chip.dataset.on === "1";
+
       if (isOn) {
         chip.dataset.on = "0";
         selectedIssues.delete(v);
@@ -302,12 +354,9 @@
     });
 
     function updateProgress(){
-      const requiredIds = [
-        "target_score","exam_timeline","taken_before",
-        "g1","g2","g3","g4","g5",
-        "writing_text","speaking_comfort"
-      ];
+      const requiredIds = ["target_score","exam_timeline","taken_before","g1","g2","g3","g4","g5","writing_text","speaking_comfort"];
       let done = 0;
+
       requiredIds.forEach(id=>{
         const el = document.getElementById(id);
         if (!el) return;
@@ -317,7 +366,9 @@
           if (el.value) done++;
         }
       });
+
       if (selectedIssues.size > 0) done += 0.5;
+
       const pct = Math.min(100, Math.round((done / (requiredIds.length + 0.5)) * 100));
       pbar.style.width = pct + "%";
     }
@@ -419,12 +470,7 @@
         const speaking_issues = Array.from(selectedIssues);
 
         const scores = computeScores();
-        const decision = decideStageAndPath(
-          scores,
-          wrote_without_translate,
-          writing_word_count,
-          taken_ielts_before
-        );
+        const decision = decideStageAndPath(scores, wrote_without_translate, writing_word_count, taken_ielts_before);
 
         const payload = {
           full_name, phone, email, city_country,
@@ -433,11 +479,8 @@
           urgency_score: scores.urgency_score,
           target_pressure: scores.target_pressure,
           speaking_risk: scores.speaking_risk,
-          speaking_comfort,
-          speaking_issues,
-          writing_text,
-          wrote_without_translate,
-          writing_word_count,
+          speaking_comfort, speaking_issues,
+          writing_text, wrote_without_translate, writing_word_count,
           stage: decision.stage,
           recommended_path: decision.recommended_path,
           result_summary: decision.result_summary,

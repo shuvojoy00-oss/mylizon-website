@@ -1,318 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grammar103 — LizOn Education</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-light: #dbeafe;
-            --accent: #f59e0b;
-            --bg: #f8fafc;
-            --text: #1e293b;
-            --muted: #64748b;
-            --glass: rgba(255, 255, 255, 0.8);
-            --border: #e2e8f0;
-            --success: #10b981;
-            --error: #ef4444;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS | LizOn Education</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
-        
-        /* Fonts */
-        .mono { font-family: 'Fira Code', monospace; color: var(--primary); font-weight: 600; }
-        .serif { font-family: 'Georgia', serif; font-style: italic; color: #334155; }
+<style>
+:root{
+  --green:#0F2E26;
+  --green2:#153B30;
+  --gold:#C6A85E;
+  --light:#f5f5f5;
+}
 
-        /* Header */
-        .header {
-            position: sticky; top: 0; background: var(--glass); backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border); padding: 10px 20px;
-            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
-        }
-        .brand { display: flex; align-items: center; text-decoration: none; color: inherit; gap: 12px; }
-        .brand img { height: 40px; }
-        .t1 { font-weight: 800; font-size: 1.2rem; }
-        .t2 { font-size: 0.8rem; color: var(--muted); }
+*{box-sizing:border-box;}
 
-        /* Navigation Buttons (Iphone Glass Style) */
-        .pill {
-            padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border);
-            background: white; cursor: pointer; transition: 0.3s; display: inline-flex;
-            align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem;
-        }
-        .pill.primary { background: var(--primary); color: white; border: none; }
-        .pill:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+body{
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:#ffffff;
+  color:#222;
+}
 
-        /* Sections */
-        section { padding: 40px 20px; max-width: 1000px; margin: 0 auto; }
-        .hero { background: linear-gradient(135deg, #fff 0%, #f1f5f9 100%); border-radius: 0 0 40px 40px; }
-        .badge { display: inline-block; padding: 4px 12px; background: var(--primary-light); 
-                 color: var(--primary); border-radius: 12px; font-size: 0.75rem; font-weight: 700; margin-bottom: 15px; }
-        
-        h1 { font-size: 2.5rem; margin-bottom: 10px; color: #0f172a; }
-        h2 { font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .hi { color: var(--primary); }
+a{text-decoration:none;}
 
-        /* Cards & Grids */
-        .structureCard {
-            background: white; padding: 25px; border-radius: 20px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 1px solid var(--border); margin: 20px 0;
-        }
-        .qaGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
-        .qaCard { background: white; padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
+.container{
+  width:90%;
+  max-width:1100px;
+  margin:auto;
+}
 
-        /* Interactive Practice */
-        .practice { margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border); }
-        select.gap {
-            padding: 4px 8px; border-radius: 8px; border: 2px solid var(--primary-light);
-            background: #fefefe; font-weight: bold; cursor: pointer; outline: none;
-        }
-        select.correct { border-color: var(--success); background: #ecfdf5; }
-        select.wrong { border-color: var(--error); background: #fef2f2; }
-        .mark { font-weight: bold; margin-left: 5px; }
-        .ans-hint { display: none; font-size: 0.85rem; color: var(--success); margin-top: 5px; font-weight: 600; }
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:white;
+  padding:80px 20px;
+  text-align:center;
+}
 
-        /* Table Style */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; border-radius: 12px; overflow: hidden; }
-        th, td { text-align: left; padding: 15px; border-bottom: 1px solid var(--border); }
-        th { background: #f8fafc; font-weight: 700; color: var(--muted); }
+.hero h1{
+  font-size:34px;
+  margin-bottom:20px;
+}
 
-        /* Pronunciation Chart */
-        .pron-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .pron-item { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; }
-        .banglish { color: var(--muted); font-size: 0.85rem; }
+.hero p{
+  font-size:18px;
+  max-width:700px;
+  margin:auto;
+  opacity:0.9;
+}
 
-        /* Jump Menu */
-        .jumpRow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-        .jump { padding: 10px 18px; border-radius: 30px; background: white; border: 1px solid var(--border); cursor: pointer; font-size: 0.85rem; transition: 0.2s; }
-        .jump:hover { background: var(--primary); color: white; }
+.hero-buttons{
+  margin-top:35px;
+}
 
-        footer { text-align: center; padding: 40px; background: #0f172a; color: white; margin-top: 50px; }
-        
-        @media (max-width: 600px) {
-            .pron-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 1.8rem; }
-        }
-    </style>
+.btn{
+  display:inline-block;
+  padding:14px 28px;
+  margin:10px;
+  font-weight:bold;
+  border-radius:4px;
+  transition:0.3s;
+}
+
+.btn-primary{
+  background:var(--gold);
+  color:#000;
+}
+
+.btn-primary:hover{
+  opacity:0.85;
+}
+
+.btn-outline{
+  border:2px solid #fff;
+  color:#fff;
+}
+
+.btn-outline:hover{
+  background:#fff;
+  color:#000;
+}
+
+/* COURSE SECTION */
+.section{
+  padding:70px 0;
+}
+
+.section h2{
+  text-align:center;
+  margin-bottom:15px;
+}
+
+.section-sub{
+  text-align:center;
+  margin-bottom:40px;
+  color:#666;
+}
+
+.course-box{
+  background:#f9f9f9;
+  padding:30px;
+  border-radius:6px;
+  margin-bottom:30px;
+}
+
+.course-box h3{
+  margin-top:0;
+}
+
+.course-box ul{
+  padding-left:18px;
+}
+
+.price{
+  font-size:22px;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+.cta-row{
+  margin-top:15px;
+}
+
+/* FOOTER CTA */
+.footer-cta{
+  background:var(--green);
+  color:white;
+  text-align:center;
+  padding:60px 20px;
+}
+
+.footer-cta h2{
+  margin-bottom:15px;
+}
+
+.footer-cta p{
+  margin-bottom:25px;
+  opacity:0.9;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero h1{font-size:26px;}
+}
+</style>
 </head>
+
 <body>
 
-<header class="header">
-    <a class="brand" href="#">
-        <img src="https://raw.githubusercontent.com/lizon-education/assets/main/logo-dark.png" alt="LizOn">
-        <div>
-            <div class="t1">LizOn Education</div>
-            <div class="t2">IELTS Master Structure</div>
-        </div>
-    </a>
-    <div class="hdrRight">
-        <button class="pill primary" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i> Menu</button>
-    </div>
-</header>
-
+<!-- HERO -->
 <section class="hero">
-    <div class="badge"><i class="fa-solid fa-bolt"></i> It’s just 1 Structure — Use Everywhere.</div>
-    <h1>Grammar103: <span class="hi">“than most other”</span></h1>
-    <p class="sub">Don't just memorize phrases. Master the <b>STRUCTURE</b> and apply it to every module of the IELTS exam.</p>
-    
-    <div class="jumpRow">
-        <button class="jump" onclick="scrollToId('grammar')">Grammar</button>
-        <button class="jump" onclick="scrollToId('wt1')">Writing Task 1</button>
-        <button class="jump" onclick="scrollToId('speaking')">Speaking (DRW)</button>
-        <button class="jump" onclick="scrollToId('wt2')">Writing Task 2</button>
-        <button class="jump" onclick="scrollToId('pron')">Pronunciation</button>
-    </div>
+  <div class="container">
+    <h1>IELTS e problem usually English na.<br>Problem holo — structure.</h1>
+    <p>LizOn e IELTS mane shortcut na. Proper build. Clear system. Controlled preparation.</p>
 
-    <div class="structureCard">
-        <div class="mono">Subject + be (am/is/are/was/were) + Comparative Adjective + than most other + Plural Noun</div>
-        <div class="serif" style="margin-top:10px;">Example: "This strategy is more effective than most other methods."</div>
+    <div class="hero-buttons">
+      <a href="#fulljourney" class="btn btn-primary">Explore Full Journey</a>
+      <a href="#desperate" class="btn btn-outline">Exam Close? Click Here</a>
     </div>
+  </div>
 </section>
 
-<section id="grammar">
-    <h2><i class="fa-solid fa-diagram-project hi"></i> 1st Portion: Grammar</h2>
-    <table>
-        <thead>
-            <tr><th>No.</th><th>IELTS Context Examples</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>1</td><td class="serif">This city is <b>more expensive</b> than most other cities in the country.</td></tr>
-            <tr><td>2</td><td class="serif">Online education is <b>more flexible</b> than most other learning systems.</td></tr>
-            <tr><td>3</td><td class="serif">Renewable energy is <b>cleaner</b> than most other energy sources.</td></tr>
-        </tbody>
-    </table>
+<!-- FULL JOURNEY -->
+<section id="fulljourney" class="section">
+  <div class="container">
+
+    <h2>IELTS Full Journey (3 Months+)</h2>
+    <p class="section-sub">Not a crash course. A proper build from base to control.</p>
+
+    <div class="course-box">
+      <h3>Who It’s For</h3>
+      <ul>
+        <li>First time IELTS candidates</li>
+        <li>Students who failed before</li>
+        <li>Grammar weak</li>
+        <li>Speaking e atke jan</li>
+        <li>Writing structure clear na</li>
+      </ul>
+
+      <h3>What You Fix Here</h3>
+      <ul>
+        <li>Grammar foundation</li>
+        <li>Writing structure control</li>
+        <li>Speaking fluency & idea flow</li>
+        <li>Listening processing</li>
+        <li>Reading speed & strategy</li>
+        <li>Exam mindset</li>
+      </ul>
+
+      <div class="price">Course Fee: 9500/-</div>
+
+      <div class="cta-row">
+        <a href="https://www.mylizon.com/pay.html" class="btn btn-primary">Admit Now</a>
+        <a href="https://wa.me/8801611611139" class="btn btn-outline">Talk with LizOn</a>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<section id="wt1">
-    <h2><i class="fa-solid fa-chart-line hi"></i> 2nd Portion: Writing Task 1</h2>
-    <div class="qaGrid">
-        <div class="qaCard">
-            <p><b>Scenario:</b> Bar Chart - Population in Asia vs others.</p>
-            <div class="practice">
-                <p>The population in Asia <select class="gap" data-ans="was higher">
-                    <option value="">Select</option>
-                    <option>was high</option>
-                    <option>was higher</option>
-                    <option>is higher</option>
-                </select> than most other <select class="gap" data-ans="regions">
-                    <option value="">Select</option>
-                    <option>region</option>
-                    <option>regions</option>
-                    <option>area</option>
-                </select> in the chart.</p>
-                <div class="ans-hint">Correct: was higher + regions</div>
-            </div>
-        </div>
-        <div class="qaCard">
-            <p><b>Scenario:</b> Process Diagram - Cooling Phase.</p>
-            <div class="practice">
-                <p>The cooling stage <select class="gap" data-ans="took longer">
-                    <option value="">Select</option>
-                    <option>took long</option>
-                    <option>takes long</option>
-                    <option>took longer</option>
-                </select> than most other <select class="gap" data-ans="steps">
-                    <option value="">Select</option>
-                    <option>step</option>
-                    <option>steps</option>
-                    <option>part</option>
-                </select> in the process.</p>
-                <div class="ans-hint">Correct: took longer + steps</div>
-            </div>
-        </div>
+<!-- DESPERATE -->
+<section id="desperate" class="section" style="background:#f1f1f1;">
+  <div class="container">
+
+    <h2>IELTS Desperate (1 Month+)</h2>
+    <p class="section-sub">For exam-knocking students only.</p>
+
+    <div class="course-box">
+      <h3>Who It’s For</h3>
+      <ul>
+        <li>Exam date very close</li>
+        <li>Retakers</li>
+        <li>Band 6 stuck</li>
+        <li>Already prepared but control nai</li>
+      </ul>
+
+      <h3>Focus Area</h3>
+      <ul>
+        <li>High frequency question types</li>
+        <li>Time management</li>
+        <li>Writing precision</li>
+        <li>Speaking under pressure</li>
+        <li>Mock & evaluation heavy</li>
+      </ul>
+
+      <div class="price">Course Fee: 6500/-</div>
+
+      <div class="cta-row">
+        <a href="https://www.mylizon.com/pay.html" class="btn btn-primary">Admit Now</a>
+        <a href="https://wa.me/8801611611139" class="btn btn-outline">Talk with LizOn</a>
+      </div>
     </div>
+
+  </div>
 </section>
 
-<section id="speaking">
-    <h2><i class="fa-solid fa-microphone hi"></i> 3rd Portion: Speaking (DRW Method)</h2>
-    <p style="margin-bottom: 20px;"><b>DRW</b> = <b>D</b>irect Answer + <b>R</b>eason + <b>W</b>hy/Widening (Comparison)</p>
-    
-    <div class="qaCard" style="border-left: 5px solid var(--primary); margin-bottom: 20px;">
-        <h3>Topic: Hometown</h3>
-        <p><b>Q: Is your hometown a good place for tourists?</b></p>
-        <p class="serif">"Yes, absolutely (D). It has a very rich history and beautiful architecture (R). In fact, it is more attractive than most other tourist destinations in my province (W)."</p>
-    </div>
+<!-- FINAL CTA -->
+<section class="footer-cta">
+  <div class="container">
+    <h2>Still confused which one is for you?</h2>
+    <p>Don’t guess. Talk with LizOn directly.</p>
 
-    <div class="structureCard">
-        <h3>Interactive Practice: DRW Fill-in</h3>
-        <div class="practice">
-            <p><b>Topic: Technology</b></p>
-            <p>Q: Do you think robots are useful?</p>
-            <p>Ans: Yes, I do. Robots <select class="gap" data-ans="are more efficient">
-                <option value="">Select</option>
-                <option>are efficient</option>
-                <option>are more efficient</option>
-                <option>is efficient</option>
-            </select> than most other <select class="gap" data-ans="inventions">
-                <option value="">Select</option>
-                <option>invention</option>
-                <option>inventions</option>
-                <option>thing</option>
-            </select> because they never get tired.</p>
-            <div class="ans-hint">Correct: are more efficient + inventions</div>
-        </div>
-    </div>
+    <a href="https://wa.me/8801611611139" class="btn btn-primary">Chat on WhatsApp</a>
+  </div>
 </section>
-
-<section id="wt2">
-    <h2><i class="fa-solid fa-pen-nib hi"></i> 4th Portion: Writing Task 2</h2>
-    <div class="qaCard">
-        <p><b>Topic:</b> Should governments invest in public transport or roads?</p>
-        <p><b>Sample Sentence:</b> "Investment in railways is <b>more sustainable</b> than most other <b>infrastructure projects</b> because it reduces the carbon footprint."</p>
-        
-        <div class="practice">
-            <p>Public transport is <select class="gap" data-ans="more beneficial">
-                <option value="">Select</option>
-                <option>more beneficial</option>
-                <option>most beneficial</option>
-                <option>beneficial</option>
-            </select> than most other <select class="gap" data-ans="solutions">
-                <option value="">Select</option>
-                <option>solution</option>
-                <option>solutions</option>
-                <option>ways</option>
-            </select> to urban traffic congestion.</p>
-            <div class="ans-hint">Correct: more beneficial + solutions</div>
-        </div>
-    </div>
-</section>
-
-<section id="pron">
-    <h2><i class="fa-solid fa-volume-high hi"></i> Pronunciation Chart</h2>
-    <div class="pron-grid">
-        <div class="qaCard">
-            <h3>Sound 1: /v/ vs /b/</h3>
-            <div class="pron-item"><span>Very</span> <span class="banglish">(ভেরি)</span></div>
-            <div class="pron-item"><span>Berry</span> <span class="banglish">(বেরি)</span></div>
-            <div class="pron-item"><span>Vat</span> <span class="banglish">(ভ্যাট)</span></div>
-            <div class="pron-item"><span>Bat</span> <span class="banglish">(ব্যাট)</span></div>
-            <div class="pron-item"><span>Vote</span> <span class="banglish">(ভোট)</span></div>
-        </div>
-        <div class="qaCard">
-            <h3>Sound 2: /p/ (Aspirated)</h3>
-            <div class="pron-item"><span>Pen</span> <span class="banglish">(ফেন - বাতাসসহ)</span></div>
-            <div class="pron-item"><span>Paper</span> <span class="banglish">(ফেইফার)</span></div>
-            <div class="pron-item"><span>Power</span> <span class="banglish">(ফাওয়ার)</span></div>
-            <div class="pron-item"><span>People</span> <span class="banglish">(ফীফল)</span></div>
-            <div class="pron-item"><span>Point</span> <span class="banglish">(ফয়েন্ট)</span></div>
-        </div>
-    </div>
-</section>
-
-<footer>
-    <img src="https://raw.githubusercontent.com/lizon-education/assets/main/logo-dark.png" alt="LizOn" style="height:40px; filter: brightness(0) invert(1);">
-    <p>© 2026 LizOn Education. All Rights Reserved.</p>
-    <div style="margin-top:15px;">
-        <a href="ielts.html" style="color:white; margin:0 10px;">IELTS</a>
-        <a href="pte.html" style="color:white; margin:0 10px;">PTE</a>
-        <a href="about.html" style="color:white; margin:0 10px;">About</a>
-    </div>
-</footer>
-
-<button id="scrollTop" onclick="scrollToId('top')" style="position:fixed; bottom:20px; right:20px; display:none;" class="pill primary"><i class="fa-solid fa-arrow-up"></i></button>
-
-<script>
-    // Scroll To ID function
-    function scrollToId(id) {
-        if(id === 'top') { window.scrollTo({top: 0, behavior: 'smooth'}); return; }
-        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Interactive Select logic
-    document.querySelectorAll('select.gap').forEach(select => {
-        select.addEventListener('change', function() {
-            const correctAns = this.getAttribute('data-ans');
-            const hint = this.parentElement.nextElementSibling;
-            
-            if (this.value === correctAns) {
-                this.className = 'gap correct';
-                if(hint) hint.style.display = 'none';
-            } else if (this.value === "") {
-                this.className = 'gap';
-            } else {
-                this.className = 'gap wrong';
-                if(hint) hint.style.display = 'block';
-            }
-        });
-    });
-
-    // Scroll Top Button Visibility
-    window.onscroll = function() {
-        const btn = document.getElementById("scrollTop");
-        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-            btn.style.display = "block";
-        } else {
-            btn.style.display = "none";
-        }
-    };
-
-    function toggleMenu() {
-        alert("Menu Links: IELTS, PTE, Study Abroad, About LizOn");
-    }
-</script>
 
 </body>
 </html>

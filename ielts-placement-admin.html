@@ -1,557 +1,126 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LizOn Education — Placement Admin</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LizOn Placement Admin</title>
+
   <style>
-    :root{
-      --bg:#0f2a22;
-      --card:#12352b;
-      --text:#e8fff5;
-      --muted:rgba(232,255,245,.72);
-      --line:rgba(232,255,245,.12);
-      --btn:#19b37a;
-      --btn2:#0ea56f;
-      --warn:#ffb020;
-      --good:#6ee7b7;
-      --bad:#ff6b6b;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f2a22;
+      color: #e8fff5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:radial-gradient(900px 600px at 50% 0%, #153b30 0%, var(--bg) 55%);color:var(--text);}
-    .wrap{max-width:1100px;margin:0 auto;padding:18px;}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 14px;flex-wrap:wrap}
-    .brand{display:flex;gap:10px;align-items:center}
-    .brand b{font-size:16px;letter-spacing:.2px}
-    .pill{border:1px solid var(--line);padding:8px 10px;border-radius:999px;color:var(--muted);font-size:12px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;}
-    h1{font-size:18px;margin:0 0 10px}
-    h2{font-size:14px;margin:0 0 10px;color:var(--muted);font-weight:650}
-    label{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px}
-    input,select,textarea{
-      width:100%;box-sizing:border-box;
-      background:rgba(0,0,0,.15);
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:12px;
-      color:var(--text);
-      outline:none;
+
+    .card {
+      background: #153b30;
+      padding: 30px;
+      border-radius: 12px;
+      width: 340px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
-    textarea{min-height:120px;resize:vertical}
-    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:12px}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .btn{
-      border:none;border-radius:14px;
-      background:linear-gradient(180deg,var(--btn),var(--btn2));
-      color:#052015;
-      padding:12px 14px;
-      font-weight:850;
-      cursor:pointer;
+
+    h2 {
+      margin-top: 0;
+      text-align: center;
     }
-    .btn:disabled{opacity:.6;cursor:not-allowed}
-    .btnGhost{
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:rgba(0,0,0,.12);
-      color:var(--text);
-      padding:12px 14px;
-      font-weight:750;
-      cursor:pointer;
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
     }
-    .note{font-size:12px;color:var(--muted);line-height:1.45}
-    .table{width:100%;border-collapse:separate;border-spacing:0 10px}
-    .tr{background:rgba(0,0,0,.12);border:1px solid var(--line)}
-    .table td,.table th{padding:12px 12px;text-align:left;font-size:13px}
-    .table th{color:var(--muted);font-size:12px;font-weight:700}
-    .badge{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
-    .badge.NEW{border-color:rgba(255,176,32,.4);color:var(--warn);background:rgba(255,176,32,.08)}
-    .badge.REVIEWED{border-color:rgba(110,231,183,.35);color:var(--good);background:rgba(110,231,183,.08)}
-    .badge.CONTACTED{border-color:rgba(25,179,122,.35);color:var(--good);background:rgba(25,179,122,.08)}
-    .badge.ADMITTED{border-color:rgba(110,231,183,.55);color:var(--good);background:rgba(110,231,183,.12)}
-    .badge.CLOSED{border-color:rgba(255,255,255,.18);color:rgba(232,255,245,.6);background:rgba(255,255,255,.06)}
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media(max-width:900px){.split{grid-template-columns:1fr}}
-    .muted{color:var(--muted)}
-    .hide{display:none}
-    .kvs{display:grid;grid-template-columns:160px 1fr;gap:8px;font-size:13px}
-    .kvs div{padding:6px 0;border-bottom:1px dashed rgba(232,255,245,.10)}
-    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background: #19b37a;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-size: 14px;
+      text-align: center;
+    }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <b>LizOn Education</b>
-        <div class="pill">Placement Admin (Login Required)</div>
-      </div>
-      <div class="row">
-        <span id="who" class="pill">Not logged in</span>
-        <button id="logoutBtn" class="btnGhost hide" type="button">Logout</button>
-      </div>
-    </div>
 
-    <!-- LOGIN -->
-    <div id="loginCard" class="card">
-      <h1>Staff Login</h1>
-      <div class="split">
-        <div>
-          <label>Email</label>
-          <input id="loginEmail" type="email" placeholder="counselor@lizon.com" />
-        </div>
-        <div>
-          <label>Password</label>
-          <input id="loginPass" type="password" placeholder="••••••••" />
-        </div>
-      </div>
-      <div class="row" style="margin-top:14px">
-        <button id="loginBtn" class="btn" type="button">Login</button>
-        <span id="loginMsg" class="note"></span>
-      </div>
-    </div>
+  <div class="card">
+    <h2>Admin Login</h2>
 
-    <!-- DASHBOARD -->
-    <div id="dash" class="hide">
-      <div class="card">
-        <h1>Attempts</h1>
-        <div class="split">
-          <div>
-            <h2>Filters</h2>
-            <div class="split">
-              <div>
-                <label>Status</label>
-                <select id="fStatus">
-                  <option value="">All</option>
-                  <option>NEW</option>
-                  <option>REVIEWED</option>
-                  <option>CONTACTED</option>
-                  <option>ADMITTED</option>
-                  <option>CLOSED</option>
-                </select>
-              </div>
-              <div>
-                <label>Stage</label>
-                <select id="fStage">
-                  <option value="">All</option>
-                  <option>FOUNDATION</option>
-                  <option>CORE</option>
-                  <option>STRATEGY</option>
-                  <option>EXAM-KNOCKING</option>
-                </select>
-              </div>
-              <div>
-                <label>Search (phone / name / result id)</label>
-                <input id="fSearch" placeholder="01... / Joy / uuid..." />
-              </div>
-              <div>
-                <label>Sort</label>
-                <select id="fSort">
-                  <option value="created_desc">Newest first</option>
-                  <option value="created_asc">Oldest first</option>
-                </select>
-              </div>
-            </div>
-            <div class="row" style="margin-top:12px">
-              <button id="refreshBtn" class="btn" type="button">Refresh</button>
-              <span class="note">Tip: focus NEW + EXAM-KNOCKING first for fastest closes.</span>
-            </div>
-          </div>
-          <div>
-            <h2>Quick Stats (loaded)</h2>
-            <div class="kvs">
-              <div class="muted">Total</div><div id="stTotal">—</div>
-              <div class="muted">NEW</div><div id="stNew">—</div>
-              <div class="muted">EXAM-KNOCKING</div><div id="stExam">—</div>
-              <div class="muted">FOUNDATION</div><div id="stFound">—</div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button type="button" onclick="login()">Login</button>
 
-      <div class="grid">
-        <div class="card">
-          <h2>List</h2>
-          <table class="table" id="listTbl">
-            <thead>
-              <tr>
-                <th>When</th>
-                <th>Status</th>
-                <th>Stage</th>
-                <th>Target</th>
-                <th>Timeline</th>
-                <th>Phone</th>
-                <th>Open</th>
-              </tr>
-            </thead>
-            <tbody id="listBody"></tbody>
-          </table>
-          <div class="note" id="listMsg"></div>
-        </div>
-
-        <div class="card">
-          <h2>Details</h2>
-          <div id="emptyDetails" class="note">Select an attempt to view writing + update status.</div>
-
-          <div id="details" class="hide">
-            <div class="kvs">
-              <div class="muted">Result ID</div><div class="mono" id="dId">—</div>
-              <div class="muted">Name</div><div id="dName">—</div>
-              <div class="muted">Phone</div><div id="dPhone">—</div>
-              <div class="muted">Email</div><div id="dEmail">—</div>
-              <div class="muted">City</div><div id="dCity">—</div>
-              <div class="muted">Stage</div><div id="dStage">—</div>
-              <div class="muted">Recommended</div><div id="dPath">—</div>
-              <div class="muted">Target / Timeline</div><div id="dTT">—</div>
-              <div class="muted">Grammar</div><div id="dGrammar">—</div>
-              <div class="muted">Speaking</div><div id="dSpeak">—</div>
-              <div class="muted">Translate?</div><div id="dTrans">—</div>
-            </div>
-
-            <label style="margin-top:14px">Writing</label>
-            <textarea id="dWriting" readonly></textarea>
-
-            <div class="split" style="margin-top:10px">
-              <div>
-                <label>Status</label>
-                <select id="dStatus">
-                  <option>NEW</option>
-                  <option>REVIEWED</option>
-                  <option>CONTACTED</option>
-                  <option>ADMITTED</option>
-                  <option>CLOSED</option>
-                </select>
-              </div>
-              <div>
-                <label>Reviewed By</label>
-                <input id="dBy" placeholder="Lata / Joy / ..." />
-              </div>
-            </div>
-
-            <label>Counselor Note</label>
-            <textarea id="dNote" placeholder="Short note: what to recommend + why..."></textarea>
-
-            <div class="row" style="margin-top:12px">
-              <button id="saveBtn" class="btn" type="button">Save Update</button>
-              <button id="copyMsgBtn" class="btnGhost" type="button">Copy Follow-up Message</button>
-              <span id="saveMsg" class="note"></span>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <div class="message" id="message"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Supabase UMD (MUST use this one) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
   <script>
-    // ============================
-    // CONFIG (REPLACE THESE)
-    // ============================
+    // ==========================
+    // SUPABASE CONFIG
+    // ==========================
     const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // UI refs
-    const loginCard = document.getElementById("loginCard");
-    const dash = document.getElementById("dash");
-    const who = document.getElementById("who");
-    const logoutBtn = document.getElementById("logoutBtn");
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
 
-    const loginBtn = document.getElementById("loginBtn");
-    const loginMsg = document.getElementById("loginMsg");
+    async function login() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const message = document.getElementById("message");
 
-    const refreshBtn = document.getElementById("refreshBtn");
-    const listBody = document.getElementById("listBody");
-    const listMsg = document.getElementById("listMsg");
-
-    const fStatus = document.getElementById("fStatus");
-    const fStage = document.getElementById("fStage");
-    const fSearch = document.getElementById("fSearch");
-    const fSort = document.getElementById("fSort");
-
-    const emptyDetails = document.getElementById("emptyDetails");
-    const details = document.getElementById("details");
-
-    const dId = document.getElementById("dId");
-    const dName = document.getElementById("dName");
-    const dPhone = document.getElementById("dPhone");
-    const dEmail = document.getElementById("dEmail");
-    const dCity = document.getElementById("dCity");
-    const dStage = document.getElementById("dStage");
-    const dPath = document.getElementById("dPath");
-    const dTT = document.getElementById("dTT");
-    const dGrammar = document.getElementById("dGrammar");
-    const dSpeak = document.getElementById("dSpeak");
-    const dTrans = document.getElementById("dTrans");
-    const dWriting = document.getElementById("dWriting");
-
-    const dStatus = document.getElementById("dStatus");
-    const dBy = document.getElementById("dBy");
-    const dNote = document.getElementById("dNote");
-
-    const saveBtn = document.getElementById("saveBtn");
-    const saveMsg = document.getElementById("saveMsg");
-    const copyMsgBtn = document.getElementById("copyMsgBtn");
-
-    // Stats
-    const stTotal = document.getElementById("stTotal");
-    const stNew = document.getElementById("stNew");
-    const stExam = document.getElementById("stExam");
-    const stFound = document.getElementById("stFound");
-
-    let selectedRow = null; // store currently opened attempt (full object)
-
-    function fmtTime(ts){
-      try{
-        const d = new Date(ts);
-        return d.toLocaleString();
-      }catch(e){ return ts; }
-    }
-
-    function badge(status){
-      const s = status || "NEW";
-      return `<span class="badge ${s}">${s}</span>`;
-    }
-
-    function safe(v){ return (v === null || v === undefined || v === "") ? "—" : v; }
-
-    function computeLoadedStats(rows){
-      stTotal.textContent = rows.length;
-      stNew.textContent = rows.filter(r => (r.status||"NEW") === "NEW").length;
-      stExam.textContent = rows.filter(r => r.stage === "EXAM-KNOCKING").length;
-      stFound.textContent = rows.filter(r => r.stage === "FOUNDATION").length;
-    }
-
-    async function ensureAuthUI(){
-      const { data } = await supabase.auth.getSession();
-      const session = data.session;
-
-      if (session){
-        who.textContent = session.user.email;
-        logoutBtn.classList.remove("hide");
-        loginCard.classList.add("hide");
-        dash.classList.remove("hide");
-        await loadAttempts();
-      } else {
-        who.textContent = "Not logged in";
-        logoutBtn.classList.add("hide");
-        loginCard.classList.remove("hide");
-        dash.classList.add("hide");
+      if (!email || !password) {
+        message.textContent = "Enter email and password.";
+        message.style.color = "red";
+        return;
       }
-    }
 
-    // Login
-    loginBtn.addEventListener("click", async () => {
-      loginMsg.textContent = "";
-      loginBtn.disabled = true;
-      loginBtn.textContent = "Logging in...";
+      message.textContent = "Logging in...";
+      message.style.color = "white";
 
-      try{
-        const email = document.getElementById("loginEmail").value.trim();
-        const password = document.getElementById("loginPass").value;
-
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-
-        loginMsg.textContent = "Logged in.";
-        await ensureAuthUI();
-      }catch(err){
-        loginMsg.textContent = "Login failed: " + (err?.message || err);
-      }finally{
-        loginBtn.disabled = false;
-        loginBtn.textContent = "Login";
-      }
-    });
-
-    // Logout
-    logoutBtn.addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      selectedRow = null;
-      emptyDetails.classList.remove("hide");
-      details.classList.add("hide");
-      await ensureAuthUI();
-    });
-
-    // Filters reload
-    refreshBtn.addEventListener("click", loadAttempts);
-    fStatus.addEventListener("change", loadAttempts);
-    fStage.addEventListener("change", loadAttempts);
-    fSort.addEventListener("change", loadAttempts);
-
-    let searchTimer = null;
-    fSearch.addEventListener("input", () => {
-      clearTimeout(searchTimer);
-      searchTimer = setTimeout(loadAttempts, 400);
-    });
-
-    async function loadAttempts(){
-      listMsg.textContent = "Loading...";
-      listBody.innerHTML = "";
-      selectedRow = null;
-      emptyDetails.classList.remove("hide");
-      details.classList.add("hide");
-
-      try{
-        let q = supabase.from("ielts_placement_attempts").select("*");
-
-        // Filters
-        if (fStatus.value) q = q.eq("status", fStatus.value);
-        if (fStage.value) q = q.eq("stage", fStage.value);
-
-        // Search
-        const s = fSearch.value.trim();
-        if (s){
-          // simple OR search across a few fields
-          q = q.or(`phone.ilike.%${s}%,full_name.ilike.%${s}%,email.ilike.%${s}%,id.eq.${s}`);
-        }
-
-        // Sort
-        const asc = (fSort.value === "created_asc");
-        q = q.order("created_at", { ascending: asc });
-
-        // Limit (avoid loading the universe)
-        q = q.limit(150);
-
-        const { data, error } = await q;
-        if (error) throw error;
-
-        computeLoadedStats(data || []);
-
-        if (!data || data.length === 0){
-          listMsg.textContent = "No attempts found for current filters.";
-          return;
-        }
-
-        listMsg.textContent = "";
-
-        listBody.innerHTML = data.map(r => `
-          <tr class="tr">
-            <td>${fmtTime(r.created_at)}</td>
-            <td>${badge(r.status)}</td>
-            <td><span class="badge ${r.stage}">${r.stage}</span></td>
-            <td>${safe(r.target_score)}</td>
-            <td>${safe(r.exam_timeline)}</td>
-            <td>${safe(r.phone)}</td>
-            <td><button class="btnGhost" data-open="${r.id}">Open</button></td>
-          </tr>
-        `).join("");
-
-        // Attach open handlers
-        listBody.querySelectorAll("button[data-open]").forEach(btn => {
-          btn.addEventListener("click", () => {
-            const id = btn.getAttribute("data-open");
-            const row = data.find(x => x.id === id);
-            openDetails(row);
-          });
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
         });
 
-      }catch(err){
-        listMsg.textContent = "Load failed: " + (err?.message || err);
+      if (error) {
+        message.textContent = error.message;
+        message.style.color = "red";
+        return;
       }
+
+      message.textContent = "Login successful!";
+      message.style.color = "lightgreen";
+
+      console.log("Logged in user:", data.user);
     }
-
-    function openDetails(r){
-      selectedRow = r;
-      emptyDetails.classList.add("hide");
-      details.classList.remove("hide");
-
-      dId.textContent = r.id;
-      dName.textContent = safe(r.full_name);
-      dPhone.textContent = safe(r.phone);
-      dEmail.textContent = safe(r.email);
-      dCity.textContent = safe(r.city_country);
-
-      dStage.textContent = safe(r.stage);
-      dPath.textContent = safe(r.recommended_path);
-      dTT.textContent = `${safe(r.target_score)} / ${safe(r.exam_timeline)}`;
-
-      dGrammar.textContent = `${safe(r.grammar_score)} / 5 (Urgency:${safe(r.urgency_score)} Pressure:${safe(r.target_pressure)})`;
-
-      const issues = (r.speaking_issues && r.speaking_issues.length) ? r.speaking_issues.join(", ") : "—";
-      dSpeak.textContent = `Comfort: ${safe(r.speaking_comfort)} | Issues: ${issues}`;
-
-      dTrans.textContent = r.wrote_without_translate ? "No translate" : "Used translate / not confident";
-
-      dWriting.value = r.writing_text || "";
-
-      dStatus.value = r.status || "NEW";
-      dBy.value = r.reviewed_by || "";
-      dNote.value = r.counselor_note || "";
-
-      saveMsg.textContent = "";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    // Save update
-    saveBtn.addEventListener("click", async () => {
-      if (!selectedRow) return;
-
-      saveMsg.textContent = "";
-      saveBtn.disabled = true;
-      saveBtn.textContent = "Saving...";
-
-      try{
-        const payload = {
-          status: dStatus.value,
-          counselor_note: dNote.value.trim() || null,
-          reviewed_by: dBy.value.trim() || null,
-          reviewed_at: new Date().toISOString()
-        };
-
-        const { error } = await supabase
-          .from("ielts_placement_attempts")
-          .update(payload)
-          .eq("id", selectedRow.id);
-
-        if (error) throw error;
-
-        // update local
-        selectedRow = { ...selectedRow, ...payload };
-
-        saveMsg.textContent = "Saved.";
-        // refresh list to reflect status
-        await loadAttempts();
-
-      }catch(err){
-        saveMsg.textContent = "Save failed: " + (err?.message || err);
-      }finally{
-        saveBtn.disabled = false;
-        saveBtn.textContent = "Save Update";
-      }
-    });
-
-    // Copy follow-up message (for WhatsApp paste)
-    copyMsgBtn.addEventListener("click", async () => {
-      if (!selectedRow) return;
-
-      const msg =
-`Hi, apnar placement test review korsi.
-
-Stage: ${selectedRow.stage}
-Recommended: ${selectedRow.recommended_path}
-
-Apnar target: ${selectedRow.target_score}
-Exam timeline: ${selectedRow.exam_timeline}
-
-Ekta quick 1–2 minute kotha bolle, exact plan confirm kore dite parbo.`;
-
-      try{
-        await navigator.clipboard.writeText(msg);
-        saveMsg.textContent = "Message copied.";
-      }catch(e){
-        // fallback
-        prompt("Copy this message:", msg);
-      }
-    });
-
-    // Keep session state
-    supabase.auth.onAuthStateChange((_event, _session) => {
-      ensureAuthUI();
-    });
-
-    // Init
-    ensureAuthUI();
   </script>
+
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>IELTS | LizOn Education</title>
 
 <style>
@@ -10,139 +10,205 @@
   --green:#0F2E26;
   --green2:#153B30;
   --gold:#C6A85E;
-  --light:#f5f5f5;
+  --bg:#ffffff;
+  --soft:#f6f6f6;
+  --text:#1f1f1f;
+  --muted:#6b6b6b;
+  --card:#f3f3f3;
+  --radius:10px;
 }
 
 *{box-sizing:border-box;}
-
 body{
   margin:0;
   font-family: Arial, Helvetica, sans-serif;
-  background:#ffffff;
-  color:#222;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
 }
-
-a{text-decoration:none;}
-
+a{ text-decoration:none; }
 .container{
-  width:90%;
+  width:92%;
   max-width:1100px;
   margin:auto;
 }
 
-/* HERO */
-.hero{
-  background:linear-gradient(135deg,var(--green),var(--green2));
-  color:white;
-  padding:80px 20px;
-  text-align:center;
-}
-
-.hero h1{
-  font-size:34px;
-  margin-bottom:20px;
-}
-
-.hero p{
-  font-size:18px;
-  max-width:700px;
-  margin:auto;
-  opacity:0.9;
-}
-
-.hero-buttons{
-  margin-top:35px;
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.2px;
+  background:rgba(198,168,94,.18);
+  color:#2a220f;
 }
 
 .btn{
-  display:inline-block;
-  padding:14px 28px;
-  margin:10px;
-  font-weight:bold;
-  border-radius:4px;
-  transition:0.3s;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:14px 18px;
+  border-radius:12px;
+  font-weight:800;
+  cursor:pointer;
+  border:0;
+  transition:.2s ease;
+  text-align:center;
+  min-width:180px;
 }
-
-.btn-primary{
-  background:var(--gold);
-  color:#000;
-}
-
-.btn-primary:hover{
-  opacity:0.85;
-}
-
+.btn-primary{ background:var(--gold); color:#111; }
+.btn-primary:hover{ opacity:.9; }
+.btn-dark{ background:var(--green); color:#fff; }
+.btn-dark:hover{ opacity:.95; }
 .btn-outline{
-  border:2px solid #fff;
+  background:transparent;
+  border:2px solid rgba(255,255,255,.85);
   color:#fff;
 }
-
 .btn-outline:hover{
   background:#fff;
-  color:#000;
+  color:#111;
 }
 
-/* COURSE SECTION */
-.section{
+.section{ padding:70px 0; }
+.center{ text-align:center; }
+.muted{ color:var(--muted); }
+
+.hero{
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:#fff;
+  padding:84px 0 70px;
+  position:relative;
+  overflow:hidden;
+}
+.hero .grid{
+  display:grid;
+  gap:18px;
+  grid-template-columns: 1.2fr .8fr;
+  align-items:center;
+}
+.hero h1{
+  margin:10px 0 14px;
+  font-size:38px;
+  line-height:1.15;
+}
+.hero p{
+  margin:0 0 22px;
+  opacity:.92;
+  font-size:16px;
+  max-width:720px;
+}
+.hero .ctaRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:10px;
+}
+.heroCard{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius);
+  padding:18px;
+}
+.heroCard h3{ margin:0 0 10px; font-size:16px; }
+.heroCard ul{ margin:0; padding-left:18px; opacity:.92; }
+.heroCard li{ margin:6px 0; }
+
+.strip{
+  margin-top:-28px;
+}
+.stripBox{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 10px 28px rgba(0,0,0,.12);
+  padding:18px;
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:14px;
+}
+.kpi{
+  background:var(--soft);
+  border-radius:12px;
+  padding:14px;
+}
+.kpi .t{ font-weight:900; }
+.kpi .s{ font-size:13px; color:var(--muted); margin-top:6px; }
+
+.cards{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:16px;
+}
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:18px;
+}
+.card h3{ margin:0 0 10px; }
+.card .meta{ font-size:13px; color:var(--muted); margin-bottom:10px; }
+.card ul{ margin:0; padding-left:18px; }
+.card li{ margin:7px 0; }
+
+.bigCard{
+  background:var(--soft);
+  border-radius:var(--radius);
+  padding:22px;
+}
+
+.twoCol{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:18px;
+}
+
+.hr{
+  height:1px;
+  background:rgba(0,0,0,.08);
+  margin:18px 0;
+}
+
+.faq{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:16px;
+}
+.qa{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:18px;
+}
+.qa h4{ margin:0 0 8px; }
+.qa p{ margin:0; color:var(--muted); }
+
+.footerCta{
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:#fff;
   padding:70px 0;
 }
-
-.section h2{
-  text-align:center;
-  margin-bottom:15px;
+.footerCta .row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center;
+  margin-top:18px;
 }
 
-.section-sub{
-  text-align:center;
-  margin-bottom:40px;
-  color:#666;
+.smallNote{
+  font-size:12.5px;
+  color:rgba(255,255,255,.8);
+  margin-top:14px;
 }
 
-.course-box{
-  background:#f9f9f9;
-  padding:30px;
-  border-radius:6px;
-  margin-bottom:30px;
-}
-
-.course-box h3{
-  margin-top:0;
-}
-
-.course-box ul{
-  padding-left:18px;
-}
-
-.price{
-  font-size:22px;
-  font-weight:bold;
-  margin:15px 0;
-}
-
-.cta-row{
-  margin-top:15px;
-}
-
-/* FOOTER CTA */
-.footer-cta{
-  background:var(--green);
-  color:white;
-  text-align:center;
-  padding:60px 20px;
-}
-
-.footer-cta h2{
-  margin-bottom:15px;
-}
-
-.footer-cta p{
-  margin-bottom:25px;
-  opacity:0.9;
-}
-
-/* RESPONSIVE */
-@media(max-width:768px){
-  .hero h1{font-size:26px;}
+@media (max-width: 980px){
+  .hero .grid{ grid-template-columns:1fr; }
+  .stripBox{ grid-template-columns:1fr 1fr; }
+  .cards{ grid-template-columns:1fr; }
+  .twoCol{ grid-template-columns:1fr; }
+  .faq{ grid-template-columns:1fr; }
+  .hero h1{ font-size:30px; }
+  .btn{ width:100%; min-width:auto; }
 }
 </style>
 </head>
@@ -152,97 +218,224 @@ a{text-decoration:none;}
 <!-- HERO -->
 <section class="hero">
   <div class="container">
-    <h1>IELTS e problem usually English na.<br>Problem holo — structure.</h1>
-    <p>LizOn e IELTS mane shortcut na. Proper build. Clear system. Controlled preparation.</p>
+    <span class="badge">LizOn Education • Online IELTS</span>
+    <div class="grid">
+      <div>
+        <h1>IELTS e problem usually English na.<br/>Problem holo — structure.</h1>
+        <p>
+          Ami <b>Joy</b> — <b>IELTS Band 9 Scorer</b>. Ei program e shortcut, hype, motivational talk nai.
+          Structured routine, weekly evaluation, monthly mocks — ekta controlled system.
+        </p>
 
-    <div class="hero-buttons">
-      <a href="#fulljourney" class="btn btn-primary">Explore Full Journey</a>
-      <a href="#desperate" class="btn btn-outline">Exam Close? Click Here</a>
+        <div class="ctaRow">
+          <a class="btn btn-primary" href="https://wa.me/8801611611139?text=Hi%20Joy%20Bhai.%20Amar%20IELTS%20situation%20share%20korte%20chai.%20Please%20guide%20me.">
+            Talk with LizOn (WhatsApp)
+          </a>
+          <a class="btn btn-outline" href="https://www.mylizon.com/test.html">
+            Take Placement Test
+          </a>
+        </div>
+
+        <div class="smallNote">
+          Batch size generally <b>15 students</b>. (We admit as many as we can, but we keep it manageable.)
+        </div>
+      </div>
+
+      <div class="heroCard">
+        <h3>What you get (real, not marketing)</h3>
+        <ul>
+          <li><b>Weekly Speaking + Writing evaluation</b></li>
+          <li><b>Class tests</b> (nearly each class)</li>
+          <li><b>Monthly mocks</b></li>
+          <li><b>Live online class + class records</b></li>
+          <li>Step-by-step routine (Start → Upgrade → Complete)</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FULL JOURNEY -->
-<section id="fulljourney" class="section">
+<!-- KPI STRIP -->
+<section class="strip">
   <div class="container">
-
-    <h2>IELTS Full Journey (3 Months+)</h2>
-    <p class="section-sub">Not a crash course. A proper build from base to control.</p>
-
-    <div class="course-box">
-      <h3>Who It’s For</h3>
-      <ul>
-        <li>First time IELTS candidates</li>
-        <li>Students who failed before</li>
-        <li>Grammar weak</li>
-        <li>Speaking e atke jan</li>
-        <li>Writing structure clear na</li>
-      </ul>
-
-      <h3>What You Fix Here</h3>
-      <ul>
-        <li>Grammar foundation</li>
-        <li>Writing structure control</li>
-        <li>Speaking fluency & idea flow</li>
-        <li>Listening processing</li>
-        <li>Reading speed & strategy</li>
-        <li>Exam mindset</li>
-      </ul>
-
-      <div class="price">Course Fee: 9500/-</div>
-
-      <div class="cta-row">
-        <a href="https://www.mylizon.com/pay.html" class="btn btn-primary">Admit Now</a>
-        <a href="https://wa.me/8801611611139" class="btn btn-outline">Talk with LizOn</a>
+    <div class="stripBox">
+      <div class="kpi">
+        <div class="t">3 Tracks</div>
+        <div class="s">Start • Upgrade • Desperate</div>
+      </div>
+      <div class="kpi">
+        <div class="t">Weekly Evaluations</div>
+        <div class="s">Speaking + Writing (every week)</div>
+      </div>
+      <div class="kpi">
+        <div class="t">Monthly Mocks</div>
+        <div class="s">Progress under real pressure</div>
+      </div>
+      <div class="kpi">
+        <div class="t">Recorded Classes</div>
+        <div class="s">Live + records provided</div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- DESPERATE -->
-<section id="desperate" class="section" style="background:#f1f1f1;">
+<!-- ROUTINE -->
+<section class="section">
   <div class="container">
+    <div class="center">
+      <h2>IELTS Unified Routine (Online)</h2>
+      <p class="muted">This is the system. You don’t “try IELTS”. You follow a structure.</p>
+    </div>
 
-    <h2>IELTS Desperate (1 Month+)</h2>
-    <p class="section-sub">For exam-knocking students only.</p>
+    <div class="cards" style="margin-top:24px;">
+      <!-- START STAGE -->
+      <div class="card">
+        <h3>8:15 PM • Sun–Tue–Thu</h3>
+        <div class="meta"><b>Start Stage</b> (ZERO + HOPE) • Weekly 3 days</div>
 
-    <div class="course-box">
-      <h3>Who It’s For</h3>
-      <ul>
-        <li>Exam date very close</li>
-        <li>Retakers</li>
-        <li>Band 6 stuck</li>
-        <li>Already prepared but control nai</li>
-      </ul>
+        <div class="hr"></div>
+        <div class="meta"><b>What you learn</b></div>
+        <ul>
+          <li><b>Grammar control:</b> basic accuracy, sentence building for speaking & writing</li>
+          <li><b>Reading:</b> speed + understanding, beginner strategies, foundation question handling</li>
+          <li><b>Listening:</b> listening power, section control, traps + synonym awareness</li>
+          <li><b>Writing:</b> idea generation + basic Task 2 structure (plus Task 1 basics)</li>
+          <li><b>Speaking:</b> basic speaking fluency + confidence + direction on pronunciation</li>
+        </ul>
 
-      <h3>Focus Area</h3>
-      <ul>
-        <li>High frequency question types</li>
-        <li>Time management</li>
-        <li>Writing precision</li>
-        <li>Speaking under pressure</li>
-        <li>Mock & evaluation heavy</li>
-      </ul>
+        <div class="hr"></div>
+        <a class="btn btn-dark" href="https://wa.me/8801611611139?text=I%20want%20to%20start%20IELTS%20from%20the%208:15%20PM%20Start%20Stage%20(Sun-Tue-Thu).%20Please%20guide%20me.">
+          Join Start Stage
+        </a>
+      </div>
 
-      <div class="price">Course Fee: 6500/-</div>
+      <!-- UPGRADE STAGE -->
+      <div class="card">
+        <h3>8:15 PM • Sat–Mon–Wed</h3>
+        <div class="meta"><b>Upgrade Stage</b> (STEP-UP) • Weekly 3 days</div>
 
-      <div class="cta-row">
-        <a href="https://www.mylizon.com/pay.html" class="btn btn-primary">Admit Now</a>
-        <a href="https://wa.me/8801611611139" class="btn btn-outline">Talk with LizOn</a>
+        <div class="hr"></div>
+        <div class="meta"><b>What you learn</b></div>
+        <ul>
+          <li><b>Important question types</b> (Reading + Listening) with time management</li>
+          <li><b>Reading:</b> accuracy under pressure, matching, headings, T/F/NG etc. (core types)</li>
+          <li><b>Listening:</b> high-frequency types + speed + trap control</li>
+          <li><b>Writing:</b> band-6+ structure upgrades, coherence + error patterns</li>
+          <li><b>Speaking:</b> Part 2 & 3 control, opinion building + fluency upgrade</li>
+        </ul>
+
+        <div class="hr"></div>
+        <a class="btn btn-dark" href="https://wa.me/8801611611139?text=I%20finished%20foundation%20or%20I%20need%20Step-Up%20(8:15%20PM%20Sat-Mon-Wed).%20Please%20guide%20me.">
+          Join Upgrade Stage
+        </a>
+      </div>
+
+      <!-- DESPERATE -->
+      <div class="card">
+        <h3>9:20 PM • Sun–Thu</h3>
+        <div class="meta"><b>DESPERATE</b> (Complete Here) • Weekly 5 days • <b>Friday + Saturday off</b></div>
+
+        <div class="hr"></div>
+        <div class="meta"><b>What you do here</b></div>
+        <ul>
+          <li><b>Practice + evaluation loop</b> (pressure handling)</li>
+          <li><b>Weekly Speaking + Writing evaluation</b> (consistent feedback)</li>
+          <li><b>Class tests</b> (nearly each class)</li>
+          <li><b>Monthly mocks</b> (real exam simulation)</li>
+          <li>Weak-point targeting + exam mindset</li>
+        </ul>
+
+        <div class="hr"></div>
+        <a class="btn btn-primary" href="https://wa.me/8801611611139?text=My%20exam%20date%20is%20close.%20I%20want%20DESPERATE%20(9:20%20PM%20Sun-Thu).%20Please%20guide%20me.">
+          I’m Exam-Close (DESPERATE)
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING (simple, not aggressive) -->
+<section class="section" style="background:#fafafa;">
+  <div class="container">
+    <div class="center">
+      <h2>Course Fees</h2>
+      <p class="muted">Payment is simple. But we recommend WhatsApp first so we place you in the correct stage.</p>
+    </div>
+
+    <div class="twoCol" style="margin-top:20px;">
+      <div class="bigCard">
+        <h3>IELTS Full Journey (3 Months+)</h3>
+        <p class="muted">Best for: starting / rebuilding / fixing structure properly.</p>
+        <div style="font-size:26px;font-weight:900;margin:10px 0;">9500/-</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <a class="btn btn-dark" href="https://wa.me/8801611611139?text=I%20want%20IELTS%20Full%20Journey%20(3%20Months%2B).%20Please%20guide%20me%20which%20stage%20to%20start.">Talk Before Admission</a>
+          <a class="btn btn-primary" href="https://www.mylizon.com/pay.html">Pay Now</a>
+        </div>
+      </div>
+
+      <div class="bigCard">
+        <h3>IELTS Desperate (1 Month+)</h3>
+        <p class="muted">Best for: exam-knocking students & retakers (not for beginners).</p>
+        <div style="font-size:26px;font-weight:900;margin:10px 0;">6500/-</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <a class="btn btn-dark" href="https://wa.me/8801611611139?text=I%20want%20IELTS%20DESPERATE%20(1%20Month%2B).%20My%20exam%20is%20close.%20Please%20guide%20me.">Talk Before Admission</a>
+          <a class="btn btn-primary" href="https://www.mylizon.com/pay.html">Pay Now</a>
+        </div>
       </div>
     </div>
 
+    <div class="center" style="margin-top:18px;">
+      <a class="btn btn-outline" style="border-color:#0F2E26;color:#0F2E26;" href="https://www.mylizon.com/test.html">
+        Take Placement Test First
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="center">
+      <h2>Quick Answers</h2>
+      <p class="muted">Short, clear — so you can decide fast.</p>
+    </div>
+
+    <div class="faq" style="margin-top:22px;">
+      <div class="qa">
+        <h4>Is this online?</h4>
+        <p>Yes. Fully online live classes. Class records are also provided.</p>
+      </div>
+      <div class="qa">
+        <h4>Do you evaluate Writing & Speaking?</h4>
+        <p>Yes. Weekly Writing + Speaking evaluation, plus class tests nearly each class.</p>
+      </div>
+      <div class="qa">
+        <h4>Do you have mocks?</h4>
+        <p>Yes. Monthly mocks to measure progress under real exam pressure.</p>
+      </div>
+      <div class="qa">
+        <h4>How many students per batch?</h4>
+        <p>Generally around 15 students per batch (kept manageable).</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- FINAL CTA -->
-<section class="footer-cta">
-  <div class="container">
-    <h2>Still confused which one is for you?</h2>
-    <p>Don’t guess. Talk with LizOn directly.</p>
+<section class="footerCta">
+  <div class="container center">
+    <h2>Don’t guess. Get placed correctly.</h2>
+    <p style="opacity:.9;max-width:720px;margin:10px auto 0;">
+      Most students waste weeks because they join the wrong batch.
+      Talk first — we’ll place you in the right stage.
+    </p>
 
-    <a href="https://wa.me/8801611611139" class="btn btn-primary">Chat on WhatsApp</a>
+    <div class="row">
+      <a class="btn btn-primary" href="https://wa.me/8801611611139?text=Hi%20Joy%20Bhai.%20Amar%20IELTS%20level%20bujhte%20chai.%20Please%20guide%20me.">Chat on WhatsApp</a>
+      <a class="btn btn-outline" href="https://www.mylizon.com/pay.html">Already Decided? Pay Now</a>
+    </div>
+
+    <div class="smallNote">WhatsApp: 01611611139 • LizOn Education</div>
   </div>
 </section>
 

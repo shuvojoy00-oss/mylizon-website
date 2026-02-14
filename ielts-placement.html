@@ -304,37 +304,8 @@
     </div>
   </div>
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-
   <script>
- const SUPABASE_URL = "https://ltsdtgdatgiriyfqfrtc.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0"; // MUST be full key
     const WA_NUMBER = "8801611611139"; // no +
-
-    // ✅ FORCE ANON ONLY (so admin login never affects this page)
-    const memoryStorage = {
-      getItem: () => null,
-      setItem: () => {},
-      removeItem: () => {}
-    };
-
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-        detectSessionInUrl: false,
-        storage: memoryStorage
-      }
-    });
-
-    // Debug
-    console.log("URL:", SUPABASE_URL);
-    console.log("KEY prefix:", SUPABASE_ANON_KEY.slice(0, 25));
-
-    supabaseClient.auth.getSession().then(({ data }) => {
-      console.log("SESSION:", data.session ? "AUTH (should NOT happen here)" : "ANON ✅");
-    });
 
     const pbar = document.getElementById("pbar");
     const wcEl = document.getElementById("wc");
@@ -454,15 +425,16 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0"; // M
       return {stage, recommended_path, result_summary};
     }
 
+    // ✅ Neon version: save via your Vercel API (serverless) — secure
     async function insertAttempt(payload){
-      const { data, error } = await supabaseClient
-        .from("ielts_placement_attempts")
-        .insert(payload)
-        .select("id")
-        .single();
-
-      if (error) throw error;
-      return data.id;
+      const r = await fetch("/api/placement-submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "Insert failed");
+      return j.id;
     }
 
     form.addEventListener("submit", async (e) => {
@@ -528,11 +500,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0"; // M
         resultCard.scrollIntoView({behavior:"smooth", block:"start"});
 
       } catch (err) {
-        const extra =
-          `\n\nStatus: ${err?.status || "n/a"}\n` +
-          `Code: ${err?.code || "n/a"}\n` +
-          `Details: ${err?.details || "n/a"}`;
-        alert("Submission failed:\n\n" + (err?.message || err) + extra);
+        alert("Submission failed:\n\n" + (err?.message || err));
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = "See My Result";

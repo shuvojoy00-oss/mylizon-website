@@ -82,9 +82,6 @@
     .big{font-size:18px;font-weight:900}
     .hide{display:none}
 
-    /* =========================
-       DARK THEME SELECT FIX ✅
-       ========================= */
     select{
       background-color:#153b30;
       color:#ffffff;
@@ -307,27 +304,37 @@
     </div>
   </div>
 
-  <!-- ✅ Supabase UMD build -->
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
   <script>
-  const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
-const WA_NUMBER = "8801611611139"; // no +
+    const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0"; // MUST be full key
+    const WA_NUMBER = "8801611611139"; // no +
 
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+    // ✅ FORCE ANON ONLY (so admin login never affects this page)
+    const memoryStorage = {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {}
+    };
 
-// Debug
-console.log("URL:", SUPABASE_URL);
-console.log("KEY:", SUPABASE_ANON_KEY.slice(0, 25));
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+        storage: memoryStorage
+      }
+    });
 
-supabaseClient.auth.getSession().then(({ data }) => {
-  console.log("SESSION:", data.session ? "AUTH" : "ANON");
-});
+    // Debug
+    console.log("URL:", SUPABASE_URL);
+    console.log("KEY prefix:", SUPABASE_ANON_KEY.slice(0, 25));
 
+    supabaseClient.auth.getSession().then(({ data }) => {
+      console.log("SESSION:", data.session ? "AUTH (should NOT happen here)" : "ANON ✅");
+    });
 
     const pbar = document.getElementById("pbar");
     const wcEl = document.getElementById("wc");
@@ -521,7 +528,11 @@ supabaseClient.auth.getSession().then(({ data }) => {
         resultCard.scrollIntoView({behavior:"smooth", block:"start"});
 
       } catch (err) {
-        alert("Submission failed:\n\n" + (err?.message || err));
+        const extra =
+          `\n\nStatus: ${err?.status || "n/a"}\n` +
+          `Code: ${err?.code || "n/a"}\n` +
+          `Details: ${err?.details || "n/a"}`;
+        alert("Submission failed:\n\n" + (err?.message || err) + extra);
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = "See My Result";

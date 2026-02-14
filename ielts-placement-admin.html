@@ -97,7 +97,7 @@
       font-weight:900;
     }
 
-    /* Modal */
+    /* Modal (HARDENED) */
     .modalBack{
       position:fixed;
       inset:0;
@@ -155,11 +155,11 @@
       <div class="grid2">
         <div>
           <h2>Email</h2>
-          <input id="email" type="email" placeholder="Email" />
+          <input id="email" type="email" placeholder="Email" autocomplete="username" />
         </div>
         <div>
           <h2>Password</h2>
-          <input id="password" type="password" placeholder="Password" />
+          <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
         </div>
       </div>
       <div class="row" style="margin-top:12px">
@@ -289,6 +289,10 @@
     const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
 
+    if(!window.supabase){
+      alert("Supabase library not loaded. Check CDN link.");
+    }
+
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: { persistSession:true, autoRefreshToken:true, detectSessionInUrl:true, storage: window.localStorage }
     });
@@ -332,16 +336,22 @@
       editBack.setAttribute("aria-hidden","false");
       editMsg.textContent = "";
       editMsg.classList.remove("err");
+      // focus safety
+      setTimeout(()=> e_full_name?.focus(), 50);
     }
+
     function closeModal(){
       editBack.classList.add("hide");
       editBack.setAttribute("aria-hidden","true");
       currentEditId = null;
+      editMeta.textContent = "";
+      editMsg.textContent = "";
+      editMsg.classList.remove("err");
     }
 
-    // Hard-close safety: always works
-    closeEdit.onclick = closeModal;
-    cancelEdit.onclick = closeModal;
+    // HARD CLOSE always works
+    closeEdit.addEventListener("click", closeModal);
+    cancelEdit.addEventListener("click", closeModal);
 
     // Click outside closes
     editBack.addEventListener("click", (e)=>{
@@ -354,7 +364,7 @@
     });
 
     async function showUI(){
-      // Important: NEVER show modal on load
+      // Never show modal on load
       closeModal();
 
       const { data } = await supabaseClient.auth.getSession();
@@ -383,7 +393,7 @@
         .from("ielts_placement_attempts")
         .select("id, created_at, full_name, phone, target_score, exam_timeline, stage, status")
         .order("created_at", { ascending: false })
-        .limit(100);
+        .limit(200);
 
       if(error){
         dashErr.textContent = "Cannot load table: " + error.message;
@@ -418,10 +428,10 @@
 
       // bind actions
       tbody.querySelectorAll(".delBtn").forEach(btn=>{
-        btn.onclick = ()=> deleteAttempt(btn.dataset.id);
+        btn.addEventListener("click", ()=> deleteAttempt(btn.dataset.id));
       });
       tbody.querySelectorAll(".editBtn").forEach(btn=>{
-        btn.onclick = ()=> openEdit(btn.dataset.id);
+        btn.addEventListener("click", ()=> openEdit(btn.dataset.id));
       });
     }
 
@@ -442,7 +452,6 @@
     }
 
     async function openEdit(id){
-      // Only open modal if logged in
       const { data } = await supabaseClient.auth.getSession();
       if(!data.session){
         alert("Please login first.");
@@ -452,7 +461,6 @@
       currentEditId = id;
       openModal();
       editMeta.textContent = "Loading attempt...";
-      editMsg.textContent = "";
 
       const { data: row, error } = await supabaseClient
         .from("ielts_placement_attempts")
@@ -484,6 +492,7 @@
       saveEdit.textContent = "Saving...";
       editMsg.textContent = "";
       editMsg.classList.remove("err");
+      editMsg.style.color = "var(--muted)";
 
       const updates = {
         full_name: e_full_name.value.trim() || null,
@@ -516,7 +525,7 @@
     }
 
     // Events
-    loginBtn.onclick = async ()=>{
+    loginBtn.addEventListener("click", async ()=>{
       loginMsg.textContent = "";
       loginMsg.classList.remove("err");
 
@@ -545,17 +554,22 @@
 
       loginMsg.textContent = "Login successful!";
       await showUI();
-    };
+    });
 
-    logoutBtn.onclick = async ()=>{
+    logoutBtn.addEventListener("click", async ()=>{
       await supabaseClient.auth.signOut();
       await showUI();
-    };
+    });
 
-    refreshBtn.onclick = loadAttempts;
-    saveEdit.onclick = saveEditChanges;
+    refreshBtn.addEventListener("click", loadAttempts);
+    saveEdit.addEventListener("click", saveEditChanges);
 
-    // On load: ALWAYS close modal
+    // keep UI synced if session changes
+    supabaseClient.auth.onAuthStateChange((_event, _session) => {
+      showUI();
+    });
+
+    // On load
     closeModal();
     showUI();
   </script>

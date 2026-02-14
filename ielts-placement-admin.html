@@ -179,7 +179,7 @@
       </div>
 
       <div class="row" style="gap:12px;margin-top:10px">
-        <span class="badge">Table: public.ielts_placement_attempts</span>
+        <span class="badge">Table: public.placement_attempts</span>
         <span class="badge" id="count">Loaded: 0</span>
       </div>
 
@@ -390,7 +390,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
       count.textContent = "Loading...";
 
       const { data, error } = await supabaseClient
-        .from("ielts_placement_attempts")
+        .from("placement_attempts")
         .select("id, created_at, full_name, phone, target_score, exam_timeline, stage, status")
         .order("created_at", { ascending: false })
         .limit(200);
@@ -440,7 +440,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
       if(!ok) return;
 
       const { error } = await supabaseClient
-        .from("ielts_placement_attempts")
+        .from("placement_attempts")
         .delete()
         .eq("id", id);
 
@@ -463,7 +463,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
       editMeta.textContent = "Loading attempt...";
 
       const { data: row, error } = await supabaseClient
-        .from("ielts_placement_attempts")
+        .from("placement_attempts")
         .select("id, created_at, full_name, phone, target_score, exam_timeline, stage, status")
         .eq("id", id)
         .single();
@@ -504,7 +504,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
       };
 
       const { error } = await supabaseClient
-        .from("ielts_placement_attempts")
+        .from("placement_attempts")
         .update(updates)
         .eq("id", currentEditId);
 

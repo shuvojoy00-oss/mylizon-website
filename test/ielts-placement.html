@@ -14,7 +14,6 @@
       --bg: #0F2E26;
       --bg2:#153B30;
       --card:#12362D;
-      --card2:#0F2A23;
       --text:#EAF4F1;
       --muted:#A9C1BB;
       --line: rgba(255,255,255,.10);
@@ -27,17 +26,22 @@
       --max: 980px;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --field-bg: rgba(255,255,255,.06);
+      --field-bg2: rgba(0,0,0,.10);
+      --field-text: var(--text);
     }
 
     [data-theme="light"]{
       --bg:#F4FBF8;
       --bg2:#E7F5EF;
       --card:#FFFFFF;
-      --card2:#FFFFFF;
       --text:#0D1F18;
       --muted:#3A5A50;
       --line: rgba(0,0,0,.10);
       --shadow: 0 10px 24px rgba(0,0,0,.12);
+      --field-bg: #FFFFFF;
+      --field-bg2: #FFFFFF;
+      --field-text: #0D1F18;
     }
 
     *{ box-sizing:border-box; }
@@ -48,6 +52,10 @@
       background: radial-gradient(1200px 700px at 20% 10%, var(--bg2), var(--bg));
       min-height:100vh;
     }
+
+    /* IMPORTANT: makes native form controls follow theme */
+    body[data-theme="dark"] { color-scheme: dark; }
+    body[data-theme="light"] { color-scheme: light; }
 
     a{ color:inherit; text-decoration:none; }
     .wrap{ max-width:var(--max); margin:0 auto; padding:18px 16px 44px; }
@@ -79,7 +87,7 @@
       font-weight:700;
       font-size:12px;
     }
-    [data-theme="light"] .toggle{ background:#FFFFFF; }
+    [data-theme="light"] .toggle{ background:#FFFFFF; color:var(--text); }
 
     .hero{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
@@ -189,19 +197,34 @@
       color:var(--muted);
       margin:0 0 6px;
     }
+
     input, select, textarea{
       width:100%;
       padding:12px 12px;
       border-radius:14px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
+      background: var(--field-bg);
+      color: var(--field-text);
       outline:none;
       font-size:14px;
     }
-    [data-theme="light"] input,
-    [data-theme="light"] select,
-    [data-theme="light"] textarea{ background:#fff; }
+
+    /* Better select visibility in dark mode */
+    select{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.10));
+      appearance: auto;
+    }
+    body[data-theme="dark"] select,
+    body[data-theme="dark"] option{
+      background-color: #0E241E;
+      color: #EAF4F1;
+    }
+    body[data-theme="light"] select,
+    body[data-theme="light"] option{
+      background-color:#FFFFFF;
+      color:#0D1F18;
+    }
+
     textarea{ min-height:150px; resize:vertical; }
 
     .hint{
@@ -250,6 +273,10 @@
       background: rgba(255,107,107,.12);
       color: var(--danger);
       border:1px solid rgba(255,107,107,.22);
+    }
+    .btn:disabled{
+      opacity:.6;
+      cursor:not-allowed;
     }
 
     .err{
@@ -309,9 +336,6 @@
       line-height:1.5;
       text-align:center;
     }
-
-    /* Honeypot (anti-bot) */
-    .hp { position:absolute; left:-9999px; top:-9999px; opacity:0; pointer-events:none; }
   </style>
 </head>
 
@@ -438,18 +462,12 @@
             </div>
           </div>
 
-          <!-- Honeypot -->
-          <div class="hp">
-            <label for="website">Leave this empty</label>
-            <input id="website" type="text" autocomplete="off" />
-          </div>
-
           <div class="err" id="err1"></div>
 
           <div class="btnRow">
             <div class="btnGroup"></div>
             <div class="btnGroup">
-              <button class="btn btnPrimary" type="button" onclick="nextStep()">Next</button>
+              <button class="btn btnPrimary" type="button" id="next1">Next</button>
             </div>
           </div>
         </div>
@@ -534,10 +552,10 @@
 
           <div class="btnRow">
             <div class="btnGroup">
-              <button class="btn btnGhost" type="button" onclick="prevStep()">Back</button>
+              <button class="btn btnGhost" type="button" id="back2">Back</button>
             </div>
             <div class="btnGroup">
-              <button class="btn btnPrimary" type="button" onclick="nextStep()">Next</button>
+              <button class="btn btnPrimary" type="button" id="next2">Next</button>
             </div>
           </div>
         </div>
@@ -571,10 +589,10 @@
 
           <div class="btnRow">
             <div class="btnGroup">
-              <button class="btn btnGhost" type="button" onclick="prevStep()">Back</button>
+              <button class="btn btnGhost" type="button" id="back3">Back</button>
             </div>
             <div class="btnGroup">
-              <button class="btn btnPrimary" type="button" onclick="nextStep()">Next</button>
+              <button class="btn btnPrimary" type="button" id="next3">Next</button>
             </div>
           </div>
         </div>
@@ -591,33 +609,21 @@
           </div>
 
           <div class="mini" style="margin-top:12px;">
-            <div class="miniCard">
-              <p class="t">Target score</p>
-              <p class="b" id="sumTarget">—</p>
-            </div>
-            <div class="miniCard">
-              <p class="t">Exam timeline</p>
-              <p class="b" id="sumTime">—</p>
-            </div>
-            <div class="miniCard">
-              <p class="t">Grammar score</p>
-              <p class="b" id="sumGrammar">—</p>
-            </div>
-            <div class="miniCard">
-              <p class="t">Speaking comfort</p>
-              <p class="b" id="sumSpeak">—</p>
-            </div>
+            <div class="miniCard"><p class="t">Target score</p><p class="b" id="sumTarget">—</p></div>
+            <div class="miniCard"><p class="t">Exam timeline</p><p class="b" id="sumTime">—</p></div>
+            <div class="miniCard"><p class="t">Grammar score</p><p class="b" id="sumGrammar">—</p></div>
+            <div class="miniCard"><p class="t">Speaking comfort</p><p class="b" id="sumSpeak">—</p></div>
           </div>
 
           <div class="err" id="err4"></div>
 
           <div class="btnRow">
             <div class="btnGroup">
-              <button class="btn btnGhost" type="button" onclick="prevStep()">Back</button>
-              <button class="btn btnDanger" type="button" onclick="resetAll()">Reset</button>
+              <button class="btn btnGhost" type="button" id="back4">Back</button>
+              <button class="btn btnDanger" type="button" id="resetBtn">Reset</button>
             </div>
             <div class="btnGroup">
-              <button class="btn btnPrimary" id="submitBtn" type="button" onclick="submitTest()">Submit & Get Result</button>
+              <button class="btn btnPrimary" id="submitBtn" type="button">Submit & Get Result</button>
             </div>
           </div>
         </div>
@@ -633,27 +639,15 @@
           </div>
 
           <div class="mini" style="margin-top:14px;">
-            <div class="miniCard">
-              <p class="t">Recommended path</p>
-              <p class="b" id="path">—</p>
-            </div>
-            <div class="miniCard">
-              <p class="t">Target</p>
-              <p class="b" id="rTarget">—</p>
-            </div>
-            <div class="miniCard">
-              <p class="t">Timeline</p>
-              <p class="b" id="rTime">—</p>
-            </div>
-            <div class="miniCard">
-              <p class="t">Grammar score</p>
-              <p class="b" id="rGrammar">—</p>
-            </div>
+            <div class="miniCard"><p class="t">Recommended path</p><p class="b" id="path">—</p></div>
+            <div class="miniCard"><p class="t">Target</p><p class="b" id="rTarget">—</p></div>
+            <div class="miniCard"><p class="t">Timeline</p><p class="b" id="rTime">—</p></div>
+            <div class="miniCard"><p class="t">Grammar score</p><p class="b" id="rGrammar">—</p></div>
           </div>
 
           <div class="btnRow" style="margin-top:14px;">
             <div class="btnGroup">
-              <button class="btn btnGhost" type="button" onclick="resetAll()">Take Again</button>
+              <button class="btn btnGhost" type="button" id="againBtn">Take Again</button>
             </div>
             <div class="btnGroup">
               <a class="btn btnPrimary" id="waBtn" href="#" target="_blank" rel="noopener">Confirm on WhatsApp</a>
@@ -679,17 +673,14 @@
 const SUPABASE_URL = "https://ltsdtgdatgiriyfqfrtc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
 
-// Replace with your official WhatsApp number for admissions (no +, no spaces)
+// PUT YOUR REAL WHATSAPP NUMBER HERE (no +, no spaces)
 const WHATSAPP_NUMBER = "8801XXXXXXXXX";
 
-// Optional redirect after success (leave blank to stay on result screen)
 const SUCCESS_REDIRECT = "";
-
-// Supabase client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* =========================
-   State
+   Helpers
 ========================= */
 let step = 1;
 const el = (id)=>document.getElementById(id);
@@ -714,44 +705,6 @@ function showStep(n){
   step = n;
   updateProgress();
 }
-function nextStep(){
-  const ok = validateStep(step);
-  if(!ok) return;
-
-  if(step === 3){
-    const g = grammarScore();
-    el("sumTarget").textContent = el("target").value || "—";
-    el("sumTime").textContent = el("timeline").value || "—";
-    el("sumGrammar").textContent = `${g}/5`;
-    el("sumSpeak").textContent = el("speak").value || "—";
-  }
-
-  if(step < 4) showStep(step+1);
-}
-function prevStep(){
-  if(step > 1) showStep(step-1);
-}
-function resetAll(){
-  ["name","phone","email","target","timeline","attempt","prevband",
-   "g1","g2","g3","g4","g5","speak","writing","translator","website"].forEach(id=>{
-    const node = el(id);
-    if(!node) return;
-    if(node.tagName === "SELECT") node.value = "";
-    else node.value = "";
-  });
-
-  ["err1","err2","err3","err4"].forEach(id=>{
-    el(id).style.display="none";
-    el(id).textContent="";
-  });
-
-  el("wc").textContent = "0";
-  el("wcStatus").textContent = "Too short";
-  el("wcStatus").className = "bad";
-
-  showStep(1);
-}
-
 function showErr(stepNo, msg){
   const e = el("err"+stepNo);
   e.textContent = msg;
@@ -763,14 +716,11 @@ function clearErr(stepNo){
   e.style.display = "none";
 }
 
+/* =========================
+   Validation
+========================= */
 function validateStep(n){
   clearErr(n);
-
-  // Honeypot: bots fill it, humans won't
-  if(el("website") && el("website").value.trim()){
-    // silently block bots (no error, no hint)
-    return false;
-  }
 
   if(n===1){
     const name = el("name").value.trim();
@@ -784,7 +734,6 @@ function validateStep(n){
     if(!target) return showErr(1,"Target score is required."), false;
     if(!timeline) return showErr(1,"Exam timeline is required."), false;
     if(!attempt) return showErr(1,"Please select if you took IELTS before."), false;
-
     return true;
   }
 
@@ -803,7 +752,6 @@ function validateStep(n){
 
     if(wc < 60) return showErr(3,"Writing is too short. Minimum 60 words."), false;
     if(!t) return showErr(3,"Please confirm if you used Google Translate."), false;
-
     return true;
   }
 
@@ -813,7 +761,6 @@ function validateStep(n){
     }
     return true;
   }
-
   return true;
 }
 
@@ -843,13 +790,12 @@ el("writing").addEventListener("input", ()=>{
 });
 
 /* =========================
-   Scoring Logic (Hybrid)
+   Scoring Logic
 ========================= */
 function grammarScore(){
   const ids = ["g1","g2","g3","g4","g5"];
   return ids.reduce((sum,id)=> sum + (parseInt(el(id).value || "0",10) || 0), 0);
 }
-
 function urgencyScore(timeline){
   if(timeline === "2–4 weeks") return 3;
   if(timeline === "1–2 months") return 2;
@@ -861,24 +807,17 @@ function targetPressureScore(target){
   if(target === "6.5") return 1;
   return 0;
 }
-function normalizeSpeaking(s){
-  const m = (s||"").match(/^(\d)/);
-  return m ? parseInt(m[1],10) : 0;
-}
-
 function autoStage(){
   const g = grammarScore();
   const tl = el("timeline").value;
   const t = el("target").value;
-  const usedTranslator = el("translator").value; // Yes/No
+  const usedTranslator = el("translator").value;
   const attempt = el("attempt").value;
 
   const urg = urgencyScore(tl);
   const press = targetPressureScore(t);
-  const sp = normalizeSpeaking(el("speak").value);
 
   let stage = "HOPE";
-
   if(g <= 2 || usedTranslator === "No") stage = "ZERO";
   else if(g === 3) stage = "HOPE";
   else if(g >= 4) stage = "STEP-UP";
@@ -886,7 +825,7 @@ function autoStage(){
   const hasAttempt = attempt.startsWith("Yes");
   if(urg >= 2 && (press >= 1 || hasAttempt)) stage = "DESPERATE";
 
-  return { stage, g, urg, press, sp };
+  return { stage, g };
 }
 
 function stageCopy(stage){
@@ -919,6 +858,47 @@ function stageCopy(stage){
 }
 
 /* =========================
+   Navigation handlers (NO inline onclick)
+========================= */
+function goNext(){
+  const ok = validateStep(step);
+  if(!ok) return;
+
+  if(step === 3){
+    const g = grammarScore();
+    el("sumTarget").textContent = el("target").value || "—";
+    el("sumTime").textContent = el("timeline").value || "—";
+    el("sumGrammar").textContent = `${g}/5`;
+    el("sumSpeak").textContent = el("speak").value || "—";
+  }
+
+  if(step < 4) showStep(step + 1);
+}
+function goBack(){
+  if(step > 1) showStep(step - 1);
+}
+function resetAll(){
+  ["name","phone","email","target","timeline","attempt","prevband",
+   "g1","g2","g3","g4","g5","speak","writing","translator"].forEach(id=>{
+    const node = el(id);
+    if(!node) return;
+    if(node.tagName === "SELECT") node.value = "";
+    else node.value = "";
+  });
+
+  ["err1","err2","err3","err4"].forEach(id=>{
+    el(id).style.display="none";
+    el(id).textContent="";
+  });
+
+  el("wc").textContent = "0";
+  el("wcStatus").textContent = "Too short";
+  el("wcStatus").className = "bad";
+
+  showStep(1);
+}
+
+/* =========================
    Submit to Supabase
 ========================= */
 async function submitTest(){
@@ -932,33 +912,25 @@ async function submitTest(){
   const score = autoStage();
   const copy = stageCopy(score.stage);
 
-  // result_id generation (human-readable)
   let resultId = "LZ-PT-" + Math.floor(100000 + Math.random() * 900000);
 
   const payload = {
     result_id: resultId,
-
     name: el("name").value.trim(),
     phone: el("phone").value.trim(),
     email: el("email").value.trim() || null,
-
     target_score: el("target").value,
     timeline: el("timeline").value,
-
     previous_attempt: el("attempt").value,
     previous_band: el("prevband").value || null,
-
     grammar_score: score.g,
     speaking_level: el("speak").value,
-
     writing_text: el("writing").value.trim(),
     used_translator: el("translator").value,
-
     auto_stage: score.stage
   };
 
   try{
-    // Insert into Supabase
     const { data, error } = await supabase
       .from("placement_attempts")
       .insert(payload)
@@ -966,9 +938,7 @@ async function submitTest(){
       .single();
 
     if(error){
-      // Rare collision on unique result_id → retry once
-      if(String(error.message || "").toLowerCase().includes("duplicate") ||
-         String(error.code || "") === "23505"){
+      if(String(error.code || "") === "23505"){
         resultId = "LZ-PT-" + Math.floor(100000 + Math.random() * 900000);
         payload.result_id = resultId;
 
@@ -1031,8 +1001,23 @@ Please review my writing and suggest final course.`;
   el("waBtn").setAttribute("href", waLink);
 }
 
-// init
-updateProgress();
+/* =========================
+   Wire buttons (ensures every button works)
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+  updateProgress();
+
+  el("next1").addEventListener("click", goNext);
+  el("back2").addEventListener("click", goBack);
+  el("next2").addEventListener("click", goNext);
+  el("back3").addEventListener("click", goBack);
+  el("next3").addEventListener("click", goNext);
+  el("back4").addEventListener("click", goBack);
+
+  el("resetBtn").addEventListener("click", resetAll);
+  el("againBtn").addEventListener("click", resetAll);
+  el("submitBtn").addEventListener("click", submitTest);
+});
 </script>
 </body>
 </html>

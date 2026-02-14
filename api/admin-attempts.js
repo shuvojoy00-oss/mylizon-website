@@ -10,10 +10,14 @@ function getToken(req){
 }
 
 module.exports = async (req, res) => {
-  const token = getToken(req);
-  if (!process.env.ADMIN_TOKEN || token !== process.env.ADMIN_TOKEN) {
-    return res.status(401).json({ ok:false, error:"Unauthorized" });
-  }
+ const headerToken =
+  req.headers["x-admin-token"] ||
+  (req.headers.authorization || "").replace("Bearer ", "");
+
+if (headerToken !== process.env.ADMIN_TOKEN) {
+  return res.status(401).json({ ok: false, error: "Unauthorized" });
+}
+}
 
   const pool = getPool();
 

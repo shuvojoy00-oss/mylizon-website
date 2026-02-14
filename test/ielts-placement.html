@@ -975,8 +975,11 @@ async function submitTest(){
     }
 
   }catch(err){
-    console.error(err);
-    showErr(4, "Submission failed. Check Supabase table name, RLS policies, and column names.");
+  console.error(err);
+  const msg = (err && (err.message || err.details || err.hint)) ? (err.message || err.details || err.hint) : String(err);
+  showErr(4, "Submission failed: " + msg);
+}
+
   }finally{
     btn.disabled = false;
     btn.textContent = "Submit & Get Result";

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>LizOn Admin — Placement Test</title>
+<style>
+  :root{
+    --bg:#0f2e26; --bg2:#153b30;
+    --card:rgba(255,255,255,.07);
+    --line:rgba(255,255,255,.14);
+    --txt:rgba(255,255,255,.92);
+    --muted:rgba(255,255,255,.70);
+    --accent:#b7ff8a; --warn:#ffdf6e; --danger:#ff8b8b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--txt);
+    background:radial-gradient(1200px 900px at 30% 10%, var(--bg2), var(--bg));}
+  .wrap{max-width:1200px;margin:0 auto;padding:18px 14px 40px;}
+  .top{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+  input,select,button,textarea{
+    border-radius:12px;border:1px solid var(--line);
+    background:rgba(0,0,0,.14);color:var(--txt);padding:10px 10px;outline:none;
+  }
+  button{cursor:pointer;font-weight:700}
+  .btn{background:rgba(183,255,138,.95);color:#0b1f19;border:none}
+  .ghost{background:transparent}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .muted{color:var(--muted);font-size:12px}
+  table{width:100%;border-collapse:separate;border-spacing:0;margin-top:12px;overflow:hidden;border-radius:14px}
+  th,td{border-bottom:1px solid var(--line);padding:10px 10px;font-size:12px;vertical-align:top}
+  th{position:sticky;top:0;background:rgba(0,0,0,.22);text-align:left}
+  tr:hover td{background:rgba(255,255,255,.03)}
+  .pill{padding:6px 10px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--muted)}
+  .danger{color:var(--danger)} .ok{color:var(--accent)} .warn{color:var(--warn)}
+  .small{font-size:11px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .wbox{max-width:360px;white-space:pre-wrap;line-height:1.35}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<!-- Hidden form for updates (no CORS) -->
+<form id="adminForm" method="POST" target="adminFrame" style="display:none;">
+  <input type="hidden" name="payload" id="adminPayload">
+</form>
+<iframe name="adminFrame" style="display:none;"></iframe>
+
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div style="font-size:18px;font-weight:800;">LizOn Admin — Placement Test</div>
+      <div class="muted">View • Update status • Notes • Final course • Delete rows</div>
+    </div>
+    <div class="row">
+      <span class="pill" id="kpiNew">New: 0</span>
+      <span class="pill" id="kpiTotal">Total: 0</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="pass" type="password" placeholder="Admin password" style="min-width:220px">
+      <button class="btn" onclick="loadData()">Login & Load</button>
+
+      <select id="statusFilter" onchange="applyFilter()" style="min-width:180px">
+        <option value="">All status</option>
+        <option>New</option>
+        <option>Contacted</option>
+        <option>Interested</option>
+        <option>Admitted</option>
+        <option>Not Interested</option>
+        <option>Follow Up</option>
+      </select>
+
+      <input id="search" placeholder="Search name / phone / result_id" style="min-width:260px" oninput="applyFilter()">
+      <button class="ghost" onclick="loadData()">Refresh</button>
+    </div>
+    <div class="muted" id="msg" style="margin-top:10px;"></div>
+
+    <div id="tableWrap"></div>
+  </div>
+</div>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMGAB79PeNKmCNueGMBc1wgYaEUqhWFRHVAawtTk-dJ4Sn8P1R089rIjmz2Z2M5z6y3Q/exec"; // <-- paste /exec URL
+
+  let RAW = [];      // full 2D array from sheet
+  let HEAD = [];     // header row
+  let ROWS = [];     // objects with rowIndex + fields
+  let PASS = "";
+
+  function colIndex(name){
+    return HEAD.indexOf(name);
+  }
+
+  async function loadData(){
+    PASS = document.getElementById("pass").value.trim();
+    if(!PASS){ alert("Enter admin password"); return; }
+
+    document.getElementById("msg").textContent = "Loading...";
+    const url = `${SCRIPT_URL}?action=list&password=${encodeURIComponent(PASS)}`;
+
+    const res = await fetch(url);
+    const out = await res.json().catch(()=>({ok:false}));
+
+    if(!out.ok){
+      document.getElementById("msg").innerHTML = `<span class="danger">Unauthorized or endpoint error.</span>`;
+      return;
+    }
+
+    RAW = out.data || [];
+    if(RAW.length < 2){
+      document.getElementById("msg").textContent = "No rows yet.";
+      return;
+    }
+
+    HEAD = RAW[0].map(x=>String(x||"").trim());
+    buildObjects();
+
+    document.getElementById("msg").innerHTML = `<span class="ok">Loaded.</span> Rows: ${ROWS.length}`;
+    updateKPIs();
+    applyFilter();
+  }
+
+  function buildObjects(){
+    ROWS = [];
+    for(let r=1; r<RAW.length; r++){
+      const rowArr = RAW[r];
+      const obj = { rowIndex: r+1 }; // Sheet row number
+      for(let c=0;c<HEAD.length;c++){
+        obj[HEAD[c]] = rowArr[c];
+      }
+      ROWS.push(obj);
+    }
+  }
+
+  function updateKPIs(){
+    const st = "counselor_status";
+    const newCount = ROWS.filter(x => String(x[st]||"") === "New").length;
+    document.getElementById("kpiNew").textContent = `New: ${newCount}`;
+    document.getElementById("kpiTotal").textContent = `Total: ${ROWS.length}`;
+  }
+
+  function applyFilter(){
+    const fStatus = document.getElementById("statusFilter").value.trim();
+    const q = document.getElementById("search").value.trim().toLowerCase();
+
+    let list = [...ROWS];
+
+    if(fStatus){
+      list = list.filter(x => String(x["counselor_status"]||"") === fStatus);
+    }
+
+    if(q){
+      list = list.filter(x => {
+        const name = String(x["full_name"]||"").toLowerCase();
+        const phone = String(x["phone"]||"").toLowerCase();
+        const rid = String(x["result_id"]||"").toLowerCase();
+        return name.includes(q) || phone.includes(q) || rid.includes(q);
+      });
+    }
+
+    renderTable(list);
+  }
+
+  function safe(v){ return (v===null || v===undefined) ? "" : String(v); }
+
+  function renderTable(list){
+    if(list.length===0){
+      document.getElementById("tableWrap").innerHTML = `<div class="muted" style="margin-top:12px;">No matching rows.</div>`;
+      return;
+    }
+
+    // Columns to show (you can adjust)
+    const cols = [
+      "timestamp","result_id","full_name","phone",
+      "target_score","timeline",
+      "grammar_score","speaking_level",
+      "stage_auto","recommended_path",
+      "counselor_status","final_course","counselor_note",
+      "writing_text"
+    ];
+
+    const html = `
+      <div style="overflow:auto;max-height:70vh;margin-top:10px;border-radius:14px;border:1px solid var(--line);">
+        <table>
+          <thead>
+            <tr>
+              <th class="small">Row</th>
+              ${cols.map(c=>`<th>${c}</th>`).join("")}
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list.map(x=>rowHTML(x, cols)).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+    document.getElementById("tableWrap").innerHTML = html;
+  }
+
+  function rowHTML(x, cols){
+    const row = x.rowIndex;
+
+    const status = safe(x["counselor_status"]||"New");
+    const note = safe(x["counselor_note"]||"");
+    const finalCourse = safe(x["final_course"]||"");
+
+    const statusSelect = `
+      <select id="st_${row}">
+        ${["New","Contacted","Interested","Admitted","Not Interested","Follow Up"]
+          .map(s=>`<option ${s===status?"selected":""}>${s}</option>`).join("")}
+      </select>
+    `;
+
+    const finalInput = `<input id="fc_${row}" value="${escapeHtml(finalCourse)}" placeholder="ZERO/HOPE/STEP-UP/DESPERATE" style="min-width:160px">`;
+    const noteArea = `<textarea id="note_${row}" placeholder="Note..." style="min-width:220px;min-height:60px">${escapeHtml(note)}</textarea>`;
+
+    const cells = cols.map(c=>{
+      if(c==="counselor_status") return `<td>${statusSelect}</td>`;
+      if(c==="final_course") return `<td>${finalInput}</td>`;
+      if(c==="counselor_note") return `<td>${noteArea}</td>`;
+      if(c==="writing_text") return `<td><div class="wbox">${escapeHtml(safe(x[c]))}</div></td>`;
+      return `<td>${escapeHtml(safe(x[c]))}</td>`;
+    }).join("");
+
+    return `
+      <tr>
+        <td class="small muted">${row}</td>
+        ${cells}
+        <td>
+          <div class="actions">
+            <button class="btn" onclick="saveRow(${row})">Save</button>
+            <button class="ghost" onclick="copyWA(${row})">Copy WA</button>
+            <button class="ghost danger" onclick="deleteRow(${row})">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }
+
+  function escapeHtml(str){
+    return String(str||"")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function submitAdminUpdate(payloadObj){
+    // CORS-free form post
+    const form = document.getElementById("adminForm");
+    const payload = document.getElementById("adminPayload");
+    form.action = SCRIPT_URL;
+    payload.value = JSON.stringify(payloadObj);
+    form.submit();
+  }
+
+  function saveRow(row){
+    const st = document.getElementById(`st_${row}`).value;
+    const fc = document.getElementById(`fc_${row}`).value.trim();
+    const note = document.getElementById(`note_${row}`).value.trim();
+
+    submitAdminUpdate({
+      mode:"update",
+      password: PASS,
+      row: row,
+      counselor_status: st,
+      final_course: fc,
+      counselor_note: note
+    });
+
+    document.getElementById("msg").innerHTML = `<span class="ok">Saved update for row ${row}.</span> (Refresh to see latest)`;
+  }
+
+  function deleteRow(row){
+    if(!confirm(`Delete row ${row}? This cannot be undone.`)) return;
+    fetch(`${SCRIPT_URL}?action=delete&row=${row}&password=${encodeURIComponent(PASS)}`)
+      .then(r=>r.json())
+      .then(out=>{
+        if(!out.ok){ alert("Delete failed"); return; }
+        document.getElementById("msg").innerHTML = `<span class="warn">Deleted row ${row}.</span>`;
+        loadData();
+      })
+      .catch(()=>alert("Delete error"));
+  }
+
+  function copyWA(row){
+    // Try to find whatsapp_prefill if it exists in sheet
+    const item = ROWS.find(x=>x.rowIndex===row);
+    const text = item ? (item["whatsapp_prefill"] || `Result ID: ${item["result_id"]}`) : `Row ${row}`;
+    navigator.clipboard.writeText(String(text)).then(()=>{
+      document.getElementById("msg").innerHTML = `<span class="ok">WhatsApp message copied.</span>`;
+    }).catch(()=>{
+      alert("Clipboard blocked by browser. Copy manually.");
+    });
+  }
+</script>
+
+</body>
+</html>

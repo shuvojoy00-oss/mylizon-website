@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>LizOn Education — IELTS Placement Test</title>
   <meta name="description" content="Quick IELTS placement test for Bangladeshi students. Auto stage suggestion + counselor confirmation."/>
+
+  <!-- Supabase JS (v2) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root{
       --bg: #0F2E26;
@@ -25,7 +29,6 @@
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
 
-    /* Light mode (optional) */
     [data-theme="light"]{
       --bg:#F4FBF8;
       --bg2:#E7F5EF;
@@ -49,14 +52,11 @@
     a{ color:inherit; text-decoration:none; }
     .wrap{ max-width:var(--max); margin:0 auto; padding:18px 16px 44px; }
 
-    /* Header */
     .topbar{
       display:flex; align-items:center; justify-content:space-between;
       gap:12px; padding:10px 6px 18px;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-    }
+    .brand{ display:flex; align-items:center; gap:10px; }
     .logo{
       width:42px; height:42px; border-radius:12px;
       background: linear-gradient(145deg, rgba(42,174,123,.22), rgba(243,201,105,.12));
@@ -65,13 +65,8 @@
       font-weight:800;
       letter-spacing:.5px;
     }
-    .brand h1{
-      font-size:14px; margin:0; line-height:1.2;
-      letter-spacing:.2px;
-    }
-    .brand p{
-      margin:2px 0 0; font-size:12px; color:var(--muted);
-    }
+    .brand h1{ font-size:14px; margin:0; line-height:1.2; letter-spacing:.2px; }
+    .brand p{ margin:2px 0 0; font-size:12px; color:var(--muted); }
 
     .actions{ display:flex; gap:10px; align-items:center; }
     .toggle{
@@ -86,7 +81,6 @@
     }
     [data-theme="light"] .toggle{ background:#FFFFFF; }
 
-    /* Hero */
     .hero{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       border:1px solid var(--line);
@@ -97,14 +91,8 @@
       grid-template-columns: 1.2fr .8fr;
       gap:14px;
     }
-    @media (max-width:860px){
-      .hero{ grid-template-columns:1fr; }
-    }
-    .hero h2{
-      margin:0;
-      font-size:20px;
-      letter-spacing:.2px;
-    }
+    @media (max-width:860px){ .hero{ grid-template-columns:1fr; } }
+    .hero h2{ margin:0; font-size:20px; letter-spacing:.2px; }
     .hero .sub{
       margin:8px 0 0;
       color:var(--muted);
@@ -128,9 +116,7 @@
       background:rgba(0,0,0,.06);
     }
     [data-theme="light"] .heroRight{ background:rgba(0,0,0,.03); }
-    .heroRight .k{
-      font-size:12px; color:var(--muted); margin:0 0 8px;
-    }
+    .heroRight .k{ font-size:12px; color:var(--muted); margin:0 0 8px; }
     .heroRight .v{
       font-family:var(--mono);
       font-weight:800;
@@ -143,7 +129,6 @@
       background:rgba(255,255,255,.05);
     }
 
-    /* Card */
     .card{
       margin-top:14px;
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
@@ -157,14 +142,9 @@
       display:flex; justify-content:space-between; gap:12px; align-items:center;
       border-bottom:1px solid var(--line);
     }
-    .cardHead h3{
-      margin:0; font-size:14px; letter-spacing:.2px;
-    }
-    .cardHead .small{
-      color:var(--muted); font-size:12px;
-    }
+    .cardHead h3{ margin:0; font-size:14px; letter-spacing:.2px; }
+    .cardHead .small{ color:var(--muted); font-size:12px; }
 
-    /* Progress */
     .progress{
       width:240px; height:10px; border-radius:999px;
       background: rgba(255,255,255,.10);
@@ -178,9 +158,7 @@
       background: linear-gradient(90deg, var(--accent), var(--warn));
       transition: width .25s ease;
     }
-    @media (max-width:640px){
-      .progress{ width:160px; }
-    }
+    @media (max-width:640px){ .progress{ width:160px; } }
 
     .cardBody{ padding:16px; }
 
@@ -203,9 +181,7 @@
       grid-template-columns: 1fr 1fr;
       gap:12px;
     }
-    @media (max-width:740px){
-      .grid{ grid-template-columns:1fr; }
-    }
+    @media (max-width:740px){ .grid{ grid-template-columns:1fr; } }
 
     label{
       display:block;
@@ -225,9 +201,7 @@
     }
     [data-theme="light"] input,
     [data-theme="light"] select,
-    [data-theme="light"] textarea{
-      background:#fff;
-    }
+    [data-theme="light"] textarea{ background:#fff; }
     textarea{ min-height:150px; resize:vertical; }
 
     .hint{
@@ -290,19 +264,11 @@
     }
     [data-theme="light"] .err{ color:#7d1c1c; }
 
-    /* Result */
-    .resultBox{
-      display:none;
-      padding:16px;
-    }
+    .resultBox{ display:none; padding:16px; }
     .resultTop{
       display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;
     }
-    .stage{
-      font-size:22px;
-      margin:0;
-      letter-spacing:.4px;
-    }
+    .stage{ font-size:22px; margin:0; letter-spacing:.4px; }
     .stageSub{
       margin:8px 0 0;
       color:var(--muted);
@@ -325,9 +291,7 @@
       grid-template-columns:repeat(4, 1fr);
       gap:10px;
     }
-    @media (max-width:860px){
-      .mini{ grid-template-columns:repeat(2, 1fr); }
-    }
+    @media (max-width:860px){ .mini{ grid-template-columns:repeat(2, 1fr); } }
     .miniCard{
       border:1px solid var(--line);
       background: rgba(0,0,0,.06);
@@ -338,7 +302,6 @@
     .miniCard .t{ font-size:12px; color:var(--muted); margin:0; }
     .miniCard .b{ margin:6px 0 0; font-weight:900; letter-spacing:.2px; }
 
-    /* Footer */
     .footer{
       margin-top:16px;
       color:var(--muted);
@@ -346,6 +309,9 @@
       line-height:1.5;
       text-align:center;
     }
+
+    /* Honeypot (anti-bot) */
+    .hp { position:absolute; left:-9999px; top:-9999px; opacity:0; pointer-events:none; }
   </style>
 </head>
 
@@ -400,7 +366,7 @@
       </div>
 
       <div class="cardBody">
-        <!-- Step containers -->
+        <!-- Step 1 -->
         <div id="step1" class="step">
           <div class="stepTitle">
             <h4>Basic Info</h4>
@@ -472,6 +438,12 @@
             </div>
           </div>
 
+          <!-- Honeypot -->
+          <div class="hp">
+            <label for="website">Leave this empty</label>
+            <input id="website" type="text" autocomplete="off" />
+          </div>
+
           <div class="err" id="err1"></div>
 
           <div class="btnRow">
@@ -482,6 +454,7 @@
           </div>
         </div>
 
+        <!-- Step 2 -->
         <div id="step2" class="step" style="display:none;">
           <div class="stepTitle">
             <h4>Grammar Check (5 Questions)</h4>
@@ -569,6 +542,7 @@
           </div>
         </div>
 
+        <!-- Step 3 -->
         <div id="step3" class="step" style="display:none;">
           <div class="stepTitle">
             <h4>Writing Sample (Most Important)</h4>
@@ -605,6 +579,7 @@
           </div>
         </div>
 
+        <!-- Step 4 -->
         <div id="step4" class="step" style="display:none;">
           <div class="stepTitle">
             <h4>Submit</h4>
@@ -693,24 +668,30 @@
     </section>
 
     <div class="footer">
-      © LizOn Education • MyLizOn.com • IELTS ZERO ladder inside • No shortcuts, only structure.
+      © LizOn Education • MyLizOn.com • No shortcuts, only structure.
     </div>
   </div>
 
 <script>
 /* =========================
-   CONFIG — change these 3
+   CONFIG (Supabase connected)
 ========================= */
-   const SUPABASE_URL = "https://uujglzkjfssmvpcsdoec.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_WVSzGmKKXz3kjMk6MVE7Cw_6Fj08UbA"; // MUST be full key
-    const WA_NUMBER = "8801611611139"; // no +
-const SUCCESS_REDIRECT = ""; // optional: "/thank-you.html" or leave blank
+const SUPABASE_URL = "https://ltsdtgdatgiriyfqfrtc.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
+
+// Replace with your official WhatsApp number for admissions (no +, no spaces)
+const WHATSAPP_NUMBER = "8801XXXXXXXXX";
+
+// Optional redirect after success (leave blank to stay on result screen)
+const SUCCESS_REDIRECT = "";
+
+// Supabase client
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* =========================
    State
 ========================= */
 let step = 1;
-
 const el = (id)=>document.getElementById(id);
 
 function setTheme(){
@@ -725,7 +706,6 @@ function updateProgress(){
   el("bar").style.width = `${pct}%`;
   el("stepMeta").textContent = `Step ${step} of 4`;
 }
-
 function showStep(n){
   for(let i=1;i<=4;i++){
     el("step"+i).style.display = (i===n) ? "block" : "none";
@@ -734,13 +714,11 @@ function showStep(n){
   step = n;
   updateProgress();
 }
-
 function nextStep(){
   const ok = validateStep(step);
   if(!ok) return;
 
   if(step === 3){
-    // keep summaries ready
     const g = grammarScore();
     el("sumTarget").textContent = el("target").value || "—";
     el("sumTime").textContent = el("timeline").value || "—";
@@ -753,29 +731,24 @@ function nextStep(){
 function prevStep(){
   if(step > 1) showStep(step-1);
 }
-
 function resetAll(){
-  // Reset inputs
   ["name","phone","email","target","timeline","attempt","prevband",
-   "g1","g2","g3","g4","g5","speak","writing","translator"].forEach(id=>{
+   "g1","g2","g3","g4","g5","speak","writing","translator","website"].forEach(id=>{
     const node = el(id);
     if(!node) return;
     if(node.tagName === "SELECT") node.value = "";
     else node.value = "";
   });
 
-  // Reset errors
   ["err1","err2","err3","err4"].forEach(id=>{
     el(id).style.display="none";
     el(id).textContent="";
   });
 
-  // Reset counter
   el("wc").textContent = "0";
   el("wcStatus").textContent = "Too short";
   el("wcStatus").className = "bad";
 
-  // Reset UI
   showStep(1);
 }
 
@@ -792,6 +765,12 @@ function clearErr(stepNo){
 
 function validateStep(n){
   clearErr(n);
+
+  // Honeypot: bots fill it, humans won't
+  if(el("website") && el("website").value.trim()){
+    // silently block bots (no error, no hint)
+    return false;
+  }
 
   if(n===1){
     const name = el("name").value.trim();
@@ -829,9 +808,9 @@ function validateStep(n){
   }
 
   if(n===4){
-    // Everything should already be validated, but keep safety:
-    if(APPS_SCRIPT_URL.includes("PASTE_YOUR_APPS_SCRIPT")) return showErr(4,"Apps Script URL is not configured in the code."), false;
-    if(!WHATSAPP_NUMBER || WHATSAPP_NUMBER.includes("X")) return showErr(4,"WhatsApp number is not configured in the code."), false;
+    if(!WHATSAPP_NUMBER || WHATSAPP_NUMBER.includes("X")) {
+      return showErr(4,"Please set WHATSAPP_NUMBER in the code."), false;
+    }
     return true;
   }
 
@@ -846,7 +825,6 @@ function countWords(text){
   if(!clean) return 0;
   return clean.split(" ").filter(Boolean).length;
 }
-
 el("writing").addEventListener("input", ()=>{
   const wc = countWords(el("writing").value);
   el("wc").textContent = wc;
@@ -868,7 +846,6 @@ el("writing").addEventListener("input", ()=>{
    Scoring Logic (Hybrid)
 ========================= */
 function grammarScore(){
-  // Each correct option is stored as value="1"
   const ids = ["g1","g2","g3","g4","g5"];
   return ids.reduce((sum,id)=> sum + (parseInt(el(id).value || "0",10) || 0), 0);
 }
@@ -877,17 +854,14 @@ function urgencyScore(timeline){
   if(timeline === "2–4 weeks") return 3;
   if(timeline === "1–2 months") return 2;
   if(timeline === "2–3 months") return 1;
-  return 0; // 3+ months, Not fixed
+  return 0;
 }
-
 function targetPressureScore(target){
   if(target === "7.5+" || target === "7.0") return 2;
   if(target === "6.5") return 1;
   return 0;
 }
-
 function normalizeSpeaking(s){
-  // "1 (very weak)" -> 1, "5 (confident)" -> 5
   const m = (s||"").match(/^(\d)/);
   return m ? parseInt(m[1],10) : 0;
 }
@@ -903,14 +877,12 @@ function autoStage(){
   const press = targetPressureScore(t);
   const sp = normalizeSpeaking(el("speak").value);
 
-  // Base stage from grammar/writing honesty
   let stage = "HOPE";
 
   if(g <= 2 || usedTranslator === "No") stage = "ZERO";
   else if(g === 3) stage = "HOPE";
   else if(g >= 4) stage = "STEP-UP";
 
-  // Override to DESPERATE for exam-knocking pressure
   const hasAttempt = attempt.startsWith("Yes");
   if(urg >= 2 && (press >= 1 || hasAttempt)) stage = "DESPERATE";
 
@@ -947,7 +919,7 @@ function stageCopy(stage){
 }
 
 /* =========================
-   Submit
+   Submit to Supabase
 ========================= */
 async function submitTest(){
   clearErr(4);
@@ -960,45 +932,68 @@ async function submitTest(){
   const score = autoStage();
   const copy = stageCopy(score.stage);
 
+  // result_id generation (human-readable)
+  let resultId = "LZ-PT-" + Math.floor(100000 + Math.random() * 900000);
+
   const payload = {
+    result_id: resultId,
+
     name: el("name").value.trim(),
     phone: el("phone").value.trim(),
-    email: el("email").value.trim(),
-    targetScore: el("target").value,
+    email: el("email").value.trim() || null,
+
+    target_score: el("target").value,
     timeline: el("timeline").value,
-    previousAttempt: el("attempt").value,
-    previousBand: el("prevband").value,
-    grammarScore: score.g,
-    speakingLevel: el("speak").value,
-    writingText: el("writing").value.trim(),
-    usedTranslator: el("translator").value,
-    autoStage: score.stage
+
+    previous_attempt: el("attempt").value,
+    previous_band: el("prevband").value || null,
+
+    grammar_score: score.g,
+    speaking_level: el("speak").value,
+
+    writing_text: el("writing").value.trim(),
+    used_translator: el("translator").value,
+
+    auto_stage: score.stage
   };
 
   try{
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type":"application/json" },
-      body: JSON.stringify(payload),
-      mode: "cors"
-    });
+    // Insert into Supabase
+    const { data, error } = await supabase
+      .from("placement_attempts")
+      .insert(payload)
+      .select("result_id")
+      .single();
 
-    const data = await res.json().catch(()=>null);
-    if(!res.ok || !data || data.status !== "success"){
-      throw new Error("Submission failed.");
+    if(error){
+      // Rare collision on unique result_id → retry once
+      if(String(error.message || "").toLowerCase().includes("duplicate") ||
+         String(error.code || "") === "23505"){
+        resultId = "LZ-PT-" + Math.floor(100000 + Math.random() * 900000);
+        payload.result_id = resultId;
+
+        const retry = await supabase
+          .from("placement_attempts")
+          .insert(payload)
+          .select("result_id")
+          .single();
+
+        if(retry.error) throw retry.error;
+        renderResult(retry.data.result_id, score.stage, copy, payload);
+      } else {
+        throw error;
+      }
+    } else {
+      renderResult(data.result_id, score.stage, copy, payload);
     }
 
-    // Show result
-    renderResult(data.resultId, score.stage, copy, payload);
-
-    // Optional redirect (if you want a thank you page)
     if(SUCCESS_REDIRECT){
-      // Keep result visible for a moment then redirect
       setTimeout(()=>{ window.location.href = SUCCESS_REDIRECT; }, 1200);
     }
 
   }catch(err){
-    showErr(4, "Could not submit right now. Please try again or check server configuration.");
+    console.error(err);
+    showErr(4, "Submission failed. Check Supabase table name, RLS policies, and column names.");
   }finally{
     btn.disabled = false;
     btn.textContent = "Submit & Get Result";
@@ -1006,7 +1001,6 @@ async function submitTest(){
 }
 
 function renderResult(resultId, stage, copy, payload){
-  // Hide steps
   for(let i=1;i<=4;i++) el("step"+i).style.display = "none";
   el("bar").style.width = "100%";
   el("stepMeta").textContent = "Result generated";
@@ -1018,18 +1012,17 @@ function renderResult(resultId, stage, copy, payload){
   el("rid").textContent = "ResultID: " + resultId;
 
   el("path").textContent = copy.path;
-  el("rTarget").textContent = payload.targetScore || "—";
+  el("rTarget").textContent = payload.target_score || "—";
   el("rTime").textContent = payload.timeline || "—";
-  el("rGrammar").textContent = `${payload.grammarScore}/5`;
+  el("rGrammar").textContent = `${payload.grammar_score}/5`;
 
-  // WhatsApp message
   const msg =
 `Hi LizOn,
 Ami placement test diyechi.
 Result: ${stage}
-Target: ${payload.targetScore}
+Target: ${payload.target_score}
 Exam: ${payload.timeline}
-Grammar: ${payload.grammarScore}/5
+Grammar: ${payload.grammar_score}/5
 Result ID: ${resultId}
 
 Please review my writing and suggest final course.`;

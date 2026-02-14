@@ -97,7 +97,7 @@
       font-weight:900;
     }
 
-    /* Modal (HARDENED) */
+    /* Modal */
     .modalBack{
       position:fixed;
       inset:0;
@@ -152,19 +152,19 @@
     <!-- LOGIN VIEW -->
     <div class="card" id="loginView">
       <h1>Staff Login</h1>
-      <div class="grid2">
-        <div>
-          <h2>Email</h2>
-          <input id="email" type="email" placeholder="Email" autocomplete="username" />
-        </div>
-        <div>
-          <h2>Password</h2>
-          <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
-        </div>
+
+      <div style="max-width:520px">
+        <h2>Password</h2>
+        <input id="password" type="password" placeholder="Admin password" autocomplete="current-password" />
       </div>
+
       <div class="row" style="margin-top:12px">
         <button class="btn" id="loginBtn" type="button">Login</button>
         <span class="msg" id="loginMsg"></span>
+      </div>
+
+      <div class="msg">
+        Security note: this admin talks to Neon through server API (safe). Never store DB passwords in HTML.
       </div>
     </div>
 
@@ -179,7 +179,7 @@
       </div>
 
       <div class="row" style="gap:12px;margin-top:10px">
-        <span class="badge">Table: public.placement_attempts</span>
+        <span class="badge">Table: public.ielts_placement_attempts</span>
         <span class="badge" id="count">Loaded: 0</span>
       </div>
 
@@ -205,7 +205,7 @@
     </div>
   </div>
 
-  <!-- EDIT MODAL (HIDDEN BY DEFAULT) -->
+  <!-- EDIT MODAL -->
   <div class="modalBack hide" id="editBack" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-label="Edit attempt">
       <div class="modalTop">
@@ -282,21 +282,7 @@
     </div>
   </div>
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-
   <script>
- const SUPABASE_URL = "https://ltsdtgdatgiriyfqfrtc.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
-
-    if(!window.supabase){
-      alert("Supabase library not loaded. Check CDN link.");
-    }
-
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: { persistSession:true, autoRefreshToken:true, detectSessionInUrl:true, storage: window.localStorage }
-    });
-
     // UI refs
     const who = document.getElementById("who");
     const logoutBtn = document.getElementById("logoutBtn");
@@ -325,21 +311,30 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
     const e_status = document.getElementById("e_status");
 
     let currentEditId = null;
+    let rowsCache = new Map(); // id -> row
 
     function fmt(ts){
       try { return new Date(ts).toLocaleString(); } catch(e){ return ts; }
     }
     function safe(v){ return (v===null||v===undefined||v==="") ? "—" : v; }
 
+    function getToken(){
+      return localStorage.getItem("ADMIN_TOKEN") || "";
+    }
+    function setToken(t){
+      localStorage.setItem("ADMIN_TOKEN", t);
+    }
+    function clearToken(){
+      localStorage.removeItem("ADMIN_TOKEN");
+    }
+
     function openModal(){
       editBack.classList.remove("hide");
       editBack.setAttribute("aria-hidden","false");
       editMsg.textContent = "";
       editMsg.classList.remove("err");
-      // focus safety
       setTimeout(()=> e_full_name?.focus(), 50);
     }
-
     function closeModal(){
       editBack.classList.add("hide");
       editBack.setAttribute("aria-hidden","true");
@@ -348,135 +343,158 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
       editMsg.textContent = "";
       editMsg.classList.remove("err");
     }
-
-    // HARD CLOSE always works
     closeEdit.addEventListener("click", closeModal);
     cancelEdit.addEventListener("click", closeModal);
+    editBack.addEventListener("click", (e)=>{ if(e.target === editBack) closeModal(); });
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && !editBack.classList.contains("hide")) closeModal(); });
 
-    // Click outside closes
-    editBack.addEventListener("click", (e)=>{
-      if(e.target === editBack) closeModal();
-    });
+    async function adminLogin(password){
+      const r = await fetch("/api/admin-login", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ password })
+      });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "Login failed");
+      setToken(j.token);
+      return j.token;
+    }
 
-    // ESC closes
-    document.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape" && !editBack.classList.contains("hide")) closeModal();
-    });
+    async function apiGetAttempts(){
+      const r = await fetch("/api/admin-attempts", {
+        method:"GET",
+        headers:{ "x-admin-token": getToken() }
+      });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "Load failed");
+      return j.rows || [];
+    }
 
-    async function showUI(){
-      // Never show modal on load
+    async function apiUpdateAttempt(payload){
+      const r = await fetch("/api/admin-attempts", {
+        method:"PATCH",
+        headers:{
+          "Content-Type":"application/json",
+          "x-admin-token": getToken()
+        },
+        body: JSON.stringify(payload)
+      });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "Update failed");
+      return j;
+    }
+
+    async function apiDeleteAttempt(id){
+      const r = await fetch("/api/admin-attempts", {
+        method:"DELETE",
+        headers:{
+          "Content-Type":"application/json",
+          "x-admin-token": getToken()
+        },
+        body: JSON.stringify({ id })
+      });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "Delete failed");
+      return j;
+    }
+
+    function showLoggedOut(){
+      who.textContent = "Not logged in";
+      logoutBtn.classList.add("hide");
+      loginView.classList.remove("hide");
+      dashView.classList.add("hide");
+      dashErr.textContent = "";
+      loginMsg.textContent = "";
       closeModal();
+    }
 
-      const { data } = await supabaseClient.auth.getSession();
-      const session = data.session;
-
-      if(session){
-        who.textContent = session.user.email;
-        logoutBtn.classList.remove("hide");
-        loginView.classList.add("hide");
-        dashView.classList.remove("hide");
-        await loadAttempts();
-      }else{
-        who.textContent = "Not logged in";
-        logoutBtn.classList.add("hide");
-        loginView.classList.remove("hide");
-        dashView.classList.add("hide");
-      }
+    async function showLoggedIn(){
+      who.textContent = "Admin";
+      logoutBtn.classList.remove("hide");
+      loginView.classList.add("hide");
+      dashView.classList.remove("hide");
+      await loadAttempts();
     }
 
     async function loadAttempts(){
       dashErr.textContent = "";
       tbody.innerHTML = "";
       count.textContent = "Loading...";
+      rowsCache.clear();
 
-      const { data, error } = await supabaseClient
-        .from("placement_attempts")
-        .select("id, created_at, full_name, phone, target_score, exam_timeline, stage, status")
-        .order("created_at", { ascending: false })
-        .limit(200);
+      try{
+        const data = await apiGetAttempts();
+        count.textContent = "Loaded: " + (data.length || 0);
 
-      if(error){
-        dashErr.textContent = "Cannot load table: " + error.message;
-        count.textContent = "Loaded: 0";
-        return;
+        if(!data || data.length===0){
+          tbody.innerHTML = `<tr><td colspan="8">No attempts yet.</td></tr>`;
+          return;
+        }
+
+        data.forEach(r => rowsCache.set(String(r.id), r));
+
+        tbody.innerHTML = data.map(r => `
+          <tr>
+            <td>${fmt(r.created_at)}</td>
+            <td>${safe(r.full_name)}</td>
+            <td>${safe(r.phone)}</td>
+            <td>${safe(r.target_score)}</td>
+            <td>${safe(r.exam_timeline)}</td>
+            <td>${safe(r.stage)}</td>
+            <td>${safe(r.status)}</td>
+            <td>
+              <div class="actions">
+                <button class="editBtn" type="button" data-id="${r.id}">Edit</button>
+                <button class="delBtn" type="button" data-id="${r.id}">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `).join("");
+
+        tbody.querySelectorAll(".delBtn").forEach(btn=>{
+          btn.addEventListener("click", ()=> deleteAttempt(btn.dataset.id));
+        });
+        tbody.querySelectorAll(".editBtn").forEach(btn=>{
+          btn.addEventListener("click", ()=> openEdit(btn.dataset.id));
+        });
+
+      }catch(err){
+        const msg = String(err?.message || err);
+        dashErr.textContent = msg;
+
+        // if unauthorized, force logout view
+        if (msg.toLowerCase().includes("unauthorized")) {
+          clearToken();
+          showLoggedOut();
+        } else {
+          count.textContent = "Loaded: 0";
+        }
       }
-
-      count.textContent = "Loaded: " + (data?.length || 0);
-
-      if(!data || data.length===0){
-        tbody.innerHTML = `<tr><td colspan="8">No attempts yet.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = data.map(r => `
-        <tr>
-          <td>${fmt(r.created_at)}</td>
-          <td>${safe(r.full_name)}</td>
-          <td>${safe(r.phone)}</td>
-          <td>${safe(r.target_score)}</td>
-          <td>${safe(r.exam_timeline)}</td>
-          <td>${safe(r.stage)}</td>
-          <td>${safe(r.status)}</td>
-          <td>
-            <div class="actions">
-              <button class="editBtn" type="button" data-id="${r.id}">Edit</button>
-              <button class="delBtn" type="button" data-id="${r.id}">Delete</button>
-            </div>
-          </td>
-        </tr>
-      `).join("");
-
-      // bind actions
-      tbody.querySelectorAll(".delBtn").forEach(btn=>{
-        btn.addEventListener("click", ()=> deleteAttempt(btn.dataset.id));
-      });
-      tbody.querySelectorAll(".editBtn").forEach(btn=>{
-        btn.addEventListener("click", ()=> openEdit(btn.dataset.id));
-      });
     }
 
     async function deleteAttempt(id){
       const ok = confirm("Delete this attempt permanently? This cannot be undone.");
       if(!ok) return;
 
-      const { error } = await supabaseClient
-        .from("placement_attempts")
-        .delete()
-        .eq("id", id);
-
-      if(error){
-        alert("Delete failed: " + error.message);
-        return;
+      try{
+        await apiDeleteAttempt(Number(id));
+        await loadAttempts();
+      }catch(err){
+        alert("Delete failed: " + (err?.message || err));
       }
-      await loadAttempts();
     }
 
-    async function openEdit(id){
-      const { data } = await supabaseClient.auth.getSession();
-      if(!data.session){
-        alert("Please login first.");
+    function openEdit(id){
+      const row = rowsCache.get(String(id));
+      if(!row){
+        alert("Row not found. Refresh and try again.");
         return;
       }
 
-      currentEditId = id;
+      currentEditId = Number(id);
       openModal();
-      editMeta.textContent = "Loading attempt...";
-
-      const { data: row, error } = await supabaseClient
-        .from("placement_attempts")
-        .select("id, created_at, full_name, phone, target_score, exam_timeline, stage, status")
-        .eq("id", id)
-        .single();
-
-      if(error){
-        editMsg.textContent = "Cannot open: " + error.message;
-        editMsg.classList.add("err");
-        editMeta.textContent = "";
-        return;
-      }
 
       editMeta.textContent = `ID: ${row.id} • Created: ${fmt(row.created_at)}`;
-
       e_full_name.value = row.full_name || "";
       e_phone.value = row.phone || "";
       e_target.value = row.target_score || "";
@@ -495,6 +513,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
       editMsg.style.color = "var(--muted)";
 
       const updates = {
+        id: currentEditId,
         full_name: e_full_name.value.trim() || null,
         phone: e_phone.value.trim() || null,
         target_score: e_target.value || null,
@@ -503,25 +522,19 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
         status: e_status.value || null
       };
 
-      const { error } = await supabaseClient
-        .from("placement_attempts")
-        .update(updates)
-        .eq("id", currentEditId);
-
-      saveEdit.disabled = false;
-      saveEdit.textContent = "Save Changes";
-
-      if(error){
-        editMsg.textContent = "Update failed: " + error.message;
+      try{
+        await apiUpdateAttempt(updates);
+        editMsg.textContent = "Saved ✓";
+        editMsg.style.color = "rgba(110,231,183,.95)";
+        await loadAttempts();
+        setTimeout(closeModal, 250);
+      }catch(err){
+        editMsg.textContent = "Update failed: " + (err?.message || err);
         editMsg.classList.add("err");
-        return;
+      }finally{
+        saveEdit.disabled = false;
+        saveEdit.textContent = "Save Changes";
       }
-
-      editMsg.textContent = "Saved ✓";
-      editMsg.style.color = "rgba(110,231,183,.95)";
-
-      await loadAttempts();
-      setTimeout(closeModal, 250);
     }
 
     // Events
@@ -529,11 +542,10 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
       loginMsg.textContent = "";
       loginMsg.classList.remove("err");
 
-      const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
-      if(!email || !password){
-        loginMsg.textContent = "Enter email + password.";
+      if(!password){
+        loginMsg.textContent = "Enter admin password.";
         loginMsg.classList.add("err");
         return;
       }
@@ -541,37 +553,31 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
       loginBtn.disabled = true;
       loginBtn.textContent = "Logging in...";
 
-      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-
-      loginBtn.disabled = false;
-      loginBtn.textContent = "Login";
-
-      if(error){
-        loginMsg.textContent = error.message;
+      try{
+        await adminLogin(password);
+        loginMsg.textContent = "Login successful!";
+        await showLoggedIn();
+      }catch(err){
+        loginMsg.textContent = err?.message || String(err);
         loginMsg.classList.add("err");
-        return;
+      }finally{
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Login";
       }
-
-      loginMsg.textContent = "Login successful!";
-      await showUI();
     });
 
-    logoutBtn.addEventListener("click", async ()=>{
-      await supabaseClient.auth.signOut();
-      await showUI();
+    logoutBtn.addEventListener("click", ()=>{
+      clearToken();
+      showLoggedOut();
     });
 
     refreshBtn.addEventListener("click", loadAttempts);
     saveEdit.addEventListener("click", saveEditChanges);
 
-    // keep UI synced if session changes
-    supabaseClient.auth.onAuthStateChange((_event, _session) => {
-      showUI();
-    });
-
     // On load
     closeModal();
-    showUI();
+    if (getToken()) showLoggedIn().catch(()=> showLoggedOut());
+    else showLoggedOut();
   </script>
 </body>
 </html>

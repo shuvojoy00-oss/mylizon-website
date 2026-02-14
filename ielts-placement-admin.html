@@ -242,20 +242,32 @@
     loginMsg.textContent = "";
   }
 
-  async function apiFetch(url, opts={}){
-    const headers = Object.assign({}, opts.headers || {});
-    const t = token();
-    if (t) headers["x-admin-token"] = t;
-    if (opts.body && !headers["content-type"]) headers["content-type"] = "application/json";
-    const res = await fetch(url, Object.assign({}, opts, { headers }));
-    let data = null;
-    try { data = await res.json(); } catch(e) {}
-    if (!res.ok) {
-      const err = (data && (data.error || data.message)) || ("HTTP " + res.status);
-      throw new Error(err);
-    }
-    return data;
+async function apiFetch(url, opts={}){
+  const headers = Object.assign({}, opts.headers || {});
+  const t = token();
+
+  if (t) {
+    headers["x-admin-token"] = t; 
+    headers["authorization"] = "Bearer " + t;
   }
+
+  if (opts.body && !headers["content-type"]) {
+    headers["content-type"] = "application/json";
+  }
+
+  const res = await fetch(url, Object.assign({}, opts, { headers }));
+
+  let data = null;
+  try { data = await res.json(); } catch(e) {}
+
+  if (!res.ok) {
+    const err = (data && (data.error || data.message)) || ("HTTP " + res.status);
+    throw new Error(err);
+  }
+
+  return data;
+}
+
 
   function fmtTime(iso){
     try{

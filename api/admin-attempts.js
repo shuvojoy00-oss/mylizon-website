@@ -1,12 +1,19 @@
 const { getPool } = require("./_db");
 
-function deny(res) {
-  return res.status(401).json({ ok: false, error: "Unauthorized" });
+function getToken(req){
+  const h = req.headers || {};
+  const x = h["x-admin-token"];
+  const auth = h["authorization"];
+  if (x) return x;
+  if (auth && auth.toLowerCase().startsWith("bearer ")) return auth.slice(7);
+  return null;
 }
 
 module.exports = async (req, res) => {
-  const token = req.headers["x-admin-token"];
-  if (!process.env.ADMIN_TOKEN || token !== process.env.ADMIN_TOKEN) return deny(res);
+  const token = getToken(req);
+  if (!process.env.ADMIN_TOKEN || token !== process.env.ADMIN_TOKEN) {
+    return res.status(401).json({ ok:false, error:"Unauthorized" });
+  }
 
   const pool = getPool();
 
@@ -18,46 +25,33 @@ module.exports = async (req, res) => {
         order by created_at desc
         limit 300;
       `);
-      return res.json({ ok: true, rows: r.rows });
+      return res.json({ ok:true, rows:r.rows });
     }
 
     if (req.method === "PATCH") {
       const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
       const id = Number(body?.id);
-      if (!id) return res.status(400).json({ ok: false, error: "Missing id" });
+      if (!id) return res.status(400).json({ ok:false, error:"Missing id" });
 
       const r = await pool.query(
-        `
-        update public.ielts_placement_attempts
-        set full_name=$1, phone=$2, target_score=$3, exam_timeline=$4, stage=$5, status=$6
-        where id=$7
-        returning id;
-        `,
-        [
-          body.full_name || null,
-          body.phone || null,
-          body.target_score || null,
-          body.exam_timeline || null,
-          body.stage || null,
-          body.status || null,
-          id
-        ]
+        `update public.ielts_placement_attempts
+         set full_name=$1, phone=$2, target_score=$3, exam_timeline=$4, stage=$5, status=$6
+         where id=$7 returning id;`,
+        [body.full_name||null, body.phone||null, body.target_score||null, body.exam_timeline||null, body.stage||null, body.status||null, id]
       );
-
-      return res.json({ ok: true, id: r.rows[0]?.id || id });
+      return res.json({ ok:true, id:r.rows[0]?.id || id });
     }
 
     if (req.method === "DELETE") {
       const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
       const id = Number(body?.id);
-      if (!id) return res.status(400).json({ ok: false, error: "Missing id" });
-
+      if (!id) return res.status(400).json({ ok:false, error:"Missing id" });
       await pool.query(`delete from public.ielts_placement_attempts where id=$1`, [id]);
-      return res.json({ ok: true });
+      return res.json({ ok:true });
     }
 
-    return res.status(405).json({ ok: false, error: "Method not allowed" });
+    return res.status(405).json({ ok:false, error:"Method not allowed" });
   } catch (e) {
-    return res.status(500).json({ ok: false, error: String(e?.message || e) });
+    return res.status(500).json({ ok:false, error:String(e?.message || e) });
   }
 };

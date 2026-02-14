@@ -5,422 +5,331 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>LizOn Admin — Placement Attempts</title>
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root{
-      --bg:#0F2E26; --bg2:#153B30; --card:#12362D;
+      --bg:#0F2E26; --bg2:#153B30;
+      --card:rgba(255,255,255,.06);
       --text:#EAF4F1; --muted:#A9C1BB; --line:rgba(255,255,255,.10);
       --accent:#2AAE7B; --danger:#FF6B6B; --warn:#F3C969;
-      --shadow:0 12px 30px rgba(0,0,0,.25); --radius:18px; --max:1100px;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --shadow:0 12px 30px rgba(0,0,0,.25);
+      --r:18px; --max:1100px;
+      --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
     }
-    body{ margin:0; font-family:var(--sans); color:var(--text);
-      background: radial-gradient(1200px 700px at 20% 10%, var(--bg2), var(--bg));
-      min-height:100vh;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--sans); color:var(--text);
+      background:radial-gradient(1200px 700px at 20% 10%, var(--bg2), var(--bg));
+      min-height:100vh; color-scheme:dark;
     }
-    .wrap{ max-width:var(--max); margin:0 auto; padding:18px 16px 40px; }
-    .top{ display:flex; justify-content:space-between; align-items:center; gap:12px; }
-    .brand{ display:flex; align-items:center; gap:10px; }
-    .logo{ width:42px; height:42px; border-radius:12px;
-      background: linear-gradient(145deg, rgba(42,174,123,.22), rgba(243,201,105,.12));
-      border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
-      font-weight:900;
+    .wrap{max-width:var(--max); margin:0 auto; padding:18px 16px 44px;}
+    .top{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:8px 0 14px;}
+    .brand{display:flex; align-items:center; gap:10px;}
+    .logo{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:900}
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow);}
+    .pad{padding:14px}
+    .row{display:flex; gap:12px; flex-wrap:wrap}
+    input,select,textarea{
+      width:100%; padding:12px; border-radius:14px; border:1px solid var(--line);
+      background:rgba(0,0,0,.18); color:var(--text); outline:none; font-size:14px;
     }
-    .card{ margin-top:14px; border:1px solid var(--line); border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow:var(--shadow); overflow:hidden;
-    }
-    .head{ padding:14px 16px; display:flex; justify-content:space-between; align-items:center; gap:12px;
-      border-bottom:1px solid var(--line);
-    }
-    .head h2{ margin:0; font-size:15px; }
-    .muted{ color:var(--muted); font-size:12px; }
-    .body{ padding:16px; }
-    input, select, textarea{
-      width:100%; padding:12px 12px; border-radius:14px;
-      border:1px solid var(--line); background: rgba(255,255,255,.06);
-      color:var(--text); outline:none; font-size:14px;
-    }
-    .row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    @media(max-width:860px){ .row{ grid-template-columns:1fr; } }
-    .btn{ cursor:pointer; border:none; border-radius:14px; padding:12px 14px; font-weight:900; }
-    .primary{ background:linear-gradient(135deg, var(--accent), #1B8B62); color:white; }
-    .ghost{ background:rgba(255,255,255,.06); color:var(--text); border:1px solid var(--line); }
-    .danger{ background: rgba(255,107,107,.12); color: var(--danger); border:1px solid rgba(255,107,107,.22); }
-    .bar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
-    table{ width:100%; border-collapse:separate; border-spacing:0; margin-top:12px; overflow:hidden; border-radius:14px; border:1px solid var(--line); }
-    th, td{ text-align:left; padding:10px 10px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:top; }
-    th{ font-size:12px; color:var(--muted); background:rgba(0,0,0,.10); }
-    tr:last-child td{ border-bottom:none; }
-    .pill{ font-family:var(--mono); font-size:11px; padding:6px 10px; border-radius:999px; border:1px solid var(--line); display:inline-block; }
-    .smallBtn{ padding:8px 10px; border-radius:12px; font-size:12px; font-weight:900; }
-    .err{ margin-top:10px; padding:10px 12px; border-radius:14px; border:1px solid rgba(255,107,107,.25); background: rgba(255,107,107,.12); color:#ffd1d1; display:none; }
-    .ok{ margin-top:10px; padding:10px 12px; border-radius:14px; border:1px solid rgba(42,174,123,.25); background: rgba(42,174,123,.12); color:#d9ffef; display:none; }
-    .modalWrap{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; padding:16px; }
-    .modal{ width:min(760px, 96vw); background:#0F2A23; border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); overflow:hidden; }
-    .modalHead{ padding:14px 16px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:10px; }
-    .modalBody{ padding:16px; }
-    .modalHead h3{ margin:0; font-size:14px; }
-    .x{ background:transparent; color:var(--muted); border:1px solid var(--line); border-radius:12px; padding:8px 10px; cursor:pointer; }
+    textarea{min-height:90px; resize:vertical}
+    label{font-size:12px; color:var(--muted); display:block; margin:0 0 6px}
+    .btn{border:none; border-radius:14px; padding:11px 14px; font-weight:900; cursor:pointer}
+    .btnA{background:linear-gradient(135deg, var(--accent), #1B8B62); color:#fff}
+    .btnG{background:rgba(255,255,255,.06); color:var(--text); border:1px solid var(--line)}
+    .btnD{background:rgba(255,107,107,.14); color:var(--danger); border:1px solid rgba(255,107,107,.28)}
+    .muted{color:var(--muted); font-size:12px}
+    .err{display:none; margin-top:10px; padding:10px 12px; border-radius:14px; border:1px solid rgba(255,107,107,.25); background:rgba(255,107,107,.12); color:#ffd1d1}
+    .toolbar{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap}
+    .grid{display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px}
+    .item{background:rgba(0,0,0,.14); border:1px solid var(--line); border-radius:16px; padding:12px}
+    .itemTop{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:flex-start}
+    .id{font-family:var(--mono); font-weight:900}
+    .k{font-size:12px; color:var(--muted)}
+    .v{font-weight:900}
+    .pill{display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.06); margin-right:6px}
+    .two{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media(max-width:900px){.two{grid-template-columns:1fr}}
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <div class="logo">LZ</div>
-        <div>
-          <div style="font-weight:900">LizOn Admin</div>
-          <div class="muted">Placement Attempts • Read / Edit / Delete</div>
-        </div>
-      </div>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">
+      <div class="logo">LZ</div>
       <div>
-        <button class="btn ghost" id="logoutBtn" style="display:none;">Logout</button>
+        <div style="font-weight:900">LizOn Admin</div>
+        <div class="muted">Placement Attempts • Edit / Delete</div>
+      </div>
+    </div>
+    <button class="btn btnG" id="logoutBtn" type="button" style="display:none;">Logout</button>
+  </div>
+
+  <!-- Login -->
+  <div class="card pad" id="loginCard">
+    <div style="font-weight:900; font-size:16px;">Admin Login</div>
+    <div class="muted" style="margin-top:6px;">Only admins can access. Uses Supabase Auth.</div>
+    <div class="row" style="margin-top:12px;">
+      <div style="flex:1; min-width:260px;">
+        <label>Email</label>
+        <input id="email" type="email" placeholder="admin@email.com">
+      </div>
+      <div style="flex:1; min-width:260px;">
+        <label>Password</label>
+        <input id="pass" type="password" placeholder="••••••••">
+      </div>
+      <div style="display:flex; align-items:flex-end;">
+        <button class="btn btnA" id="loginBtn" type="button">Login</button>
+      </div>
+    </div>
+    <div class="err" id="loginErr"></div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="card pad" id="dashCard" style="display:none;">
+    <div class="toolbar">
+      <div>
+        <div style="font-weight:900; font-size:16px;">Attempts</div>
+        <div class="muted" id="meta">—</div>
+      </div>
+
+      <div class="row" style="align-items:flex-end;">
+        <div style="min-width:220px;">
+          <label>Search (name / phone / result_id)</label>
+          <input id="q" type="text" placeholder="e.g. 01, Rahim, LZ-PT-...">
+        </div>
+        <div style="min-width:180px;">
+          <label>Filter by stage</label>
+          <select id="stageFilter">
+            <option value="">All</option>
+            <option value="ZERO">ZERO</option>
+            <option value="HOPE">HOPE</option>
+            <option value="STEP-UP">STEP-UP</option>
+            <option value="DESPERATE">DESPERATE</option>
+          </select>
+        </div>
+        <button class="btn btnG" id="refreshBtn" type="button">Refresh</button>
       </div>
     </div>
 
-    <!-- LOGIN -->
-    <section class="card" id="loginCard">
-      <div class="head">
-        <h2>Admin Login</h2>
-        <div class="muted">Supabase Auth required</div>
-      </div>
-      <div class="body">
-        <div class="row">
-          <div>
-            <label class="muted">Email</label>
-            <input id="loginEmail" type="email" placeholder="admin@email.com" autocomplete="email"/>
-          </div>
-          <div>
-            <label class="muted">Password</label>
-            <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"/>
-          </div>
-        </div>
-        <div style="margin-top:12px; display:flex; justify-content:flex-end;">
-          <button class="btn primary" id="loginBtn">Login</button>
-        </div>
-        <div class="err" id="loginErr"></div>
-      </div>
-    </section>
-
-    <!-- DASHBOARD -->
-    <section class="card" id="dashCard" style="display:none;">
-      <div class="head">
-        <div>
-          <h2>Student Submissions</h2>
-          <div class="muted" id="meta">—</div>
-        </div>
-        <div class="bar" style="justify-content:flex-end;">
-          <input id="q" type="text" placeholder="Search name / phone / result_id" style="width:260px;"/>
-          <button class="btn ghost" id="refreshBtn">Refresh</button>
-        </div>
-      </div>
-      <div class="body">
-        <div class="ok" id="okBox"></div>
-        <div class="err" id="errBox"></div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Result</th>
-              <th>Student</th>
-              <th>Target / Timeline</th>
-              <th>Stage</th>
-              <th>Grammar</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-    </section>
+    <div class="err" id="dashErr"></div>
+    <div class="grid" id="list"></div>
   </div>
-
-  <!-- EDIT MODAL -->
-  <div class="modalWrap" id="modalWrap">
-    <div class="modal">
-      <div class="modalHead">
-        <h3>Edit Student Info</h3>
-        <button class="x" id="closeModal">Close</button>
-      </div>
-      <div class="modalBody">
-        <div class="row">
-          <div>
-            <label class="muted">Name</label>
-            <input id="e_name" />
-          </div>
-          <div>
-            <label class="muted">Phone</label>
-            <input id="e_phone" />
-          </div>
-          <div>
-            <label class="muted">Target score</label>
-            <input id="e_target" />
-          </div>
-          <div>
-            <label class="muted">Timeline</label>
-            <input id="e_timeline" />
-          </div>
-        </div>
-
-        <div style="margin-top:12px;">
-          <label class="muted">Writing</label>
-          <textarea id="e_writing" rows="6"></textarea>
-        </div>
-
-        <div style="margin-top:12px; display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;">
-          <button class="btn danger" id="deleteBtn">Delete</button>
-          <button class="btn primary" id="saveBtn">Save Changes</button>
-        </div>
-
-        <div class="err" id="modalErr" style="margin-top:12px;"></div>
-        <div class="ok" id="modalOk" style="margin-top:12px;"></div>
-      </div>
-    </div>
-  </div>
+</div>
 
 <script>
-  // ✅ Put your real anon key (JWT-like "eyJ...")
-  const SUPABASE_URL = "https://ltsdtgdatgiriyfqfrtc.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
+const SUPABASE_URL = "https://ltsdtgdatgiriyfqfrtc.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
+const el = (id)=>document.getElementById(id);
 
-  const el = (id)=>document.getElementById(id);
-  const show = (id)=> el(id).style.display = "block";
-  const hide = (id)=> el(id).style.display = "none";
+function sb(){
+  if(!window.supabase?.createClient) return null;
+  return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
 
-  function supa(){
-    if(!window.supabase) return null;
-    return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+function showErr(id, msg){
+  const b = el(id);
+  b.textContent = msg;
+  b.style.display = "block";
+}
+function clearErr(id){
+  const b = el(id);
+  b.textContent = "";
+  b.style.display = "none";
+}
+
+async function login(){
+  clearErr("loginErr");
+  const client = sb();
+  if(!client) return showErr("loginErr","Supabase failed to load. Reload.");
+
+  const email = el("email").value.trim();
+  const pass = el("pass").value;
+
+  if(!email || !pass) return showErr("loginErr","Email + password required.");
+
+  const { data, error } = await client.auth.signInWithPassword({ email, password: pass });
+  if(error) return showErr("loginErr", error.message);
+
+  // session exists -> load dashboard
+  el("loginCard").style.display = "none";
+  el("dashCard").style.display = "block";
+  el("logoutBtn").style.display = "inline-block";
+  await loadList();
+}
+
+async function logout(){
+  const client = sb();
+  if(!client) return;
+  await client.auth.signOut();
+  location.reload();
+}
+
+function itemHTML(row){
+  const safe = (v)=> (v===null || v===undefined || v==="") ? "—" : String(v);
+
+  return `
+  <div class="item" data-id="${row.id}">
+    <div class="itemTop">
+      <div>
+        <div class="id">${safe(row.result_id)} <span class="muted">• ${new Date(row.created_at).toLocaleString()}</span></div>
+        <div style="margin-top:6px;">
+          <span class="pill">${safe(row.auto_stage)}</span>
+          <span class="pill">Target ${safe(row.target_score)}</span>
+          <span class="pill">${safe(row.timeline)}</span>
+          <span class="pill">G ${safe(row.grammar_score)}/5</span>
+        </div>
+        <div style="margin-top:10px;" class="two">
+          <div><div class="k">Name</div><div class="v">${safe(row.name)}</div></div>
+          <div><div class="k">Phone</div><div class="v">${safe(row.phone)}</div></div>
+          <div><div class="k">Email</div><div class="v">${safe(row.email)}</div></div>
+          <div><div class="k">Prev attempt</div><div class="v">${safe(row.previous_attempt)} (${safe(row.previous_band)})</div></div>
+        </div>
+      </div>
+
+      <div style="min-width:320px; flex:1;">
+        <label>Writing</label>
+        <textarea readonly>${safe(row.writing_text)}</textarea>
+
+        <div class="two" style="margin-top:10px;">
+          <div>
+            <label>Status</label>
+            <select class="status">
+              <option value="">(blank)</option>
+              <option value="new">new</option>
+              <option value="reviewing">reviewing</option>
+              <option value="done">done</option>
+            </select>
+          </div>
+          <div>
+            <label>Final Path</label>
+            <input class="final_path" type="text" placeholder="e.g. ZERO → HOPE" />
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <label>Counselor Note</label>
+          <textarea class="note" placeholder="Short note..."></textarea>
+        </div>
+
+        <div class="row" style="margin-top:10px; justify-content:flex-end;">
+          <button class="btn btnG save" type="button">Save</button>
+          <button class="btn btnD del" type="button">Delete</button>
+        </div>
+
+        <div class="err rowErr" style="display:none;"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+async function loadList(){
+  clearErr("dashErr");
+  const client = sb();
+  if(!client) return showErr("dashErr","Supabase failed to load.");
+
+  // Make sure session is valid
+  const { data: sess } = await client.auth.getSession();
+  if(!sess?.session){
+    el("loginCard").style.display = "block";
+    el("dashCard").style.display = "none";
+    el("logoutBtn").style.display = "none";
+    return;
   }
 
-  let client = null;
-  let currentEdit = null;
+  const q = el("q").value.trim();
+  const stage = el("stageFilter").value;
 
-  function toastOk(msg){
-    el("okBox").textContent = msg;
-    show("okBox");
-    setTimeout(()=>hide("okBox"), 1800);
-  }
-  function toastErr(msg){
-    el("errBox").textContent = msg;
-    show("errBox");
-  }
+  let query = client
+    .from("placement_attempts")
+    .select("*")
+    .order("created_at", { ascending:false })
+    .limit(50);
 
-  function modalErr(msg){
-    el("modalErr").textContent = msg;
-    show("modalErr");
-  }
-  function modalOk(msg){
-    el("modalOk").textContent = msg;
-    show("modalOk");
-    setTimeout(()=>hide("modalOk"), 1400);
-  }
-  function modalResetMsg(){
-    el("modalErr").textContent = "";
-    hide("modalErr");
-    el("modalOk").textContent = "";
-    hide("modalOk");
+  if(stage) query = query.eq("auto_stage", stage);
+
+  // simple OR search
+  if(q){
+    query = query.or(`name.ilike.%${q}%,phone.ilike.%${q}%,result_id.ilike.%${q}%`);
   }
 
-  async function login(){
-    hide("loginErr");
-    const email = el("loginEmail").value.trim();
-    const pass = el("loginPass").value.trim();
-    if(!email || !pass){
-      el("loginErr").textContent = "Email & password required.";
-      show("loginErr");
-      return;
-    }
-
-    const { error } = await client.auth.signInWithPassword({ email, password: pass });
-    if(error){
-      el("loginErr").textContent = error.message || "Login failed.";
-      show("loginErr");
-      return;
-    }
+  const { data, error } = await query;
+  if(error){
+    return showErr("dashErr",
+      "Load failed: " + error.message +
+      " | If this says RLS, your admin JWT is missing app_role='admin'."
+    );
   }
 
-  async function logout(){
-    await client.auth.signOut();
-  }
+  el("meta").textContent = `Showing ${data.length} latest attempts`;
+  const list = el("list");
+  list.innerHTML = data.map(itemHTML).join("");
 
-  function openModal(row){
-    currentEdit = row;
-    modalResetMsg();
-    el("e_name").value = row.name || "";
-    el("e_phone").value = row.phone || "";
-    el("e_target").value = row.target_score || "";
-    el("e_timeline").value = row.timeline || "";
-    el("e_writing").value = row.writing_text || "";
-    show("modalWrap");
-  }
-  function closeModal(){
-    hide("modalWrap");
-    currentEdit = null;
-  }
+  // hydrate fields + wire actions
+  data.forEach(row=>{
+    const node = list.querySelector(`[data-id="${row.id}"]`);
+    if(!node) return;
 
-  async function saveEdit(){
-    modalResetMsg();
-    if(!currentEdit) return;
+    node.querySelector(".status").value = row.status || "";
+    node.querySelector(".final_path").value = row.final_path || "";
+    node.querySelector(".note").value = row.counselor_note || "";
 
-    const patch = {
-      name: el("e_name").value.trim(),
-      phone: el("e_phone").value.trim(),
-      target_score: el("e_target").value.trim(),
-      timeline: el("e_timeline").value.trim(),
-      writing_text: el("e_writing").value.trim()
-    };
-
-    const { error } = await client
-      .from("placement_attempts")
-      .update(patch)
-      .eq("result_id", currentEdit.result_id);
-
-    if(error){
-      modalErr(error.message || "Update failed.");
-      return;
-    }
-    modalOk("Saved.");
-    await load();
-  }
-
-  async function deleteRow(){
-    modalResetMsg();
-    if(!currentEdit) return;
-    const sure = confirm("Delete this student submission? This cannot be undone.");
-    if(!sure) return;
-
-    const { error } = await client
-      .from("placement_attempts")
-      .delete()
-      .eq("result_id", currentEdit.result_id);
-
-    if(error){
-      modalErr(error.message || "Delete failed.");
-      return;
-    }
-    closeModal();
-    toastOk("Deleted.");
-    await load();
-  }
-
-  function renderTable(list){
-    const tbody = el("rows");
-    tbody.innerHTML = "";
-
-    if(!list.length){
-      tbody.innerHTML = `<tr><td colspan="6" class="muted">No results found.</td></tr>`;
-      return;
-    }
-
-    for(const r of list){
-      const tr = document.createElement("tr");
-
-      tr.innerHTML = `
-        <td>
-          <div class="pill">${r.result_id || "—"}</div>
-          <div class="muted" style="margin-top:6px;">${(r.created_at||"").toString().slice(0,19).replace("T"," ")}</div>
-        </td>
-        <td>
-          <div style="font-weight:900">${r.name || "—"}</div>
-          <div class="muted">${r.phone || "—"}</div>
-          <div class="muted">${r.email || ""}</div>
-        </td>
-        <td>
-          <div><b>${r.target_score || "—"}</b></div>
-          <div class="muted">${r.timeline || "—"}</div>
-        </td>
-        <td><b>${r.auto_stage || "—"}</b></td>
-        <td>${(r.grammar_score ?? "—")}/5</td>
-        <td>
-          <button class="btn ghost smallBtn" data-edit="${r.result_id}">Edit</button>
-        </td>
-      `;
-
-      tbody.appendChild(tr);
-    }
-
-    // wire edit buttons
-    tbody.querySelectorAll("[data-edit]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const id = btn.getAttribute("data-edit");
-        const row = list.find(x => x.result_id === id);
-        if(row) openModal(row);
-      });
-    });
-  }
-
-  async function load(){
-    hide("errBox");
-    const q = el("q").value.trim().toLowerCase();
-
-    const { data, error } = await client
-      .from("placement_attempts")
-      .select("result_id,created_at,name,phone,email,target_score,timeline,auto_stage,grammar_score,writing_text")
-      .order("created_at", { ascending:false })
-      .limit(200);
-
-    if(error){
-      toastErr(error.message || "Load failed.");
-      return;
-    }
-
-    const filtered = (data || []).filter(r=>{
-      if(!q) return true;
-      return (
-        (r.name||"").toLowerCase().includes(q) ||
-        (r.phone||"").toLowerCase().includes(q) ||
-        (r.result_id||"").toLowerCase().includes(q)
-      );
-    });
-
-    el("meta").textContent = `Showing ${filtered.length} of ${(data||[]).length} (latest 200)`;
-    renderTable(filtered);
-  }
-
-  async function onAuthChange(){
-    const { data: { session } } = await client.auth.getSession();
-
-    if(!session){
-      show("loginCard");
-      hide("dashCard");
-      hide("logoutBtn");
-      return;
-    }
-
-    // show dashboard
-    hide("loginCard");
-    show("dashCard");
-    show("logoutBtn");
-
-    await load();
-  }
-
-  window.addEventListener("DOMContentLoaded", async ()=>{
-    client = supa();
-    if(!client){
-      alert("Supabase script didn't load. Refresh page.");
-      return;
-    }
-
-    el("loginBtn").addEventListener("click", login);
-    el("logoutBtn").addEventListener("click", logout);
-    el("refreshBtn").addEventListener("click", load);
-    el("q").addEventListener("input", load);
-
-    el("closeModal").addEventListener("click", closeModal);
-    el("modalWrap").addEventListener("click", (e)=>{ if(e.target === el("modalWrap")) closeModal(); });
-    el("saveBtn").addEventListener("click", saveEdit);
-    el("deleteBtn").addEventListener("click", deleteRow);
-
-    // initial
-    await onAuthChange();
-
-    // listener
-    client.auth.onAuthStateChange(async ()=>{
-      await onAuthChange();
-    });
+    node.querySelector(".save").addEventListener("click", ()=>saveRow(row.id, node));
+    node.querySelector(".del").addEventListener("click", ()=>deleteRow(row.id, node));
   });
+}
+
+async function saveRow(id, node){
+  const client = sb();
+  const errBox = node.querySelector(".rowErr");
+  errBox.style.display="none"; errBox.textContent="";
+
+  const payload = {
+    status: node.querySelector(".status").value || null,
+    final_path: node.querySelector(".final_path").value.trim() || null,
+    counselor_note: node.querySelector(".note").value.trim() || null
+  };
+
+  const { error } = await client.from("placement_attempts").update(payload).eq("id", id);
+  if(error){
+    errBox.style.display="block";
+    errBox.textContent = "Save failed: " + error.message;
+    return;
+  }
+  errBox.style.display="block";
+  errBox.style.borderColor="rgba(42,174,123,.35)";
+  errBox.style.background="rgba(42,174,123,.12)";
+  errBox.textContent = "Saved.";
+}
+
+async function deleteRow(id, node){
+  if(!confirm("Delete this attempt permanently?")) return;
+  const client = sb();
+  const errBox = node.querySelector(".rowErr");
+  errBox.style.display="none"; errBox.textContent="";
+
+  const { error } = await client.from("placement_attempts").delete().eq("id", id);
+  if(error){
+    errBox.style.display="block";
+    errBox.textContent = "Delete failed: " + error.message;
+    return;
+  }
+  node.remove();
+}
+
+window.addEventListener("DOMContentLoaded", ()=>{
+  el("loginBtn").addEventListener("click", login);
+  el("logoutBtn").addEventListener("click", logout);
+  el("refreshBtn").addEventListener("click", loadList);
+  el("q").addEventListener("keydown", (e)=>{ if(e.key==="Enter") loadList(); });
+  el("stageFilter").addEventListener("change", loadList);
+
+  // Auto-check existing session
+  setTimeout(loadList, 350);
+});
 </script>
 </body>
 </html>

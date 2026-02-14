@@ -6,448 +6,353 @@
   <title>LizOn Education — IELTS Placement Test</title>
   <meta name="description" content="Quick IELTS placement test for Bangladeshi students. Auto stage suggestion + counselor confirmation."/>
 
-  <!-- Supabase JS (v2) -->
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root{
-      --bg:#0F2E26; --bg2:#153B30; --card:#12362D;
-      --text:#EAF4F1; --muted:#A9C1BB; --line: rgba(255,255,255,.10);
-      --accent:#2AAE7B; --accent2:#1B8B62; --warn:#F3C969; --danger:#FF6B6B;
-      --shadow: 0 12px 30px rgba(0,0,0,.25);
-      --radius: 18px; --max: 980px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      --field-bg: rgba(255,255,255,.06);
-      --field-text: var(--text);
+      --bg:#0F2E26; --bg2:#153B30;
+      --text:#EAF4F1; --muted:#A9C1BB;
+      --line:rgba(255,255,255,.10);
+      --accent:#2AAE7B; --accent2:#1B8B62;
+      --warn:#F3C969; --danger:#FF6B6B;
+      --shadow:0 12px 30px rgba(0,0,0,.25);
+      --radius:18px; --max:980px;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      --field-bg:rgba(255,255,255,.07);
+      --field-text:var(--text);
+      --select-bg:#0E241E;
+      --select-text:#EAF4F1;
     }
     [data-theme="light"]{
-      --bg:#F4FBF8; --bg2:#E7F5EF; --card:#FFFFFF;
-      --text:#0D1F18; --muted:#3A5A50; --line: rgba(0,0,0,.10);
-      --shadow: 0 10px 24px rgba(0,0,0,.12);
-      --field-bg:#FFFFFF; --field-text:#0D1F18;
+      --bg:#F4FBF8; --bg2:#E7F5EF;
+      --text:#0D1F18; --muted:#3A5A50;
+      --line:rgba(0,0,0,.10);
+      --shadow:0 10px 24px rgba(0,0,0,.12);
+      --field-bg:#fff; --field-text:#0D1F18;
+      --select-bg:#fff; --select-text:#0D1F18;
     }
     *{box-sizing:border-box}
     body{
       margin:0; font-family:var(--sans); color:var(--text);
-      background: radial-gradient(1200px 700px at 20% 10%, var(--bg2), var(--bg));
+      background:radial-gradient(1200px 700px at 20% 10%, var(--bg2), var(--bg));
       min-height:100vh;
     }
-    body[data-theme="dark"]{ color-scheme: dark; }
-    body[data-theme="light"]{ color-scheme: light; }
-
-    a{color:inherit; text-decoration:none;}
+    body[data-theme="dark"]{color-scheme:dark}
+    body[data-theme="light"]{color-scheme:light}
     .wrap{max-width:var(--max); margin:0 auto; padding:18px 16px 44px;}
-    .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 6px 18px;}
-    .brand{display:flex; align-items:center; gap:10px;}
-    .logo{
-      width:42px; height:42px; border-radius:12px;
-      background: linear-gradient(145deg, rgba(42,174,123,.22), rgba(243,201,105,.12));
-      border:1px solid var(--line);
-      display:flex; align-items:center; justify-content:center;
-      font-weight:800; letter-spacing:.5px;
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 6px 18px;}
+    .brand{display:flex;align-items:center;gap:10px;}
+    .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(145deg, rgba(42,174,123,.22), rgba(243,201,105,.12));border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800}
+    .brand h1{font-size:14px;margin:0;line-height:1.2}
+    .brand p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+    .toggle{border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);padding:10px 12px;border-radius:999px;cursor:pointer;font-weight:700;font-size:12px}
+    .hero{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+    @media(max-width:860px){.hero{grid-template-columns:1fr}}
+    .hero h2{margin:0;font-size:20px}
+    .sub{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.45}
+    .pillRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .pill{font-size:12px;padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.06)}
+    .heroRight{border:1px dashed var(--line);border-radius:16px;padding:14px;background:rgba(0,0,0,.06)}
+    .heroRight .k{font-size:12px;color:var(--muted);margin:0 0 8px}
+    .heroRight .v{font-family:var(--mono);font-weight:800;letter-spacing:.6px;font-size:12px;padding:10px;border:1px solid var(--line);border-radius:12px;display:inline-block;background:rgba(255,255,255,.05)}
+    .card{margin-top:14px;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .cardHead{padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line)}
+    .cardHead h3{margin:0;font-size:14px}
+    .small{color:var(--muted);font-size:12px}
+    .progress{width:240px;height:10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid var(--line);overflow:hidden;flex:0 0 auto}
+    .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--warn));transition:width .25s ease}
+    @media(max-width:640px){.progress{width:160px}}
+    .cardBody{padding:16px}
+    .stepTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .stepTitle h4{margin:0;font-size:16px}
+    .badge{font-size:12px;font-family:var(--mono);padding:6px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:740px){.grid{grid-template-columns:1fr}}
+    label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
+    input,select,textarea{
+      width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);
+      background:var(--field-bg);color:var(--field-text);outline:none;font-size:14px
     }
-    .brand h1{font-size:14px; margin:0; line-height:1.2; letter-spacing:.2px;}
-    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted);}
-    .actions{display:flex; gap:10px; align-items:center;}
-    .toggle{
-      border:1px solid var(--line); background:rgba(255,255,255,.06); color:var(--text);
-      padding:10px 12px; border-radius:999px; cursor:pointer; font-weight:700; font-size:12px;
-    }
-    [data-theme="light"] .toggle{ background:#fff; color:var(--text); }
+    textarea{min-height:150px;resize:vertical}
 
-    .hero{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
-      padding:18px; display:grid; grid-template-columns:1.2fr .8fr; gap:14px;
-    }
-    @media (max-width:860px){ .hero{grid-template-columns:1fr;} }
-    .hero h2{margin:0; font-size:20px; letter-spacing:.2px;}
-    .hero .sub{margin:8px 0 0; color:var(--muted); font-size:13px; line-height:1.45;}
-    .pillRow{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
-    .pill{font-size:12px; padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(0,0,0,.06);}
-    [data-theme="light"] .pill{background:rgba(0,0,0,.03);}
-    .heroRight{border:1px dashed var(--line); border-radius:16px; padding:14px; background:rgba(0,0,0,.06);}
-    [data-theme="light"] .heroRight{background:rgba(0,0,0,.03);}
-    .heroRight .k{font-size:12px; color:var(--muted); margin:0 0 8px;}
-    .heroRight .v{
-      font-family:var(--mono); font-weight:800; letter-spacing:.6px; font-size:12px;
-      padding:10px 10px; border:1px solid var(--line); border-radius:12px;
-      display:inline-block; background:rgba(255,255,255,.05);
-    }
+    /* DARK MODE SELECT FIX (options clear) */
+    select{background:var(--field-bg)}
+    body[data-theme="dark"] select{background-color:var(--select-bg);color:var(--select-text)}
+    body[data-theme="dark"] option{background-color:var(--select-bg);color:var(--select-text)}
 
-    .card{
-      margin-top:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden;
-    }
-    .cardHead{
-      padding:14px 16px; display:flex; justify-content:space-between; gap:12px; align-items:center;
-      border-bottom:1px solid var(--line);
-    }
-    .cardHead h3{margin:0; font-size:14px; letter-spacing:.2px;}
-    .cardHead .small{color:var(--muted); font-size:12px;}
-    .progress{width:240px; height:10px; border-radius:999px; background:rgba(255,255,255,.10); border:1px solid var(--line); overflow:hidden; flex:0 0 auto;}
-    .bar{height:100%; width:0%; background:linear-gradient(90deg, var(--accent), var(--warn)); transition: width .25s ease;}
-    @media (max-width:640px){ .progress{width:160px;} }
-    .cardBody{padding:16px;}
-
-    .stepTitle{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;}
-    .stepTitle h4{margin:0; font-size:16px;}
-    .badge{font-size:12px; font-family:var(--mono); padding:6px 10px; border-radius:999px; border:1px solid var(--line); color:var(--muted);}
-
-    .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-    @media (max-width:740px){ .grid{grid-template-columns:1fr;} }
-    label{display:block; font-size:12px; color:var(--muted); margin:0 0 6px;}
-    input, select, textarea{
-      width:100%; padding:12px 12px; border-radius:14px; border:1px solid var(--line);
-      background:var(--field-bg); color:var(--field-text); outline:none; font-size:14px;
-    }
-
-    /* Better select visibility in dark mode */
-    select{ background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.10)); appearance:auto; }
-    body[data-theme="dark"] select, body[data-theme="dark"] option{ background-color:#0E241E; color:#EAF4F1; }
-    body[data-theme="light"] select, body[data-theme="light"] option{ background-color:#FFFFFF; color:#0D1F18; }
-
-    textarea{min-height:150px; resize:vertical;}
-    .hint{margin-top:6px; color:var(--muted); font-size:12px; line-height:1.35;}
-    .counter{display:flex; justify-content:space-between; gap:10px; align-items:center; margin-top:8px; font-size:12px; color:var(--muted);}
-    .counter .ok{color:var(--accent); font-weight:800;}
-    .counter .bad{color:var(--danger); font-weight:800;}
-
-    .btnRow{display:flex; gap:10px; align-items:center; justify-content:space-between; margin-top:14px; flex-wrap:wrap;}
-    .btnGroup{display:flex; gap:10px; flex-wrap:wrap;}
-    .btn{cursor:pointer; border:none; border-radius:14px; padding:12px 14px; font-weight:800; font-size:13px; letter-spacing:.2px;}
-    .btnPrimary{background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff;}
-    .btnGhost{background:rgba(255,255,255,.06); color:var(--text); border:1px solid var(--line);}
-    .btnDanger{background:rgba(255,107,107,.12); color:var(--danger); border:1px solid rgba(255,107,107,.22);}
-    .btn:disabled{opacity:.6; cursor:not-allowed;}
-
-    .err{
-      margin-top:10px; padding:10px 12px; border-radius:14px;
-      border:1px solid rgba(255,107,107,.25); background:rgba(255,107,107,.12);
-      color:#ffd1d1; font-size:13px; display:none;
-    }
-    [data-theme="light"] .err{ color:#7d1c1c; }
-
-    .resultBox{display:none; padding:16px;}
-    .resultTop{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;}
-    .stage{font-size:22px; margin:0; letter-spacing:.4px;}
-    .stageSub{margin:8px 0 0; color:var(--muted); font-size:13px; line-height:1.45; max-width:62ch;}
-    .resultId{font-family:var(--mono); border:1px solid var(--line); padding:10px 12px; border-radius:14px; background:rgba(255,255,255,.06); font-weight:900; letter-spacing:.8px;}
-    .mini{margin-top:10px; display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;}
-    @media (max-width:860px){ .mini{grid-template-columns:repeat(2, 1fr);} }
-    .miniCard{border:1px solid var(--line); background:rgba(0,0,0,.06); border-radius:16px; padding:10px 12px;}
-    [data-theme="light"] .miniCard{background:rgba(0,0,0,.03);}
-    .miniCard .t{font-size:12px; color:var(--muted); margin:0;}
-    .miniCard .b{margin:6px 0 0; font-weight:900; letter-spacing:.2px;}
-    .footer{margin-top:16px; color:var(--muted); font-size:12px; line-height:1.5; text-align:center;}
+    .hint{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.35}
+    .counter{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:8px;font-size:12px;color:var(--muted)}
+    .ok{color:var(--accent);font-weight:800}
+    .bad{color:var(--danger);font-weight:800}
+    .btnRow{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:14px;flex-wrap:wrap}
+    .btnGroup{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{cursor:pointer;border:none;border-radius:14px;padding:12px 14px;font-weight:800;font-size:13px}
+    .btnPrimary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+    .btnGhost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--line)}
+    .btnDanger{background:rgba(255,107,107,.12);color:var(--danger);border:1px solid rgba(255,107,107,.22)}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .err{margin-top:10px;padding:10px 12px;border-radius:14px;border:1px solid rgba(255,107,107,.25);background:rgba(255,107,107,.12);color:#ffd1d1;font-size:13px;display:none}
+    [data-theme="light"] .err{color:#7d1c1c}
+    .resultBox{display:none;padding:16px}
+    .resultTop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+    .stage{font-size:22px;margin:0}
+    .stageSub{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.45;max-width:62ch}
+    .resultId{font-family:var(--mono);border:1px solid var(--line);padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06);font-weight:900}
+    .mini{margin-top:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    @media(max-width:860px){.mini{grid-template-columns:repeat(2,1fr)}}
+    .miniCard{border:1px solid var(--line);background:rgba(0,0,0,.06);border-radius:16px;padding:10px 12px}
+    .miniCard .t{font-size:12px;color:var(--muted);margin:0}
+    .miniCard .b{margin:6px 0 0;font-weight:900}
+    .footer{margin-top:16px;color:var(--muted);font-size:12px;line-height:1.5;text-align:center}
   </style>
 </head>
 
 <body data-theme="dark">
-  <div class="wrap">
-    <header class="topbar">
-      <div class="brand">
-        <div class="logo">LZ</div>
-        <div>
-          <h1>LizOn Education</h1>
-          <p>IELTS Placement Test • Hybrid Result</p>
-        </div>
-      </div>
-      <div class="actions">
-        <button class="toggle" id="themeBtn" type="button">Toggle Mode</button>
-      </div>
-    </header>
-
-    <section class="hero">
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">LZ</div>
       <div>
-        <h2>Quick IELTS Placement Test</h2>
-        <p class="sub">8–10 minutes. Short but sharp. You’ll get an instant stage suggestion + a counselor confirmation after we review your writing.</p>
-        <div class="pillRow">
-          <span class="pill">For HSC / 12th standard students</span>
-          <span class="pill">Grammar + Writing reality check</span>
-          <span class="pill">Auto stage: ZERO / HOPE / STEP-UP / DESPERATE</span>
-          <span class="pill">LizOn Education</span>
+        <h1>LizOn Education</h1>
+        <p>IELTS Placement Test • Hybrid Result</p>
+      </div>
+    </div>
+    <button class="toggle" id="themeBtn" type="button">Toggle Mode</button>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h2>Quick IELTS Placement Test</h2>
+      <p class="sub">8–10 minutes. Short but sharp. You’ll get an instant stage suggestion + a counselor confirmation after we review your writing.</p>
+      <div class="pillRow">
+        <span class="pill">For HSC / 12th standard students</span>
+        <span class="pill">Grammar + Writing reality check</span>
+        <span class="pill">Auto stage: ZERO / HOPE / STEP-UP / DESPERATE</span>
+        <span class="pill">LizOn Education</span>
+      </div>
+    </div>
+    <div class="heroRight">
+      <p class="k">Reminder (LizOn ladder)</p>
+      <div class="v">IELTS ZERO → HOPE → STEP-UP → DESPERATE</div>
+      <p class="hint" style="margin-top:10px;">This is a diagnostic. No “guessing”. Your writing answer is the real signal.</p>
+    </div>
+  </section>
+
+  <section class="card" id="testCard">
+    <div class="cardHead">
+      <div>
+        <h3>Placement Test</h3>
+        <div class="small" id="stepMeta">Step 1 of 4</div>
+      </div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+    </div>
+
+    <div class="cardBody">
+      <!-- Step 1 -->
+      <div id="step1" class="step">
+        <div class="stepTitle"><h4>Basic Info</h4><span class="badge">Fast + Required</span></div>
+        <div class="grid">
+          <div><label for="name">Your Name *</label><input id="name" type="text" placeholder="e.g., Rahim Uddin" autocomplete="name"/></div>
+          <div><label for="phone">WhatsApp Number *</label><input id="phone" type="tel" placeholder="e.g., 01XXXXXXXXX" autocomplete="tel"/></div>
+          <div><label for="email">Email (optional)</label><input id="email" type="email" placeholder="e.g., you@gmail.com" autocomplete="email"/></div>
+          <div><label for="target">Target IELTS Score *</label>
+            <select id="target">
+              <option value="">Select</option><option>5.5</option><option>6.0</option><option>6.5</option><option>7.0</option><option>7.5+</option>
+            </select>
+          </div>
+          <div><label for="timeline">When is your exam? *</label>
+            <select id="timeline">
+              <option value="">Select</option><option>2–4 weeks</option><option>1–2 months</option><option>2–3 months</option><option>3+ months</option><option>Not fixed</option>
+            </select>
+          </div>
+          <div><label for="attempt">Taken IELTS before? *</label>
+            <select id="attempt">
+              <option value="">Select</option><option>No</option><option>Yes (once)</option><option>Yes (2+ times)</option>
+            </select>
+          </div>
+          <div><label for="prevband">If yes, last overall band</label>
+            <select id="prevband">
+              <option value="">Select</option><option>4.0–4.5</option><option>5.0</option><option>5.5</option><option>6.0</option><option>6.5</option><option>7.0+</option>
+            </select>
+            <div class="hint">If you never took IELTS, keep it blank.</div>
+          </div>
+        </div>
+        <div class="err" id="err1"></div>
+        <div class="btnRow"><div></div><div class="btnGroup"><button class="btn btnPrimary" id="next1" type="button">Next</button></div></div>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="step2" class="step" style="display:none;">
+        <div class="stepTitle"><h4>Grammar Check (5 Questions)</h4><span class="badge">Score: 0–5</span></div>
+        <div class="grid">
+          <div><label>G1. Choose the correct sentence *</label>
+            <select id="g1"><option value="">Select</option><option value="0">She have finished her homework.</option><option value="1">She has finished her homework.</option></select>
+          </div>
+          <div><label>G2. Choose the correct sentence *</label>
+            <select id="g2"><option value="">Select</option><option value="0">I am living in Dhaka since 2020.</option><option value="1">I have been living in Dhaka since 2020.</option></select>
+          </div>
+          <div><label>G3. Pick the best connector *</label>
+            <select id="g3"><option value="">Select</option><option value="0">because</option><option value="0">but</option><option value="0">although</option><option value="1">so</option></select>
+            <div class="hint">Sentence: “I was tired, ____ I finished the task.”</div>
+          </div>
+          <div><label>G4. Identify the mistake *</label>
+            <select id="g4"><option value="">Select</option><option value="0">Despite</option><option value="1">he</option><option value="0">was</option><option value="0">joined</option></select>
+            <div class="hint">Sentence: “Despite he was late, he joined the class.”</div>
+          </div>
+          <div><label>G5. Choose the correct preposition *</label>
+            <select id="g5"><option value="">Select</option><option value="0">on</option><option value="1">in</option><option value="0">at</option><option value="0">for</option></select>
+            <div class="hint">Sentence: “I’m interested ____ studying abroad.”</div>
+          </div>
+          <div><label>Speaking comfort (1–5) *</label>
+            <select id="speak"><option value="">Select</option><option>1 (very weak)</option><option>2</option><option>3</option><option>4</option><option>5 (confident)</option></select>
+            <div class="hint">No audio needed. Just reality.</div>
+          </div>
+        </div>
+        <div class="err" id="err2"></div>
+        <div class="btnRow">
+          <div class="btnGroup"><button class="btn btnGhost" id="back2" type="button">Back</button></div>
+          <div class="btnGroup"><button class="btn btnPrimary" id="next2" type="button">Next</button></div>
         </div>
       </div>
-      <div class="heroRight">
-        <p class="k">Reminder (LizOn ladder)</p>
-        <div class="v">IELTS ZERO → HOPE → STEP-UP → DESPERATE</div>
-        <p class="hint" style="margin-top:10px;">This is a diagnostic. No “guessing”. Your writing answer is the real signal.</p>
-      </div>
-    </section>
 
-    <section class="card" id="testCard">
-      <div class="cardHead">
-        <div>
-          <h3>Placement Test</h3>
-          <div class="small" id="stepMeta">Step 1 of 4</div>
-        </div>
-        <div class="progress" aria-label="progress"><div class="bar" id="bar"></div></div>
-      </div>
+      <!-- Step 3 -->
+      <div id="step3" class="step" style="display:none;">
+        <div class="stepTitle"><h4>Writing Sample (Most Important)</h4><span class="badge">80–120 words ideal</span></div>
+        <label for="writing">W1. In 80–120 words, tell us why you want IELTS and your plan for the next 2–3 months. *</label>
+        <textarea id="writing" placeholder="Write naturally. Don’t overthink."></textarea>
+        <div class="counter"><div>Word count: <span id="wc">0</span></div><div id="wcStatus" class="bad">Too short</div></div>
 
-      <div class="cardBody">
-        <!-- Step 1 -->
-        <div id="step1" class="step">
-          <div class="stepTitle"><h4>Basic Info</h4><span class="badge">Fast + Required</span></div>
-
-          <div class="grid">
-            <div><label for="name">Your Name *</label><input id="name" type="text" placeholder="e.g., Rahim Uddin" autocomplete="name"/></div>
-            <div><label for="phone">WhatsApp Number *</label><input id="phone" type="tel" placeholder="e.g., 01XXXXXXXXX" autocomplete="tel"/></div>
-            <div><label for="email">Email (optional)</label><input id="email" type="email" placeholder="e.g., you@gmail.com" autocomplete="email"/></div>
-
-            <div>
-              <label for="target">Target IELTS Score *</label>
-              <select id="target">
-                <option value="">Select</option><option>5.5</option><option>6.0</option><option>6.5</option><option>7.0</option><option>7.5+</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="timeline">When is your exam? *</label>
-              <select id="timeline">
-                <option value="">Select</option><option>2–4 weeks</option><option>1–2 months</option><option>2–3 months</option><option>3+ months</option><option>Not fixed</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="attempt">Taken IELTS before? *</label>
-              <select id="attempt">
-                <option value="">Select</option><option>No</option><option>Yes (once)</option><option>Yes (2+ times)</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="prevband">If yes, last overall band</label>
-              <select id="prevband">
-                <option value="">Select</option><option>4.0–4.5</option><option>5.0</option><option>5.5</option><option>6.0</option><option>6.5</option><option>7.0+</option>
-              </select>
-              <div class="hint">If you never took IELTS, keep it blank.</div>
-            </div>
-          </div>
-
-          <div class="err" id="err1"></div>
-
-          <div class="btnRow">
-            <div class="btnGroup"></div>
-            <div class="btnGroup"><button class="btn btnPrimary" type="button" id="next1">Next</button></div>
-          </div>
+        <div style="margin-top:10px;">
+          <label for="translator">W2. I wrote this without Google Translate *</label>
+          <select id="translator"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>
+          <div class="hint">Honesty = correct placement. Nobody will judge you—only plan your path.</div>
         </div>
 
-        <!-- Step 2 -->
-        <div id="step2" class="step" style="display:none;">
-          <div class="stepTitle"><h4>Grammar Check (5 Questions)</h4><span class="badge">Score: 0–5</span></div>
-
-          <div class="grid">
-            <div><label>G1. Choose the correct sentence *</label><select id="g1"><option value="">Select</option><option value="0">She have finished her homework.</option><option value="1">She has finished her homework.</option></select></div>
-            <div><label>G2. Choose the correct sentence *</label><select id="g2"><option value="">Select</option><option value="0">I am living in Dhaka since 2020.</option><option value="1">I have been living in Dhaka since 2020.</option></select></div>
-            <div><label>G3. Pick the best connector *</label><select id="g3"><option value="">Select</option><option value="0">because</option><option value="0">but</option><option value="0">although</option><option value="1">so</option></select><div class="hint">Sentence: “I was tired, ____ I finished the task.”</div></div>
-            <div><label>G4. Identify the mistake *</label><select id="g4"><option value="">Select</option><option value="0">Despite</option><option value="1">he</option><option value="0">was</option><option value="0">joined</option></select><div class="hint">Sentence: “Despite he was late, he joined the class.”</div></div>
-            <div><label>G5. Choose the correct preposition *</label><select id="g5"><option value="">Select</option><option value="0">on</option><option value="1">in</option><option value="0">at</option><option value="0">for</option></select><div class="hint">Sentence: “I’m interested ____ studying abroad.”</div></div>
-            <div><label>Speaking comfort (1–5) *</label><select id="speak"><option value="">Select</option><option>1 (very weak)</option><option>2</option><option>3</option><option>4</option><option>5 (confident)</option></select><div class="hint">No audio needed. Just reality.</div></div>
-          </div>
-
-          <div class="err" id="err2"></div>
-
-          <div class="btnRow">
-            <div class="btnGroup"><button class="btn btnGhost" type="button" id="back2">Back</button></div>
-            <div class="btnGroup"><button class="btn btnPrimary" type="button" id="next2">Next</button></div>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div id="step3" class="step" style="display:none;">
-          <div class="stepTitle"><h4>Writing Sample (Most Important)</h4><span class="badge">80–120 words ideal</span></div>
-
-          <label for="writing">W1. In 80–120 words, tell us why you want IELTS and your plan for the next 2–3 months. *</label>
-          <textarea id="writing" placeholder="Write naturally. Don’t overthink."></textarea>
-
-          <div class="counter"><div>Word count: <span id="wc">0</span></div><div id="wcStatus" class="bad">Too short</div></div>
-
-          <div style="margin-top:10px;">
-            <label for="translator">W2. I wrote this without Google Translate *</label>
-            <select id="translator"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>
-            <div class="hint">Honesty = correct placement. Nobody will judge you—only plan your path.</div>
-          </div>
-
-          <div class="err" id="err3"></div>
-
-          <div class="btnRow">
-            <div class="btnGroup"><button class="btn btnGhost" type="button" id="back3">Back</button></div>
-            <div class="btnGroup"><button class="btn btnPrimary" type="button" id="next3">Next</button></div>
-          </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div id="step4" class="step" style="display:none;">
-          <div class="stepTitle"><h4>Submit</h4><span class="badge">Instant result</span></div>
-
-          <div class="hint">We’ll auto-suggest your stage instantly. Then a counselor reviews your writing and confirms the exact path.</div>
-
-          <div class="mini" style="margin-top:12px;">
-            <div class="miniCard"><p class="t">Target score</p><p class="b" id="sumTarget">—</p></div>
-            <div class="miniCard"><p class="t">Exam timeline</p><p class="b" id="sumTime">—</p></div>
-            <div class="miniCard"><p class="t">Grammar score</p><p class="b" id="sumGrammar">—</p></div>
-            <div class="miniCard"><p class="t">Speaking comfort</p><p class="b" id="sumSpeak">—</p></div>
-          </div>
-
-          <div class="err" id="err4"></div>
-
-          <div class="btnRow">
-            <div class="btnGroup">
-              <button class="btn btnGhost" type="button" id="back4">Back</button>
-              <button class="btn btnDanger" type="button" id="resetBtn">Reset</button>
-            </div>
-            <div class="btnGroup"><button class="btn btnPrimary" id="submitBtn" type="button">Submit & Get Result</button></div>
-          </div>
-        </div>
-
-        <!-- Result -->
-        <div class="resultBox" id="resultBox">
-          <div class="resultTop">
-            <div><h3 class="stage" id="stageTitle">Your IELTS Stage (Preview)</h3><p class="stageSub" id="stageSub"></p></div>
-            <div class="resultId" id="rid">ResultID: —</div>
-          </div>
-
-          <div class="mini" style="margin-top:14px;">
-            <div class="miniCard"><p class="t">Recommended path</p><p class="b" id="path">—</p></div>
-            <div class="miniCard"><p class="t">Target</p><p class="b" id="rTarget">—</p></div>
-            <div class="miniCard"><p class="t">Timeline</p><p class="b" id="rTime">—</p></div>
-            <div class="miniCard"><p class="t">Grammar score</p><p class="b" id="rGrammar">—</p></div>
-          </div>
-
-          <div class="btnRow" style="margin-top:14px;">
-            <div class="btnGroup"><button class="btn btnGhost" type="button" id="againBtn">Take Again</button></div>
-            <div class="btnGroup"><a class="btn btnPrimary" id="waBtn" href="#" target="_blank" rel="noopener">Confirm on WhatsApp</a></div>
-          </div>
-
-          <p class="hint" style="margin-top:12px;">Counselor will review your writing and confirm the final plan. Don’t guess. Don’t panic. Follow structure.</p>
+        <div class="err" id="err3"></div>
+        <div class="btnRow">
+          <div class="btnGroup"><button class="btn btnGhost" id="back3" type="button">Back</button></div>
+          <div class="btnGroup"><button class="btn btnPrimary" id="next3" type="button">Next</button></div>
         </div>
       </div>
-    </section>
 
-    <div class="footer">© LizOn Education • MyLizOn.com • No shortcuts, only structure.</div>
-  </div>
+      <!-- Step 4 -->
+      <div id="step4" class="step" style="display:none;">
+        <div class="stepTitle"><h4>Submit</h4><span class="badge">Instant result</span></div>
+        <div class="hint">We’ll auto-suggest your stage instantly. Then a counselor reviews your writing and confirms the exact path.</div>
+
+        <div class="mini" style="margin-top:12px;">
+          <div class="miniCard"><p class="t">Target score</p><p class="b" id="sumTarget">—</p></div>
+          <div class="miniCard"><p class="t">Exam timeline</p><p class="b" id="sumTime">—</p></div>
+          <div class="miniCard"><p class="t">Grammar score</p><p class="b" id="sumGrammar">—</p></div>
+          <div class="miniCard"><p class="t">Speaking comfort</p><p class="b" id="sumSpeak">—</p></div>
+        </div>
+
+        <div class="err" id="err4"></div>
+        <div class="btnRow">
+          <div class="btnGroup">
+            <button class="btn btnGhost" id="back4" type="button">Back</button>
+            <button class="btn btnDanger" id="resetBtn" type="button">Reset</button>
+          </div>
+          <div class="btnGroup">
+            <button class="btn btnPrimary" id="submitBtn" type="button">Submit & Get Result</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="resultBox" id="resultBox">
+        <div class="resultTop">
+          <div><h3 class="stage" id="stageTitle">Your IELTS Stage (Preview)</h3><p class="stageSub" id="stageSub"></p></div>
+          <div class="resultId" id="rid">ResultID: —</div>
+        </div>
+
+        <div class="mini" style="margin-top:14px;">
+          <div class="miniCard"><p class="t">Recommended path</p><p class="b" id="path">—</p></div>
+          <div class="miniCard"><p class="t">Target</p><p class="b" id="rTarget">—</p></div>
+          <div class="miniCard"><p class="t">Timeline</p><p class="b" id="rTime">—</p></div>
+          <div class="miniCard"><p class="t">Grammar score</p><p class="b" id="rGrammar">—</p></div>
+        </div>
+
+        <div class="btnRow" style="margin-top:14px;">
+          <div class="btnGroup"><button class="btn btnGhost" id="againBtn" type="button">Take Again</button></div>
+          <div class="btnGroup"><a class="btn btnPrimary" id="waBtn" href="#" target="_blank" rel="noopener">Confirm on WhatsApp</a></div>
+        </div>
+
+        <p class="hint" style="margin-top:12px;">Counselor will review your writing and confirm the final plan. Don’t guess. Don’t panic. Follow structure.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">© LizOn Education • MyLizOn.com • No shortcuts, only structure.</div>
+</div>
 
 <script>
-/* ========================= CONFIG ========================= */
+/* CONFIG */
 const SUPABASE_URL = "https://ltsdtgdatgiriyfqfrtc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
 const WHATSAPP_NUMBER = "8801611611139";
 const SUCCESS_REDIRECT = "";
 
-/* ========================= Helpers ========================= */
-let step = 1;
 const el = (id)=>document.getElementById(id);
+let step = 1;
+
+function getSupabaseClient(){
+  if(!window.supabase?.createClient) return null;
+  return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
 
 function setTheme(){
   const body = document.body;
-  const current = body.getAttribute("data-theme") || "dark";
-  body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+  body.setAttribute("data-theme", (body.getAttribute("data-theme")==="dark") ? "light" : "dark");
 }
 
 function updateProgress(){
-  const pct = (step-1) / 4 * 100;
-  el("bar").style.width = `${pct}%`;
+  const pct = ((step-1)/4)*100;
+  el("bar").style.width = pct + "%";
   el("stepMeta").textContent = `Step ${step} of 4`;
 }
+
 function showStep(n){
-  for(let i=1;i<=4;i++){
-    el("step"+i).style.display = (i===n) ? "block" : "none";
-  }
+  for(let i=1;i<=4;i++) el("step"+i).style.display = (i===n) ? "block" : "none";
   el("resultBox").style.display = "none";
   step = n;
   updateProgress();
 }
 
-function showErr(stepNo, msg){
-  const e = el("err"+stepNo);
-  e.textContent = msg;
-  e.style.display = "block";
+function showErr(n,msg){
+  const box = el("err"+n);
+  box.textContent = msg;
+  box.style.display = "block";
 }
-function clearErr(stepNo){
-  const e = el("err"+stepNo);
-  e.textContent = "";
-  e.style.display = "none";
-}
-
-/* ========================= Validation ========================= */
-function validateStep(n){
-  clearErr(n);
-
-  if(n===1){
-    const name = el("name").value.trim();
-    const phone = el("phone").value.trim();
-    const target = el("target").value.trim();
-    const timeline = el("timeline").value.trim();
-    const attempt = el("attempt").value.trim();
-    if(!name) return showErr(1,"Name is required."), false;
-    if(!phone) return showErr(1,"WhatsApp number is required."), false;
-    if(!target) return showErr(1,"Target score is required."), false;
-    if(!timeline) return showErr(1,"Exam timeline is required."), false;
-    if(!attempt) return showErr(1,"Please select if you took IELTS before."), false;
-    return true;
-  }
-
-  if(n===2){
-    const req = ["g1","g2","g3","g4","g5","speak"];
-    for(const r of req){
-      if(!el(r).value) return showErr(2,"Answer all grammar + speaking items."), false;
-    }
-    return true;
-  }
-
-  if(n===3){
-    const w = el("writing").value.trim();
-    const wc = countWords(w);
-    const t = el("translator").value;
-    if(wc < 60) return showErr(3,"Writing is too short. Minimum 60 words."), false;
-    if(!t) return showErr(3,"Please confirm if you used Google Translate."), false;
-    return true;
-  }
-
-  if(n===4){
-    if(!WHATSAPP_NUMBER) return showErr(4,"WHATSAPP_NUMBER missing."), false;
-    return true;
-  }
-  return true;
+function clearErr(n){
+  const box = el("err"+n);
+  box.textContent = "";
+  box.style.display = "none";
 }
 
-/* ========================= Word Counter ========================= */
 function countWords(text){
   const clean = text.replace(/\s+/g," ").trim();
   if(!clean) return 0;
   return clean.split(" ").filter(Boolean).length;
 }
-function bindWordCounter(){
-  el("writing").addEventListener("input", ()=>{
-    const wc = countWords(el("writing").value);
-    el("wc").textContent = wc;
 
-    const status = el("wcStatus");
-    if(wc < 60){ status.textContent="Too short"; status.className="bad"; }
-    else if(wc <= 140){ status.textContent="Good length"; status.className="ok"; }
-    else{ status.textContent="Too long"; status.className="bad"; }
-  });
-}
-
-/* ========================= Scoring ========================= */
 function grammarScore(){
-  const ids = ["g1","g2","g3","g4","g5"];
-  return ids.reduce((sum,id)=> sum + (parseInt(el(id).value || "0",10) || 0), 0);
+  return ["g1","g2","g3","g4","g5"].reduce((s,id)=> s + (parseInt(el(id).value||"0",10)||0), 0);
 }
-function urgencyScore(timeline){
-  if(timeline==="2–4 weeks") return 3;
-  if(timeline==="1–2 months") return 2;
-  if(timeline==="2–3 months") return 1;
+
+function urgencyScore(tl){
+  if(tl==="2–4 weeks") return 3;
+  if(tl==="1–2 months") return 2;
+  if(tl==="2–3 months") return 1;
   return 0;
 }
-function targetPressureScore(target){
-  if(target==="7.5+" || target==="7.0") return 2;
-  if(target==="6.5") return 1;
+function targetPressureScore(t){
+  if(t==="7.5+" || t==="7.0") return 2;
+  if(t==="6.5") return 1;
   return 0;
 }
+
 function autoStage(){
   const g = grammarScore();
   const tl = el("timeline").value;
@@ -466,30 +371,62 @@ function autoStage(){
   const hasAttempt = attempt.startsWith("Yes");
   if(urg>=2 && (press>=1 || hasAttempt)) stage="DESPERATE";
 
-  return { stage, g };
+  return {stage, g};
 }
+
 function stageCopy(stage){
-  if(stage==="ZERO") return { title:"Your IELTS Stage: FOUNDATION (ZERO)", sub:"Apnar base e structure crack ache. Ekhon shortcut dile unstable score hobe. First base fix korte hobe — grammar + basic speaking control.", path:"ZERO → HOPE" };
-  if(stage==="HOPE") return { title:"Your IELTS Stage: CORE SKILL FIX (HOPE)", sub:"Apnar base ok, but core skill gula (reading/listening/writing structure/speaking opinion) tighten kora dorkar. Ekhon consistency build korlei score stable hobe.", path:"HOPE → STEP-UP" };
-  if(stage==="STEP-UP") return { title:"Your IELTS Stage: BAND 6+ STRATEGY (STEP-UP)", sub:"Apnar grammar control bhalo. Ekhon important question types + time management + band-6+ strategy apply korlei output jump korbe.", path:"STEP-UP → DESPERATE (if exam close)" };
-  return { title:"Your IELTS Stage: EXAM-KNOCKING (DESPERATE)", sub:"Exam close. Preparation ache, kintu control unstable. Ekhon pressure handling + practice + evaluation chara safe decision hobe na.", path:"DESPERATE (Complete Here)" };
+  if(stage==="ZERO") return {title:"Your IELTS Stage: FOUNDATION (ZERO)", sub:"Apnar base e structure crack ache. Ekhon shortcut dile unstable score hobe. First base fix korte hobe — grammar + basic speaking control.", path:"ZERO → HOPE"};
+  if(stage==="HOPE") return {title:"Your IELTS Stage: CORE SKILL FIX (HOPE)", sub:"Apnar base ok, but core skill gula (reading/listening/writing structure/speaking opinion) tighten kora dorkar. Ekhon consistency build korlei score stable hobe.", path:"HOPE → STEP-UP"};
+  if(stage==="STEP-UP") return {title:"Your IELTS Stage: BAND 6+ STRATEGY (STEP-UP)", sub:"Apnar grammar control bhalo. Ekhon important question types + time management + band-6+ strategy apply korlei output jump korbe.", path:"STEP-UP → DESPERATE (if exam close)"};
+  return {title:"Your IELTS Stage: EXAM-KNOCKING (DESPERATE)", sub:"Exam close. Preparation ache, kintu control unstable. Ekhon pressure handling + practice + evaluation chara safe decision hobe na.", path:"DESPERATE (Complete Here)"};
 }
 
-/* ========================= Navigation ========================= */
-function goNext(){
-  const ok = validateStep(step);
-  if(!ok) return;
+function validateStep(n){
+  clearErr(n);
 
-  if(step === 3){
+  if(n===1){
+    if(!el("name").value.trim()) return showErr(1,"Name is required."), false;
+    if(!el("phone").value.trim()) return showErr(1,"WhatsApp number is required."), false;
+    if(!el("target").value.trim()) return showErr(1,"Target score is required."), false;
+    if(!el("timeline").value.trim()) return showErr(1,"Exam timeline is required."), false;
+    if(!el("attempt").value.trim()) return showErr(1,"Please select if you took IELTS before."), false;
+    return true;
+  }
+
+  if(n===2){
+    for(const id of ["g1","g2","g3","g4","g5","speak"]) if(!el(id).value) return showErr(2,"Answer all grammar + speaking items."), false;
+    return true;
+  }
+
+  if(n===3){
+    const wc = countWords(el("writing").value.trim());
+    if(wc<60) return showErr(3,"Writing is too short. Minimum 60 words."), false;
+    if(!el("translator").value) return showErr(3,"Please confirm if you used Google Translate."), false;
+    return true;
+  }
+
+  if(n===4){
+    if(!WHATSAPP_NUMBER) return showErr(4,"WhatsApp number missing in code."), false;
+    return true;
+  }
+
+  return true;
+}
+
+function goNext(){
+  if(!validateStep(step)) return;
+
+  if(step===3){
     const g = grammarScore();
     el("sumTarget").textContent = el("target").value || "—";
     el("sumTime").textContent = el("timeline").value || "—";
     el("sumGrammar").textContent = `${g}/5`;
     el("sumSpeak").textContent = el("speak").value || "—";
   }
-  if(step < 4) showStep(step + 1);
+
+  if(step<4) showStep(step+1);
 }
-function goBack(){ if(step > 1) showStep(step - 1); }
+function goBack(){ if(step>1) showStep(step-1); }
 
 function resetAll(){
   ["name","phone","email","target","timeline","attempt","prevband","g1","g2","g3","g4","g5","speak","writing","translator"].forEach(id=>{ el(id).value=""; });
@@ -498,44 +435,20 @@ function resetAll(){
   showStep(1);
 }
 
-/* ========================= Supabase loader ========================= */
-async function waitForSupabase(timeoutMs=4000){
-  const start = Date.now();
-  while(Date.now()-start < timeoutMs){
-    if(window.supabase && window.supabase.createClient) return true;
-    await new Promise(r=>setTimeout(r, 50));
-  }
-  return false;
-}
-function getSupabaseClient(){
-  if(!window.supabase || !window.supabase.createClient) return null;
-  return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-}
-
-/* ========================= Submit ========================= */
 async function submitTest(){
   clearErr(4);
   if(!validateStep(4)) return;
 
-  const ok = await waitForSupabase();
-  if(!ok){
-    showErr(4, "Supabase did not load. Hard refresh (Ctrl+F5) and try again.");
-    return;
-  }
-  const supabase = getSupabaseClient();
-  if(!supabase){
-    showErr(4, "Supabase client init failed.");
-    return;
-  }
+  const sb = getSupabaseClient();
+  if(!sb) return showErr(4,"Supabase script did not load. Reload the page."), void 0;
 
   const btn = el("submitBtn");
-  btn.disabled = true;
-  btn.textContent = "Submitting...";
+  btn.disabled = true; btn.textContent = "Submitting...";
 
   const score = autoStage();
   const copy = stageCopy(score.stage);
 
-  let resultId = "LZ-PT-" + Math.floor(100000 + Math.random() * 900000);
+  let resultId = "LZ-PT-" + Math.floor(100000 + Math.random()*900000);
 
   const payload = {
     result_id: resultId,
@@ -554,42 +467,26 @@ async function submitTest(){
   };
 
   try{
-    const { data, error } = await supabase
-      .from("placement_attempts")
-      .insert(payload)
-      .select("result_id")
-      .single();
+    const { data, error } = await sb.from("placement_attempts").insert(payload).select("result_id").single();
 
     if(error){
-      if(String(error.code||"")==="23505"){
-        resultId = "LZ-PT-" + Math.floor(100000 + Math.random() * 900000);
-        payload.result_id = resultId;
-
-        const retry = await supabase
-          .from("placement_attempts")
-          .insert(payload)
-          .select("result_id")
-          .single();
-
-        if(retry.error) throw retry.error;
-        renderResult(retry.data.result_id, score.stage, copy, payload);
-      }else{
-        throw error;
+      const msg = String(error.message || "");
+      if(msg.toLowerCase().includes("row-level security")){
+        throw new Error("RLS blocked insert. Run the provided SQL policies for anon INSERT.");
       }
-    }else{
-      renderResult(data.result_id, score.stage, copy, payload);
+      throw new Error(msg || "Insert failed.");
     }
+
+    renderResult(data.result_id, score.stage, copy, payload);
 
     if(SUCCESS_REDIRECT){
-      setTimeout(()=>{ window.location.href = SUCCESS_REDIRECT; }, 1200);
+      setTimeout(()=> location.href = SUCCESS_REDIRECT, 1200);
     }
-  }catch(err){
-    console.error(err);
-    const msg = (err && (err.message || err.details || err.hint)) ? (err.message || err.details || err.hint) : String(err);
-    showErr(4, "Submission failed: " + msg);
+
+  }catch(e){
+    showErr(4, "Submission failed: " + (e?.message || e));
   }finally{
-    btn.disabled = false;
-    btn.textContent = "Submit & Get Result";
+    btn.disabled=false; btn.textContent="Submit & Get Result";
   }
 }
 
@@ -597,16 +494,16 @@ function renderResult(resultId, stage, copy, payload){
   for(let i=1;i<=4;i++) el("step"+i).style.display="none";
   el("bar").style.width="100%";
   el("stepMeta").textContent="Result generated";
+
   el("resultBox").style.display="block";
+  el("stageTitle").textContent=copy.title;
+  el("stageSub").textContent=copy.sub;
+  el("rid").textContent="ResultID: " + resultId;
 
-  el("stageTitle").textContent = copy.title;
-  el("stageSub").textContent = copy.sub;
-  el("rid").textContent = "ResultID: " + resultId;
-
-  el("path").textContent = copy.path;
-  el("rTarget").textContent = payload.target_score || "—";
-  el("rTime").textContent = payload.timeline || "—";
-  el("rGrammar").textContent = `${payload.grammar_score}/5`;
+  el("path").textContent=copy.path;
+  el("rTarget").textContent=payload.target_score || "—";
+  el("rTime").textContent=payload.timeline || "—";
+  el("rGrammar").textContent=`${payload.grammar_score}/5`;
 
   const msg =
 `Hi LizOn,
@@ -622,27 +519,28 @@ Please review my writing and suggest final course.`;
   el("waBtn").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
 
-/* ========================= Wire buttons ========================= */
 window.addEventListener("DOMContentLoaded", ()=>{
-  updateProgress();
-  bindWordCounter();
-
   el("themeBtn").addEventListener("click", setTheme);
 
-  el("next1").addEventListener("click", goNext);
+  el("writing").addEventListener("input", ()=>{
+    const wc = countWords(el("writing").value);
+    el("wc").textContent = wc;
+    if(wc<60){ el("wcStatus").textContent="Too short"; el("wcStatus").className="bad"; }
+    else if(wc<=140){ el("wcStatus").textContent="Good length"; el("wcStatus").className="ok"; }
+    else { el("wcStatus").textContent="Too long"; el("wcStatus").className="bad"; }
+  });
 
+  el("next1").addEventListener("click", goNext);
   el("back2").addEventListener("click", goBack);
   el("next2").addEventListener("click", goNext);
-
   el("back3").addEventListener("click", goBack);
   el("next3").addEventListener("click", goNext);
-
   el("back4").addEventListener("click", goBack);
-
   el("resetBtn").addEventListener("click", resetAll);
   el("againBtn").addEventListener("click", resetAll);
-
   el("submitBtn").addEventListener("click", submitTest);
+
+  updateProgress();
 });
 </script>
 </body>

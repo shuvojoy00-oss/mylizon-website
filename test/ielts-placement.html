@@ -6,8 +6,8 @@
   <title>LizOn Education — IELTS Placement Test</title>
   <meta name="description" content="Quick IELTS placement test for Bangladeshi students. Auto stage suggestion + counselor confirmation."/>
 
-  <!-- Supabase JS (v2) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Supabase JS (v2) - DEFER so it doesn't block/kill page init -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root{
@@ -27,7 +27,6 @@
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       --field-bg: rgba(255,255,255,.06);
-      --field-bg2: rgba(0,0,0,.10);
       --field-text: var(--text);
     }
 
@@ -40,7 +39,6 @@
       --line: rgba(0,0,0,.10);
       --shadow: 0 10px 24px rgba(0,0,0,.12);
       --field-bg: #FFFFFF;
-      --field-bg2: #FFFFFF;
       --field-text: #0D1F18;
     }
 
@@ -53,7 +51,7 @@
       min-height:100vh;
     }
 
-    /* IMPORTANT: makes native form controls follow theme */
+    /* native controls follow theme */
     body[data-theme="dark"] { color-scheme: dark; }
     body[data-theme="light"] { color-scheme: light; }
 
@@ -668,7 +666,7 @@
 
 <script>
 /* =========================
-   CONFIG (Supabase connected)
+   CONFIG
 ========================= */
 const SUPABASE_URL = "https://ltsdtgdatgiriyfqfrtc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
@@ -677,7 +675,12 @@ const SUPABASE_ANON_KEY = "sb_publishable_uSn7h5kPGwdwu9uUYlIySg_9yH7xCs0";
 const WHATSAPP_NUMBER = "8801XXXXXXXXX";
 
 const SUCCESS_REDIRECT = "";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* Supabase safe getter (prevents page crash) */
+function getSupabaseClient(){
+  if(!window.supabase || !window.supabase.createClient) return null;
+  return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
 
 /* =========================
    Helpers
@@ -690,7 +693,6 @@ function setTheme(){
   const current = body.getAttribute("data-theme") || "dark";
   body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
 }
-el("themeBtn").addEventListener("click", setTheme);
 
 function updateProgress(){
   const pct = (step-1) / 4 * 100;
@@ -772,22 +774,26 @@ function countWords(text){
   if(!clean) return 0;
   return clean.split(" ").filter(Boolean).length;
 }
-el("writing").addEventListener("input", ()=>{
-  const wc = countWords(el("writing").value);
-  el("wc").textContent = wc;
+function bindWordCounter(){
+  const w = el("writing");
+  if(!w) return;
+  w.addEventListener("input", ()=>{
+    const wc = countWords(w.value);
+    el("wc").textContent = wc;
 
-  const status = el("wcStatus");
-  if(wc < 60){
-    status.textContent = "Too short";
-    status.className = "bad";
-  }else if(wc <= 140){
-    status.textContent = "Good length";
-    status.className = "ok";
-  }else{
-    status.textContent = "Too long";
-    status.className = "bad";
-  }
-});
+    const status = el("wcStatus");
+    if(wc < 60){
+      status.textContent = "Too short";
+      status.className = "bad";
+    }else if(wc <= 140){
+      status.textContent = "Good length";
+      status.className = "ok";
+    }else{
+      status.textContent = "Too long";
+      status.className = "bad";
+    }
+  });
+}
 
 /* =========================
    Scoring Logic
@@ -858,7 +864,7 @@ function stageCopy(stage){
 }
 
 /* =========================
-   Navigation handlers (NO inline onclick)
+   Navigation handlers
 ========================= */
 function goNext(){
   const ok = validateStep(step);
@@ -882,13 +888,14 @@ function resetAll(){
    "g1","g2","g3","g4","g5","speak","writing","translator"].forEach(id=>{
     const node = el(id);
     if(!node) return;
-    if(node.tagName === "SELECT") node.value = "";
-    else node.value = "";
+    node.value = "";
   });
 
   ["err1","err2","err3","err4"].forEach(id=>{
-    el(id).style.display="none";
-    el(id).textContent="";
+    const e = el(id);
+    if(!e) return;
+    e.style.display="none";
+    e.textContent="";
   });
 
   el("wc").textContent = "0";
@@ -899,11 +906,17 @@ function resetAll(){
 }
 
 /* =========================
-   Submit to Supabase
+   Submit to Supabase (safe)
 ========================= */
 async function submitTest(){
   clearErr(4);
   if(!validateStep(4)) return;
+
+  const supabase = getSupabaseClient();
+  if(!supabase){
+    showErr(4, "Supabase script did not load. Reload the page and try again.");
+    return;
+  }
 
   const btn = el("submitBtn");
   btn.disabled = true;
@@ -1002,21 +1015,32 @@ Please review my writing and suggest final course.`;
 }
 
 /* =========================
-   Wire buttons (ensures every button works)
+   Wire buttons safely
 ========================= */
-document.addEventListener("DOMContentLoaded", () => {
-  updateProgress();
+window.addEventListener("DOMContentLoaded", () => {
+  try{
+    updateProgress();
+    bindWordCounter();
 
-  el("next1").addEventListener("click", goNext);
-  el("back2").addEventListener("click", goBack);
-  el("next2").addEventListener("click", goNext);
-  el("back3").addEventListener("click", goBack);
-  el("next3").addEventListener("click", goNext);
-  el("back4").addEventListener("click", goBack);
+    el("themeBtn")?.addEventListener("click", setTheme);
 
-  el("resetBtn").addEventListener("click", resetAll);
-  el("againBtn").addEventListener("click", resetAll);
-  el("submitBtn").addEventListener("click", submitTest);
+    el("next1")?.addEventListener("click", goNext);
+
+    el("back2")?.addEventListener("click", goBack);
+    el("next2")?.addEventListener("click", goNext);
+
+    el("back3")?.addEventListener("click", goBack);
+    el("next3")?.addEventListener("click", goNext);
+
+    el("back4")?.addEventListener("click", goBack);
+
+    el("resetBtn")?.addEventListener("click", resetAll);
+    el("againBtn")?.addEventListener("click", resetAll);
+
+    el("submitBtn")?.addEventListener("click", submitTest);
+  }catch(e){
+    console.error("Init failed:", e);
+  }
 });
 </script>
 </body>

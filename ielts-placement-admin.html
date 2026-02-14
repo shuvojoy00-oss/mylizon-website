@@ -1,583 +1,419 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LizOn Placement Admin</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>LizOn Education — Placement Admin</title>
 
   <style>
     :root{
-      --bg:#0f2a22;
-      --text:#e8fff5;
-      --muted:rgba(232,255,245,.75);
-      --line:rgba(232,255,245,.14);
-      --btn:#19b37a;
-      --btn2:#0ea56f;
-      --danger:#ff6b6b;
-      --warn:#ffd166;
-      --ok:#6ee7b7;
+      --bg:#0F2E26;
+      --bg2:#153B30;
+      --card:#12362D;
+      --text:#EAF4F1;
+      --muted:rgba(234,244,241,.70);
+      --line:rgba(234,244,241,.12);
+      --good:#19b37a;
+      --good2:#0ea56f;
+      --danger:#ff5b5b;
+      --warn:#ffc857;
     }
-
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:system-ui,Arial;
-      background:radial-gradient(900px 600px at 50% 0%, #1a4a3a 0%, var(--bg) 60%);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:radial-gradient(900px 600px at 50% 0%, var(--bg2) 0%, var(--bg) 55%);
       color:var(--text);
+      min-height:100vh;
     }
-
-    .wrap{max-width:1100px;margin:0 auto;padding:18px;}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .brand{display:flex;align-items:center;gap:10px}
-    .pill{border:1px solid var(--line);padding:7px 10px;border-radius:999px;color:var(--muted);font-size:12px}
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    .top{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 18px;
+      border-bottom:1px solid var(--line);
+      position:sticky;top:0;
+      backdrop-filter: blur(10px);
+      background:rgba(15,46,38,.65);
+    }
+    .brand{display:flex;gap:10px;align-items:center;font-weight:700}
+    .pill{
+      font-size:12px;
+      padding:4px 10px;
       border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-      margin-top:14px;
+      border-radius:999px;
+      color:var(--muted);
     }
-    h1{margin:0 0 10px;font-size:18px}
-    h2{margin:0 0 10px;font-size:13px;color:var(--muted);font-weight:650}
-
-    input, select{
-      width:100%;
-      box-sizing:border-box;
-      padding:12px;
+    .wrap{max-width:1080px;margin:0 auto;padding:18px}
+    .card{
+      background:linear-gradient(180deg, rgba(18,54,45,.92), rgba(18,54,45,.72));
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+    label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
+    input{
+      width:360px;max-width:100%;
+      padding:12px 12px;
       border-radius:12px;
       border:1px solid var(--line);
-      background:rgba(0,0,0,.15);
+      background:rgba(0,0,0,.12);
       color:var(--text);
       outline:none;
-      font-size:14px;
     }
-
-    button{
-      border:none;border-radius:12px;
-      padding:10px 12px;
-      font-weight:850;
+    input:focus{border-color:rgba(25,179,122,.55)}
+    .btn{
+      padding:12px 14px;border-radius:12px;
+      border:1px solid rgba(25,179,122,.35);
+      background:linear-gradient(180deg, var(--good), var(--good2));
+      color:#061b14;font-weight:700;
       cursor:pointer;
-      font-size:14px;
     }
-
-    .btn{background:linear-gradient(180deg,var(--btn),var(--btn2));color:#062016;}
-    .btnGhost{background:rgba(0,0,0,.12);border:1px solid var(--line);color:var(--text)}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media(max-width:900px){.grid2{grid-template-columns:1fr}}
-    .msg{margin-top:12px;font-size:13px;color:var(--muted)}
-    .err{color:var(--danger)}
-    table{width:100%;border-collapse:separate;border-spacing:0 10px}
-    th{font-size:12px;color:var(--muted);text-align:left;font-weight:800;padding:8px}
-    td{
-      padding:12px 8px;
-      background:rgba(0,0,0,.12);
-      border-top:1px solid var(--line);
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .btn2{
+      padding:10px 12px;border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.14);
+      color:var(--text);
+      cursor:pointer;
+    }
+    .hint{font-size:12px;color:var(--muted);margin-top:10px}
+    .err{color:var(--danger);font-size:12px;margin-left:10px}
+    .ok{color:var(--good);font-size:12px;margin-left:10px}
+    .mt{margin-top:14px}
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      margin-top:10px;
+      overflow:hidden;
+      border-radius:14px;
+      border:1px solid var(--line);
+    }
+    th,td{
+      padding:10px 10px;
       border-bottom:1px solid var(--line);
       font-size:13px;
       vertical-align:middle;
-      white-space:nowrap;
     }
-    td:first-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px}
-    td:last-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}
-    .hide{display:none !important;}
-    .badge{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
+    th{color:var(--muted);font-weight:600;text-align:left;background:rgba(0,0,0,.10)}
+    tr:last-child td{border-bottom:none}
     .actions{display:flex;gap:8px;flex-wrap:wrap}
-    .editBtn{
+    .mini{
       padding:8px 10px;border-radius:10px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,209,102,.12);
-      color:var(--warn);
-      font-weight:900;
-    }
-    .delBtn{
-      padding:8px 10px;border-radius:10px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,0,0,.12);
-      color:#ffd1d1;
-      font-weight:900;
-    }
-
-    /* Modal */
-    .modalBack{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.55);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:16px;
-      z-index:999999;
-      pointer-events:auto;
-    }
-    .modal{
-      width:min(720px, 96vw);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
       border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
-      box-shadow:0 20px 50px rgba(0,0,0,.5);
-      position:relative;
-      z-index:1000000;
-      pointer-events:auto;
-    }
-    .modalTop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-    .modalTop b{font-size:15px}
-    .closeBtn{
-      background:rgba(0,0,0,.2);
-      border:1px solid var(--line);
+      background:rgba(0,0,0,.14);
       color:var(--text);
-      padding:8px 10px;border-radius:12px;
-      cursor:pointer;font-weight:900;
+      cursor:pointer;
+      font-size:12px;
     }
-    .modalActions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
-    .saveBtn{background:linear-gradient(180deg,var(--btn),var(--btn2));color:#062016;}
-    .cancelBtn{background:rgba(0,0,0,.12);border:1px solid var(--line);color:var(--text)}
+    .mini.danger{border-color:rgba(255,91,91,.5);color:#ffd3d3}
+    .badge{
+      font-size:12px;color:var(--muted);
+      border:1px solid var(--line);
+      padding:6px 10px;border-radius:999px;
+      display:inline-flex;gap:6px;align-items:center;
+      background:rgba(0,0,0,.08);
+    }
+    .sp{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     .small{font-size:12px;color:var(--muted)}
+    .w160{width:160px}
+    .w140{width:140px}
   </style>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <b>LizOn Education</b>
-        <span class="pill">Placement Admin</span>
-      </div>
-      <div class="row">
-        <span class="pill" id="who">Not logged in</span>
-        <button class="btnGhost hide" id="logoutBtn" type="button">Logout</button>
-      </div>
+
+  <div class="top">
+    <div class="brand">
+      <span>LizOn Education</span>
+      <span class="pill">Placement Admin</span>
     </div>
+    <div class="right">
+      <span id="who" class="badge">Not logged in</span>
+      <button id="logoutBtn" class="btn2" style="display:none;">Logout</button>
+    </div>
+  </div>
 
-    <!-- LOGIN VIEW -->
-    <div class="card" id="loginView">
-      <h1>Staff Login</h1>
+  <div class="wrap">
 
-      <div style="max-width:520px">
-        <h2>Password</h2>
-        <input id="password" type="password" placeholder="Admin password" autocomplete="current-password" />
+    <!-- LOGIN CARD -->
+    <div id="loginCard" class="card">
+      <div style="font-weight:700;margin-bottom:10px;">Staff Login</div>
+
+      <div class="row">
+        <div>
+          <label>Password</label>
+          <input id="pass" type="password" placeholder="Admin password" autocomplete="current-password"/>
+        </div>
+        <button id="loginBtn" class="btn">Login</button>
+        <span id="loginMsg" class="err"></span>
       </div>
 
-      <div class="row" style="margin-top:12px">
-        <button class="btn" id="loginBtn" type="button">Login</button>
-        <span class="msg" id="loginMsg"></span>
-      </div>
-
-      <div class="msg">
+      <div class="hint">
         Security note: this admin talks to Neon through server API (safe). Never store DB passwords in HTML.
       </div>
     </div>
 
-    <!-- DASH VIEW -->
-    <div class="card hide" id="dashView">
-      <div class="row" style="justify-content:space-between">
+    <!-- DASHBOARD CARD -->
+    <div id="dashCard" class="card mt" style="display:none;">
+      <div class="sp">
         <div>
-          <h1>Placement Attempts</h1>
-          <div class="msg">Edit or delete attempts. Delete is permanent.</div>
+          <div style="font-weight:700;">Placement Attempts</div>
+          <div class="small">Edit or delete attempts. Delete is permanent.</div>
         </div>
-        <button class="btnGhost" id="refreshBtn" type="button">Refresh</button>
+        <div class="right">
+          <span class="badge">Table: public.ielts_placement_attempts</span>
+          <button id="refreshBtn" class="btn2">Refresh</button>
+        </div>
       </div>
 
-      <div class="row" style="gap:12px;margin-top:10px">
-        <span class="badge">Table: public.ielts_placement_attempts</span>
-        <span class="badge" id="count">Loaded: 0</span>
-      </div>
+      <div id="dashMsg" class="small mt"></div>
 
-      <div style="margin-top:12px;overflow:auto">
-        <table>
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Target</th>
-              <th>Timeline</th>
-              <th>Stage</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
-
-      <div class="msg err" id="dashErr"></div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:170px;">Time</th>
+            <th style="width:190px;">Name</th>
+            <th style="width:140px;">Phone</th>
+            <th style="width:90px;">Target</th>
+            <th style="width:160px;">Timeline</th>
+            <th style="width:130px;">Stage</th>
+            <th style="width:110px;">Status</th>
+            <th style="width:160px;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td colspan="8" class="small">Loading…</td></tr>
+        </tbody>
+      </table>
     </div>
+
   </div>
 
-  <!-- EDIT MODAL -->
-  <div class="modalBack hide" id="editBack" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-label="Edit attempt">
-      <div class="modalTop">
-        <b>Edit Attempt</b>
-        <button class="closeBtn" id="closeEdit" type="button">Close</button>
-      </div>
+<script>
+  // ===== CONFIG =====
+  const API_LOGIN = "/api/admin-login";
+  const API_ATTEMPTS = "/api/admin-attempts";
+  const LS_TOKEN_KEY = "ADMIN_TOKEN";
 
-      <div class="small" id="editMeta"></div>
+  // ===== HELPERS =====
+  const $ = (id) => document.getElementById(id);
+  const who = $("who");
+  const loginCard = $("loginCard");
+  const dashCard = $("dashCard");
+  const loginBtn = $("loginBtn");
+  const logoutBtn = $("logoutBtn");
+  const refreshBtn = $("refreshBtn");
+  const loginMsg = $("loginMsg");
+  const dashMsg = $("dashMsg");
+  const rowsEl = $("rows");
+  const passEl = $("pass");
 
-      <div class="grid2" style="margin-top:10px">
-        <div>
-          <h2>Full Name</h2>
-          <input id="e_full_name" placeholder="Full name">
-        </div>
-        <div>
-          <h2>Phone</h2>
-          <input id="e_phone" placeholder="01XXXXXXXXX">
-        </div>
+  function setWho(text){
+    who.textContent = text;
+  }
 
-        <div>
-          <h2>Target</h2>
-          <select id="e_target">
-            <option value="">—</option>
-            <option>5.5</option>
-            <option>6.0</option>
-            <option>6.5</option>
-            <option>7.0</option>
-            <option>7.5+</option>
-          </select>
-        </div>
+  function token(){
+    return localStorage.getItem(LS_TOKEN_KEY);
+  }
 
-        <div>
-          <h2>Timeline</h2>
-          <select id="e_timeline">
-            <option value="">—</option>
-            <option>2–4 weeks</option>
-            <option>1–2 months</option>
-            <option>2–3 months</option>
-            <option>3+ months</option>
-            <option>Not fixed</option>
-          </select>
-        </div>
+  function setToken(t){
+    localStorage.setItem(LS_TOKEN_KEY, t);
+  }
 
-        <div>
-          <h2>Stage</h2>
-          <select id="e_stage">
-            <option value="">—</option>
-            <option>FOUNDATION</option>
-            <option>CORE</option>
-            <option>STRATEGY</option>
-            <option>EXAM-KNOCKING</option>
-          </select>
-        </div>
+  function clearToken(){
+    localStorage.removeItem(LS_TOKEN_KEY);
+  }
 
-        <div>
-          <h2>Status</h2>
-          <select id="e_status">
-            <option value="">—</option>
-            <option>NEW</option>
-            <option>CONTACTED</option>
-            <option>FOLLOW-UP</option>
-            <option>ADMITTED</option>
-            <option>CLOSED</option>
-          </select>
-        </div>
-      </div>
+  function showLogin(msg=""){
+    loginCard.style.display = "";
+    dashCard.style.display = "none";
+    logoutBtn.style.display = "none";
+    setWho("Not logged in");
+    loginMsg.textContent = msg || "";
+  }
 
-      <div class="msg" id="editMsg"></div>
+  function showDash(){
+    loginCard.style.display = "none";
+    dashCard.style.display = "";
+    logoutBtn.style.display = "";
+    setWho("Admin");
+    loginMsg.textContent = "";
+  }
 
-      <div class="modalActions">
-        <button class="cancelBtn" id="cancelEdit" type="button">Cancel</button>
-        <button class="saveBtn" id="saveEdit" type="button">Save Changes</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // UI refs
-    const who = document.getElementById("who");
-    const logoutBtn = document.getElementById("logoutBtn");
-    const loginView = document.getElementById("loginView");
-    const dashView = document.getElementById("dashView");
-    const loginBtn = document.getElementById("loginBtn");
-    const loginMsg = document.getElementById("loginMsg");
-    const refreshBtn = document.getElementById("refreshBtn");
-    const tbody = document.getElementById("tbody");
-    const count = document.getElementById("count");
-    const dashErr = document.getElementById("dashErr");
-
-    // Modal refs
-    const editBack = document.getElementById("editBack");
-    const closeEdit = document.getElementById("closeEdit");
-    const cancelEdit = document.getElementById("cancelEdit");
-    const saveEdit = document.getElementById("saveEdit");
-    const editMsg = document.getElementById("editMsg");
-    const editMeta = document.getElementById("editMeta");
-
-    const e_full_name = document.getElementById("e_full_name");
-    const e_phone = document.getElementById("e_phone");
-    const e_target = document.getElementById("e_target");
-    const e_timeline = document.getElementById("e_timeline");
-    const e_stage = document.getElementById("e_stage");
-    const e_status = document.getElementById("e_status");
-
-    let currentEditId = null;
-    let rowsCache = new Map(); // id -> row
-
-    function fmt(ts){
-      try { return new Date(ts).toLocaleString(); } catch(e){ return ts; }
+  async function apiFetch(url, opts={}){
+    const headers = Object.assign({}, opts.headers || {});
+    const t = token();
+    if (t) headers["x-admin-token"] = t;
+    if (opts.body && !headers["content-type"]) headers["content-type"] = "application/json";
+    const res = await fetch(url, Object.assign({}, opts, { headers }));
+    let data = null;
+    try { data = await res.json(); } catch(e) {}
+    if (!res.ok) {
+      const err = (data && (data.error || data.message)) || ("HTTP " + res.status);
+      throw new Error(err);
     }
-    function safe(v){ return (v===null||v===undefined||v==="") ? "—" : v; }
+    return data;
+  }
 
-    function getToken(){
-      return localStorage.getItem("ADMIN_TOKEN") || "";
-    }
-    function setToken(t){
-      localStorage.setItem("ADMIN_TOKEN", t);
-    }
-    function clearToken(){
-      localStorage.removeItem("ADMIN_TOKEN");
+  function fmtTime(iso){
+    try{
+      const d = new Date(iso);
+      return d.toLocaleString();
+    }catch(e){ return iso || ""; }
+  }
+
+  // ===== DASHBOARD RENDER =====
+  function renderRows(list){
+    if (!list || !list.length){
+      rowsEl.innerHTML = `<tr><td colspan="8" class="small">No attempts yet.</td></tr>`;
+      return;
     }
 
-    function openModal(){
-      editBack.classList.remove("hide");
-      editBack.setAttribute("aria-hidden","false");
-      editMsg.textContent = "";
-      editMsg.classList.remove("err");
-      setTimeout(()=> e_full_name?.focus(), 50);
-    }
-    function closeModal(){
-      editBack.classList.add("hide");
-      editBack.setAttribute("aria-hidden","true");
-      currentEditId = null;
-      editMeta.textContent = "";
-      editMsg.textContent = "";
-      editMsg.classList.remove("err");
-    }
-    closeEdit.addEventListener("click", closeModal);
-    cancelEdit.addEventListener("click", closeModal);
-    editBack.addEventListener("click", (e)=>{ if(e.target === editBack) closeModal(); });
-    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && !editBack.classList.contains("hide")) closeModal(); });
+    rowsEl.innerHTML = list.map(r => `
+      <tr data-id="${r.id}">
+        <td>${fmtTime(r.created_at)}</td>
+        <td><input class="w160" data-k="full_name" value="${escapeHtml(r.full_name||"")}" /></td>
+        <td><input class="w140" data-k="phone" value="${escapeHtml(r.phone||"")}" /></td>
+        <td><input class="w140" data-k="target_score" value="${escapeHtml(r.target_score||"")}" /></td>
+        <td><input class="w160" data-k="exam_timeline" value="${escapeHtml(r.exam_timeline||"")}" /></td>
+        <td><input class="w140" data-k="stage" value="${escapeHtml(r.stage||"")}" /></td>
+        <td><input class="w140" data-k="status" value="${escapeHtml(r.status||"")}" /></td>
+        <td>
+          <div class="actions">
+            <button class="mini" data-act="save">Save</button>
+            <button class="mini danger" data-act="del">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `).join("");
+  }
 
-    async function adminLogin(password){
-      const r = await fetch("/api/admin-login", {
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  async function loadAttempts(){
+    dashMsg.textContent = "Loading…";
+    const data = await apiFetch(API_ATTEMPTS, { method:"GET" });
+    renderRows(data.rows);
+    dashMsg.textContent = `Loaded ${data.rows.length} row(s).`;
+  }
+
+  function readRowInputs(tr){
+    const id = Number(tr.getAttribute("data-id"));
+    const obj = { id };
+    tr.querySelectorAll("input[data-k]").forEach(inp=>{
+      obj[inp.getAttribute("data-k")] = inp.value;
+    });
+    return obj;
+  }
+
+  async function saveRow(tr){
+    const payload = readRowInputs(tr);
+    dashMsg.textContent = "Saving…";
+    await apiFetch(API_ATTEMPTS, { method:"PATCH", body: JSON.stringify(payload) });
+    dashMsg.textContent = "Saved.";
+  }
+
+  async function deleteRow(tr){
+    const id = Number(tr.getAttribute("data-id"));
+    const ok = confirm("Delete this attempt permanently?");
+    if (!ok) return;
+    dashMsg.textContent = "Deleting…";
+    await apiFetch(API_ATTEMPTS, { method:"DELETE", body: JSON.stringify({ id }) });
+    tr.remove();
+    dashMsg.textContent = "Deleted.";
+  }
+
+  // ===== EVENTS =====
+  loginBtn.addEventListener("click", async ()=>{
+    loginBtn.disabled = true;
+    loginMsg.textContent = "";
+    try{
+      const password = passEl.value || "";
+      const res = await fetch(API_LOGIN, {
         method:"POST",
-        headers:{ "Content-Type":"application/json" },
+        headers:{ "content-type":"application/json" },
         body: JSON.stringify({ password })
       });
-      const j = await r.json();
-      if (!j.ok) throw new Error(j.error || "Login failed");
-      setToken(j.token);
-      return j.token;
-    }
+      const data = await res.json().catch(()=>null);
 
-    async function apiGetAttempts(){
-      const r = await fetch("/api/admin-attempts", {
-        method:"GET",
-        headers:{ "x-admin-token": getToken() }
-      });
-      const j = await r.json();
-      if (!j.ok) throw new Error(j.error || "Load failed");
-      return j.rows || [];
-    }
+      if (!res.ok || !data || !data.ok) {
+        throw new Error((data && (data.error || data.message)) || "Login failed");
+      }
 
-    async function apiUpdateAttempt(payload){
-      const r = await fetch("/api/admin-attempts", {
-        method:"PATCH",
-        headers:{
-          "Content-Type":"application/json",
-          "x-admin-token": getToken()
-        },
-        body: JSON.stringify(payload)
-      });
-      const j = await r.json();
-      if (!j.ok) throw new Error(j.error || "Update failed");
-      return j;
-    }
+      // ✅ store token for API calls
+      setToken(data.token);
 
-    async function apiDeleteAttempt(id){
-      const r = await fetch("/api/admin-attempts", {
-        method:"DELETE",
-        headers:{
-          "Content-Type":"application/json",
-          "x-admin-token": getToken()
-        },
-        body: JSON.stringify({ id })
-      });
-      const j = await r.json();
-      if (!j.ok) throw new Error(j.error || "Delete failed");
-      return j;
-    }
-
-    function showLoggedOut(){
-      who.textContent = "Not logged in";
-      logoutBtn.classList.add("hide");
-      loginView.classList.remove("hide");
-      dashView.classList.add("hide");
-      dashErr.textContent = "";
-      loginMsg.textContent = "";
-      closeModal();
-    }
-
-    async function showLoggedIn(){
-      who.textContent = "Admin";
-      logoutBtn.classList.remove("hide");
-      loginView.classList.add("hide");
-      dashView.classList.remove("hide");
+      showDash();
       await loadAttempts();
-    }
 
-    async function loadAttempts(){
-      dashErr.textContent = "";
-      tbody.innerHTML = "";
-      count.textContent = "Loading...";
-      rowsCache.clear();
-
-      try{
-        const data = await apiGetAttempts();
-        count.textContent = "Loaded: " + (data.length || 0);
-
-        if(!data || data.length===0){
-          tbody.innerHTML = `<tr><td colspan="8">No attempts yet.</td></tr>`;
-          return;
-        }
-
-        data.forEach(r => rowsCache.set(String(r.id), r));
-
-        tbody.innerHTML = data.map(r => `
-          <tr>
-            <td>${fmt(r.created_at)}</td>
-            <td>${safe(r.full_name)}</td>
-            <td>${safe(r.phone)}</td>
-            <td>${safe(r.target_score)}</td>
-            <td>${safe(r.exam_timeline)}</td>
-            <td>${safe(r.stage)}</td>
-            <td>${safe(r.status)}</td>
-            <td>
-              <div class="actions">
-                <button class="editBtn" type="button" data-id="${r.id}">Edit</button>
-                <button class="delBtn" type="button" data-id="${r.id}">Delete</button>
-              </div>
-            </td>
-          </tr>
-        `).join("");
-
-        tbody.querySelectorAll(".delBtn").forEach(btn=>{
-          btn.addEventListener("click", ()=> deleteAttempt(btn.dataset.id));
-        });
-        tbody.querySelectorAll(".editBtn").forEach(btn=>{
-          btn.addEventListener("click", ()=> openEdit(btn.dataset.id));
-        });
-
-      }catch(err){
-        const msg = String(err?.message || err);
-        dashErr.textContent = msg;
-
-        // if unauthorized, force logout view
-        if (msg.toLowerCase().includes("unauthorized")) {
-          clearToken();
-          showLoggedOut();
-        } else {
-          count.textContent = "Loaded: 0";
-        }
-      }
-    }
-
-    async function deleteAttempt(id){
-      const ok = confirm("Delete this attempt permanently? This cannot be undone.");
-      if(!ok) return;
-
-      try{
-        await apiDeleteAttempt(Number(id));
-        await loadAttempts();
-      }catch(err){
-        alert("Delete failed: " + (err?.message || err));
-      }
-    }
-
-    function openEdit(id){
-      const row = rowsCache.get(String(id));
-      if(!row){
-        alert("Row not found. Refresh and try again.");
-        return;
-      }
-
-      currentEditId = Number(id);
-      openModal();
-
-      editMeta.textContent = `ID: ${row.id} • Created: ${fmt(row.created_at)}`;
-      e_full_name.value = row.full_name || "";
-      e_phone.value = row.phone || "";
-      e_target.value = row.target_score || "";
-      e_timeline.value = row.exam_timeline || "";
-      e_stage.value = row.stage || "";
-      e_status.value = row.status || "";
-    }
-
-    async function saveEditChanges(){
-      if(!currentEditId) return;
-
-      saveEdit.disabled = true;
-      saveEdit.textContent = "Saving...";
-      editMsg.textContent = "";
-      editMsg.classList.remove("err");
-      editMsg.style.color = "var(--muted)";
-
-      const updates = {
-        id: currentEditId,
-        full_name: e_full_name.value.trim() || null,
-        phone: e_phone.value.trim() || null,
-        target_score: e_target.value || null,
-        exam_timeline: e_timeline.value || null,
-        stage: e_stage.value || null,
-        status: e_status.value || null
-      };
-
-      try{
-        await apiUpdateAttempt(updates);
-        editMsg.textContent = "Saved ✓";
-        editMsg.style.color = "rgba(110,231,183,.95)";
-        await loadAttempts();
-        setTimeout(closeModal, 250);
-      }catch(err){
-        editMsg.textContent = "Update failed: " + (err?.message || err);
-        editMsg.classList.add("err");
-      }finally{
-        saveEdit.disabled = false;
-        saveEdit.textContent = "Save Changes";
-      }
-    }
-
-    // Events
-    loginBtn.addEventListener("click", async ()=>{
-      loginMsg.textContent = "";
-      loginMsg.classList.remove("err");
-
-      const password = document.getElementById("password").value;
-
-      if(!password){
-        loginMsg.textContent = "Enter admin password.";
-        loginMsg.classList.add("err");
-        return;
-      }
-
-      loginBtn.disabled = true;
-      loginBtn.textContent = "Logging in...";
-
-      try{
-        await adminLogin(password);
-        loginMsg.textContent = "Login successful!";
-        await showLoggedIn();
-      }catch(err){
-        loginMsg.textContent = err?.message || String(err);
-        loginMsg.classList.add("err");
-      }finally{
-        loginBtn.disabled = false;
-        loginBtn.textContent = "Login";
-      }
-    });
-
-    logoutBtn.addEventListener("click", ()=>{
+    }catch(e){
       clearToken();
-      showLoggedOut();
-    });
+      showLogin(e.message || "Login error");
+    }finally{
+      loginBtn.disabled = false;
+    }
+  });
 
-    refreshBtn.addEventListener("click", loadAttempts);
-    saveEdit.addEventListener("click", saveEditChanges);
+  logoutBtn.addEventListener("click", ()=>{
+    clearToken();
+    showLogin("");
+  });
 
-    // On load
-    closeModal();
-    if (getToken()) showLoggedIn().catch(()=> showLoggedOut());
-    else showLoggedOut();
-  </script>
+  refreshBtn.addEventListener("click", async ()=>{
+    try{
+      await loadAttempts();
+    }catch(e){
+      // if token becomes invalid, force login
+      clearToken();
+      showLogin("Session expired. Please login again.");
+    }
+  });
+
+  rowsEl.addEventListener("click", async (e)=>{
+    const btn = e.target.closest("button[data-act]");
+    if (!btn) return;
+    const tr = btn.closest("tr[data-id]");
+    if (!tr) return;
+
+    const act = btn.getAttribute("data-act");
+    try{
+      if (act === "save") await saveRow(tr);
+      if (act === "del") await deleteRow(tr);
+    }catch(err){
+      if ((err.message||"").toLowerCase().includes("unauthorized")){
+        clearToken();
+        showLogin("Unauthorized. Please login again.");
+      }else{
+        dashMsg.textContent = "Error: " + (err.message || err);
+      }
+    }
+  });
+
+  // ===== AUTO-BOOT =====
+  (async function init(){
+    // only try dashboard if token already exists
+    if (token()){
+      try{
+        showDash();
+        await loadAttempts();
+      }catch(e){
+        clearToken();
+        showLogin("");
+      }
+    } else {
+      showLogin("");
+    }
+  })();
+</script>
+
 </body>
 </html>

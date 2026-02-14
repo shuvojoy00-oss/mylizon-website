@@ -311,11 +311,23 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
   <script>
-    const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
-    const WA_NUMBER = "8801611611139"; // ✅ REPLACE THIS (no +)
+  const SUPABASE_URL = "https://smkvvaasvhfrljdyklcs.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_kCj2ULamXmVN2h0UbCHYBg_1sWWZQF0";
+const WA_NUMBER = "8801611611139"; // no +
 
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+// Debug
+console.log("URL:", SUPABASE_URL);
+console.log("KEY:", SUPABASE_ANON_KEY.slice(0, 25));
+
+supabaseClient.auth.getSession().then(({ data }) => {
+  console.log("SESSION:", data.session ? "AUTH" : "ANON");
+});
+
 
     const pbar = document.getElementById("pbar");
     const wcEl = document.getElementById("wc");

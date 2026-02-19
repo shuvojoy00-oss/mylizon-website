@@ -37,10 +37,20 @@
             <label>Email</label>
             <input class="input" id="email" type="email" placeholder="name@email.com" required />
           </div>
-          <div class="field">
-            <label>Password</label>
-            <input class="input" id="password" type="password" placeholder="Your password" required />
-          </div>
+      <div class="field">
+  <label>Password</label>
+  <div style="position:relative;">
+    <input class="input" id="password" type="password" placeholder="Your password" required />
+    <span id="togglePass"
+      style="position:absolute; right:12px; top:50%; transform:translateY(-50%);
+             cursor:pointer; font-size:14px; user-select:none;">
+      👁
+    </span>
+  </div>
+</div>
+
+<div id="loginMsg" class="mini" style="margin-top:10px;"></div>
+
 
           <div class="row">
             <button class="btn btnPrimary" type="submit">Login</button>
@@ -76,75 +86,107 @@
       </div>
     </div>
   </div>
+<script type="module">
+import { sb, getMyProfile } from "./assets/portal.js";
 
-  <script type="module">
-    import { sb, getMyProfile } from "./assets/portal.js";
+// Password toggle
+const passInput = document.getElementById("password");
+const togglePass = document.getElementById("togglePass");
 
-    window.addEventListener("error", (e) => {
-      alert("JS Error: " + (e?.message || "Unknown error"));
-    });
+togglePass.addEventListener("click", () => {
+  if (passInput.type === "password") {
+    passInput.type = "text";
+    togglePass.textContent = "🙈";
+  } else {
+    passInput.type = "password";
+    togglePass.textContent = "👁";
+  }
+});
 
-    // PWA install
-    let deferredPrompt = null;
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-    });
-    document.getElementById("btnInstall").addEventListener("click", async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt = null;
-      } else {
-        alert("iPhone: Share → Add to Home Screen\nAndroid: Menu → Add to Home screen / Install app");
-      }
-    });
+// Message box
+const loginMsg = document.getElementById("loginMsg");
 
-    // If already logged in, go index
-    const { data: sess } = await sb.auth.getSession();
-    if (sess.session) location.href = "./index.html";
+// If already logged in
+const { data: sess } = await sb.auth.getSession();
+if (sess.session) location.href = "./index.html";
 
-    // Google OAuth
-    document.getElementById("btnGoogle").addEventListener("click", async () => {
-      const { error } = await sb.auth.signInWithOAuth({
-        provider: "google",
-        options: { redirectTo: location.origin + "/portal/index.html" }
-      });
-      if (error) alert(error.message);
-    });
+// Google OAuth
+document.getElementById("btnGoogle").addEventListener("click", async () => {
+  const { error } = await sb.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: location.origin + "/portal/index.html" }
+  });
+  if (error) {
+    loginMsg.textContent = error.message;
+    loginMsg.style.color = "red";
+  }
+});
 
-    // Email+password login
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
+// Email + password login
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const password = document.getElementById("password").value;
+  loginMsg.textContent = "Checking...";
+  loginMsg.style.color = "#666";
 
-      const { data, error } = await sb.auth.signInWithPassword({ email, password });
-      if (error) return alert("Login failed: " + error.message);
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = passInput.value;
 
-      // invite-only check
-      const profile = await getMyProfile(data.user);
-      if (!profile || profile.status !== "active") {
-        alert("Your portal access is not active yet. Contact LizOn admin.");
-        await sb.auth.signOut();
-        return;
-      }
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
 
-      location.href = "./index.html";
-    });
+  if (error) {
+    loginMsg.style.color = "red";
 
-    // Reset password email
-    document.getElementById("btnReset").addEventListener("click", async () => {
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      if (!email) return alert("Enter your email first.");
+    if (error.message.toLowerCase().includes("invalid login credentials")) {
+      loginMsg.textContent = "Wrong email or password.";
+    } else {
+      loginMsg.textContent = error.message;
+    }
+    return;
+  }
 
-      const { error } = await sb.auth.resetPasswordForEmail(email, {
-        redirectTo: location.origin + "/portal/login.html"
-      });
+  // Invite-only check
+  const profile = await getMyProfile(data.user);
 
-      if (error) return alert("Reset failed: " + error.message);
-      alert("Password reset email sent. Check inbox/spam.");
-    });
-  </script>
+  if (!profile || profile.status !== "active") {
+    loginMsg.style.color = "red";
+    loginMsg.textContent = "Your portal access is not active yet.";
+    await sb.auth.signOut();
+    return;
+  }
+
+  loginMsg.style.color = "green";
+  loginMsg.textContent = "Login successful! Redirecting...";
+
+  setTimeout(() => {
+    location.href = "./index.html";
+  }, 800);
+});
+
+// Reset password
+document.getElementById("btnReset").addEventListener("click", async () => {
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  if (!email) {
+    loginMsg.style.color = "red";
+    loginMsg.textContent = "Enter your email first.";
+    return;
+  }
+
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: location.origin + "/portal/login.html"
+  });
+
+  if (error) {
+    loginMsg.style.color = "red";
+    loginMsg.textContent = error.message;
+    return;
+  }
+
+  loginMsg.style.color = "green";
+  loginMsg.textContent = "Password reset email sent.";
+});
+</script>
+
 </body>
 </html>
+

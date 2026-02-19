@@ -168,3 +168,182 @@ label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
   background: #fee2e2;
   color: #b91c1c;
 }
+
+/* ===== Modern Dark Auth Theme (LizOn Portal) ===== */
+:root{
+  --bg1:#0b0c10;
+  --bg2:#121321;
+  --card:#171826;
+  --card2:#1c1d2e;
+  --text:#f3f4f6;
+  --muted:rgba(243,244,246,.7);
+  --border:rgba(255,255,255,.10);
+  --border2:rgba(255,255,255,.16);
+  --shadow: 0 24px 80px rgba(0,0,0,.45);
+  --green:#0c4b2d; /* LizOn dark green */
+  --green2:#0f6b3a;
+  --danger:#ff5b6a;
+  --btn:#2a2c44;
+  --btn2:#2f3150;
+}
+
+/* page background */
+body{
+  background: radial-gradient(1200px 600px at 20% 10%, #1b1d32 0%, transparent 55%),
+              radial-gradient(1200px 600px at 80% 20%, #142f26 0%, transparent 55%),
+              linear-gradient(180deg, var(--bg2), var(--bg1));
+  color: var(--text);
+}
+
+/* make everything feel premium */
+.wrap{
+  max-width: 980px;
+}
+
+/* topbar */
+.topbar{
+  background: transparent;
+  border: none;
+  padding: 10px 0 18px 0;
+}
+
+/* cards look like the reference */
+.card{
+  background: linear-gradient(180deg, var(--card), var(--card2));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 18px;
+}
+
+/* headings */
+.h1,.sectionTitle{
+  color: var(--text);
+}
+.p,.mini{
+  color: var(--muted);
+}
+
+/* inputs */
+.input{
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 12px;
+  height: 44px;
+}
+.input::placeholder{
+  color: rgba(243,244,246,.45);
+}
+.input:focus{
+  outline: none;
+  border-color: rgba(255,255,255,.25);
+  box-shadow: 0 0 0 4px rgba(15,107,58,.18);
+}
+
+/* buttons */
+.btn{
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 12px;
+  height: 44px;
+  transition: .15s ease;
+}
+.btn:hover{
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.18);
+}
+.btnPrimary{
+  background: linear-gradient(180deg, var(--green2), var(--green));
+  border: 1px solid rgba(255,255,255,.10);
+}
+.btnPrimary:hover{
+  filter: brightness(1.05);
+}
+.btnDanger{
+  background: rgba(255,91,106,.12);
+  border: 1px solid rgba(255,91,106,.25);
+  color: #ffd4d8;
+}
+
+/* divider */
+.hr{
+  border-color: rgba(255,255,255,.08);
+}
+
+/* notice box more subtle */
+.noticeWarn{
+  background: rgba(255,91,106,.08);
+  border: 1px solid rgba(255,91,106,.18);
+  color: rgba(243,244,246,.86);
+}
+
+/* pills */
+.pill{
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  color: rgba(243,244,246,.85);
+}
+
+/* password input wrap (professional) */
+.inputWrap{
+  position: relative;
+  display:flex;
+  align-items:center;
+}
+.inputWrap .input{
+  padding-right: 48px;
+}
+.iconBtn{
+  position:absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 34px;
+  width: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.06);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  color: rgba(243,244,246,.75);
+}
+.iconBtn:hover{
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.18);
+}
+
+/* message box */
+.msgBox{
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.06);
+  font-size: 13px;
+  line-height: 1.35;
+  display:none;
+}
+.msgBox.info{ color: rgba(243,244,246,.85); }
+.msgBox.success{
+  border-color: rgba(34,197,94,.25);
+  background: rgba(34,197,94,.10);
+  color: #bff4d0;
+}
+.msgBox.error{
+  border-color: rgba(255,91,106,.25);
+  background: rgba(255,91,106,.10);
+  color: #ffd4d8;
+}
+
+/* make login layout closer to reference */
+.authGrid{
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 18px;
+}
+@media (max-width: 860px){
+  .authGrid{ grid-template-columns: 1fr; }
+}

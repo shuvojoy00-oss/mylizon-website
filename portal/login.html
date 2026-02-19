@@ -102,45 +102,58 @@
 <script type="module">
 import { sb, getMyProfile } from "./assets/portal.js";
 
-// Password toggle
+// Elements
 const passInput = document.getElementById("password");
 const togglePass = document.getElementById("togglePass");
-
-togglePass.addEventListener("click", () => {
-  if (passInput.type === "password") {
-    passInput.type = "text";
-    togglePass.textContent = "🙈";
-  } else {
-    passInput.type = "password";
-    togglePass.textContent = "👁";
-  }
-});
-
-// Message box
+const eyeOpen = document.getElementById("eyeOpen");
+const eyeClosed = document.getElementById("eyeClosed");
 const loginMsg = document.getElementById("loginMsg");
 
+// ---------------------------
+// Password toggle (clean)
+// ---------------------------
+togglePass.addEventListener("click", () => {
+  const isHidden = passInput.type === "password";
+  passInput.type = isHidden ? "text" : "password";
+
+  eyeOpen.style.display = isHidden ? "none" : "block";
+  eyeClosed.style.display = isHidden ? "block" : "none";
+});
+
+// ---------------------------
+// Helper: Show Message
+// ---------------------------
+function showMsg(text, type = "info") {
+  loginMsg.style.display = "block";
+  loginMsg.className = "msgBox " + type;
+  loginMsg.textContent = text;
+}
+
+// ---------------------------
 // If already logged in
+// ---------------------------
 const { data: sess } = await sb.auth.getSession();
 if (sess.session) location.href = "./index.html";
 
-// Google OAuth
+// ---------------------------
+// Google Login
+// ---------------------------
 document.getElementById("btnGoogle").addEventListener("click", async () => {
   const { error } = await sb.auth.signInWithOAuth({
     provider: "google",
     options: { redirectTo: location.origin + "/portal/index.html" }
   });
-  if (error) {
-    loginMsg.textContent = error.message;
-    loginMsg.style.color = "red";
-  }
+
+  if (error) showMsg(error.message, "error");
 });
 
-// Email + password login
+// ---------------------------
+// Email + Password Login
+// ---------------------------
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  loginMsg.textContent = "Checking...";
-  loginMsg.style.color = "#666";
+  showMsg("Checking credentials...", "info");
 
   const email = document.getElementById("email").value.trim().toLowerCase();
   const password = passInput.value;
@@ -148,40 +161,37 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
 
   if (error) {
-    loginMsg.style.color = "red";
-
     if (error.message.toLowerCase().includes("invalid login credentials")) {
-      loginMsg.textContent = "Wrong email or password.";
+      showMsg("Wrong email or password.", "error");
     } else {
-      loginMsg.textContent = error.message;
+      showMsg(error.message, "error");
     }
     return;
   }
 
-  // Invite-only check
   const profile = await getMyProfile(data.user);
 
   if (!profile || profile.status !== "active") {
-    loginMsg.style.color = "red";
-    loginMsg.textContent = "Your portal access is not active yet.";
+    showMsg("Your portal access is not active yet.", "error");
     await sb.auth.signOut();
     return;
   }
 
-  loginMsg.style.color = "green";
-  loginMsg.textContent = "Login successful! Redirecting...";
+  showMsg("Login successful! Redirecting...", "success");
 
   setTimeout(() => {
     location.href = "./index.html";
-  }, 800);
+  }, 900);
 });
 
-// Reset password
+// ---------------------------
+// Reset Password
+// ---------------------------
 document.getElementById("btnReset").addEventListener("click", async () => {
   const email = document.getElementById("email").value.trim().toLowerCase();
+
   if (!email) {
-    loginMsg.style.color = "red";
-    loginMsg.textContent = "Enter your email first.";
+    showMsg("Enter your email first.", "error");
     return;
   }
 
@@ -190,17 +200,16 @@ document.getElementById("btnReset").addEventListener("click", async () => {
   });
 
   if (error) {
-    loginMsg.style.color = "red";
-    loginMsg.textContent = error.message;
+    showMsg(error.message, "error");
     return;
   }
 
-  loginMsg.style.color = "green";
-  loginMsg.textContent = "Password reset email sent.";
+  showMsg("Password reset email sent.", "success");
 });
 </script>
 
 </body>
 </html>
+
 
 

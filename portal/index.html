@@ -4,6 +4,8 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Portal — LizOn</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0b5f2a" />
   <link rel="stylesheet" href="./assets/portal.css"/>
 </head>
 <body>
@@ -27,6 +29,10 @@
   </div>
 
   <script type="module">
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js").catch(()=>{});
+    }
+
     import { requireActiveProfile } from "./assets/portal.js";
 
     const pack = await requireActiveProfile();

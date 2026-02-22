@@ -907,29 +907,7 @@
       </div>
     </div>
   </section>
-  <!-- EARLY ACCESS POPUP (IMAGE ADDED) -->
-  <div class="pop-wrap" id="earlyPop" aria-hidden="true">
-    <div class="pop" role="dialog" aria-modal="true" aria-label="Early Access Reward">
-      <div class="pop-head">
-        <div class="pop-title">Limited Time Discount</div>
-        <button class="x" id="earlyPopClose" type="button" aria-label="Close">✕</button>
-      </div>
-      <div class="pop-body">
-        <div class="pop-img" aria-label="Early access discount poster">
-          <img src="assets/pte-early-access-2000tk.png" alt="PTE Early Access 2000tk Discount - LizOn Education" loading="eager" />
-        </div>
-        <p><b>2000tk fee reduction</b> — early admission e.</p>
-        <div class="pop-actions">
-          <button class="btn btn-blue" id="earlyPopQuickTips" type="button">Watch Quick Tips</button>
-          <a class="btn btn-primary" id="earlyPopSecure"
-             href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%2C%20PTE%20January%20batch%20e%20early%20admission%20nite%20chai.%20Limited%20Time%20Discount%20niye%20details%20diben%3F"
-             target="_blank" rel="noopener">Get Discount</a>
-          <button class="btn btn-teal" data-open-ask type="button">AskLizOn (tap)</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
+ 
   <!-- COMMON MISTAKE POPUP -->
   <div class="pop-wrap" id="mistakePop" aria-hidden="true">
     <div class="pop" role="dialog" aria-modal="true" aria-label="PTE most common mistake">
@@ -1845,27 +1823,16 @@
     // ----------------------------
     // Popups: Early + Mistake
     // ----------------------------
-    const earlyPop = $('#earlyPop');
+  
     const mistakePop = $('#mistakePop');
 
-    $('#earlyPopClose').addEventListener('click', ()=> closePop('earlyPop'));
-    $('#earlyPopQuickTips').addEventListener('click', ()=>{
-      closePop('earlyPop');
-      location.hash = '#quicktips';
-    });
-    earlyPop.addEventListener('click', (e)=>{ if(e.target === earlyPop) closePop('earlyPop'); });
+  
 
     $('#mistakePopClose').addEventListener('click', ()=> closePop('mistakePop'));
     $('#mistakePopClose2').addEventListener('click', ()=> closePop('mistakePop'));
     mistakePop.addEventListener('click', (e)=>{ if(e.target === mistakePop) closePop('mistakePop'); });
 
-    // Show Early Access once per session
-    try{
-      if(!sessionStorage.getItem('pte_early_shown')){
-        sessionStorage.setItem('pte_early_shown','1');
-        setTimeout(()=> openPop('earlyPop'), 1100);
-      }
-    }catch(_){}
+
 
     // Show mistake popup once after some scrolling
     let mistakeShown = false;

@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PTE Class | LizOn Education</title>
+  <meta
+    name="description"
+    content="Learn PTE properly with LizOn Education. Watch class videos inside the site, follow the lesson flow, and prepare with an officially trained instructor."
+  />
+
+  <style>
+    :root{
+      --bg: #f4f8f5;
+      --panel: #ffffff;
+      --panel-2: #eef5f0;
+      --text: #163126;
+      --muted: #5b6f66;
+      --brand: #0f4d3b;
+      --brand-2: #1b6b54;
+      --line: #dce9e0;
+      --soft: 0 10px 30px rgba(15, 77, 59, 0.08);
+      --soft-2: 0 18px 45px rgba(15, 77, 59, 0.12);
+      --gold: #c39b32;
+      --danger: #b23a48;
+      --radius: 22px;
+      --radius-sm: 14px;
+      --header-h: 84px;
+    }
+
+    *{
+      box-sizing: border-box;
+    }
+
+    html{
+      scroll-behavior: smooth;
+    }
+
+    body{
+      margin:0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(27,107,84,.08), transparent 25%),
+        linear-gradient(180deg, #f7fbf8 0%, #eef6f1 100%);
+      color: var(--text);
+    }
+
+    a{
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img{
+      max-width: 100%;
+      display: block;
+    }
+
+    .container{
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .header{
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,.82);
+      border-bottom: 1px solid rgba(15,77,59,.08);
+    }
+
+    .header-inner{
+      min-height: var(--header-h);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width: 0;
+    }
+
+    .brand-badge{
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand), #2d8c70);
+      color: #fff;
+      display:grid;
+      place-items:center;
+      font-weight: 800;
+      box-shadow: var(--soft);
+      flex-shrink: 0;
+    }
+
+    .brand-text{
+      min-width: 0;
+    }
+
+    .brand-text h1{
+      font-size: 18px;
+      line-height: 1.1;
+      margin: 0 0 4px;
+      color: var(--brand);
+    }
+
+    .brand-text p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border:none;
+      cursor:pointer;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: .2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover{
+      transform: translateY(-1px);
+    }
+
+    .btn-primary{
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: #fff;
+      box-shadow: var(--soft);
+    }
+
+    .btn-secondary{
+      background: #fff;
+      color: var(--brand);
+      border: 1px solid var(--line);
+    }
+
+    .hero{
+      padding: 34px 0 22px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.18fr .82fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .side-card,
+    .player-wrap,
+    .lesson-card,
+    .journey-card,
+    .footer-card{
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(15,77,59,.09);
+      border-radius: var(--radius);
+      box-shadow: var(--soft);
+    }
+
+    .hero-card{
+      padding: 30px;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at top right, rgba(27,107,84,.12), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.96) 0%, rgba(247,252,249,.96) 100%);
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(15,77,59,.08);
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero-card h2{
+      margin:0 0 14px;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.06;
+      letter-spacing: -.02em;
+    }
+
+    .hero-card h2 .accent{
+      color: var(--brand);
+    }
+
+    .hero-card p{
+      margin:0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .mini-point{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .mini-point strong{
+      display:block;
+      color: var(--brand);
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .mini-point span{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .side-card{
+      padding: 22px;
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+    }
+
+    .score-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      align-self: flex-start;
+      background: rgba(195,155,50,.12);
+      color: #7b5a0a;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .side-card h3{
+      margin:0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .side-card p{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .check-list{
+      display:grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .check-item{
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .check-dot{
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--brand);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .section{
+      padding: 12px 0 30px;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h3{
+      margin:0;
+      font-size: clamp(24px, 3vw, 36px);
+      color: var(--brand);
+    }
+
+    .section-head p{
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 780px;
+    }
+
+    .main-layout{
+      display:grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .journey-card{
+      position: sticky;
+      top: calc(var(--header-h) + 16px);
+      padding: 18px;
+    }
+
+    .journey-card h4{
+      margin:0 0 12px;
+      font-size: 18px;
+      color: var(--brand);
+    }
+
+    .journey-card p{
+      margin:0 0 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .progress-box{
+      background: linear-gradient(135deg, rgba(15,77,59,.09), rgba(27,107,84,.04));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .progress-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--brand);
+    }
+
+    .progress-track{
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #d9e8de;
+      overflow:hidden;
+    }
+
+    .progress-fill{
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      transition: width .25s ease;
+    }
+
+    .lesson-nav{
+      display:grid;
+      gap: 10px;
+    }
+
+    .lesson-jump{
+      display:flex;
+      align-items:flex-start;
+      gap: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 16px;
+      padding: 12px;
+      transition: .18s ease;
+    }
+
+    .lesson-jump:hover{
+      border-color: rgba(15,77,59,.28);
+      transform: translateY(-1px);
+    }
+
+    .lesson-jump-index{
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(15,77,59,.1);
+      color: var(--brand);
+      display:grid;
+      place-items:center;
+      font-weight: 800;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .lesson-jump strong{
+      display:block;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .lesson-jump span{
+      display:block;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .reset-btn{
+      width: 100%;
+      margin-top: 14px;
+      background: #fff;
+      color: var(--danger);
+      border: 1px solid rgba(178,58,72,.18);
+    }
+
+    .lessons{
+      display:grid;
+      gap: 18px;
+    }
+
+    .lesson-card{
+      overflow: hidden;
+      scroll-margin-top: calc(var(--header-h) + 18px);
+    }
+
+    .lesson-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      padding: 18px 18px 0;
+      flex-wrap: wrap;
+    }
+
+    .lesson-num{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .lesson-badge{
+      background: rgba(15,77,59,.08);
+      border: 1px solid rgba(15,77,59,.08);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--brand);
+    }
+
+    .lesson-main{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      padding: 16px 18px 18px;
+      align-items: stretch;
+    }
+
+    .player-wrap{
+      padding: 0;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: none;
+      background: #08110d;
+      min-height: 300px;
+      position: relative;
+    }
+
+    .video-shell{
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #08110d;
+      overflow: hidden;
+    }
+
+    .video-thumb{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-overlay{
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.55)),
+        linear-gradient(135deg, rgba(15,77,59,.18), rgba(27,107,84,.08));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition: .2s ease;
+    }
+
+    .video-overlay:hover{
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.48)),
+        linear-gradient(135deg, rgba(15,77,59,.12), rgba(27,107,84,.06));
+    }
+
+    .play-btn{
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.94);
+      color: var(--brand);
+      display:grid;
+      place-items:center;
+      box-shadow: 0 18px 45px rgba(0,0,0,.2);
+      font-size: 28px;
+      padding-left: 4px;
+    }
+
+    .thumb-label{
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .thumb-chip{
+      background: rgba(255,255,255,.95);
+      color: var(--brand);
+      font-weight: 800;
+      font-size: 12.5px;
+      border-radius: 999px;
+      padding: 10px 12px;
+    }
+
+    .watch-note{
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      opacity: .96;
+    }
+
+    iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
+
+    .lesson-content{
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+      padding: 2px 4px 2px 2px;
+    }
+
+    .lesson-content h4{
+      margin:0;
+      font-size: clamp(20px, 2vw, 28px);
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    .lesson-content p{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .lesson-meta{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .meta-box{
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: var(--panel-2);
+    }
+
+    .meta-box strong{
+      display:block;
+      color: var(--brand);
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .meta-box span{
+      display:block;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .lesson-actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 2px;
+    }
+
+    .mini-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--brand);
+      cursor: pointer;
+    }
+
+    .mini-btn.complete.active{
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color:#fff;
+      border-color: transparent;
+    }
+
+    .cta-band{
+      padding: 10px 0 34px;
+    }
+
+    .cta-card{
+      background: linear-gradient(135deg, #0f4d3b, #1a7058);
+      color: #fff;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--soft-2);
+    }
+
+    .cta-card h3{
+      margin:0 0 12px;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.15;
+    }
+
+    .cta-card p{
+      margin:0;
+      color: rgba(255,255,255,.9);
+      font-size: 15px;
+      line-height: 1.8;
+      max-width: 860px;
+    }
+
+    .cta-actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .cta-actions .btn-secondary{
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.22);
+      color: #fff;
+    }
+
+    footer{
+      padding: 0 0 40px;
+    }
+
+    .footer-card{
+      padding: 22px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+    }
+
+    .footer-card h4{
+      margin:0 0 10px;
+      color: var(--brand);
+      font-size: 22px;
+    }
+
+    .footer-card p{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .footer-chip-wrap{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .footer-chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 11px 14px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      color: var(--brand);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .bottom-bar{
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      z-index: 1000;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      background: rgba(15,77,59,.95);
+      color:#fff;
+      padding: 12px 14px;
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+      backdrop-filter: blur(10px);
+    }
+
+    .bottom-bar strong{
+      display:block;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .bottom-bar span{
+      display:block;
+      font-size: 12.5px;
+      opacity: .92;
+    }
+
+    .bottom-bar .btn{
+      padding: 11px 14px;
+      background: #fff;
+      color: var(--brand);
+      box-shadow: none;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 1100px){
+      .hero-grid,
+      .main-layout,
+      .footer-grid,
+      .lesson-main{
+        grid-template-columns: 1fr;
+      }
+
+      .journey-card{
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px){
+      :root{
+        --header-h: 76px;
+      }
+
+      .container{
+        width: min(100% - 20px, 1200px);
+      }
+
+      .header-inner{
+        gap: 12px;
+      }
+
+      .brand-text h1{
+        font-size: 16px;
+      }
+
+      .brand-text p{
+        font-size: 12px;
+      }
+
+      .header-actions{
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .header-actions .btn{
+        flex: 1 1 100%;
+      }
+
+      .hero-card,
+      .side-card,
+      .journey-card,
+      .cta-card,
+      .footer-card{
+        padding: 18px;
+      }
+
+      .hero-points,
+      .lesson-meta{
+        grid-template-columns: 1fr;
+      }
+
+      .play-btn{
+        width: 72px;
+        height: 72px;
+        font-size: 24px;
+      }
+
+      .bottom-bar{
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .bottom-bar .btn{
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="https://www.MyLizOn.com/">
+        <div class="brand-badge">L</div>
+        <div class="brand-text">
+          <h1>LizOn Education</h1>
+          <p>PTE Class Portal | Learn inside the site</p>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a
+          class="btn btn-secondary"
+          href="#classes"
+        >
+          Browse Classes
+        </a>
+
+        <a
+          class="btn btn-primary"
+          href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn.%20I%20want%20to%20join%20the%20PTE%20course."
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Join PTE Course
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-card">
+          <div class="tag">PTE Class with the Pearson way</div>
+
+          <h2>
+            You deserve to achieve your <span class="accent">PTE score</span>.
+          </h2>
+
+          <p>
+            This is where you start properly — with an officially trained instructor,
+            <strong>Mr. Joy Sir</strong>, who also achieved a <strong>PTE score of 87</strong>.
+            Open each class, tap the thumbnail, watch inside the site, and follow the lesson flow one by one.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary"
+              href="#classes"
+            >
+              Start Learning Now
+            </a>
+
+            <a
+              class="btn btn-secondary"
+              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn.%20I%20need%20guidance%20for%20PTE."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Talk with LizOn
+            </a>
+          </div>
+
+          <div class="hero-points">
+            <div class="mini-point">
+              <strong>Watch inside site</strong>
+              <span>No need to leave the page. Just tap and learn directly here.</span>
+            </div>
+            <div class="mini-point">
+              <strong>Follow the class flow</strong>
+              <span>Students can move step by step and avoid random learning.</span>
+            </div>
+            <div class="mini-point">
+              <strong>Track progress</strong>
+              <span>Mark each class complete and keep your learning organized.</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="side-card">
+          <div class="score-pill">Officially trained instructor • PTE 87 scorer</div>
+          <h3>How to use this page properly</h3>
+          <p>
+            Don’t jump randomly. Start from the first lesson, understand the method,
+            then move module by module. After watching a class, mark it complete so
+            you know exactly where you are.
+          </p>
+
+          <div class="check-list">
+            <div class="check-item">
+              <div class="check-dot">1</div>
+              <div>Start with the scoring method so you understand how Pearson actually evaluates your score.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-dot">2</div>
+              <div>Move through reading, listening, writing, and speaking classes in the order given below.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-dot">3</div>
+              <div>Tap each thumbnail to play the class inside the website.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-dot">4</div>
+              <div>Need help to join the full course? Use the WhatsApp button and talk with LizOn directly.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="classes">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>PTE Class Roadmap</h3>
+            <p>
+              These class titles and links are based on your provided class document. Students can learn by pressing any thumbnail below and the lesson will open inside the page. :contentReference[oaicite:1]{index=1}
+            </p>
+          </div>
+        </div>
+
+        <div class="main-layout">
+          <aside class="journey-card">
+            <h4>Student Journey</h4>
+            <p>
+              Complete the lessons in sequence. This page remembers your progress on this device.
+            </p>
+
+            <div class="progress-box">
+              <div class="progress-top">
+                <span>Completed</span>
+                <span id="progressText">0 / 10</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+
+            <nav class="lesson-nav" id="lessonNav"></nav>
+
+            <button class="btn reset-btn" id="resetProgressBtn" type="button">
+              Reset Progress
+            </button>
+          </aside>
+
+          <div class="lessons" id="lessonsContainer"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="container">
+        <div class="cta-card">
+          <h3>Need the full PTE course guidance from LizOn?</h3>
+          <p>
+            Watching classes is a strong start. But if you want proper direction, module support,
+            score-focused preparation, and direct guidance, talk with LizOn on WhatsApp and join the
+            course properly.
+          </p>
+
+          <div class="cta-actions">
+            <a
+              class="btn btn-secondary"
+              href="#classes"
+            >
+              Continue Learning
+            </a>
+
+            <a
+              class="btn btn-primary"
+              href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn.%20I%20want%20to%20join%20the%20PTE%20course.%20Please%20guide%20me."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Join PTE Course
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-card">
+        <div class="footer-grid">
+          <div>
+            <h4>LizOn Education</h4>
+            <p>
+              Learn smart, not randomly. This page is designed so students can come, open the classes,
+              learn inside the website, and move through the PTE journey properly.
+            </p>
+
+            <div class="footer-chip-wrap">
+              <div class="footer-chip">PTE Class Portal</div>
+              <div class="footer-chip">Inside-site video learning</div>
+              <div class="footer-chip">WhatsApp support available</div>
+            </div>
+          </div>
+
+          <div>
+            <h4>Quick Contact</h4>
+            <p>
+              Need help with course joining, class direction, or PTE preparation?
+              Tap below and talk with LizOn directly.
+            </p>
+
+            <div class="footer-chip-wrap">
+              <a
+                class="footer-chip"
+                href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn.%20I%20need%20help%20with%20PTE."
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp: 01611611139
+              </a>
+
+              <a
+                class="footer-chip"
+                href="https://www.MyLizOn.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit MyLizOn.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="bottom-bar">
+    <div>
+      <strong>Need guidance to achieve your PTE score?</strong>
+      <span>Talk with LizOn directly on WhatsApp.</span>
+    </div>
+
+    <a
+      class="btn"
+      href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn.%20I%20want%20guidance%20for%20PTE."
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Talk with LizOn
+    </a>
+  </div>
+
+  <script>
+    const lessons = [
+      {
+        id: 1,
+        title: "Learn PTE – Pearson Scoring Method",
+        videoId: "vQsm8p43Szw",
+        category: "Foundation",
+        focus: "Understand how Pearson scoring works before you go into module practice.",
+        support: "Best to start with first so students know the logic behind the exam."
+      },
+      {
+        id: 2,
+        title: "PTE: Reading – Re-Order Sentences & MCQ",
+        videoId: "vQsm8p43Szw",
+        category: "Reading",
+        focus: "Build understanding around reading structure, sentence logic, and MCQ strategy.",
+        support: "Good early module class after understanding the scoring system."
+      },
+      {
+        id: 3,
+        title: "PTE: WFD (Dictation), FIG (Drag Drop)",
+        videoId: "ESTz-Fn15Sk",
+        category: "Listening + Integrated",
+        focus: "Work on high-impact practice areas like dictation and drag-drop logic.",
+        support: "Very useful for students who want score improvement through repeated practice."
+      },
+      {
+        id: 4,
+        title: "PTE: Reading - FiB (Drop-Down), Speaking - ASQ",
+        videoId: "O_f8ADEWpio",
+        category: "Reading + Speaking",
+        focus: "Train fill in the blanks understanding and quick-answer speaking control.",
+        support: "A mixed class that helps students stay sharp in both language response and pattern."
+      },
+      {
+        id: 5,
+        title: "PTE - Listening MCQ & SMW - Select Missing Word",
+        videoId: "AXphkM1DeLc",
+        category: "Listening",
+        focus: "Improve listening selection logic and understanding of missing-word decisions.",
+        support: "Helps students reduce guessing and become more method-based."
+      },
+      {
+        id: 6,
+        title: "PTE Listening MCQ Multiple Answer – Understanding Method",
+        videoId: "73GVWd18Y1g",
+        category: "Listening",
+        focus: "Step-by-step understanding method for one of the trickier listening areas.",
+        support: "Important for avoiding confusion in multiple-answer questions."
+      },
+      {
+        id: 7,
+        title: "PTE: Listening - SST, FiB, HiW",
+        videoId: "vHnOqjwvbF4",
+        category: "Listening + Writing",
+        focus: "Covers summarized response thinking, fill in blanks, and highlight incorrect words.",
+        support: "A strong class for students needing organized module practice."
+      },
+      {
+        id: 8,
+        title: "PTE: Writing - Essay Writing",
+        videoId: "8W0PBaQbCxg",
+        category: "Writing",
+        focus: "Understand how to structure essay writing properly instead of writing randomly.",
+        support: "Useful for students who struggle with idea flow and academic response style."
+      },
+      {
+        id: 9,
+        title: "PTE: Speaking - Re-Tell Lecture",
+        videoId: "NOK6e-P2CEc",
+        category: "Speaking",
+        focus: "Build speaking control, organization, and delivery for lecture-based response.",
+        support: "Important for speaking confidence and structured output."
+      },
+      {
+        id: 10,
+        title: "PTE Key Class for Success | Read Aloud, DI, FIG, HIW",
+        videoId: "6UFcwhzAawU",
+        category: "Success Class",
+        focus: "A key mixed class to tie together important scoring modules for success.",
+        support: "A useful class when students want to connect multiple high-value tasks."
+      },
+      {
+        id: 11,
+        title: "Summarize Written Text (Updated High Scoring Method)",
+        videoId: "t5WOMAm6VIw",
+        category: "Writing",
+        focus: "Updated high-scoring method for Summarize Written Text.",
+        support: "Strong lesson for students who want better structure and scoring awareness."
+      }
+    ];
+
+    /*
+      The user asked for all classes from the document.
+      The document snippet contains 11 lines/classes including the scoring-method entry.
+      For progress clarity in the UI, we will use all available lessons from the document.
+    */
+
+    const correctedLessons = lessons.map((item, idx) => ({
+      ...item,
+      id: idx + 1
+    }));
+
+    const lessonsContainer = document.getElementById("lessonsContainer");
+    const lessonNav = document.getElementById("lessonNav");
+    const progressText = document.getElementById("progressText");
+    const progressFill = document.getElementById("progressFill");
+    const resetProgressBtn = document.getElementById("resetProgressBtn");
+
+    const STORAGE_KEY = "lizon_pteclass_progress_v1";
+
+    function getSavedProgress() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveProgress(progress) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    function getYouTubeThumb(videoId) {
+      return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    }
+
+    function renderLessonNav() {
+      lessonNav.innerHTML = correctedLessons.map(lesson => `
+        <a class="lesson-jump" href="#lesson-${lesson.id}">
+          <div class="lesson-jump-index">${lesson.id}</div>
+          <div>
+            <strong>${lesson.title}</strong>
+            <span>${lesson.category}</span>
+          </div>
+        </a>
+      `).join("");
+    }
+
+    function renderLessons() {
+      const progress = getSavedProgress();
+
+      lessonsContainer.innerHTML = correctedLessons.map(lesson => {
+        const completed = !!progress[lesson.id];
+        return `
+          <article class="lesson-card" id="lesson-${lesson.id}">
+            <div class="lesson-top">
+              <div class="lesson-num">Lesson ${lesson.id}</div>
+              <div class="lesson-badge">${lesson.category}</div>
+            </div>
+
+            <div class="lesson-main">
+              <div class="player-wrap">
+                <div class="video-shell" id="video-shell-${lesson.id}">
+                  <img
+                    class="video-thumb"
+                    src="${getYouTubeThumb(lesson.videoId)}"
+                    alt="${lesson.title}"
+                    loading="lazy"
+                  />
+                  <div
+                    class="video-overlay"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Play ${lesson.title}"
+                    onclick="playVideo(${lesson.id}, '${lesson.videoId}')"
+                    onkeydown="handleVideoKey(event, ${lesson.id}, '${lesson.videoId}')"
+                  >
+                    <div class="play-btn">▶</div>
+                    <div class="thumb-label">
+                      <div class="thumb-chip">Tap to play inside site</div>
+                      <div class="watch-note">Learn now</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="lesson-content">
+                <h4>${lesson.title}</h4>
+                <p>${lesson.focus}</p>
+
+                <div class="lesson-meta">
+                  <div class="meta-box">
+                    <strong>Why this class matters</strong>
+                    <span>${lesson.support}</span>
+                  </div>
+                  <div class="meta-box">
+                    <strong>Best student action</strong>
+                    <span>Watch fully, understand the method, then mark it complete.</span>
+                  </div>
+                </div>
+
+                <div class="lesson-actions">
+                  <button
+                    class="mini-btn"
+                    type="button"
+                    onclick="playVideo(${lesson.id}, '${lesson.videoId}')"
+                  >
+                    Play Class
+                  </button>
+
+                  <button
+                    class="mini-btn complete ${completed ? 'active' : ''}"
+                    type="button"
+                    data-complete-id="${lesson.id}"
+                    onclick="toggleComplete(${lesson.id})"
+                  >
+                    ${completed ? 'Completed ✓' : 'Mark Complete'}
+                  </button>
+
+                  <a
+                    class="mini-btn"
+                    href="https://www.youtube.com/watch?v=${lesson.videoId}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open YouTube
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      updateProgressUI();
+    }
+
+    function playVideo(lessonId, videoId) {
+      const shell = document.getElementById(`video-shell-${lessonId}`);
+      if (!shell) return;
+
+      shell.innerHTML = `
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      `;
+    }
+
+    function handleVideoKey(event, lessonId, videoId) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        playVideo(lessonId, videoId);
+      }
+    }
+
+    function toggleComplete(lessonId) {
+      const progress = getSavedProgress();
+      progress[lessonId] = !progress[lessonId];
+      saveProgress(progress);
+
+      const btn = document.querySelector(`[data-complete-id="${lessonId}"]`);
+      if (btn) {
+        if (progress[lessonId]) {
+          btn.classList.add("active");
+          btn.textContent = "Completed ✓";
+        } else {
+          btn.classList.remove("active");
+          btn.textContent = "Mark Complete";
+        }
+      }
+
+      updateProgressUI();
+    }
+
+    function updateProgressUI() {
+      const progress = getSavedProgress();
+      const total = correctedLessons.length;
+      const completed = correctedLessons.filter(lesson => progress[lesson.id]).length;
+      const percent = total ? (completed / total) * 100 : 0;
+
+      progressText.textContent = `${completed} / ${total}`;
+      progressFill.style.width = `${percent}%`;
+    }
+
+    resetProgressBtn.addEventListener("click", () => {
+      localStorage.removeItem(STORAGE_KEY);
+      renderLessons();
+    });
+
+    renderLessonNav();
+    renderLessons();
+  </script>
+</body>
+</html>

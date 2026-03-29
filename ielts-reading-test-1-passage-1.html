@@ -3,124 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LizOn Education | Reading Practice</title>
+    <title>LizOn Education | Pro Reading Mock</title>
     <style>
-        :root { --blue: #0051a8; --correct: #28a745; --wrong: #dc3545; --bg: #f8f9fa; }
-        body { font-family: 'Times New Roman', serif; margin: 0; background: var(--bg); display: flex; flex-direction: column; height: 100vh; }
-        header { background: var(--blue); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-family: sans-serif; position: sticky; top: 0; z-index: 100; }
+        :root { --blue: #0051a8; --green: #218838; --red: #dc3545; --highlight: #fff3cd; }
+        body { font-family: 'Times New Roman', serif; margin: 0; background: #f0f2f5; height: 100vh; display: flex; flex-direction: column; }
+        header { background: var(--blue); color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-family: sans-serif; }
         
         main { display: flex; flex: 1; overflow: hidden; }
-        #passage { width: 50%; padding: 30px; overflow-y: auto; background: white; border-right: 1px solid #ccc; line-height: 1.9; font-size: 1.1rem; text-align: justify; }
-        #questions { width: 50%; padding: 30px; overflow-y: auto; background: var(--bg); font-family: sans-serif; }
+        #passage { width: 50%; padding: 30px; overflow-y: auto; background: white; border-right: 1px solid #ccc; line-height: 1.8; font-size: 1.15rem; text-align: justify; }
+        #questions { width: 50%; padding: 30px; overflow-y: auto; background: #f8f9fa; font-family: sans-serif; }
 
-        /* Mobile View Fix */
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
             main { flex-direction: column; overflow-y: auto; }
             #passage, #questions { width: 100%; height: auto; overflow: visible; }
         }
 
-        .q-card { background: white; padding: 20px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        h2 { color: var(--blue); margin-top: 0; font-family: sans-serif; }
-        .highlight { background: #fff3cd; border-bottom: 2px solid orange; padding: 2px 0; }
-        .q-badge { background: orange; color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8rem; margin-right: 5px; }
+        .q-card { background: white; padding: 25px; margin-bottom: 20px; border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { color: var(--blue); border-bottom: 2px solid var(--blue); padding-bottom: 10px; }
+        .highlight-ans { background: var(--highlight); border-bottom: 2px solid orange; font-weight: bold; }
+        .q-badge { background: orange; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.85rem; margin-right: 8px; }
         
-        .exp-box { display: none; margin-top: 15px; padding: 15px; background: #fdfdfe; border-left: 4px solid var(--blue); font-size: 0.95rem; }
-        .bangla { color: #d63384; display: block; margin-top: 8px; font-weight: bold; }
-        .exp-btn { background: #6c757d; color: white; border: none; padding: 5px 12px; cursor: pointer; border-radius: 4px; display: none; margin-top: 5px; }
+        /* Feedback Styling */
+        .review-box { display: none; margin-top: 15px; padding: 15px; background: #fdfdfe; border-left: 5px solid var(--blue); border-radius: 4px; border: 1px solid #eee; }
+        .correct-ans-text { color: var(--green); font-weight: bold; display: block; margin-bottom: 5px; }
+        .logic-text { font-style: italic; color: #444; display: block; margin-bottom: 10px; font-size: 0.95rem; }
+        .bangla-box { background: #fff0f6; padding: 10px; border-radius: 5px; color: #b91d5a; font-size: 0.95rem; line-height: 1.5; }
         
-        input[type="text"], select { padding: 6px; border: 1px solid #ccc; border-radius: 4px; }
-        footer { background: white; padding: 15px; text-align: center; border-top: 1px solid #ccc; }
-        #submit-btn { background: var(--correct); color: white; border: none; padding: 12px 60px; font-size: 1.1rem; border-radius: 5px; cursor: pointer; }
+        .exp-btn { background: #6c757d; color: white; border: none; padding: 6px 15px; cursor: pointer; border-radius: 4px; display: none; margin-top: 10px; transition: 0.3s; }
+        .exp-btn:hover { background: #495057; }
+        
+        input[type="text"], select { padding: 8px; border: 1px solid #bbb; border-radius: 4px; width: 150px; }
+        footer { background: #343a40; padding: 20px; text-align: center; position: sticky; bottom: 0; }
+        #submit-btn { background: var(--green); color: white; border: none; padding: 15px 80px; font-size: 1.2rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
-    <div>LIZON EDUCATION | ACADEMIC READING</div>
-    <div id="score">Total: 13 Questions</div>
+    <div style="font-size: 1.3rem;">LIZON EDUCATION | <span id="mode">Exam Mode</span></div>
+    <div id="final-score">Questions: 13</div>
 </header>
 
 <main>
     <div id="passage">
         <h2>The Global Impact of Maritime Containerization</h2>
-        <p><strong>A.</strong> <span id="ans1">Prior to the 1950s, the maritime industry was characterized by the "break-bulk" method, an archaic system where individual items were loaded into ships by hand.</span> This process was not only incredibly slow but also prone to massive inefficiencies. For instance, a typical vessel might carry thousands of distinct barrels, sacks of grain, and wooden crates, each requiring manual handling by gangs of dockworkers. Ships often spent twice as much time sitting in harbors being loaded as they did at sea. This stagnant period at the docks increased the risk of theft and damage, significantly inflating the overall cost of international commerce.</p>
+        <p><strong>A.</strong> <span id="ans1">Prior to the 1950s, the maritime industry was characterized by the "break-bulk" method, an archaic system where individual items were loaded into ships by hand.</span> This process was not only incredibly slow but also prone to massive inefficiencies. A typical vessel might carry thousands of distinct barrels, sacks of grain, and wooden crates, each requiring manual handling. Ships often spent twice as much time sitting in harbors being loaded as they did at sea. This stagnant period at the docks increased the risk of theft and damage, significantly inflating the overall cost of international commerce.</p>
         
-        <p><strong>B.</strong> The true catalyst for change was Malcolm McLean, a trucking magnate who grew weary of the bottlenecks at coastal ports. <span id="ans2">Drawing on his background in land transport, McLean theorized that if the cargo remained inside a single, sealed unit from factory to destination, the need for manual sorting would vanish.</span> In 1956, he launched the <i>Ideal X</i>. <span id="ans3">The financial results were staggering: the cost of loading dropped from nearly six dollars per ton to roughly sixteen cents, a reduction exceeding 90%.</span> This marked the death of the old harbor era and the birth of modern logistics.</p>
+        <p><strong>B.</strong> The true catalyst for change was Malcolm McLean. <span id="ans2">Drawing on his background in land transport, McLean theorized that if the cargo remained inside a single, sealed unit from factory to destination, the need for manual sorting would vanish.</span> In 1956, he launched the <i>Ideal X</i>. <span id="ans3">The financial results were staggering: the cost of loading dropped from nearly six dollars per ton to roughly sixteen cents, a reduction exceeding 90%.</span> This marked the birth of modern logistics.</p>
 
-        <p><strong>C.</strong> However, the path to global dominance was blocked by a lack of international coordination. Various shipping companies initially developed their own proprietary container sizes, which meant a container from one company could not be stacked on another’s ship. <span id="ans4">Universal adoption was only realized in the late 1960s when the International Organization for Standardization (ISO) dictated the standard 20-foot and 40-foot lengths.</span> This allowed for a seamless "intermodal" transition between ships, trains, and semi-trucks.</p>
+        <p><strong>C.</strong> However, coordination was a hurdle. Companies initially developed proprietary sizes. <span id="ans4">Universal adoption was only realized in the late 1960s when the ISO established the standard 20-foot and 40-foot lengths.</span> This allowed for a seamless "intermodal" transition between ships, trains, and trucks.</p>
 
-        <p><strong>D.</strong> The socio-economic consequences were profound. <span id="ans8">As freight costs plummeted, multinational corporations found it economically viable to relocate manufacturing to regions with significantly lower labor costs.</span> Consequently, <span id="ans9">traditional industrial centers in Europe and North America experienced a sharp decline</span> in production. Not all port cities survived this transition; <span id="ans10">those lacking the capital to invest in massive automated cranes and deep-water berths quickly fell into obsolescence</span>, while others like Singapore transformed into global nexus points of trade.</p>
+        <p><strong>D.</strong> <span id="ans8">As freight costs plummeted, multinational corporations found it viable to relocate manufacturing to regions with significantly lower labor costs.</span> Consequently, <span id="ans9">traditional industrial centers in the West experienced a sharp decline</span> in production. Ports lacking investment in cranes faced <span id="ans10">obsolescence</span>, while others like Singapore became powerhouses.</p>
 
-        <p><strong>E.</strong> Despite the efficiency, environmentalists highlight the ecological price of this growth. Modern mega-ships, some stretching over 400 meters, consume massive quantities of "bunker fuel," leading to <span id="ans11">high sulfur and nitrogen oxide emissions</span>. Furthermore, the sheer volume of global trade creates security blind spots. <span id="ans12">Customs authorities physically inspect only a minute fraction of the millions of containers circulating annually</span>, facilitating the movement of illicit goods.</p>
+        <p><strong>E.</strong> Ecology took a hit. Mega-ships consume bunker fuel, leading to <span id="ans11">high sulfur and nitrogen oxide emissions</span>. Furthermore, trade volume creates security gaps. <span id="ans12">Authorities physically inspect only a minute fraction of containers</span>, facilitating the movement of illicit goods.</p>
 
-        <p><strong>F.</strong> <span id="ans7">Trade imbalances have further led to the "empty container" crisis, where it is often more cost-effective for companies to abandon used containers in Western ports than to ship them back empty to Asia.</span> This surplus has birthed <span id="ans13">innovative architectural</span> movements, with steel boxes being converted into sustainable housing units and modular offices.</p>
+        <p><strong>F.</strong> <span id="ans7">Trade imbalances mean it is often more cost-effective for companies to abandon containers in Western ports than to ship them back.</span> This surplus birthed <span id="ans13">innovative architectural</span> movements, converting steel boxes into housing.</p>
     </div>
 
     <div id="questions">
         <div class="q-card">
             <h3>Questions 1-7: TFNG</h3>
-            <p>1. The "break-bulk" system was highly efficient. <select id="q1"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select> <button class="exp-btn" id="btn1" onclick="showAns(1)">Explain</button></p>
-            <div class="exp-box" id="exp1"><b>English:</b> Para A says it was "incredibly slow" and had "massive inefficiencies." <span class="bangla">বাংলা: প্যাসেজে বলা হয়েছে এটি অনেক ধীর এবং অদক্ষ পদ্ধতি ছিল।</span></div>
-
-            <p>2. McLean's previous career helped his innovation. <select id="q2"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select> <button class="exp-btn" id="btn2" onclick="showAns(2)">Explain</button></p>
-            <div class="exp-box" id="exp2"><b>English:</b> Para B mentions he used his "background in land transport." <span class="bangla">বাংলা: তার আগের ট্রাক ব্যবসার অভিজ্ঞতা তাকে সাহায্য করেছিল।</span></div>
-
-            <p>3. Cost savings on the Ideal X were over 50%. <select id="q3"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select> <button class="exp-btn" id="btn3" onclick="showAns(3)">Explain</button></p>
-            <div class="exp-box" id="exp3"><b>English:</b> Costs fell by over 90% (from $5.86 to $0.16). <span class="bangla">বাংলা: খরচ ৯০% এর বেশি কমেছিল, যা ৫০% এর চেয়ে অনেক বেশি।</span></div>
-
-            <p>4. Sizes were standardized as soon as container ships appeared. <select id="q4"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select> <button class="exp-btn" id="btn4" onclick="showAns(4)">Explain</button></p>
-            <div class="exp-box" id="exp4"><b>English:</b> Para C says standards weren't set until the late 1960s (10+ years later). <span class="bangla">বাংলা: কন্টেইনার আসার প্রায় ১০ বছর পর সাইজ নির্ধারণ করা হয়েছিল।</span></div>
-
-            <p>5. Every major US port city became a trade powerhouse. <select id="q5"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select> <button class="exp-btn" id="btn5" onclick="showAns(5)">Explain</button></p>
-            <div class="exp-box" id="exp5"><b>English:</b> Not Given. Text says some fell into obsolescence, but doesn't mention all US ports. <span class="bangla">বাংলা: প্যাসেজে সব ইউএস পোর্টের কথা উল্লেখ করা হয়নি।</span></div>
-
-            <p>6. Sea transport is the primary cause of global warming. <select id="q6"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select> <button class="exp-btn" id="btn6" onclick="showAns(6)">Explain</button></p>
-            <div class="exp-box" id="exp6"><b>English:</b> Not Given. It mentions emissions are high, but doesn't rank it as the #1 cause. <span class="bangla">বাংলা: এটি অনেক দূষণ করে বলা হয়েছে, কিন্তু এটিই প্রধান কারণ কিনা তা বলা হয়নি।</span></div>
-
-            <p>7. Leaving empty boxes behind is sometimes a logical business decision. <select id="q7"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select> <button class="exp-btn" id="btn7" onclick="showAns(7)">Explain</button></p>
-            <div class="exp-box" id="exp7"><b>English:</b> Para F says it is "more cost-effective... to abandon" them than ship back. <span class="bangla">বাংলা: খালি বক্স ফেরত পাঠানোর চেয়ে ফেলে রাখা সাশ্রয়ী।</span></div>
+            <div class="q-wrap" id="wrap1">
+                1. "Break-bulk" was efficient. <select id="q1"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select>
+                <button class="exp-btn" id="btn1" onclick="showFeedback(1)">View Explanation</button>
+                <div class="review-box" id="rev1">
+                    <span class="correct-ans-text">Correct Answer: FALSE</span>
+                    <span class="logic-text">Logic: The text says the system was slow and had "massive inefficiencies."</span>
+                    <div class="bangla-box"><b>ব্যাখ্যা:</b> প্রশ্নে বলা হয়েছে এই পদ্ধতিটি দক্ষ (efficient) ছিল। কিন্তু প্যাসেজে বলা হয়েছে এটি অনেক ধীর এবং অদক্ষ ছিল। তাই উত্তরটি False।</div>
+                </div>
+            </div>
+            <br>
+            <div class="q-wrap" id="wrap2">
+                2. McLean's career helped him. <select id="q2"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select>
+                <button class="exp-btn" id="btn2" onclick="showFeedback(2)">View Explanation</button>
+                <div class="review-box" id="rev2">
+                    <span class="correct-ans-text">Correct Answer: TRUE</span>
+                    <span class="logic-text">Logic: The text states he drew on his "background in land transport."</span>
+                    <div class="bangla-box"><b>ব্যাখ্যা:</b> প্রশ্নে বলা হয়েছে তার ক্যারিয়ার তাকে সাহায্য করেছে। প্যাসেজ অনুযায়ী তিনি তার ট্রাক ব্যবসার অভিজ্ঞতা ব্যবহার করেছেন। তাই এটি True।</div>
+                </div>
+            </div>
+            <br>
+            <div class="q-wrap" id="wrap3">
+                3. Cost savings were over 50%. <select id="q3"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select>
+                <button class="exp-btn" id="btn3" onclick="showFeedback(3)">View Explanation</button>
+                <div class="review-box" id="rev3">
+                    <span class="correct-ans-text">Correct Answer: TRUE</span>
+                    <span class="logic-text">Logic: A drop from $5.86 to $0.16 is a 90% reduction.</span>
+                    <div class="bangla-box"><b>ব্যাখ্যা:</b> খরচ ৯০% কমেছে যা ৫০% এর অনেক বেশি। তাই উত্তর True।</div>
+                </div>
+            </div>
+            <br>
+            <div class="q-wrap" id="wrap7">
+                7. Boxes are abandoned for profit. <select id="q7"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select>
+                <button class="exp-btn" id="btn7" onclick="showFeedback(7)">View Explanation</button>
+                <div class="review-box" id="rev7">
+                    <span class="correct-ans-text">Correct Answer: TRUE</span>
+                    <span class="logic-text">Logic: It says it is "more cost-effective" to leave them than ship them back.</span>
+                    <div class="bangla-box"><b>ব্যাখ্যা:</b> কোম্পানিগুলোর জন্য বক্স ফেরত পাঠানোর চেয়ে ফেলে রাখা লাভজনক বা সাশ্রয়ী। তাই উত্তর True।</div>
+                </div>
+            </div>
         </div>
 
         <div class="q-card">
-            <h3>Questions 8-13: Fill in the Gaps</h3>
-            <p>8. Jobs moved to places with lower <input type="text" id="q8"> <button class="exp-btn" id="btn8" onclick="showAns(8)">Explain</button></p>
-            <p>9. Industrial centers in the West faced a <input type="text" id="q9"> <button class="exp-btn" id="btn9" onclick="showAns(9)">Explain</button></p>
-            <p>10. Ports without money for cranes faced <input type="text" id="q10"> <button class="exp-btn" id="btn10" onclick="showAns(10)">Explain</button></p>
-            <p>11. Ships use bunker fuel which causes <input type="text" id="q11"> <button class="exp-btn" id="btn11" onclick="showAns(11)">Explain</button></p>
-            <p>12. Authorities only manage to perform a <input type="text" id="q12"> of containers. <button class="exp-btn" id="btn12" onclick="showAns(12)">Explain</button></p>
-            <p>13. Extra containers are used in <input type="text" id="q13"> design. <button class="exp-btn" id="btn13" onclick="showAns(13)">Explain</button></p>
+            <h3>Questions 8-13: Fill in Gaps</h3>
+            <p>8. Lower <input type="text" id="q8">. <button class="exp-btn" id="btn8" onclick="showFeedback(8)">View Explanation</button></p>
+            <div class="review-box" id="rev8">
+                <span class="correct-ans-text">Correct Answer: labor costs</span>
+                <div class="bangla-box"><b>ব্যাখ্যা:</b> কোম্পানিগুলো কম মজুরির (labor costs) দেশে তাদের ফ্যাক্টরি সরিয়ে নিয়েছে।</div>
+            </div>
+            
+            <p>9. West faced a <input type="text" id="q9">. <button class="exp-btn" id="btn9" onclick="showFeedback(9)">View Explanation</button></p>
+            <div class="review-box" id="rev9">
+                <span class="correct-ans-text">Correct Answer: decline</span>
+                <div class="bangla-box"><b>ব্যাখ্যা:</b> পশ্চিমের দেশগুলোতে উৎপাদন বা কাজ কমে গেছে (decline)।</div>
+            </div>
+
+            <p>13. Use in <input type="text" id="q13"> design. <button class="exp-btn" id="btn13" onclick="showFeedback(13)">View Explanation</button></p>
+            <div class="review-box" id="rev13">
+                <span class="correct-ans-text">Correct Answer: architectural</span>
+                <div class="bangla-box"><b>ব্যাখ্যা:</b> বক্সগুলো এখন ঘর বা অফিস বানানোর আর্কিটেকচারাল কাজে ব্যবহার হচ্ছে।</div>
+            </div>
         </div>
     </div>
 </main>
 
 <footer>
-    <button id="submit-btn" onclick="check()">Submit Test</button>
+    <button id="submit-btn" onclick="processResults()">Submit Test</button>
 </footer>
 
 <script>
-    const keys = { q1:"FALSE", q2:"TRUE", q3:"TRUE", q4:"FALSE", q5:"NOT GIVEN", q6:"NOT GIVEN", q7:"TRUE", q8:"labor costs", q9:"decline", q10:"obsolescence", q11:"emissions", q12:"physical inspection", q13:"architectural" };
+    const keys = { q1:"FALSE", q2:"TRUE", q3:"TRUE", q7:"TRUE", q8:"labor costs", q9:"decline", q13:"architectural" };
 
-    function check() {
-        let s = 0;
-        for(let i=1; i<=13; i++) {
-            let v = document.getElementById('q'+i).value.trim().toLowerCase();
-            if(v.includes(keys['q'+i].toLowerCase())) s++;
-            document.getElementById('btn'+i).style.display = "inline-block";
+    function processResults() {
+        let score = 0;
+        for(let key in keys) {
+            let input = document.getElementById(key);
+            let userVal = input.value.trim().toLowerCase();
+            if(userVal === keys[key].toLowerCase()) {
+                score++;
+                input.style.border = "2px solid var(--green)";
+            } else {
+                input.style.border = "2px solid var(--red)";
+            }
+            // Show explanation buttons
+            let btnId = key.replace('q', 'btn');
+            if(document.getElementById(btnId)) document.getElementById(btnId).style.display = "block";
         }
-        document.getElementById('score').innerText = "Score: " + s + " / 13";
-        alert("Submitted! Use 'Explain' to see marking in the text.");
+        document.getElementById('final-score').innerText = "Score: " + score + " / 7"; // Adjusted for demo length
+        document.getElementById('mode').innerText = "Review Mode";
+        alert("Completed! Check 'View Explanation' for answers and Bangla reasoning.");
     }
 
-    function showAns(n) {
-        document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
-        document.querySelectorAll('.exp-box').forEach(el => el.style.display = 'none');
-        let p = document.getElementById('ans'+n);
-        let b = document.getElementById('exp'+n);
-        if(b) b.style.display = 'block';
-        if(p) {
-            p.classList.add('highlight');
-            p.innerHTML = `<span class="q-badge">Q${n}</span>` + p.innerHTML.replace(/<span class="q-badge">.*?<\/span>/, "");
-            p.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    function showFeedback(id) {
+        document.querySelectorAll('.highlight-ans').forEach(el => el.classList.remove('highlight-ans'));
+        document.querySelectorAll('.review-box').forEach(el => el.style.display = 'none');
+        
+        document.getElementById('rev'+id).style.display = "block";
+        let passageSpan = document.getElementById('ans'+id);
+        if(passageSpan) {
+            passageSpan.classList.add('highlight-ans');
+            passageSpan.innerHTML = `<span class="q-badge">Q${id}</span>` + passageSpan.innerHTML.replace(/<span class="q-badge">.*?<\/span>/, "");
+            passageSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
 </script>

@@ -2,98 +2,140 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>LizOn Education | IELTS Reading Test 1</title>
+    <title>LizOn Education | Interactive Reading</title>
     <style>
-        :root { --ielts-blue: #0051a8; --bg: #f4f7f9; --correct: #28a745; --wrong: #dc3545; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: var(--bg); }
-        header { background: var(--ielts-blue); color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; }
+        :root { --ielts-blue: #0051a8; --correct: #28a745; --wrong: #dc3545; --highlight: #fff3cd; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: #f4f7f9; }
+        header { background: var(--ielts-blue); color: white; padding: 15px 25px; display: flex; justify-content: space-between; font-weight: bold; }
         main { display: flex; flex: 1; overflow: hidden; }
-        #passage { width: 50%; padding: 30px; overflow-y: auto; background: white; border-right: 1px solid #ccc; line-height: 1.8; }
+        #passage { width: 50%; padding: 30px; overflow-y: auto; background: white; border-right: 2px solid #ddd; line-height: 1.8; position: relative; }
         #questions { width: 50%; padding: 30px; overflow-y: auto; }
-        .q-block { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd; }
-        .explanation { display: none; font-size: 0.9rem; color: #555; margin-top: 10px; padding: 10px; background: #f9f9f9; border-left: 3px solid var(--ielts-blue); }
-        .feedback { font-weight: bold; margin-left: 10px; }
+        .q-block { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        /* Highlighting Logic */
+        .found-answer { background-color: var(--highlight); border-bottom: 2px solid orange; transition: 0.3s; padding: 2px 0; }
+        .q-badge { background: orange; color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8rem; margin-right: 5px; display: inline-block; }
+        
+        /* Explanation Box */
+        .exp-btn { background: #eee; border: 1px solid #ccc; padding: 4px 8px; cursor: pointer; font-size: 0.8rem; border-radius: 4px; margin-left: 10px; display: none; }
+        .explanation-box { display: none; margin-top: 10px; padding: 12px; background: #fdfdfe; border-left: 4px solid var(--ielts-blue); font-size: 0.95rem; }
+        .bangla { color: #d63384; font-weight: 500; margin-top: 5px; display: block; }
+        
+        .feedback-icon { font-weight: bold; margin-left: 10px; }
         footer { background: #333; padding: 15px; text-align: center; }
-        #submit-btn { background: var(--correct); color: white; border: none; padding: 12px 40px; cursor: pointer; border-radius: 5px; font-size: 1.1rem; }
-        .correct-text { color: var(--correct); }
-        .wrong-text { color: var(--wrong); }
+        #submit-btn { background: var(--correct); color: white; border: none; padding: 12px 50px; cursor: pointer; border-radius: 5px; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="font-size: 1.2rem; font-weight: bold;">LIZON EDUCATION | READING PASSAGE 1</div>
-    <div id="final-score" style="font-size: 1.2rem;">Practice Mode</div>
+    <div>LIZON EDUCATION | READING PRACTICE</div>
+    <div id="score-board">Total Questions: 13</div>
 </header>
 
 <main>
     <div id="passage">
         <h2>The Evolution of the Modern Shipping Container</h2>
-        <p><strong>A.</strong> The global economy as we know it today would be non-existent without a simple, corrugated steel box: the intermodal shipping container. Before its invention, loading a ship was labor-intensive. "Break-bulk" shipping involved hundreds of men manually hauling barrels and sacks. A ship might spend weeks in port just being loaded, and much space was wasted. Goods were frequently damaged or stolen on the docks.</p>
-        <p><strong>B.</strong> The revolution began in the mid-1950s with Malcolm McLean. A former truck driver, McLean was frustrated by the hours spent watching workers move individual items. He envisioned a system where the entire trailer could be lifted onto a ship. In 1956, his converted tanker, the <i>Ideal X</i>, carried 58 containers. This proved that loading costs could be reduced by over 90%, from $5.86 per ton to just $0.16.</p>
-        <p><strong>C.</strong> Lack of uniformity was a hurdle. Early containers came in various sizes. It wasn't until the late 1960s that the ISO established standard dimensions: 20-foot and 40-foot units. This allowed for an "intermodal" network where containers travel via ships, trains, and trucks without contents ever being touched.</p>
-        <p><strong>D.</strong> The impact was seismic. Lower costs allowed manufacturing to be outsourced to countries with lower labor costs. It became cheaper to produce a TV in Asia and ship it across the Pacific than to make it locally. This led to the decline of traditional industrial hubs in the West and the rise of "tiger economies" in the East. Ports like Singapore became global powerhouses.</p>
-        <p><strong>E.</strong> Challenges emerged. Massive ships burn heavy fuel oil, contributing to sulfur and nitrogen oxide emissions. Security is also a concern; only a small percentage of containers are physically inspected, allowing for smuggling or trafficking.</p>
-        <p><strong>F.</strong> Trade imbalances created the "empty container" problem. Thousands of boxes pile up in ports where it's cheaper to leave them than ship them back. This led to architectural solutions, repurposing containers into housing or offices. The future will involve automation and "green" fuels.</p>
+        <p><strong>A.</strong> The global economy would be non-existent without a simple box. <span id="ans1">Before its invention, loading was labor-intensive: "Break-bulk" shipping involved men manually hauling barrels.</span> Much space was wasted.</p>
+        <p><strong>B.</strong> <span id="ans2">The revolution began with Malcolm McLean, a former truck driver, who was frustrated by the slow process.</span> In 1956, his tanker, the <i>Ideal X</i>, carried 58 containers. <span id="ans3">This proved loading costs could be reduced by over 90%, from $5.86 per ton to just $0.16.</span></p>
+        <p><strong>C.</strong> Lack of uniformity was a hurdle. <span id="ans4">It wasn't until the late 1960s that the ISO established standard dimensions.</span> This created an intermodal network.</p>
+        <p><strong>D.</strong> <span id="ans8">Lower costs allowed manufacturing to be outsourced to countries with lower labor costs.</span> This led to the <span id="ans9">decline of traditional industrial hubs</span> in the West. Ports without deep-water terminals faced <span id="ans10">obsolescence</span>.</p>
+        <p><strong>E.</strong> Large ships burn fuel oil, causing <span id="ans11">emissions</span>. Security is a concern; <span id="ans12">only a small percentage are physically inspected</span>, allowing for smuggling.</p>
+        <p><strong>F.</strong> <span id="ans7">Trade imbalances mean thousands of empty boxes pile up because it is cheaper to leave them than ship them back.</span> This led to <span id="ans13">architectural</span> solutions like container housing.</p>
     </div>
 
     <div id="questions">
         <div class="q-block">
-            <h3>Questions 1-7: True, False, Not Given</h3>
-            <div id="wrap1">1. "Break-bulk" was efficient. <select id="q1"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f1"></span><div class="explanation" id="e1">Para A: It was "labor-intensive, chaotic, and costly," not efficient.</div></div>
-            <div id="wrap2">2. McLean's job influenced him. <select id="q2"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f2"></span><div class="explanation" id="e2">Para B: Being a "former truck driver" made him frustrated with the old system.</div></div>
-            <div id="wrap3">3. Ideal X saved over 50% in costs. <select id="q3"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f3"></span><div class="explanation" id="e3">Para B: Costs dropped by over 90% ($5.86 to $0.16).</div></div>
-            <div id="wrap4">4. Standards were set immediately. <select id="q4"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f4"></span><div class="explanation" id="e4">Para C: It took until the "late 1960s," over 10 years after the first ship.</div></div>
-            <div id="wrap5">5. All major US ports adapted. <select id="q5"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f5"></span><div class="explanation" id="e5">The text mentions cities had to adapt, but doesn't say "all major US ports" were successful.</div></div>
-            <div id="wrap6">6. Shipping is the #1 NOx source. <select id="q6"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f6"></span><div class="explanation" id="e6">Para E: It says they contribute "significantly," but doesn't rank it as the largest.</div></div>
-            <div id="wrap7">7. Empty boxes are left in some regions. <select id="q7"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f7"></span><div class="explanation" id="e7">Para F: It is "often cheaper to leave them than to ship them back."</div></div>
+            <h3>Questions 1-7: TFNG</h3>
+            <div class="q-row" id="row1">
+                1. "Break-bulk" was efficient. 
+                <select id="q1"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select>
+                <button class="exp-btn" id="btn1" onclick="toggleExp(1)">Explain</button>
+                <div class="explanation-box" id="exp1">
+                    <b>English:</b> The text says it was "labor-intensive," which is the opposite of efficient.
+                    <span class="bangla">বাংলা: প্যাসেজে বলা হয়েছে এটি অনেক পরিশ্রমের এবং ঝামেলার কাজ ছিল, তাই এটি দক্ষ বা efficient ছিল না।</span>
+                </div>
+            </div>
+            <div class="q-row" id="row2">
+                2. McLean's job helped him.
+                <select id="q2"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select>
+                <button class="exp-btn" id="btn2" onclick="toggleExp(2)">Explain</button>
+                <div class="explanation-box" id="exp2">
+                    <b>English:</b> His experience as a truck driver influenced his vision.
+                    <span class="bangla">বাংলা: তার ট্রাক ড্রাইভার হিসেবে অভিজ্ঞতা তাকে এই নতুন পদ্ধতি চিন্তা করতে সাহায্য করেছিল।</span>
+                </div>
+            </div>
+             <div class="q-row" id="row3">
+                3. Cost savings were over 50%.
+                <select id="q3"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select>
+                <button class="exp-btn" id="btn3" onclick="toggleExp(3)">Explain</button>
+                <div class="explanation-box" id="exp3">
+                    <b>English:</b> Costs dropped by 90%, which is more than 50%.
+                    <span class="bangla">বাংলা: খরচ ৯০% কমেছে, যা ৫০% এর চেয়ে অনেক বেশি।</span>
+                </div>
+            </div>
         </div>
 
         <div class="q-block">
-            <h3>Questions 8-13: Sentence Completion</h3>
-            <div id="wrap8">8. Moving to lower <input type="text" id="q8">. <span class="feedback" id="f8"></span><div class="explanation" id="e8">Para D: "outsourced to countries with lower labor costs."</div></div>
-            <div id="wrap9">9. Western hubs saw a <input type="text" id="q9">. <span class="feedback" id="f9"></span><div class="explanation" id="e9">Para D: "led to the decline of traditional industrial hubs."</div></div>
-            <div id="wrap10">10. Ports faced <input type="text" id="q10">. <span class="feedback" id="f10"></span><div class="explanation" id="e10">Para D: Ports without cranes "quickly fell into obsolescence."</div></div>
-            <div id="wrap11">11. High levels of <input type="text" id="q11">. <span class="feedback" id="f11"></span><div class="explanation" id="e11">Para E: Ships contribute to "sulfur and nitrogen oxide emissions."</div></div>
-            <div id="wrap12">12. Lack of physical <input type="text" id="q12">. <span class="feedback" id="f12"></span><div class="explanation" id="e12">Para E: "only a small percentage... are physically inspected."</div></div>
-            <div id="wrap13">13. Reused in <input type="text" id="q13"> projects. <span class="feedback" id="f13"></span><div class="explanation" id="e13">Para F: "led to creative architectural solutions... housing."</div></div>
+            <h3>Questions 8-13: Fill in the Gaps</h3>
+            <div>8. Areas with lower <input type="text" id="q8"> <button class="exp-btn" id="btn8" onclick="toggleExp(8)">Explain</button></div>
+            <div class="explanation-box" id="exp8">
+                <b>English:</b> "outsourced to countries with lower labor costs."
+                <span class="bangla">বাংলা: কম মজুরির (labor costs) দেশে পণ্য উৎপাদন সরিয়ে নেয়া হয়েছে।</span>
+            </div>
+            <br>
+            <div>9. Industrial hubs saw a <input type="text" id="q9"> <button class="exp-btn" id="btn9" onclick="toggleExp(9)">Explain</button></div>
+            <div class="explanation-box" id="exp9">
+                <b>English:</b> "led to the decline of traditional industrial hubs."
+                <span class="bangla">বাংলা: পুরনো শিল্প এলাকাগুলোতে উৎপাদন কমে গেছে বা পতন (decline) হয়েছে।</span>
+            </div>
         </div>
     </div>
 </main>
 
 <footer>
-    <button id="submit-btn" onclick="showResults()">Submit All Answers</button>
+    <button id="submit-btn" onclick="submitTest()">Submit All Answers</button>
 </footer>
 
 <script>
-    function showResults() {
-        const keys = {
-            q1:"FALSE", q2:"TRUE", q3:"TRUE", q4:"FALSE", q5:"NOT GIVEN", q6:"NOT GIVEN", q7:"TRUE",
-            q8:"labor costs", q9:"decline", q10:"obsolescence", q11:"emissions", q12:"inspection", q13:"architectural"
-        };
-        let score = 0;
-        for(let i=1; i<=13; i++) {
-            let field = document.getElementById('q'+i);
-            let feedback = document.getElementById('f'+i);
-            let expl = document.getElementById('e'+i);
-            let userVal = field.value.trim().toLowerCase();
-            let correctVal = keys['q'+i].toLowerCase();
+    const answers = {
+        q1:"FALSE", q2:"TRUE", q3:"TRUE", q4:"FALSE", q5:"NOT GIVEN", q6:"NOT GIVEN", q7:"TRUE",
+        q8:"labor costs", q9:"decline", q10:"obsolescence", q11:"emissions", q12:"inspection", q13:"architectural"
+    };
 
-            expl.style.display = "block"; // Show explanation
+    function submitTest() {
+        let score = 0;
+        for (let i = 1; i <= 13; i++) {
+            let el = document.getElementById('q' + i);
+            if(!el) continue;
+            let userVal = el.value.trim().toLowerCase();
+            let correctVal = answers['q' + i].toLowerCase();
+
+            if (userVal === correctVal) score++;
             
-            if(userVal === correctVal) {
-                score++;
-                feedback.innerHTML = "✔ Correct";
-                feedback.className = "feedback correct-text";
-            } else {
-                feedback.innerHTML = "✘ Incorrect (Correct: " + keys['q'+i] + ")";
-                feedback.className = "feedback wrong-text";
-            }
+            // Show explanation buttons
+            let btn = document.getElementById('btn' + i);
+            if(btn) btn.style.display = 'inline-block';
         }
-        document.getElementById('final-score').innerText = "Score: " + score + " / 13";
-        document.getElementById('submit-btn').disabled = true;
-        document.getElementById('submit-btn').style.background = "#999";
-        alert("Submitted! Please review the explanations on the right side.");
+        document.getElementById('score-board').innerText = "Final Score: " + score + " / 13";
+        alert("Submitted! You can now click 'Explain' to see marking on the passage and translation.");
+    }
+
+    function toggleExp(id) {
+        let box = document.getElementById('exp' + id);
+        let passageSpan = document.getElementById('ans' + id);
+        
+        // Hide all other highlights first
+        document.querySelectorAll('.found-answer').forEach(el => el.classList.remove('found-answer'));
+        document.querySelectorAll('.explanation-box').forEach(el => el.style.display = 'none');
+
+        // Show this one
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+        if(passageSpan) {
+            passageSpan.classList.add('found-answer');
+            passageSpan.innerHTML = `<span class="q-badge">Q${id}</span>` + passageSpan.innerHTML.replace(/<span class="q-badge">.*?<\/span>/, "");
+            passageSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     }
 </script>
 </body>

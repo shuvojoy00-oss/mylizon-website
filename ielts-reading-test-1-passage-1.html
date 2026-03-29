@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LizOn Education | IELTS Reading Practice</title>
+    <style>
+        :root {
+            --ielts-blue: #0051a8;
+            --ielts-light-grey: #f4f4f4;
+            --ielts-border: #ccc;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* Header */
+        header {
+            background-color: var(--ielts-blue);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: bold; font-size: 1.2rem; }
+        
+        /* Main Layout */
+        main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        /* Left Side: Passage */
+        #passage-container {
+            width: 50%;
+            padding: 20px 40px;
+            overflow-y: auto;
+            border-right: 2px solid var(--ielts-border);
+            line-height: 1.6;
+            background: white;
+        }
+        #passage-container h2 { color: var(--ielts-blue); }
+        .para-letter { font-weight: bold; margin-right: 10px; }
+
+        /* Right Side: Questions */
+        #question-container {
+            width: 50%;
+            padding: 20px 40px;
+            overflow-y: auto;
+            background-color: var(--ielts-light-grey);
+        }
+        .question-block {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--ielts-border);
+            border-radius: 4px;
+        }
+        .q-item { margin-bottom: 15px; }
+        input[type="text"], select {
+            padding: 5px;
+            border: 1px solid #999;
+            border-radius: 3px;
+        }
+        
+        /* Footer/Controls */
+        footer {
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: right;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 4px;
+        }
+        button:hover { background: #218838; }
+        .result { font-weight: bold; margin-right: 20px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">LizOn Education - IELTS Reading Mock</div>
+    <div>Time Remaining: <span id="timer">60:00</span></div>
+</header>
+
+<main>
+    <section id="passage-container">
+        <h2>The Evolution and Impact of the Modern Shipping Container</h2>
+        <p><span class="para-letter">A.</span> The global economy as we know it today would be non-existent without a simple, corrugated steel box: the intermodal shipping container. Before its invention, the process of loading and unloading a ship was a labor-intensive, chaotic, and costly endeavor...</p>
+        <p><span class="para-letter">B.</span> The revolution began in the mid-1950s with an American entrepreneur named Malcolm McLean. A former truck driver, McLean was frustrated by the hours spent watching workers slowly move individual items from trucks to ships...</p>
+        <p><span class="para-letter">C.</span> Despite the clear financial benefits, the industry faced a hurdle: lack of uniformity. It wasn't until the late 1960s that the International Organization for Standardization (ISO) established the standard dimensions we use today...</p>
+        <p><span class="para-letter">D.</span> The impact on global trade was seismic. By lowering transportation costs so dramatically, the shipping container allowed manufacturing to be outsourced to countries with lower labor costs...</p>
+        <p><span class="para-letter">E.</span> However, the container age brought new challenges. Massive container ships, some over 400 meters long, burn vast quantities of heavy fuel oil, contributing significantly to sulfur and nitrogen oxide emissions...</p>
+        <p><span class="para-letter">F.</span> In recent years, the "empty container" problem has also emerged. Thousands of empty steel boxes pile up in ports. This has led to creative architectural solutions, with containers being repurposed into low-cost housing...</p>
+    </section>
+
+    <section id="question-container">
+        <div class="question-block">
+            <h3>Questions 1–4: True, False, Not Given</h3>
+            <div class="q-item">
+                1. Before the 1950s, the "break-bulk" method was efficient.
+                <select id="q1">
+                    <option value="">Select...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+            </div>
+            <div class="q-item">
+                2. Malcolm McLean's background influenced his invention.
+                <select id="q2">
+                    <option value="">Select...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+            </div>
+            <div class="q-item">
+                3. The Ideal X voyage saved more than 50% in costs.
+                <select id="q3">
+                    <option value="">Select...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+            </div>
+            <div class="q-item">
+                4. Standardization was achieved immediately.
+                <select id="q4">
+                    <option value="">Select...</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <h3>Questions 5–7: Fill in the Gaps</h3>
+            <p>Manufacturing moved to locations with cheaper 5. <input type="text" id="q5">.</p>
+            <p>Industrial centers in the West saw a 6. <input type="text" id="q6"> in activity.</p>
+            <p>Surplus containers are now used in 7. <input type="text" id="q7"> projects.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <span class="result" id="score-display"></span>
+    <button onclick="checkAnswers()">Submit Test</button>
+</footer>
+
+<script>
+    function checkAnswers() {
+        const answers = {
+            q1: "FALSE",
+            q2: "TRUE",
+            q3: "TRUE",
+            q4: "FALSE",
+            q5: "labor costs",
+            q6: "decline",
+            q7: "architectural"
+        };
+        
+        let score = 0;
+        let total = 7;
+
+        for (let key in answers) {
+            let userAns = document.getElementById(key).value.trim().toLowerCase();
+            if (userAns === answers[key].toLowerCase()) {
+                score++;
+            }
+        }
+
+        document.getElementById('score-display').innerText = "Your Score: " + score + " / " + total;
+        alert("Assessment Complete! You scored " + score + " out of " + total);
+    }
+</script>
+
+</body>
+</html>

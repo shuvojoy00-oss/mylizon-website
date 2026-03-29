@@ -2,29 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>LizOn Education | Reading Practice Test 1</title>
+    <title>LizOn Education | IELTS Reading Test 1</title>
     <style>
-        :root { --ielts-blue: #0051a8; --bg: #f0f2f5; --border: #ccd0d5; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: var(--bg); }
-        header { background: var(--ielts-blue); color: white; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        main { display: flex; flex: 1; overflow: hidden; gap: 5px; }
-        #passage { width: 50%; padding: 30px; overflow-y: auto; background: white; line-height: 1.8; font-size: 1.05rem; }
-        #questions { width: 50%; padding: 30px; overflow-y: auto; background: #fafafa; border-left: 2px solid var(--border); }
-        .q-block { background: white; border: 1px solid var(--border); padding: 20px; margin-bottom: 25px; border-radius: 8px; }
-        h2 { color: var(--ielts-blue); margin-top: 0; }
-        .q-num { font-weight: bold; color: var(--ielts-blue); }
-        input[type="text"], select { padding: 8px; border: 1px solid var(--border); border-radius: 4px; width: 180px; }
-        footer { background: #e9ebee; padding: 15px 30px; display: flex; justify-content: flex-end; align-items: center; border-top: 1px solid var(--border); }
-        #submit-btn { background: #28a745; color: white; border: none; padding: 12px 30px; cursor: pointer; border-radius: 5px; font-weight: bold; font-size: 1rem; }
-        #submit-btn:hover { background: #218838; }
-        #results { display: none; margin-top: 20px; padding: 20px; background: #d4edda; border-left: 5px solid #28a745; }
+        :root { --ielts-blue: #0051a8; --bg: #f4f7f9; --correct: #28a745; --wrong: #dc3545; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: var(--bg); }
+        header { background: var(--ielts-blue); color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; }
+        main { display: flex; flex: 1; overflow: hidden; }
+        #passage { width: 50%; padding: 30px; overflow-y: auto; background: white; border-right: 1px solid #ccc; line-height: 1.8; }
+        #questions { width: 50%; padding: 30px; overflow-y: auto; }
+        .q-block { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd; }
+        .explanation { display: none; font-size: 0.9rem; color: #555; margin-top: 10px; padding: 10px; background: #f9f9f9; border-left: 3px solid var(--ielts-blue); }
+        .feedback { font-weight: bold; margin-left: 10px; }
+        footer { background: #333; padding: 15px; text-align: center; }
+        #submit-btn { background: var(--correct); color: white; border: none; padding: 12px 40px; cursor: pointer; border-radius: 5px; font-size: 1.1rem; }
+        .correct-text { color: var(--correct); }
+        .wrong-text { color: var(--wrong); }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="font-size: 1.4rem; font-weight: bold;">LizOn Education | IELTS Academic Reading</div>
-    <div>Time: 60:00</div>
+    <div style="font-size: 1.2rem; font-weight: bold;">LIZON EDUCATION | READING PASSAGE 1</div>
+    <div id="final-score" style="font-size: 1.2rem;">Practice Mode</div>
 </header>
 
 <main>
@@ -41,48 +40,60 @@
     <div id="questions">
         <div class="q-block">
             <h3>Questions 1-7: True, False, Not Given</h3>
-            <p>1. Before the 1950s, the "break-bulk" method was efficient. <select id="q1"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
-            <p>2. McLean's background influenced his invention. <select id="q2"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
-            <p>3. The Ideal X voyage saved over 50% in costs. <select id="q3"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
-            <p>4. Standardization was achieved immediately. <select id="q4"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
-            <p>5. All major US ports adapted successfully. <select id="q5"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
-            <p>6. Shipping is the world's largest NOx contributor. <select id="q6"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
-            <p>7. Some regions abandon empty containers. <select id="q7"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
+            <div id="wrap1">1. "Break-bulk" was efficient. <select id="q1"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f1"></span><div class="explanation" id="e1">Para A: It was "labor-intensive, chaotic, and costly," not efficient.</div></div>
+            <div id="wrap2">2. McLean's job influenced him. <select id="q2"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f2"></span><div class="explanation" id="e2">Para B: Being a "former truck driver" made him frustrated with the old system.</div></div>
+            <div id="wrap3">3. Ideal X saved over 50% in costs. <select id="q3"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f3"></span><div class="explanation" id="e3">Para B: Costs dropped by over 90% ($5.86 to $0.16).</div></div>
+            <div id="wrap4">4. Standards were set immediately. <select id="q4"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f4"></span><div class="explanation" id="e4">Para C: It took until the "late 1960s," over 10 years after the first ship.</div></div>
+            <div id="wrap5">5. All major US ports adapted. <select id="q5"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f5"></span><div class="explanation" id="e5">The text mentions cities had to adapt, but doesn't say "all major US ports" were successful.</div></div>
+            <div id="wrap6">6. Shipping is the #1 NOx source. <select id="q6"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f6"></span><div class="explanation" id="e6">Para E: It says they contribute "significantly," but doesn't rank it as the largest.</div></div>
+            <div id="wrap7">7. Empty boxes are left in some regions. <select id="q7"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select><span class="feedback" id="f7"></span><div class="explanation" id="e7">Para F: It is "often cheaper to leave them than to ship them back."</div></div>
         </div>
 
         <div class="q-block">
             <h3>Questions 8-13: Sentence Completion</h3>
-            <p>8. Manufacturing moved to areas with lower <input type="text" id="q8">.</p>
-            <p>9. Western industrial hubs saw a <input type="text" id="q9"> in activity.</p>
-            <p>10. Ports without infrastructure faced <input type="text" id="q10">.</p>
-            <p>11. Large vessels cause high levels of <input type="text" id="q11">.</p>
-            <p>12. Authorities struggle with physical <input type="text" id="q12"> of contents.</p>
-            <p>13. Containers are reused in <input type="text" id="q13"> projects like housing.</p>
+            <div id="wrap8">8. Moving to lower <input type="text" id="q8">. <span class="feedback" id="f8"></span><div class="explanation" id="e8">Para D: "outsourced to countries with lower labor costs."</div></div>
+            <div id="wrap9">9. Western hubs saw a <input type="text" id="q9">. <span class="feedback" id="f9"></span><div class="explanation" id="e9">Para D: "led to the decline of traditional industrial hubs."</div></div>
+            <div id="wrap10">10. Ports faced <input type="text" id="q10">. <span class="feedback" id="f10"></span><div class="explanation" id="e10">Para D: Ports without cranes "quickly fell into obsolescence."</div></div>
+            <div id="wrap11">11. High levels of <input type="text" id="q11">. <span class="feedback" id="f11"></span><div class="explanation" id="e11">Para E: Ships contribute to "sulfur and nitrogen oxide emissions."</div></div>
+            <div id="wrap12">12. Lack of physical <input type="text" id="q12">. <span class="feedback" id="f12"></span><div class="explanation" id="e12">Para E: "only a small percentage... are physically inspected."</div></div>
+            <div id="wrap13">13. Reused in <input type="text" id="q13"> projects. <span class="feedback" id="f13"></span><div class="explanation" id="e13">Para F: "led to creative architectural solutions... housing."</div></div>
         </div>
-        
-        <div id="results"></div>
     </div>
 </main>
 
 <footer>
-    <button id="submit-btn" onclick="grade()">Submit All Answers</button>
+    <button id="submit-btn" onclick="showResults()">Submit All Answers</button>
 </footer>
 
 <script>
-    function grade() {
+    function showResults() {
         const keys = {
             q1:"FALSE", q2:"TRUE", q3:"TRUE", q4:"FALSE", q5:"NOT GIVEN", q6:"NOT GIVEN", q7:"TRUE",
             q8:"labor costs", q9:"decline", q10:"obsolescence", q11:"emissions", q12:"inspection", q13:"architectural"
         };
         let score = 0;
         for(let i=1; i<=13; i++) {
-            let val = document.getElementById('q'+i).value.trim().toLowerCase();
-            if(val === keys['q'+i].toLowerCase()) score++;
+            let field = document.getElementById('q'+i);
+            let feedback = document.getElementById('f'+i);
+            let expl = document.getElementById('e'+i);
+            let userVal = field.value.trim().toLowerCase();
+            let correctVal = keys['q'+i].toLowerCase();
+
+            expl.style.display = "block"; // Show explanation
+            
+            if(userVal === correctVal) {
+                score++;
+                feedback.innerHTML = "✔ Correct";
+                feedback.className = "feedback correct-text";
+            } else {
+                feedback.innerHTML = "✘ Incorrect (Correct: " + keys['q'+i] + ")";
+                feedback.className = "feedback wrong-text";
+            }
         }
-        const res = document.getElementById('results');
-        res.style.display = "block";
-        res.innerHTML = `<h3>Results for LizOn Student</h3><p>Score: <strong>${score} / 13</strong></p><p>Check the Answer Key for explanations.</p>`;
-        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById('final-score').innerText = "Score: " + score + " / 13";
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').style.background = "#999";
+        alert("Submitted! Please review the explanations on the right side.");
     }
 </script>
 </body>

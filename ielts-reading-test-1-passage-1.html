@@ -2,192 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LizOn Education | IELTS Reading Practice</title>
+    <title>LizOn Education | Reading Practice Test 1</title>
     <style>
-        :root {
-            --ielts-blue: #0051a8;
-            --ielts-light-grey: #f4f4f4;
-            --ielts-border: #ccc;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-        /* Header */
-        header {
-            background-color: var(--ielts-blue);
-            color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo { font-weight: bold; font-size: 1.2rem; }
-        
-        /* Main Layout */
-        main {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        /* Left Side: Passage */
-        #passage-container {
-            width: 50%;
-            padding: 20px 40px;
-            overflow-y: auto;
-            border-right: 2px solid var(--ielts-border);
-            line-height: 1.6;
-            background: white;
-        }
-        #passage-container h2 { color: var(--ielts-blue); }
-        .para-letter { font-weight: bold; margin-right: 10px; }
-
-        /* Right Side: Questions */
-        #question-container {
-            width: 50%;
-            padding: 20px 40px;
-            overflow-y: auto;
-            background-color: var(--ielts-light-grey);
-        }
-        .question-block {
-            background: white;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid var(--ielts-border);
-            border-radius: 4px;
-        }
-        .q-item { margin-bottom: 15px; }
-        input[type="text"], select {
-            padding: 5px;
-            border: 1px solid #999;
-            border-radius: 3px;
-        }
-        
-        /* Footer/Controls */
-        footer {
-            background: #333;
-            color: white;
-            padding: 10px 20px;
-            text-align: right;
-        }
-        button {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1rem;
-            border-radius: 4px;
-        }
-        button:hover { background: #218838; }
-        .result { font-weight: bold; margin-right: 20px; }
+        :root { --ielts-blue: #0051a8; --bg: #f0f2f5; --border: #ccd0d5; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: var(--bg); }
+        header { background: var(--ielts-blue); color: white; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        main { display: flex; flex: 1; overflow: hidden; gap: 5px; }
+        #passage { width: 50%; padding: 30px; overflow-y: auto; background: white; line-height: 1.8; font-size: 1.05rem; }
+        #questions { width: 50%; padding: 30px; overflow-y: auto; background: #fafafa; border-left: 2px solid var(--border); }
+        .q-block { background: white; border: 1px solid var(--border); padding: 20px; margin-bottom: 25px; border-radius: 8px; }
+        h2 { color: var(--ielts-blue); margin-top: 0; }
+        .q-num { font-weight: bold; color: var(--ielts-blue); }
+        input[type="text"], select { padding: 8px; border: 1px solid var(--border); border-radius: 4px; width: 180px; }
+        footer { background: #e9ebee; padding: 15px 30px; display: flex; justify-content: flex-end; align-items: center; border-top: 1px solid var(--border); }
+        #submit-btn { background: #28a745; color: white; border: none; padding: 12px 30px; cursor: pointer; border-radius: 5px; font-weight: bold; font-size: 1rem; }
+        #submit-btn:hover { background: #218838; }
+        #results { display: none; margin-top: 20px; padding: 20px; background: #d4edda; border-left: 5px solid #28a745; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">LizOn Education - IELTS Reading Mock</div>
-    <div>Time Remaining: <span id="timer">60:00</span></div>
+    <div style="font-size: 1.4rem; font-weight: bold;">LizOn Education | IELTS Academic Reading</div>
+    <div>Time: 60:00</div>
 </header>
 
 <main>
-    <section id="passage-container">
-        <h2>The Evolution and Impact of the Modern Shipping Container</h2>
-        <p><span class="para-letter">A.</span> The global economy as we know it today would be non-existent without a simple, corrugated steel box: the intermodal shipping container. Before its invention, the process of loading and unloading a ship was a labor-intensive, chaotic, and costly endeavor...</p>
-        <p><span class="para-letter">B.</span> The revolution began in the mid-1950s with an American entrepreneur named Malcolm McLean. A former truck driver, McLean was frustrated by the hours spent watching workers slowly move individual items from trucks to ships...</p>
-        <p><span class="para-letter">C.</span> Despite the clear financial benefits, the industry faced a hurdle: lack of uniformity. It wasn't until the late 1960s that the International Organization for Standardization (ISO) established the standard dimensions we use today...</p>
-        <p><span class="para-letter">D.</span> The impact on global trade was seismic. By lowering transportation costs so dramatically, the shipping container allowed manufacturing to be outsourced to countries with lower labor costs...</p>
-        <p><span class="para-letter">E.</span> However, the container age brought new challenges. Massive container ships, some over 400 meters long, burn vast quantities of heavy fuel oil, contributing significantly to sulfur and nitrogen oxide emissions...</p>
-        <p><span class="para-letter">F.</span> In recent years, the "empty container" problem has also emerged. Thousands of empty steel boxes pile up in ports. This has led to creative architectural solutions, with containers being repurposed into low-cost housing...</p>
-    </section>
+    <div id="passage">
+        <h2>The Evolution of the Modern Shipping Container</h2>
+        <p><strong>A.</strong> The global economy as we know it today would be non-existent without a simple, corrugated steel box: the intermodal shipping container. Before its invention, loading a ship was labor-intensive. "Break-bulk" shipping involved hundreds of men manually hauling barrels and sacks. A ship might spend weeks in port just being loaded, and much space was wasted. Goods were frequently damaged or stolen on the docks.</p>
+        <p><strong>B.</strong> The revolution began in the mid-1950s with Malcolm McLean. A former truck driver, McLean was frustrated by the hours spent watching workers move individual items. He envisioned a system where the entire trailer could be lifted onto a ship. In 1956, his converted tanker, the <i>Ideal X</i>, carried 58 containers. This proved that loading costs could be reduced by over 90%, from $5.86 per ton to just $0.16.</p>
+        <p><strong>C.</strong> Lack of uniformity was a hurdle. Early containers came in various sizes. It wasn't until the late 1960s that the ISO established standard dimensions: 20-foot and 40-foot units. This allowed for an "intermodal" network where containers travel via ships, trains, and trucks without contents ever being touched.</p>
+        <p><strong>D.</strong> The impact was seismic. Lower costs allowed manufacturing to be outsourced to countries with lower labor costs. It became cheaper to produce a TV in Asia and ship it across the Pacific than to make it locally. This led to the decline of traditional industrial hubs in the West and the rise of "tiger economies" in the East. Ports like Singapore became global powerhouses.</p>
+        <p><strong>E.</strong> Challenges emerged. Massive ships burn heavy fuel oil, contributing to sulfur and nitrogen oxide emissions. Security is also a concern; only a small percentage of containers are physically inspected, allowing for smuggling or trafficking.</p>
+        <p><strong>F.</strong> Trade imbalances created the "empty container" problem. Thousands of boxes pile up in ports where it's cheaper to leave them than ship them back. This led to architectural solutions, repurposing containers into housing or offices. The future will involve automation and "green" fuels.</p>
+    </div>
 
-    <section id="question-container">
-        <div class="question-block">
-            <h3>Questions 1–4: True, False, Not Given</h3>
-            <div class="q-item">
-                1. Before the 1950s, the "break-bulk" method was efficient.
-                <select id="q1">
-                    <option value="">Select...</option>
-                    <option value="TRUE">TRUE</option>
-                    <option value="FALSE">FALSE</option>
-                    <option value="NOT GIVEN">NOT GIVEN</option>
-                </select>
-            </div>
-            <div class="q-item">
-                2. Malcolm McLean's background influenced his invention.
-                <select id="q2">
-                    <option value="">Select...</option>
-                    <option value="TRUE">TRUE</option>
-                    <option value="FALSE">FALSE</option>
-                    <option value="NOT GIVEN">NOT GIVEN</option>
-                </select>
-            </div>
-            <div class="q-item">
-                3. The Ideal X voyage saved more than 50% in costs.
-                <select id="q3">
-                    <option value="">Select...</option>
-                    <option value="TRUE">TRUE</option>
-                    <option value="FALSE">FALSE</option>
-                    <option value="NOT GIVEN">NOT GIVEN</option>
-                </select>
-            </div>
-            <div class="q-item">
-                4. Standardization was achieved immediately.
-                <select id="q4">
-                    <option value="">Select...</option>
-                    <option value="TRUE">TRUE</option>
-                    <option value="FALSE">FALSE</option>
-                    <option value="NOT GIVEN">NOT GIVEN</option>
-                </select>
-            </div>
+    <div id="questions">
+        <div class="q-block">
+            <h3>Questions 1-7: True, False, Not Given</h3>
+            <p>1. Before the 1950s, the "break-bulk" method was efficient. <select id="q1"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
+            <p>2. McLean's background influenced his invention. <select id="q2"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
+            <p>3. The Ideal X voyage saved over 50% in costs. <select id="q3"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
+            <p>4. Standardization was achieved immediately. <select id="q4"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
+            <p>5. All major US ports adapted successfully. <select id="q5"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
+            <p>6. Shipping is the world's largest NOx contributor. <select id="q6"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
+            <p>7. Some regions abandon empty containers. <select id="q7"><option value="">-</option><option>TRUE</option><option>FALSE</option><option>NOT GIVEN</option></select></p>
         </div>
 
-        <div class="question-block">
-            <h3>Questions 5–7: Fill in the Gaps</h3>
-            <p>Manufacturing moved to locations with cheaper 5. <input type="text" id="q5">.</p>
-            <p>Industrial centers in the West saw a 6. <input type="text" id="q6"> in activity.</p>
-            <p>Surplus containers are now used in 7. <input type="text" id="q7"> projects.</p>
+        <div class="q-block">
+            <h3>Questions 8-13: Sentence Completion</h3>
+            <p>8. Manufacturing moved to areas with lower <input type="text" id="q8">.</p>
+            <p>9. Western industrial hubs saw a <input type="text" id="q9"> in activity.</p>
+            <p>10. Ports without infrastructure faced <input type="text" id="q10">.</p>
+            <p>11. Large vessels cause high levels of <input type="text" id="q11">.</p>
+            <p>12. Authorities struggle with physical <input type="text" id="q12"> of contents.</p>
+            <p>13. Containers are reused in <input type="text" id="q13"> projects like housing.</p>
         </div>
-    </section>
+        
+        <div id="results"></div>
+    </div>
 </main>
 
 <footer>
-    <span class="result" id="score-display"></span>
-    <button onclick="checkAnswers()">Submit Test</button>
+    <button id="submit-btn" onclick="grade()">Submit All Answers</button>
 </footer>
 
 <script>
-    function checkAnswers() {
-        const answers = {
-            q1: "FALSE",
-            q2: "TRUE",
-            q3: "TRUE",
-            q4: "FALSE",
-            q5: "labor costs",
-            q6: "decline",
-            q7: "architectural"
+    function grade() {
+        const keys = {
+            q1:"FALSE", q2:"TRUE", q3:"TRUE", q4:"FALSE", q5:"NOT GIVEN", q6:"NOT GIVEN", q7:"TRUE",
+            q8:"labor costs", q9:"decline", q10:"obsolescence", q11:"emissions", q12:"inspection", q13:"architectural"
         };
-        
         let score = 0;
-        let total = 7;
-
-        for (let key in answers) {
-            let userAns = document.getElementById(key).value.trim().toLowerCase();
-            if (userAns === answers[key].toLowerCase()) {
-                score++;
-            }
+        for(let i=1; i<=13; i++) {
+            let val = document.getElementById('q'+i).value.trim().toLowerCase();
+            if(val === keys['q'+i].toLowerCase()) score++;
         }
-
-        document.getElementById('score-display').innerText = "Your Score: " + score + " / " + total;
-        alert("Assessment Complete! You scored " + score + " out of " + total);
+        const res = document.getElementById('results');
+        res.style.display = "block";
+        res.innerHTML = `<h3>Results for LizOn Student</h3><p>Score: <strong>${score} / 13</strong></p><p>Check the Answer Key for explanations.</p>`;
+        window.scrollTo(0, document.body.scrollHeight);
     }
 </script>
-
 </body>
 </html>

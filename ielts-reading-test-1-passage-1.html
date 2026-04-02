@@ -3,253 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LizOn Education | IELTS Reading Practice</title>
+    <title>LizOn Education | IELTS Reading</title>
     <style>
         :root {
-            --primary-blue: #004a99;
-            --accent-gold: #ffd700;
-            --highlight-color: #ffff00;
-            --bg-light: #f8f9fa;
-            --text-main: #2d3436;
+            --primary: #004a99;
+            --accent: #ffd700;
+            --highlight: #ffff00;
+            --bg: #f8f9fa;
         }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             display: flex; flex-direction: column;
-            color: var(--text-main);
+            color: #2d3436;
         }
 
+        /* Header & Footer */
         header {
-            background-color: var(--primary-blue);
+            background: var(--primary);
             color: white;
             padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 10;
         }
-        .header-logo { font-size: 22px; font-weight: bold; }
-        .header-services { font-size: 16px; font-weight: 500; opacity: 0.9; }
+        .header-services { font-size: 14px; font-weight: 500; opacity: 0.9; }
 
-        .test-container {
+        footer {
+            background: #2d3436;
+            color: white;
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        .wa-btn {
+            color: #25D366;
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid #25D366;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+        /* Layout */
+        .main-wrapper {
             display: flex;
             flex: 1;
             overflow: hidden;
-            background: white;
         }
-
         .pane {
             overflow-y: auto;
             padding: 40px;
             height: 100%;
             box-sizing: border-box;
         }
-
-        #left-pane { width: 50%; border-right: 2px solid #e0e0e0; }
-        #right-pane { width: 50%; background-color: var(--bg-light); }
-
+        #left-pane { width: 50%; border-right: 2px solid #ddd; }
+        #right-pane { width: 50%; background: var(--bg); }
         #resizer {
-            width: 10px;
+            width: 8px;
             cursor: col-resize;
             background: #dfe6e9;
-            transition: background 0.3s;
         }
-        #resizer:hover { background: var(--primary-blue); }
 
-        h2 { color: var(--primary-blue); border-bottom: 2px solid var(--accent-gold); padding-bottom: 10px; margin-top: 0; }
-        .content-area { line-height: 1.8; font-size: 17px; }
-        p { margin-bottom: 1.5em; }
-
-        .hl { background-color: var(--highlight-color); border-radius: 2px; }
-
-        .q-block { background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #eee; }
-        .q-num { font-weight: bold; background: var(--primary-blue); color: white; padding: 2px 8px; border-radius: 4px; margin-right: 8px; }
-        input[type="text"] { border: 1px solid #ccc; padding: 8px; border-radius: 5px; width: 140px; outline: none; }
-        select { padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
-
-        /* Review Styles */
-        .ans-loc { background-color: #d1ecf1; font-weight: bold; padding: 2px 4px; display: none; border-bottom: 2px solid #0c5460; position: relative; }
-        .q-tag { font-size: 12px; background: #0c5460; color: white; padding: 1px 5px; border-radius: 3px; margin-right: 4px; }
-        
-        .btn-review {
-            display: none; margin-left: 8px; padding: 4px 12px; font-size: 12px;
-            border-radius: 20px; border: 1px solid #004a99; cursor: pointer; background: white; color: #004a99;
+        /* Passage Styling */
+        .passage-txt { line-height: 1.8; font-size: 18px; text-align: justify; }
+        .ans-loc { 
+            background: #d1ecf1; 
+            font-weight: bold; 
+            display: none; 
+            padding: 2px 5px;
+            border-radius: 3px;
         }
-        .btn-review:hover { background: #004a99; color: white; }
+        .q-badge {
+            background: #0c5460;
+            color: white;
+            font-size: 11px;
+            padding: 1px 4px;
+            margin-right: 5px;
+            border-radius: 2px;
+        }
 
+        /* Question Styling */
+        .q-card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            border: 1px solid #eee;
+        }
+        input[type="text"] { border: 1px solid #ccc; padding: 6px; width: 140px; border-radius: 4px; }
+        select { padding: 6px; border-radius: 4px; border: 1px solid #ccc; }
+
+        /* Review Elements */
+        .btn-rev {
+            display: none;
+            margin-left: 8px;
+            padding: 3px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+            background: white;
+            color: var(--primary);
+        }
         .info-panel {
-            display: none; margin-top: 10px; padding: 15px; border-radius: 8px;
-            font-family: 'Hind Siliguri', sans-serif; font-size: 15px; line-height: 1.6;
+            display: none;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 15px;
+            line-height: 1.5;
+            background: #fff9db;
+            border-left: 4px solid #fab005;
         }
-        .exp-box { background: #fff4e6; border: 1px solid #ffd8a8; }
-        .mean-box { background: #e7f5ff; border: 1px solid #a5d8ff; margin-bottom: 10px; }
-        .label-bn { font-weight: bold; display: block; margin-bottom: 5px; color: #d9480f; }
-
-        footer {
-            background: #2d3436; color: white; padding: 15px 40px;
-            display: flex; justify-content: space-between; align-items: center; font-size: 14px;
-        }
-        .whatsapp-link {
-            color: #25D366; text-decoration: none; font-weight: bold; font-size: 16px;
-            border: 1px solid #25D366; padding: 5px 15px; border-radius: 5px;
-        }
+        .hl { background: var(--highlight); }
 
         #submit-btn {
-            display: block; width: 220px; margin: 30px auto; padding: 15px;
-            background: var(--primary-blue); color: white; border: none;
-            border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer;
+            display: block; width: 200px; margin: 20px auto; padding: 15px;
+            background: var(--primary); color: white; border: none;
+            border-radius: 30px; font-weight: bold; cursor: pointer;
         }
-        #overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000;
-        }
-        .result-card { background: white; padding: 40px; border-radius: 15px; text-align: center; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="header-logo">LizOn Education</div>
+    <div style="font-size: 22px; font-weight: bold;">LizOn Education</div>
     <div class="header-services">IELTS - PTE - Study Abroad Consultation</div>
 </header>
 
-<div class="test-container">
+<div class="main-wrapper">
     <div id="left-pane" class="pane">
-        <div class="content-area" id="passage-container">
+        <div class="passage-txt" id="passage-container">
             <h2>The development of the London underground railway</h2>
-            <p>In the first half of the 1800s, <span class="ans-loc" id="m1"><span class="q-tag">Q1</span>London’s population grew at an astonishing rate</span> <button class="btn-review" onclick="toggleM(1)">Meaning</button>
-            <div id="mn1" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> ১৮০০ সালের প্রথমার্ধে লন্ডনের জনসংখ্যা আশ্চর্যজনক হারে বেড়েছিল।</div>
-            and the central area became increasingly congested. In addition, the expansion of the overground railway network resulted in more and more passengers arriving in the capital. However, in 1846, a Royal Commission decided that the railways should not be allowed to enter the City, the capital’s historic and business centre. Crossing the City became a nightmare.</p>
+            <p>In the first half of the 1800s, <span class="ans-loc" id="m1"><span class="q-badge">Q1</span>London’s population grew at an astonishing rate</span> <button class="btn-rev" onclick="tgl('mn1')">Meaning</button>
+            <div id="mn1" class="info-panel">১৮০০ শতকের প্রথমার্ধে লন্ডনের জনসংখ্যা অত্যন্ত বিস্ময়কর হারে বৃদ্ধি পেয়েছিল।</div>
+            and the central area became increasingly congested. In addition, the expansion of the overground railway network resulted in more and more passengers arriving in the capital. However, in 1846, a Royal Commission decided that the railways should not be allowed to enter the City, the capital’s historic and business centre. The result was that the overground railway stations formed a ring around the City. The area within consisted of poorly built, overcrowded slums and the streets were full of horse-drawn traffic. Crossing the City became a nightmare. It could take an hour and a half to travel 8 km by horse-drawn carriage or bus.</p>
 
-            <p>Amongst the most vocal advocates for a solution to London’s traffic problems was Charles Pearson. He saw both social and economic advantages in building an underground railway that would link the overground railway stations together and clear London slums at the same time. <span class="ans-loc" id="m2"><span class="q-tag">Q2</span>His idea was to relocate the poor workers who lived in the inner-city slums to newly constructed suburbs</span> <button class="btn-review" onclick="toggleM(2)">Meaning</button>
-            <div id="mn2" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> তার ধারণা ছিল শহরের বস্তিতে থাকা দরিদ্র শ্রমিকদের নতুন নির্মিত শহরতলিতে পাঠিয়ে দেওয়া।</div>
-            and to provide cheap rail travel for them to get to work. Pearson’s ideas gained support amongst <span class="ans-loc" id="m3"><span class="q-tag">Q3</span>some businessmen</span> <button class="btn-review" onclick="toggleM(3)">Meaning</button>
-            <div id="mn3" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> পিয়ারসনের ধারণাটি কিছু ব্যবসায়ীদের মধ্যে সমর্থন লাভ করেছিল।</div>
-            and in 1851 he submitted a plan to Parliament.</p>
+            <p>Amongst the most vocal advocates for a solution to London’s traffic problems was Charles Pearson, who worked as a solicitor for the City of London. He saw both social and economic advantages in building an underground railway that would link the overground railway stations together and clear London slums at the same time. <span class="ans-loc" id="m2"><span class="q-badge">Q2</span>His idea was to relocate the poor workers who lived in the inner-city slums to newly constructed suburbs</span> <button class="btn-rev" onclick="tgl('mn2')">Meaning</button>
+            <div id="mn2" class="info-panel">তার পরিকল্পনা ছিল শহরের বস্তিতে বসবাসরত দরিদ্র শ্রমিকদের নবনির্মিত শহরতলিগুলোতে স্থানান্তরিত করা।</div>
+            and to provide cheap rail travel for them to get to work. Pearson’s ideas gained support amongst <span class="ans-loc" id="m3"><span class="q-badge">Q3</span>some businessmen</span> <button class="btn-rev" onclick="tgl('mn3')">Meaning</button>
+            <div id="mn3" class="info-panel">পিয়ারসনের এই ধারণাটি বেশ কিছু ব্যবসায়ীদের মধ্যে সমর্থন পেয়েছিল।</div>
+            and in 1851 he submitted a plan to Parliament. It was rejected, but coincided with a proposal from another group for an underground connecting line.</p>
 
-            <p>The Metropolitan Railway Company was established in 1854. <span class="ans-loc" id="m4"><span class="q-tag">Q4</span>The organisation had difficulty in raising the funding</span> <button class="btn-review" onclick="toggleM(4)">Meaning</button>
-            <div id="mn4" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> সংস্থাটির জন্য অর্থায়ন বা তহবিল জোগাড় করা কঠিন হয়ে দাঁড়িয়েছিল।</div>
-            for such a radical and expensive scheme, <span class="ans-loc" id="m5"><span class="q-tag">Q5</span>not least because of the critical articles printed by the press.</span> <button class="btn-review" onclick="toggleM(5)">Meaning</button>
-            <div id="mn5" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> বিশেষ করে সংবাদপত্রে প্রকাশিত নেতিবাচক নিবন্ধগুলোর কারণে এটি আরও কঠিন হয়েছিল।</div>
+            <p>The Metropolitan Railway Company was established in 1854. <span class="ans-loc" id="m4"><span class="q-badge">Q4</span>The organisation had difficulty in raising the funding</span> <button class="btn-rev" onclick="tgl('mn4')">Meaning</button>
+            <div id="mn4" class="info-panel">এই ধরনের ব্যয়বহুল একটি প্রকল্পের জন্য অর্থ সংগ্রহ করা প্রতিষ্ঠানটির জন্য কঠিন ছিল।</div>
+            for such a radical and expensive scheme, <span class="ans-loc" id="m5"><span class="q-badge">Q5</span>not least because of the critical articles printed by the press.</span> <button class="btn-rev" onclick="tgl('mn5')">Meaning</button>
+            <div id="mn5" class="info-panel">সংবাদপত্রে প্রকাশিত সমালোচনামূলক নিবন্ধগুলোর কারণে এটি আরও জটিল হয়ে উঠেছিল।</div>
             Objectors argued that the tunnels would collapse under the weight of traffic overhead.</p>
 
-            <p>The construction used a technique known as ‘cut and cover’. A trench was dug, brick walls constructed, and finally a brick arch was added to create a tunnel. <span class="ans-loc" id="m6"><span class="q-tag">Q6</span>A two-metre-deep layer of soil was laid on top of the tunnel</span> <button class="btn-review" onclick="toggleM(6)">Meaning</button>
-            <div id="mn6" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> টানেলের উপরে দুই মিটার গভীর মাটির স্তর দেওয়া হয়েছিল।</div>
+            <p>The construction used a technique known as ‘cut and cover’. A trench was dug, brick walls constructed, and finally a brick arch was added. <span class="ans-loc" id="m6"><span class="q-badge">Q6</span>A two-metre-deep layer of soil was laid on top of the tunnel</span> <button class="btn-rev" onclick="tgl('mn6')">Meaning</button>
+            <div id="mn6" class="info-panel">টানেল বা খিলানটি তৈরির পর তার ওপর দুই মিটার গভীর মাটির স্তর দেওয়া হয়েছিল।</div>
             and the road above rebuilt.</p>
 
-            <p>The Metropolitan line opened on 10 January 1863. <span class="ans-loc" id="m7"><span class="q-tag">Q7</span>It was the world’s first underground railway.</span> <button class="btn-review" onclick="toggleM(7)">Meaning</button>
-            <div id="mn7" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> এটি ছিল বিশ্বের প্রথম ভূগর্ভস্থ রেলপথ।</div>
-            On its first day, <span class="ans-loc" id="m8"><span class="q-tag">Q8</span>almost 40,000 passengers were carried</span> <button class="btn-review" onclick="toggleM(8)">Meaning</button>
-            <div id="mn8" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> প্রথম দিনেই প্রায় ৪০,০০০ যাত্রী বহন করা হয়েছিল।</div>
-            though the passage makes no mention of predictions. Smoke and fumes remained a problem, <span class="ans-loc" id="m9"><span class="q-tag">Q9</span>even though ventilation shafts were added to the tunnels.</span> <button class="btn-review" onclick="toggleM(9)">Meaning</button>
-            <div id="mn9" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> টানেলে ভেন্টিলেশন শ্যাফট যুক্ত করা হলেও ধোঁয়া ও গ্যাস একটি সমস্যা হিসেবেই থেকে গিয়েছিল।</div></p>
+            <p>The Metropolitan line opened on 10 January 1863. <span class="ans-loc" id="m7"><span class="q-badge">Q7</span>It was the world’s first underground railway.</span> <button class="btn-rev" onclick="tgl('mn7')">Meaning</button>
+            <div id="mn7" class="info-panel">এটি ছিল বিশ্বের সর্বপ্রথম ভূগর্ভস্থ রেলপথ।</div>
+            On its first day, <span class="ans-loc" id="m8"><span class="q-badge">Q8</span>almost 40,000 passengers were carried</span> <button class="btn-rev" onclick="tgl('mn8')">Meaning</button>
+            <div id="mn8" class="info-panel">প্রথম দিনেই প্রায় ৪০,০০০ যাত্রী এই রেলে ভ্রমণ করেছিলেন।</div>
+            between Paddington and Farringdon. Smoke and fumes remained a problem, <span class="ans-loc" id="m9"><span class="q-badge">Q9</span>even though ventilation shafts were added to the tunnels.</span> <button class="btn-rev" onclick="tgl('mn9')">Meaning</button>
+            <div id="mn9" class="info-panel">টানেলে ভেন্টিলেশন শ্যাফট ব্যবহার করার পরেও ধোঁয়া ও গ্যাসের সমস্যা পুরোপুরি দূর হয়নি।</div></p>
 
-            <p>By the 1880s, congestion on London’s streets had become worse. <span class="ans-loc" id="m10"><span class="q-tag">Q10</span>The ‘cut and cover’ method of construction was not an option in the capital's centre. The only alternative was to tunnel deep underground.</span> <button class="btn-review" onclick="toggleM(10)">Meaning</button>
-            <div id="mn10" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> শহরের কেন্দ্রে 'কাট অ্যান্ড কভার' পদ্ধতি সম্ভব ছিল না, তাই গভীর টানেল খোঁড়াই ছিল একমাত্র বিকল্প।</div></p>
+            <p>By the 1880s, congestion on London’s streets had become worse. <span class="ans-loc" id="m10"><span class="q-badge">Q10</span>The ‘cut and cover’ method of construction was not an option in the capital's centre. The only alternative was to tunnel deep underground.</span> <button class="btn-rev" onclick="tgl('mn10')">Meaning</button>
+            <div id="mn10" class="info-panel">শহরের কেন্দ্রে 'কাট অ্যান্ড কভার' পদ্ধতি সম্ভব ছিল না, তাই গভীর টানেল খুঁড়ে রেললাইন তৈরি করা ছাড়া উপায় ছিল না।</div></p>
 
-            <p>The City & South London opened in 1890. <span class="ans-loc" id="m11"><span class="q-tag">Q11</span>The carriages were narrow and had tiny windows just below the roof</span> <button class="btn-review" onclick="toggleM(11)">Meaning</button>
-            <div id="mn11" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> বগিগুলো ছিল সরু এবং ছাদের ঠিক নিচে ছোট ছোট জানালা ছিল।</div>
-            because it was thought passengers wouldn't want to look at walls. <span class="ans-loc" id="m12"><span class="q-tag">Q12</span>Although it was a technical achievement, it did not make a profit.</span> <button class="btn-review" onclick="toggleM(12)">Meaning</button>
-            <div id="mn12" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> প্রযুক্তিগতভাবে সফল হলেও এটি কোনো মুনাফা অর্জন করতে পারেনি।</div>
-            Regarding the ‘Tuppenny Tube’, <span class="ans-loc" id="m13"><span class="q-tag">Q13</span>it was very popular</span> <button class="btn-review" onclick="toggleM(13)">Meaning</button>
-            <div id="mn13" class="info-panel mean-box"><span class="label-bn">বঙ্গানুবাদ:</span> এটি অত্যন্ত জনপ্রিয় ছিল, তবে এর সময়ানুবর্তিতা সম্পর্কে তথ্য নেই।</div>
-            but its punctuality was not recorded.</p>
+            <p>The City & South London opened in 1890. <span class="ans-loc" id="m11"><span class="q-badge">Q11</span>The carriages were narrow and had tiny windows just below the roof</span> <button class="btn-rev" onclick="tgl('mn11')">Meaning</button>
+            <div id="mn11" class="info-panel">বগিগুলো ছিল সরু এবং জানালাগুলো ছিল অনেক ছোট যা ছাদের ঠিক নিচে অবস্থিত ছিল।</div>
+            because it was thought passengers would not want to look at tunnel walls. <span class="ans-loc" id="m12"><span class="q-badge">Q12</span>Although the City & South London Railway was a great technical achievement, it did not make a profit.</span> <button class="btn-rev" onclick="tgl('mn12')">Meaning</button>
+            <div id="mn12" class="info-panel">এটি একটি বড় প্রযুক্তিগত সাফল্য হলেও এটি থেকে কোনো আর্থিক মুনাফা আসেনি।</div>
+            Then, in 1900, the Central London Railway, known as the ‘Tuppenny Tube’, began operation. <span class="ans-loc" id="m13"><span class="q-badge">Q13</span>It was very popular</span> <button class="btn-rev" onclick="tgl('mn13')">Meaning</button>
+            <div id="mn13" class="info-panel">এটি মানুষের কাছে অত্যন্ত জনপ্রিয় হয়েছিল।</div>
+            and soon afterwards new railways and extensions were added.</p>
         </div>
     </div>
 
     <div id="resizer"></div>
 
     <div id="right-pane" class="pane">
-        <div class="content-area" id="questions-container">
+        <div id="questions-container">
             <h3>Questions 1-6</h3>
             <p>Complete the notes below. Choose <b>ONE WORD ONLY</b> from the passage.</p>
-            
-            <div class="q-block">
-                <p><span class="q-num">1</span> The <b>population</b> of London increased rapidly between 1800 and 1850. <br><input type="text" id="ans1"> <span id="f1"></span> <button class="btn-review" onclick="showE(1)">Explain</button></p>
-                <div id="ex1" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> প্যাসেজের শুরুতে বলা হয়েছে যে ১৮০০ শতকের প্রথমার্ধে লন্ডনের <b>population</b> (জনসংখ্যা) অত্যন্ত দ্রুত হারে বৃদ্ধি পায়। সঠিক উত্তর হলো 'population'।</div>
+            <div class="q-card">
+                <p>1. The <b>population</b> of London increased rapidly between 1800 and 1850. <br><input type="text" id="ans1"> <span id="f1"></span> <button class="btn-rev" onclick="tgl('ex1')">Explain</button></p>
+                <div id="ex1" class="info-panel"><b>ব্যাখ্যা:</b> প্যাসেজের শুরুতে বলা আছে লন্ডনের population অবিশ্বাস্য গতিতে বেড়েছিল।</div>
 
-                <p><span class="q-num">2</span> Building the railway would make it possible to move people to better housing in the <input type="text" id="ans2">. <span id="f2"></span> <button class="btn-review" onclick="showE(2)">Explain</button></p>
-                <div id="ex2" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> চার্লস পিয়ারসন চেয়েছিলেন দরিদ্র শ্রমিকদের শহরের কেন্দ্র থেকে সরিয়ে শহরতলিতে বা <b>suburbs</b>-এ উন্নত বাসস্থানে স্থানান্তর করতে।</div>
+                <p>2. Building the railway would make it possible to move people to better housing in the <input type="text" id="ans2">. <span id="f2"></span> <button class="btn-rev" onclick="tgl('ex2')">Explain</button></p>
+                <div id="ex2" class="info-panel"><b>ব্যাখ্যা:</b> দরিদ্রদের শহরের বাইরে suburbs বা শহরতলিতে স্থানান্তর করার কথা বলা হয়েছে।</div>
 
-                <p><span class="q-num">3</span> A number of <input type="text" id="ans3"> agreed with Pearson’s idea. <span id="f3"></span> <button class="btn-review" onclick="showE(3)">Explain</button></p>
-                <div id="ex3" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> পিয়ারসনের এই ধারণাকে সমর্থন করেছিলেন কিছু <b>businessmen</b> (ব্যবসায়ী)। প্যাসেজে 'some businessmen' উল্লেখ আছে।</div>
+                <p>3. A number of <input type="text" id="ans3"> agreed with Pearson’s idea. <span id="f3"></span> <button class="btn-rev" onclick="tgl('ex3')">Explain</button></p>
+                <div id="ex3" class="info-panel"><b>ব্যাখ্যা:</b> পিয়ারসনের প্রস্তাবটি কিছু businessmen (ব্যবসায়ী) সমর্থন করেছিলেন।</div>
 
-                <p><span class="q-num">4</span> The company initially had problems getting the <input type="text" id="ans4"> needed for the project. <span id="f4"></span> <button class="btn-review" onclick="showE(4)">Explain</button></p>
-                <div id="ex4" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> রেলওয়ে কোম্পানি এই বিশাল প্রজেক্টের জন্য প্রয়োজনীয় <b>funding</b> (তহবিল বা অর্থায়ন) পেতে সমস্যার মুখে পড়েছিল।</div>
+                <p>4. The company initially had problems getting the <input type="text" id="ans4"> needed for the project. <span id="f4"></span> <button class="btn-rev" onclick="showE(4)">Explain</button></p>
+                <div id="ex4" class="info-panel"><b>ব্যাখ্যা:</b> প্রজেক্টের জন্য সবচেয়ে বড় সমস্যা ছিল funding বা অর্থায়ন জোগাড় করা।</div>
 
-                <p><span class="q-num">5</span> Negative articles about the project appeared in the <input type="text" id="ans5">. <span id="f5"></span> <button class="btn-review" onclick="showE(5)">Explain</button></p>
-                <div id="ex5" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> সংবাদপত্রের নেতিবাচক খবরগুলোই মূলত ফান্ডিং পেতে বাধার সৃষ্টি করেছিল। এখানে 'press' বলতে সংবাদপত্রকে বোঝানো হয়েছে।</div>
+                <p>5. Negative articles about the project appeared in the <input type="text" id="ans5">. <span id="f5"></span> <button class="btn-rev" onclick="tgl('ex5')">Explain</button></p>
+                <div id="ex5" class="info-panel"><b>ব্যাখ্যা:</b> press বা সংবাদপত্রে এই প্রজেক্ট নিয়ে নেতিবাচক খবর আসায় ফান্ডিং পেতে সমস্যা হচ্ছিল।</div>
 
-                <p><span class="q-num">6</span> With the completion of the brick arch, the tunnel was covered with <input type="text" id="ans6">. <span id="f6"></span> <button class="btn-review" onclick="showE(6)">Explain</button></p>
-                <div id="ex6" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> প্যাসেজের 'cut and cover' বর্ণনায় বলা হয়েছে যে ইটের খিলান তৈরির পর উপরে ২ মিটার গভীর <b>soil</b> (মাটি) দিয়ে ঢেকে দেওয়া হয়।</div>
+                <p>6. With the completion of the brick arch, the tunnel was covered with <input type="text" id="ans6">. <span id="f6"></span> <button class="btn-rev" onclick="tgl('ex6')">Explain</button></p>
+                <div id="ex6" class="info-panel"><b>ব্যাখ্যা:</b> খিলান তৈরির পর মাটি বা soil দিয়ে সেটি ঢেকে দেয়া হয়েছিল।</div>
             </div>
 
-            <h3>Questions 7-13 (TRUE / FALSE / NOT GIVEN)</h3>
-            <div class="q-block">
+            <h3>Questions 7-13</h3>
+            <p>TRUE / FALSE / NOT GIVEN</p>
+            <div class="q-card">
                 <p>7. Other countries had built underground railways before the Metropolitan. <br>
-                <select id="ans7"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f7"></span> <button class="btn-review" onclick="showE(7)">Explain</button></p>
-                <div id="ex7" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> FALSE. কারণ প্যাসেজে পরিষ্কার বলা আছে এটি ছিল 'world’s first' বা বিশ্বের প্রথম ভূগর্ভস্থ রেলপথ।</div>
+                <select id="ans7"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f7"></span> <button class="btn-rev" onclick="tgl('ex7')">Explain</button></p>
+                <div id="ex7" class="info-panel"><b>ব্যাখ্যা:</b> FALSE. প্যাসেজে বলা আছে এটি ছিল world's first (বিশ্বের প্রথম)।</div>
 
                 <p>8. More people than predicted travelled on the first day. <br>
-                <select id="ans8"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f8"></span> <button class="btn-review" onclick="showE(8)">Explain</button></p>
-                <div id="ex8" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> NOT GIVEN. যাত্রীসংখ্যা ৪০,০০০ ছিল কিন্তু কোনো ধরনের 'prediction' বা পূর্বাভাসের কথা প্যাসেজে নেই।</div>
+                <select id="ans8"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f8"></span> <button class="btn-rev" onclick="tgl('ex8')">Explain</button></p>
+                <div id="ex8" class="info-panel"><b>ব্যাখ্যা:</b> NOT GIVEN. কতজন যাত্রী ছিল তা বলা আছে কিন্তু পূর্বাভাসের (prediction) কোনো উল্লেখ নেই।</div>
 
                 <p>9. Ventilation shafts failed to prevent pollution in the tunnels. <br>
-                <select id="ans9"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f9"></span> <button class="btn-review" onclick="showE(9)">Explain</button></p>
-                <div id="ex9" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> TRUE. প্যাসেজে বলা হয়েছে শ্যাফট থাকা সত্ত্বেও ধোঁয়া এবং গ্যাস (smoke and fumes) একটি সমস্যা ছিল, অর্থাৎ তারা দূষণ পুরোপুরি ঠেকাতে পারেনি।</div>
+                <select id="ans9"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f9"></span> <button class="btn-rev" onclick="tgl('ex9')">Explain</button></p>
+                <div id="ex9" class="info-panel"><b>ব্যাখ্যা:</b> TRUE. শ্যাফট থাকা সত্ত্বেও ধোঁয়া বা দূষণ নিয়ন্ত্রণে আসেনি।</div>
 
-                <p>10. A different approach from ‘cut and cover’ was required in central London. <br>
-                <select id="ans10"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f10"></span> <button class="btn-review" onclick="showE(10)">Explain</button></p>
-                <div id="ex10" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> TRUE. প্যাসেজে বলা আছে শহরের কেন্দ্রে 'cut and cover' পদ্ধতি সম্ভব ছিল না, তাই ভিন্ন বিকল্প (গভীর টানেল) প্রয়োজন ছিল।</div>
+                <p>10. A different approach was required in central London. <br>
+                <select id="ans10"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f10"></span> <button class="btn-rev" onclick="tgl('ex10')">Explain</button></p>
+                <div id="ex10" class="info-panel"><b>ব্যাখ্যা:</b> TRUE. শহরের মাঝখানে কাট অ্যান্ড কভার কাজ করছিল না, তাই গভীর টানেল দরকার ছিল।</div>
 
-                <p>11. The windows on City & South London trains were at eye level. <br>
-                <select id="ans11"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f11"></span> <button class="btn-review" onclick="showE(11)">Explain</button></p>
-                <div id="ex11" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> FALSE. জানালাগুলো ছিল খুব ছোট এবং 'just below the roof' বা ছাদের ঠিক নিচে, অর্থাৎ চোখের উচ্চতায় ছিল না।</div>
+                <p>11. The windows were at eye level. <br>
+                <select id="ans11"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f11"></span> <button class="btn-rev" onclick="tgl('ex11')">Explain</button></p>
+                <div id="ex11" class="info-panel"><b>ব্যাখ্যা:</b> FALSE. জানালাগুলো ছিল ছাদের ঠিক নিচে, অর্থাৎ চোখের উচ্চতায় নয়।</div>
 
-                <p>12. The City & South London Railway was a financial success. <br>
-                <select id="ans12"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f12"></span> <button class="btn-review" onclick="showE(12)">Explain</button></p>
-                <div id="ex12" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> FALSE. প্যাসেজে স্পষ্ট লেখা আছে 'it did not make a profit' (এটি লাভ করতে পারেনি)।</div>
+                <p>12. The City & South London Railway made a profit. <br>
+                <select id="ans12"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f12"></span> <button class="btn-rev" onclick="tgl('ex12')">Explain</button></p>
+                <div id="ex12" class="info-panel"><b>ব্যাখ্যা:</b> FALSE. এটি লাভ করতে (profit) পারেনি।</div>
 
-                <p>13. Trains on the ‘Tuppenny Tube’ nearly always ran on time. <br>
-                <select id="ans13"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f13"></span> <button class="btn-review" onclick="showE(13)">Explain</button></p>
-                <div id="ex13" class="info-panel exp-box"><span class="label-bn">বিস্তারিত ব্যাখ্যা:</span> NOT GIVEN. ট্রেনটি জনপ্রিয় ছিল তা বলা হয়েছে, কিন্তু তা সময়মতো (on time) চলত কি না সে সম্পর্কে প্যাসেজ নীরব।</div>
+                <p>13. 'Tuppenny Tube' was nearly always on time. <br>
+                <select id="ans13"><option value="">Select</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select> <span id="f13"></span> <button class="btn-rev" onclick="tgl('ex13')">Explain</button></p>
+                <div id="ex13" class="info-panel"><b>ব্যাখ্যা:</b> NOT GIVEN. জনপ্রিয়তার কথা থাকলেও সময়ের ব্যাপারে কোনো তথ্য নেই।</div>
             </div>
 
-            <button id="submit-btn" onclick="checkAll()">Submit Test</button>
+            <button id="submit-btn" onclick="checkTest()">Submit Answer</button>
         </div>
     </div>
 </div>
 
 <footer>
-    <div>&copy; 2026 LizOn Education - Helpline: 01611611139</div>
-    <a href="https://wa.me/8801611611139?text=I%20want%20to%20take%20admission%20in%20private%20course" class="whatsapp-link" target="_blank">Take Admission in Private Course</a>
+    <div>&copy; 2026 LizOn Education - WhatsApp: 01611611139</div>
+    <a href="https://wa.me/8801611611139?text=I%20want%20to%20take%20admission%20in%20private%20course" class="wa-btn" target="_blank">Take Admission in Private Course</a>
 </footer>
-
-<div id="overlay">
-    <div class="result-card">
-        <h2 id="score-text">Score: 0/13</h2>
-        <p>Review the markers in the passage and the Bangla explanations provided.</p>
-        <button onclick="document.getElementById('overlay').style.display='none'">Review Answers</button>
-    </div>
-</div>
 
 <script>
     // Resizer logic
     const resizer = document.getElementById('resizer');
     const leftPane = document.getElementById('left-pane');
     resizer.addEventListener('mousedown', (e) => {
-        document.addEventListener('mousemove', resize);
-        document.addEventListener('mouseup', () => document.removeEventListener('mousemove', resize));
+        document.addEventListener('mousemove', (ev) => {
+            let p = (ev.clientX / window.innerWidth) * 100;
+            leftPane.style.width = p + '%';
+            document.getElementById('right-pane').style.width = (100 - p) + '%';
+        });
+        document.addEventListener('mouseup', () => document.removeEventListener('mousemove', null));
     });
-    function resize(e) {
-        let percent = (e.clientX / window.innerWidth) * 100;
-        leftPane.style.width = percent + '%';
-        document.getElementById('right-pane').style.width = (100 - percent) + '%';
-    }
 
-    // Highlighting logic (Universal)
-    function hl(id) {
+    // Dual Highlighting
+    function enableHL(id) {
         document.getElementById(id).addEventListener('mouseup', function() {
             let s = window.getSelection();
             if (s.rangeCount && s.toString().length > 0) {
@@ -261,39 +275,34 @@
             }
         });
     }
-    hl('passage-container'); hl('questions-container');
+    enableHL('passage-container'); enableHL('questions-container');
 
-    // Answer logic
-    const keys = {
+    // Answer Validation
+    const sol = {
         ans1: "population", ans2: "suburbs", ans3: "businessmen", ans4: "funding", ans5: "press", ans6: "soil",
         ans7: "FALSE", ans8: "NOT GIVEN", ans9: "TRUE", ans10: "TRUE", ans11: "FALSE", ans12: "FALSE", ans13: "NOT GIVEN"
     };
 
-    function checkAll() {
-        let score = 0;
+    function checkTest() {
+        let sc = 0;
         for (let i = 1; i <= 13; i++) {
             let u = document.getElementById('ans' + i).value.trim().toLowerCase();
-            let k = keys['ans' + i].toLowerCase();
+            let k = sol['ans' + i].toLowerCase();
             let f = document.getElementById('f' + i);
-            if (u === k) { score++; f.innerHTML = '<b style="color:green">✓</b>'; }
-            else { f.innerHTML = `<b style="color:red">✗ (Ans: ${keys['ans'+i]})</b>`; }
+            if (u === k) { sc++; f.innerHTML = '<b style="color:green">✓</b>'; }
+            else { f.innerHTML = `<b style="color:red">✗ (${sol['ans'+i]})</b>`; }
             
+            // Show review tools
             document.getElementById('m' + i).style.display = 'inline';
-            document.querySelectorAll('.btn-review').forEach(b => b.style.display = 'inline-block');
+            document.querySelectorAll('.btn-rev').forEach(b => b.style.display = 'inline-block');
         }
-        document.getElementById('score-text').innerText = `Score: ${score} / 13`;
-        document.getElementById('overlay').style.display = 'flex';
+        alert("Your Score: " + sc + " / 13. Please review the highlighted markers and meanings.");
     }
 
-    function showE(i) { let b = document.getElementById('ex' + i); b.style.display = (b.style.display === 'block') ? 'none' : 'block'; }
-    function toggleM(i) { let b = document.getElementById('mn' + i); b.style.display = (b.style.display === 'block') ? 'none' : 'block'; }
-
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.info-panel') && !e.target.closest('.btn-review')) {
-            document.querySelectorAll('.info-panel').forEach(p => p.style.display = 'none');
-        }
-    });
+    function tgl(id) {
+        let p = document.getElementById(id);
+        p.style.display = (p.style.display === 'block') ? 'none' : 'block';
+    }
 </script>
-
 </body>
 </html>

@@ -64,7 +64,6 @@
         .dropdown-content a:hover { background-color: var(--lizon-light); color: var(--lizon-green); }
         .dropdown:hover .dropdown-content { display: block; }
 
-        /* Instant Admissions Button */
         .btn-admissions {
             background: var(--lizon-dark); color: white; padding: 10px 20px;
             border-radius: 50px; font-weight: 600; cursor: pointer; border: none;
@@ -72,7 +71,7 @@
         }
         .btn-admissions:hover { background: #1a252f; transform: translateY(-2px); }
 
-        /* Modal / Popup Styling */
+        /* Modal Styling */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0;
             width: 100%; height: 100%; background-color: rgba(0,0,0,0.6);
@@ -90,7 +89,6 @@
         }
         .modal-header { margin-bottom: 25px; border-bottom: 2px solid var(--lizon-light); padding-bottom: 15px; }
         
-        /* Modal Content Styling */
         .plan-select {
             width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #eee;
             font-family: 'Hind Siliguri'; font-size: 1rem; margin-bottom: 20px; outline: none;
@@ -101,9 +99,8 @@
             min-height: 150px; margin-bottom: 25px; border-left: 5px solid var(--lizon-green);
             line-height: 1.6;
         }
-        .admit-now-box { text-align: center; border-top: 1px solid #eee; pt: 20px; }
 
-        /* Existing Styles (Hero, Steps, etc.) remains as provided */
+        /* Hero & Sections */
         .hero { padding: 80px 0; background: linear-gradient(135deg, #fdfdfd 0%, #f4f7f6 100%); display: flex; align-items: center; min-height: 80vh; }
         .hero-flex { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
         .hero-content { flex: 1; min-width: 300px; }
@@ -112,22 +109,37 @@
         .badge { position: absolute; background: white; padding: 10px 20px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-weight: bold; color: var(--lizon-green); }
         .section-title { text-align: center; margin-bottom: 50px; }
         .section-title h2 { font-size: 2.2rem; color: var(--lizon-dark); margin-bottom: 10px; }
+
+        /* Trusted Section */
+        .trusted-section { padding: 60px 0; background: #fff; border-top: 1px solid #eee; text-align: center; }
+        .standards-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 25px; font-weight: 700; color: #777; font-size: 1.1rem; }
+        .standards-list span { padding: 5px 15px; border-radius: 5px; background: var(--lizon-light); color: var(--lizon-dark); }
+
         .steps { padding: 80px 0; }
         .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .step-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); text-align: center; border-bottom: 4px solid transparent; transition: 0.3s; }
         .step-card:hover { border-bottom-color: var(--lizon-green); transform: translateY(-5px); }
         .step-card i { font-size: 3rem; color: var(--lizon-green); margin-bottom: 20px; }
+
+        /* Marquee Speed Updated (80s to 40s) */
         .reviews-section { padding: 80px 0; background: var(--lizon-dark); color: white; overflow: hidden; }
-        .marquee-wrapper { display: flex; gap: 20px; animation: scroll 80s linear infinite; }
+        .marquee-wrapper { display: flex; gap: 20px; animation: scroll 40s linear infinite; }
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .review-card { background: rgba(255,255,255,0.05); min-width: 350px; padding: 25px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
-        .rev-header { color: var(--lizon-green); font-weight: bold; margin-bottom: 5px; }
-        .rev-origin { font-size: 0.8rem; color: #aaa; display: block; margin-bottom: 10px; }
+        
         .faq { padding: 80px 0; background: var(--lizon-light); }
         .faq-item { background: white; margin-bottom: 15px; border-radius: 10px; overflow: hidden; }
         .faq-question { padding: 20px; cursor: pointer; display: flex; justify-content: space-between; font-weight: 600; }
         .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: 0.3s ease; color: #666; }
-        .faq-item.active .faq-answer { padding: 0 20px 20px; max-height: 200px; }
+        .faq-item.active .faq-answer { padding: 0 20px 20px; max-height: 400px; }
+
+        /* Plan Card Section */
+        .plan-card-section { padding: 80px 0; background: #fff; }
+        .dream-plan-card { 
+            background: white; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); 
+            padding: 40px; border: 1px solid #eee; margin-top: 20px;
+        }
+
         footer { padding: 60px 0 20px; background: #1a1a1a; color: #ccc; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
         .footer-links a { color: #ccc; text-decoration: none; display: block; margin-bottom: 10px; }
@@ -145,10 +157,8 @@
     <div class="container">
         <nav>
             <a href="#" class="logo">LizOn Education</a>
-            
             <div class="nav-actions">
                 <button class="btn-admissions" onclick="openModal()">Instant Admissions</button>
-
                 <div class="dropdown">
                     <button class="dropbtn">Free Resources <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i></button>
                     <div class="dropdown-content">
@@ -156,8 +166,7 @@
                         <a href="https://drive.google.com/drive/folders/1iDKSixrNURku84MiYkFirj39I4Y-bb-3" target="_blank"><i class="fas fa-book"></i> Books, Notes, Resources</a>
                     </div>
                 </div>
-
-                <a href="https://wa.me/8801611611139?text=Hello%20LizOn%20Education,%20I%20am%20interested%20in%20the%20IELTS%20Full%20Journey.%20Is%20there%20any%20special%20discount%20for%20today?" class="btn-wa">
+                <a href="https://wa.me/8801611611139?text=Hello%20LizOn%20Education,%20I%20am%20interested%20in%20the%20IELTS%20Full%20Journey." class="btn-wa">
                     <i class="fab fa-whatsapp"></i> Chat with Us
                 </a>
             </div>
@@ -171,27 +180,17 @@
         <div class="modal-header">
             <h2 style="margin:0; color: var(--lizon-dark);">অ্যাডমিশন ও কোর্স পরিকল্পনা</h2>
         </div>
-        
         <p style="font-weight: 600; margin-bottom: 10px;">পরিকল্পনা (Your Dream Plan)</p>
-        <select class="plan-select" id="planSelector" onchange="updatePlanDetails()">
+        <select class="plan-select" id="planSelector" onchange="updatePlanDetails('planDescription', this.value)">
             <option value="p1">প্রথম মাসের পরিকল্পনা</option>
             <option value="p2">দ্বিতীয় মাসের পরিকল্পনা</option>
             <option value="p3">তৃতীয় মাসের পরিকল্পনা: এক্সাম অ্যাপ্রোচ</option>
             <option value="p4">ব্যক্তিগত সক্ষমতা ও নমনীয়তা</option>
             <option value="p5">লিজন (LizOn)-এর প্রতিশ্রুতি</option>
         </select>
-
-        <div class="plan-details" id="planDescription">
-            • সপ্তাহে ৫টা করে ক্লাস হবে।<br>
-            • যদি আমরা দিনে ১টা করে ক্লাস করি, তাহলে প্রথম মাসে ২০টা ক্লাস হবে।<br>
-            • আর যদি দিনে ২টা করে ক্লাস করি, তাহলে মাসে ৪০টা ক্লাস হবে।<br>
-            • আমাদের কোশ্চেন টাইপস আছে ৩০টারও বেশি।<br>
-            প্রথম মাসে আমাদের মেইন ফোকাস থাকবে বেসিক গ্রামার এবং ভোকাবুলারির ওপর।<br>
-            • এই মাসে আমরা শিখবো কীভাবে প্রশ্নগুলো সলভ করতে হয় এবং কোন কোন রুলস ফলো করতে হয়।
-        </div>
-
-        <div class="admit-now-box">
-            <a href="https://wa.me/8801611611139?text=I%20want%20to%20admit%20in%20কাঙ্ক্ষিত%20স্কোর%20না%20পাওয়া%20পর্যন্ত%20IELTS%20Course" class="btn-wa" style="width: 100%; justify-content: center; margin-top: 15px; background: var(--lizon-dark);">
+        <div class="plan-details" id="planDescription">...</div>
+        <div style="text-align: center;">
+            <a href="https://wa.me/8801611611139?text=I%20want%20to%20admit%20in%20কাঙ্ক্ষিত%20স্কোর%20না%20পাওয়া%20পর্যন্ত%20IELTS%20Course" class="btn-wa" style="width: 100%; justify-content: center; background: var(--lizon-dark);">
                 Admit Now (WhatsApp)
             </a>
         </div>
@@ -204,7 +203,7 @@
             <h4 style="color: var(--lizon-green); margin-bottom: 10px;">Since 2019 • Empowering 2,100+ Students</h4>
             <h1 style="font-size: 3.2rem; line-height: 1.2; margin-bottom: 20px;">IELTS Full Journey: <span style="color: var(--lizon-green);">কাঙ্ক্ষিত স্কোর</span> না পাওয়া পর্যন্ত</h1>
             <p style="font-size: 1.2rem; margin-bottom: 30px; color: #555;">সিস্টেম ছাড়া IELTS হয় না। আমাদের ৩-ধাপের বিশেষ পদ্ধতিতে আপনি পাবেন লাইভ ইভালুয়েশন এবং আনলিমিটেড সাপোর্ট—যতদিন না আপনি আপনার লক্ষ্যে পৌঁছাচ্ছেন।</p>
-            <a href="https://wa.me/8801611611139?text=Hello%20LizOn%20Education,%20I%20am%20interested%20in%20the%20IELTS%20Full%20Journey.%20Is%20there%20any%20special%20discount%20for%20today?" class="btn-wa">
+            <a href="https://wa.me/8801611611139" class="btn-wa">
                 <i class="fab fa-whatsapp"></i> আজই সারপ্রাইজ ডিসকাউন্ট জানুন
             </a>
         </div>
@@ -216,6 +215,16 @@
     </div>
 </section>
 
+<section class="trusted-section">
+    <div class="container">
+        <h2 style="color: var(--lizon-dark); margin-bottom: 10px;">Trusted by International Standards</h2>
+        <p style="color: #666; max-width: 700px; margin: 0 auto;">We follow the standards and systems of globally recognised IELTS authorities and study-abroad networks.</p>
+        <div class="standards-list">
+            <span>British Council</span> <span>IDP</span> <span>IELTS.org</span> <span>Pearson</span> <span>UCAS</span> <span>EducationUSA</span> <span>Grammarly</span> <span>Duolingo</span>
+        </div>
+    </div>
+</section>
+
 <section class="steps">
     <div class="container">
         <div class="section-title">
@@ -223,52 +232,65 @@
             <p>আমাদের বিশেষ কারিকুলাম যা আপনাকে জিরো থেকে প্রো বানাবে।</p>
         </div>
         <div class="steps-grid">
-            <div class="step-card">
-                <i class="fas fa-layer-group"></i>
-                <h3>ধাপ ১: ফাউন্ডেশন</h3>
-                <p>গ্রামার এবং সেনটেনন্স স্ট্রাকচারের ভয় দূর করা। বেসিক মজবুত না হলে স্কোর তোলা অসম্ভব।</p>
-            </div>
-            <div class="step-card">
-                <i class="fas fa-bullseye"></i>
-                <h3>ধাপ ২: স্ট্র্যাটেজি</h3>
-                <p>৪টি মডিউলের (R, L, W, S) বিশেষ ট্রিকস এবং সিস্টেম আয়ত্ত করা যা সময় বাঁচায়।</p>
-            </div>
-            <div class="step-card">
-                <i class="fas fa-comments-dollar"></i>
-                <h3>ধাপ ৩: মাস্টারি</h3>
-                <p>সপ্তাহে ২ দিন লাইভ ইভালুয়েশন এবং আনলিমিটেড মক টেস্ট। যতক্ষণ না স্কোর আসছে!</p>
-            </div>
+            <div class="step-card"><i class="fas fa-layer-group"></i><h3>ধাপ ১: ফাউন্ডেশন</h3><p>গ্রামার এবং সেনটেনন্স স্ট্রাকচারের ভয় দূর করা। বেসিক মজবুত না হলে স্কোর তোলা অসম্ভব।</p></div>
+            <div class="step-card"><i class="fas fa-bullseye"></i><h3>ধাপ ২: স্ট্র্যাটেজি</h3><p>৪টি মডিউলের (R, L, W, S) বিশেষ ট্রিকস এবং সিস্টেম আয়ত্ত করা যা সময় বাঁচায়।</p></div>
+            <div class="step-card"><i class="fas fa-comments-dollar"></i><h3>ধাপ ৩: মাস্টারি</h3><p>সপ্তাহে ২ দিন লাইভ ইভালুয়েশন এবং আনলিমিটেড মক টেস্ট। যতক্ষণ না স্কোর আসছে!</p></div>
         </div>
     </div>
 </section>
 
 <section class="reviews-section">
-    <div class="container">
-        <div class="section-title">
-            <h2 style="color: white;">গ্লোবাল লিজন সাকসেস স্টোরি</h2>
-            <p style="color: #aaa;">আমাদের শিক্ষার্থীরা এখন বিশ্বের নামী সব শহরে।</p>
-        </div>
-    </div>
+    <div class="container"><div class="section-title"><h2 style="color: white;">গ্লোবাল লিজন সাকসেস স্টোরি</h2></div></div>
     <div class="marquee-wrapper">
-        <div class="review-card"><span class="rev-header">Tanvir (8.0)</span><span class="rev-origin">From Chittagong → Melbourne, Australia</span><p>"Joy Bhaia-র সিস্টেম ফলো করে আমি ১ম বারেই ৮.০ পেয়েছি। সাপোর্টটা অকল্পনীয় ছিল!"</p></div>
-        <div class="review-card"><span class="rev-header">Maliha (7.5)</span><span class="rev-origin">From Dhaka → London, UK</span><p>"লাইভ ইভালুয়েশন না থাকলে রাইটিং স্কোর তোলা আমার জন্য অসম্ভব হতো। ধন্যবাদ লিজন!"</p></div>
-        <div class="review-card"><span class="rev-header">Rahat (7.0)</span><span class="rev-origin">From Sylhet → Toronto, Canada</span><p>"অন্যান্য জায়গায় কোর্স শেষ করে দেয়, কিন্তু লিজন আমার স্কোর আসা পর্যন্ত সাথে ছিল।"</p></div>
+        <div class="review-card"><span class="rev-header">Tanvir (8.0)</span><span class="rev-origin">From Chittagong → Melbourne</span><p>"Joy Bhaia-র সিস্টেম ফলো করে আমি ১ম বারেই ৮.০ পেয়েছি।"</p></div>
+        <div class="review-card"><span class="rev-header">Maliha (7.5)</span><span class="rev-origin">From Dhaka → London</span><p>"লাইভ ইভালুয়েশন না থাকলে রাইটিং স্কোর তোলা অসম্ভব হতো।"</p></div>
+        <div class="review-card"><span class="rev-header">Rahat (7.0)</span><span class="rev-origin">From Sylhet → Toronto</span><p>"লিজন আমার স্কোর আসা পর্যন্ত সাথে ছিল।"</p></div>
     </div>
 </section>
 
 <section class="faq">
     <div class="container">
-        <div class="section-title">
-            <h2>সচরাচর জিজ্ঞাসিত প্রশ্ন</h2>
-        </div>
+        <div class="section-title"><h2>সচরাচর জিজ্ঞাসিত প্রশ্ন</h2></div>
         <div style="max-width: 800px; margin: 0 auto;">
             <div class="faq-item">
                 <div class="faq-question">কোর্সটি কতদিনের? <i class="fas fa-plus"></i></div>
                 <div class="faq-answer">আমাদের কোর্স নির্দিষ্ট দিনের নয়। আপনার কাঙ্ক্ষিত স্কোর না আসা পর্যন্ত আপনি আমাদের সাথে যুক্ত থাকতে পারবেন।</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">আমি কি জিরো লেভেল থেকে শুরু করতে পারব? <i class="fas fa-plus"></i></div>
-                <div class="faq-answer">হ্যাঁ, আমাদের স্টেপ-১ এ আমরা একদম বেসিক গ্রামার এবং স্ট্রাকচার থেকে শুরু করি।</div>
+                <div class="faq-question">প্রথম মাসে কী কী শেখানো হয়? <i class="fas fa-plus"></i></div>
+                <div class="faq-answer">প্রথম মাসে আমাদের মেইন ফোকাস থাকে বেসিক গ্রামার এবং ভোকাবুলারির ওপর। এই মাসে আমরা শিখবো কীভাবে প্রশ্নগুলো সলভ করতে হয় এবং কোন কোন রুলস ফলো করতে হয়।</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">যদি আমি ২-৩ মাসে শিখতে না পারি তবে কি বাড়তি ফি দিতে হবে? <i class="fas fa-plus"></i></div>
+                <div class="faq-answer">একদমই না। কারো কোর্স শেষ করতে ২ মাস লাগতে পারে, আবার কারো ৩-৪ মাসও লাগতে পারে। আমরা শিক্ষার্থীর ব্যক্তিগত সক্ষমতা অনুযায়ী সময় বাড়িয়ে সমন্বয় করি। লিজন-এ একবার পেমেন্ট করলে সাপোর্ট পাবেন আজীবন।</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">আপনারা কি নিয়মিত পরীক্ষা নেন? <i class="fas fa-plus"></i></div>
+                <div class="faq-answer">হ্যাঁ, প্রতি সপ্তাহে এবং প্রতি মাসে টেস্ট নেওয়া হয়। এমনকি প্রতিটি ক্লাসের সাথে ছোট ছোট টেস্টের ব্যবস্থা থাকে যাতে আপনার অগ্রগতি নিশ্চিত হয়।</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="classplan" class="plan-card-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>পরিকল্পনা (Your Dream Plan)</h2>
+            <p>সাফল্যের জন্য আমাদের সুবিন্যস্ত রোডম্যাপ</p>
+        </div>
+        <div class="dream-plan-card">
+            <select class="plan-select" id="planSelectorStatic" onchange="updatePlanDetails('planDescriptionStatic', this.value)">
+                <option value="p1">প্রথম মাসের পরিকল্পনা</option>
+                <option value="p2">দ্বিতীয় মাসের পরিকল্পনা</option>
+                <option value="p3">তৃতীয় মাসের পরিকল্পনা: এক্সাম অ্যাপ্রোচ</option>
+                <option value="p4">ব্যক্তিগত সক্ষমতা ও নমনীয়তা</option>
+                <option value="p5">লিজন (LizOn)-এর প্রতিশ্রুতি</option>
+            </select>
+            <div class="plan-details" id="planDescriptionStatic" style="min-height: 200px; font-size: 1.1rem;">...</div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://wa.me/8801611611139?text=I%20want%20to%20enroll%20in%20the%20IELTS%20Full%20Journey" class="btn-wa" style="padding: 15px 40px; font-size: 1.1rem;">
+                    <i class="fab fa-whatsapp"></i> আজই আপনার যাত্রা শুরু করুন
+                </a>
             </div>
         </div>
     </div>
@@ -279,60 +301,54 @@
         <div class="footer-grid">
             <div>
                 <h3 style="color: white;">LizOn Education</h3>
-                <p>৫১, বুদ্ধ মন্দির বাসাবো (মর্নিং বেল স্কুল এবং ব্র্যাক অফিসের পাশে), ঢাকা ১২১৪।</p>
-                <p>Email: lizonedu@gmail.com</p>
+                <p>৫১, বুদ্ধ মন্দির বাসাবো, ঢাকা ১২১৪।</p>
                 <p>Call/WA: 01611611139</p>
             </div>
             <div class="footer-links">
                 <h4 style="color: white;">Quick Links</h4>
-                <a href="#">IELTS Course</a>
-                <a href="#">PTE Short-cut</a>
-                <a href="#">Study Abroad Support</a>
+                <a href="#classplan">Course Plan</a>
+                <a href="https://www.mylizon.com/ieltsclass.html">Free IELTS Class</a>
             </div>
             <div>
-                <h4 style="color: white;">Follow the Journey</h4>
+                <h4 style="color: white;">Follow Us</h4>
                 <div class="social-icons">
                     <a href="https://www.facebook.com/lizoneducation"><i class="fab fa-facebook"></i></a>
-                    <a href="https://youtube.com/@lizoneducation?si=1EWSGh0_YJLR5orG"><i class="fab fa-youtube"></i></a>
+                    <a href="https://youtube.com/@lizoneducation"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
         <hr style="border: 0; border-top: 1px solid #333;">
-        <p style="text-align: center; font-size: 0.8rem; margin-top: 20px;">&copy; 2026 LizOn Education. We will assist students until they get to DESIRED score.</p>
+        <p style="text-align: center; font-size: 0.8rem; margin-top: 20px;">&copy; 2026 LizOn Education. Supporting you until your desired score.</p>
     </div>
 </footer>
 
 <script>
-    // Modal Control
-    function openModal() { document.getElementById('admissionModal').style.display = 'block'; }
-    function closeModal() { document.getElementById('admissionModal').style.display = 'none'; }
-    window.onclick = function(event) {
-        let modal = document.getElementById('admissionModal');
-        if (event.target == modal) modal.style.display = "none";
-    }
-
-    // Plan Updates
     const plans = {
-        p1: "• সপ্তাহে ৫টা করে ক্লাস হবে।<br>• যদি আমরা দিনে ১টা করে ক্লাস করি, তাহলে প্রথম মাসে ২০টা ক্লাস হবে।<br>• আর যদি দিনে ২টা করে ক্লাস করি, তাহলে মাসে ৪০টা ক্লাস হবে।<br>• আমাদের কোশ্চেন টাইপস আছে ৩০টারও বেশি।<br>প্রথম মাসে আমাদের মেইন ফোকাস থাকবে বেসিক গ্রামার এবং ভোকাবুলারির ওপর।<br>• এই মাসে আমরা শিখবো কীভাবে প্রশ্নগুলো সলভ করতে হয় এবং কোন কোন রুলস ফলো করতে হয়।",
-        p2: "• দ্বিতীয় মাসে আমাদের মূল কাজ হবে প্র্যাকটিস করা।<br>আমরা প্রথম মাসে যা যা শিখেছি, সেগুলো প্রপার প্র্যাকটিসের মাধ্যমে আয়ত্তে আনবো।<br>• এর সাথে থাকবে মক টেস্ট ইভালুয়েশন।<br>• টেস্ট দিতে গিয়ে দেখা যাবে যে আমরা হয়তো শিখলাম এবং প্র্যাকটিসও করলাম, কিন্তু টেস্টে গিয়ে অনেক ভুল হচ্ছে বা সময় বেশি লেগে যাচ্ছে।<br>• তাই দ্বিতীয় মাসে প্র্যাকটিসের পাশাপাশি আমাদের ভুলগুলো খুঁজে বের করে সেগুলো ইমপ্রুভ করার চেষ্টা করবো।",
-        p3: "• প্র্যাকটিস টেস্ট এবং ইভ্যালুয়েশনের পাশাপাশি এক্সাম অ্যাপ্রোচ শেখাটা খুব গুরুত্বপূর্ণ।<br>• তাই তৃতীয় মাসে গিয়ে আমরা মূলত এই এক্সাম অ্যাপ্রোচ বা পরীক্ষার কৌশলগুলো শিখবো।",
-        p4: "• অনেক সময় দেখা যায়, প্রথম মাসে যা শেখানো হয়েছে, একজন শিক্ষার্থী হয়তো তা পুরোপুরি আয়ত্ত করতে পারেনি।<br>• সেই অবস্থায় পরবর্তী ধাপে চলে যাওয়া সঠিক সিদ্ধান্ত নয়; বরং যা সে পারছে না, তাকে সেগুলো আবার শেখাতে হবে।<br>• কারণ আমরা কেউই ঈশ্বরচন্দ্র বিদ্যাসাগর নই। কেউ হয়তো একবার পড়লেই বোঝে, কারো দুই-তিনবার বা তার বেশি সময় লাগতে পারে।<br>• তাই কারো কোর্স শেষ করতে ২ মাস লাগতে পারে, আবার কারো ৩-৪ মাসও লাগতে পারে।<br>• যারা কম সময়ে কোর্স শেষ করতে চায়, তাদের ক্ষেত্রে ক্লাসের সংখ্যা বাড়িয়ে সমন্বয় করতে হবে।",
-        p5: "লিজন-এ অ্যাডমিশন নেওয়ার পর আমরা নিয়মিত পরীক্ষা এবং ইভ্যালুয়েশনের মাধ্যমে শিক্ষার্থীর অগ্রগতি নিশ্চিত করি:<br>• প্রতি সপ্তাহে টেস্ট নেওয়া হয়।<br>• প্রতি মাসে টেস্ট নেওয়া হয়।<br>• এমনকি প্রতিটি ক্লাসের সাথে ছোট ছোট টেস্টের ব্যবস্থা থাকে।<br>• আমাদের মূল লক্ষ্য হলো শেখানোর পাশাপাশি সঠিক তদারকির মাধ্যমে শিক্ষার্থীকে একটি নির্দিষ্ট সময়ের মধ্যে তার কাঙ্ক্ষিত স্কোর পেতে সাহায্য করা।"
+        p1: "• সপ্তাহে ৫টা করে ক্লাস হবে।<br>• দিনে ১টা ক্লাস হলে প্রথম মাসে ২০টা, আর দিনে ২টা ক্লাস হলে ৪০টা ক্লাস হবে।<br>• আমাদের কোশ্চেন টাইপস আছে ৩০টারও বেশি।<br>• মেইন ফোকাস থাকবে বেসিক গ্রামার এবং ভোকাবুলারির ওপর।<br>• আমরা শিখবো কীভাবে প্রশ্নগুলো সলভ করতে হয় এবং কোন রুলস ফলো করতে হয়।",
+        p2: "• দ্বিতীয় মাসে মূল কাজ হবে প্র্যাকটিস করা।<br>• প্রথম মাসে যা শিখেছি, সেগুলো প্রপার প্র্যাকটিসের মাধ্যমে আয়ত্তে আনা হবে।<br>• সাথে থাকবে মক টেস্ট ইভালুয়েশন।<br>• ভুলগুলো খুঁজে বের করে সেগুলো ইমপ্রুভ করার চেষ্টা করা হবে যাতে পরীক্ষায় সময় বাঁচে।",
+        p3: "• প্র্যাকটিস টেস্ট এবং ইভ্যালুয়েশনের পাশাপাশি এক্সাম অ্যাপ্রোচ শেখাটা খুব গুরুত্বপূর্ণ।<br>• তাই তৃতীয় মাসে গিয়ে মূলত এই এক্সাম অ্যাপ্রোচ বা পরীক্ষার বিশেষ কৌশলগুলো শিখবো।",
+        p4: "• আমরা শিক্ষার্থীর ব্যক্তিগত সক্ষমতাকে গুরুত্ব দেই।<br>• কারো কোর্স শেষ করতে ২ মাস লাগতে পারে, আবার কারো ৩-৪ মাস।<br>• যারা পিছিয়ে থাকে তাদের আবার শেখানো হয়, কারণ সবার শেখার গতি এক নয়।<br>• কম সময়ে শেষ করতে চাইলে ক্লাসের সংখ্যা বাড়িয়ে সমন্বয় করা হয়।",
+        p5: "• প্রতি সপ্তাহে এবং প্রতি মাসে নিয়মিত পরীক্ষা ও ইভ্যালুয়েশন নেওয়া হয়।<br>• প্রতিটি ক্লাসের সাথে ছোট টেস্টের ব্যবস্থা থাকে।<br>• আমাদের লক্ষ্য হলো সঠিক তদারকির মাধ্যমে শিক্ষার্থীকে একটি নির্দিষ্ট সময়ের মধ্যে তার কাঙ্ক্ষিত স্কোর পেতে সাহায্য করা।"
     };
 
-    function updatePlanDetails() {
-        const val = document.getElementById('planSelector').value;
-        document.getElementById('planDescription').innerHTML = plans[val];
+    function updatePlanDetails(containerId, planKey) {
+        document.getElementById(containerId).innerHTML = plans[planKey];
     }
 
-    // FAQ Toggle
+    // Initialize plans
+    updatePlanDetails('planDescription', 'p1');
+    updatePlanDetails('planDescriptionStatic', 'p1');
+
+    function openModal() { document.getElementById('admissionModal').style.display = 'block'; }
+    function closeModal() { document.getElementById('admissionModal').style.display = 'none'; }
+    window.onclick = function(e) { if(e.target == document.getElementById('admissionModal')) closeModal(); }
+
     document.querySelectorAll('.faq-question').forEach(item => {
         item.addEventListener('click', () => {
             const parent = item.parentElement;
             parent.classList.toggle('active');
             const icon = item.querySelector('i');
-            icon.classList.toggle('fa-plus');
-            icon.classList.toggle('fa-minus');
+            icon.classList.toggle('fa-plus'); icon.classList.toggle('fa-minus');
         });
     });
 </script>

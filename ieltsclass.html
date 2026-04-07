@@ -16,6 +16,11 @@
     body{ font-family: Inter, Arial, sans-serif; background: #f7fbf8; margin: 0; color: var(--text); }
     .container{ width: min(1200px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0; }
     
+    /* Header Style */
+    .page-header { text-align: center; margin-bottom: 50px; }
+    .page-header h1 { color: var(--brand); font-size: 36px; margin-bottom: 10px; }
+    .page-header p { color: var(--muted); font-size: 16px; }
+
     /* Course Grid */
     .class-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 60px; }
     .class-card{ background: #fff; border-radius: 24px; border: 1px solid var(--line); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
@@ -27,7 +32,7 @@
     /* Lesson List */
     .lesson-list-container { padding: 15px; background: #fff; border-top: 1px solid var(--line); }
     .lesson-header { font-weight: 800; font-size: 14px; color: var(--brand); margin-bottom: 10px; display: flex; justify-content: space-between; }
-    .lesson-scroll { max-height: 200px; overflow-y: auto; }
+    .lesson-scroll { max-height: 220px; overflow-y: auto; }
     .lesson-scroll::-webkit-scrollbar { width: 4px; }
     .lesson-scroll::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; }
 
@@ -39,7 +44,7 @@
     .lesson-item:hover { background: var(--brand-soft); border-color: var(--line); }
     .lesson-icon { width: 24px; height: 24px; background: var(--brand-soft); color: var(--brand); border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 11px; flex-shrink: 0; }
 
-    /* Footer Styles from Image */
+    /* Footer Styles */
     .footer-wrapper { background: #fff; border-radius: 28px; padding: 30px; border: 1px solid var(--line); box-shadow: var(--shadow); }
     .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .footer-box { background: var(--brand-soft); border-radius: 20px; padding: 25px; }
@@ -53,7 +58,10 @@
 <body>
 
   <div class="container">
-    <h2 style="text-align: center; color: var(--brand); margin-bottom: 40px;">IELTS Full Module Playlists</h2>
+    <header class="page-header">
+        <h1>IELTS Full Module Playlists</h1>
+        <p>Master every section of the IELTS exam with Mr. Joy Sir</p>
+    </header>
     
     <div class="class-grid" id="mainGrid"></div>
 
@@ -76,21 +84,20 @@
   </div>
 
   <script>
-    // DATA CONFIGURATION: Add your Video IDs for each playlist here
     const courseData = [
       {
         title: "Listening IELTS Course",
         category: "Listening",
         lessons: [
-          { title: "IELTS Listening MAPS Made Easy | Band 8+ Strategy", id: "Jk1_z3ZEP3w" }, // Replace with your IDs
+          { title: "IELTS Listening MAPS Made Easy | Band 8+ Strategy", id: "Jk1_z3ZEP3w" },
           { title: "IELTS Listening DOUBLE MCQ | Most Students Fail Here", id: "7Hw21qGzSfo" },
           { title: "IELTS Listening MCQ Tricks | Stop Losing Marks", id: "vyDFMkBDPPM" },
-          { title: "The 9–10 Method | Master IELTS Listening Part 4", id: "vNt0bZOT1rY" }, // Replace with your IDs
+          { title: "The 9–10 Method | Master IELTS Listening Part 4", id: "vNt0bZOT1rY" },
           { title: "IELTS Listening Start Korbo Kivabe? Full Strategy", id: "Fg6bQ_kcs_A" },
           { title: "The Hidden Rule of Part 3 MCQ No One Tells You", id: "JWxE1t1xldo" },
-          { title: "Why You Still Lose Marks in Part 2 (Fill in the Gaps)", id: "Jw2B3r31OV" }, // Replace with your IDs
+          { title: "Why You Still Lose Marks in Part 2", id: "Jw2B3r31OV" },
           { title: "IELTS Listening MATCHING | Full Band 9 Strategy", id: "RsOd9F6BCKY" },
-          { title: "No Starting Point in MAPS? Don’t Panic, Do This", id: "K0FFnDsmJDE" }
+          { title: "No Starting Point in MAPS? Don’t Panic", id: "K0FFnDsmJDE" }
         ]
       },
       {
@@ -98,80 +105,61 @@
         category: "Reading",
         lessons: [
           { title: "IELTS Reading Passage 1 Strategy | Control Your Time", id: "9xhmVGWMZzQ" },
-          { title: "IELTS Reading Fill in the Blanks | Stop Losing Easy Marks", id: "VV0cYZIMCiw" }
-          { title: "IELTS Reading Full Passage Guide | Heading Matching", id: "mz8yXH0ATXw" }, // Replace with your IDs
+          { title: "IELTS Reading Fill in the Blanks", id: "VV0cYZIMCiw" },
+          { title: "IELTS Reading Full Passage Guide | Heading Matching", id: "mz8yXH0ATXw" },
           { title: "IELTS Reading Question Answer | Full Strategy", id: "F9UbZjrVx8I" },
-          { title: "IELTS Reading Hardest Part Explained | Passage 3 Strategy", id: "NStYP_rhDIk" },
-          { title: "MCQ and Passage Plan Reading", id: "u4BWY_ed9GE" }, // Replace with your IDs
+          { title: "IELTS Reading Hardest Part Explained | Passage 3", id: "NStYP_rhDIk" },
+          { title: "MCQ and Passage Plan Reading", id: "u4BWY_ed9GE" },
           { title: "Matching Statement Reading Module", id: "76jp5A6lxZI" },
-          { title: "IELTS Summary Completion Tricks Ensure 35 Marks Without Clues Reading Strategy", id: "lORWHoRol-E" },
-          { title: "IELTS Reading Heading Matching", id: "-Vght6-Fihw" }, // Replace with your IDs
-          { title: "IELTS Reading TFNG Time Saving & Scoring Method", id: "EHLEpDr2V5g" },
-          { title: "Sentence EndingReading Strategy Toward The End + Listening Part 1 & Maps", id: "Hc72BOogLyU" },
-          { title: "Reading With Clues Fill in the Gaps", id: "r-AJNiDiaH0" }, // Replace with your IDs
+          { title: "IELTS Summary Completion Tricks", id: "lORWHoRol-E" },
+          { title: "IELTS Reading Heading Matching", id: "-Vght6-Fihw" },
+          { title: "IELTS Reading TFNG Time Saving Method", id: "EHLEpDr2V5g" },
+          { title: "Sentence Ending Reading Strategy", id: "Hc72BOogLyU" },
+          { title: "Reading With Clues Fill in the Gaps", id: "r-AJNiDiaH0" },
           { title: "Reading Matching Information", id: "lIAjR-EB1SY" },
           { title: "Upcoming Question Types IELTS READING", id: "ZE9yHqEv3Go" }
         ]
       },
-
- {
+      {
         title: "Speaking IELTS Course",
         category: "Speaking",
         lessons: [
-          { title: "The reason Students miss their desired score in Speaking module", id: "JU_FQXz6Kr8" },
-          { title: "Speaking Full Plan Practice", id: "y6qkHcb15bE" }
-          { title: "Speaking Part 3 5 Tips & 7 Question Types", id: "Tv541X-mFBY" }, // Replace with your IDs
+          { title: "Why students miss their desired score in Speaking", id: "JU_FQXz6Kr8" },
+          { title: "Speaking Full Plan Practice", id: "y6qkHcb15bE" },
+          { title: "Speaking Part 3: 5 Tips & 7 Question Types", id: "Tv541X-mFBY" },
           { title: "IELTS Speaking Part 2 Cue Card 3P", id: "Gmchy83D6Ew" },
-          { title: "Speaking Cue Card Concentrate on Topic Not Questions", id: "D-ynqkOcA0Y" },
-          { title: "IELTS Speaking Part 1", id: "VdWhTuGeIkM" } // Replace with your IDs
-         
+          { title: "Cue Card: Concentrate on Topic, Not Questions", id: "D-ynqkOcA0Y" },
+          { title: "IELTS Speaking Part 1", id: "VdWhTuGeIkM" }
         ]
       },
-
-{
+      {
         title: "Writing Task 1 IELTS Course",
         category: "Writing Task 1",
         lessons: [
           { title: "Pie Chart Line by Line Guidelines", id: "Cx-4qHh3FvE" },
-          { title: "Writing Task 1 Diagram Intro, Overall, Body 1, Body 2", id: "-PwpKbjst9E" }
-          { title: "Line Graph Strategy", id: "qaqnRbGQNaM" }, // Replace with your IDs
+          { title: "Task 1 Diagram: Intro, Overall, Body 1 & 2", id: "-PwpKbjst9E" },
+          { title: "Line Graph Strategy", id: "qaqnRbGQNaM" },
           { title: "Maps Writing Task 1", id: "Lh8Yf9qfAtA" },
-          { title: "Task 1Writing AC Line Graph & Bar Chart", id: "1HxWLXVVBzU" },
-          { title: "Bar Chart Strategy", id: "BZi0uL4hQfY" } // Replace with your IDs
-         
+          { title: "Task 1: AC Line Graph & Bar Chart", id: "1HxWLXVVBzU" },
+          { title: "Bar Chart Strategy", id: "BZi0uL4hQfY" }
         ]
       },
       {
         title: "Writing Task 2 IELTS Course",
         category: "Writing Task 2",
         lessons: [
-          { title: "How to start writing Structures Planning", id: "d_HFFL8GA08" },
-          { title: "Writing Task 2 How to write like an Examiner", id: "ytbbfnndo0c" }
-          { title: "Writing Task 2 Full Structure for all question types", id: "Tczb_96xnEs" } // Replace with your IDs
-         
+          { title: "How to start writing: Structures & Planning", id: "d_HFFL8GA08" },
+          { title: "Writing Task 2: How to write like an Examiner", id: "ytbbfnndo0c" },
+          { title: "Writing Task 2: Full Structure for all types", id: "Tczb_96xnEs" }
         ]
       },
-  {
+      {
         title: "GT Letter Writing IELTS Course",
         category: "GT Letter Writing",
         lessons: [
-          { title: "GT Writing Task 1 Letter Writing Formal & Informal", id: "qBKNoeVIkgg" }
-         
+          { title: "GT Writing Task 1: Formal & Informal Letters", id: "qBKNoeVIkgg" }
         ]
-      },
-
-   {
-        title: "Writing Task 2 IELTS Course",
-        category: "Writing Task 2",
-        lessons: [
-          { title: "How to start writing Structures Planning", id: "d_HFFL8GA08" },
-          { title: "Writing Task 2 How to write like an Examiner", id: "ytbbfnndo0c" }
-          { title: "Writing Task 2 Full Structure for all question types", id: "Tczb_96xnEs" }, // Replace with your IDs
-         
-        ]
-      },
-
-      
+      }
     ];
 
     const grid = document.getElementById("mainGrid");

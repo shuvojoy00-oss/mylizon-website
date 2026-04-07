@@ -181,12 +181,17 @@
       `).join("");
     }
 
-   function loadPlaylist(index, playlistId) {
+ function loadPlaylist(index, playlistId) {
   const container = document.getElementById(`player-${index}`);
-  // Updated URL to ensure the playlist context is strong
+  
+  // This URL format forces the "Playlist" interface to be visible 
+  // and allows users to scroll through all videos in the list.
   container.innerHTML = `
-    <iframe width="100%" height="100%" 
-      src="https://www.youtube-nocookie.com/embed?listType=playlist&list=${playlistId}&autoplay=1&rel=0" 
+    <iframe 
+      width="100%" 
+      height="100%" 
+      src="https://www.youtube.com/embed/videoseries?list=${playlistId}&rel=0" 
+      title="YouTube playlist player" 
       frameborder="0" 
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
       allowfullscreen>

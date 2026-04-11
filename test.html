@@ -9,10 +9,10 @@
     
     <style>
         :root {
-            --lizon-green: #27ae60;
-            --lizon-dark: #2c3e50;
+            --lizon-green: #0F3D2E; /* Authority Green */
+            --lizon-accent: #27ae60;
+            --lizon-dark: #1E1E1E; /* Charcoal */
             --lizon-light: #f4f7f6;
-            --accent: #f39c12;
             --text-main: #333;
         }
 
@@ -23,8 +23,9 @@
             background-color: #fff; scroll-behavior: smooth;
         }
 
-        .container { width: 95%; max-width: 1300px; margin: 0 auto; }
+        .container { width: 92%; max-width: 1200px; margin: 0 auto; }
         
+        /* Header & Mobile Fix */
         header { 
             background: white; padding: 15px 0; position: sticky; top: 0; 
             z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -34,72 +35,63 @@
         
         .nav-actions { display: flex; align-items: center; gap: 12px; }
 
-        .dropdown { position: relative; display: inline-block; padding-bottom: 10px; margin-bottom: -10px; }
-        .dropbtn {
-            background: var(--lizon-light); color: var(--lizon-dark);
-            padding: 10px 20px; border-radius: 50px; font-weight: 600;
-            cursor: pointer; border: 1px solid #ddd; transition: 0.3s; font-size: 0.9rem;
-        }
-        .dropdown-content {
-            display: none; position: absolute; right: 0; background-color: white;
-            min-width: 220px; box-shadow: 0px 8px 24px rgba(0,0,0,0.15);
-            border-radius: 12px; z-index: 1; margin-top: 5px; overflow: hidden;
-        }
-        .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a {
-            color: var(--lizon-dark); padding: 12px 20px; text-decoration: none;
-            display: block; font-size: 0.95rem; border-bottom: 1px solid #f0f0f0;
-        }
-        .dropdown-content a:hover { background-color: var(--lizon-light); color: var(--lizon-green); }
-
-        .btn-admissions, .btn-wa {
+        .btn-admissions, .btn-wa, .dropbtn {
             background: var(--lizon-dark); color: white; padding: 10px 20px;
             border-radius: 50px; font-weight: 600; cursor: pointer; border: none;
-            transition: 0.3s; font-size: 0.9rem; text-decoration: none;
+            transition: 0.3s; font-size: 0.85rem; text-decoration: none;
             display: inline-flex; align-items: center; gap: 8px;
         }
+        .dropbtn { background: var(--lizon-light); color: var(--lizon-dark); border: 1px solid #ddd; }
         .btn-wa { background: #25d366; }
-        .btn-admissions:hover, .btn-wa:hover { transform: translateY(-2px); opacity: 0.9; }
 
-        .hero { padding: 80px 0; background: linear-gradient(135deg, #fdfdfd 0%, #f4f7f6 100%); display: flex; align-items: center; min-height: 80vh; }
-        .hero-flex { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
-        .hero-content { flex: 1; min-width: 300px; }
-        .hero-image { flex: 1; min-width: 300px; text-align: center; position: relative; }
-        .hero-image img { width: 100%; max-width: 450px; border-radius: 30px; }
-        .badge { position: absolute; background: white; padding: 10px 20px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-weight: bold; color: var(--lizon-green); }
+        /* Hero Image & Badges */
+        .hero { padding: 60px 0; background: #fff; }
+        .hero-flex { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+        .hero-content { flex: 1.2; min-width: 300px; }
+        .hero-image { flex: 1; min-width: 300px; position: relative; display: inline-block; }
+        .hero-image img { width: 100%; max-width: 450px; border-radius: 40px; }
+        
+        .badge-joy { position: absolute; background: white; padding: 8px 15px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.9rem; }
+        .badge-band { top: 15%; right: -20px; color: var(--lizon-accent); border: 1px solid #eee; }
+        .badge-name { bottom: 15%; left: -20px; color: var(--lizon-accent); border: 1px solid #eee; }
 
-        .reviews-section { padding: 80px 0; background: var(--lizon-dark); color: white; position: relative; overflow: hidden; }
-        .slider-container { overflow: hidden; cursor: grab; padding: 20px 0; }
-        .slider-track { display: flex; gap: 20px; transition: transform 0.5s ease-out; }
-        .review-card { 
-            background: rgba(255,255,255,0.05); min-width: 320px; max-width: 320px; 
-            padding: 25px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); 
+        /* Trusted Standards Section */
+        .trusted-section { padding: 40px 0; text-align: center; border-top: 1px solid #eee; }
+        .trusted-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
+        .logo-tag { background: #f8f9fa; padding: 8px 15px; border-radius: 5px; font-weight: 600; font-size: 0.85rem; color: #555; }
+
+        /* 3-Step Success */
+        .steps-section { padding: 80px 0; text-align: center; background: #fff; }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        .step-card { padding: 40px 30px; border-radius: 20px; border: 1px solid #f0f0f0; transition: 0.3s; }
+        .step-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .step-card i { font-size: 2.5rem; color: var(--lizon-accent); margin-bottom: 20px; display: block; }
+
+        /* Slider */
+        .reviews-section { padding: 80px 0; background: var(--lizon-dark); color: white; position: relative; }
+        .slider-container { overflow: hidden; position: relative; padding: 20px 0; }
+        .slider-track { display: flex; gap: 20px; transition: transform 0.5s ease; width: max-content; }
+        .review-card { background: rgba(255,255,255,0.05); width: 300px; padding: 25px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        .nav-btn { background: rgba(255,255,255,0.2); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; }
+        #prevBtn { left: 10px; } #nextBtn { right: 10px; }
+
+        /* FAQ Section */
+        .faq-section { padding: 80px 0; background: #fff; }
+        .faq-item { border-bottom: 1px solid #eee; margin-bottom: 10px; }
+        .faq-question { width: 100%; text-align: left; padding: 20px; background: none; border: none; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { padding: 0 20px 20px; color: #666; display: none; line-height: 1.6; }
+
+        /* Modal Styles */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); overflow-y: auto; padding: 20px 0; }
+        .modal-content { background: white; margin: auto; padding: 30px; border-radius: 20px; width: 95%; max-width: 500px; position: relative; }
+
+        @media (max-width: 768px) {
+            .nav-actions { display: none; }
+            .mobile-nav { display: flex !important; fixed: bottom; width: 100%; background: white; position: fixed; bottom: 0; left: 0; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1001; justify-content: space-around; }
+            .hero-flex { text-align: center; }
+            .hero-image { order: -1; }
+            .badge-band { right: 0; } .badge-name { left: 0; }
         }
-        
-        .slider-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 20px; pointer-events: none; z-index: 10; }
-        .nav-btn { 
-            pointer-events: auto; background: rgba(255,255,255,0.1); color: white; 
-            width: 45px; height: 45px; border-radius: 50%; border: none; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); overflow-y: auto; }
-        .modal-content { background: white; margin: 2% auto; padding: 30px; border-radius: 24px; width: 90%; max-width: 550px; position: relative; }
-        .close-modal { position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; color: #999; }
-        
-        .pay-header { text-align: center; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-bottom: 20px; }
-        .price-tag { font-size: 2rem; color: var(--lizon-green); font-weight: 800; margin: 10px 0; }
-        .pay-methods { background: #f9f9f9; padding: 20px; border-radius: 15px; border: 1px solid #eee; }
-        .method-group { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #ddd; }
-        .method-group:last-child { border-bottom: none; }
-        .method-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
-        .plan-details { background: #f4f7f6; padding: 20px; border-radius: 15px; border-left: 5px solid var(--lizon-green); margin-top: 15px; line-height: 1.8; }
-        .plan-select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-weight: 600; }
-
-        footer { padding: 60px 0 20px; background: #111; color: #999; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
-        
-        @media (max-width: 768px) { .nav-actions { display: none; } }
     </style>
 </head>
 <body>
@@ -110,170 +102,176 @@
             <a href="https://mylizon.com" class="logo">LizOn Education</a>
             <div class="nav-actions">
                 <button class="btn-admissions" onclick="openModal('planModal')">Admission & Course Plan</button>
-                <div class="dropdown">
-                    <button class="dropbtn">Free Resources <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></button>
-                    <div class="dropdown-content">
-                        <a href="https://www.mylizon.com/ieltsclass.html"><i class="fas fa-video"></i> IELTS Class</a>
-                        <a href="https://drive.google.com/drive/folders/1iDKSixrNURku84MiYkFirj39I4Y-bb-3" target="_blank"><i class="fas fa-book"></i> Books, Notes, Resources</a>
-                    </div>
-                </div>
-                <a href="https://wa.me/8801611611139" class="btn-wa"><i class="fab fa-whatsapp"></i> Chat</a>
+                <button class="dropbtn" onclick="openModal('planModal')">Free Resources</button>
+                <a href="https://wa.me/8801611611139" class="btn-wa"><i class="fab fa-whatsapp"></i> Chat with Us</a>
             </div>
         </nav>
     </div>
 </header>
 
-<div id="payModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('payModal')">&times;</span>
-        <div class="pay-header">
-            <h2 style="margin:0;">অ্যাডমিশন কনফার্ম করুন</h2>
-            <p style="color:#666; margin-top:5px;">IELTS Full Journey (কাঙ্ক্ষিত স্কোর না পাওয়া পর্যন্ত)</p>
-            <div class="price-tag">Fee: 12,000/-</div>
-        </div>
-        <div class="pay-methods">
-            <div class="method-group">
-                <div class="method-item" style="color:var(--lizon-green)"><span>Bkash Merchant (Make Payment):</span> <span>01611611139</span></div>
-            </div>
-            <div class="method-group">
-                <div class="method-item"><span>Bkash Personal (Send Money):</span> <span>01337533979</span></div>
-                <div class="method-item"><span>Rocket Personal (Send Money):</span> <span>01337533979</span></div>
-                <div class="method-item"><span>Nagad Personal (Send Money):</span> <span>01337533979</span></div>
-                <div class="method-item"><span>Upay Personal (Send Money):</span> <span>01889993896</span></div>
-            </div>
-            <div class="method-group">
-                <p style="font-weight:bold; margin-bottom:10px; border-bottom: 1px solid #eee;">Bank Account Details</p>
-                <div class="method-item"><span>Bank:</span> <span>DBBL (Dutch Bangla Bank)</span></div>
-                <div class="method-item"><span>A/C No:</span> <span>2211510117789</span></div>
-                <div class="method-item"><span>A/C Name:</span> <span>SHUVA SARKER JOY</span></div>
-                <div class="method-item"><span>Branch:</span> <span>Manda</span></div>
-            </div>
-            <div class="method-group">
-                <p style="font-weight:bold; margin-bottom:10px; border-bottom: 1px solid #eee;">Visa Card Transfer</p>
-                <div class="method-item"><span>Card No:</span> <span>4777920004855617</span></div>
-                <div class="method-item"><span>Bank:</span> <span>Brac Bank</span></div>
-            </div>
-            <p style="text-align:center; font-size:0.85rem; color:#d35400;">Please confirm us after you complete the payment.</p>
-        </div>
-        <a href="https://wa.me/8801611611139?text=I%20have%20sent%2012000%20TK%20for%20IELTS%20Course.%20Please%20confirm." class="btn-wa" style="width:100%; justify-content:center; margin-top:15px; padding:12px;">Confirm on WhatsApp</a>
-    </div>
-</div>
-
-<div id="planModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('planModal')">&times;</span>
-        <h3>অ্যাডমিশন ও কোর্স পরিকল্পনা</h3>
-        <p>পরিকল্পনা (Your Dream Plan)</p>
-        <select class="plan-select" id="planSelector" onchange="updatePlan('planDescModal', this.value)">
-            <option value="p1">প্রথম মাসের পরিকল্পনা</option>
-            <option value="p2">দ্বিতীয় মাসের পরিকল্পনা</option>
-            <option value="p3">তৃতীয় মাসের পরিকল্পনা: এক্সাম অ্যাপ্রোচ</option>
-            <option value="p4">ব্যক্তিগত সক্ষমতা ও নমনীয়তা</option>
-            <option value="p5">লিজন (LizOn)-এর প্রতিশ্রুতি</option>
-        </select>
-        <div class="plan-details" id="planDescModal">...</div>
-        <button onclick="closeModal('planModal'); openModal('payModal')" class="btn-admissions" style="width:100%; justify-content:center; margin-top:20px;">অ্যাডমিশন নিন (১২,০০০/-)</button>
-    </div>
+<div class="mobile-nav" style="display:none;">
+    <button onclick="openModal('planModal')" style="background:var(--lizon-dark); color:white; border:none; padding:10px 15px; border-radius:5px; font-weight:bold;">Admission & Plan</button>
+    <a href="https://wa.me/8801611611139" style="background:#25d366; color:white; padding:10px 15px; border-radius:5px; text-decoration:none; font-weight:bold;">WhatsApp</a>
 </div>
 
 <section class="hero">
     <div class="container hero-flex">
         <div class="hero-content">
-            <h4 style="color: var(--lizon-green);">Since 2019 • Empowering 2,100+ Students</h4>
-            <h1 style="font-size: 3rem; line-height: 1.2; margin-bottom: 20px;">IELTS Full Journey: <span style="color: var(--lizon-green);">কাঙ্ক্ষিত স্কোর</span> না পাওয়া পর্যন্ত</h1>
+            <h4 style="color: var(--lizon-accent); font-weight:600;">Since 2019 • Empowering 2,100+ Students</h4>
+            <h1 style="font-size: 2.8rem; line-height: 1.2; margin: 15px 0;">IELTS Full Journey: <br><span style="color: var(--lizon-accent);">কাঙ্ক্ষিত স্কোর</span> না পাওয়া পর্যন্ত</h1>
             <p style="font-size: 1.1rem; color: #555; margin-bottom: 30px;">সিস্টেম ছাড়া IELTS হয় না। আমাদের ৩-ধাপের বিশেষ পদ্ধতিতে আপনি পাবেন লাইভ ইভালুয়েশন এবং আনলিমিটেড সাপোর্ট।</p>
-            <button onclick="openModal('payModal')" class="btn-admissions" style="padding: 15px 40px; font-size: 1.1rem;">Admit Now</button>
+            <button onclick="openModal('payModal')" class="btn-admissions" style="padding: 15px 40px; font-size: 1.1rem; background:var(--lizon-accent);">অ্যাডমিশন নিন এখনই</button>
         </div>
         <div class="hero-image">
-            <img src="assets/joy-sir.png" alt="S.S. Joy - LizOn Education">
-            <div class="badge" style="top: 10%; right: -5%;">Certified Band 9</div>
+            <img src="https://i.ibb.co/9H0pL7S/joy-sir.png" alt="Mr. Joy Sir">
+            <div class="badge-joy badge-band">Band 9 Instructor</div>
+            <div class="badge-joy badge-name">Mr. Joy sir</div>
+        </div>
+    </div>
+</section>
+
+<section class="trusted-section">
+    <div class="container">
+        <p style="font-weight:700; color:#444;">Trusted by International Standards</p>
+        <p style="font-size:0.9rem; color:#888;">We follow the standards and systems of globally recognised IELTS authorities.</p>
+        <div class="trusted-logos">
+            <span class="logo-tag">British Council</span>
+            <span class="logo-tag">IDP</span>
+            <span class="logo-tag">IELTS.org</span>
+            <span class="logo-tag">Pearson</span>
+            <span class="logo-tag">Grammarly</span>
+            <span class="logo-tag">Duolingo</span>
+        </div>
+    </div>
+</section>
+
+<section class="steps-section">
+    <div class="container">
+        <h2 style="font-size:2rem;">আপনার ৩-ধাপের সাফল্যের পথ</h2>
+        <p>আমাদের বিশেষ কারিকুলাম যা আপনাকে জিরো থেকে প্রো বানাবে।</p>
+        <div class="steps-grid">
+            <div class="step-card">
+                <i class="fas fa-layer-group"></i>
+                <h3>ধাপ ১: ফাউন্ডেশন</h3>
+                <p>গ্রামার এবং সেন্টেন্স স্ট্রাকচারের ভয় দূর করা। বেসিক মজবুত না হলে স্কোর তোলা অসম্ভব।</p>
+            </div>
+            <div class="step-card">
+                <i class="fas fa-bullseye"></i>
+                <h3>ধাপ ২: স্ট্র্যাটেজি</h3>
+                <p>৪টি মডিউলের (R, L, W, S) বিশেষ ট্রিকস এবং সিস্টেম আয়ত্ত করা যা সময় বাঁচায়।</p>
+            </div>
+            <div class="step-card">
+                <i class="fas fa-comment-dollar"></i>
+                <h3>ধাপ ৩: মাস্টারি</h3>
+                <p>সপ্তাহে ২ দিন লাইভ ইভালুয়েশন এবং আনলিমিটেড মক টেস্ট। যতক্ষণ না স্কোর আসছে!</p>
+            </div>
         </div>
     </div>
 </section>
 
 <section class="reviews-section">
     <div class="container"><h2 style="text-align:center; margin-bottom:40px;">গ্লোবাল লিজন সাকসেস স্টোরি</h2></div>
-    <div class="slider-nav">
+    <div class="slider-container">
         <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
         <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-    </div>
-    <div class="slider-container" id="sliderContainer">
         <div class="slider-track" id="sliderTrack">
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Tanvir (8.0)</span><p>"Joy Bhaia-র সিস্টেম ফলো করে আমি ১ম বারেই ৮.০ পেয়েছি।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Maliha (7.5)</span><p>"লাইভ ইভালুয়েশন না থাকলে রাইটিং স্কোর তোলা অসম্ভব হতো।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Rahat (7.0)</span><p>"লিজন আমার স্কোর আসা পর্যন্ত সাথে ছিল।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Faysal (7.5)</span><p>"লিজনের ম্যাটেরিয়ালস গুলো একদম আপ-টু-ডেট।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Nusrat (7.0)</span><p>"স্পিকিং ভয় কাটানোর ট্রিকস গুলো ম্যাজিকের মতো।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Sakib (7.5)</span><p>"সিস্টেম ছাড়া রিডিং এ ৭.৫ সম্ভব না।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Anika (8.0)</span><p>"৩য় বার আমার স্কোর ৮.০ আসে লিজন এর সাপোর্টে!"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Jamil (7.0)</span><p>"অ্যাডমিশন নেওয়ার পর যে সাপোর্ট পেয়েছি, তা অতুলনীয়।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Riya (7.5)</span><p>"রাইটিং টাস্ক ২ নিয়ে আমার ভয় দূর হয়েছে।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Imran (7.0)</span><p>"লিসেনিং এ ৯ এ ৯ পাওয়া এখন অনেক সহজ।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Sumon (7.5)</span><p>"স্কোর না পাওয়া পর্যন্ত সাপোর্টের সিস্টেমটি সেরা।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Habib (7.0)</span><p>"চাকরির পাশাপাশি আইইএলটিএস করা সহজ ছিল।"</p></div>
-            <div class="review-card"><span style="color:var(--lizon-green); font-weight:bold;">Shuvo (7.5)</span><p>"সিস্টেম ছাড়া কোনোটিই সম্ভব না। ধন্যবাদ জয় ভাইয়া।"</p></div>
+            <div class="review-card"><b>Tanvir (8.0)</b><p>"Joy Bhaia-র সিস্টেম ফলো করে আমি ১ম বারেই ৮.০ পেয়েছি।"</p></div>
+            <div class="review-card"><b>Maliha (7.5)</b><p>"লাইভ ইভালুয়েশন না থাকলে রাইটিং স্কোর তোলা অসম্ভব হতো।"</p></div>
+            <div class="review-card"><b>Rahat (7.0)</b><p>"লিজন আমার স্কোর আসা পর্যন্ত সাথে ছিল।"</p></div>
+            <div class="review-card"><b>Faysal (7.5)</b><p>"লিজনের ম্যাটেরিয়ালস গুলো একদম আপ-টু-ডেট।"</p></div>
         </div>
     </div>
 </section>
 
-<section id="classplan" style="padding: 80px 0; background: var(--lizon-light);">
+<section class="faq-section">
     <div class="container" style="max-width:800px;">
-        <h2 style="text-align:center;">পরিকল্পনা (Your Dream Plan)</h2>
-        <select class="plan-select" onchange="updatePlan('planDescStatic', this.value)">
+        <h2 style="text-align:center; margin-bottom:40px;">সচরাচর জিজ্ঞাসিত প্রশ্ন</h2>
+        <div class="faq-item">
+            <button class="faq-question">কোর্সটি কতদিনের? <i class="fas fa-minus"></i></button>
+            <div class="faq-answer" style="display:block;">আমাদের কোর্স নির্দিষ্ট দিনের নয়। আপনার কাঙ্ক্ষিত স্কোর না আসা পর্যন্ত আপনি আমাদের সাথে যুক্ত থাকতে পারবেন।</div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">প্রথম মাসে কী কী শেখানো হয়? <i class="fas fa-plus"></i></button>
+            <div class="faq-answer">মেইন ফোকাস থাকে বেসিক গ্রামার এবং ভোকাবুলারির ওপর। এই মাসে আমরা শিখবো কীভাবে প্রশ্নগুলো সলভ করতে হয়।</div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">আপনারা কি নিয়মিত পরীক্ষা নেন? <i class="fas fa-plus"></i></button>
+            <div class="faq-answer">হ্যাঁ, প্রতি সপ্তাহে এবং প্রতি মাসে টেস্ট নেওয়া হয়। প্রতিটি ক্লাসের সাথে ছোট টেস্টের ব্যবস্থা থাকে।</div>
+        </div>
+    </div>
+</section>
+
+<div id="planModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('planModal')" style="float:right; cursor:pointer;">&times;</span>
+        <h3 style="color:var(--lizon-green)">অ্যাডমিশন ও কোর্স পরিকল্পনা</h3>
+        <select id="planSelector" onchange="updatePlanText(this.value)" style="width:100%; padding:10px; margin:15px 0;">
             <option value="p1">প্রথম মাসের পরিকল্পনা</option>
             <option value="p2">দ্বিতীয় মাসের পরিকল্পনা</option>
-            <option value="p3">তৃতীয় মাসের পরিকল্পনা</option>
-            <option value="p4">ব্যক্তিগত সক্ষমতা</option>
-            <option value="p5">লিজনের প্রতিশ্রুতি</option>
+            <option value="p3">তৃতীয় মাসের পরিকল্পনা: এক্সাম অ্যাপ্রোচ</option>
+            <option value="p4">ব্যক্তিগত সক্ষমতা ও নমনীয়তা</option>
+            <option value="p5">লিজন (LizOn)-এর প্রতিশ্রুতি</option>
         </select>
-        <div class="plan-details" id="planDescStatic">...</div>
-        <div style="text-align: center; margin-top: 25px;">
-            <button onclick="openModal('payModal')" class="btn-admissions" style="padding:15px 40px;">Admit Now (12,000/-)</button>
+        <div id="planDesc" style="background:#f9f9f9; padding:15px; border-radius:10px; border-left:4px solid var(--lizon-accent); line-height:1.7;">
+            • সপ্তাহে ৫টা করে ক্লাস হবে।<br>• দিনে ১টা ক্লাস হলে প্রথম মাসে ২০টা ক্লাস হবে।
         </div>
+        <button onclick="closeModal('planModal'); openModal('payModal')" class="btn-admissions" style="width:100%; margin-top:15px; justify-content:center;">অ্যাডমিশন নিন (১২,০০০/-)</button>
     </div>
-</section>
+</div>
 
-<footer>
-    <div class="container">
-        <div class="footer-grid">
-            <div><h3>LizOn Education</h3><p>৫১, বুদ্ধ মন্দির বাসাবো, ঢাকা ১২১৪।</p></div>
-            <div><a href="https://mylizon.com" style="color:#999;">Main Website</a></div>
+<div id="payModal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeModal('payModal')" style="float:right; cursor:pointer;">&times;</span>
+        <h3 style="text-align:center;">অ্যাডমিশন পেমেন্ট ডিটেইলস</h3>
+        <div style="font-size:0.9rem; line-height:1.6;">
+            <p><b>Bkash Merchant:</b> 01611611139</p>
+            <p><b>Bkash Personal:</b> 01337533979</p>
+            <p><b>Bank:</b> DBBL | 2211510117789 | SHUVA SARKER JOY</p>
         </div>
+        <a href="https://wa.me/8801611611139" class="btn-wa" style="width:100%; justify-content:center;">Confirm on WhatsApp</a>
     </div>
-</footer>
+</div>
 
 <script>
-    const plans = {
-        p1: "• সপ্তাহে ৫টা করে ক্লাস হবে।<br>• দিনে ১টা ক্লাস হলে প্রথম মাসে ২০টা, আর দিনে ২টা ক্লাস হলে ৪০টা ক্লাস হবে।<br>• আমাদের কোশ্চেন টাইপস আছে ৩০টারও বেশি।<br>• মেইন ফোকাস থাকবে বেসিক গ্রামার এবং ভোকাবুলারির ওপর।<br>• আমরা শিখবো কীভাবে প্রশ্নগুলো সলভ করতে হয় এবং কোন রুলস ফলো করতে হয়।",
-        p2: "• দ্বিতীয় মাসে মূল কাজ হবে প্র্যাকটিস করা।<br>• প্রথম মাসে যা শিখেছি, সেগুলো প্রপার প্র্যাকটিসের মাধ্যমে আয়ত্তে আনা হবে।<br>• সাথে থাকবে মক টেস্ট ইভালুয়েশন।<br>• ভুলগুলো খুঁজে বের করে সেগুলো ইমপ্রুভ করার চেষ্টা করা হবে যাতে পরীক্ষায় সময় বাঁচে।",
-        p3: "• প্র্যাকটিস টেস্ট এবং ইভালুয়েশনের পাশাপাশি এক্সাম অ্যাপ্রোচ শেখাটা খুব গুরুত্বপূর্ণ।<br>• তাই তৃতীয় মাসে গিয়ে মূলত এই এক্সাম অ্যাপ্রোচ বা পরীক্ষার বিশেষ কৌশলগুলো শিখবো।",
-        p4: "• আমরা শিক্ষার্থীর ব্যক্তিগত সক্ষমতাকে গুরুত্ব দেই। কারো কোর্স শেষ করতে ২ মাস লাগতে পারে, আবার কারো ৩-৪ মাস।<br>• যারা পিছিয়ে থাকে তাদের আবার শেখানো হয়, কারণ সবার শেখার গতি এক নয়।<br>• কম সময়ে শেষ করতে চাইলে ক্লাসের সংখ্যা বাড়িয়ে সমন্বয় করা হয়।",
-        p5: "• প্রতি সপ্তাহে এবং প্রতি মাসে নিয়মিত পরীক্ষা ও ইভালুয়েশন নেওয়া হয়।<br>• প্রতিটি ক্লাসের সাথে ছোট টেস্টের ব্যবস্থা থাকে।<br>• আমাদের লক্ষ্য হলো সঠিক তদারকির মাধ্যমে শিক্ষার্থীকে একটি নির্দিষ্ট সময়ের মধ্যে তার কাঙ্ক্ষিত স্কোর পেতে সাহায্য করা।"
-    };
-
-    function updatePlan(id, key) { document.getElementById(id).innerHTML = plans[key]; }
-    function openModal(id) { document.getElementById(id).style.display = 'block'; }
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    
-    // Slider
+
+    // FAQ Toggle
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const answer = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            const isVisible = answer.style.display === 'block';
+            answer.style.display = isVisible ? 'none' : 'block';
+            icon.classList.toggle('fa-plus', isVisible);
+            icon.classList.toggle('fa-minus', !isVisible);
+        });
+    });
+
+    // Slider Logic
     const track = document.getElementById('sliderTrack');
-    let scrollPos = 0;
-    let isAutoScrolling = true;
+    let offset = 0;
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        offset -= 320;
+        if (Math.abs(offset) >= track.scrollWidth - 300) offset = 0;
+        track.style.transform = `translateX(${offset}px)`;
+    });
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        offset += 320;
+        if (offset > 0) offset = -(track.scrollWidth - 320);
+        track.style.transform = `translateX(${offset}px)`;
+    });
 
-    function autoScroll() {
-        if (!isAutoScrolling) return;
-        scrollPos += 1.5;
-        if (scrollPos >= track.scrollWidth / 2) scrollPos = 0;
-        track.style.transform = `translateX(-${scrollPos}px)`;
-        requestAnimationFrame(autoScroll);
-    }
-
-    document.getElementById('nextBtn').addEventListener('click', () => { scrollPos += 340; isAutoScrolling = false; setTimeout(()=>isAutoScrolling=true, 3000); });
-    document.getElementById('prevBtn').addEventListener('click', () => { scrollPos -= 340; isAutoScrolling = false; setTimeout(()=>isAutoScrolling=true, 3000); });
-
-    updatePlan('planDescModal', 'p1');
-    updatePlan('planDescStatic', 'p1');
-    autoScroll();
+    // Plan Text Update
+    const plans = {
+        p1: "• সপ্তাহে ৫টা করে ক্লাস হবে।<br>• দিনে ১টা ক্লাস হলে প্রথম মাসে ২০টা, আর দিনে ২টা ক্লাস হলে ৪০টা ক্লাস হবে।<br>• আমাদের কোশ্চেন টাইপস আছে ৩০টারও বেশি।",
+        p2: "• দ্বিতীয় মাসে মূল কাজ হবে প্র্যাকটিস করা।<br>• ভুলগুলো খুঁজে বের করে সেগুলো ইমপ্রুভ করার চেষ্টা করা হবে যাতে পরীক্ষায় সময় বাঁচে।",
+        p3: "• প্র্যাকটিস টেস্ট এবং ইভালুয়েশনের পাশাপাশি এক্সাম অ্যাপ্রোচ শেখাটা খুব গুরুত্বপূর্ণ।",
+        p4: "• আমরা শিক্ষার্থীর ব্যক্তিগত সক্ষমতাকে গুরুত্ব দেই। কারো কোর্স শেষ করতে ২ মাস লাগতে পারে, আবার কারো ৩-৪ মাস।",
+        p5: "• প্রতি সপ্তাহে এবং প্রতি মাসে নিয়মিত পরীক্ষা ও ইভালুয়েশন নেওয়া হয়।<br>• আমাদের লক্ষ্য হলো শিক্ষার্থীকে তার কাঙ্ক্ষিত স্কোর পেতে সাহায্য করা।"
+    };
+    function updatePlanText(val) { document.getElementById('planDesc').innerHTML = plans[val]; }
 </script>
+
 </body>
 </html>

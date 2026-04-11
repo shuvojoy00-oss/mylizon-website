@@ -9,10 +9,10 @@
     
     <style>
         :root {
-            --lizon-green: #0F3D2E; /* Authority Green */
-            --lizon-accent: #27ae60;
-            --lizon-dark: #1E1E1E; /* Charcoal */
+            --lizon-green: #27ae60;
+            --lizon-dark: #2c3e50;
             --lizon-light: #f4f7f6;
+            --accent: #f39c12;
             --text-main: #333;
         }
 
@@ -23,74 +23,86 @@
             background-color: #fff; scroll-behavior: smooth;
         }
 
-        .container { width: 92%; max-width: 1200px; margin: 0 auto; }
+        .container { width: 95%; max-width: 1200px; margin: 0 auto; }
         
-        /* Header & Mobile Fix */
         header { 
             background: white; padding: 15px 0; position: sticky; top: 0; 
             z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        nav { display: flex; justify-content: space-between; align-items: center; }
+        nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .logo { font-size: 1.6rem; font-weight: 700; color: var(--lizon-green); text-decoration: none; }
         
-        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        .nav-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-        .btn-admissions, .btn-wa, .dropbtn {
-            background: var(--lizon-dark); color: white; padding: 10px 20px;
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn {
+            background: var(--lizon-light); color: var(--lizon-dark);
+            padding: 8px 15px; border-radius: 50px; font-weight: 600;
+            cursor: pointer; border: 1px solid #ddd; transition: 0.3s; font-size: 0.85rem;
+        }
+        .dropdown-content {
+            display: none; position: absolute; right: 0; background-color: white;
+            min-width: 200px; box-shadow: 0px 8px 24px rgba(0,0,0,0.15);
+            border-radius: 12px; z-index: 10; margin-top: 5px; overflow: hidden;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a {
+            color: var(--lizon-dark); padding: 12px 20px; text-decoration: none;
+            display: block; font-size: 0.9rem; border-bottom: 1px solid #f0f0f0;
+        }
+
+        .btn-admissions, .btn-wa {
+            background: var(--lizon-dark); color: white; padding: 8px 15px;
             border-radius: 50px; font-weight: 600; cursor: pointer; border: none;
             transition: 0.3s; font-size: 0.85rem; text-decoration: none;
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; gap: 6px;
         }
-        .dropbtn { background: var(--lizon-light); color: var(--lizon-dark); border: 1px solid #ddd; }
         .btn-wa { background: #25d366; }
 
-        /* Hero Image & Badges */
-        .hero { padding: 60px 0; background: #fff; }
+        /* Hero & Image Badges */
+        .hero { padding: 40px 0; background: linear-gradient(135deg, #fdfdfd 0%, #f4f7f6 100%); }
         .hero-flex { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
-        .hero-content { flex: 1.2; min-width: 300px; }
-        .hero-image { flex: 1; min-width: 300px; position: relative; display: inline-block; }
-        .hero-image img { width: 100%; max-width: 450px; border-radius: 40px; }
+        .hero-content { flex: 1; min-width: 300px; }
+        .hero-image { flex: 1; min-width: 300px; text-align: center; position: relative; padding: 20px; }
+        .hero-image img { width: 100%; max-width: 400px; border-radius: 40px; display: block; margin: 0 auto; }
         
-        .badge-joy { position: absolute; background: white; padding: 8px 15px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.9rem; }
-        .badge-band { top: 15%; right: -20px; color: var(--lizon-accent); border: 1px solid #eee; }
-        .badge-name { bottom: 15%; left: -20px; color: var(--lizon-accent); border: 1px solid #eee; }
+        .badge-instructor { position: absolute; top: 10%; right: 0; background: white; padding: 10px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); color: #27ae60; font-weight: bold; }
+        .badge-name { position: absolute; bottom: 10%; left: 0; background: white; padding: 10px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); color: #27ae60; font-weight: bold; }
 
-        /* Trusted Standards Section */
-        .trusted-section { padding: 40px 0; text-align: center; border-top: 1px solid #eee; }
+        /* Trusted Section */
+        .trusted-section { padding: 60px 0; text-align: center; background: #fff; }
         .trusted-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
-        .logo-tag { background: #f8f9fa; padding: 8px 15px; border-radius: 5px; font-weight: 600; font-size: 0.85rem; color: #555; }
+        .trust-tag { background: #f8f9fa; padding: 8px 16px; border-radius: 6px; font-weight: 600; color: #555; border: 1px solid #eee; }
 
         /* 3-Step Success */
-        .steps-section { padding: 80px 0; text-align: center; background: #fff; }
+        .steps-section { padding: 80px 0; background: #fff; text-align: center; }
         .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
-        .step-card { padding: 40px 30px; border-radius: 20px; border: 1px solid #f0f0f0; transition: 0.3s; }
-        .step-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .step-card i { font-size: 2.5rem; color: var(--lizon-accent); margin-bottom: 20px; display: block; }
+        .step-card { padding: 40px 30px; border-radius: 20px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #f0f0f0; }
+        .step-card i { font-size: 40px; color: var(--lizon-green); margin-bottom: 20px; display: block; }
 
-        /* Slider */
-        .reviews-section { padding: 80px 0; background: var(--lizon-dark); color: white; position: relative; }
-        .slider-container { overflow: hidden; position: relative; padding: 20px 0; }
-        .slider-track { display: flex; gap: 20px; transition: transform 0.5s ease; width: max-content; }
+        /* Slider Section */
+        .reviews-section { padding: 80px 0; background: var(--lizon-dark); color: white; position: relative; overflow: hidden; }
+        .slider-container { overflow: hidden; width: 100%; position: relative; margin-top: 30px; }
+        .slider-track { display: flex; gap: 20px; transition: transform 0.3s ease-out; width: max-content; }
         .review-card { background: rgba(255,255,255,0.05); width: 300px; padding: 25px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
-        .nav-btn { background: rgba(255,255,255,0.2); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; }
-        #prevBtn { left: 10px; } #nextBtn { right: 10px; }
+        .slider-nav { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
+        .nav-btn { background: var(--lizon-green); color: white; width: 45px; height: 45px; border-radius: 50%; border: none; cursor: pointer; z-index: 5; }
 
         /* FAQ Section */
-        .faq-section { padding: 80px 0; background: #fff; }
-        .faq-item { border-bottom: 1px solid #eee; margin-bottom: 10px; }
-        .faq-question { width: 100%; text-align: left; padding: 20px; background: none; border: none; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-section { padding: 80px 0; background: #fdfdfd; }
+        .faq-item { background: white; margin-bottom: 15px; border-radius: 12px; border: 1px solid #eee; overflow: hidden; }
+        .faq-question { padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
         .faq-answer { padding: 0 20px 20px; color: #666; display: none; line-height: 1.6; }
 
-        /* Modal Styles */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); overflow-y: auto; padding: 20px 0; }
-        .modal-content { background: white; margin: auto; padding: 30px; border-radius: 20px; width: 95%; max-width: 500px; position: relative; }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(5px); overflow-y: auto; }
+        .modal-content { background: white; margin: 5% auto; padding: 30px; border-radius: 24px; width: 90%; max-width: 500px; position: relative; }
+
+        footer { padding: 40px 0; background: #111; color: #999; text-align: center; }
 
         @media (max-width: 768px) {
-            .nav-actions { display: none; }
-            .mobile-nav { display: flex !important; fixed: bottom; width: 100%; background: white; position: fixed; bottom: 0; left: 0; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1001; justify-content: space-around; }
-            .hero-flex { text-align: center; }
-            .hero-image { order: -1; }
-            .badge-band { right: 0; } .badge-name { left: 0; }
+            .hero-flex { flex-direction: column-reverse; text-align: center; }
+            .nav-actions { width: 100%; justify-content: center; }
+            .badge-instructor, .badge-name { padding: 6px 12px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -102,53 +114,56 @@
             <a href="https://mylizon.com" class="logo">LizOn Education</a>
             <div class="nav-actions">
                 <button class="btn-admissions" onclick="openModal('planModal')">Admission & Course Plan</button>
-                <button class="dropbtn" onclick="openModal('planModal')">Free Resources</button>
-                <a href="https://wa.me/8801611611139" class="btn-wa"><i class="fab fa-whatsapp"></i> Chat with Us</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Free Resources <i class="fas fa-chevron-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="https://www.mylizon.com/ieltsclass.html">IELTS Class</a>
+                        <a href="https://drive.google.com/drive/folders/1iDKSixrNURku84MiYkFirj39I4Y-bb-3" target="_blank">Books & Resources</a>
+                    </div>
+                </div>
+                <a href="https://wa.me/8801611611139" class="btn-wa"><i class="fab fa-whatsapp"></i></a>
             </div>
         </nav>
     </div>
 </header>
 
-<div class="mobile-nav" style="display:none;">
-    <button onclick="openModal('planModal')" style="background:var(--lizon-dark); color:white; border:none; padding:10px 15px; border-radius:5px; font-weight:bold;">Admission & Plan</button>
-    <a href="https://wa.me/8801611611139" style="background:#25d366; color:white; padding:10px 15px; border-radius:5px; text-decoration:none; font-weight:bold;">WhatsApp</a>
-</div>
-
 <section class="hero">
     <div class="container hero-flex">
         <div class="hero-content">
-            <h4 style="color: var(--lizon-accent); font-weight:600;">Since 2019 • Empowering 2,100+ Students</h4>
-            <h1 style="font-size: 2.8rem; line-height: 1.2; margin: 15px 0;">IELTS Full Journey: <br><span style="color: var(--lizon-accent);">কাঙ্ক্ষিত স্কোর</span> না পাওয়া পর্যন্ত</h1>
+            <h4 style="color: var(--lizon-green); margin-bottom: 10px;">Since 2019 • Empowering 2,100+ Students</h4>
+            <h1 style="font-size: 2.5rem; line-height: 1.2; margin-bottom: 20px;">IELTS Full Journey: <span style="color: var(--lizon-green);">কাঙ্ক্ষিত স্কোর</span> না পাওয়া পর্যন্ত</h1>
             <p style="font-size: 1.1rem; color: #555; margin-bottom: 30px;">সিস্টেম ছাড়া IELTS হয় না। আমাদের ৩-ধাপের বিশেষ পদ্ধতিতে আপনি পাবেন লাইভ ইভালুয়েশন এবং আনলিমিটেড সাপোর্ট।</p>
-            <button onclick="openModal('payModal')" class="btn-admissions" style="padding: 15px 40px; font-size: 1.1rem; background:var(--lizon-accent);">অ্যাডমিশন নিন এখনই</button>
+            <button onclick="openModal('payModal')" class="btn-admissions" style="padding: 15px 40px; font-size: 1.1rem; border-radius: 10px;">Admit Now (12,000/-)</button>
         </div>
         <div class="hero-image">
-            <img src="https://i.ibb.co/9H0pL7S/joy-sir.png" alt="Mr. Joy Sir">
-            <div class="badge-joy badge-band">Band 9 Instructor</div>
-            <div class="badge-joy badge-name">Mr. Joy sir</div>
+            <img src="assets/joy-sir.png" alt="Mr. Joy Sir">
+            <div class="badge-instructor">Band 9 instructor</div>
+            <div class="badge-name">Mr. Joy sir</div>
         </div>
     </div>
 </section>
 
 <section class="trusted-section">
     <div class="container">
-        <p style="font-weight:700; color:#444;">Trusted by International Standards</p>
-        <p style="font-size:0.9rem; color:#888;">We follow the standards and systems of globally recognised IELTS authorities.</p>
+        <h2 style="margin-bottom: 10px;">Trusted by International Standards</h2>
+        <p style="color: #777; max-width: 700px; margin: 0 auto;">We follow the standards and systems of globally recognised IELTS authorities and study-abroad networks.</p>
         <div class="trusted-logos">
-            <span class="logo-tag">British Council</span>
-            <span class="logo-tag">IDP</span>
-            <span class="logo-tag">IELTS.org</span>
-            <span class="logo-tag">Pearson</span>
-            <span class="logo-tag">Grammarly</span>
-            <span class="logo-tag">Duolingo</span>
+            <span class="trust-tag">British Council</span>
+            <span class="trust-tag">IDP</span>
+            <span class="trust-tag">IELTS.org</span>
+            <span class="trust-tag">Pearson</span>
+            <span class="trust-tag">UCAS</span>
+            <span class="trust-tag">EducationUSA</span>
+            <span class="trust-tag">Grammarly</span>
+            <span class="trust-tag">Duolingo</span>
         </div>
     </div>
 </section>
 
 <section class="steps-section">
     <div class="container">
-        <h2 style="font-size:2rem;">আপনার ৩-ধাপের সাফল্যের পথ</h2>
-        <p>আমাদের বিশেষ কারিকুলাম যা আপনাকে জিরো থেকে প্রো বানাবে।</p>
+        <h2>আপনার ৩-ধাপের সাফল্যের পথ</h2>
+        <p style="color: #777;">আমাদের বিশেষ কারিকুলাম যা আপনাকে জিরো থেকে প্রো বানাবে।</p>
         <div class="steps-grid">
             <div class="step-card">
                 <i class="fas fa-layer-group"></i>
@@ -158,10 +173,10 @@
             <div class="step-card">
                 <i class="fas fa-bullseye"></i>
                 <h3>ধাপ ২: স্ট্র্যাটেজি</h3>
-                <p>৪টি মডিউলের (R, L, W, S) বিশেষ ট্রিকস এবং সিস্টেম আয়ত্ত করা যা সময় বাঁচায়।</p>
+                <p>৪টি মডিউলের (R, L, W, S) বিশেষ ট্রিকস এবং সিস্টেম আয়ত্ত করা যা সময় বাঁচায়।</p>
             </div>
             <div class="step-card">
-                <i class="fas fa-comment-dollar"></i>
+                <i class="fas fa-comments-dollar"></i>
                 <h3>ধাপ ৩: মাস্টারি</h3>
                 <p>সপ্তাহে ২ দিন লাইভ ইভালুয়েশন এবং আনলিমিটেড মক টেস্ট। যতক্ষণ না স্কোর আসছে!</p>
             </div>
@@ -170,108 +185,108 @@
 </section>
 
 <section class="reviews-section">
-    <div class="container"><h2 style="text-align:center; margin-bottom:40px;">গ্লোবাল লিজন সাকসেস স্টোরি</h2></div>
-    <div class="slider-container">
-        <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-        <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-        <div class="slider-track" id="sliderTrack">
-            <div class="review-card"><b>Tanvir (8.0)</b><p>"Joy Bhaia-র সিস্টেম ফলো করে আমি ১ম বারেই ৮.০ পেয়েছি।"</p></div>
-            <div class="review-card"><b>Maliha (7.5)</b><p>"লাইভ ইভালুয়েশন না থাকলে রাইটিং স্কোর তোলা অসম্ভব হতো।"</p></div>
-            <div class="review-card"><b>Rahat (7.0)</b><p>"লিজন আমার স্কোর আসা পর্যন্ত সাথে ছিল।"</p></div>
-            <div class="review-card"><b>Faysal (7.5)</b><p>"লিজনের ম্যাটেরিয়ালস গুলো একদম আপ-টু-ডেট।"</p></div>
+    <div class="container">
+        <h2 style="text-align:center; margin-bottom:10px;">গ্লোবাল লিজন সাকসেস স্টোরি</h2>
+        <div class="slider-container" id="sliderContainer">
+            <div class="slider-track" id="sliderTrack">
+                <div class="review-card"><strong>Tanvir (8.0)</strong><p>"Joy Bhaia-র সিস্টেম ফলো করে আমি ১ম বারেই ৮.০ পেয়েছি।"</p></div>
+                <div class="review-card"><strong>Maliha (7.5)</strong><p>"লাইভ ইভালুয়েশন না থাকলে রাইটিং স্কোর তোলা অসম্ভব হতো।"</p></div>
+                <div class="review-card"><strong>Rahat (7.0)</strong><p>"লিজন আমার স্কোর আসা পর্যন্ত সাথে ছিল।"</p></div>
+                <div class="review-card"><strong>Faysal (7.5)</strong><p>"লিজনের ম্যাটেরিয়ালস গুলো একদম আপ-টু-ডেট।"</p></div>
+                <div class="review-card"><strong>Nusrat (7.0)</strong><p>"স্পিকিং ভয় কাটানোর ট্রিকস গুলো ম্যাজিকের মতো।"</p></div>
+                <div class="review-card"><strong>Sakib (7.5)</strong><p>"সিস্টেম ছাড়া রিডিং এ ৭.৫ সম্ভব না।"</p></div>
+            </div>
+        </div>
+        <div class="slider-nav">
+            <button class="nav-btn" onclick="moveSlider(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn" onclick="moveSlider(1)"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 </section>
 
 <section class="faq-section">
-    <div class="container" style="max-width:800px;">
-        <h2 style="text-align:center; margin-bottom:40px;">সচরাচর জিজ্ঞাসিত প্রশ্ন</h2>
+    <div class="container" style="max-width: 800px;">
+        <h2 style="text-align: center; margin-bottom: 40px;">সচরাচর জিজ্ঞাসিত প্রশ্ন</h2>
+        
         <div class="faq-item">
-            <button class="faq-question">কোর্সটি কতদিনের? <i class="fas fa-minus"></i></button>
-            <div class="faq-answer" style="display:block;">আমাদের কোর্স নির্দিষ্ট দিনের নয়। আপনার কাঙ্ক্ষিত স্কোর না আসা পর্যন্ত আপনি আমাদের সাথে যুক্ত থাকতে পারবেন।</div>
+            <div class="faq-question" onclick="toggleFaq(this)">কোর্সটি কতদিনের? <i class="fas fa-minus"></i></div>
+            <div class="faq-answer" style="display: block;">আমাদের কোর্স নির্দিষ্ট দিনের নয়। আপনার কাঙ্ক্ষিত স্কোর না আসা পর্যন্ত আপনি আমাদের সাথে যুক্ত থাকতে পারবেন।</div>
         </div>
+
         <div class="faq-item">
-            <button class="faq-question">প্রথম মাসে কী কী শেখানো হয়? <i class="fas fa-plus"></i></button>
-            <div class="faq-answer">মেইন ফোকাস থাকে বেসিক গ্রামার এবং ভোকাবুলারির ওপর। এই মাসে আমরা শিখবো কীভাবে প্রশ্নগুলো সলভ করতে হয়।</div>
+            <div class="faq-question" onclick="toggleFaq(this)">প্রথম মাসে কী কী শেখানো হয়? <i class="fas fa-plus"></i></div>
+            <div class="faq-answer">প্রথম মাসে আমাদের মেইন ফোকাস থাকে বেসিক গ্রামার এবং ভোকাবুলারির ওপর। এই মাসে আমরা শিখবো কীভাবে প্রশ্নগুলো সলভ করতে হয় এবং কোন কোন রুলস ফলো করতে হয়।</div>
         </div>
+
         <div class="faq-item">
-            <button class="faq-question">আপনারা কি নিয়মিত পরীক্ষা নেন? <i class="fas fa-plus"></i></button>
-            <div class="faq-answer">হ্যাঁ, প্রতি সপ্তাহে এবং প্রতি মাসে টেস্ট নেওয়া হয়। প্রতিটি ক্লাসের সাথে ছোট টেস্টের ব্যবস্থা থাকে।</div>
+            <div class="faq-question" onclick="toggleFaq(this)">যদি আমি ২-৩ মাসে শিখতে না পারি তবে কি বাড়তি ফি দিতে হবে? <i class="fas fa-plus"></i></div>
+            <div class="faq-answer">একদমই না। কারো কোর্স শেষ করতে ২ মাস লাগতে পারে, আবার কারো ৩-৪ মাসও লাগতে পারে। আমরা শিক্ষার্থীর ব্যক্তিগত সক্ষমতা অনুযায়ী সময় বাড়িয়ে সমন্বয় করি। লিজন-এ একবার পেমেন্ট করলে সাপোর্ট পাবেন আজীবন।</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">আপনারা কি নিয়মিত পরীক্ষা নেন? <i class="fas fa-plus"></i></div>
+            <div class="faq-answer">হ্যাঁ, প্রতি সপ্তাহে এবং প্রতি মাসে টেস্ট নেওয়া হয়। এমনকি প্রতিটি ক্লাসের সাথে ছোট ছোট টেস্টের ব্যবস্থা থাকে যাতে আপনার অগ্রগতি নিশ্চিত হয়।</div>
         </div>
     </div>
 </section>
 
 <div id="planModal" class="modal">
     <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('planModal')" style="float:right; cursor:pointer;">&times;</span>
-        <h3 style="color:var(--lizon-green)">অ্যাডমিশন ও কোর্স পরিকল্পনা</h3>
-        <select id="planSelector" onchange="updatePlanText(this.value)" style="width:100%; padding:10px; margin:15px 0;">
-            <option value="p1">প্রথম মাসের পরিকল্পনা</option>
-            <option value="p2">দ্বিতীয় মাসের পরিকল্পনা</option>
-            <option value="p3">তৃতীয় মাসের পরিকল্পনা: এক্সাম অ্যাপ্রোচ</option>
-            <option value="p4">ব্যক্তিগত সক্ষমতা ও নমনীয়তা</option>
-            <option value="p5">লিজন (LizOn)-এর প্রতিশ্রুতি</option>
-        </select>
-        <div id="planDesc" style="background:#f9f9f9; padding:15px; border-radius:10px; border-left:4px solid var(--lizon-accent); line-height:1.7;">
-            • সপ্তাহে ৫টা করে ক্লাস হবে।<br>• দিনে ১টা ক্লাস হলে প্রথম মাসে ২০টা ক্লাস হবে।
-        </div>
-        <button onclick="closeModal('planModal'); openModal('payModal')" class="btn-admissions" style="width:100%; margin-top:15px; justify-content:center;">অ্যাডমিশন নিন (১২,০০০/-)</button>
+        <span style="position:absolute; right:20px; cursor:pointer;" onclick="closeModal('planModal')">&times;</span>
+        <h3>অ্যাডমিশন ও কোর্স পরিকল্পনা</h3>
+        <p>সপ্তাহে ৫টি ক্লাস, লাইভ ইভালুয়েশন এবং আনলিমিটেড মক টেস্ট সুবিধা।</p>
+        <button onclick="closeModal('planModal'); openModal('payModal')" class="btn-admissions" style="width:100%; justify-content:center; margin-top:20px;">অ্যাডমিশন নিন (১২,০০০/-)</button>
     </div>
 </div>
 
 <div id="payModal" class="modal">
     <div class="modal-content">
-        <span onclick="closeModal('payModal')" style="float:right; cursor:pointer;">&times;</span>
-        <h3 style="text-align:center;">অ্যাডমিশন পেমেন্ট ডিটেইলস</h3>
-        <div style="font-size:0.9rem; line-height:1.6;">
-            <p><b>Bkash Merchant:</b> 01611611139</p>
-            <p><b>Bkash Personal:</b> 01337533979</p>
-            <p><b>Bank:</b> DBBL | 2211510117789 | SHUVA SARKER JOY</p>
+        <span style="position:absolute; right:20px; cursor:pointer;" onclick="closeModal('payModal')">&times;</span>
+        <h2 style="text-align:center;">অ্যাডমিশন কনফার্ম করুন</h2>
+        <div style="background:#f9f9f9; padding:15px; border-radius:10px; margin-top:15px;">
+            <p><strong>Bkash Merchant:</strong> 01611611139</p>
+            <p><strong>Personal (B/N/R):</strong> 01337533979</p>
+            <p><strong>Bank:</strong> DBBL (2211510117789)</p>
         </div>
-        <a href="https://wa.me/8801611611139" class="btn-wa" style="width:100%; justify-content:center;">Confirm on WhatsApp</a>
+        <a href="https://wa.me/8801611611139" class="btn-wa" style="width:100%; justify-content:center; margin-top:15px; border-radius:10px;">Confirm on WhatsApp</a>
     </div>
 </div>
 
-<script>
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+<footer>
+    <div class="container">
+        <p>&copy; 2026 LizOn Education. All Rights Reserved.</p>
+    </div>
+</footer>
 
-    // FAQ Toggle
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const answer = btn.nextElementSibling;
-            const icon = btn.querySelector('i');
-            const isVisible = answer.style.display === 'block';
-            answer.style.display = isVisible ? 'none' : 'block';
-            icon.classList.toggle('fa-plus', isVisible);
-            icon.classList.toggle('fa-minus', !isVisible);
-        });
-    });
+<script>
+    function openModal(id) { document.getElementById(id).style.display = 'block'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     // Slider Logic
     const track = document.getElementById('sliderTrack');
-    let offset = 0;
-    document.getElementById('nextBtn').addEventListener('click', () => {
-        offset -= 320;
-        if (Math.abs(offset) >= track.scrollWidth - 300) offset = 0;
-        track.style.transform = `translateX(${offset}px)`;
-    });
-    document.getElementById('prevBtn').addEventListener('click', () => {
-        offset += 320;
-        if (offset > 0) offset = -(track.scrollWidth - 320);
-        track.style.transform = `translateX(${offset}px)`;
-    });
+    let index = 0;
+    function moveSlider(direction) {
+        const cardWidth = 320; 
+        const visibleCards = Math.floor(document.getElementById('sliderContainer').offsetWidth / cardWidth) || 1;
+        const totalCards = track.children.length;
+        index += direction;
+        if (index < 0) index = 0;
+        if (index > totalCards - visibleCards) index = totalCards - visibleCards;
+        track.style.transform = `translateX(-${index * cardWidth}px)`;
+    }
 
-    // Plan Text Update
-    const plans = {
-        p1: "• সপ্তাহে ৫টা করে ক্লাস হবে।<br>• দিনে ১টা ক্লাস হলে প্রথম মাসে ২০টা, আর দিনে ২টা ক্লাস হলে ৪০টা ক্লাস হবে।<br>• আমাদের কোশ্চেন টাইপস আছে ৩০টারও বেশি।",
-        p2: "• দ্বিতীয় মাসে মূল কাজ হবে প্র্যাকটিস করা।<br>• ভুলগুলো খুঁজে বের করে সেগুলো ইমপ্রুভ করার চেষ্টা করা হবে যাতে পরীক্ষায় সময় বাঁচে।",
-        p3: "• প্র্যাকটিস টেস্ট এবং ইভালুয়েশনের পাশাপাশি এক্সাম অ্যাপ্রোচ শেখাটা খুব গুরুত্বপূর্ণ।",
-        p4: "• আমরা শিক্ষার্থীর ব্যক্তিগত সক্ষমতাকে গুরুত্ব দেই। কারো কোর্স শেষ করতে ২ মাস লাগতে পারে, আবার কারো ৩-৪ মাস।",
-        p5: "• প্রতি সপ্তাহে এবং প্রতি মাসে নিয়মিত পরীক্ষা ও ইভালুয়েশন নেওয়া হয়।<br>• আমাদের লক্ষ্য হলো শিক্ষার্থীকে তার কাঙ্ক্ষিত স্কোর পেতে সাহায্য করা।"
-    };
-    function updatePlanText(val) { document.getElementById('planDesc').innerHTML = plans[val]; }
+    // FAQ Toggle
+    function toggleFaq(element) {
+        const answer = element.nextElementSibling;
+        const icon = element.querySelector('i');
+        if (answer.style.display === "block") {
+            answer.style.display = "none";
+            icon.className = "fas fa-plus";
+        } else {
+            answer.style.display = "block";
+            icon.className = "fas fa-minus";
+        }
+    }
 </script>
-
 </body>
 </html>

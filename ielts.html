@@ -34,7 +34,6 @@
         
         .nav-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
-        /* Dropdown Fix - Extended padding bottom creates a bridge for the mouse */
         .dropdown { position: relative; display: inline-block; padding-bottom: 15px; margin-bottom: -15px; }
         .dropbtn {
             background: var(--lizon-light); color: var(--lizon-dark);
@@ -53,7 +52,7 @@
         }
         .dropdown-content a:hover { background-color: var(--lizon-light); color: var(--lizon-green); }
 
-        .btn-admissions, .btn-wa {
+        .btn-admissions, .btn-wa, .btn-sticky {
             background: var(--lizon-dark); color: white; padding: 10px 20px;
             border-radius: 50px; font-weight: 600; cursor: pointer; border: none;
             transition: 0.3s; font-size: 0.9rem; text-decoration: none;
@@ -62,17 +61,36 @@
         .btn-wa { background: #25d366; }
         .btn-admissions:hover, .btn-wa:hover { transform: translateY(-2px); opacity: 0.9; }
 
+        /* Sticky Footer Mobile */
+        .sticky-mobile-bar {
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%; 
+            background: white; padding: 12px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); 
+            z-index: 1500; justify-content: center;
+        }
+        .btn-sticky { width: 90%; justify-content: center; background: var(--lizon-green); font-size: 1.1rem; }
+
         /* Hero Section */
-        .hero { padding: 60px 0; background: linear-gradient(135deg, #fdfdfd 0%, #f4f7f6 100%); }
+        .hero { padding: 60px 0 40px; background: linear-gradient(135deg, #fdfdfd 0%, #f4f7f6 100%); }
         .hero-flex { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; justify-content: space-between; }
         .hero-content { flex: 1; min-width: 300px; max-width: 600px; }
         
-        /* Hero Image Labels */
         .hero-image-wrapper { position: relative; display: inline-block; text-align: center; margin: 0 auto; }
         .hero-image-wrapper img { width: 100%; max-width: 450px; border-radius: 30px; display: block; }
         
         .badge-instructor { position: absolute; top: 10%; right: -5%; background: white; padding: 10px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); color: var(--lizon-green); font-weight: 700; z-index: 2; }
         .badge-name { position: absolute; bottom: 10%; left: -5%; background: white; padding: 10px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); color: var(--lizon-green); font-weight: 700; z-index: 2; }
+
+        /* Video & Who is this for Section */
+        .video-insight-section { padding: 60px 0; background: #fff; }
+        .video-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: start; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); background: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        
+        .whom-list { list-style: none; padding: 0; margin: 0; }
+        .whom-list li { margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-start; }
+        .whom-list i { color: var(--lizon-green); font-size: 1.2rem; margin-top: 5px; }
+        .whom-list span { font-size: 1rem; color: #444; line-height: 1.5; }
+        .whom-list b { color: var(--lizon-dark); display: block; margin-bottom: 2px; }
 
         /* Trusted Section */
         .trusted-section { padding: 40px 0; text-align: center; border-bottom: 1px solid #eee; }
@@ -115,7 +133,7 @@
         .pay-group { border-bottom: 1px dashed #ccc; padding-bottom: 15px; margin-bottom: 15px; }
         .pay-group:last-child { border-bottom: none; }
 
-        footer { padding: 40px 0 20px; background: #111; color: #999; text-align: center; }
+        footer { padding: 40px 0 60px; background: #111; color: #999; text-align: center; }
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
@@ -126,7 +144,9 @@
             .badge-instructor, .badge-name { padding: 8px 15px; font-size: 0.85rem; }
             .badge-instructor { right: 0; }
             .badge-name { left: 0; }
+            .video-grid { grid-template-columns: 1fr; }
             .slider-wrapper { padding: 0 30px; }
+            .sticky-mobile-bar { display: flex; }
         }
     </style>
 </head>
@@ -169,6 +189,37 @@
     </div>
 </section>
 
+<section class="video-insight-section">
+    <div class="container">
+        <div class="video-grid">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/SWzTlqAHHS0?rel=0" title="IELTS Course Details" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="whom-content">
+                <h2 style="color: var(--lizon-dark); margin-bottom: 25px;">Is This Course Right For You?</h2>
+                <ul class="whom-list">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><b>The "Coaching Center" Survivor</b> If you've tried popular centers but failed, we provide the missing "System."</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><b>The Overwhelmed Student</b> We simplify 35+ question types into a clear, manageable 3-step path.</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><b>Writing & Speaking Struggler</b> Get continuous Live Evaluation until your band descriptors improve.</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><b>The Busy Professional</b> 40+ classes a month with life-time support until your desired score is achieved.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="trusted-section">
     <div class="container">
         <h2 style="color: var(--lizon-dark); margin-bottom: 10px;">Trusted by International Standards</h2>
@@ -192,17 +243,17 @@
         <p style="color: #666; margin-bottom: 10px;">আমাদের বিশেষ কারিকুলাম যা আপনাকে জিরো থেকে প্রো বানাবে।</p>
         <div class="steps-grid">
             <div class="step-card">
-                <i class="fas fa-layer-group"></i>
+                <i class="fas fa-seedling"></i>
                 <h3>ধাপ ১: ফাউন্ডেশন</h3>
                 <p>গ্রামার এবং সেন্টেন্স স্ট্রাকচারের ভয় দূর করা। বেসিক মজবুত না হলে স্কোর তোলা অসম্ভব।</p>
             </div>
             <div class="step-card">
-                <i class="fas fa-bullseye"></i>
+                <i class="fas fa-chess-knight"></i>
                 <h3>ধাপ ২: স্ট্র্যাটেজি</h3>
                 <p>৪টি মডিউলের (R, L, W, S) বিশেষ ট্রিকস এবং সিস্টেম আয়ত্ত করা যা সময় বাঁচায়।</p>
             </div>
             <div class="step-card">
-                <i class="fas fa-comments-dollar"></i>
+                <i class="fas fa-award"></i>
                 <h3>ধাপ ৩: মাস্টারি</h3>
                 <p>সপ্তাহে ২ দিন লাইভ ইভ্যালুয়েশন এবং আনলিমিটেড মক টেস্ট। যতক্ষণ না স্কোর আসছে!</p>
             </div>
@@ -267,6 +318,10 @@
     </div>
 </section>
 
+<div class="sticky-mobile-bar">
+    <button onclick="openModal('payModal')" class="btn-sticky">Enroll Now (12,000/-)</button>
+</div>
+
 <div id="planModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('planModal')">&times;</span>
@@ -290,32 +345,28 @@
 <div id="payModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('payModal')">&times;</span>
-        <h2 style="text-align:center; color: var(--lizon-dark); margin-top:0;">Details</h2>
+        <h2 style="text-align:center; color: var(--lizon-dark); margin-top:0;">Admission Details</h2>
         
         <div style="background:#fdfdfd; padding:20px; border-radius:15px; border: 1px solid #eee; margin-top:15px;">
             <div class="pay-group">
-                <div class="pay-row" style="color:var(--lizon-dark); font-weight: 600;"><span>Bkash Merchant ( Make Payment ) :</span></div>
-                <div class="pay-row"><span>01611611139</span></div>
+                <div class="pay-row" style="color:var(--lizon-dark); font-weight: 600;"><span><i class="fas fa-store"></i> bKash Merchant (Payment) :</span></div>
+                <div class="pay-row"><span style="font-size:1.2rem; color:var(--lizon-green); font-weight:700;">01611611139</span></div>
             </div>
 
             <div class="pay-group">
-                <div class="pay-row"><span>Bkash Personal (send money)</span> <span>01337533979</span></div>
-                <div class="pay-row"><span>Rocket Personal (send money)</span> <span>01337533979</span></div>
-                <div class="pay-row"><span>Nagad Personal (send money)</span> <span>01337533979</span></div>
-                <div class="pay-row"><span>Upay Personal (send money)</span> <span>01889993896</span></div>
+                <div class="pay-row"><span>bKash/Nagad/Rocket (Personal)</span> <span>01337533979</span></div>
+                <div class="pay-row"><span>Upay Personal</span> <span>01889993896</span></div>
             </div>
 
             <div class="pay-group">
-                <p style="margin-top:0; margin-bottom:10px; font-weight:600; color:var(--lizon-dark);">Bank Account Details</p>
+                <p style="margin-top:0; margin-bottom:10px; font-weight:600; color:var(--lizon-dark);"><i class="fas fa-university"></i> Bank Account Details</p>
                 <div class="pay-row" style="color: #555;">DBBL (Datch Bangla Bank Limited)</div>
                 <div class="pay-row"><span>Account no:</span> <span>2211510117789</span></div>
                 <div class="pay-row"><span>Account Name:</span> <span>SHUVA SARKER JOY</span></div>
-                <div class="pay-row"><span>Branch :</span> <span>Manda</span></div>
-                <div class="pay-row"><span>Routing Number:</span> <span>090262874</span></div>
             </div>
 
             <div class="pay-group" style="border-bottom: none; padding-bottom: 0;">
-                <p style="margin-top:0; margin-bottom:10px; font-weight:600; color:var(--lizon-dark);">Visa Card Transfer</p>
+                <p style="margin-top:0; margin-bottom:10px; font-weight:600; color:var(--lizon-dark);"><i class="fas fa-credit-card"></i> Visa Card Transfer</p>
                 <div class="pay-row"><span>Visa Card No:</span> <span>4777920004855617</span></div>
                 <div class="pay-row"><span>Bank:</span> <span>Brac Bank</span></div>
             </div>
@@ -335,7 +386,6 @@
 </footer>
 
 <script>
-    // Exact Text Data for Plans from the 5 Images
     const plansData = {
         p1: "• সপ্তাহে ৫টা করে ক্লাস হবে।<br>• দিনে ১টা ক্লাস হলে প্রথম মাসে ২০টা, আর দিনে ২টা ক্লাস হলে ৪০টা ক্লাস হবে।<br>• আমাদের কোশ্চেন টাইপস আছে ৩০টারও বেশি।<br>• মেইন ফোকাস থাকবে বেসিক গ্রামার এবং ভোকাবুলারির ওপর।<br>• আমরা শিখবো কীভাবে প্রশ্নগুলো সলভ করতে হয় এবং কোন রুলস ফলো করতে হয়।",
         p2: "• দ্বিতীয় মাসে মূল কাজ হবে প্র্যাকটিস করা।<br>• প্রথম মাসে যা শিখেছি, সেগুলো প্রপার প্র্যাকটিসের মাধ্যমে আয়ত্তে আনা হবে।<br>• সাথে থাকবে মক টেস্ট ইভালুয়েশন।<br>• ভুলগুলো খুঁজে বের করে সেগুলো ইমপ্রুভ করার চেষ্টা করা হবে যাতে পরীক্ষায় সময় বাঁচে।",
@@ -357,10 +407,8 @@
         document.getElementById(id).style.display = 'none'; 
     }
     
-    // Initialize Plan Text
     updatePlan('planDescModal', 'p1');
 
-    // FAQ Toggle Logic
     function toggleFaq(element) {
         const answer = element.nextElementSibling;
         const icon = element.querySelector('i');
@@ -373,7 +421,6 @@
         }
     }
 
-    // Smooth Slider Logic
     function slideLeft() {
         const track = document.getElementById('sliderTrack');
         track.scrollBy({ left: -340, behavior: 'smooth' });
@@ -384,7 +431,6 @@
         track.scrollBy({ left: 340, behavior: 'smooth' });
     }
 
-    // Auto-scroll functionality (optional, pauses if user clicks)
     const track = document.getElementById('sliderTrack');
     let autoScrollInterval;
     
@@ -398,7 +444,6 @@
         }, 3500);
     }
 
-    // Pause auto-scroll on interaction
     track.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
     track.addEventListener('mouseleave', startAutoScroll);
     track.addEventListener('touchstart', () => clearInterval(autoScrollInterval));

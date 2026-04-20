@@ -1,417 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PTE Live - Full Crash Course | LizOn Education</title>
-  <link rel="icon" type="image/png" href="assets/logo-dark.png" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #fdfdfd;
-      color: #222;
-      scroll-behavior: smooth;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTE Live Full Crash Course | LizOn Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c41e3a;
+            --dark: #1a1a1a;
+            --light: #f4f4f4;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Hind Siliguri', 'Inter', sans-serif; line-height: 1.6; color: var(--dark); overflow-x: hidden; }
+        
+        /* Navbar */
+        nav { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .logo img { height: 45px; }
+        .nav-links a { text-decoration: none; color: var(--dark); margin-left: 20px; font-weight: 600; font-size: 14px; }
 
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: #ffffff;
-      padding: 15px 60px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+        /* Hero Section */
+        .hero { background: linear-gradient(135deg, #fdfdfd 0%, #ececec 100%); padding: 60px 5% 0; display: flex; flex-wrap: wrap; align-items: center; }
+        .hero-text { flex: 1; min-width: 320px; padding-bottom: 40px; }
+        .hero-text h1 { font-size: 2.5rem; color: var(--primary); line-height: 1.2; margin-bottom: 20px; }
+        .hero-text p { font-size: 1.1rem; margin-bottom: 25px; color: #444; }
+        .badge { background: #ffd700; padding: 5px 15px; border-radius: 20px; font-weight: bold; display: inline-block; margin-bottom: 15px; }
+        .hero-img { flex: 1; min-width: 320px; text-align: center; }
+        .hero-img img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
 
-    header img {
-      height: 50px;
-    }
+        /* Stats Bar */
+        .stats { background: var(--dark); color: var(--white); padding: 20px 5%; display: flex; justify-content: space-around; flex-wrap: wrap; text-align: center; }
+        .stat-item h3 { color: var(--primary); font-size: 1.5rem; }
 
-    nav a {
-      margin: 0 12px;
-      text-decoration: none;
-      color: #222;
-      font-weight: 500;
-    }
+        /* Problem Section */
+        .problem-box { padding: 60px 5%; background: var(--white); }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { font-size: 2rem; color: var(--primary); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { padding: 30px; border-radius: 12px; background: #fff; border-bottom: 4px solid var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
 
-    .btn-primary {
-      background-color: #0d47a1;
-      color: white;
-      padding: 10px 24px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-    }
+        /* CTA Section */
+        .cta-box { background: var(--primary); color: var(--white); padding: 60px 5%; text-align: center; }
+        .btn { background: #ffd700; color: #000; padding: 18px 35px; border-radius: 8px; font-weight: bold; font-size: 1.2rem; cursor: pointer; border: none; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .btn:hover { background: #fff; transform: translateY(-3px); }
 
-    .btn-primary:hover {
-      background-color: #1565c0;
-    }
+        /* FAQ */
+        .faq { padding: 60px 5%; background: var(--light); }
+        details { background: #fff; padding: 15px; margin-bottom: 10px; border-radius: 8px; cursor: pointer; }
+        summary { font-weight: 600; font-size: 1.1rem; list-style: none; position: relative; padding-right: 20px; }
+        summary::after { content: '+'; position: absolute; right: 0; color: var(--primary); }
 
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-      background: linear-gradient(135deg, #0d47a1, #1976d2);
-      color: white;
-    }
+        /* Modal */
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #fff; padding: 30px; border-radius: 15px; max-width: 500px; width: 100%; position: relative; text-align: center; }
+        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; }
 
-    .hero h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
-    .hero a {
-      margin: 0 5px;
-    }
-
-    section {
-      padding: 60px 80px;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 2em;
-    }
-
-    .about {
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    .instructor {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-      text-align: left;
-    }
-
-    .instructor img {
-      width: 220px;
-      border-radius: 10px;
-    }
-
-    .modules {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 20px;
-    }
-
-    .module-card {
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      padding: 20px;
-      text-align: center;
-    }
-
-    .trusted {
-      text-align: center;
-    }
-
-    .trusted img {
-      max-width: 200px;
-      margin-top: 20px;
-    }
-
-    .resources {
-      text-align: center;
-    }
-
-    .resources a {
-      display: inline-block;
-      margin: 10px;
-      padding: 12px 18px;
-      background-color: #0d47a1;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-    }
-
-    .faq {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .faq-item {
-      border-bottom: 1px solid #ccc;
-      padding: 15px 0;
-    }
-
-    .faq-item h3 {
-      cursor: pointer;
-      position: relative;
-    }
-
-    .faq-item h3::after {
-      content: '+';
-      position: absolute;
-      right: 0;
-    }
-
-    .faq-item.open h3::after {
-      content: '-';
-    }
-
-    .faq-item p {
-      display: none;
-      margin-top: 10px;
-      line-height: 1.6;
-    }
-
-    .faq-item.open p {
-      display: block;
-    }
-
-    .reviews {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .review-card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      padding: 20px;
-    }
-
-    .review-card h4 {
-      margin-top: 0;
-    }
-
-    .review-card span {
-      color: gold;
-    }
-
-    .cta {
-      text-align: center;
-      background-color: #1976d2;
-      color: white;
-      padding: 50px 20px;
-    }
-
-    .cta a {
-      background-color: white;
-      color: #1976d2;
-      padding: 12px 30px;
-      border-radius: 6px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    footer {
-      background-color: #0d47a1;
-      color: white;
-      text-align: center;
-      padding: 20px 10px;
-    }
-
-    footer a {
-      color: #ffeb3b;
-      text-decoration: none;
-      margin: 0 10px;
-    }
-
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-      }
-      section {
-        padding: 50px 20px;
-      }
-    }
-  </style>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const faqItems = document.querySelectorAll(".faq-item h3");
-      faqItems.forEach(f => {
-        f.addEventListener("click", function() {
-          this.parentElement.classList.toggle("open");
-        });
-      });
-    });
-  </script>
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 1.8rem; }
+            .nav-links { display: none; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <img src="assets/logo-dark.png" alt="LizOn Education Logo" />
-    <nav>
-      <a href="[mylizon.com](https://www.mylizon.com/)">Home</a>
-      <a href="#">Courses</a>
-      <a href="[drive.google.com](https://drive.google.com/drive/folders/18xjLim4_duxrEgKrvd1qQ_i5INGnd4hj?usp=drive_link)">Free Resources</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-    <a class="btn-primary" href="[mylizon.com](https://www.mylizon.com/pay.html)">Admit Now</a>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero">
-    <h1>PTE Live Full Crash Course</h1>
-    <p>Since 2022 • Empowering 670+ Students</p>
-    <a class="btn-primary" href="[mylizon.com](https://www.mylizon.com/pay.html)">Join Now</a>
-    <a class="btn-primary" href="#videos">Watch Intro</a>
-  </section>
-
-  <!-- About Course -->
-  <section class="about">
-    <h2>About the Course</h2>
-    <p>
-      LizOn Education brings you the ultimate <strong>PTE Live Crash Course</strong> — designed specially for 
-      <strong>Bangladeshi students</strong> who dream of studying abroad. 🇧🇩  
-      Here you’ll find live interactive classes, personalized speaking feedback, and expert guidance from 
-      <strong>Joy Bhaiya</strong>.  
-      <br><br>
-      এই কোর্সটি তোমাকে সম্পূর্ণভাবে প্রস্তুত করবে PTE পরীক্ষার জন্য — starting from basics to real-time mock tests.
-      After completing this course, you’ll feel confident and exam-ready!
-    </p>
-  </section>
-
-  <!-- Instructor -->
-  <section class="instructor">
-    <img src="assets/joy-sir.png" alt="Joy Sir - LizOn Education" />
-    <div>
-      <h2>Meet Your Instructor</h2>
-      <h3>Joy Sir — PTE Expert</h3>
-      <p>
-        Joy Bhaiya has successfully guided hundreds of Bangladeshi students towards 79+ scores in PTE.
-        His classes are filled with motivation, real strategy, and deep analytical practice.  
-        <br><br>
-        <em>“PTE is not just about English — it’s about smart technique. Let’s master it together!”</em> — Joy Sir
-      </p>
+<nav>
+    <div class="logo"><img src="assets/logo-dark.png" alt="LizOn Logo"></div>
+    <div class="nav-links">
+        <a href="https://www.mylizon.com/">Home</a>
+        <a href="https://www.mylizon.com/pteclass.html">Free Classes</a>
+        <a href="https://www.facebook.com/lizoneducation">Community</a>
     </div>
-  </section>
+</nav>
 
-  <!-- Course Modules -->
-  <section>
-    <h2>What You’ll Learn</h2>
-    <div class="modules">
-      <div class="module-card">
-        <h3>Speaking Mastery</h3>
-        <p>Live speaking sessions with Joy Sir to boost your pronunciation, fluency, and confidence.</p>
-      </div>
-      <div class="module-card">
-        <h3>Writing & Reading Pro</h3>
-        <p>Complete guide on essay structure, summarize written text, and effective reading strategies.</p>
-      </div>
-      <div class="module-card">
-        <h3>Listening Excellence</h3>
-        <p>Improve your listening accuracy and learn keyword detection tricks used in actual exams.</p>
-      </div>
-      <div class="module-card">
-        <h3>Mock Tests & Feedback</h3>
-        <p>4 full-length mock tests with personal feedback to identify your improvement areas.</p>
-      </div>
+<section class="hero">
+    <div class="hero-text">
+        <div class="badge">Target 70+ Score</div>
+        <h1>PTE-তে ১ মাসের মধ্যে কাঙ্ক্ষিত স্কোর নিশ্চিত করুন!</h1>
+        <p>আপনি কি শুধু টেমপ্লেট ফলো করছেন? তাহলে সাবধান! পিয়ারসন (Pearson) তাদের ওয়েবসাইটে স্পষ্ট জানিয়েছে অন্ধভাবে টেমপ্লেট ফলো করলে আপনার স্কোর আসবে না। জয় ভাইয়ার স্পেশাল স্ট্র্যাটেজিতে শিখুন PTE-এর সঠিক ব্যবহার।</p>
+        <button class="btn" onclick="openModal()">Admit Now - ৳9000/-</button>
+        <div style="margin-top: 20px;">
+            <a href="https://www.mylizon.com/pteclass.html" style="color: var(--primary); font-weight: 600;">ফ্রি ক্লাস দেখুন →</a>
+        </div>
     </div>
+    <div class="hero-img">
+        <img src="assets/joy-sir.png" alt="Joy Sir - PTE Expert">
+    </div>
+</section>
 
-    <div style="text-align:center; margin-top:40px;">
-      <h3>Course Fee: <span style="color:#0d47a1;">৳ 9000/-</span></h3>
-      <a href="[mylizon.com](https://www.mylizon.com/pay.html)" class="btn-primary">Enroll Now</a>
-    </div>
-  </section>
+<section class="stats">
+    <div class="stat-item"><h3>670+</h3><p>সফল স্টুডেন্ট</p></div>
+    <div class="stat-item"><h3>Band 9</h3><p>IELTS Expert Mentor</p></div>
+    <div class="stat-item"><h3>2022</h3><p>থেকে আস্থার সাথে</p></div>
+</section>
 
-  <!-- Trusted Section -->
-  <section class="trusted">
-    <h2>Trusted by International Standards</h2>
-    <img src="assets/trusted.png" alt="Trusted by International Standards" />
-  </section>
+<section class="problem-box">
+    <div class="section-title">
+        <h2>কেন আমাদের কোর্সটি আলাদা?</h2>
+        <p>YouTube-এর আন্দাজে স্কিপ করার টিপস নয়, শিখুন লজিক্যাল অ্যাপ্রোচ।</p>
+    </div>
+    <div class="grid">
+        <div class="card">
+            <h3>No Skipping Policy</h3>
+            <p>MCQ বা Highlight Correct Summary আন্দাজে উত্তর দেয়া বা বাদ দিয়ে ভালো স্কোর করা সম্ভব না। আমরা প্রতিটা Question Type-এ আপনাকে দক্ষ করব।</p>
+        </div>
+        <div class="card">
+            <h3>Diagnostic Approach</h3>
+            <p>ঠিক কোন জায়গায় আপনার ভুল হচ্ছে, সেটা Teacher নিজ হাতে ধরিয়ে দেবেন। অন্ধভাবে টেমপ্লেট নয়, শিখুন সঠিক স্ট্র্যাটেজি।</p>
+        </div>
+        <div class="card">
+            <h3>Full Crash Course</h3>
+            <p>যাদের ১ মাসের মধ্যে স্কোর লাগবে, তাদের জন্য Speaking, Writing, Reading, Listening-এর প্রতিটা মডিউল কভার করা হবে।</p>
+        </div>
+    </div>
+</section>
 
-  <!-- Free Resources -->
-  <section class="resources">
-    <h2>Free Resources & Classes</h2>
-    <p>Get free access to study materials & practice tools anytime.</p>
-    <a href="[drive.google.com](https://drive.google.com/drive/folders/18xjLim4_duxrEgKrvd1qQ_i5INGnd4hj?usp=drive_link)">📘 Free Resources</a>
-    <a href="[mylizon.com](https://www.mylizon.com/pteclass.html)">🎥 Free PTE Classes</a>
-  </section>
+<section class="problem-box" style="background: #fff;">
+    <div class="section-title">
+        <h2>Bangladeshi Students Feedback</h2>
+    </div>
+    <div class="grid">
+        <div class="card">
+            <p>"জয় ভাইয়ার পার্সোনাল ফিডব্যাক না পেলে আমার রাইটিং-এ স্কোর আসত না। টেমপ্লেট যে সব না সেটা লিজঅন-এ এসে বুঝলাম।"</p>
+            <br><strong>- তানজিম আহমেদ, ঢাকা</strong>
+        </div>
+        <div class="card">
+            <p>"১ মাসের মধ্যে ৭০+ পাওয়া যে সম্ভব এটা কল্পনাও করি নাই। ভাইয়ার গাইডেন্স জাস্ট অসাধারণ!"</p>
+            <br><strong>- নুসরাত জাহান, চট্টগ্রাম</strong>
+        </div>
+        <div class="card">
+            <p>"অনেক YouTube ভিডিও দেখে কনফিউজড ছিলাম, কিন্তু জয় ভাইয়ার ডায়াগনস্টিক মেথড আমার সব ভুল ধরিয়ে দিয়েছে।"</p>
+            <br><strong>- আরিফুল ইসলাম, বনশ্রী</strong>
+        </div>
+    </div>
+</section>
 
-  <!-- FAQ -->
-  <section class="faq">
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq-item">
-      <h3>What is PTE?</h3>
-      <p>PTE (Pearson Test of English) is an English proficiency test for students who want to study abroad. এটি IELTS এর মতো কিন্তু automated এবং faster result দেয়।</p>
+<section class="faq">
+    <div class="section-title"><h2>সচরাচর জিজ্ঞাসিত প্রশ্নাবলী (FAQ)</h2></div>
+    <div style="max-width: 800px; margin: 0 auto;">
+        <details>
+            <summary>১ মাসে কি আসলেও PTE প্রিপারেশন সম্ভব?</summary>
+            <p>হ্যাঁ, যদি আপনি প্রপার স্ট্র্যাটেজি এবং প্রতিদিনের টাস্ক মেইনটেইন করেন। আমাদের ক্র্যাশ কোর্সটি এমনভাবেই ডিজাইন করা।</p>
+        </details>
+        <details>
+            <summary>ক্লাস কি লাইভ হবে নাকি রেকর্ডেড?</summary>
+            <p>কোর্সটি সম্পূর্ণ লাইভ হবে, যেখানে আপনি সরাসরি জয় ভাইয়াকে প্রশ্ন করতে পারবেন। এছাড়া প্র্যাকটিসের জন্য পাবেন স্পেশাল সার্ভার অ্যাক্সেস।</p>
+        </details>
+        <details>
+            <summary>আমি কি ফ্রি রিসোর্স পাবো?</summary>
+            <p>অবশ্যই! ভর্তির আগেই আপনি আমাদের <a href="https://drive.google.com/drive/folders/18xjLim4_duxrEgKrvd1qQ_i5INGnd4hj?usp=drive_link">PTE Free Resources</a> ড্রাইভটি চেক করতে পারেন।</p>
+        </details>
     </div>
-    <div class="faq-item">
-      <h3>Who can join this course?</h3>
-      <p>Any Bangladeshi student planning to go abroad for higher studies can join. No advanced English level needed — আমরা basics থেকে শুরু করি।</p>
-    </div>
-    <div class="faq-item">
-      <h3>Can I join from anywhere in Bangladesh?</h3>
-      <p>Yes! Classes are conducted live online via Zoom, so তুমি দেশের যেকোনো জায়গা থেকে join করতে পারো।</p>
-    </div>
-    <div class="faq-item">
-      <h3>Do I get recorded sessions?</h3>
-      <p>হ্যাঁ, প্রতিটি class-এর recording দেওয়া হয় যাতে পুনরায় revise করতে পারো when needed.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Is there any refund policy?</h3>
-      <p>Once enrolled, course fees are non-refundable. কিন্তু যদি কোনো genuine technical issue হয়, our team will help you solve it.</p>
-    </div>
-  </section>
+</section>
 
-  <!-- Reviews -->
-  <section>
-    <h2>What Our Students Say</h2>
-    <div class="reviews">
-      <div class="review-card">
-        <h4>Sabbir Ahmed — Dhaka 🇧🇩</h4>
-        <p>“Ami Joy bhaiyar class e join kore speaking e huge improvement paisi! LizOn r Joy sir amar confidence barai dise.”</p>
-        <span>★★★★★</span>
-      </div>
-      <div class="review-card">
-        <h4>Mim Rahman — Sylhet 🇧🇩</h4>
-        <p>“I loved Joy bhaiya's feedback. Very friendly, clear concept dichen. Amar reading section e boost dise massively.”</p>
-        <span>★★★★★</span>
-      </div>
-      <div class="review-card">
-        <h4>Tanvir Hasan — Chattogram 🇧🇩</h4>
-        <p>“LizOn team always supportive. Joy Sir er strategy e PTE 79+ easily possible. Highly recommended!”</p>
-        <span>★★★★★</span>
-      </div>
-      <div class="review-card">
-        <h4>Afra Khan — Rajshahi 🇧🇩</h4>
-        <p>“Before enrolling, ami confused chhilam. Kintu course ta amar expectation er theke beshi helpful chhilo!”</p>
-        <span>★★★★★</span>
-      </div>
+<section class="cta-box">
+    <h2>আপনার স্বপ্ন পূরণের যাত্রা শুরু হোক আজই!</h2>
+    <p style="margin-bottom: 25px;">কোর্স ফি: ৯০০০/- টাকা মাত্র।</p>
+    <button class="btn" onclick="openModal()">Enroll Now</button>
+</section>
+
+<footer style="padding: 40px 5%; background: #111; color: #888; text-align: center;">
+    <img src="assets/logo-dark.png" style="height: 40px; filter: grayscale(1) brightness(2); margin-bottom: 20px;">
+    <p>Gulshan 2 | Basabo, Dhaka, Bangladesh</p>
+    <div style="margin: 20px 0;">
+        <a href="https://www.facebook.com/lizoneducation" style="color: #fff; margin: 0 10px;">Facebook</a>
+        <a href="https://www.youtube.com/@Lizoneducation" style="color: #fff; margin: 0 10px;">YouTube</a>
     </div>
-  </section>
+    <p>&copy; 2026 LizOn Education. All Rights Reserved.</p>
+</footer>
 
-  <!-- CTA -->
-  <section class="cta">
-    <h2>Ready to Start Your PTE Journey?</h2>
-    <p>Limited Seats Available — Join the most trusted PTE course in Bangladesh 🇧🇩</p>
-    <a href="[mylizon.com](https://www.mylizon.com/pay.html)">Admit Now</a>
-  </section>
+<div id="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 style="color: var(--primary);">পেমেন্ট ডিটেইলস</h2>
+        <hr style="margin: 15px 0;">
+        <p>বিকাশ/নগদ এর মাধ্যমে ৯০০০/- টাকা পেমেন্ট করে আপনার সিট কনফার্ম করুন।</p>
+        <br>
+        <a href="https://www.mylizon.com/pay.html" class="btn" style="width: 100%;">View Payment Instructions</a>
+    </div>
+</div>
 
-  <!-- Footer -->
-  <footer>
-    <p>
-      <a href="[mylizon.com](https://www.mylizon.com/)">Home</a> |
-      <a href="#">About</a> |
-      <a href="#">Courses</a> |
-      <a href="#">Contact</a>
-    </p>
-    <p>
-      Follow us:
-      <a href="[facebook.com](https://www.facebook.com/lizoneducation)">Facebook</a> |
-      <a href="[youtube.com](https://www.youtube.com/@Lizoneducation)">YouTube</a>
-    </p>
-    <p>&copy; 2024 LizOn Education • Empowering Global Ambitions from Bangladesh 🌍</p>
-  </footer>
+<script>
+    function openModal() { document.getElementById('modal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('modal')) closeModal();
+    }
+</script>
 
 </body>
 </html>

@@ -158,8 +158,26 @@
       transition: background 0.2s, transform 0.15s;
     }
     nav .nav-cta:hover { background: var(--gold-light); transform: scale(1.03); }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .hamburger span { width: 24px; height: 2px; background: white; border-radius: 2px; transition: 0.3s; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: 8px;
+      margin: -8px;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      position: relative;
+      z-index: 1001;
+    }
+    .hamburger span { width: 24px; height: 2px; background: white; border-radius: 2px; transition: 0.3s; display:block; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .mobile-menu {
       display: none;
       flex-direction: column;
@@ -168,6 +186,8 @@
       top: 66px; left: 0; right: 0;
       padding: 20px;
       gap: 14px;
+      z-index: 1000;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.25);
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
@@ -905,9 +925,9 @@
     <a href="https://www.mylizon.com/about.html">About</a>
   </div>
   <a href="https://www.mylizon.com/pay.html" class="nav-cta" onclick="openModal(event)">এখনই ভর্তি হও</a>
-  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+  <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="https://www.mylizon.com/ielts.html">IELTS</a>
@@ -1558,15 +1578,46 @@
 
 <script>
   // Mobile menu
-  function toggleMenu() {
-    document.getElementById('mobileMenu').classList.toggle('open');
+  function toggleMenu(forceState) {
+    const menu = document.getElementById('mobileMenu');
+    const hamburger = document.getElementById('hamburger');
+    const shouldOpen = typeof forceState === 'boolean' ? forceState : !menu.classList.contains('open');
+    menu.classList.toggle('open', shouldOpen);
+    hamburger.classList.toggle('open', shouldOpen);
+    hamburger.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
   }
 
   function toggleMobileDropdown(e) {
     e.preventDefault();
+    e.stopPropagation();
     const dropdown = e.currentTarget.closest('.mobile-dropdown');
     dropdown.classList.toggle('open');
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('mobileMenu');
+
+    if (hamburger) {
+      hamburger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleMenu();
+      });
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+        toggleMenu(false);
+      }
+    });
+
+    menu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        toggleMenu(false);
+      });
+    });
+  });
 
   // FAQ
   function toggleFaq(btn) {

@@ -63,6 +63,49 @@
       transition: color 0.2s;
     }
     nav .nav-links a:hover { color: var(--gold); }
+    .nav-dropdown {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-dropdown-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dropdown-caret {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 0;
+      min-width: 210px;
+      background: #11284f;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 8px;
+      display: none;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+    }
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: rgba(255,255,255,0.82);
+      font-size: 13px;
+    }
+    .nav-dropdown-menu a:hover {
+      background: rgba(245,166,35,0.12);
+      color: var(--gold);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu {
+      display: flex;
+    }
     nav .nav-cta {
       background: var(--gold);
       color: var(--navy);
@@ -94,6 +137,48 @@
       font-weight: 500;
       padding: 8px 0;
       border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .mobile-dropdown {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 2px 0 8px;
+    }
+    .mobile-dropdown-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.85);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-family: 'Hind Siliguri', sans-serif;
+    }
+    .mobile-dropdown-caret {
+      transition: transform 0.25s ease;
+    }
+    .mobile-dropdown.open .mobile-dropdown-caret {
+      transform: rotate(180deg);
+    }
+    .mobile-dropdown-menu {
+      display: none;
+      padding: 4px 0 0 12px;
+    }
+    .mobile-dropdown.open .mobile-dropdown-menu {
+      display: flex;
+      flex-direction: column;
+    }
+    .mobile-dropdown-menu a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.72);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mobile-dropdown-menu a:last-child {
+      border-bottom: none;
+      padding-bottom: 2px;
     }
     .mobile-menu .m-cta {
       background: var(--gold);
@@ -768,7 +853,14 @@
   </a>
   <div class="nav-links">
     <a href="https://www.mylizon.com/ielts.html">IELTS</a>
-    <a href="https://www.mylizon.com/pte.html">PTE</a>
+    <div class="nav-dropdown">
+      <a href="https://www.mylizon.com/pte.html" class="nav-dropdown-toggle">PTE <span class="dropdown-caret">▾</span></a>
+      <div class="nav-dropdown-menu">
+        <a href="https://www.mylizon.com/pteportal.html">PTE Portal</a>
+        <a href="https://www.mylizon.com/pteclass.html">PTE Class</a>
+        <a href="https://drive.google.com/drive/u/3/folders/18xjLim4_duxrEgKrvd1qQ_i5INGnd4hj" target="_blank" rel="noopener">Notes &amp; Resources</a>
+      </div>
+    </div>
     <a href="https://www.mylizon.com/studyabroad.html">Study Abroad</a>
     <a href="https://www.mylizon.com/about.html">About</a>
   </div>
@@ -779,7 +871,18 @@
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="https://www.mylizon.com/ielts.html">IELTS</a>
-  <a href="https://www.mylizon.com/pte.html">PTE</a>
+  <div class="mobile-dropdown">
+    <button class="mobile-dropdown-toggle" onclick="toggleMobileDropdown(event)">
+      <span>PTE</span>
+      <span class="mobile-dropdown-caret">▾</span>
+    </button>
+    <div class="mobile-dropdown-menu" id="mobilePteMenu">
+      <a href="https://www.mylizon.com/pte.html">PTE Main Page</a>
+      <a href="https://www.mylizon.com/pteportal.html">PTE Portal</a>
+      <a href="https://www.mylizon.com/pteclass.html">PTE Class</a>
+      <a href="https://drive.google.com/drive/u/3/folders/18xjLim4_duxrEgKrvd1qQ_i5INGnd4hj" target="_blank" rel="noopener">Notes &amp; Resources</a>
+    </div>
+  </div>
   <a href="https://www.mylizon.com/studyabroad.html">Study Abroad</a>
   <a href="https://www.mylizon.com/about.html">About</a>
   <a href="#" class="m-cta" onclick="openModal(event)">এখনই ভর্তি হও →</a>
@@ -1418,6 +1521,12 @@
   // Mobile menu
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  function toggleMobileDropdown(e) {
+    e.preventDefault();
+    const dropdown = e.currentTarget.closest('.mobile-dropdown');
+    dropdown.classList.toggle('open');
   }
 
   // FAQ

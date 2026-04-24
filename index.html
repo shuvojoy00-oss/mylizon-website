@@ -1148,9 +1148,13 @@
           <button class="btn primary" id="instantHelpTop" type="button" aria-label="Get Instant Help">
             Get Instant Help
           </button>
-
-          <a class="btn" id="bookAppointmentTop" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20book%20an%20appointment.%20IELTS%2FPTE%3A%20____%20Target%3A%20____%20Exam%20date%3A%20____%20(Source%3A%20Home_book_appointment_top)" target="_blank" rel="noopener" aria-label="Book an appointment on WhatsApp">
-            Book Appointment
+<a class="btn" id="bookAppointmentTop"
+   href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20book%20an%20appointment.%20IELTS%2FPTE%3A%20____%20Target%3A%20____%20Exam%20date%3A%20____%20(Source%3A%20Home_book_appointment_top)"
+   target="_blank"
+   rel="noopener"
+   aria-label="Book an appointment on WhatsApp"
+   onclick="trackEvent('Lead')">
+         Book Appointment
           </a>
 
           <a class="btn ghost" href="#learn">Start Learning</a>
@@ -1210,7 +1214,13 @@
           </div>
           <div class="row">
             <a class="btn primary" href="studyabroad.html">Open Study Abroad</a>
-            <a class="btn" href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20Study%20Abroad%20guidance%20(N2F).%20Country%3A%20____%20Intake%3A%20____%20(Source%3A%20Home_excellence_n2f)" target="_blank" rel="noopener">Talk to Counselor</a>
+           <a class="btn"
+   href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20Study%20Abroad%20guidance%20(N2F).%20Country%3A%20____%20Intake%3A%20____%20(Source%3A%20Home_excellence_n2f)"
+   target="_blank"
+   rel="noopener"
+   onclick="trackEvent('Lead')">
+   Talk to Counselor
+</a>
           </div>
         </div>
       </div>
@@ -1326,9 +1336,13 @@
         <button class="btn primary" id="instantGuidanceBtn" type="button">
           Get Instant Help
         </button>
-        <a class="btn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20book%20an%20appointment.%20IELTS%2FPTE%3A%20____%20Target%3A%20____%20Exam%20date%3A%20____%20(Source%3A%20Home_book_appointment_reviews)" target="_blank" rel="noopener">
-          Book Appointment
-        </a>
+       <a class="btn"
+   href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20book%20an%20appointment.%20IELTS%2FPTE%3A%20____%20Target%3A%20____%20Exam%20date%3A%20____%20(Source%3A%20Home_book_appointment_reviews)"
+   target="_blank"
+   rel="noopener"
+   onclick="trackEvent('Lead')">
+   Book Appointment
+</a>
       </div>
     </section>
 
@@ -1393,7 +1407,10 @@
 
   <!-- Bottom guidance bar -->
   <div class="bottomBar" aria-label="Need guidance bar">
-    <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20Home_bottom_bar)" target="_blank" rel="noopener">
+  <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20Home_bottom_bar)"
+   target="_blank"
+   rel="noopener"
+   onclick="trackEvent('Lead')">
       <div class="barLeft">
         <span class="dot" aria-hidden="true"></span>
         Need guidance? <b>Chat on WhatsApp</b>
@@ -1475,7 +1492,14 @@
       <div class="divider" aria-hidden="true"></div>
 
       <div class="sheetChips" aria-label="Contact">
-        <a class="sheetChip" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20Home_nav)" target="_blank" rel="noopener"><span><strong>WhatsApp</strong></span><span>→</span></a>
+       <a class="sheetChip"
+   href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20Home_nav)"
+   target="_blank"
+   rel="noopener"
+   onclick="trackEvent('Lead')">
+   <span><strong>WhatsApp</strong></span>
+   <span>→</span>
+</a>
         <a class="sheetChip" href="tel:+8801611611139"><span><strong>Call</strong></span><span>→</span></a>
       </div>
 
@@ -1538,6 +1562,14 @@
 
   <script>
     (function(){
+
+
+      // ===== META EVENT TRACKING =====
+function trackEvent(name){
+  if (typeof fbq !== 'undefined'){
+    fbq('track', name);
+  }
+}
       // Year
       const y = document.getElementById('year');
       if (y) y.textContent = new Date().getFullYear();
@@ -1620,9 +1652,26 @@
         else { ping(540); speak("Let's explore Study Abroad."); }
       }
 
-      if(btnIELTS) btnIELTS.addEventListener('click', ()=> tapFeedback('ielts'));
-      if(btnPTE) btnPTE.addEventListener('click', ()=> tapFeedback('pte'));
-      if(btnSA) btnSA.addEventListener('click', ()=> tapFeedback('sa'));
+     if(btnIELTS){
+  btnIELTS.addEventListener('click', ()=>{
+    trackEvent('ViewContent');
+    tapFeedback('ielts');
+  });
+}
+
+if(btnPTE){
+  btnPTE.addEventListener('click', ()=>{
+    trackEvent('ViewContent');
+    tapFeedback('pte');
+  });
+}
+
+if(btnSA){
+  btnSA.addEventListener('click', ()=>{
+    trackEvent('ViewContent');
+    tapFeedback('sa');
+  });
+}
 
       // Up button
       const upFab = document.getElementById('upFab');
@@ -1939,8 +1988,19 @@
         askPanel?.classList.add('open');
         renderAskHome();
       }
-      if (instantGuidanceBtn) instantGuidanceBtn.addEventListener('click', openAskInstant);
-      if (instantHelpTop) instantHelpTop.addEventListener('click', openAskInstant);
+if (instantGuidanceBtn){
+  instantGuidanceBtn.addEventListener('click', () => {
+    trackEvent('Contact');
+    openAskInstant();
+  });
+}
+
+if (instantHelpTop){
+  instantHelpTop.addEventListener('click', () => {
+    trackEvent('Contact');
+    openAskInstant();
+  });
+}
 
       // Smooth anchor scroll
       document.addEventListener('click', (e)=>{

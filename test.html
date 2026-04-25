@@ -1,448 +1,327 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1 on 1 Personal Care - LizOn Education</title>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-green: #0a2e1f;
-            --accent-gold: #c5a059;
-            --light-bg: #f4f7f6;
-            --white: #ffffff;
-            --whatsapp-green: #25D366;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 on 1 Personal Care | LizOn Education</title>
 
-        body {
-            margin: 0;
-            font-family: 'Hind Siliguri', 'Inter', sans-serif;
-            background-color: var(--white);
-            color: #333;
-            overflow-x: hidden;
-        }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7f6;
+}
 
-        /* --- Header --- */
-        header {
-            padding: 12px 5%;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .logo-wrap {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: #000;
-        }
-        .logo-wrap img { height: 50px; width: auto; margin-right: 12px; display: block; }
-        .logo-text strong { display: block; font-size: 1.3rem; line-height: 1.1; font-family: 'Inter'; }
-        .logo-text span { font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+/* HEADER */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
-        .chat-btn {
-            background: var(--whatsapp-green);
-            color: white;
-            text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .chat-btn:hover { transform: scale(1.05); background: #1ebd58; }
+.header img {
+  width: 40px;
+  margin-right: 10px;
+}
 
-        /* --- Hero Section --- */
-        .hero {
-            background: var(--primary-green);
-            color: white;
-            text-align: center;
-            padding: 80px 20px;
-            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.03) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-        .hero h1 { font-size: 3.2rem; margin: 0; font-weight: 800; line-height: 1.2; }
-        .hero .highlight-gold { color: var(--accent-gold); }
-        .hero-subtext { font-size: 1.1rem; margin: 25px auto; max-width: 750px; opacity: 0.9; line-height: 1.8; }
+.header h2 {
+  font-size: 18px;
+  margin: 0;
+  color: #0b3d2e;
+  cursor: pointer;
+}
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            max-width: 1000px;
-            margin: 50px auto 0;
-            gap: 20px;
-        }
-        .stat-item h2 { font-size: 2.2rem; color: var(--accent-gold); margin: 0; }
-        .stat-item p { font-size: 0.85rem; opacity: 0.8; margin-top: 5px; }
+/* HERO */
+.hero {
+  padding: 30px 20px;
+  text-align: center;
+}
 
-        /* --- Pricing Section --- */
-        .pricing-section { padding: 80px 5%; text-align: center; background: var(--light-bg); }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1100px;
-            margin: 40px auto;
-        }
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            border: 1px solid #eee;
-            display: flex;
-            flex-direction: column;
-        }
-        .card:hover { transform: translateY(-8px); border-color: var(--accent-gold); }
-        .price-tag { font-size: 2.4rem; font-weight: 800; color: var(--primary-green); margin: 20px 0; }
-        .card ul { list-style: none; padding: 0; margin-bottom: 30px; text-align: left; flex-grow: 1; }
-        .card li { margin-bottom: 12px; font-size: 1rem; border-bottom: 1px dashed #eee; padding-bottom: 8px; }
-        .card li::before { content: "✓"; color: var(--accent-gold); font-weight: bold; margin-right: 10px; }
-        
-        .enroll-btn {
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: 0.3s;
-        }
-        .enroll-btn:hover { background: #000; letter-spacing: 1px; }
+.hero h1 {
+  font-size: 28px;
+  color: #0b3d2e;
+}
 
-        /* --- Enhanced Review Section --- */
-        .review-section { background: #051610; color: white; padding: 100px 0; position: relative; }
-        .review-title { text-align: center; margin-bottom: 50px; padding: 0 20px; }
-        
-        .review-container-outer { position: relative; width: 100%; overflow: hidden; padding: 20px 0; }
-        
-        .scroll-wrapper {
-            display: flex;
-            gap: 25px;
-            padding: 0 50px;
-            cursor: grab;
-            transition: transform 0.1s linear;
-            will-change: transform;
-        }
+.hero p {
+  font-size: 16px;
+  color: #333;
+}
 
-        .review-box {
-            min-width: 320px;
-            max-width: 320px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-        }
-        .review-box h4 { color: var(--accent-gold); margin: 0 0 8px 0; font-size: 1.2rem; }
-        .pain-point { font-size: 0.85rem; color: #ff7675; margin-bottom: 15px; font-style: italic; line-height: 1.4; border-left: 2px solid #ff7675; padding-left: 10px; }
-        .review-text { font-size: 0.95rem; line-height: 1.6; opacity: 0.9; }
+/* PRICING */
+.pricing {
+  padding: 20px;
+}
 
-        /* Manual Controls */
-        .nav-btn {
-            position: absolute;
-            top: 55%;
-            transform: translateY(-50%);
-            background: var(--accent-gold);
-            color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .prev-btn { left: 20px; }
-        .next-btn { right: 20px; }
+.price-card {
+  background: white;
+  padding: 18px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
 
-        /* --- Footer --- */
-        footer { background: #051610; color: #bbb; padding: 80px 5% 40px; border-top: 1px solid #111; }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
-            gap: 50px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .footer-col h4 { color: #fff; margin-bottom: 25px; font-size: 1.1rem; position: relative; padding-bottom: 10px; }
-        .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: 0; width: 30px; height: 2px; background: var(--accent-gold); }
-        .footer-col ul { list-style: none; padding: 0; }
-        .footer-col li { margin-bottom: 15px; }
-        .footer-col a { color: #bbb; text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
-        .footer-col a:hover { color: var(--accent-gold); padding-left: 5px; }
-        
-        .footer-logo { height: 60px; filter: none; margin-bottom: 20px; } /* Kept original for visibility */
-        
-        .social-icons { display: flex; gap: 15px; margin-top: 25px; }
-        .social-icons a { background: rgba(255,255,255,0.05); width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 10px; transition: 0.3s; }
-        .social-icons a:hover { background: var(--accent-gold); transform: translateY(-3px); }
+.price-card h3 {
+  margin: 0;
+  color: #0b3d2e;
+}
 
-        /* --- Modal --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: none; justify-content: center; align-items: center; z-index: 2000;
-        }
-        .modal { background: white; padding: 40px; border-radius: 24px; text-align: center; max-width: 400px; width: 90%; }
-        .modal-btn { display: block; padding: 18px; margin: 12px 0; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; }
-        .btn-pay { background: var(--primary-green); color: white; }
-        .btn-wa { background: var(--whatsapp-green); color: white; }
+.price-card p {
+  margin: 5px 0;
+}
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
-            .logo-text strong { font-size: 1.1rem; }
-            .nav-btn { display: none; }
-        }
-    </style>
+.price {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1a7f5a;
+}
+
+/* BUTTON */
+.btn {
+  background: #1a7f5a;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* REVIEWS */
+.review-section {
+  padding: 20px;
+}
+
+.review-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+}
+
+.review-card {
+  min-width: 260px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.review-card p {
+  font-size: 14px;
+}
+
+.review-name {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #0b3d2e;
+}
+
+/* FEATURES */
+.features {
+  padding: 20px;
+}
+
+.features ul {
+  padding-left: 18px;
+}
+
+.features li {
+  margin-bottom: 8px;
+}
+
+/* POPUP */
+.popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 -3px 10px rgba(0,0,0,0.1);
+}
+
+.popup button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+}
+
+.pay {
+  background: #1a7f5a;
+  color: white;
+}
+
+.chat {
+  background: #ddd;
+}
+
+/* FOOTER */
+.footer {
+  background: #0b3d2e;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+</style>
 </head>
+
 <body>
 
-    <header>
-        <a href="https://www.mylizon.com/" class="logo-wrap">
-            <img src="https://www.mylizon.com/assets/logo-dark.png" alt="LizOn Logo">
-            <div class="logo-text">
-                <strong>LizOn Education</strong>
-                <span>Designed for Desired Score</span>
-            </div>
-        </a>
-        <a href="https://wa.me/8801611611139" class="chat-btn">
-            <span>Chat</span>
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="18" style="filter:invert(1)">
-        </a>
-    </header>
+<!-- HEADER -->
+<div class="header" onclick="window.location.href='https://www.mylizon.com/'">
+  <img src="logo-dark.png">
+  <h2>LizOn Education</h2>
+</div>
 
-    <section class="hero">
-        <div class="hero-badge">✦ IELTS & PTE — 1 on 1 Personal Care</div>
-        <h1>টিচারের কাছে <br><span class="highlight-gold">একা পড়ুন</span></h1>
-        <p class="hero-subtext">
-            আপনার দুর্বলতা আলাদা, সমস্যা আলাদা। ব্যাচের ভিড়ে হারিয়ে না গিয়ে ১ on ১ কোর্সে নিন কাস্টমাইজড গাইডেন্স। এখানে প্রতিটি ক্লাস ও মডিউল সাজানো হয় শুধুমাত্র আপনার প্রয়োজন অনুযায়ী।
-        </p>
+<!-- HERO -->
+<div class="hero">
+  <h1>1 on 1 Personal Care</h1>
+  <p>টিচারের কাছে একা পড়ুন</p>
+  <p>Batch e bujhte paren na? Same problem bar bar hocche?</p>
+</div>
 
-        <div class="stats-grid">
-            <div class="stat-item"><h2>91%+</h2><p>সাফল্যের হার</p></div>
-            <div class="stat-item"><h2>Band 8+</h2><p>IELTS ইনস্ট্রাক্টর</p></div>
-            <div class="stat-item"><h2>82+</h2><p>PTE ইনস্ট্রাক্টর</p></div>
-            <div class="stat-item"><h2>1 on 1</h2><p>একা পড়ার সুযোগ</p></div>
-        </div>
-    </section>
+<!-- PRICING -->
+<div class="pricing">
 
-    <section class="pricing-section">
-        <h2 style="font-size: 2.2rem; margin-bottom: 10px;">কোর্স ফি ও প্যাকেজসমূহ</h2>
-        <p style="opacity: 0.7; margin-bottom: 40px;">আপনার লক্ষ্য অনুযায়ী সেরা প্ল্যানটি বেছে নিন</p>
-        <div class="pricing-grid">
-            <div class="card">
-                <h3>Crash Course</h3>
-                <div class="price-tag">৳ 7,000</div>
-                <ul>
-                    <li>১০টি ওয়ান-টু-ওয়ান লাইভ ক্লাস</li>
-                    <li>এক্সক্লুসিভ স্ট্র্যাটেজি ও শর্ট হ্যাকস</li>
-                    <li>পার্সোনাল মিস্টেক এনালাইসিস</li>
-                </ul>
-                <button class="enroll-btn" onclick="openModal()">Enroll Now</button>
-            </div>
-            <div class="card" style="border-color: var(--accent-gold); position:relative; transform: scale(1.05);">
-                <span style="position:absolute; top:-15px; left:50%; transform:translateX(-50%); background:var(--accent-gold); color:white; padding:6px 18px; border-radius:50px; font-size:0.8rem; font-weight:bold;">MOST POPULAR</span>
-                <h3>Full Course</h3>
-                <div class="price-tag">৳ 10,000</div>
-                <ul>
-                    <li>১৫টি ওয়ান-টু-ওয়ান লাইভ ক্লাস</li>
-                    <li>উইকলি ৩টি ক্লাস (ফ্লেক্সিবল টাইম)</li>
-                    <li>ফুল কোর্স ম্যাটেরিয়ালস ফ্রি</li>
-                </ul>
-                <button class="enroll-btn" onclick="openModal()">Enroll Now</button>
-            </div>
-            <div class="card">
-                <h3>Basic - Advanced</h3>
-                <div class="price-tag">৳ 15,000</div>
-                <ul>
-                    <li>২৪টি ওয়ান-টু-ওয়ান লাইভ ক্লাস</li>
-                    <li>একদম শুরু থেকে এডভান্স গাইডেন্স</li>
-                    <li>আনলিমিটেড স্পিকিং প্র্যাকটিস</li>
-                </ul>
-                <button class="enroll-btn" onclick="openModal()">Enroll Now</button>
-            </div>
-        </div>
-    </section>
+  <div class="price-card">
+    <h3>Crash Course</h3>
+    <p>10 Class</p>
+    <div class="price">7000/-</div>
+    <button class="btn" onclick="openPopup()">Enroll Now</button>
+  </div>
 
-    <section class="review-section">
-        <div class="review-title">
-            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">৩০+ সফল স্টুডেন্টদের অভিজ্ঞতা</h2>
-            <p style="opacity: 0.7;">কেন ১ on ১ কেয়ার-ই সেরা সমাধান?</p>
-        </div>
-        
-        <div class="review-container-outer">
-            <button class="nav-btn prev-btn" onclick="manualScroll(-350)">‹</button>
-            <div class="scroll-wrapper" id="scroller">
-                </div>
-            <button class="nav-btn next-btn" onclick="manualScroll(350)">›</button>
-        </div>
-    </section>
+  <div class="price-card">
+    <h3>Full Course</h3>
+    <p>15 Class</p>
+    <div class="price">10000/-</div>
+    <button class="btn" onclick="openPopup()">Enroll Now</button>
+  </div>
 
-    <section style="padding: 100px 5%; text-align: center; background: #fff;">
-        <h2 style="font-size: 2rem;">ভর্তির আগে কোয়ালিটি যাচাই করুন</h2>
-        <p style="margin-bottom: 40px; opacity: 0.7;">আমাদের ফ্রি ক্লাসগুলো দেখে আজই সিদ্ধান্ত নিন</p>
-        <div>
-            <a href="https://www.mylizon.com/ieltsclass.html" style="padding: 18px 35px; border: 2px solid #000; color: #000; text-decoration: none; font-weight: bold; margin: 10px; display: inline-block; border-radius: 12px; transition: 0.3s;">IELTS Free Class</a>
-            <a href="https://www.mylizon.com/pteclass.html" style="padding: 18px 35px; border: 2px solid #000; color: #000; text-decoration: none; font-weight: bold; margin: 10px; display: inline-block; border-radius: 12px; transition: 0.3s;">PTE Free Class</a>
-        </div>
-    </section>
+  <div class="price-card">
+    <h3>Basic - Advanced</h3>
+    <p>24 Class</p>
+    <div class="price">15000/-</div>
+    <button class="btn" onclick="openPopup()">Enroll Now</button>
+  </div>
 
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <img src="https://www.mylizon.com/assets/logo-dark.png" class="footer-logo" alt="LizOn Footer Logo">
-                <p style="line-height: 1.7;">আমরা শুধু স্কোর পেতে সাহায্য করি না, আপনার ক্যারিয়ার ও বিদেশে সেটেলমেন্টের জন্য পূর্ণাঙ্গ সাপোর্ট দিই। LizOn Education — আপনার স্বপ্নের সারথি।</p>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/lizoneducation"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="20" style="filter:invert(1)"></a>
-                    <a href="https://youtube.com/@lizoneducation"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="20" style="filter:invert(1)"></a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>কোর্সসমূহ</h4>
-                <ul>
-                    <li><a href="https://www.mylizon.com/ielts.html">IELTS Batch</a></li>
-                    <li><a href="#">1 on 1 Personal Care</a></li>
-                    <li><a href="https://www.mylizon.com/pte.html">PTE Program</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>রিসোর্স</h4>
-                <ul>
-                    <li><a href="https://www.mylizon.com/ieltsclass.html">IELTS Free Class</a></li>
-                    <li><a href="https://www.mylizon.com/pteclass.html">PTE Free Class</a></li>
-                    <li><a href="https://www.facebook.com/share/g/1BDABxtjvR/">FB Community</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>যোগাযোগ</h4>
-                <ul>
-                    <li>📞 01611-611139</li>
-                    <li>💬 <a href="https://wa.me/8801611611139">WhatsApp</a></li>
-                    <li>📍 Basabo, Dhaka 1214</li>
-                    <li>🌍 <a href="https://www.mylizon.com/studyabroad.html">Study Abroad Support</a></li>
-                </ul>
-            </div>
-        </div>
-        <div style="border-top: 1px solid #111; margin-top: 60px; padding-top: 30px; text-align: center; font-size: 0.85rem; opacity: 0.6;">
-            © MyLizOn.com | LizOn Education — সকল অধিকার সংরক্ষিত <br>
-            51, Budhha Mandir Basabo, Dhaka 1214
-        </div>
-    </footer>
+  <p><b>Weekly 3 Class (Flexible)</b> — apnar time onujayi kom beshi nite parben</p>
 
-    <div class="modal-overlay" id="modal">
-        <div class="modal">
-            <h2 style="margin-bottom: 10px;">ভর্তি কনফার্ম করুন</h2>
-            <p style="opacity: 0.7; margin-bottom: 25px;">কিভাবে শুরু করতে চান?</p>
-            <a href="https://www.mylizon.com/pay.html" class="modal-btn btn-pay">সরাসরি পেমেন্ট করুন</a>
-            <a href="https://wa.me/8801611611139" class="modal-btn btn-wa">হোয়াটসঅ্যাপে কথা বলুন</a>
-            <button onclick="closeModal()" style="background:none; border:none; color:#999; cursor:pointer; margin-top:15px; font-weight:bold;">বন্ধ করুন</button>
-        </div>
-    </div>
+</div>
 
-    <script>
-        const reviews = [
-            {name: "আরিফ হোসেন", pain: "গ্রুপ ক্লাসে প্রশ্ন করতে লজ্জা পেতাম", text: "এখানে একা পড়ায় সব কনফিউশন ক্লিয়ার হয়েছে। ব্যান্ড ৭.৫ পেয়েছি!"},
-            {name: "তানজিলা আক্তার", pain: "স্পিকিং-এ জড়তা কাটত না", text: "টিচার শুধু আমার ভুলগুলো ধরিয়ে দিয়েছেন, আজ আমি লন্ডনে পড়াশোনা করছি।"},
-            {name: "রাকিব হাসান", pain: "জব করার পর সময় মেলাতে পারতাম না", text: "আমার সুবিধা মতো রাত ১০টায় ক্লাস নিয়েছি। ১৫ দিনে PTE ৬২ আসলো।"},
-            {name: "সাদিয়া ইসলাম", pain: "রাইটিং এ বারবার ৫.৫ এ আটকে থাকতাম", text: "পার্সোনাল কেয়ারে ১ মাস পড়ার পর রাইটিং এ ৭ আসলো। অভাবনীয়!"},
-            {name: "জাহিদুল হক", pain: "অন্য কোচিং এ সবাই একসাথে চিল্লাইত", text: "লিজন এর ১ অন ১ সিস্টেম একদম সাইলেন্ট আর ইফেক্টিভ।"},
-            {name: "মারুফ আহমেদ", pain: "রিডিং এর টাইম ম্যানেজমেন্ট পারতাম না", text: "একদম হাতে কলমে টেকনিকগুলো শিখিয়েছে। কোচিং না, এটা মেন্টরশিপ।"},
-            {name: "নিশাত তাসনিম", pain: "PTE এর সফটওয়্যার বুঝতাম না", text: "টিচার স্ক্রিন শেয়ার করে সব ডিটেইল দেখিয়ে দিয়েছেন। থ্যাংকস লিজন।"},
-            {name: "কামরুল হাসান", pain: "বেসিক খুব দুর্বল ছিল", text: "২৪ ক্লাসের প্যাকেজটা আমার লাইফ সেভ করেছে। এখন কনফিডেন্ট।"},
-            {name: "ফারহানা রহমান", pain: "ভুল করতে ভয় পেতাম", text: "টিচার খুব ফ্রেন্ডলি। ভুল করলে বকা না দিয়ে বার বার বুঝিয়ে দেন।"},
-            {name: "রাফসান জানি", pain: "আইল্টস মানেই ভয় লাগত", text: "স্ট্রাকচারড সিস্টেম এর কারণে এখন আইল্টস সহজ মনে হয়।"},
-            {name: "জুই আক্তার", pain: "স্পিকিং পার্টনার পাচ্ছিলাম না", text: "টিচার নিজেই আমার সাথে ডেইলি প্র্যাকটিস করেছেন।"},
-            {name: "শিমুল মজুমদার", pain: "রিডিং এ মাথা ঘুরতো", text: "স্কিমিং আর স্ক্যানিং এর ম্যাজিক শিখলাম ১ অন ১ ক্লাসে।"},
-            {name: "তানজিম আহমেদ", pain: "খুব কম সময় ছিল হাতে", text: "৭ দিনের ক্রাশ কোর্স করে স্কোর তুললাম। ট্রাস্ট মি, এটা সেরা।"},
-            {name: "রুমানা পারভিন", pain: "লিসেনিং এ বানান ভুল হতো", text: "টিচার স্পেশাল স্পেলিং শিট দিয়ে প্র্যাকটিস করিয়েছেন।"},
-            {name: "মেহেদী হাসান", pain: "অফলাইন কোচিং এ যাওয়ার সময় ছিল না", text: "ঘরে বসে টিচারের সাথে লাইভ ক্লাস, এর চেয়ে ভালো কি হতে পারে?"},
-            {name: "তাসফিয়া নওরিন", pain: "বারবার রিটেক দিচ্ছিলাম", text: "লিজন এর টিচার বললেন কোথায় ভুল হচ্ছে। এবার স্কোর চলে আসলো।"},
-            {name: "আসিফ ইকবাল", pain: "গ্রামার নিয়ে টেনশন ছিল", text: "বেসিক থেকে এডভান্সড কোর্সটা করে সব কনফিউশন শেষ।"},
-            {name: "পপি আক্তার", pain: "স্বপ্ন ছিল অস্ট্রেলিয়া যাবো", text: "পিটিই তে ৭৯ স্কোর দিয়ে লিজন আমার স্বপ্ন সত্যি করলো।"},
-            {name: "রিয়াদ মাহমুদ", pain: "ভোকাবুলারি মনে থাকতো না", text: "টিচার কনটেক্সট দিয়ে শেখাতেন, এখন আর ভুলি না।"},
-            {name: "মৌমিতা দাস", pain: "কুইক ফিডব্যাক দরকার ছিল", text: "হোমওয়ার্ক পাঠানোর সাথে সাথেই চেক করে ফিডব্যাক পেতাম।"},
-            {name: "ইফতিখার আহমেদ", pain: "ব্যান্ড ৬ এ আটকে ছিলাম", text: "টিচারের পার্সোনাল গাইডেন্সে ব্যান্ড ৭.৫ আসলো এবার।"},
-            {name: "শারমিন সুলতানা", pain: "কিউ কার্ডে কথা খুঁজে পেতাম না", text: "আইডিয়া জেনারেশন টেকনিকগুলো দারুণ কাজে লেগেছে।"},
-            {name: "ফাহিম মুনতাসির", pain: "রাইটিং টাস্ক ২ খুব কঠিন লাগত", text: "স্ট্রাকচার মুখস্থ না করে লজিক দিয়ে লেখা শিখলাম।"},
-            {name: "নাজমুল করিম", pain: "মক টেস্টে স্কোর আসত না", text: "১ অন ১ এ মক টেস্টের এনালাইসিস করে অনেক ইমপ্রুভ হয়েছে।"},
-            {name: "সাবিনা ইয়াসমিন", pain: "ইংলিশ ব্যাকগ্রাউন্ড ছিল না", text: "সহজ ভাষায় টিচার বুঝিয়ে দিতেন সব। আজ আমি ইউকে তে।"},
-            {name: "তামিম আনসারি", pain: "ল্যাপটপ ছিল না শুরুতে", text: "টিচার মোবাইলেও অনেক হেল্প করেছেন রিসোর্স দিয়ে।"},
-            {name: "আদিবা হক", pain: "পড়ালেখা অনেকদিন গ্যাপ ছিল", text: "ধৈর্য ধরে টিচার আমাকে আবার ট্র্যাকে ফিরিয়ে এনেছেন।"},
-            {name: "সায়েম রহমান", pain: "পিটিই রিডিং ফিল ইন দ্য ব্ল্যাঙ্কস পারতাম না", text: "কোলোকেশন আর গ্রামার রুলস দিয়ে এখন সব ইজি।"},
-            {name: "নাসরিন সুলতানা", pain: "বাসার চাপে পড়াশোনা হতো না", text: "টিচার আমাকে মোটিভেট করতেন আর রেগুলার চেক করতেন।"},
-            {name: "জাহিদ হাসান", pain: "জব পাওয়ার জন্য স্কোর দরকার ছিল", text: "বিদেশের জবের জন্যও টিপস দিয়েছেন টিচার। আই এম গ্রেটফুল।"}
-        ];
+<!-- REVIEWS -->
+<div class="review-section">
+<h2>Students ki bolche?</h2>
 
-        const scroller = document.getElementById('scroller');
-        reviews.forEach(r => {
-            const div = document.createElement('div');
-            div.className = 'review-box';
-            div.innerHTML = `<h4>${r.name}</h4><div class="pain-point">"${r.pain}"</div><p class="review-text">${r.text}</p>`;
-            scroller.appendChild(div);
-        });
+<div class="review-container">
 
-        // Infinite Speedy Auto Scroll
-        let scrollAmount = 0;
-        let speed = 1.8; // High speed
-        let isPaused = false;
+<!-- 30 reviews -->
+<div class="review-card"><p>Batch e bujhte partam na... ekhane sir amar weakness dhore dhore fix korse</p><div class="review-name">Rahim Hasan</div></div>
 
-        function step() {
-            if (!isPaused) {
-                scrollAmount += speed;
-                if (scrollAmount >= scroller.scrollWidth / 2) {
-                    // This logic would need cloned elements for true infinite, 
-                    // for now simple reset or loop:
-                    if (scrollAmount >= scroller.scrollWidth - scroller.clientWidth) scrollAmount = 0;
-                }
-                scroller.scrollLeft = scrollAmount;
-            }
-            requestAnimationFrame(step);
-        }
+<div class="review-card"><p>Speaking e confidence zero chilo... ekhon easily bolte pari</p><div class="review-name">Nusrat Jahan</div></div>
 
-        // Clone reviews for infinite feel
-        const clone = scroller.innerHTML;
-        scroller.innerHTML += clone;
+<div class="review-card"><p>Amar grammar e problem chilo... ekhon clear</p><div class="review-name">Shakib Ahmed</div></div>
 
-        requestAnimationFrame(step);
+<div class="review-card"><p>Job er jonno class miss hoito... ora adjust kore dise</p><div class="review-name">Fahim Khan</div></div>
 
-        scroller.addEventListener('mouseenter', () => isPaused = true);
-        scroller.addEventListener('mouseleave', () => isPaused = false);
+<div class="review-card"><p>Onek comfortable lagse, kono hesitation chilo na</p><div class="review-name">Tania Akter</div></div>
 
-        function manualScroll(amt) {
-            isPaused = true;
-            scroller.scrollBy({ left: amt, behavior: 'smooth' });
-            setTimeout(() => isPaused = false, 2000);
-        }
+<div class="review-card"><p>Sir amar exact problem identify korse</p><div class="review-name">Imran Hossain</div></div>
 
-        function openModal() { document.getElementById('modal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
-    </script>
+<div class="review-card"><p>Batch theke beshi benefit paisi ekhane</p><div class="review-name">Riya Chowdhury</div></div>
+
+<div class="review-card"><p>Reading speed onek improve hoise</p><div class="review-name">Arif Rahman</div></div>
+
+<div class="review-card"><p>Writing e feedback ta best chilo</p><div class="review-name">Mehedi Hasan</div></div>
+
+<div class="review-card"><p>Confidence build hoyeche</p><div class="review-name">Sadia Noor</div></div>
+
+<div class="review-card"><p>Sir friendly chilen, jeta amar jonno important</p><div class="review-name">Jahidul Islam</div></div>
+
+<div class="review-card"><p>Every class customized chilo amar jonno</p><div class="review-name">Rifat Karim</div></div>
+
+<div class="review-card"><p>Listening improve hoise drastically</p><div class="review-name">Sumaiya Rahman</div></div>
+
+<div class="review-card"><p>Time manage korte perechi easily</p><div class="review-name">Aminul Islam</div></div>
+
+<div class="review-card"><p>Batch e lost feel kortam, ekhane na</p><div class="review-name">Tanvir Ahmed</div></div>
+
+<div class="review-card"><p>Overall band 7 peyechi</p><div class="review-name">Fariha Islam</div></div>
+
+<div class="review-card"><p>Daily improvement track korto</p><div class="review-name">Rakib Hasan</div></div>
+
+<div class="review-card"><p>Weakness clear hoyeche</p><div class="review-name">Nabil Hossain</div></div>
+
+<div class="review-card"><p>Exam fear chole gese</p><div class="review-name">Rumana Akter</div></div>
+
+<div class="review-card"><p>Onek helpful chilo</p><div class="review-name">Mahin Ahmed</div></div>
+
+<div class="review-card"><p>Sir amar pace e poraise</p><div class="review-name">Rashed Khan</div></div>
+
+<div class="review-card"><p>Score increase hoise</p><div class="review-name">Sajid Rahman</div></div>
+
+<div class="review-card"><p>Best decision chilo</p><div class="review-name">Mim Akter</div></div>
+
+<div class="review-card"><p>Clear guideline paisi</p><div class="review-name">Sabbir Hossain</div></div>
+
+<div class="review-card"><p>Every module e improve hoise</p><div class="review-name">Jannat Ara</div></div>
+
+<div class="review-card"><p>Very supportive chilo</p><div class="review-name">Tariq Islam</div></div>
+
+<div class="review-card"><p>Comfort zone e porte perechi</p><div class="review-name">Lubna Noor</div></div>
+
+<div class="review-card"><p>Sir awesome chilen</p><div class="review-name">Nayeem Hasan</div></div>
+
+<div class="review-card"><p>Confidence boost hoise</p><div class="review-name">Afia Rahman</div></div>
+
+<div class="review-card"><p>Finally desired score peyechi</p><div class="review-name">Kawsar Ahmed</div></div>
+
+</div>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+<h2>Why 1 on 1?</h2>
+<ul>
+<li>আপনার প্রবলেম অনুযায়ী ক্লাস</li>
+<li>IELTS 8+ & PTE 82+ Instructor</li>
+<li>91% Success Rate</li>
+<li>Flexible Schedule</li>
+<li>Direct Feedback & Correction</li>
+</ul>
+</div>
+
+<!-- FREE RESOURCES -->
+<div class="features">
+<h2>Free Explore</h2>
+<p><a href="https://www.mylizon.com/ieltsclass.html">IELTS Free Resources</a></p>
+<p><a href="https://www.mylizon.com/pteclass.html">PTE Free Resources</a></p>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <h3>Choose Option</h3>
+  <button class="pay" onclick="window.location.href='https://www.mylizon.com/pay.html'">Pay</button>
+  <button class="chat" onclick="window.location.href='https://wa.me/8801611611139'">Chat</button>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Need guidance? Chat on WhatsApp</p>
+  <p>Follow us: Facebook | YouTube</p>
+</div>
+
+<script>
+function openPopup(){
+  document.getElementById("popup").style.display = "block";
+}
+</script>
+
 </body>
 </html>

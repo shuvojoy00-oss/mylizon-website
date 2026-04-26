@@ -205,6 +205,28 @@
             .footer-grid { grid-template-columns: 1fr; gap: 40px; }
         }
     </style>
+
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '908763892197452');
+fbq('track', 'PageView');
+</script>
+
+<noscript>
+  <img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=908763892197452&ev=PageView&noscript=1"/>
+</noscript>
+    
 </head>
 <body>
 
@@ -216,7 +238,9 @@
                 <span>Designed for Desired Score</span>
             </div>
         </a>
-        <a href="https://wa.me/8801611611139" class="chat-btn">
+        <a href="https://wa.me/8801611611139"
+   class="chat-btn"
+   onclick="trackEvent('Lead')">
             <span>Chat</span>
             <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="18" style="filter:invert(1)">
         </a>
@@ -242,19 +266,22 @@
                 <h3>Crash Course</h3>
                 <div class="price-tag">৳ 7,000</div>
                 <ul><li>১০টি ক্লাস</li><li>শর্ট হ্যাকস</li><li>মিস্টেক এনালাইসিস</li></ul>
-                <button class="enroll-btn" onclick="openModal()">Enroll Now</button>
+                <button class="enroll-btn"
+        onclick="trackEvent('InitiateCheckout'); openModal()">Enroll Now</button>
             </div>
             <div class="card" style="border-color: var(--accent-gold); transform: scale(1.05);">
                 <h3>Full Course</h3>
                 <div class="price-tag">৳ 10,000</div>
                 <ul><li>১৫টি ক্লাস</li><li>উইকলি ৩টি ক্লাস</li><li>All modules covered</li></ul>
-                <button class="enroll-btn" onclick="openModal()">Enroll Now</button>
+                <button class="enroll-btn"
+        onclick="trackEvent('InitiateCheckout'); openModal()">Enroll Now</button>
             </div>
             <div class="card">
                 <h3>Basic - Advanced</h3>
                 <div class="price-tag">৳ 15,000</div>
                 <ul><li>২৪টি ক্লাস</li><li>বেসিক থেকে এডভান্স</li><li>Access to Practice Server</li></ul>
-                <button class="enroll-btn" onclick="openModal()">Enroll Now</button>
+                <button class="enroll-btn"
+        onclick="trackEvent('InitiateCheckout'); openModal()">Enroll Now</button>
             </div>
         </div>
     </section>
@@ -285,15 +312,15 @@
             <div class="footer-col">
                 <h4>কোর্সসমূহ</h4>
                 <ul>
-                    <li><a href="https://www.mylizon.com/ielts.html">IELTS Batch</a></li>
-                    <li><a href="https://www.mylizon.com/pte.html">PTE Program</a></li>
+                    <li><a href="https://www.mylizon.com/ielts.html" onclick="trackEvent('ViewContent')">IELTS Batch</a></li>
+                    <li><a href="https://www.mylizon.com/pte.html" onclick="trackEvent('ViewContent')">PTE Program</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>রিসোর্স</h4>
                 <ul>
-                    <li><a href="https://www.mylizon.com/ieltsclass.html">IELTS Free Class</a></li>
-                    <li><a href="https://www.mylizon.com/pteclass.html">PTE Free Class</a></li>
+                    <li><a href="https://www.mylizon.com/ieltsclass.html" onclick="trackEvent('ViewContent')">IELTS Free Class</a></li>
+                    <li><a href="https://www.mylizon.com/pteclass.html" onclick="trackEvent('ViewContent')">PTE Free Class</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -309,8 +336,12 @@
     <div class="modal-overlay" id="modal">
         <div class="modal">
             <h2>ভর্তি কনফার্ম করুন</h2>
-            <a href="https://www.mylizon.com/pay.html" class="modal-btn btn-pay">সরাসরি পেমেন্ট করুন</a>
-            <a href="https://wa.me/8801611611139" class="modal-btn btn-wa">হোয়াটসঅ্যাপে কথা বলুন</a>
+            <a href="https://www.mylizon.com/pay.html"
+   class="modal-btn btn-pay"
+   onclick="trackEvent('InitiateCheckout')">সরাসরি পেমেন্ট করুন</a>
+            <a href="https://wa.me/8801611611139"
+   class="modal-btn btn-wa"
+   onclick="trackEvent('Lead')">হোয়াটসঅ্যাপে কথা বলুন</a>
             <button onclick="closeModal()" style="border:none; background:none; cursor:pointer; color:#999; margin-top:10px;">বন্ধ করুন</button>
         </div>
     </div>
@@ -427,6 +458,12 @@
 
         function openModal() { document.getElementById('modal').style.display = 'flex'; }
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+        function trackEvent(name){
+  if (typeof fbq !== 'undefined'){
+    fbq('track', name);
+  }
+}
     </script>
 </body>
 </html>

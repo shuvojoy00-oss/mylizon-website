@@ -688,6 +688,36 @@
     /* Small helper */
     .sep{height:10px}
   </style>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){
+if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '908763892197452');
+fbq('track', 'PageView');
+
+function trackEvent(name){
+  if (typeof fbq !== 'undefined'){
+    fbq('track', name);
+  }
+}
+</script>
+
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=908763892197452&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+  
 </head>
 
 <body>
@@ -1589,8 +1619,12 @@
     "waLesac","waSeo","waReviews"
   ].forEach(id => {
     const el = document.getElementById(id);
-    if(el) el.href = WA_LINK;
+   if(el){
+  el.href = WA_LINK;
+  el.addEventListener("click", () => {
+    trackEvent('Lead');
   });
+}
 
   // Wire map buttons
   ["mapQuick","mapFooter"].forEach(id => {
@@ -1615,7 +1649,12 @@
     });
     panes.forEach(p => p.classList.toggle("active", p.id === target));
   }
-  btns.forEach(b => b.addEventListener("click", () => activate(b.dataset.target)));
+ btns.forEach(b => {
+  b.addEventListener("click", () => {
+    trackEvent('ViewContent');
+    activate(b.dataset.target);
+  });
+});
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -1629,6 +1668,7 @@
   const topVideoWrap = document.getElementById("topVideoWrap");
   const YT_ID = "-ZE8aowoiMc";
   function loadTopVideo(){
+      trackEvent('ViewContent');
     if(!topVideoWrap) return;
     topVideoWrap.innerHTML = `
       <div style="position:relative; padding-top:56.25%; background:#000;">
@@ -1996,7 +2036,12 @@
       modal.setAttribute("aria-hidden","true");
     }
 
-    openButtons.forEach(b => b.addEventListener("click", openModal));
+   openButtons.forEach(b => {
+  b.addEventListener("click", () => {
+    trackEvent('InitiateCheckout');
+    openModal();
+  });
+});
     btnClose.addEventListener("click", closeModal);
     btnX.addEventListener("click", closeModal);
 
@@ -2254,6 +2299,7 @@
     }
 
     function renderResult(){
+       trackEvent('CompleteRegistration');
       titleEl.textContent = "Your Study Direction";
       stepEl.textContent = "Completed";
 

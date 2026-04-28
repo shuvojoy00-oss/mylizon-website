@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LizOn Education - IELTS Speaking Simulator</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -45,7 +42,6 @@
 </head>
 <body class="bg-slate-50 font-sans text-gray-900 selection:bg-red-200 min-h-screen flex flex-col">
 
-    <!-- Global Header -->
     <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-50 print-hidden shadow-sm">
         <div class="flex items-center gap-3 cursor-pointer" onclick="setAppState('home')">
             <div class="bg-[#d82129] text-white font-black text-xl px-2 py-1 tracking-tighter">IELTS</div>
@@ -56,7 +52,6 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
     <main id="app-content" class="p-4 md:p-8 flex-1"></main>
 
     <script>
@@ -97,13 +92,17 @@
             testSequence: [],
             currentStepIndex: 0,
             transcript: [],
-            currentInput: '',
+            
+            // Text input state
+            currentInput: '', // Source of truth for the text box
+            baseInputText: '', // Snapshot of text before mic turns on
             isRecording: false,
             evaluationResult: null
         };
 
         // --- Speech Services ---
         let recognition = null;
+        let speechFinal = ''; // Holds finalized sentences during an active recording session
         const synthesis = window.speechSynthesis;
 
         function initSpeechRecognition() {
@@ -111,33 +110,29 @@
             if (SpeechRecognition) {
                 recognition = new SpeechRecognition();
                 recognition.continuous = true;
-                recognition.interimResults = true; // Still use interim for real-time feedback
+                recognition.interimResults = true; 
                 recognition.lang = 'en-GB';
 
                 recognition.onresult = (event) => {
-                    let interimTranscript = '';
-                    let finalTranscript = '';
+                    let speechInterim = '';
 
                     for (let i = event.resultIndex; i < event.results.length; ++i) {
                         if (event.results[i].isFinal) {
-                            finalTranscript += event.results[i][0].transcript;
+                            speechFinal += event.results[i][0].transcript;
                         } else {
-                            interimTranscript += event.results[i][0].transcript;
+                            speechInterim += event.results[i][0].transcript;
                         }
                     }
 
-                    // Only append finalized sentences to our true state to prevent duplication loops
-                    if (finalTranscript) {
-                        // Ensure there is a space before adding new text if it doesn't exist
-                        const space = state.currentInput.length > 0 && !state.currentInput.endsWith(' ') ? ' ' : '';
-                        state.currentInput = state.currentInput + space + finalTranscript.trim() + ' ';
-                    }
-
-                    // Update UI with finalized text + current interim guess
+                    // Safely combine: What was typed before + finalized speech + current guess
+                    const combinedText = (state.baseInputText + ' ' + speechFinal + speechInterim).trim();
+                    
+                    // Update state and UI without triggering feedback loops
+                    state.currentInput = combinedText;
+                    
                     const textarea = document.getElementById('answer-input');
                     if (textarea) {
-                        const space = state.currentInput.length > 0 && !state.currentInput.endsWith(' ') && interimTranscript.length > 0 ? ' ' : '';
-                        textarea.value = state.currentInput + space + interimTranscript;
+                        textarea.value = combinedText;
                         textarea.scrollTop = textarea.scrollHeight;
                     }
                     
@@ -146,14 +141,27 @@
 
                 recognition.onerror = (event) => {
                     console.error("Speech recognition error", event.error);
-                    state.isRecording = false;
-                    render();
+                    stopRecordingSafely();
                 };
 
                 recognition.onend = () => {
-                    if (state.isRecording) recognition.start(); 
+                    if (state.isRecording) {
+                        try { recognition.start(); } catch(e) {}
+                    } 
                 };
             }
+        }
+
+        function stopRecordingSafely() {
+            if (recognition && state.isRecording) {
+                recognition.stop();
+                state.isRecording = false;
+                
+                // Commit whatever is in the textarea as the final source of truth
+                const textarea = document.getElementById('answer-input');
+                if (textarea) state.currentInput = textarea.value;
+            }
+            render();
         }
 
         function toggleRecording() {
@@ -163,17 +171,23 @@
             }
             
             if (state.isRecording) {
-                recognition.stop();
-                state.isRecording = false;
+                stopRecordingSafely();
             } else {
                 try {
+                    // Take snapshot of text before recording starts to prevent duplication loops
+                    const textarea = document.getElementById('answer-input');
+                    state.baseInputText = textarea ? textarea.value : state.currentInput;
+                    
+                    // Reset session speech memories
+                    speechFinal = ''; 
+                    
                     recognition.start();
                     state.isRecording = true;
+                    render();
                 } catch (e) {
                     console.error(e);
                 }
             }
-            render();
         }
 
         function speakExaminerText(text) {
@@ -182,12 +196,9 @@
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-GB';
                 
-                // Force synthesis to wait until voices are loaded if needed
                 let voices = synthesis.getVoices();
                 if(voices.length === 0) {
-                     window.speechSynthesis.onvoiceschanged = () => {
-                         speakWithVoice(utterance);
-                     };
+                     window.speechSynthesis.onvoiceschanged = () => speakWithVoice(utterance);
                 } else {
                      speakWithVoice(utterance);
                 }
@@ -201,12 +212,10 @@
             synthesis.speak(utterance);
         }
 
-
         // --- Core Logic ---
         function setAppState(newState) {
             state.appState = newState;
             
-            // Toggle header indicator
             const indicator = document.getElementById('session-active-indicator');
             if (newState !== 'home' && newState !== 'results') {
                 indicator.classList.remove('hidden');
@@ -218,8 +227,7 @@
             
             if(newState === 'home') {
                 synthesis.cancel();
-                if(recognition && state.isRecording) recognition.stop();
-                state.isRecording = false;
+                stopRecordingSafely();
             }
             
             render();
@@ -274,7 +282,12 @@
             }
         }
 
-        function handleInputChange(value) {
+        function handleManualInputChange(value) {
+            // If user types manually while recording, update the base string to prevent loss of typed data
+            if(state.isRecording) {
+                // To keep it simple: stop recording if they start typing manually
+                stopRecordingSafely(); 
+            }
             state.currentInput = value;
             updateSubmitButtonState();
         }
@@ -309,20 +322,26 @@
         function submitAnswer() {
             const currentStep = state.testSequence[state.currentStepIndex];
             
-            // Ensure we grab what's in the textarea to capture any interim text or manual typing
+            // Stop recording & finalize text before submitting
+            if (state.isRecording) {
+                stopRecordingSafely();
+            }
+
             const textarea = document.getElementById('answer-input');
             if (textarea) state.currentInput = textarea.value;
 
             if (!state.currentInput.trim() && currentStep.type !== 'instruction') return;
             
-            if (state.isRecording) toggleRecording();
             synthesis.cancel();
 
             if (currentStep.type === 'question' || currentStep.type === 'cuecard') {
                 state.transcript.push({ speaker: 'Student', text: state.currentInput.trim(), part: state.currentPart });
             }
             
+            // Clear inputs for next step
             state.currentInput = '';
+            state.baseInputText = '';
+            speechFinal = '';
 
             const nextIndex = state.currentStepIndex + 1;
             if (nextIndex < state.testSequence.length) {
@@ -565,7 +584,7 @@
                                 class="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all text-gray-800"
                                 rows="4"
                                 placeholder="Type your answer here, or click the microphone to speak..."
-                                oninput="handleInputChange(this.value)"
+                                oninput="handleManualInputChange(this.value)"
                             >${state.currentInput}</textarea>
                             <button 
                                 onclick="toggleRecording()"
@@ -589,7 +608,6 @@
 
             return `
                 <div class="max-w-3xl mx-auto w-full flex flex-col h-[85vh]">
-                    <!-- Header Status -->
                     <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-200 shrink-0">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-[#d82129] font-bold">
@@ -603,12 +621,10 @@
                         <button onclick="setAppState('home')" class="text-gray-400 hover:text-gray-600">Cancel</button>
                     </div>
 
-                    <!-- Interaction Area -->
                     <div id="chat-scroll-area" class="flex-1 overflow-y-auto space-y-6 pb-6 p-2">
                         ${transcriptHTML}
                     </div>
 
-                    <!-- Input Area -->
                     <div class="bg-white p-4 rounded-2xl shadow-xl border border-gray-200 mt-4 shrink-0">
                         ${inputAreaHTML}
                     </div>
@@ -738,7 +754,6 @@
             return `
                 <div class="max-w-4xl mx-auto w-full bg-white shadow-2xl rounded-sm print-shadow-none print-w-full print-max-w-full">
                     
-                    <!-- Customized Header for Download -->
                     <div class="bg-[#d82129] text-white p-8 rounded-t-sm print-rounded-none relative overflow-hidden">
                         <div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
                             <i data-lucide="file-text" class="w-48 h-48 transform rotate-12"></i>
@@ -759,7 +774,6 @@
 
                     <div class="p-8 space-y-12 print-p-4 print-space-y-6">
                         
-                        <!-- Controls (Hidden on Print) -->
                         <div class="flex justify-between items-center border-b pb-6 print-hidden">
                             <button onclick="setAppState('home')" class="text-gray-600 hover:text-gray-900 flex items-center gap-2 font-medium">
                                 <i data-lucide="home" class="w-4 h-4"></i> Back to Home
@@ -769,7 +783,6 @@
                             </button>
                         </div>
 
-                        <!-- Criteria Scores -->
                         <section>
                             <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Detailed Scores</h3>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -777,7 +790,6 @@
                             </div>
                         </section>
 
-                        <!-- Feedback & Improvement Plan -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 print-block print-space-y-6">
                             <section class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
                                 <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
@@ -796,7 +808,6 @@
                             </section>
                         </div>
 
-                        <!-- Full Transcript with Corrections -->
                         <section class="print-break-inside-avoid pt-4">
                             <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Mistakes & Corrections</h3>
                             <p class="text-sm text-gray-500 mb-6">Review your transcript below. Your errors are crossed out in red, accompanied by improved sentences in green.</p>
@@ -805,7 +816,6 @@
                             </div>
                         </section>
 
-                        <!-- Interactive Band Descriptors Highlight -->
                         <section class="print-break-inside-avoid pt-8 border-t">
                             <h3 class="text-xl font-bold text-gray-800 mb-4">Target Areas based on Band Descriptors</h3>
                             <p class="text-sm text-gray-500 mb-4">The highlighted red cells indicate areas where you missed the criteria for a higher band, based on your current score.</p>
@@ -842,6 +852,3 @@
     </script>
 </body>
 </html>
-
-
-```

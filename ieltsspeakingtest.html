@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,12 +111,13 @@
             if (SpeechRecognition) {
                 recognition = new SpeechRecognition();
                 recognition.continuous = true;
-                recognition.interimResults = true;
+                recognition.interimResults = true; // Still use interim for real-time feedback
                 recognition.lang = 'en-GB';
 
                 recognition.onresult = (event) => {
-                    let finalTranscript = '';
                     let interimTranscript = '';
+                    let finalTranscript = '';
+
                     for (let i = event.resultIndex; i < event.results.length; ++i) {
                         if (event.results[i].isFinal) {
                             finalTranscript += event.results[i][0].transcript;
@@ -123,10 +125,23 @@
                             interimTranscript += event.results[i][0].transcript;
                         }
                     }
+
+                    // Only append finalized sentences to our true state to prevent duplication loops
                     if (finalTranscript) {
-                        state.currentInput = (state.currentInput + ' ' + finalTranscript).trim();
-                        updateInputUI();
+                        // Ensure there is a space before adding new text if it doesn't exist
+                        const space = state.currentInput.length > 0 && !state.currentInput.endsWith(' ') ? ' ' : '';
+                        state.currentInput = state.currentInput + space + finalTranscript.trim() + ' ';
                     }
+
+                    // Update UI with finalized text + current interim guess
+                    const textarea = document.getElementById('answer-input');
+                    if (textarea) {
+                        const space = state.currentInput.length > 0 && !state.currentInput.endsWith(' ') && interimTranscript.length > 0 ? ' ' : '';
+                        textarea.value = state.currentInput + space + interimTranscript;
+                        textarea.scrollTop = textarea.scrollHeight;
+                    }
+                    
+                    updateSubmitButtonState();
                 };
 
                 recognition.onerror = (event) => {
@@ -275,8 +290,11 @@
         
         function updateSubmitButtonState() {
             const btn = document.getElementById('submit-answer-btn');
+            const textarea = document.getElementById('answer-input');
+            const val = textarea ? textarea.value : state.currentInput;
+            
             if(btn) {
-                if(!state.currentInput.trim() && !state.isRecording) {
+                if(!val.trim() && !state.isRecording) {
                     btn.disabled = true;
                     btn.classList.add('bg-gray-300');
                     btn.classList.remove('bg-[#d82129]');
@@ -290,6 +308,11 @@
 
         function submitAnswer() {
             const currentStep = state.testSequence[state.currentStepIndex];
+            
+            // Ensure we grab what's in the textarea to capture any interim text or manual typing
+            const textarea = document.getElementById('answer-input');
+            if (textarea) state.currentInput = textarea.value;
+
             if (!state.currentInput.trim() && currentStep.type !== 'instruction') return;
             
             if (state.isRecording) toggleRecording();
@@ -321,8 +344,11 @@
             const formattedTranscript = transcriptData.map(t => `${t.speaker} (Part ${t.part}): ${t.text || '[Listened]'} \n${t.cueCard ? `Cue Card Context: ${t.cueCard}\n` : ''}`).join('\n\n');
             
             const prompt = `
-                Act as an expert IELTS Examiner. Evaluate the following student transcript from an IELTS Speaking practice session.
-                Grade them strictly based on the official IELTS speaking band descriptors (0-9).
+                Act as a STRICT, ACCURATE, and HIGHLY CRITICAL IELTS Examiner. Evaluate the following student transcript from an IELTS Speaking practice session.
+                
+                CRITICAL INSTRUCTION: You MUST grade strictly based on the official IELTS speaking band descriptors. DO NOT inflate scores out of politeness. 
+                - If a student is repetitive, makes basic grammatical errors, uses unnatural phrasing, or struggles with coherence, their score MUST reflect a Band 4.0, 5.0, or 5.5. 
+                - Only award 6.0 or higher if they genuinely demonstrate the required flexibility, complexity, and grammatical control. Be harsh but fair.
                 
                 Transcript:
                 ${formattedTranscript}
@@ -331,24 +357,36 @@
                 Use this exact structure:
                 {
                     "scores": {
-                        "fluency": <number 0-9>,
-                        "lexical": <number 0-9>,
-                        "grammar": <number 0-9>,
-                        "pronunciation": <number 0-9>,
-                        "overall": <number 0-9>
+                        "fluency": <number 0-9 in 0.5 increments>,
+                        "lexical": <number 0-9 in 0.5 increments>,
+                        "grammar": <number 0-9 in 0.5 increments>,
+                        "pronunciation": <number 0-9 in 0.5 increments>,
+                        "overall": <number 0-9 in 0.5 increments>
                     },
-                    "feedback_summary": "Overall assessment paragraph...",
+                    "feedback_summary": "Strict, critical overall assessment paragraph explaining the scores...",
                     "improvement_plan": [
                         "Actionable point 1",
                         "Actionable point 2",
                         "Actionable point 3"
                     ],
                     "missed_descriptors": {
-                        "fluency": "Short description of what they missed from the band above their score.",
-                        "lexical": "Short description of what they missed from the band above their score.",
-                        "grammar": "Short description of what they missed from the band above their score.",
-                        "pronunciation": "Short description of what they missed from the band above their score."
-                    }
+                        "fluency": "What specifically kept them from the next higher band?",
+                        "lexical": "What specifically kept them from the next higher band?",
+                        "grammar": "What specifically kept them from the next higher band?",
+                        "pronunciation": "What specifically kept them from the next higher band?"
+                    },
+                    "transcript_review": [
+                        {
+                            "speaker": "Examiner",
+                            "text": "The examiner's question"
+                        },
+                        {
+                            "speaker": "Student",
+                            "original_text": "The student's exact original words",
+                            "corrected_text": "The natural, grammatically correct version of what they tried to say (Band 7+ level)",
+                            "mistakes_and_improvements": "Detailed explanation of mistakes made and why the corrected version is better."
+                        }
+                    ]
                 }
             `;
 
@@ -383,21 +421,33 @@
                 }
             } catch (error) {
                 console.error("Evaluation error:", error);
-                // Fallback dummy data if API fails or key is empty
+                // Fallback dummy data if API fails
                 return {
-                    scores: { fluency: 6.5, lexical: 6.0, grammar: 6.0, pronunciation: 7.0, overall: 6.5 },
-                    feedback_summary: "Good effort overall. You were able to maintain fluency well, but there were occasional hesitations when searching for more complex vocabulary. Grammar is generally well-controlled in simple sentences, but complex structures often contained errors.",
+                    scores: { fluency: 5.0, lexical: 5.5, grammar: 5.0, pronunciation: 6.0, overall: 5.5 },
+                    feedback_summary: "The candidate was able to keep going but relied heavily on repetition and slow speech. Vocabulary was sufficient for familiar topics but lacked flexibility. Basic grammatical forms were controlled, but attempts at complex structures contained frequent errors.",
                     improvement_plan: [
-                        "Practice using more complex sentence structures (e.g., relative clauses, conditionals).",
-                        "Expand your vocabulary on less familiar topics by reading wider materials.",
-                        "Work on minimizing filler words like 'um' and 'ah'."
+                        "Work on reducing repetition and hesitation when searching for basic vocabulary.",
+                        "Practice forming complex sentences correctly (e.g., conditionals, relative clauses) before using them in the test.",
+                        "Expand vocabulary beyond basic, familiar terms to avoid inappropriate word choices."
                     ],
                     missed_descriptors: {
-                        fluency: "Did not consistently produce long turns without noticeable effort.",
-                        lexical: "Lacked flexibility in discussing unfamiliar topics.",
-                        grammar: "Errors in complex structures occasionally impeded communication.",
-                        pronunciation: "Intonation and stress were not sustained throughout."
-                    }
+                        fluency: "Relied too heavily on repetition. Could not maintain coherence without hesitation.",
+                        lexical: "Lacked the vocabulary to discuss topics flexibly; frequent word choice errors.",
+                        grammar: "Errors in basic structures occurred; subordinate clauses were rare and often incorrect.",
+                        pronunciation: "Mispronunciations occasionally caused lack of clarity."
+                    },
+                    transcript_review: [
+                        {
+                            "speaker": "Examiner",
+                            "text": "What do you do in your free time?"
+                        },
+                        {
+                            "speaker": "Student",
+                            "original_text": "generally generally I watch TV game is my favourite",
+                            "corrected_text": "Generally, I enjoy playing video games; it's my favourite thing to do in my free time.",
+                            "mistakes_and_improvements": "Repetition of 'generally'. 'TV game' is incorrect phrasing; use 'video games'. The sentence structure 'watch TV game is my favourite' is grammatically broken. The corrected version uses a proper compound sentence."
+                        }
+                    ]
                 };
             }
         }
@@ -424,7 +474,7 @@
             if(state.appState === 'testing') {
                  const scrollArea = document.getElementById('chat-scroll-area');
                  if(scrollArea) scrollArea.scrollTop = scrollArea.scrollHeight;
-                 updateInputUI(); // Ensure button state is correct on render
+                 updateInputUI(); 
             }
         }
 
@@ -513,7 +563,7 @@
                             <textarea 
                                 id="answer-input"
                                 class="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all text-gray-800"
-                                rows="3"
+                                rows="4"
                                 placeholder="Type your answer here, or click the microphone to speak..."
                                 oninput="handleInputChange(this.value)"
                             >${state.currentInput}</textarea>
@@ -578,7 +628,7 @@
 
         function getResultsHTML() {
             if (!state.evaluationResult) return '';
-            const { scores, feedback_summary, improvement_plan, missed_descriptors } = state.evaluationResult;
+            const { scores, feedback_summary, improvement_plan, missed_descriptors, transcript_review } = state.evaluationResult;
 
             const getScoreColor = (score) => {
                 if (score >= 7) return 'text-green-600 bg-green-50 border-green-200';
@@ -652,27 +702,38 @@
                 tableRowsHTML += rowHtml;
             });
 
-            let fullTranscriptHTML = state.transcript.map((msg, idx) => {
-                if (msg.type === 'instruction') return ''; 
-                
-                let cueHtml = '';
-                if(msg.cueCard) {
-                    cueHtml = `<div class="mb-2 p-3 bg-yellow-50 border border-yellow-200 text-xs text-gray-700 font-mono rounded">[Cue Card Given: ${msg.cueCard.split('\n')[0]}]</div>`;
-                }
-
-                return `
-                    <div class="flex gap-4">
-                        <div class="font-bold w-24 flex-shrink-0 text-sm mt-1 ${msg.speaker === 'Examiner' ? 'text-gray-500' : 'text-blue-600'}">
-                            ${msg.speaker}:
-                        </div>
-                        <div class="text-gray-800 text-sm whitespace-pre-wrap flex-1">
-                            ${cueHtml}
-                            ${msg.text}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
+            // Generating marked up transcript
+            let fullTranscriptHTML = '';
+            if (transcript_review && transcript_review.length > 0) {
+                fullTranscriptHTML = transcript_review.map(item => {
+                    if (item.speaker === 'Examiner') {
+                        return `
+                            <div class="flex gap-4">
+                                <div class="font-bold w-24 flex-shrink-0 text-sm mt-3 text-gray-500 text-right">Examiner:</div>
+                                <div class="text-gray-800 text-sm whitespace-pre-wrap flex-1 bg-gray-100 p-3 rounded-lg">${item.text}</div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="flex gap-4">
+                                <div class="font-bold w-24 flex-shrink-0 text-sm mt-1 text-blue-600 text-right">You said:</div>
+                                <div class="flex-1 space-y-2 border-l-2 border-blue-200 pl-4 py-1">
+                                    <div class="text-red-500 text-sm whitespace-pre-wrap line-through opacity-80 decoration-red-400 decoration-2">${item.original_text}</div>
+                                    <div class="text-green-700 text-sm font-medium whitespace-pre-wrap bg-green-50 p-2 rounded inline-block">✓ ${item.corrected_text}</div>
+                                    ${item.mistakes_and_improvements ? `
+                                        <div class="text-xs text-gray-600 bg-white p-3 rounded border border-gray-200 shadow-sm mt-2">
+                                            <strong class="text-gray-800">Why this was changed:</strong><br/>
+                                            ${item.mistakes_and_improvements}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }).join('<div class="h-6"></div>');
+            } else {
+                fullTranscriptHTML = `<p class="text-gray-500 italic">Detailed corrections are unavailable for this session.</p>`;
+            }
 
             return `
                 <div class="max-w-4xl mx-auto w-full bg-white shadow-2xl rounded-sm print-shadow-none print-w-full print-max-w-full">
@@ -735,8 +796,17 @@
                             </section>
                         </div>
 
+                        <!-- Full Transcript with Corrections -->
+                        <section class="print-break-inside-avoid pt-4">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Mistakes & Corrections</h3>
+                            <p class="text-sm text-gray-500 mb-6">Review your transcript below. Your errors are crossed out in red, accompanied by improved sentences in green.</p>
+                            <div class="space-y-6">
+                                ${fullTranscriptHTML}
+                            </div>
+                        </section>
+
                         <!-- Interactive Band Descriptors Highlight -->
-                        <section class="print-break-inside-avoid">
+                        <section class="print-break-inside-avoid pt-8 border-t">
                             <h3 class="text-xl font-bold text-gray-800 mb-4">Target Areas based on Band Descriptors</h3>
                             <p class="text-sm text-gray-500 mb-4">The highlighted red cells indicate areas where you missed the criteria for a higher band, based on your current score.</p>
                             
@@ -758,14 +828,6 @@
                             </div>
                         </section>
 
-                        <!-- Full Transcript -->
-                        <section class="print-break-inside-avoid pt-8">
-                            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Full Test Transcript</h3>
-                            <div class="space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-100">
-                                ${fullTranscriptHTML}
-                            </div>
-                        </section>
-
                     </div>
                 </div>
             `;
@@ -780,3 +842,6 @@
     </script>
 </body>
 </html>
+
+
+```

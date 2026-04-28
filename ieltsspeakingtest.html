@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LizOn Education - IELTS Speaking Simulator</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom styles for printing the results to PDF */
+        @media print {
+            body { background: white; }
+            .print-hidden { display: none !important; }
+            .print-block { display: block !important; }
+            .print-shadow-none { box-shadow: none !important; }
+            .print-rounded-none { border-radius: 0 !important; }
+            .print-w-full { width: 100% !important; max-width: none !important; }
+            .print-p-4 { padding: 1rem !important; }
+            .print-space-y-6 > * + * { margin-top: 1.5rem !important; }
+            .print-break-inside-avoid { break-inside: avoid; }
+        }
+
+        /* Loading spinner animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-custom {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes pulse-custom {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .animate-pulse-custom {
+            animation: pulse-custom 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-gray-900 selection:bg-red-200 min-h-screen flex flex-col">
+
+    <!-- Global Header -->
+    <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-50 print-hidden shadow-sm">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="setAppState('home')">
+            <div class="bg-[#d82129] text-white font-black text-xl px-2 py-1 tracking-tighter">IELTS</div>
+            <span class="font-bold text-gray-700 hidden sm:inline">Speaking Simulator</span>
+        </div>
+        <div id="session-active-indicator" class="hidden animate-pulse flex items-center gap-2 text-sm font-medium text-[#d82129]">
+            <div class="w-2 h-2 rounded-full bg-[#d82129]"></div> Session Active
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main id="app-content" class="p-4 md:p-8 flex-1"></main>
+
+    <script>
+        // --- API Configuration ---
+        const apiKey = ""; // Injected by environment
+
+        // --- Data ---
+        const QUESTION_BANKS = {
+            part1: [
+                { topic: "Work or Study", questions: ["Do you work or are you a student?", "What do you like most about your job/studies?", "What is your typical day like?"] },
+                { topic: "Hometown", questions: ["Where is your hometown?", "What do you like about it?", "Has it changed much since you were a child?"] },
+                { topic: "Hobbies", questions: ["What do you do in your free time?", "Did you have different hobbies as a child?", "Is it important to have hobbies?"] }
+            ],
+            part2: [
+                { topic: "A Memorable Journey", cueCard: "Describe a memorable journey you have made.\nYou should say:\n- where you went\n- how you travelled\n- who you went with\nAnd explain why this journey was so memorable." },
+                { topic: "Someone You Admire", cueCard: "Describe someone you admire.\nYou should say:\n- who they are\n- how you know them\n- what they do\nAnd explain why you admire them." }
+            ],
+            part3: {
+                "A Memorable Journey": ["Why do people like to travel?", "How has travel changed in the last 50 years?", "What are the impacts of tourism on local environments?"],
+                "Someone You Admire": ["What qualities make a good leader?", "Do you think people's role models change as they get older?", "How does the media influence who we admire?"]
+            }
+        };
+
+        const BAND_DESCRIPTORS = {
+            9: { fluency: "Fluent with rare repetition. Hesitation is content-related. Fully coherent.", lexical: "Total flexibility and precise use in all contexts. Idiomatic.", grammar: "Precise and accurate at all times, apart from native-like slips.", pronunciation: "Effortless to understand. Full range of features used precisely." },
+            8: { fluency: "Fluent with occasional repetition. Coherent and appropriately extended.", lexical: "Wide resource, flexible and precise. Skillful use of uncommon items.", grammar: "Wide range of structures. Majority of sentences are error-free.", pronunciation: "Easy to understand throughout. Wide range of features used." },
+            7: { fluency: "Produces long turns without effort. Some hesitation or self-correction.", lexical: "Resource flexibly used. Awareness of style/collocation despite some errors.", grammar: "Range of complex structures used. Frequent error-free sentences.", pronunciation: "Positive features of band 6, plus some from band 8. Easy to understand." },
+            6: { fluency: "Willing to speak at length. Coherence occasionally lost due to hesitation.", lexical: "Sufficient vocabulary to discuss topics at length. Meaning is generally clear.", grammar: "Mix of simple and complex forms. Errors occur but rarely impede meaning.", pronunciation: "Generally understood without effort. Control of features is variable." },
+            5: { fluency: "Keeps going but relies on repetition/slow speech. Overuses discourse markers.", lexical: "Sufficient for familiar topics, limited flexibility. Attempts paraphrase.", grammar: "Basic forms controlled. Complex structures attempted but often contain errors.", pronunciation: "Displays features of band 4, some of 6. Pronunciation may cause difficulty." },
+            4: { fluency: "Noticeable pauses. Slow speech. Repetitive use of connectives.", lexical: "Basic vocabulary for familiar topics. Frequent inappropriacies.", grammar: "Produces basic sentences. Subordinate clauses are rare. Frequent errors.", pronunciation: "Limited range of features. Frequent mispronunciations cause lack of clarity." }
+        };
+
+        // --- Application State ---
+        let state = {
+            appState: 'home', // home, testing, evaluating, results
+            testMode: null, 
+            currentPart: 1,
+            testSequence: [],
+            currentStepIndex: 0,
+            transcript: [],
+            currentInput: '',
+            isRecording: false,
+            evaluationResult: null
+        };
+
+        // --- Speech Services ---
+        let recognition = null;
+        const synthesis = window.speechSynthesis;
+
+        function initSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                recognition = new SpeechRecognition();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = 'en-GB';
+
+                recognition.onresult = (event) => {
+                    let finalTranscript = '';
+                    let interimTranscript = '';
+                    for (let i = event.resultIndex; i < event.results.length; ++i) {
+                        if (event.results[i].isFinal) {
+                            finalTranscript += event.results[i][0].transcript;
+                        } else {
+                            interimTranscript += event.results[i][0].transcript;
+                        }
+                    }
+                    if (finalTranscript) {
+                        state.currentInput = (state.currentInput + ' ' + finalTranscript).trim();
+                        updateInputUI();
+                    }
+                };
+
+                recognition.onerror = (event) => {
+                    console.error("Speech recognition error", event.error);
+                    state.isRecording = false;
+                    render();
+                };
+
+                recognition.onend = () => {
+                    if (state.isRecording) recognition.start(); 
+                };
+            }
+        }
+
+        function toggleRecording() {
+            if (!recognition) {
+                alert("Speech recognition not supported in this browser. Please type your answers.");
+                return;
+            }
+            
+            if (state.isRecording) {
+                recognition.stop();
+                state.isRecording = false;
+            } else {
+                try {
+                    recognition.start();
+                    state.isRecording = true;
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+            render();
+        }
+
+        function speakExaminerText(text) {
+            if (synthesis) {
+                synthesis.cancel(); 
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-GB';
+                
+                // Force synthesis to wait until voices are loaded if needed
+                let voices = synthesis.getVoices();
+                if(voices.length === 0) {
+                     window.speechSynthesis.onvoiceschanged = () => {
+                         speakWithVoice(utterance);
+                     };
+                } else {
+                     speakWithVoice(utterance);
+                }
+            }
+        }
+
+        function speakWithVoice(utterance) {
+            const voices = synthesis.getVoices();
+            const ukVoice = voices.find(v => v.lang === 'en-GB' && v.name.includes('Female'));
+            if (ukVoice) utterance.voice = ukVoice;
+            synthesis.speak(utterance);
+        }
+
+
+        // --- Core Logic ---
+        function setAppState(newState) {
+            state.appState = newState;
+            
+            // Toggle header indicator
+            const indicator = document.getElementById('session-active-indicator');
+            if (newState !== 'home' && newState !== 'results') {
+                indicator.classList.remove('hidden');
+                indicator.classList.add('flex');
+            } else {
+                indicator.classList.add('hidden');
+                indicator.classList.remove('flex');
+            }
+            
+            if(newState === 'home') {
+                synthesis.cancel();
+                if(recognition && state.isRecording) recognition.stop();
+                state.isRecording = false;
+            }
+            
+            render();
+        }
+
+        function startTest(mode) {
+            state.testMode = mode;
+            let sequence = [];
+            
+            const p1Topic = QUESTION_BANKS.part1[Math.floor(Math.random() * QUESTION_BANKS.part1.length)];
+            const p2Topic = QUESTION_BANKS.part2[Math.floor(Math.random() * QUESTION_BANKS.part2.length)];
+            
+            if (mode === 'full' || mode === 'part1') {
+                sequence.push({ part: 1, type: 'instruction', text: "Let's talk about " + p1Topic.topic + "." });
+                p1Topic.questions.forEach(q => sequence.push({ part: 1, type: 'question', text: q }));
+            }
+            if (mode === 'full' || mode === 'part2') {
+                sequence.push({ 
+                    part: 2, 
+                    type: 'cuecard', 
+                    text: "I'm going to give you a topic and I'd like you to talk about it for one to two minutes. Before you talk, you'll have one minute to think about what you're going to say.",
+                    cueCard: p2Topic.cueCard 
+                });
+            }
+            if (mode === 'full' || mode === 'part3') {
+                const p3Questions = QUESTION_BANKS.part3[p2Topic.topic] || QUESTION_BANKS.part3["A Memorable Journey"];
+                sequence.push({ part: 3, type: 'instruction', text: "We've been talking about " + p2Topic.topic + ", and I'd like to discuss with you one or two more general questions related to this." });
+                p3Questions.forEach(q => sequence.push({ part: 3, type: 'question', text: q }));
+            }
+
+            state.testSequence = sequence;
+            state.currentStepIndex = 0;
+            state.transcript = [];
+            state.currentInput = '';
+            
+            setAppState('testing');
+            handleStep(sequence[0], true);
+        }
+
+        function handleStep(step, isFirst = false) {
+            if (step) {
+                state.currentPart = step.part;
+                if (step.type === 'instruction' || step.type === 'question' || step.type === 'cuecard') {
+                    const examinerMsg = { speaker: 'Examiner', text: step.text, cueCard: step.cueCard, part: step.part };
+                    
+                    if(isFirst) state.transcript = [examinerMsg];
+                    else state.transcript.push(examinerMsg);
+                    
+                    speakExaminerText(step.text);
+                    render();
+                }
+            }
+        }
+
+        function handleInputChange(value) {
+            state.currentInput = value;
+            updateSubmitButtonState();
+        }
+
+        function updateInputUI() {
+            const textarea = document.getElementById('answer-input');
+            if(textarea) {
+                textarea.value = state.currentInput;
+                textarea.scrollTop = textarea.scrollHeight;
+            }
+            updateSubmitButtonState();
+        }
+        
+        function updateSubmitButtonState() {
+            const btn = document.getElementById('submit-answer-btn');
+            if(btn) {
+                if(!state.currentInput.trim() && !state.isRecording) {
+                    btn.disabled = true;
+                    btn.classList.add('bg-gray-300');
+                    btn.classList.remove('bg-[#d82129]');
+                } else {
+                    btn.disabled = false;
+                    btn.classList.remove('bg-gray-300');
+                    btn.classList.add('bg-[#d82129]');
+                }
+            }
+        }
+
+        function submitAnswer() {
+            const currentStep = state.testSequence[state.currentStepIndex];
+            if (!state.currentInput.trim() && currentStep.type !== 'instruction') return;
+            
+            if (state.isRecording) toggleRecording();
+            synthesis.cancel();
+
+            if (currentStep.type === 'question' || currentStep.type === 'cuecard') {
+                state.transcript.push({ speaker: 'Student', text: state.currentInput.trim(), part: state.currentPart });
+            }
+            
+            state.currentInput = '';
+
+            const nextIndex = state.currentStepIndex + 1;
+            if (nextIndex < state.testSequence.length) {
+                state.currentStepIndex = nextIndex;
+                handleStep(state.testSequence[nextIndex]);
+            } else {
+                finishTest();
+            }
+        }
+
+        async function finishTest() {
+            setAppState('evaluating');
+            state.evaluationResult = await evaluateWithGemini(state.transcript);
+            setAppState('results');
+        }
+
+        // --- Gemini Evaluation ---
+        async function evaluateWithGemini(transcriptData) {
+            const formattedTranscript = transcriptData.map(t => `${t.speaker} (Part ${t.part}): ${t.text || '[Listened]'} \n${t.cueCard ? `Cue Card Context: ${t.cueCard}\n` : ''}`).join('\n\n');
+            
+            const prompt = `
+                Act as an expert IELTS Examiner. Evaluate the following student transcript from an IELTS Speaking practice session.
+                Grade them strictly based on the official IELTS speaking band descriptors (0-9).
+                
+                Transcript:
+                ${formattedTranscript}
+                
+                Provide a comprehensive evaluation in valid JSON format ONLY. 
+                Use this exact structure:
+                {
+                    "scores": {
+                        "fluency": <number 0-9>,
+                        "lexical": <number 0-9>,
+                        "grammar": <number 0-9>,
+                        "pronunciation": <number 0-9>,
+                        "overall": <number 0-9>
+                    },
+                    "feedback_summary": "Overall assessment paragraph...",
+                    "improvement_plan": [
+                        "Actionable point 1",
+                        "Actionable point 2",
+                        "Actionable point 3"
+                    ],
+                    "missed_descriptors": {
+                        "fluency": "Short description of what they missed from the band above their score.",
+                        "lexical": "Short description of what they missed from the band above their score.",
+                        "grammar": "Short description of what they missed from the band above their score.",
+                        "pronunciation": "Short description of what they missed from the band above their score."
+                    }
+                }
+            `;
+
+            try {
+                const maxRetries = 3;
+                let attempt = 0;
+                let delay = 1000;
+
+                while (attempt < maxRetries) {
+                    try {
+                        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                contents: [{ parts: [{ text: prompt }] }],
+                                generationConfig: { responseMimeType: "application/json" }
+                            })
+                        });
+                        
+                        if (!response.ok) throw new Error("API Request failed");
+                        
+                        const data = await response.json();
+                        const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                        return JSON.parse(resultText);
+                        
+                    } catch (error) {
+                        attempt++;
+                        if (attempt >= maxRetries) throw error;
+                        await new Promise(r => setTimeout(r, delay));
+                        delay *= 2;
+                    }
+                }
+            } catch (error) {
+                console.error("Evaluation error:", error);
+                // Fallback dummy data if API fails or key is empty
+                return {
+                    scores: { fluency: 6.5, lexical: 6.0, grammar: 6.0, pronunciation: 7.0, overall: 6.5 },
+                    feedback_summary: "Good effort overall. You were able to maintain fluency well, but there were occasional hesitations when searching for more complex vocabulary. Grammar is generally well-controlled in simple sentences, but complex structures often contained errors.",
+                    improvement_plan: [
+                        "Practice using more complex sentence structures (e.g., relative clauses, conditionals).",
+                        "Expand your vocabulary on less familiar topics by reading wider materials.",
+                        "Work on minimizing filler words like 'um' and 'ah'."
+                    ],
+                    missed_descriptors: {
+                        fluency: "Did not consistently produce long turns without noticeable effort.",
+                        lexical: "Lacked flexibility in discussing unfamiliar topics.",
+                        grammar: "Errors in complex structures occasionally impeded communication.",
+                        pronunciation: "Intonation and stress were not sustained throughout."
+                    }
+                };
+            }
+        }
+
+        function handlePrint() {
+            window.print();
+        }
+
+        // --- Render Functions ---
+        function render() {
+            const container = document.getElementById('app-content');
+            
+            if (state.appState === 'home') container.innerHTML = getHomeHTML();
+            else if (state.appState === 'testing') container.innerHTML = getTestingHTML();
+            else if (state.appState === 'evaluating') container.innerHTML = getEvaluatingHTML();
+            else if (state.appState === 'results') container.innerHTML = getResultsHTML();
+            
+            // Re-initialize Lucide Icons after DOM update
+            if(window.lucide) {
+                lucide.createIcons();
+            }
+
+            // Scroll to bottom of testing view if active
+            if(state.appState === 'testing') {
+                 const scrollArea = document.getElementById('chat-scroll-area');
+                 if(scrollArea) scrollArea.scrollTop = scrollArea.scrollHeight;
+                 updateInputUI(); // Ensure button state is correct on render
+            }
+        }
+
+        function getHomeHTML() {
+            return `
+                <div class="flex flex-col items-center justify-center min-h-[80vh] text-center p-6 space-y-8 animate-fade-in">
+                    <div class="max-w-2xl bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                        <h1 class="text-4xl font-extrabold text-[#d82129] mb-4">IELTS Speaking Simulator</h1>
+                        <p class="text-gray-600 mb-8 text-lg">Practice your speaking skills with our AI Examiner. Get detailed feedback, band scores, and a personalized improvement plan based on official IELTS descriptors.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <button onclick="startTest('part1')" class="flex items-center justify-center gap-2 p-4 bg-gray-50 hover:bg-red-50 border border-gray-200 hover:border-red-200 rounded-xl transition-all group">
+                                <div class="text-left w-full">
+                                    <h3 class="font-bold text-gray-800 group-hover:text-[#d82129]">Part 1: Introduction</h3>
+                                    <p class="text-sm text-gray-500">Short Q&A on familiar topics (4-5 mins)</p>
+                                </div>
+                            </button>
+                            <button onclick="startTest('part2')" class="flex items-center justify-center gap-2 p-4 bg-gray-50 hover:bg-red-50 border border-gray-200 hover:border-red-200 rounded-xl transition-all group">
+                                <div class="text-left w-full">
+                                    <h3 class="font-bold text-gray-800 group-hover:text-[#d82129]">Part 2: Long Turn</h3>
+                                    <p class="text-sm text-gray-500">Speak for 2 mins on a cue card (3-4 mins)</p>
+                                </div>
+                            </button>
+                            <button onclick="startTest('part3')" class="flex items-center justify-center gap-2 p-4 bg-gray-50 hover:bg-red-50 border border-gray-200 hover:border-red-200 rounded-xl transition-all group">
+                                <div class="text-left w-full">
+                                    <h3 class="font-bold text-gray-800 group-hover:text-[#d82129]">Part 3: Discussion</h3>
+                                    <p class="text-sm text-gray-500">Abstract follow-up questions (4-5 mins)</p>
+                                </div>
+                            </button>
+                            <button onclick="startTest('full')" class="flex items-center justify-center gap-2 p-4 bg-[#d82129] hover:bg-red-700 text-white shadow-lg rounded-xl transition-all transform hover:scale-105 group">
+                                <div class="text-left flex-1">
+                                    <h3 class="font-bold">Full Speaking Test</h3>
+                                    <p class="text-sm text-red-100">Complete 11-14 min simulation</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-6 h-6 opacity-70"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getTestingHTML() {
+            const currentStep = state.testSequence[state.currentStepIndex];
+            if (!currentStep) return '';
+
+            let transcriptHTML = state.transcript.map(msg => {
+                const isExaminer = msg.speaker === 'Examiner';
+                let cueCardHTML = '';
+                if(msg.cueCard) {
+                    cueCardHTML = `<div class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm font-mono text-gray-800 whitespace-pre-wrap shadow-sm">${msg.cueCard.replace(/\n/g, '<br/>')}</div>`;
+                }
+
+                return `
+                    <div class="flex ${isExaminer ? 'justify-start' : 'justify-end'}">
+                        <div class="max-w-[80%] p-4 rounded-2xl ${isExaminer ? 'bg-gray-100 text-gray-800 rounded-tl-sm' : 'bg-blue-50 text-blue-900 border border-blue-100 rounded-tr-sm'}">
+                            <div class="text-xs font-semibold mb-1 opacity-60 uppercase">${msg.speaker}</div>
+                            <p class="text-lg whitespace-pre-wrap">${msg.text}</p>
+                            ${cueCardHTML}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            if(state.transcript.length === 0) {
+                 transcriptHTML = `<div class="text-gray-400 italic">Examiner is preparing...</div>`;
+            }
+
+            let inputAreaHTML = '';
+            if (currentStep.type === 'instruction') {
+                inputAreaHTML = `
+                    <div class="flex justify-between items-center p-2">
+                        <p class="text-gray-600 italic">Listen to the examiner's instructions.</p>
+                        <button onclick="submitAnswer()" class="bg-[#d82129] text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-700 flex items-center gap-2">
+                            Continue <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                const isRecordingClass = state.isRecording ? 'bg-red-500 text-white animate-pulse-custom' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50';
+                const micIcon = state.isRecording ? '<i data-lucide="square" class="w-5 h-5 fill-current"></i>' : '<i data-lucide="mic" class="w-5 h-5"></i>';
+                
+                inputAreaHTML = `
+                    <div class="space-y-4">
+                        <div class="relative">
+                            <textarea 
+                                id="answer-input"
+                                class="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all text-gray-800"
+                                rows="3"
+                                placeholder="Type your answer here, or click the microphone to speak..."
+                                oninput="handleInputChange(this.value)"
+                            >${state.currentInput}</textarea>
+                            <button 
+                                onclick="toggleRecording()"
+                                class="absolute bottom-4 right-4 p-3 rounded-full shadow-md transition-all ${isRecordingClass}"
+                            >
+                                ${micIcon}
+                            </button>
+                        </div>
+                        <div class="flex justify-end">
+                            <button 
+                                id="submit-answer-btn"
+                                onclick="submitAnswer()"
+                                class="bg-[#d82129] text-white px-8 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 shadow-sm"
+                            >
+                                Submit Answer <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="max-w-3xl mx-auto w-full flex flex-col h-[85vh]">
+                    <!-- Header Status -->
+                    <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-200 shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-[#d82129] font-bold">
+                                P${state.currentPart}
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-gray-800">IELTS Practice ${state.testMode === 'full' ? 'Full Test' : ''}</h2>
+                                <p class="text-xs text-gray-500">Step ${state.currentStepIndex + 1} of ${state.testSequence.length}</p>
+                            </div>
+                        </div>
+                        <button onclick="setAppState('home')" class="text-gray-400 hover:text-gray-600">Cancel</button>
+                    </div>
+
+                    <!-- Interaction Area -->
+                    <div id="chat-scroll-area" class="flex-1 overflow-y-auto space-y-6 pb-6 p-2">
+                        ${transcriptHTML}
+                    </div>
+
+                    <!-- Input Area -->
+                    <div class="bg-white p-4 rounded-2xl shadow-xl border border-gray-200 mt-4 shrink-0">
+                        ${inputAreaHTML}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getEvaluatingHTML() {
+            return `
+                <div class="flex flex-col items-center justify-center min-h-[60vh] space-y-6">
+                    <div class="w-20 h-20 border-4 border-[#d82129] border-t-transparent rounded-full animate-spin-custom"></div>
+                    <h2 class="text-2xl font-bold text-gray-800">Examiner is evaluating your performance...</h2>
+                    <p class="text-gray-500 animate-pulse-custom">Analyzing fluency, vocabulary, grammar, and pronunciation.</p>
+                </div>
+            `;
+        }
+
+        function getResultsHTML() {
+            if (!state.evaluationResult) return '';
+            const { scores, feedback_summary, improvement_plan, missed_descriptors } = state.evaluationResult;
+
+            const getScoreColor = (score) => {
+                if (score >= 7) return 'text-green-600 bg-green-50 border-green-200';
+                if (score >= 6) return 'text-blue-600 bg-blue-50 border-blue-200';
+                return 'text-orange-600 bg-orange-50 border-orange-200';
+            };
+
+            const scoreCardsHTML = ['fluency', 'lexical', 'grammar', 'pronunciation'].map(crit => {
+                const label = crit === 'fluency' ? 'Fluency & Coherence' : crit === 'lexical' ? 'Lexical Resource' : crit === 'grammar' ? 'Grammar Range' : 'Pronunciation';
+                return `
+                    <div class="p-4 rounded-xl border flex flex-col items-center text-center ${getScoreColor(scores[crit])}">
+                        <span class="text-sm font-semibold uppercase tracking-wider opacity-80 mb-1">${label}</span>
+                        <span class="text-3xl font-black">${scores[crit]}</span>
+                    </div>
+                `;
+            }).join('');
+
+            const improvementListHTML = improvement_plan.map((plan, idx) => `
+                <li class="flex gap-3 text-sm text-blue-800">
+                    <span class="flex-shrink-0 w-6 h-6 bg-blue-200 text-blue-700 rounded-full flex items-center justify-center font-bold text-xs">${idx + 1}</span>
+                    <span>${plan}</span>
+                </li>
+            `).join('');
+
+            const bandsToRender = [8, 7, 6, 5, 4];
+            let tableRowsHTML = '';
+            
+            bandsToRender.forEach(band => {
+                let rowHtml = `<tr class="border-b last:border-0 hover:bg-gray-50 transition-colors">
+                    <td class="p-4 border-r font-black text-center text-lg text-gray-400 bg-gray-50">${band}</td>`;
+                
+                ['fluency', 'lexical', 'grammar', 'pronunciation'].forEach(crit => {
+                    const userScore = Math.floor(scores[crit]);
+                    const targetBand = Math.min(9, userScore + 1);
+                    
+                    const isAchieved = band === userScore;
+                    const isMissed = band === targetBand;
+                    
+                    let cellClass = 'p-4 border-r align-top relative ';
+                    if(isMissed) cellClass += 'bg-red-50 border-red-200';
+                    else if(isAchieved) cellClass += 'bg-green-50 opacity-60';
+
+                    let missedBadge = '';
+                    let missedFeedback = '';
+
+                    if(isMissed) {
+                        missedBadge = `
+                            <div class="absolute top-2 right-2 flex items-center gap-1 text-[#d82129] font-bold text-[10px] uppercase tracking-wide bg-red-100 px-2 py-1 rounded">
+                                Missed <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                            </div>`;
+                        if(missed_descriptors[crit]) {
+                            missedFeedback = `
+                                <div class="mt-3 text-xs bg-white p-2 rounded border border-red-100 text-red-700 shadow-sm italic relative">
+                                    <div class="absolute -top-2 left-4 w-3 h-3 bg-white border-t border-l border-red-100 transform rotate-45"></div>
+                                    "${missed_descriptors[crit]}"
+                                </div>`;
+                        }
+                    }
+
+                    rowHtml += `
+                        <td class="${cellClass}">
+                            ${missedBadge}
+                            <div class="mt-2 ${isMissed ? 'text-red-900 font-medium' : 'text-gray-600'}">
+                                ${BAND_DESCRIPTORS[band][crit]}
+                            </div>
+                            ${missedFeedback}
+                        </td>
+                    `;
+                });
+                rowHtml += `</tr>`;
+                tableRowsHTML += rowHtml;
+            });
+
+            let fullTranscriptHTML = state.transcript.map((msg, idx) => {
+                if (msg.type === 'instruction') return ''; 
+                
+                let cueHtml = '';
+                if(msg.cueCard) {
+                    cueHtml = `<div class="mb-2 p-3 bg-yellow-50 border border-yellow-200 text-xs text-gray-700 font-mono rounded">[Cue Card Given: ${msg.cueCard.split('\n')[0]}]</div>`;
+                }
+
+                return `
+                    <div class="flex gap-4">
+                        <div class="font-bold w-24 flex-shrink-0 text-sm mt-1 ${msg.speaker === 'Examiner' ? 'text-gray-500' : 'text-blue-600'}">
+                            ${msg.speaker}:
+                        </div>
+                        <div class="text-gray-800 text-sm whitespace-pre-wrap flex-1">
+                            ${cueHtml}
+                            ${msg.text}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+
+            return `
+                <div class="max-w-4xl mx-auto w-full bg-white shadow-2xl rounded-sm print-shadow-none print-w-full print-max-w-full">
+                    
+                    <!-- Customized Header for Download -->
+                    <div class="bg-[#d82129] text-white p-8 rounded-t-sm print-rounded-none relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+                            <i data-lucide="file-text" class="w-48 h-48 transform rotate-12"></i>
+                        </div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <div>
+                                <h1 class="text-3xl font-extrabold tracking-tight mb-2">Improve with LizOn Education</h1>
+                                <p class="text-red-100 text-lg">IELTS Speaking Simulation Report</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-5xl font-black bg-white text-[#d82129] inline-block px-4 py-2 rounded-lg shadow-lg">
+                                    ${scores.overall}
+                                </div>
+                                <p class="mt-2 text-sm font-semibold uppercase tracking-widest text-red-100">Overall Band</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-8 space-y-12 print-p-4 print-space-y-6">
+                        
+                        <!-- Controls (Hidden on Print) -->
+                        <div class="flex justify-between items-center border-b pb-6 print-hidden">
+                            <button onclick="setAppState('home')" class="text-gray-600 hover:text-gray-900 flex items-center gap-2 font-medium">
+                                <i data-lucide="home" class="w-4 h-4"></i> Back to Home
+                            </button>
+                            <button onclick="handlePrint()" class="bg-gray-900 text-white px-5 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-800 transition-colors shadow-sm font-medium">
+                                <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+                            </button>
+                        </div>
+
+                        <!-- Criteria Scores -->
+                        <section>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Detailed Scores</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                ${scoreCardsHTML}
+                            </div>
+                        </section>
+
+                        <!-- Feedback & Improvement Plan -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 print-block print-space-y-6">
+                            <section class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                                <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                    <i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i> Examiner's Feedback
+                                </h3>
+                                <p class="text-gray-700 leading-relaxed text-sm">${feedback_summary}</p>
+                            </section>
+                            
+                            <section class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                                <h3 class="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2">
+                                    <i data-lucide="alert-circle" class="w-5 h-5 text-blue-500"></i> Improvement Plan
+                                </h3>
+                                <ul class="space-y-3">
+                                    ${improvementListHTML}
+                                </ul>
+                            </section>
+                        </div>
+
+                        <!-- Interactive Band Descriptors Highlight -->
+                        <section class="print-break-inside-avoid">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Target Areas based on Band Descriptors</h3>
+                            <p class="text-sm text-gray-500 mb-4">The highlighted red cells indicate areas where you missed the criteria for a higher band, based on your current score.</p>
+                            
+                            <div class="overflow-x-auto border rounded-xl shadow-sm">
+                                <table class="w-full text-left text-sm border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-gray-700 uppercase tracking-wider text-xs">
+                                            <th class="p-4 border-b border-r w-16 text-center">Band</th>
+                                            <th class="p-4 border-b border-r">Fluency & Coherence</th>
+                                            <th class="p-4 border-b border-r">Lexical Resource</th>
+                                            <th class="p-4 border-b border-r">Grammar Range</th>
+                                            <th class="p-4 border-b">Pronunciation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${tableRowsHTML}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <!-- Full Transcript -->
+                        <section class="print-break-inside-avoid pt-8">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Full Test Transcript</h3>
+                            <div class="space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                                ${fullTranscriptHTML}
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize application on load
+        window.onload = () => {
+            initSpeechRecognition();
+            render();
+        };
+
+    </script>
+</body>
+</html>

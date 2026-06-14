@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LizOn Study Abroad Assessment</title>
+    <style>
+        :root {
+            --bg-color: #071710; /* Dark green, not pure black */
+            --surface-color: #112F22;
+            --surface-hover: #1A4231;
+            --gold: #D4AF37;
+            --gold-hover: #E5C354;
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .container {
+            background-color: var(--surface-color);
+            width: 100%;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header & Progress Bar */
+        header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .brand {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--gold);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            color: var(--gold);
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            flex-direction: column;
+            padding: 30px;
+            flex-grow: 1;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        h1 { font-size: 1.8rem; }
+        h2 { font-size: 1.4rem; margin-bottom: 25px; }
+        
+        .subheadline {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* Cards */
+        .options-grid {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 2px solid transparent;
+            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option-card:hover {
+            background-color: var(--surface-hover);
+        }
+
+        .option-card.selected {
+            border-color: var(--gold);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 16px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background-color: #555;
+            color: #888;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Forms & Inputs */
+        .hidden-form {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        input[type="text"], input[type="tel"], input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.2);
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        /* Processing Screen */
+        .checklist {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .checklist li {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+
+        .checklist li.done {
+            opacity: 1;
+        }
+
+        .checklist li.done::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Roadmap */
+        .roadmap-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .roadmap-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 25px;
+            bottom: -15px;
+            width: 2px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .step-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--surface-hover);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            margin-right: 15px;
+            z-index: 1;
+        }
+
+        .roadmap-step.active .step-dot {
+            background-color: var(--gold);
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        
+        .roadmap-step.past .step-dot {
+            background-color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .step-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            padding-top: 2px;
+        }
+
+        .roadmap-step.active .step-text {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .result-explanation {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--gold);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                min-height: 100vh;
+                border-radius: 0;
+            }
+            body { padding: 0; }
+            .screen { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <button class="back-btn" id="backBtn" onclick="goBack()">&#8592;</button>
+        <div class="brand">LizOn Study Abroad</div>
+    </header>
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="screen active" id="screen-1">
+        <h1>Study Abroad Starts Here</h1>
+        <p class="subheadline">Find out where you currently stand and what your next step should be.</p>
+        <button class="btn-primary" style="margin-top: 50px;" onclick="nextScreen(2)">Find My Starting Point</button>
+    </div>
+
+    <div class="screen" id="screen-2">
+        <h2>Are You Currently A LizOn Student?</h2>
+        <div class="options-grid">
+            <div class="option-card" onclick="selectSingleOption('lizon_student', 'No', 3)">No</div>
+            <div class="option-card" onclick="selectSingleOption('lizon_student', 'IELTS ZERO', 3)">IELTS ZERO</div>
+            <div class="option-card" onclick="selectSingleOption('lizon_student', 'IELTS HOPE', 3)">IELTS HOPE</div>
+            <div class="option-card" onclick="selectSingleOption('lizon_student', 'IELTS STEP-UP', 3)">IELTS STEP-UP</div>
+            <div class="option-card" onclick="selectSingleOption('lizon_student', 'IELTS DESPERATE', 3)">IELTS DESPERATE</div>
+            <div class="option-card" onclick="selectSingleOption('lizon_student', 'PTE', 3)">PTE</div>
+            <div class="option-card" onclick="selectSingleOption('lizon_student', 'Other', 3)">Other</div>
+        </div>
+    </div>
+
+    <div class="screen" id="screen-3">
+        <h2>What best describes you right now?</h2>
+        <div class="options-grid">
+            <div class="option-card" onclick="selectSingleOption('education', 'HSC Student', 4)">HSC Student</div>
+            <div class="option-card" onclick="selectSingleOption('education', 'HSC Completed', 4)">HSC Completed</div>
+            <div class="option-card" onclick="selectSingleOption('education', 'Diploma Student', 4)">Diploma Student</div>
+            <div class="option-card" onclick="selectSingleOption('education', 'Diploma Completed', 4)">Diploma Completed</div>
+            <div class="option-card" onclick="selectSingleOption('education', 'Bachelor Student', 4)">Bachelor Student</div>
+            <div class="option-card" onclick="selectSingleOption('education', 'Bachelor Completed', 4)">Bachelor Completed</div>
+            <div class="option-card" onclick="selectSingleOption('education', 'Master\'s Student', 4)">Master's Student</div>
+            <div class="option-card" onclick="selectSingleOption('education', 'Master\'s Completed', 4)">Master's Completed</div>
+        </div>
+    </div>
+
+    <div class="screen" id="screen-4">
+        <h2>What is your current IELTS/PTE status?</h2>
+        <div class="options-grid">
+            <div class="option-card" onclick="selectSingleOption('english_status', 'Not Started', 5)">Not Started</div>
+            <div class="option-card" onclick="selectSingleOption('english_status', 'Planning To Start', 5)">Planning To Start</div>
+            <div class="option-card" onclick="selectSingleOption('english_status', 'Currently Preparing', 5)">Currently Preparing</div>
+            <div class="option-card" id="card-has-score" onclick="toggleScoreForm()">Already Have A Score</div>
+        </div>
+        
+        <div class="hidden-form" id="score-details">
+            <div class="form-group">
+                <label>Test Type:</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="test_type" value="IELTS" checked> IELTS
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="test_type" value="PTE"> PTE
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Overall Score:</label>
+                <input type="number" id="test_score" placeholder="e.g. 6.5 or 58" step="0.5">
+            </div>
+            <button class="btn-primary" onclick="saveScoreAndContinue()">Continue</button>
+        </div>
+    </div>
+
+    <div class="screen" id="screen-5">
+        <h2>Do you currently have a study gap?</h2>
+        <div class="options-grid">
+            <div class="option-card" onclick="selectSingleOption('gap', 'No Gap', 6)">No Gap</div>
+            <div class="option-card" onclick="selectSingleOption('gap', 'Under 2 Years', 6)">Under 2 Years</div>
+            <div class="option-card" onclick="selectSingleOption('gap', '2–5 Years', 6)">2–5 Years</div>
+            <div class="option-card" onclick="selectSingleOption('gap', 'More Than 5 Years', 6)">More Than 5 Years</div>
+        </div>
+    </div>
+
+    <div class="screen" id="screen-6">
+        <h2>Which countries interest you? <br><span style="font-size: 0.9rem; color: var(--text-muted);">(Choose up to 3)</span></h2>
+        <div class="options-grid" id="country-grid">
+            <div class="option-card multi" onclick="toggleMultiOption(this, 'Australia')">Australia</div>
+            <div class="option-card multi" onclick="toggleMultiOption(this, 'UK')">UK</div>
+            <div class="option-card multi" onclick="toggleMultiOption(this, 'Canada')">Canada</div>
+            <div class="option-card multi" onclick="toggleMultiOption(this, 'USA')">USA</div>
+            <div class="option-card multi" onclick="toggleMultiOption(this, 'Ireland')">Ireland</div>
+            <div class="option-card multi" onclick="toggleMultiOption(this, 'Europe')">Europe</div>
+            <div class="option-card multi" onclick="toggleMultiOption(this, 'Not Sure Yet')">Not Sure Yet</div>
+        </div>
+        <button class="btn-primary" id="btn-country-next" onclick="saveCountriesAndContinue()" disabled>Continue</button>
+    </div>
+
+    <div class="screen" id="screen-7">
+        <h2>What budget range are you considering?</h2>
+        <div class="options-grid">
+            <div class="option-card" onclick="selectSingleOption('budget', 'Under 15 Lakh', 8)">Under 15 Lakh</div>
+            <div class="option-card" onclick="selectSingleOption('budget', '15–25 Lakh', 8)">15–25 Lakh</div>
+            <div class="option-card" onclick="selectSingleOption('budget', '25–40 Lakh', 8)">25–40 Lakh</div>
+            <div class="option-card" onclick="selectSingleOption('budget', '40+ Lakh', 8)">40+ Lakh</div>
+            <div class="option-card" onclick="selectSingleOption('budget', 'Not Sure Yet', 8)">Not Sure Yet</div>
+        </div>
+    </div>
+
+    <div class="screen" id="screen-8">
+        <h2>Do you already have your academic documents available?</h2>
+        <div class="options-grid">
+            <div class="option-card" onclick="selectSingleOption('documents', 'Yes', 9)">Yes</div>
+            <div class="option-card" onclick="selectSingleOption('documents', 'No', 9)">No</div>
+            <div class="option-card" onclick="selectSingleOption('documents', 'Not Sure', 9)">Not Sure</div>
+        </div>
+    </div>
+
+    <div class="screen" id="screen-9">
+        <h2>When would you like to begin?</h2>
+        <div class="options-grid">
+            <div class="option-card" onclick="selectSingleOption('timeline', 'Within 3 Months', 10)">Within 3 Months</div>
+            <div class="option-card" onclick="selectSingleOption('timeline', '3–6 Months', 10)">3–6 Months</div>
+            <div class="option-card" onclick="selectSingleOption('timeline', '6–12 Months', 10)">6–12 Months</div>
+            <div class="option-card" onclick="selectSingleOption('timeline', 'More Than 1 Year', 10)">More Than 1 Year</div>
+        </div>
+    </div>
+
+    <div class="screen" id="screen-10">
+        <h2>Analyzing Your Profile...</h2>
+        <ul class="checklist" id="processing-checklist">
+            <li id="check-edu">Education</li>
+            <li id="check-eng">English Status</li>
+            <li id="check-gap">Study Gap</li>
+            <li id="check-bud">Budget</li>
+            <li id="check-time">Timeline</li>
+        </ul>
+    </div>
+
+    <div class="screen" id="screen-11">
+        <h2>Your Study Abroad Starting Point</h2>
+        
+        <div class="result-explanation" id="result-text">
+            </div>
+
+        <div class="roadmap-container">
+            <div class="roadmap-step" id="step-1">
+                <div class="step-dot"></div>
+                <div class="step-text">Stage 1: IELTS / PTE Preparation</div>
+            </div>
+            <div class="roadmap-step" id="step-2">
+                <div class="step-dot"></div>
+                <div class="step-text">Stage 2: Documents & Budget Evaluation</div>
+            </div>
+            <div class="roadmap-step" id="step-3">
+                <div class="step-dot"></div>
+                <div class="step-text">Stage 3: Country Shortlist</div>
+            </div>
+            <div class="roadmap-step" id="step-4">
+                <div class="step-dot"></div>
+                <div class="step-text">Stage 4: University Options</div>
+            </div>
+            <div class="roadmap-step" id="step-5">
+                <div class="step-dot"></div>
+                <div class="step-text">Stage 5: Application</div>
+            </div>
+            <div class="roadmap-step" id="step-6">
+                <div class="step-dot"></div>
+                <div class="step-text">Stage 6: Visa</div>
+            </div>
+        </div>
+
+        <button class="btn-primary" onclick="nextScreen(12)">Continue</button>
+    </div>
+
+    <div class="screen" id="screen-12">
+        <h2>Want A Personalized Roadmap?</h2>
+        <p class="subheadline">Enter your details to get a free comprehensive plan from our expert counselors.</p>
+        
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="lead_name" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+            <label>Phone Number / WhatsApp</label>
+            <input type="tel" id="lead_phone" placeholder="+880 1234 567890" required>
+        </div>
+        
+        <button class="btn-primary" style="margin-top: 30px;" onclick="submitLead()">Get My Roadmap</button>
+    </div>
+
+    <div class="screen" id="screen-13">
+        <h2>Your Journey Has Started</h2>
+        <p class="subheadline">We have generated your personalized roadmap. Connect with us on WhatsApp to receive it instantly.</p>
+        <button class="btn-primary" style="background-color: #25D366; color: white;" onclick="openWhatsApp()">Talk On WhatsApp</button>
+    </div>
+
+</div>
+
+<script>
+    let currentScreen = 1;
+    let history = [];
+    const answers = {
+        lizon_student: '',
+        education: '',
+        english_status: '',
+        test_type: '',
+        test_score: '',
+        gap: '',
+        countries: [],
+        budget: '',
+        documents: '',
+        timeline: '',
+        calculated_stage: 1,
+        calculated_stage_name: ''
+    };
+
+    const TOTAL_QUESTIONS = 8; // Screens 2 to 9
+
+    function updateProgress() {
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const backBtn = document.getElementById('backBtn');
+        
+        // Show/hide progress bar and back button
+        if (currentScreen > 1 && currentScreen < 10) {
+            progressContainer.style.display = 'block';
+            backBtn.style.display = 'block';
+            const progress = ((currentScreen - 1) / TOTAL_QUESTIONS) * 100;
+            progressBar.style.width = progress + '%';
+        } else {
+            progressContainer.style.display = 'none';
+            backBtn.style.display = currentScreen === 12 ? 'block' : 'none';
+        }
+    }
+
+    function switchScreen(target) {
+        document.getElementById(`screen-${currentScreen}`).classList.remove('active');
+        document.getElementById(`screen-${target}`).classList.add('active');
+        history.push(currentScreen);
+        currentScreen = target;
+        updateProgress();
+
+        if (currentScreen === 10) runProcessing();
+        if (currentScreen === 11) generateResult();
+    }
+
+    function nextScreen(target) {
+        switchScreen(target);
+    }
+
+    function goBack() {
+        if (history.length > 0) {
+            const prev = history.pop();
+            document.getElementById(`screen-${currentScreen}`).classList.remove('active');
+            document.getElementById(`screen-${prev}`).classList.add('active');
+            currentScreen = prev;
+            updateProgress();
+        }
+    }
+
+    // --- Interaction Handlers ---
+
+    function resetCards(containerId) {
+        const cards = document.querySelectorAll(`#${containerId} .option-card`);
+        cards.forEach(c => c.classList.remove('selected'));
+    }
+
+    function selectSingleOption(key, value, nextScreenNum) {
+        answers[key] = value;
+        // Visual feedback
+        const currentScreenEl = document.getElementById(`screen-${currentScreen}`);
+        const cards = currentScreenEl.querySelectorAll('.option-card');
+        cards.forEach(c => c.classList.remove('selected'));
+        event.target.classList.add('selected');
+
+        // Delay slightly for visual feedback before auto-advancing
+        setTimeout(() => {
+            nextScreen(nextScreenNum);
+        }, 300);
+    }
+
+    // Screen 4 specific
+    function toggleScoreForm() {
+        answers['english_status'] = 'Already Have A Score';
+        const currentScreenEl = document.getElementById('screen-4');
+        const cards = currentScreenEl.querySelectorAll('.option-card');
+        cards.forEach(c => c.classList.remove('selected'));
+        document.getElementById('card-has-score').classList.add('selected');
+        
+        document.getElementById('score-details').style.display = 'block';
+    }
+
+    function saveScoreAndContinue() {
+        const score = document.getElementById('test_score').value;
+        const type = document.querySelector('input[name="test_type"]:checked').value;
+        answers['test_type'] = type;
+        answers['test_score'] = score;
+        nextScreen(5);
+    }
+
+    // Screen 6 Multi-select
+    function toggleMultiOption(element, country) {
+        if (country === 'Not Sure Yet') {
+            answers.countries = ['Not Sure Yet'];
+            const allCards = document.querySelectorAll('#country-grid .option-card');
+            allCards.forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+        } else {
+            // Remove 'Not Sure Yet' if it was selected
+            const notSureIndex = answers.countries.indexOf('Not Sure Yet');
+            if (notSureIndex > -1) {
+                answers.countries.splice(notSureIndex, 1);
+                document.querySelectorAll('#country-grid .option-card').forEach(c => {
+                    if (c.innerText === 'Not Sure Yet') c.classList.remove('selected');
+                });
+            }
+
+            if (answers.countries.includes(country)) {
+                answers.countries = answers.countries.filter(c => c !== country);
+                element.classList.remove('selected');
+            } else {
+                if (answers.countries.length < 3) {
+                    answers.countries.push(country);
+                    element.classList.add('selected');
+                }
+            }
+        }
+
+        const btn = document.getElementById('btn-country-next');
+        btn.disabled = answers.countries.length === 0;
+    }
+
+    function saveCountriesAndContinue() {
+        nextScreen(7);
+    }
+
+    // --- Processing & Logic ---
+
+    function runProcessing() {
+        const checks = ['check-edu', 'check-eng', 'check-gap', 'check-bud', 'check-time'];
+        let delay = 500;
+        
+        checks.forEach((id, index) => {
+            setTimeout(() => {
+                document.getElementById(id).classList.add('done');
+            }, delay * (index + 1));
+        });
+
+        setTimeout(() => {
+            nextScreen(11);
+        }, delay * (checks.length + 2));
+    }
+
+    function calculateStage() {
+        const eng = answers.english_status;
+        const bud = answers.budget;
+        const ctr = answers.countries;
+
+        if (eng === 'Not Started' || eng === 'Planning To Start') {
+            return { num: 1, name: "IELTS / PTE Preparation" };
+        } 
+        
+        if (eng === 'Currently Preparing' || (eng === 'Already Have A Score' && bud === 'Not Sure Yet')) {
+            return { num: 2, name: "Documents & Budget Evaluation" };
+        }
+
+        if (eng === 'Already Have A Score' && bud !== 'Not Sure Yet' && (ctr.includes('Not Sure Yet') || ctr.length === 0)) {
+            return { num: 3, name: "Country Shortlist" };
+        }
+
+        if (eng === 'Already Have A Score' && bud !== 'Not Sure Yet' && ctr.length > 0 && !ctr.includes('Not Sure Yet')) {
+            return { num: 4, name: "University Options" };
+        }
+
+        return { num: 1, name: "IELTS / PTE Preparation" }; // Fallback
+    }
+
+    function generateResult() {
+        const stageData = calculateStage();
+        answers.calculated_stage = stageData.num;
+        answers.calculated_stage_name = stageData.name;
+
+        // Setup Roadmap UI
+        for (let i = 1; i <= 6; i++) {
+            const stepEl = document.getElementById(`step-${i}`);
+            stepEl.className = 'roadmap-step'; // reset
+            if (i < stageData.num) stepEl.classList.add('past');
+            if (i === stageData.num) stepEl.classList.add('active');
+        }
+
+        // Setup Text
+        const textContainer = document.getElementById('result-text');
+        let explanation = `Based on your profile, your journey begins at <strong>Stage ${stageData.num}: ${stageData.name}</strong>. `;
+        
+        if (stageData.num === 1) {
+            explanation += `Securing a strong English proficiency score is your critical first step before considering university applications or budgets.`;
+        } else if (stageData.num === 2) {
+            explanation += `Since your English preparation is underway or completed, evaluating your budget and gathering academic documents is the immediate priority to filter viable options.`;
+        } else if (stageData.num === 3) {
+            explanation += `With your English score and budget clarified, we need to focus on matching your profile with the best destination countries.`;
+        } else if (stageData.num === 4) {
+            explanation += `Your foundation is solid. Since you have your scores, budget, and destination preferences (${answers.countries.join(', ')}), it is time to shortlist universities and prepare applications.`;
+        }
+
+        textContainer.innerHTML = explanation;
+    }
+
+    function submitLead() {
+        const name = document.getElementById('lead_name').value;
+        const phone = document.getElementById('lead_phone').value;
+        
+        if (!name || !phone) {
+            alert("Please provide your name and phone number to continue.");
+            return;
+        }
+
+        answers.lead_name = name;
+        answers.lead_phone = phone;
+        
+        nextScreen(13);
+    }
+
+    function openWhatsApp() {
+        // Construct the message
+        let engStatusText = answers.english_status;
+        if (answers.english_status === 'Already Have A Score') {
+            engStatusText += ` (${answers.test_type}: ${answers.test_score})`;
+        }
+
+        const msg = `Hi LizOn,
+I completed the Study Abroad Assessment.
+
+*Current Stage:* Stage ${answers.calculated_stage}: ${answers.calculated_stage_name}
+
+*Profile Details:*
+- Education: ${answers.education}
+- English Status: ${engStatusText}
+- Study Gap: ${answers.gap}
+- Interested Countries: ${answers.countries.join(', ')}
+- Budget: ${answers.budget}
+- Timeline: ${answers.timeline}
+
+*Lead Info:*
+Name: ${answers.lead_name}
+Phone: ${answers.lead_phone}
+
+I would like to get my personalized roadmap.`;
+
+        const encodedMsg = encodeURIComponent(msg);
+        
+        // Agency WhatsApp Number (Replace this placeholder with the actual number e.g., '8801XXXXXXXXX')
+        const whatsappNumber = ''; 
+        
+        const waUrl = whatsappNumber 
+            ? `https://wa.me/${whatsappNumber}?text=${encodedMsg}`
+            : `https://wa.me/?text=${encodedMsg}`;
+            
+        window.open(waUrl, '_blank');
+    }
+</script>
+
+</body>
+</html>

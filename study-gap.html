@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Gap | LizOn Study Abroad</title>
+    <meta name="description" content="Understand how a study gap may affect your study abroad journey and discover your next step with LizOn Study Abroad.">
+    <style>
+        :root {
+            --dark-green: #0b3d2c;
+            --dark-green-hover: #082b1f;
+            --gold-accent: #d4af37;
+            --gold-hover: #b5952f;
+            --white: #ffffff;
+            --light-gray: #f5f7f6;
+            --text-dark: #1a2421;
+            --text-light: #4a5c54;
+            --border-color: #e2e8f0;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; color: var(--dark-green); }
+        h3 { font-size: 1.25rem; }
+        p { margin-bottom: 1rem; color: var(--text-light); }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .bg-light { background-color: var(--light-gray); }
+        .bg-dark { background-color: var(--dark-green); color: var(--white); }
+        .bg-dark p { color: #e2e8f0; }
+        .bg-dark h2 { color: var(--white); }
+
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-2 { margin-bottom: 2rem; }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--gold-accent);
+            color: var(--text-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border-color: var(--gold-accent);
+            color: var(--gold-accent);
+        }
+
+        .bg-dark .btn-secondary {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .bg-dark .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-lift {
+            transition: var(--transition);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(11, 61, 44, 0.08);
+        }
+
+        /* Section 1: Hero */
+        .hero {
+            padding: 8rem 0 6rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-label {
+            display: inline-block;
+            background-color: rgba(212, 175, 55, 0.2);
+            color: var(--gold-accent);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 { margin-bottom: 1.5rem; }
+        .hero p { max-width: 700px; margin: 0 auto 1.5rem; font-size: 1.125rem; }
+
+        /* Grid System */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(11, 61, 44, 0.04);
+            border: 1px solid var(--border-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Section 3: Accordion */
+        .accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--white);
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 1.25rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--dark-green);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .accordion-icon::before, .accordion-icon::after {
+            content: '';
+            position: absolute;
+            background-color: var(--dark-green);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: var(--transition);
+        }
+
+        .accordion-icon::before { width: 16px; height: 2px; }
+        .accordion-icon::after { width: 2px; height: 16px; }
+        
+        .accordion-item.active .accordion-icon::after { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+        .accordion-item.active .accordion-header { background-color: var(--light-gray); }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .accordion-body {
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        /* Section 4: Students Like You */
+        .student-card {
+            border-top: 4px solid var(--dark-green);
+        }
+        
+        .disclaimer {
+            font-size: 0.875rem;
+            font-style: italic;
+            text-align: center;
+            margin-top: -1rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .student-data {
+            margin: 1rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid var(--gold-accent);
+        }
+
+        .student-data p { margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .student-data span { font-weight: 600; color: var(--text-dark); }
+        .student-step { 
+            margin-top: auto; 
+            background: var(--light-gray); 
+            padding: 1rem; 
+            border-radius: 6px; 
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        /* Section 5: What Matters More */
+        .factor-card {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .factor-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(212, 175, 55, 0.15);
+            color: var(--gold-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Section 7: Journey Roadmap */
+        .roadmap {
+            position: relative;
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 1rem 0;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 24px;
+            width: 2px;
+            background: var(--gold-accent);
+            opacity: 0.5;
+        }
+
+        .roadmap-item {
+            position: relative;
+            padding-left: 4rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .roadmap-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .roadmap-item:last-child { margin-bottom: 0; }
+
+        .roadmap-dot {
+            position: absolute;
+            left: 16px;
+            top: 4px;
+            width: 18px;
+            height: 18px;
+            background: var(--gold-accent);
+            border: 4px solid var(--light-gray);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .roadmap-content {
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--gold-accent);
+        }
+
+        .copyright {
+            opacity: 0.6;
+            font-size: 0.875rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+        }
+
+        /* Sticky Mobile CTA */
+        .mobile-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+            z-index: 1000;
+            display: none;
+        }
+
+        .mobile-cta .btn {
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            section { padding: 4rem 0; }
+            .hero { padding: 6rem 0 4rem; }
+            
+            .btn-group { flex-direction: column; width: 100%; }
+            .btn-group .btn { width: 100%; }
+
+            .mobile-cta { display: block; }
+            body { padding-bottom: 80px; } /* Buffer for sticky CTA */
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero bg-dark">
+        <div class="container fade-in">
+            <span class="hero-label">LizOn Study Abroad</span>
+            <h1>Have A Study Gap?<br>Your Journey May Not Be Over.</h1>
+            <p>Many students worry that a study gap automatically ends their study abroad plans. In reality, the right next step depends on your profile, documents, budget, and goals.</p>
+            <div class="btn-group">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+                <a href="https://wa.me/8800000000000" class="btn btn-secondary">Talk To A Counselor</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container text-center fade-in">
+            <h2>What Is A Study Gap?</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <p>A study gap is the period between your last completed academic qualification and your next planned study.</p>
+                <p>A gap does not automatically prevent you from studying abroad. What matters is understanding your overall profile and planning the next step carefully.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container fade-in">
+            <h2 class="text-center mb-2">Common Questions Students Ask</h2>
+            <div class="accordion" id="faq-accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" aria-expanded="false">
+                        Is My Gap Too Long?
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>A longer gap does not automatically mean your journey is over. Every profile is different.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" aria-expanded="false">
+                        Will Universities Reject Me?
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Universities often consider multiple factors, not just a study gap.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" aria-expanded="false">
+                        Will My Visa Be Refused?
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Visa decisions depend on many elements beyond a study gap alone.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" aria-expanded="false">
+                        What Documents Might Be Important?
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Academic records, supporting documents, and your overall profile may all play a role.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" aria-expanded="false">
+                        Which Countries Are More Flexible?
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Different destinations evaluate profiles differently. A profile assessment helps identify realistic options.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container fade-in">
+            <h2 class="text-center">Students Like You</h2>
+            <p class="disclaimer text-center mb-2">*These are hypothetical examples provided for illustration, not real outcomes or guarantees.</p>
+            
+            <div class="grid grid-2">
+                <div class="card student-card hover-lift">
+                    <h3>Arif</h3>
+                    <div class="student-data">
+                        <p><span>Gap:</span> 2 Years</p>
+                        <p><span>Concern:</span> Unsure whether he could continue studying.</p>
+                    </div>
+                    <div class="student-step">
+                        Possible Next Step: Documents & Budget Evaluation
+                    </div>
+                </div>
+                <div class="card student-card hover-lift">
+                    <h3>Nusrat</h3>
+                    <div class="student-data">
+                        <p><span>Gap:</span> 4 Years</p>
+                        <p><span>Concern:</span> Career break after graduation.</p>
+                    </div>
+                    <div class="student-step">
+                        Possible Next Step: Country Shortlist
+                    </div>
+                </div>
+                <div class="card student-card hover-lift">
+                    <h3>Fahim</h3>
+                    <div class="student-data">
+                        <p><span>Gap:</span> 6 Years</p>
+                        <p><span>Concern:</span> Unsure if options still existed.</p>
+                    </div>
+                    <div class="student-step">
+                        Possible Next Step: Profile Evaluation
+                    </div>
+                </div>
+                <div class="card student-card hover-lift">
+                    <h3>Tanisha</h3>
+                    <div class="student-data">
+                        <p><span>Gap:</span> 3 Years</p>
+                        <p><span>Concern:</span> Did not know where to begin.</p>
+                    </div>
+                    <div class="student-step">
+                        Possible Next Step: Find My Starting Point
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-2 pt-2">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container fade-in">
+            <h2 class="text-center mb-2">A Study Gap Is Only One Part Of The Picture</h2>
+            <div class="grid grid-3">
+                <div class="card factor-card hover-lift">
+                    <div class="factor-icon">A</div>
+                    <h3>Academic Background</h3>
+                    <p>Your previous grades and relevance of prior studies.</p>
+                </div>
+                <div class="card factor-card hover-lift">
+                    <div class="factor-icon">E</div>
+                    <h3>English Score</h3>
+                    <p>Proficiency tests like IELTS or PTE can strengthen applications.</p>
+                </div>
+                <div class="card factor-card hover-lift">
+                    <div class="factor-icon">$</div>
+                    <h3>Budget</h3>
+                    <p>Financial readiness for tuition and living expenses.</p>
+                </div>
+                <div class="card factor-card hover-lift">
+                    <div class="factor-icon">C</div>
+                    <h3>Career History</h3>
+                    <p>Work experience related to your field can sometimes contextualize a gap.</p>
+                </div>
+                <div class="card factor-card hover-lift">
+                    <div class="factor-icon">D</div>
+                    <h3>Supporting Documents</h3>
+                    <p>Clear documentation outlining your timeline and activities.</p>
+                </div>
+                <div class="card factor-card hover-lift">
+                    <div class="factor-icon">P</div>
+                    <h3>Future Study Plan</h3>
+                    <p>How the intended course aligns logically with your background.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-dark text-center">
+        <div class="container fade-in">
+            <h2>Not Sure What Your Gap Means?</h2>
+            <p style="max-width: 600px; margin: 0 auto 2rem;">Every study gap is different. A quick assessment can help identify your current stage and next step.</p>
+            <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container fade-in">
+            <h2 class="text-center">Where Are You In The Journey?</h2>
+            <p class="text-center">You do not need to solve everything today.<br>You simply need to know what comes next.</p>
+            
+            <div class="roadmap" id="journey-roadmap">
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">IELTS / PTE Preparation</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">Documents & Budget Evaluation</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">Country Shortlist</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">University Options</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">Application</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">Visa</div>
+                </div>
+            </div>
+
+            <div class="text-center mt-2">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="text-center">
+        <div class="container fade-in">
+            <h2>Let's Identify Your Next Step</h2>
+            <p style="max-width: 600px; margin: 0 auto 2rem;">Instead of guessing, start with a profile-based assessment.</p>
+            <div class="btn-group">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+                <a href="https://wa.me/8800000000000" class="btn btn-secondary" style="color: var(--dark-green); border-color: var(--dark-green);">Talk To A Counselor</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container fade-in">
+            <h3>LizOn Study Abroad</h3>
+            <div class="footer-links">
+                <a href="studyabroad.html">Home</a>
+                <a href="find-your-path.html">Find Your Path</a>
+                <a href="assessment.html">Assessment</a>
+                <a href="https://wa.me/8800000000000">WhatsApp</a>
+            </div>
+            <div class="copyright">
+                &copy; <span id="year"></span> LizOn Study Abroad. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="mobile-cta">
+        <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+    </div>
+
+    <script>
+        // Update copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Accordion Logic
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const content = header.nextElementSibling;
+                const isActive = item.classList.contains('active');
+                
+                // Close all other accordions
+                document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                        otherItem.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Toggle current accordion
+                if (isActive) {
+                    item.classList.remove('active');
+                    content.style.maxHeight = null;
+                    header.setAttribute('aria-expanded', 'false');
+                } else {
+                    item.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    header.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        // Intersection Observer for Fade-in Animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const roadmapItems = document.querySelectorAll('.roadmap-item');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Staggered animation for roadmap items
+        const roadmapObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const items = entry.target.querySelectorAll('.roadmap-item');
+                    items.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, index * 150);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const roadmapSection = document.getElementById('journey-roadmap');
+        if (roadmapSection) {
+            roadmapObserver.observe(roadmapSection);
+        }
+    </script>
+</body>
+</html>

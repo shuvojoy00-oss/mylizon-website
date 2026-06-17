@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low GPA | LizOn Study Abroad</title>
+    <meta name="description" content="Understand how a lower GPA fits into your study abroad profile and discover your next step with LizOn Study Abroad.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark-green: #0a3622;
+            --primary-green-light: #125c3a;
+            --accent-gold: #D4AF37;
+            --accent-gold-hover: #b5952f;
+            --white: #ffffff;
+            --light-gray: #F5F7FA;
+            --text-main: #1a1d20;
+            --text-muted: #4a5568;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--primary-dark-green);
+        }
+
+        h1 { font-size: 2.5rem; font-weight: 700; }
+        h2 { font-size: 2rem; font-weight: 600; }
+        h3 { font-size: 1.25rem; font-weight: 600; }
+        p { margin-bottom: 1rem; color: var(--text-muted); }
+
+        /* Layout Utility */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .bg-gray {
+            background-color: var(--light-gray);
+        }
+
+        .bg-dark {
+            background-color: var(--primary-dark-green);
+            color: var(--white);
+        }
+        
+        .bg-dark h1, .bg-dark h2, .bg-dark p {
+            color: var(--white);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-gold);
+            color: var(--primary-dark-green);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--accent-gold);
+            color: var(--primary-dark-green);
+            transform: translateY(-2px);
+        }
+        
+        .btn-dark {
+            background-color: var(--primary-dark-green);
+            color: var(--white);
+        }
+
+        .btn-dark:hover {
+            background-color: var(--primary-green-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-dark-green);
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-lift {
+            transition: var(--transition);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Sections */
+        /* Hero */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .label-small {
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto 1rem;
+            font-size: 1.125rem;
+        }
+
+        /* Grids */
+        .grid-6 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .grid-card-simple {
+            background: var(--white);
+            padding: 1.5rem 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+            color: var(--primary-dark-green);
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-bg {
+            background: var(--light-gray);
+            border: none;
+        }
+
+        .card-label {
+            font-size: 0.875rem;
+            color: var(--primary-dark-green);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        /* Accordion */
+        .accordion {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--white);
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-dark-green);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: inherit;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            transition: var(--transition);
+        }
+
+        .accordion-item.active .accordion-header::after {
+            content: '−';
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 1.5rem;
+        }
+
+        .accordion-item.active .accordion-content {
+            padding-bottom: 1.5rem;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            max-width: 600px;
+            margin: 4rem auto 0;
+            position: relative;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15px;
+            height: 100%;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .roadmap-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .roadmap-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .roadmap-dot {
+            position: absolute;
+            left: 6px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 4px solid var(--accent-gold);
+            z-index: 2;
+        }
+
+        .roadmap-content {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--primary-dark-green);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark-green);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 3rem;
+        }
+
+        @media(min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.875rem;
+        }
+
+        /* Sticky CTA Mobile */
+        .sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .sticky-cta .btn {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            .hero { padding: 4rem 0; }
+            .section-padding { padding: 4rem 0; }
+            .btn-group { flex-direction: column; width: 100%; }
+            .btn-group .btn { width: 100%; }
+            
+            /* Add padding bottom to body for sticky CTA */
+            body { padding-bottom: 80px; }
+            .sticky-cta { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">LizOn Study Abroad</div>
+        </div>
+    </nav>
+
+    <section class="hero bg-dark fade-up">
+        <div class="container">
+            <span class="label-small">LizOn Study Abroad</span>
+            <h1>My GPA Is Low. What Are My Options?</h1>
+            <p>A lower GPA may create challenges, but it does not automatically define your entire study abroad journey.</p>
+            <p>Understanding your full profile is often more important than focusing on one number alone.</p>
+            <div class="btn-group">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+                <a href="https://wa.me/8800000000000" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Talk To A Counselor</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-gray fade-up">
+        <div class="container text-center">
+            <h2>A Low GPA Is Not The Entire Profile</h2>
+            <p style="max-width: 800px; margin: 0 auto;">Academic results matter. However, universities often review multiple factors when evaluating applications. A GPA is one part of a much larger picture.</p>
+            
+            <div class="grid-6">
+                <div class="grid-card-simple hover-lift">Academic Background</div>
+                <div class="grid-card-simple hover-lift">English Score</div>
+                <div class="grid-card-simple hover-lift">Study Gap</div>
+                <div class="grid-card-simple hover-lift">Budget</div>
+                <div class="grid-card-simple hover-lift">Supporting Documents</div>
+                <div class="grid-card-simple hover-lift">Future Goals</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding fade-up">
+        <div class="container">
+            <div class="text-center">
+                <h2>Questions Students Often Ask</h2>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">Can I Study Abroad With A Low GPA?</button>
+                    <div class="accordion-content">
+                        <p style="padding-top: 1rem;">Every profile is different. GPA is only one factor among many.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Do All Universities Have The Same Requirements?</button>
+                    <div class="accordion-content">
+                        <p style="padding-top: 1rem;">Different universities and programs may evaluate profiles differently.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Can IELTS Or PTE Help Strengthen My Profile?</button>
+                    <div class="accordion-content">
+                        <p style="padding-top: 1rem;">English proficiency can be an important part of an application.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Should I Give Up Because Of My GPA?</button>
+                    <div class="accordion-content">
+                        <p style="padding-top: 1rem;">Before making assumptions, it is important to evaluate your complete profile.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">What Should I Do Next?</button>
+                    <div class="accordion-content">
+                        <p style="padding-top: 1rem;">Start by understanding your current stage and overall profile.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-gray fade-up">
+        <div class="container">
+            <div class="text-center">
+                <h2>Students Like You</h2>
+                <p><em>*These are hypothetical examples representing common student profiles.</em></p>
+            </div>
+            
+            <div class="grid-4">
+                <div class="card hover-lift">
+                    <div class="card-label">Arif</div>
+                    <h3>Lower GPA than expected</h3>
+                    <p style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);"><strong>Possible Next Step:</strong><br>Profile Evaluation</p>
+                </div>
+                <div class="card hover-lift">
+                    <div class="card-label">Nusrat</div>
+                    <h3>Average academic performance</h3>
+                    <p style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);"><strong>Possible Next Step:</strong><br>Country Shortlist</p>
+                </div>
+                <div class="card hover-lift">
+                    <div class="card-label">Fahim</div>
+                    <h3>Unsure whether universities would consider his profile</h3>
+                    <p style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);"><strong>Possible Next Step:</strong><br>Documents & Budget Evaluation</p>
+                </div>
+                <div class="card hover-lift">
+                    <div class="card-label">Tanisha</div>
+                    <h3>Did not know where to begin</h3>
+                    <p style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                        <strong>Possible Next Step:</strong><br>
+                        <a href="assessment.html" style="color: var(--accent-gold); font-weight: 600;">Find My Starting Point →</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding fade-up">
+        <div class="container text-center">
+            <h2>What Else Shapes A Study Abroad Profile?</h2>
+            
+            <div class="grid-3">
+                <div class="card card-bg hover-lift">
+                    <h3>English Score</h3>
+                    <p>Standardized test scores like IELTS or PTE can demonstrate your readiness for English-taught programs.</p>
+                </div>
+                <div class="card card-bg hover-lift">
+                    <h3>Study Gap</h3>
+                    <p>The timeline of your education and how you have spent any gap years is carefully considered.</p>
+                </div>
+                <div class="card card-bg hover-lift">
+                    <h3>Budget</h3>
+                    <p>Financial planning is crucial to finding programs and countries that align with your resources.</p>
+                </div>
+                <div class="card card-bg hover-lift">
+                    <h3>Course Selection</h3>
+                    <p>Applying for a program that logically follows your previous studies strengthens your intent.</p>
+                </div>
+                <div class="card card-bg hover-lift">
+                    <h3>Supporting Documents</h3>
+                    <p>A well-crafted Statement of Purpose (SOP) and strong references add depth to your application.</p>
+                </div>
+                <div class="card card-bg hover-lift">
+                    <h3>Future Study Plan</h3>
+                    <p>Universities look for clear career goals and a structured plan for your academic future.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-dark fade-up text-center">
+        <div class="container">
+            <h2>Not Sure Where You Stand?</h2>
+            <p style="max-width: 600px; margin: 0 auto 2rem;">A quick assessment can help identify your current stage and the next step in your journey.</p>
+            <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+        </div>
+    </section>
+
+    <section class="section-padding fade-up">
+        <div class="container">
+            <div class="text-center">
+                <h2>Your Journey, One Step At A Time</h2>
+                <p>Most students do not need all the answers today. They simply need to know what comes next.</p>
+            </div>
+            
+            <div class="roadmap">
+                <div class="roadmap-item hover-lift">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">IELTS / PTE Preparation</div>
+                </div>
+                <div class="roadmap-item hover-lift">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">Documents & Budget Evaluation</div>
+                </div>
+                <div class="roadmap-item hover-lift">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">Country Shortlist</div>
+                </div>
+                <div class="roadmap-item hover-lift">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">University Options</div>
+                </div>
+                <div class="roadmap-item hover-lift">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">Application</div>
+                </div>
+                <div class="roadmap-item hover-lift">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">Visa</div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 3rem;">
+                <a href="assessment.html" class="btn btn-dark">Find My Starting Point</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-gray fade-up text-center">
+        <div class="container">
+            <h2>Let's Identify Your Next Step</h2>
+            <p style="max-width: 600px; margin: 0 auto;">Your GPA is only one part of your story. Start with a profile-based assessment.</p>
+            <div class="btn-group">
+                <a href="assessment.html" class="btn btn-dark">Find My Starting Point</a>
+                <a href="https://wa.me/8800000000000" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" style="border-color: var(--primary-dark-green); color: var(--primary-dark-green);">Talk To A Counselor</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 style="color: var(--white); margin-bottom: 1rem;">LizOn Study Abroad</h3>
+                    <p style="color: rgba(255,255,255,0.7); max-width: 300px;">Helping students navigate their study abroad journey with clarity and confidence.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--white); margin-bottom: 1rem;">Quick Links</h4>
+                    <div class="footer-links">
+                        <a href="index.html">Home</a>
+                        <a href="find-your-path.html">Find Your Path</a>
+                        <a href="assessment.html">Assessment</a>
+                        <a href="https://wa.me/8800000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 LizOn Study Abroad. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="sticky-cta">
+        <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Accordion Logic
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const item = this.parentElement;
+                    const content = this.nextElementSibling;
+                    
+                    // Close others
+                    document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                        }
+                    });
+
+                    // Toggle current
+                    item.classList.toggle('active');
+                    if (item.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = null;
+                    }
+                });
+            });
+
+            // Intersection Observer for Fade Animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-up').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>

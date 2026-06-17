@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholarship Options | LizOn Study Abroad</title>
+    <meta name="description" content="Explore scholarship opportunities realistically and identify your next step with LizOn Study Abroad.">
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-color: #0F3F2C; /* Dark Green */
+            --accent-color: #D4AF37; /* Gold Accent */
+            --accent-hover: #c29e2f;
+            --bg-light: #F5F7F6; /* Light Gray */
+            --text-main: #1A201D; /* Dark grey, not pure black */
+            --text-muted: #4A5550;
+            --white: #FFFFFF;
+            --border-radius: 8px;
+            --card-shadow: 0 4px 12px rgba(15, 63, 44, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            background-color: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 70px; /* Space for sticky mobile CTA */
+        }
+
+        h1, h2, h3 {
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        a {
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .bg-light {
+            background-color: var(--bg-light);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn-group.center {
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Cards & Grids */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(15, 63, 44, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(15, 63, 44, 0.12);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Specific Sections */
+        /* Hero */
+        .hero {
+            padding: 8rem 0 6rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.125rem;
+            max-width: 600px;
+        }
+
+        .hero .label {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .hero .btn-secondary {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        .hero .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--primary-color);
+        }
+
+        /* FAQ Accordion */
+        .accordion {
+            margin-top: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .accordion-item {
+            background: var(--white);
+            border: 1px solid rgba(15, 63, 44, 0.1);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-btn {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .accordion-btn:hover {
+            background-color: rgba(15, 63, 44, 0.02);
+        }
+
+        .accordion-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            color: var(--accent-color);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content p {
+            padding: 0 1.5rem 1.5rem;
+            margin: 0;
+        }
+
+        /* Students Cards */
+        .student-card .meta {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(15, 63, 44, 0.1);
+        }
+        
+        .student-card .meta-link {
+            color: var(--accent-color);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        
+        .student-card .meta-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .roadmap-step {
+            background: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--primary-color);
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(15, 63, 44, 0.05);
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .roadmap-arrow {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Sticky Mobile CTA */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        .sticky-cta .btn {
+            width: 100%;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 0;
+            }
+            .hero {
+                padding: 6rem 0 4rem;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+            .sticky-cta {
+                display: block;
+            }
+            body {
+                padding-bottom: 80px;
+            }
+        }
+        @media (min-width: 769px) {
+            body {
+                padding-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="container fade-in">
+            <span class="label">LizOn Study Abroad</span>
+            <h1>Looking For Scholarship Options?<br>Let's Start With Reality.</h1>
+            <p>Many students begin their study abroad journey hoping to receive a scholarship. The first step is understanding your profile and identifying which opportunities may be realistic for your situation.</p>
+            <div class="btn-group">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+                <a href="https://wa.me/8801611611139" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Talk To A Counselor</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container fade-in">
+            <div class="text-center" style="max-width: 800px; margin: 0 auto;">
+                <h2>Not Every Scholarship Looks The Same</h2>
+                <p>When students hear the word "scholarship", they often imagine full funding. In reality, scholarships come in different forms and vary significantly between institutions, countries, and student profiles.</p>
+            </div>
+            
+            <div class="grid">
+                <div class="card fade-in">
+                    <h3>Partial Scholarships</h3>
+                    <p>Often provided as a tuition fee discount. These are more common and can significantly reduce the overall financial burden.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3>Merit Scholarships</h3>
+                    <p>Awarded based on strong academic records, standardized test scores, or outstanding extracurricular achievements.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3>University Scholarships</h3>
+                    <p>Specific funding offered directly by the institution to attract international talent to their programs.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3>Country-Specific Opportunities</h3>
+                    <p>Government-backed grants or initiatives targeted at students coming from specific regions or countries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container fade-in">
+            <h2 class="text-center">Questions Students Often Ask</h2>
+            <div class="accordion">
+                
+                <div class="accordion-item">
+                    <button class="accordion-btn" aria-expanded="false">
+                        Can I Get A Full Scholarship?
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Scholarship opportunities vary widely and depend on many factors. It is important to evaluate your profile before making assumptions.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-btn" aria-expanded="false">
+                        Does GPA Matter?
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Academic performance may play an important role, but scholarship decisions often consider multiple factors.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-btn" aria-expanded="false">
+                        Do IELTS Or PTE Scores Matter?
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>English proficiency can be an important part of a competitive profile.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-btn" aria-expanded="false">
+                        Which Countries Offer Scholarships?
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Different countries and institutions may provide different opportunities.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-btn" aria-expanded="false">
+                        How Do I Know What Is Realistic?
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Start by understanding your profile and identifying your current stage.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container fade-in">
+            <h2 class="text-center">Students Like You</h2>
+            <p class="text-center" style="max-width: 600px; margin: 0 auto; font-size: 0.9rem;">(The following are hypothetical examples designed to illustrate common situations.)</p>
+            
+            <div class="grid">
+                <div class="card student-card fade-in">
+                    <h3>Arif</h3>
+                    <p><strong>Concern:</strong> Wanted to understand scholarship opportunities before choosing a country.</p>
+                    <div class="meta">
+                        <strong>Possible Next Step:</strong><br>
+                        Profile Evaluation
+                    </div>
+                </div>
+
+                <div class="card student-card fade-in">
+                    <h3>Nusrat</h3>
+                    <p><strong>Concern:</strong> Focused only on full scholarships.</p>
+                    <div class="meta">
+                        <strong>Possible Next Step:</strong><br>
+                        Scholarship Planning
+                    </div>
+                </div>
+
+                <div class="card student-card fade-in">
+                    <h3>Fahim</h3>
+                    <p><strong>Concern:</strong> Unsure whether his profile was competitive.</p>
+                    <div class="meta">
+                        <strong>Possible Next Step:</strong><br>
+                        Documents & Budget Evaluation
+                    </div>
+                </div>
+
+                <div class="card student-card fade-in">
+                    <h3>Tanisha</h3>
+                    <p><strong>Concern:</strong> Did not know where to begin.</p>
+                    <div class="meta">
+                        <strong>Possible Next Step:</strong><br>
+                        <a href="assessment.html" class="meta-link">Find My Starting Point &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container fade-in">
+            <h2 class="text-center">Your Entire Profile Matters</h2>
+            
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                <div class="card fade-in">
+                    <h3>Academic Performance</h3>
+                    <p>Past grades and academic trajectory form the foundation of most merit-based assessments.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3>English Score</h3>
+                    <p>Scores from standardized tests like IELTS or PTE demonstrate readiness for international education.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3>Study Gap</h3>
+                    <p>How time between studies is explained and utilized can influence an institution's evaluation.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3>Budget Planning</h3>
+                    <p>Understanding personal financial capacity helps align goals with realistic partial scholarship options.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3>Course Selection</h3>
+                    <p>Some specific fields of study receive more departmental funding or global grants than others.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3>University Choice</h3>
+                    <p>Institutional budgets and strategic recruitment goals heavily influence the availability of funds.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container fade-in text-center">
+            <h2>Scholarships Are Part Of A Bigger Journey</h2>
+            <p style="max-width: 600px; margin: 0 auto 2rem;">Scholarship planning is often most effective when viewed as part of the entire study abroad journey.</p>
+            
+            <div class="roadmap fade-in">
+                <div class="roadmap-step">IELTS / PTE Preparation</div>
+                <div class="roadmap-arrow">&#8595;</div>
+                
+                <div class="roadmap-step">Documents & Budget Evaluation</div>
+                <div class="roadmap-arrow">&#8595;</div>
+                
+                <div class="roadmap-step">Country Shortlist</div>
+                <div class="roadmap-arrow">&#8595;</div>
+                
+                <div class="roadmap-step">University Options</div>
+                <div class="roadmap-arrow">&#8595;</div>
+                
+                <div class="roadmap-step">Application</div>
+                <div class="roadmap-arrow">&#8595;</div>
+                
+                <div class="roadmap-step" style="background: var(--primary-color); color: var(--white); border-color: var(--primary-color);">Visa</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container fade-in text-center">
+            <h2 style="font-size: 2.25rem;">Not Sure What Opportunities May Fit Your Profile?</h2>
+            <p style="font-size: 1.125rem; max-width: 600px; margin: 1rem auto 2rem;">A quick assessment can help identify your current stage and next step.</p>
+            <a href="assessment.html" class="btn btn-primary" style="font-size: 1.125rem; padding: 1rem 2rem;">Find My Starting Point</a>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container fade-in text-center">
+            <h2>Start With Your Profile, Not Assumptions</h2>
+            <p style="max-width: 600px; margin: 0 auto;">Scholarship opportunities are often easier to understand once you know where you stand today.</p>
+            <div class="btn-group center">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+                <a href="https://wa.me/8801611611139" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Talk To A Counselor</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <a href="studyabroad.html" class="footer-brand">LizOn Study Abroad</a>
+            <ul class="footer-links">
+                <li><a href="studyabroad.html">Home</a></li>
+                <li><a href="find-your-path.html">Find Your Path</a></li>
+                <li><a href="assessment.html">Assessment</a></li>
+                <li><a href="https://wa.me/8801611611139" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            </ul>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> LizOn Study Abroad. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="sticky-cta">
+        <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Accordion Logic
+            const accordions = document.querySelectorAll(".accordion-btn");
+            accordions.forEach(acc => {
+                acc.addEventListener("click", function() {
+                    const item = this.parentElement;
+                    const content = this.nextElementSibling;
+                    const isActive = item.classList.contains("active");
+                    
+                    // Close all others
+                    document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                        otherItem.classList.remove("active");
+                        otherItem.querySelector('.accordion-btn').setAttribute('aria-expanded', 'false');
+                        otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                    });
+
+                    // Toggle current
+                    if (!isActive) {
+                        item.classList.add("active");
+                        this.setAttribute('aria-expanded', 'true');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            // Fade-in Animation Logic using Intersection Observer
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

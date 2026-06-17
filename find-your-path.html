@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Path | LizOn Study Abroad</title>
+    <meta name="description" content="Identify the next step in your study abroad journey. Explore pathways for study gaps, low GPA, scholarships, IELTS/PTE preparation, and more.">
+    <style>
+        :root {
+            --primary: #11422b;
+            --primary-light: #1a6341;
+            --accent: #d4af37;
+            --accent-hover: #bda032;
+            --bg: #ffffff;
+            --surface: #f5f7f6;
+            --text-main: #1c2320;
+            --text-muted: #4a5951;
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --shadow-sm: 0 2px 8px rgba(17, 66, 43, 0.05);
+            --shadow-md: 0 8px 24px rgba(17, 66, 43, 0.08);
+            --shadow-hover: 0 12px 32px rgba(17, 66, 43, 0.12);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            line-height: 1.2;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        h2 { font-size: 2rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        p { margin-bottom: 1rem; color: var(--text-muted); }
+
+        .label-small {
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            min-height: 48px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--text-main);
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--bg);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        /* Cards */
+        .grid {
+            display: grid;
+            grid-gap: 24px;
+        }
+
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        
+        .card {
+            background: var(--bg);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(17, 66, 43, 0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .card-content {
+            flex-grow: 1;
+        }
+
+        .card .btn {
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        /* Header / Nav */
+        header {
+            padding: 24px 0;
+            background: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand::before {
+            content: '';
+            display: block;
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent);
+            border-radius: 50%;
+        }
+
+        /* Sections */
+        .hero {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+            padding: 100px 0;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-visual {
+            background: var(--bg);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        /* Timeline Visual */
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: var(--primary);
+            opacity: 0.2;
+        }
+
+        .timeline li {
+            position: relative;
+            padding-bottom: 32px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .timeline li:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline li::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 4px solid var(--bg);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .timeline li span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 4px;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 48px;
+        }
+
+        .bg-surface {
+            background-color: var(--surface);
+        }
+
+        /* Roadmap Visual */
+        .roadmap {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            margin-top: 60px;
+            gap: 16px;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: var(--accent);
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .roadmap-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-circle {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: var(--bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 16px;
+            border: 4px solid var(--surface);
+            transition: var(--transition);
+        }
+
+        .roadmap-step:hover .step-circle {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .step-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1.4;
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(212, 175, 55, 0.15);
+            color: #8c7322;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        /* CTA Sections */
+        .assessment-cta {
+            background: var(--primary);
+            color: var(--bg);
+            text-align: center;
+            border-radius: var(--radius-lg);
+            padding: 64px 24px;
+            margin: 40px auto;
+            max-width: 1000px;
+        }
+
+        .assessment-cta h2, .assessment-cta p {
+            color: var(--bg);
+        }
+
+        .assessment-cta p {
+            opacity: 0.9;
+        }
+
+        .final-cta {
+            text-align: center;
+            padding: 80px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--surface);
+            padding: 60px 0 24px;
+            border-top: 1px solid rgba(17, 66, 43, 0.1);
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(17, 66, 43, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Sticky Mobile CTA */
+        .mobile-sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg);
+            padding: 16px 24px;
+            box-shadow: 0 -4px 12px rgba(17, 66, 43, 0.08);
+            z-index: 1000;
+        }
+
+        .mobile-sticky-cta .btn {
+            width: 100%;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            h1 { font-size: 2rem; }
+            .roadmap {
+                flex-direction: column;
+                gap: 24px;
+                margin-top: 40px;
+            }
+            .roadmap::before {
+                top: 0;
+                bottom: 0;
+                left: 24px;
+                width: 2px;
+                height: auto;
+            }
+            .roadmap-step {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                width: 100%;
+            }
+            .step-circle {
+                margin: 0 20px 0 0;
+                flex-shrink: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 56px 0; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .btn-group { flex-direction: column; }
+            .btn-group .btn { width: 100%; }
+            .mobile-sticky-cta { display: block; }
+            body { padding-bottom: 80px; }
+            .assessment-cta { margin: 24px; padding: 40px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="brand">LizOn</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="hero">
+            <div class="container hero-grid">
+                <div class="hero-text fade-in">
+                    <span class="label-small">LizOn Study Abroad</span>
+                    <h1>Every Journey Starts Somewhere</h1>
+                    <p>Not sure where to begin? Choose the situation that best describes you and discover the next step in your study abroad journey.</p>
+                    <div class="btn-group">
+                        <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+                        <a href="https://wa.me/8800000000000" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Talk To A Counselor</a>
+                    </div>
+                </div>
+                <div class="hero-visual fade-in">
+                    <ul class="timeline">
+                        <li>IELTS/PTE <span>Preparation & Registration</span></li>
+                        <li>Documents & Budget <span>Evaluation & Planning</span></li>
+                        <li>Country Shortlist <span>Finding the right fit</span></li>
+                        <li>University Options <span>Selecting programs</span></li>
+                        <li>Application <span>Submission & Follow-up</span></li>
+                        <li>Visa <span>Processing & Approval</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-surface" id="holding-back">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2>What's Holding You Back?</h2>
+                    <p>Choose the path that best matches your current situation.</p>
+                </div>
+                <div class="grid grid-3">
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3>I Have A Study Gap</h3>
+                            <p>I'm worried my gap may affect my study abroad plans.</p>
+                        </div>
+                        <a href="study-gap.html" class="btn btn-outline">Explore This Path</a>
+                    </div>
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3>My GPA Is Low</h3>
+                            <p>I'm not sure whether my academic results are strong enough.</p>
+                        </div>
+                        <a href="low-gpa.html" class="btn btn-outline">Explore This Path</a>
+                    </div>
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3>I Haven't Started IELTS/PTE</h3>
+                            <p>I want to study abroad but don't know where to begin.</p>
+                        </div>
+                        <a href="not-started-ielts.html" class="btn btn-outline">Explore This Path</a>
+                    </div>
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3>I Need Scholarship Options</h3>
+                            <p>I want to understand what funding opportunities may be available.</p>
+                        </div>
+                        <a href="scholarships.html" class="btn btn-outline">Explore This Path</a>
+                    </div>
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3>I Was Rejected Before</h3>
+                            <p>I want to understand my next options.</p>
+                        </div>
+                        <a href="rejected-before.html" class="btn btn-outline">Explore This Path</a>
+                    </div>
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3>I'm Ready To Apply</h3>
+                            <p>I already have my documents and want to move forward.</p>
+                        </div>
+                        <a href="ready-to-apply.html" class="btn btn-outline">Explore This Path</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="approach">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2>Most Students Don't Start With A Country</h2>
+                    <p>Many students begin their study abroad journey by asking which country they should choose. Before selecting a destination, it's often more important to understand your current profile, documents, budget, and readiness.</p>
+                </div>
+                
+                <div class="roadmap fade-in">
+                    <div class="roadmap-step">
+                        <div class="step-circle">1</div>
+                        <div class="step-title">IELTS / PTE Preparation</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-circle">2</div>
+                        <div class="step-title">Documents & Budget Evaluation</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-circle">3</div>
+                        <div class="step-title">Country Shortlist</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-circle">4</div>
+                        <div class="step-title">University Options</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-circle">5</div>
+                        <div class="step-title">Application</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-circle">6</div>
+                        <div class="step-title">Visa</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-surface" id="students">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2>Students Like You</h2>
+                </div>
+                <div class="grid grid-2">
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <span class="tag">IELTS/PTE Preparation</span>
+                            <h3>Arif</h3>
+                            <p><strong>Concern:</strong> Has not started IELTS.</p>
+                        </div>
+                        <a href="#" class="btn btn-outline">Explore Path</a>
+                    </div>
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <span class="tag">Study Gap Evaluation</span>
+                            <h3>Nusrat</h3>
+                            <p><strong>Concern:</strong> 2-Year Study Gap</p>
+                        </div>
+                        <a href="#" class="btn btn-outline">Explore Path</a>
+                    </div>
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <span class="tag">Profile Evaluation</span>
+                            <h3>Fahim</h3>
+                            <p><strong>Concern:</strong> Low GPA</p>
+                        </div>
+                        <a href="#" class="btn btn-outline">Explore Path</a>
+                    </div>
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <span class="tag">Find My Starting Point</span>
+                            <h3>Tanisha</h3>
+                            <p><strong>Concern:</strong> Unsure which country fits her budget</p>
+                        </div>
+                        <a href="assessment.html" class="btn btn-primary">Take Assessment</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="assessment">
+            <div class="container">
+                <div class="assessment-cta fade-in">
+                    <h2>Not Sure Which Path Fits You?</h2>
+                    <p>You don't need to know everything today. A quick assessment can help identify your current stage and the next step in your journey.</p>
+                    <div class="btn-group" style="justify-content: center;">
+                        <a href="assessment.html" class="btn btn-accent">Find My Starting Point</a>
+                        <a href="https://wa.me/8800000000000" class="btn btn-outline" style="border-color: var(--bg); color: var(--bg);" target="_blank" rel="noopener noreferrer">Talk To A Counselor</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="final-cta" id="final">
+            <div class="container fade-in">
+                <h2>Study Abroad Starts With The Right First Step</h2>
+                <p>Let's identify where you are today and what should happen next.</p>
+                <a href="assessment.html" class="btn btn-primary" style="margin-top: 24px;">Find My Starting Point</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="flex: 2; min-width: 250px;">
+                    <a href="index.html" class="brand" style="margin-bottom: 16px;">LizOn Study Abroad</a>
+                    <p style="font-size: 0.9rem; max-width: 300px;">Guiding you to the right educational path with clarity, precision, and confidence.</p>
+                </div>
+                <div class="footer-col" style="flex: 1; min-width: 150px;">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="find-your-path.html">Find Your Path</a></li>
+                        <li><a href="assessment.html">Assessment</a></li>
+                        <li><a href="https://wa.me/8800000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <span id="year"></span> LizOn Study Abroad
+            </div>
+        </div>
+    </footer>
+
+    <div class="mobile-sticky-cta">
+        <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+    </div>
+
+    <script>
+        // Set dynamic year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Fade-in animation observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

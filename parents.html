@@ -690,4 +690,102 @@
                 </div>
                 <div class="card fade-in">
                     <h3>Career Goals</h3>
-                    <p>Long-term aspirations determine the most relevant programs and degree
+                    <p>Long-term aspirations determine the most relevant programs and degree levels.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3>Timeline</h3>
+                    <p>Intake dates and visa processing times dictate when applications need to be submitted.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="card text-center fade-in" style="background-color: var(--bg-light-gray); border-color: var(--gold); border-width: 2px;">
+                <h2>Not Sure Where To Begin?</h2>
+                <p>A quick assessment can help identify the student's current stage and next step.</p>
+                <br>
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section cta-section">
+        <div class="container fade-in">
+            <h2>Let's Understand The Next Step Together</h2>
+            <p style="max-width: 600px; margin: 0 auto 32px;">Before making decisions, start by understanding where the student currently stands.</p>
+            <div class="btn-group">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+                <a href="https://wa.me/8801611611139" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Talk To A Counselor</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">LizOn Study Abroad</div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="find-your-path.html">Find Your Path</a>
+                <a href="assessment.html">Assessment</a>
+                <a href="https://wa.me/8801611611139" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            </div>
+            <p style="font-size: 0.875rem; margin: 0;">&copy; 2024 LizOn Study Abroad. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="sticky-mobile-cta">
+        <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Accordion Functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                
+                header.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all items
+                    accordionItems.forEach(accItem => {
+                        accItem.classList.remove('active');
+                        accItem.querySelector('.accordion-content').style.maxHeight = null;
+                    });
+                    
+                    // Open clicked item if it wasn't already open
+                    if (!isActive) {
+                        item.classList.add('active');
+                        const content = item.querySelector('.accordion-content');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            // Fade-in Animation on Scroll
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejected Before? | LizOn Study Abroad</title>
+    <meta name="description" content="Understand your next step after a previous rejection and identify your current stage with LizOn Study Abroad.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-green: #0a3224;
+            --dark-green-light: #124734;
+            --gold: #d4af37;
+            --gold-hover: #b5952f;
+            --light-gray: #f4f6f5;
+            --white: #ffffff;
+            --text-dark: #2d3748; /* Avoiding pure black */
+            --text-light: #4a5568;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            color: var(--text-dark);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @media (max-width: 767px) {
+            body {
+                padding-bottom: 80px; /* Space for sticky CTA */
+            }
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.2;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .bg-light { background-color: var(--light-gray); }
+        .bg-dark { background-color: var(--dark-green); color: var(--white); }
+        .bg-dark h1, .bg-dark h2, .bg-dark h3, .bg-dark p { color: var(--white); }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--gold);
+            color: var(--dark-green);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--gold-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-dark {
+            background-color: var(--dark-green);
+            color: var(--white);
+        }
+
+        .btn-dark:hover {
+            background-color: var(--dark-green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10, 50, 36, 0.3);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Header / Navbar */
+        header {
+            padding: 1.5rem 0;
+            background: var(--dark-green);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            color: var(--gold);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Section 1: Hero */
+        .hero {
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 6rem 0 7rem;
+            text-align: center;
+        }
+
+        .hero-label {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero .btn-group {
+            justify-content: center;
+        }
+
+        /* Grids */
+        .grid-6 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        @media (min-width: 768px) {
+            .grid-6 { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .grid-6 { grid-template-columns: repeat(6, 1fr); }
+        }
+
+        .grid-4, .grid-6-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-6-cards { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        /* Cards */
+        .simple-card {
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .profile-card {
+            background: var(--white);
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+            border: 1px solid #edf2f7;
+            text-align: left;
+        }
+
+        .profile-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-green);
+        }
+
+        .profile-card .tag {
+            display: inline-block;
+            background: var(--light-gray);
+            color: var(--text-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .profile-card p {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-card .card-link {
+            color: var(--gold);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        
+        .profile-card .card-link:hover {
+            color: var(--gold-hover);
+        }
+
+        /* Content Cards (Section 5) */
+        .content-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            border-top: 4px solid var(--gold);
+        }
+
+        .content-card h3 {
+            font-size: 1.125rem;
+            color: var(--dark-green);
+            margin-bottom: 0.75rem;
+        }
+
+        .content-card p {
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Section 3: Accordion */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .accordion {
+            margin-top: 2.5rem;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 1.5rem 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--gold);
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active::after {
+            transform: rotate(45deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-content-inner {
+            padding-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        /* Section 7: Journey */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 3rem 0;
+        }
+
+        .roadmap-step {
+            background: var(--white);
+            border: 2px solid var(--dark-green);
+            color: var(--dark-green);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .roadmap-arrow {
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Centralized Alignment */
+        .text-center { text-align: center; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .max-w-3xl { max-width: 768px; }
+        
+        .disclaimer {
+            font-size: 0.875rem;
+            color: #718096;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-green);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        footer .logo {
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Sticky Mobile CTA */
+        .sticky-mobile-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            text-align: center;
+        }
+
+        .sticky-mobile-cta .btn {
+            width: 100%;
+        }
+
+        @media (max-width: 767px) {
+            .sticky-mobile-cta {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">LizOn Study Abroad</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container fade-in">
+            <span class="hero-label">LizOn Study Abroad</span>
+            <h1>Rejected Before?<br>Let's Understand What Comes Next.</h1>
+            <p>A previous rejection can feel discouraging. Before making assumptions about your future options, it helps to understand your profile and identify the next step.</p>
+            <div class="btn-group">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+                <a href="https://wa.me/8801611611139" class="btn btn-secondary">Talk To A Counselor</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light text-center">
+        <div class="container fade-in">
+            <div class="max-w-3xl mx-auto">
+                <h2>A Previous Rejection Is Only One Part Of The Picture</h2>
+                <p>Students may face rejection for many different reasons. Understanding what happened and reviewing your current profile can help create a clearer path forward.</p>
+            </div>
+            
+            <div class="grid-6">
+                <div class="simple-card hover-lift">Academic Profile</div>
+                <div class="simple-card hover-lift">English Score</div>
+                <div class="simple-card hover-lift">Documents</div>
+                <div class="simple-card hover-lift">Study Gap</div>
+                <div class="simple-card hover-lift">Budget</div>
+                <div class="simple-card hover-lift">Future Study Plan</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container faq-section fade-in">
+            <h2 class="text-center">Questions Students Often Ask</h2>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">Does A Rejection Mean My Journey Is Over?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            A previous rejection does not automatically determine your future options. Every situation is different.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">Should I Apply Again Immediately?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Before taking the next step, it is important to understand your profile and evaluate what may need attention.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">What Should I Review First?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Students often begin by reviewing their documents, profile, and overall readiness.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">Do Different Universities Evaluate Applications Differently?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Different institutions and programs may review applications differently.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">What Should I Do Next?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Start by understanding your current stage and identifying your next step.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container fade-in">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2>Students Like You</h2>
+                <p class="disclaimer">Note: These are hypothetical examples to illustrate common scenarios, not guaranteed outcomes.</p>
+            </div>
+
+            <div class="grid-4">
+                <div class="profile-card hover-lift">
+                    <h3>Arif</h3>
+                    <span class="tag">Previous application rejection</span>
+                    <p><strong>Possible Next Step:</strong> Profile Evaluation</p>
+                </div>
+
+                <div class="profile-card hover-lift">
+                    <h3>Nusrat</h3>
+                    <span class="tag">Unsure what caused the rejection</span>
+                    <p><strong>Possible Next Step:</strong> Documents & Budget Evaluation</p>
+                </div>
+
+                <div class="profile-card hover-lift">
+                    <h3>Fahim</h3>
+                    <span class="tag">Lost confidence after rejection</span>
+                    <p><strong>Possible Next Step:</strong> Country Shortlist</p>
+                </div>
+
+                <div class="profile-card hover-lift" style="border: 1px solid var(--gold);">
+                    <h3>Tanisha</h3>
+                    <span class="tag">Did not know where to begin again</span>
+                    <p><strong>Possible Next Step:</strong></p>
+                    <a href="assessment.html" class="card-link">Find My Starting Point &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container fade-in">
+            <h2 class="text-center">Before Taking The Next Step</h2>
+            
+            <div class="grid-6-cards">
+                <div class="content-card hover-lift">
+                    <h3>Academic Documents</h3>
+                    <p>Reviewing transcripts, certificates, and prior academic records for completeness.</p>
+                </div>
+                <div class="content-card hover-lift">
+                    <h3>English Score</h3>
+                    <p>Evaluating current IELTS/PTE scores and determining if improvement is needed.</p>
+                </div>
+                <div class="content-card hover-lift">
+                    <h3>Study Gap</h3>
+                    <p>Assessing how to properly address and document any breaks in education.</p>
+                </div>
+                <div class="content-card hover-lift">
+                    <h3>Budget Planning</h3>
+                    <p>Understanding the financial requirements and aligning them with your current resources.</p>
+                </div>
+                <div class="content-card hover-lift">
+                    <h3>Country Selection</h3>
+                    <p>Exploring destinations that align best with your academic profile and budget.</p>
+                </div>
+                <div class="content-card hover-lift">
+                    <h3>Application Strategy</h3>
+                    <p>Planning the timeline and components of a complete application submission.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-dark text-center">
+        <div class="container fade-in">
+            <h2>Not Sure Where You Stand?</h2>
+            <p class="max-w-3xl mx-auto" style="margin-bottom: 2rem;">A quick assessment can help identify your current stage and the next step in your journey.</p>
+            <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container fade-in">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2>Focus On The Next Step</h2>
+                <p>Most students do not need to solve the entire journey today. They simply need to know what comes next.</p>
+            </div>
+
+            <div class="roadmap">
+                <div class="roadmap-step hover-lift">IELTS / PTE Preparation</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-step hover-lift">Documents & Budget Evaluation</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-step hover-lift">Country Shortlist</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-step hover-lift">University Options</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-step hover-lift">Application</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-step hover-lift">Visa</div>
+            </div>
+
+            <div class="text-center" style="margin-top: 3rem;">
+                <a href="assessment.html" class="btn btn-dark">Find My Starting Point</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="text-center">
+        <div class="container fade-in">
+            <h2>Let's Identify Your Next Step</h2>
+            <p class="max-w-3xl mx-auto">A previous rejection does not automatically define your future path. Start with a profile-based assessment.</p>
+            <div class="btn-group" style="justify-content: center;">
+                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+                <a href="https://wa.me/8801611611139" class="btn btn-secondary">Talk To A Counselor</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container fade-in">
+            <div class="logo">LizOn Study Abroad</div>
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="find-your-path.html">Find Your Path</a>
+                <a href="assessment.html">Assessment</a>
+                <a href="https://wa.me/8801611611139">WhatsApp</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> LizOn Study Abroad. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="sticky-mobile-cta">
+        <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+    </div>
+
+    <script>
+        // Scroll Animation Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Accordion Logic
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const isActive = header.classList.contains('active');
+
+                // Close all other accordions
+                document.querySelectorAll('.accordion-header').forEach(otherHeader => {
+                    otherHeader.classList.remove('active');
+                    otherHeader.nextElementSibling.style.maxHeight = null;
+                });
+
+                // Open clicked accordion if it wasn't active
+                if (!isActive) {
+                    header.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

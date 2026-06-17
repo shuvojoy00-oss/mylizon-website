@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ready To Apply? | LizOn Study Abroad</title>
+    <meta name="description" content="Understand the next steps in your study abroad journey and identify your current stage with LizOn Study Abroad.">
+    <style>
+        :root {
+            --dark-green: #0a2e1c;
+            --dark-green-hover: #134f31;
+            --gold: #d4af37;
+            --gold-hover: #e0be50;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --text-main: #2b302d;
+            --text-muted: #525a56;
+            --border-color: #e5e8e6;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 80px; /* Space for mobile sticky CTA */
+        }
+
+        @media (min-width: 768px) {
+            body { padding-bottom: 0; }
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--dark-green);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        .section-light { background-color: var(--light-gray); }
+        .section-dark { background-color: var(--dark-green); color: var(--white); }
+        .section-dark h2, .section-dark p { color: var(--white); }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--gold);
+            color: var(--dark-green);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border-color: var(--dark-green);
+            color: var(--dark-green);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--dark-green);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-white {
+            background-color: var(--white);
+            color: var(--dark-green);
+        }
+        
+        .btn-white:hover {
+            background-color: var(--light-gray);
+            transform: translateY(-2px);
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 480px) {
+            .actions { flex-direction: row; }
+        }
+
+        /* Header / Nav */
+        header {
+            padding: 1.5rem;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark-green);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 1.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+        }
+
+        .hero .label {
+            display: inline-block;
+            background-color: var(--gold);
+            color: var(--dark-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 { font-size: 2.5rem; }
+        .hero p { max-width: 600px; margin: 0 auto; font-size: 1.125rem; }
+        .hero .actions { justify-content: center; }
+
+        @media (min-width: 768px) {
+            .hero h1 { font-size: 3.5rem; }
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .grid-2 { grid-template-columns: 1fr; }
+        .grid-3 { grid-template-columns: 1fr; }
+
+        @media (min-width: 768px) {
+            .grid-2 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(10, 46, 28, 0.08);
+            border-color: var(--gold);
+        }
+
+        .card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+        
+        .card-student {
+            border-left: 4px solid var(--gold);
+        }
+
+        .student-concern {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .student-step {
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .disclaimer {
+            font-size: 0.875rem;
+            color: #777;
+            text-align: center;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Accordion / FAQ */
+        details {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--dark-green);
+        }
+
+        summary::-webkit-details-marker { display: none; }
+        
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--gold);
+            transition: var(--transition);
+        }
+
+        details[open] summary::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.25rem 1.25rem;
+            color: var(--text-muted);
+        }
+
+        /* Roadmap */
+        .roadmap-container {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .roadmap-item {
+            background: var(--white);
+            border: 2px solid var(--dark-green);
+            color: var(--dark-green);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .roadmap-item:hover {
+            background: var(--dark-green);
+            color: var(--white);
+        }
+
+        .roadmap-arrow {
+            color: var(--gold);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Center utilities */
+        .text-center { text-align: center; }
+
+        /* Footer */
+        footer {
+            background: var(--dark-green);
+            color: var(--white);
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        footer .brand {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: #d1d5d3;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Sticky Mobile CTA */
+        .sticky-mobile {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+            z-index: 1000;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .sticky-mobile .btn {
+            display: block;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .sticky-mobile { display: none; }
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-up.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">LizOn Study Abroad</div>
+    </header>
+
+    <section class="hero fade-up">
+        <span class="label">LizOn Study Abroad</span>
+        <h1>Ready To Apply?<br>Let's Organize Your Next Steps.</h1>
+        <p>If you're serious about studying abroad, the next challenge is often understanding the process, preparing the right documents, and planning your journey carefully.</p>
+        <div class="actions">
+            <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+            <a href="https://wa.me/8801611611139" target="_blank" class="btn btn-secondary">Talk To A Counselor</a>
+        </div>
+    </section>
+
+    <section class="container fade-up">
+        <div class="text-center">
+            <h2>Before Moving Forward</h2>
+            <p>Many students believe they are ready to apply. However, successful preparation often involves more than choosing a university.</p>
+        </div>
+        <div class="grid grid-3">
+            <div class="card">
+                <h3>English Score</h3>
+                <p>Ensure your language proficiency tests meet the specific band requirements of your target programs.</p>
+            </div>
+            <div class="card">
+                <h3>Academic Documents</h3>
+                <p>Gather, verify, and translate your transcripts and certificates well ahead of application deadlines.</p>
+            </div>
+            <div class="card">
+                <h3>Budget Planning</h3>
+                <p>Calculate realistic tuition, living expenses, and available funds to avoid visa stage complications.</p>
+            </div>
+            <div class="card">
+                <h3>Country Selection</h3>
+                <p>Evaluate destinations based on post-study opportunities, cultural fit, and academic strengths.</p>
+            </div>
+            <div class="card">
+                <h3>University Research</h3>
+                <p>Look beyond rankings to find specific program modules and faculties that match your goals.</p>
+            </div>
+            <div class="card">
+                <h3>Application Strategy</h3>
+                <p>Organize your timelines and prepare a balanced mix of safe, target, and reach institutions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container section-light fade-up" style="border-radius: 20px;">
+        <div class="text-center" style="max-width: 800px; margin: 0 auto;">
+            <h2>Questions Students Often Ask</h2>
+            <div style="text-align: left; margin-top: 2rem;">
+                <details>
+                    <summary>Should I Apply To Only One University?</summary>
+                    <div class="faq-answer">Many students explore multiple options before making a final decision. Applying to a well-researched selection increases your chances of finding the best fit.</div>
+                </details>
+                <details>
+                    <summary>Do I Need To Finalize My Country First?</summary>
+                    <div class="faq-answer">Country selection is often easier after understanding your profile and options. Sometimes, your budget or academic background naturally narrows down the best destinations.</div>
+                </details>
+                <details>
+                    <summary>What Documents Should I Prepare?</summary>
+                    <div class="faq-answer">Requirements vary, but academic and supporting documents are often important. Typical requirements include transcripts, IELTS/PTE scores, passport copies, SOPs, and recommendation letters.</div>
+                </details>
+                <details>
+                    <summary>How Long Does The Process Take?</summary>
+                    <div class="faq-answer">Timelines can vary significantly depending on the destination and institution. It is usually recommended to start preparing at least 6 to 12 months before your intended intake.</div>
+                </details>
+                <details>
+                    <summary>What Should I Do First?</summary>
+                    <div class="faq-answer">Understanding your current stage can help identify the next step. Assessing your documents, budget, and academic standing is a crucial baseline.</div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section class="container fade-up">
+        <div class="text-center">
+            <h2>Students Like You</h2>
+            <p class="disclaimer">Note: The following profiles are hypothetical examples intended for illustration, not real outcomes.</p>
+        </div>
+        <div class="grid grid-2">
+            <div class="card card-student">
+                <h3>Arif</h3>
+                <p class="student-concern">"Ready to begin applications but unsure where to start."</p>
+                <p class="student-step">Possible Next Step: University Options</p>
+            </div>
+            <div class="card card-student">
+                <h3>Nusrat</h3>
+                <p class="student-concern">"Needed help organizing documents."</p>
+                <p class="student-step">Possible Next Step: Documents & Budget Evaluation</p>
+            </div>
+            <div class="card card-student">
+                <h3>Fahim</h3>
+                <p class="student-concern">"Unsure which universities matched his profile."</p>
+                <p class="student-step">Possible Next Step: Country Shortlist</p>
+            </div>
+            <div class="card card-student" style="background-color: var(--light-gray); border-color: var(--gold);">
+                <h3>Tanisha</h3>
+                <p class="student-concern">"Wanted a clearer roadmap before applying."</p>
+                <p class="student-step">Possible Next Step: <a href="assessment.html" style="color: var(--gold); text-decoration: underline;">Find My Starting Point</a></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container fade-up">
+        <div class="text-center">
+            <h2>The Journey Before Application</h2>
+            <p>Applications are often stronger when each step is completed thoughtfully.</p>
+            
+            <div class="roadmap-container">
+                <div class="roadmap-item">IELTS / PTE Preparation</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-item">Documents & Budget Evaluation</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-item">Country Shortlist</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-item">University Options</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-item">Application</div>
+                <div class="roadmap-arrow">&darr;</div>
+                <div class="roadmap-item">Visa</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container section-light fade-up" style="border-radius: 20px;">
+        <div class="text-center">
+            <h2>Beyond The Application Form</h2>
+            <p>Key elements that are critical to your success abroad but often missed in the initial rush.</p>
+        </div>
+        <div class="grid grid-3">
+            <div class="card">
+                <h3>Financial Readiness</h3>
+                <p>Ensuring you can prove sufficient funds according to strict embassy and visa guidelines.</p>
+            </div>
+            <div class="card">
+                <h3>Course Selection</h3>
+                <p>Choosing specific modules that align precisely with your future career and industry demands.</p>
+            </div>
+            <div class="card">
+                <h3>University Fit</h3>
+                <p>Understanding campus culture, local climate, and available international student support.</p>
+            </div>
+            <div class="card">
+                <h3>English Requirements</h3>
+                <p>Checking if specific courses have strict sub-score minimums (e.g., writing or speaking) beyond the overall band.</p>
+            </div>
+            <div class="card">
+                <h3>Supporting Documents</h3>
+                <p>Structuring your Statement of Purpose (SOP) to reflect genuine motivation and a clear study plan.</p>
+            </div>
+            <div class="card">
+                <h3>Long-Term Goals</h3>
+                <p>Mapping out how this specific degree in this specific country serves your 5 to 10-year life plan.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container section-dark text-center fade-up" style="margin-top: 4rem; border-radius: 20px;">
+        <h2>Not Sure Which Stage You're In?</h2>
+        <p style="max-width: 600px; margin: 0 auto 2rem;">A quick assessment can help identify your current stage and next step.</p>
+        <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+    </section>
+
+    <section class="container text-center fade-up" style="padding-top: 6rem; padding-bottom: 6rem;">
+        <h2>Let's Identify Your Next Step</h2>
+        <p style="max-width: 600px; margin: 0 auto;">Before applying, make sure you understand where you are in the journey.</p>
+        <div class="actions" style="justify-content: center;">
+            <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+            <a href="https://wa.me/8801611611139" target="_blank" class="btn btn-secondary">Talk To A Counselor</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="brand">LizOn Study Abroad</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="find-your-path.html">Find Your Path</a>
+            <a href="assessment.html">Assessment</a>
+            <a href="https://wa.me/8801611611139" target="_blank">WhatsApp</a>
+        </div>
+        <p style="font-size: 0.875rem; color: #a4aca8;">&copy; 2026 LizOn Study Abroad. All rights reserved.</p>
+    </footer>
+
+    <div class="sticky-mobile">
+        <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-up');
+            fadeElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -747,7 +747,7 @@
         textContainer.innerHTML = explanation;
     }
 
-    async function submitLead() {
+   async function submitLead() {
 
     const name = document.getElementById('lead_name').value.trim();
     const phone = document.getElementById('lead_phone').value.trim();
@@ -760,20 +760,29 @@
     answers.lead_name = name;
     answers.lead_phone = phone;
 
+    const formData = new FormData();
+
+    for (const key in answers) {
+
+        let value = answers[key];
+
+        if (Array.isArray(value)) {
+            value = value.join(", ");
+        }
+
+        formData.append(key, value);
+    }
+
     try {
 
-        const response = await fetch(
+        await fetch(
             'https://script.google.com/macros/s/AKfycbwr6jgAO-f9r0-k72L-ekh16a4UritrFbPXXY3ewYMInivzsXfIy9VNiM2yUfze3lyzvA/exec',
             {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(answers)
+                mode: 'no-cors',
+                body: formData
             }
         );
-
-        console.log("Lead Saved");
 
         nextScreen(13);
 
@@ -781,9 +790,7 @@
 
         console.error(error);
 
-        alert(
-            "Something went wrong. Please try again."
-        );
+        nextScreen(13);
 
     }
 }

@@ -747,20 +747,46 @@
         textContainer.innerHTML = explanation;
     }
 
-    function submitLead() {
-        const name = document.getElementById('lead_name').value;
-        const phone = document.getElementById('lead_phone').value;
-        
-        if (!name || !phone) {
-            alert("Please provide your name and phone number to continue.");
-            return;
-        }
+    async function submitLead() {
 
-        answers.lead_name = name;
-        answers.lead_phone = phone;
-        
-        nextScreen(13);
+    const name = document.getElementById('lead_name').value.trim();
+    const phone = document.getElementById('lead_phone').value.trim();
+
+    if (!name || !phone) {
+        alert("Please provide your name and phone number to continue.");
+        return;
     }
+
+    answers.lead_name = name;
+    answers.lead_phone = phone;
+
+    try {
+
+        const response = await fetch(
+            'https://script.google.com/macros/s/AKfycbwr6jgAO-f9r0-k72L-ekh16a4UritrFbPXXY3ewYMInivzsXfIy9VNiM2yUfze3lyzvA/exec',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(answers)
+            }
+        );
+
+        console.log("Lead Saved");
+
+        nextScreen(13);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Something went wrong. Please try again."
+        );
+
+    }
+}
 
     function openWhatsApp() {
         // Construct the message
@@ -791,7 +817,7 @@ I would like to get my personalized roadmap.`;
         const encodedMsg = encodeURIComponent(msg);
         
         // Agency WhatsApp Number (Replace this placeholder with the actual number e.g., '8801XXXXXXXXX')
-        const whatsappNumber = ''; 
+        const whatsappNumber = '8801611611139'; 
         
         const waUrl = whatsappNumber 
             ? `https://wa.me/${whatsappNumber}?text=${encodedMsg}`

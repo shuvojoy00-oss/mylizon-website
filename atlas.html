@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>LizOn Reader</title>
+
+    <meta name="description" content="LizOn Reader">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- Progress Bar -->
+    <div class="progress-container" aria-hidden="true">
+        <div id="readingProgress" class="progress-bar"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="topbar">
+
+        <button
+            id="tocButton"
+            class="icon-button"
+            aria-label="Open Table of Contents"
+            aria-controls="tocDrawer"
+            aria-expanded="false">
+            ☰
+        </button>
+
+        <div class="brand">
+
+            <span class="brand-name">
+                LizOn Reader
+            </span>
+
+            <span
+                id="bookTitle"
+                class="book-title">
+                Loading Book...
+            </span>
+
+        </div>
+
+        <div class="topbar-actions">
+
+            <button
+                id="themeToggle"
+                class="icon-button"
+                aria-label="Toggle Theme">
+                🌙
+            </button>
+
+            <button
+                id="settingsButton"
+                class="icon-button"
+                aria-label="Reader Settings"
+                aria-controls="settingsDrawer"
+                aria-expanded="false">
+                ⚙
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- Main Reader -->
+
+    <main
+        id="reader"
+        class="reader"
+        tabindex="-1">
+
+        <article
+            id="chapter"
+            class="chapter">
+
+            <header class="chapter-header">
+
+                <p
+                    id="chapterNumber"
+                    class="chapter-number">
+                </p>
+
+                <h1
+                    id="chapterTitle"
+                    class="chapter-title">
+                    Loading...
+                </h1>
+
+            </header>
+
+            <section
+                id="chapterContent"
+                class="chapter-content">
+            </section>
+
+        </article>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+
+    <nav class="chapter-navigation" aria-label="Chapter Navigation">
+
+        <button
+            id="prevChapter"
+            class="nav-button">
+            ← Previous
+        </button>
+
+        <button
+            id="nextChapter"
+            class="nav-button">
+            Next →
+        </button>
+
+    </nav>
+
+</div>
+
+<!-- Overlay -->
+
+<div
+    id="overlay"
+    class="overlay hidden">
+</div>
+
+<!-- Table of Contents -->
+
+<aside
+    id="tocDrawer"
+    class="drawer"
+    aria-label="Table of Contents">
+
+    <div class="drawer-header">
+
+        <h2>
+            Contents
+        </h2>
+
+        <button
+            id="closeToc"
+            class="icon-button"
+            aria-label="Close">
+            ✕
+        </button>
+
+    </div>
+
+    <nav
+        id="tocList"
+        class="toc-list">
+
+    </nav>
+
+</aside>
+
+<!-- Reader Settings -->
+
+<aside
+    id="settingsDrawer"
+    class="drawer"
+    aria-label="Reader Settings">
+
+    <div class="drawer-header">
+
+        <h2>
+            Reader Settings
+        </h2>
+
+        <button
+            id="closeSettings"
+            class="icon-button"
+            aria-label="Close">
+            ✕
+        </button>
+
+    </div>
+
+    <section class="settings-section">
+
+        <h3>
+            Font Size
+        </h3>
+
+        <div class="font-controls">
+
+            <button
+                id="fontDecrease"
+                class="setting-button">
+                A−
+            </button>
+
+            <span
+                id="fontSizeLabel">
+                Default
+            </span>
+
+            <button
+                id="fontIncrease"
+                class="setting-button">
+                A+
+            </button>
+
+        </div>
+
+    </section>
+
+    <section class="settings-section">
+
+        <h3>
+            Theme
+        </h3>
+
+        <button
+            id="themeSwitch"
+            class="setting-button full-width">
+            Toggle Light / Dark
+        </button>
+
+    </section>
+
+</aside>
+
+<noscript>
+
+    <div class="noscript">
+
+        <h2>
+            JavaScript Required
+        </h2>
+
+        <p>
+            LizOn Reader requires JavaScript to display books and reader features.
+        </p>
+
+    </div>
+
+</noscript>
+
+<script src="js/book.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

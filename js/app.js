@@ -161,11 +161,25 @@ const Reader = {
     },
       renderChapter() {
 
-        this.chapterNumber.textContent =
-            "Chapter " + (this.currentIndex + 1);
+    this.chapterNumber.textContent =
+        "Chapter " + (this.currentIndex + 1);
 
-        this.chapterTitle.textContent =
-            this.currentChapter.title || "";
+    this.chapterTitle.textContent =
+        this.currentChapter.title || "";
+
+    // NEW FORMAT
+    if (this.currentChapter.content) {
+
+        this.chapterContent.innerHTML =
+            this.currentChapter.content
+                .split("\n\n")
+                .map(p => `<p>${p}</p>`)
+                .join("");
+
+    }
+
+    // OLD FORMAT (kept for compatibility)
+    else {
 
         this.chapterContent.innerHTML = "";
 
@@ -174,9 +188,7 @@ const Reader = {
             if (section.heading) {
 
                 const h2 = document.createElement("h2");
-
                 h2.textContent = section.heading;
-
                 this.chapterContent.appendChild(h2);
 
             }
@@ -184,23 +196,23 @@ const Reader = {
             (section.content || []).forEach(text => {
 
                 const p = document.createElement("p");
-
                 p.textContent = text;
-
                 this.chapterContent.appendChild(p);
 
             });
 
         });
 
-        this.reader.scrollTop = 0;
+    }
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+    this.reader.scrollTop = 0;
 
-    },
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
 
     buildTOC() {
 

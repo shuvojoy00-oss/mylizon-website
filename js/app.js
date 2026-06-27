@@ -212,7 +212,7 @@ const Reader = {
         behavior: "smooth"
     });
 
-}
+},
 
     buildTOC() {
 

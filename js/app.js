@@ -135,7 +135,7 @@ const Reader = {
 
         try {
 
-            const response = await fetch(`data/${chapter.id}.json`);
+            const response = await fetch(`data/${chapter.slug}.json`);
 
             this.currentChapter = await response.json();
 

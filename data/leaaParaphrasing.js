@@ -1,14 +1,4 @@
-export type ParaphraseQuestion = {
-  id: number;
-  question: string;
-  options?: string[];
-  answer?: string;
-  marks: number;
-  difficulty: "easy" | "medium" | "hard";
-};
-
-
-export const paraphrasingQuestions: ParaphraseQuestion[] = [
+const paraphrasingQuestions = [
 
   {
     id: 41,
@@ -95,3 +85,6 @@ export const paraphrasingQuestions: ParaphraseQuestion[] = [
   }
 
 ];
+window.LEAAParaphrasing = {
+    paraphrasingQuestions
+};

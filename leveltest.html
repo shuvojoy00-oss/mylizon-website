@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+LizOn English Ability Assessment
+</title>
+
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f7f6;
+    margin:0;
+    padding:0;
+}
+
+
+.container{
+
+    max-width:800px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+
+}
+
+
+h1{
+    color:#064e3b;
+}
+
+
+.section-title{
+
+    font-size:22px;
+    margin-bottom:20px;
+
+}
+
+
+.question{
+
+    margin-bottom:25px;
+
+}
+
+
+.option{
+
+    display:block;
+    margin:8px 0;
+
+}
+
+
+button{
+
+    background:#064e3b;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:8px;
+    cursor:pointer;
+
+}
+
+
+button:hover{
+
+    opacity:.9;
+
+}
+
+
+input, textarea{
+
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+
+}
+
+
+.progress{
+
+    margin-bottom:20px;
+    font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>
+LizOn English Ability Assessment
+</h1>
+
+
+<div id="app">
+
+</div>
+
+
+</div>
+
+
+
+<script src="data/leaaQuestions.js"></script>
+
+<script src="data/leaaReading.js"></script>
+
+<script src="data/leaaParaphrasing.js"></script>
+
+<script src="data/leaaWriting.js"></script>
+
+
+<script>
+
+
+let currentStep = 0;
+
+
+let student = {
+
+    name:"",
+    email:"",
+    phone:""
+
+};
+
+
+let answers = {};
+
+let writingAnswer="";
+
+
+
+const steps=[
+
+"Student Information",
+
+"Grammar",
+
+"Vocabulary",
+
+"Sentence Processing",
+
+"Reading",
+
+"Paraphrasing",
+
+"Writing"
+
+];
+
+
+
+
+const app=document.getElementById("app");
+
+
+
+
+function render(){
+
+
+app.innerHTML="";
+
+
+let html=`
+
+
+<div class="progress">
+
+Step ${currentStep+1} / ${steps.length}
+
+<br>
+
+${steps[currentStep]}
+
+</div>
+
+`;
+
+
+
+
+if(currentStep===0){
+
+
+html+=`
+
+<input id="name"
+placeholder="Your Name">
+
+
+<input id="email"
+placeholder="Email">
+
+
+<input id="phone"
+placeholder="WhatsApp Number">
+
+
+<button onclick="saveStudent()">
+
+Start Test
+
+</button>
+
+`;
+
+
+
+}
+
+
+
+
+else if(currentStep===1){
+
+html+=renderQuestions(
+
+LEAAQuestions.grammarQuestions
+
+);
+
+}
+
+
+
+else if(currentStep===2){
+
+html+=renderQuestions(
+
+LEAAQuestions.vocabularyQuestions
+
+);
+
+}
+
+
+
+else if(currentStep===3){
+
+html+=renderQuestions(
+
+LEAAQuestions.sentenceProcessingQuestions
+
+);
+
+}
+
+
+
+else if(currentStep===4){
+
+html+=renderQuestions(
+
+LEAAReading.readingAssessment.questions
+
+);
+
+}
+
+
+
+else if(currentStep===5){
+
+html+=renderQuestions(
+
+LEAAParaphrasing.paraphrasingQuestions
+
+);
+
+}
+
+
+
+else if(currentStep===6){
+
+
+html+=`
+
+<h3>
+
+${LEAAWriting.writingAssessment.task}
+
+</h3>
+
+
+<textarea
+
+id="writing"
+
+rows="10"
+
+placeholder="Write your paragraph here..."
+
+>${writingAnswer}</textarea>
+
+
+
+<button onclick="submitTest()">
+
+Submit Assessment
+
+</button>
+
+`;
+
+}
+
+
+app.innerHTML=html;
+
+
+}
+
+
+
+
+function saveStudent(){
+
+
+student.name=document.getElementById("name").value;
+
+student.email=document.getElementById("email").value;
+
+student.phone=document.getElementById("phone").value;
+
+
+next();
+
+
+}
+
+
+
+
+function renderQuestions(questions){
+
+
+let html="";
+
+
+questions.forEach(q=>{
+
+
+html+=`
+
+<div class="question">
+
+
+<p>
+
+<strong>${q.id}.</strong>
+
+${q.question}
+
+</p>
+
+`;
+
+
+if(q.options){
+
+
+q.options.forEach(option=>{
+
+
+html+=`
+
+<label class="option">
+
+
+<input
+
+type="radio"
+
+name="${q.id}"
+
+onclick="saveAnswer(${q.id}, '${option.replace(/'/g,"")}')"
+
+>
+
+
+${option}
+
+
+</label>
+
+`;
+
+
+});
+
+
+}
+
+
+html+=`
+
+</div>
+
+`;
+
+
+});
+
+
+html+=`
+
+<button onclick="next()">
+
+Next
+
+</button>
+
+`;
+
+return html;
+
+
+}
+
+
+
+
+function saveAnswer(id,value){
+
+
+answers[id]=value;
+
+
+}
+
+
+
+
+function next(){
+
+
+currentStep++;
+
+render();
+
+
+}
+
+
+
+
+function submitTest(){
+
+
+writingAnswer=document.getElementById("writing").value;
+
+
+
+console.log({
+
+student,
+
+answers,
+
+writingAnswer
+
+});
+
+
+
+app.innerHTML=`
+
+<h2>
+
+Assessment Submitted
+
+</h2>
+
+
+<p>
+
+Thank you ${student.name}
+
+</p>
+
+
+<p>
+
+Your response has been recorded.
+
+</p>
+
+
+`;
+
+
+
+}
+
+
+
+
+render();
+
+
+
+</script>
+
+
+</body>
+
+</html>

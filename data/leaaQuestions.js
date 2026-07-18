@@ -1,16 +1,4 @@
-export type Question = {
-  id: number;
-  section: string;
-  type: "mcq";
-  question: string;
-  options: string[];
-  answer: string;
-  marks: number;
-  difficulty: "easy" | "medium" | "hard";
-};
-
-
-export const grammarQuestions: Question[] = [
+const grammarQuestions = [
 
   {
     id: 1,
@@ -195,7 +183,7 @@ export const grammarQuestions: Question[] = [
   }
 
 ];
-export const vocabularyQuestions: Question[] = [
+const vocabularyQuestions = [
 
   {
     id: 11,
@@ -376,7 +364,7 @@ export const vocabularyQuestions: Question[] = [
   }
 
 ];
-export const sentenceProcessingQuestions: Question[] = [
+const sentenceProcessingQuestions = [
 
   {
     id: 21,
@@ -568,3 +556,8 @@ export const sentenceProcessingQuestions: Question[] = [
   }
 
 ];
+window.LEAAQuestions = {
+    grammarQuestions,
+    vocabularyQuestions,
+    sentenceProcessingQuestions
+};

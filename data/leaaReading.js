@@ -1,20 +1,4 @@
-export type ReadingQuestion = {
-  id: number;
-  type:
-    | "multiple_choice"
-    | "true_false_not_given"
-    | "matching_heading"
-    | "summary_completion"
-    | "vocabulary";
-  question: string;
-  options?: string[];
-  answer: string;
-  marks: number;
-  difficulty: "easy" | "medium" | "hard";
-};
-
-
-export const readingAssessment = {
+const readingAssessment = {
 
   title: "The Changing Purpose of Higher Education",
 
@@ -210,4 +194,7 @@ Despite these challenges, higher education continues to play an important role i
 
   ]
 
+};
+window.LEAAReading = {
+    readingAssessment
 };

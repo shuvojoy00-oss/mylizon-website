@@ -1,4 +1,4 @@
-export const writingAssessment = {
+const writingAssessment = {
 
   title: "Paragraph Writing Ability",
 
@@ -43,4 +43,7 @@ export const writingAssessment = {
 
   }
 
+};
+window.LEAAWriting = {
+    writingAssessment
 };

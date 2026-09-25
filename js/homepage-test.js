@@ -392,8 +392,10 @@ function renderResults() {
     moreButton.hidden = !hasMore;
 
     if (hasMore) {
-        moreButton.innerHTML =
-            'View More Results <span aria-hidden="true">↓</span>';
+        const arrow = window.matchMedia("(max-width: 767px)").matches ? "→" : "↓";
+
+moreButton.innerHTML =
+    `View More Results <span aria-hidden="true">${arrow}</span>`;
     }
 }
 

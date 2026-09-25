@@ -302,21 +302,47 @@ async function loadResults() {
 
     if (!grid) return;
 
-    const ieltsResults = RESULT_IMAGES.ielts;
-    const pteResults = RESULT_IMAGES.pte;
+    try {
+        const response = await fetch("data/results.json", {
+            cache: "no-store"
+        });
 
-    state.allResults = interleaveResults(
-        ieltsResults,
-        pteResults
-    );
+        if (!response.ok) {
+            throw new Error("Unable to load student results.");
+        }
 
-    if (!state.allResults.length) {
+        const data = await response.json();
+
+        const ieltsResults = (data.ielts || []).map((src) => ({
+            type: "IELTS",
+            name: src.split("/").pop(),
+            src
+        }));
+
+        const pteResults = (data.pte || []).map((src) => ({
+            type: "PTE",
+            name: src.split("/").pop(),
+            src
+        }));
+
+        state.allResults = interleaveResults(
+            ieltsResults,
+            pteResults
+        );
+
+        state.visibleResults = 6;
+
+        if (!state.allResults.length) {
+            renderResultsFallback();
+            return;
+        }
+
+        renderResults();
+        hydrateHeroProof(ieltsResults, pteResults);
+    } catch (error) {
+        console.warn(error);
         renderResultsFallback();
-        return;
     }
-
-    renderResults();
-    hydrateHeroProof(ieltsResults, pteResults);
 }
 
 function renderResults() {

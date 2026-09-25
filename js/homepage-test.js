@@ -49,7 +49,7 @@ const RESULT_IMAGES = {
         {
             type: "PTE",
             name: "701582601_1599255468877284_152775484624212849_n.jpg",
-            src: "assets/results/pte/701582601_1599255468877284_152775484624212849_n.jpg.jpg"
+            src: "assets/results/pte/701582601_1599255468877284_152775484624212849_n.jpg"
         }
     ]
 };

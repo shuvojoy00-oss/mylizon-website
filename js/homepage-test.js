@@ -10,6 +10,7 @@ const SELECTORS = {
   backToTop: "#back-to-top",
   resultsGrid: "#results-grid",
   showMoreResults: "#show-more-results",
+   closeResults: "#close-results",
   resultDialog: "#result-dialog",
   resultDialogImage: "#result-dialog-image",
   videoDialog: "#video-dialog",
@@ -346,10 +347,11 @@ async function loadResults() {
 }
 
 function renderResults() {
-  const grid = $(SELECTORS.resultsGrid);
-  const moreButton = $(SELECTORS.showMoreResults);
+    const grid = $(SELECTORS.resultsGrid);
+    const moreButton = $(SELECTORS.showMoreResults);
+    const closeButton = $(SELECTORS.closeResults);
 
-  if (!grid) return;
+    if (!grid) return;
 
   const visible = state.allResults.slice(
     0,
@@ -385,14 +387,19 @@ function renderResults() {
 
   if (moreButton) {
     const hasMore =
-      state.visibleResults < state.allResults.length;
+        state.visibleResults < state.allResults.length;
 
     moreButton.hidden = !hasMore;
 
     if (hasMore) {
-      moreButton.textContent = "View More Results →";
+        moreButton.innerHTML =
+            'View More Results <span aria-hidden="true">↓</span>';
     }
-  }
+}
+
+if (closeButton) {
+    closeButton.hidden = state.visibleResults <= 6;
+}
 
   bindResultButtons();
 }
@@ -459,6 +466,24 @@ function initShowMoreResults() {
     state.visibleResults += 6;
     renderResults();
   });
+}
+function initCloseResults() {
+    const button = $(SELECTORS.closeResults);
+    const resultsSection = $("#results");
+
+    if (!button) return;
+
+    button.addEventListener("click", () => {
+        state.visibleResults = 6;
+        renderResults();
+
+        if (resultsSection) {
+            resultsSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    });
 }
 
 /* ==========================================================
@@ -690,6 +715,7 @@ function init() {
   initRevealAnimations();
 
   initShowMoreResults();
+   initCloseResults();
   initResultDialog();
   initVideos();
 

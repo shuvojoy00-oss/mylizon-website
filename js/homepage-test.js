@@ -16,12 +16,42 @@ const SELECTORS = {
   videoFrame: "#video-frame"
 };
 
-const GITHUB = {
-  owner: "shuvojoy00-oss",
-  repo: "mylizon-website",
-  branch: "main",
-  ieltsResultsPath: "assets/results/ielts",
-  pteResultsPath: "assets/results/pte"
+const RESULT_IMAGES = {
+    ielts: [
+        {
+            type: "IELTS",
+            name: "694129910_1596042069198624_8716469945302976711_n.jpg",
+            src: "assets/results/ielts/694129910_1596042069198624_8716469945302976711_n.jpg"
+        },
+        {
+            type: "IELTS",
+            name: "695753279_1596042122531952_2162575424079969370_n.jpg",
+            src: "assets/results/ielts/695753279_1596042122531952_2162575424079969370_n.jpg"
+        },
+        {
+            type: "IELTS",
+            name: "696227682_1596042149198616_6806450380861803922_n.jpg",
+            src: "assets/results/ielts/696227682_1596042149198616_6806450380861803922_n.jpg"
+        }
+    ],
+
+    pte: [
+        {
+            type: "PTE",
+            name: "699624236_1599255452210619_7323961056323092504_n.jpg",
+            src: "assets/results/pte/699624236_1599255452210619_7323961056323092504_n.jpg"
+        },
+        {
+            type: "PTE",
+            name: "699624915_1599255458877285_7592624828092472839_n.jpg",
+            src: "assets/results/pte/699624915_1599255458877285_7592624828092472839_n.jpg"
+        },
+        {
+            type: "PTE",
+            name: "699997075_1599255465543951_7945204352713327877_n.jpg",
+            src: "assets/results/pte/699997075_1599255465543951_7945204352713327877_n.jpg"
+        }
+    ]
 };
 
 const state = {
@@ -268,32 +298,25 @@ function interleaveResults(ielts, pte) {
 }
 
 async function loadResults() {
-  const grid = $(SELECTORS.resultsGrid);
+    const grid = $(SELECTORS.resultsGrid);
 
-  if (!grid) return;
+    if (!grid) return;
 
-  try {
-    const [ieltsResults, pteResults] = await Promise.all([
-      fetchGithubFolder(GITHUB.ieltsResultsPath, "IELTS"),
-      fetchGithubFolder(GITHUB.pteResultsPath, "PTE")
-    ]);
+    const ieltsResults = RESULT_IMAGES.ielts;
+    const pteResults = RESULT_IMAGES.pte;
 
     state.allResults = interleaveResults(
-      ieltsResults,
-      pteResults
+        ieltsResults,
+        pteResults
     );
 
     if (!state.allResults.length) {
-      renderResultsFallback();
-      return;
+        renderResultsFallback();
+        return;
     }
 
     renderResults();
     hydrateHeroProof(ieltsResults, pteResults);
-  } catch (error) {
-    console.warn(error);
-    renderResultsFallback();
-  }
 }
 
 function renderResults() {

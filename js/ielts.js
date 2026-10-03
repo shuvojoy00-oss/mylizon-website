@@ -1293,6 +1293,53 @@ bottomHideButton.addEventListener(
       course.id
     );
 
+    requestAnimationFrame(
+      () => {
+
+        const heading =
+          elements.courseTitle;
+
+        if (
+          !heading
+        ) {
+          return;
+        }
+
+        const headerHeight =
+          getHeaderHeight();
+
+        const stickyHeight =
+          elements.sticky
+            ? elements.sticky.offsetHeight
+            : 0;
+
+        const destination =
+          heading
+            .getBoundingClientRect()
+            .top +
+          window.scrollY -
+          headerHeight -
+          stickyHeight -
+          24;
+
+        window.scrollTo({
+
+          top:
+            Math.max(
+              0,
+              destination
+            ),
+
+          behavior:
+            prefersReducedMotion.matches
+              ? "auto"
+              : "smooth"
+
+        });
+
+      }
+    );
+
   }
 );
 

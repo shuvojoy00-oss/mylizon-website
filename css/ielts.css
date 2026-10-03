@@ -774,7 +774,8 @@ easy to read without losing the other course options.
 .course-card {
   position:
     relative;
-
+isolation:
+    isolate;
   min-width:
     0;
 
@@ -849,6 +850,52 @@ easy to read without losing the other course options.
     rgba(13, 81, 59, .06);
 }
 
+.course-card.is-open::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  z-index:
+    -1;
+
+  right:
+    -60px;
+
+  bottom:
+    -70px;
+
+  width:
+    320px;
+
+  height:
+    320px;
+
+  pointer-events:
+    none;
+
+  opacity:
+    .10;
+
+  transition:
+    opacity .22s ease,
+    transform .22s ease;
+}
+
+.course-card[data-course-id="batchCrash"].is-open::after {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(13, 81, 59, .20) 0,
+      rgba(13, 81, 59, .20) 2px,
+      transparent 2px,
+      transparent 22px
+    );
+
+  transform:
+    rotate(-8deg);
+}
 
 /* UNTIL DESIRED SCORE */
 

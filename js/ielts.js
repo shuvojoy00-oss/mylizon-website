@@ -51,11 +51,14 @@
           metric:
             "1 Month",
 
-          metricLabel:
-            "Approx. duration",
+         metricLabel:
+  "Approx. duration",
 
-          description:
-            "Complete IELTS preparation with stronger focus on techniques and exam approach.",
+price:
+  "৳ 6,000",
+
+description:
+  "Complete IELTS preparation with stronger focus on techniques and exam approach.",
 
           facts: [
 
@@ -140,10 +143,13 @@
             "2 Months",
 
           metricLabel:
-            "Approx. duration",
+  "Approx. duration",
 
-          description:
-            "Build the foundation first, then move through complete IELTS preparation.",
+price:
+  "৳ 8,000",
+
+description:
+  "Build the foundation first, then move through complete IELTS preparation.",
 
           facts: [
 
@@ -227,11 +233,14 @@
           metric:
             "No Fixed Limit",
 
-          metricLabel:
-            "Support timeline",
+         metricLabel:
+  "Support timeline",
 
-          description:
-            "For students who do not want their IELTS preparation support to end with a fixed course deadline.",
+price:
+  "৳ 11,000",
+
+description:
+  "For students who do not want their IELTS preparation support to end with a fixed course deadline.",
 
           supportCard:
             true,
@@ -341,11 +350,14 @@
           metric:
             "Around 1 Month",
 
-          metricLabel:
-            "Flexible timeline",
+         metricLabel:
+  "Flexible timeline",
 
-          description:
-            "Compact personalised preparation focused on your most important IELTS problems.",
+price:
+  "৳ 11,000",
+
+description:
+  "Compact personalised preparation focused on your most important IELTS problems.",
 
           facts: [
 
@@ -430,10 +442,13 @@
             "Around 1.5 Months",
 
           metricLabel:
-            "Flexible timeline",
+  "Flexible timeline",
 
-          description:
-            "More time for complete personalised IELTS preparation, correction and skill development.",
+price:
+  "৳ 15,000",
+
+description:
+  "More time for complete personalised IELTS preparation, correction and skill development.",
 
           facts: [
 
@@ -518,11 +533,13 @@
             "Around 2 Months",
 
           metricLabel:
-            "Flexible timeline",
+  "Flexible timeline",
 
-          description:
-            "Foundation plus complete personalised IELTS preparation with more time for development.",
+price:
+  "৳ 19,000",
 
+description:
+  "Foundation plus complete personalised IELTS preparation with more time for development.",
           facts: [
 
             [
@@ -1031,11 +1048,40 @@
     admitButton.href =
       "pay.html";
 
+const priceWrap =
+  createElement(
+    "div",
+    "course-price-wrap"
+  );
 
+const price =
+  createElement(
+    "span",
+    "course-price",
+    course.price
+  );
+
+const divider =
+  createElement(
+    "span",
+    "course-price-divider",
+    "│"
+  );
+
+divider.setAttribute(
+  "aria-hidden",
+  "true"
+);
+
+priceWrap.append(
+  price,
+  divider,
+  admitButton
+);
     actions.append(
-      detailsButton,
-      admitButton
-    );
+  detailsButton,
+  priceWrap
+);
 
 
     card.appendChild(

@@ -1267,32 +1267,57 @@ priceWrap.append(
     /* ADMIT AGAIN AT BOTTOM */
 
     const detailFooter =
-      createElement(
-        "div",
-        "course-detail-footer"
-      );
+  createElement(
+    "div",
+    "course-detail-footer"
+  );
 
 
-    const detailAdmit =
-      createElement(
-        "a",
-        "course-admit-button",
-        "Admit Now"
-      );
+const bottomHideButton =
+  createElement(
+    "button",
+    "course-bottom-hide",
+    "Hide Details ↑"
+  );
 
 
-    detailAdmit.href =
-      "pay.html";
+bottomHideButton.type =
+  "button";
 
 
-    detailFooter.appendChild(
-      detailAdmit
+bottomHideButton.addEventListener(
+  "click",
+  () => {
+
+    toggleCourse(
+      course.id
     );
 
+  }
+);
 
-    detailsInner.appendChild(
-      detailFooter
-    );
+
+const detailAdmit =
+  createElement(
+    "a",
+    "course-admit-button",
+    "Admit Now"
+  );
+
+
+detailAdmit.href =
+  "pay.html";
+
+
+detailFooter.append(
+  bottomHideButton,
+  detailAdmit
+);
+
+
+detailsInner.appendChild(
+  detailFooter
+);
 
 
     details.appendChild(

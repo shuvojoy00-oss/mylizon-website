@@ -1,28 +1,49 @@
+/* ==========================================================
+   LIZON EDUCATION
+   IELTS COURSE INTERACTION
+========================================================== */
+
 (function () {
 
-  const DATA = {
+  "use strict";
+
+
+  /* ========================================================
+     COURSE DATA
+
+     Future course changes can mostly be made here without
+     changing the HTML or CSS.
+  ======================================================== */
+
+  const COURSE_DATA = {
+
+
+    /* ======================================================
+       BATCH
+    ======================================================= */
 
     batch: {
 
-      eyebrow: "BATCH PREPARATION",
+      eyebrow:
+        "BATCH PREPARATION",
 
       heading:
-        "Choose the pace that fits where you are now.",
+        "Choose Your Batch",
 
       intro:
-        "Compare the essential information first. Open the details only when you want to look deeper.",
-
-      defaultPlan:
-        "batchCrash",
+        "Start with the summary. Open only the course you want to explore.",
 
       plans: [
+
+
+        /* CRASH */
 
         {
           id:
             "batchCrash",
 
           label:
-            "BATCH",
+            "BATCH CRASH",
 
           name:
             "Crash",
@@ -33,72 +54,84 @@
           metricLabel:
             "Approx. duration",
 
-          cardDescription:
-            "Complete IELTS coverage with technique focused preparation.",
-
-          duration:
-            "Around 1 Month",
-
-          durationLabel:
-            "Approx. duration",
-
-          summary:
-            "A focused route for students who have already started IELTS and want complete question type coverage, better technique and a clearer exam approach.",
+          description:
+            "Complete IELTS preparation with stronger focus on techniques and exam approach.",
 
           facts: [
+
             [
               "Classes",
               "3 per week"
             ],
+
             [
               "Class time",
               "Around 1 hour"
             ],
+
             [
               "Coverage",
               "Complete IELTS"
             ],
+
             [
               "Approach",
               "Technique focused"
             ],
+
             [
               "Mocks",
-              "2 full mocks"
+              "2 Full Mocks"
             ],
+
             [
               "Format",
-              "Batch learning"
+              "Batch"
             ]
+
           ],
 
           bestFor:
-            "Students who already have some IELTS foundation but feel stuck, confused by question types, or are not seeing the improvement they expected.",
+            "Students who have already started IELTS preparation but are struggling with techniques, question types or score improvement.",
 
           focus: [
-            "Listening, Reading, Writing and Speaking coverage",
+
+            "Listening, Reading, Writing and Speaking",
+
             "Techniques for IELTS question types",
+
             "Exam approach and time management",
-            "Practice built around common scoring problems"
+
+            "Focused practice for common scoring problems"
+
           ],
 
           support: [
-            "Two full mock tests",
-            "Class based correction and guidance",
-            "Practice direction between classes",
-            "Progress focused preparation"
+
+            "Two Full Mock Tests",
+
+            "Class based correction",
+
+            "Instructor guidance",
+
+            "Practice direction between classes"
+
           ],
 
           note:
-            "Course content may be adjusted over time as LizOn updates teaching methods and student support."
+            "Course structure may be adjusted when a batch needs additional attention on a particular IELTS skill."
+
         },
+
+
+        /* FULL */
 
         {
           id:
             "batchFull",
 
           label:
-            "BATCH",
+            "BATCH FULL",
 
           name:
             "Full",
@@ -109,65 +142,77 @@
           metricLabel:
             "Approx. duration",
 
-          cardDescription:
-            "Foundation first, then complete IELTS preparation.",
-
-          duration:
-            "Around 2 Months",
-
-          durationLabel:
-            "Approx. duration",
-
-          summary:
-            "A longer structured preparation path that strengthens essential language foundations before moving through complete IELTS techniques and exam practice.",
+          description:
+            "Build the foundation first, then move through complete IELTS preparation.",
 
           facts: [
+
             [
               "Classes",
               "3 per week"
             ],
+
             [
               "Class time",
               "Around 1 hour"
             ],
+
             [
               "Foundation",
-              "Grammar + basics"
+              "Grammar + Basics"
             ],
+
             [
               "Coverage",
               "Complete IELTS"
             ],
+
             [
               "Mocks",
-              "5 full mocks"
+              "5 Full Mocks"
             ],
+
             [
               "Evaluation",
-              "Weekly Writing + Speaking"
+              "Weekly"
             ]
+
           ],
 
           bestFor:
-            "Students who need more time, want grammar and foundation support, or prefer to build the basics before moving into full IELTS preparation.",
+            "Students who need more preparation time, grammar support or a stronger foundation before completing full IELTS preparation.",
 
           focus: [
+
             "Grammar and essential language foundation",
+
             "Listening, Reading, Writing and Speaking",
-            "Question type techniques and exam strategy",
-            "Progressive practice from basic to exam level"
+
+            "IELTS question type techniques",
+
+            "Exam strategy and progressive practice"
+
           ],
 
           support: [
-            "Five full mock tests",
-            "Weekly Speaking evaluation",
-            "Weekly Writing evaluation",
+
+            "Five Full Mock Tests",
+
+            "Weekly Speaking Evaluation",
+
+            "Weekly Writing Evaluation",
+
             "Ongoing correction and guided practice"
+
           ],
 
           note:
-            "The exact sequence can be adjusted when a batch needs more time on a particular skill."
+            "The exact sequence can be adjusted according to the overall progress of the batch."
+
         },
+
+
+        /* UNTIL DESIRED SCORE */
 
         {
           id:
@@ -185,71 +230,87 @@
           metricLabel:
             "Support timeline",
 
+          description:
+            "For students who do not want their IELTS preparation support to end with a fixed course deadline.",
+
           supportCard:
             true,
 
-          cardDescription:
-            "For students who do not want support to end with a fixed course timeline.",
-
-          duration:
-            "No Fixed Course Deadline",
-
-          durationLabel:
-            "Support timeline",
-
-          summary:
-            "A continued preparation option for students who want LizOn support beyond a normal fixed duration while they keep working toward their target score.",
-
           facts: [
+
             [
               "Time limit",
               "No fixed limit"
             ],
+
             [
               "Class limit",
               "No fixed limit"
             ],
+
             [
               "Mocks",
               "Continued"
             ],
+
             [
               "Evaluation",
               "Continued"
             ],
+
             [
               "Focus",
-              "Target score journey"
+              "Target Score"
             ],
+
             [
               "Support",
-              "Ongoing preparation"
+              "Ongoing"
             ]
+
           ],
 
           bestFor:
-            "Students who worry about what happens after a normal course ends, especially those who have taken IELTS before or need continued guided preparation.",
+            "Students who are worried about what happens after a normal course ends, including students who previously sat the IELTS test but did not achieve their target score.",
 
           focus: [
+
             "Continued work on weak areas",
-            "Repeated correction where needed",
-            "Exam readiness rather than a fixed end date",
+
+            "Repeated correction where required",
+
+            "Exam readiness instead of a fixed ending date",
+
             "Preparation adjusted as performance changes"
+
           ],
 
           support: [
-            "Continued classes within the plan structure",
+
+            "Continued preparation support",
+
             "Continued mock opportunities",
+
             "Continued evaluation",
-            "Ongoing guidance toward the student's target"
+
+            "Guidance while working toward the target score"
+
           ],
 
           note:
-            "This is continued preparation support, not an automatic score guarantee. Final IELTS performance depends on the student's skill, practice and exam performance."
+            "This provides continued IELTS preparation support. It is not an automatic score guarantee. Final IELTS performance depends on the student's skill, practice and exam performance."
+
         }
 
       ]
+
     },
+
+
+
+    /* ======================================================
+       1ON1
+    ======================================================= */
 
     one: {
 
@@ -257,15 +318,15 @@
         "PERSONALISED 1ON1",
 
       heading:
-        "Choose how much personalised preparation you need.",
+        "Choose Your 1on1 Plan",
 
       intro:
-        "Each plan is built around the student's current level, weaknesses and target. The difference is preparation depth and available class time.",
-
-      defaultPlan:
-        "one10",
+        "Every plan is personalised. Choose the preparation depth and class time that fit your situation.",
 
       plans: [
+
+
+        /* 10 CLASSES */
 
         {
           id:
@@ -278,70 +339,82 @@
             "10 Classes",
 
           metric:
-            "≈ 1 Month",
+            "Around 1 Month",
 
           metricLabel:
             "Flexible timeline",
 
-          cardDescription:
-            "Compact and highly targeted personal preparation.",
-
-          duration:
-            "Around 1 Month",
-
-          durationLabel:
-            "Typical timeline",
-
-          summary:
-            "A compact personalised plan focused on the student's current IELTS problems, technique gaps and the areas that need the most immediate correction.",
+          description:
+            "Compact personalised preparation focused on your most important IELTS problems.",
 
           facts: [
+
             [
               "Classes",
-              "10 personal classes"
+              "10"
             ],
+
             [
               "Class time",
               "Around 1 hour"
             ],
+
             [
               "Schedule",
               "Flexible"
             ],
+
             [
               "Coverage",
-              "Complete IELTS as needed"
+              "Personalised"
             ],
+
             [
               "Mock",
-              "1 full mock"
+              "1 Full Mock"
             ],
+
             [
               "Approach",
-              "Highly targeted"
+              "Targeted"
             ]
+
           ],
 
           bestFor:
-            "Students with a reasonable foundation who need focused correction, technique improvement or a short personalised preparation plan.",
+            "Students with a reasonable IELTS foundation who need focused correction, technique improvement or a short personalised preparation plan.",
 
           focus: [
+
             "Problems identified from current performance",
-            "Listening, Reading, Writing and Speaking as needed",
-            "Technique correction and exam approach",
-            "Focused preparation rather than a fixed generic sequence"
+
+            "Listening, Reading, Writing and Speaking as required",
+
+            "Technique correction",
+
+            "Exam approach and targeted preparation"
+
           ],
 
           support: [
+
             "Personal instructor attention",
+
             "Flexible scheduling",
-            "One full mock test",
+
+            "One Full Mock Test",
+
             "Individual correction and guidance"
+
           ],
 
           note:
-            "Because this is 1on1, the exact class sequence is personalised rather than identical for every student."
+            "Because this is 1on1 preparation, the exact class sequence can be personalised instead of following the same fixed structure for every student."
+
         },
+
+
+        /* 15 CLASSES */
 
         {
           id:
@@ -354,70 +427,82 @@
             "15 Classes",
 
           metric:
-            "≈ 1.5 Months",
+            "Around 1.5 Months",
 
           metricLabel:
             "Flexible timeline",
 
-          cardDescription:
-            "More room for complete preparation and correction.",
-
-          duration:
-            "Around 1.5 Months",
-
-          durationLabel:
-            "Typical timeline",
-
-          summary:
-            "A fuller personalised preparation plan with more time for complete IELTS coverage, individual correction and deeper skill development.",
+          description:
+            "More time for complete personalised IELTS preparation, correction and skill development.",
 
           facts: [
+
             [
               "Classes",
-              "15 personal classes"
+              "15"
             ],
+
             [
               "Class time",
               "Around 1 hour"
             ],
+
             [
               "Schedule",
               "Flexible"
             ],
+
             [
               "Coverage",
               "Complete IELTS"
             ],
+
             [
               "Mocks",
-              "2 full mocks"
+              "2 Full Mocks"
             ],
+
             [
               "Approach",
-              "Deeper preparation"
+              "Personalised"
             ]
+
           ],
 
           bestFor:
-            "Students who want complete personalised IELTS preparation with more correction time than the compact 10 class route.",
+            "Students who want complete personalised IELTS preparation with more correction and development time than the 10 class plan.",
 
           focus: [
+
             "Complete IELTS preparation",
-            "Individual skill and technique correction",
-            "Targeted work on repeated weaknesses",
+
+            "Individual skill correction",
+
+            "Work on repeated weaknesses",
+
             "Exam approach and guided practice"
+
           ],
 
           support: [
+
             "Personal instructor attention",
+
             "Flexible scheduling",
-            "Two full mock tests",
+
+            "Two Full Mock Tests",
+
             "Individual evaluation and correction"
+
           ],
 
           note:
-            "The exact preparation flow is adjusted to the student's level and progress."
+            "The preparation flow can change according to the student's current level, weaknesses and progress."
+
         },
+
+
+        /* 24 CLASSES */
 
         {
           id:
@@ -430,93 +515,107 @@
             "24 Classes",
 
           metric:
-            "≈ 2 Months",
+            "Around 2 Months",
 
           metricLabel:
             "Flexible timeline",
 
-          cardDescription:
-            "Foundation plus complete personalised preparation.",
-
-          duration:
-            "Around 2 Months",
-
-          durationLabel:
-            "Typical timeline",
-
-          summary:
-            "The deepest 1on1 route for students who need foundation support first and then complete IELTS preparation with more time for correction, mocks and development.",
+          description:
+            "Foundation plus complete personalised IELTS preparation with more time for development.",
 
           facts: [
+
             [
               "Classes",
-              "24 personal classes"
+              "24"
             ],
+
             [
               "Class time",
               "Around 1 hour"
             ],
+
             [
               "Schedule",
               "Flexible"
             ],
+
             [
               "Foundation",
-              "Grammar + basics"
+              "Grammar + Basics"
             ],
+
             [
               "Mocks",
-              "5 full mocks"
+              "5 Full Mocks"
             ],
+
             [
               "Extra",
-              "Until Desired Score access"
+              "Continued Support"
             ]
+
           ],
 
           bestFor:
-            "Students who need foundation work, more preparation time, or a complete personalised route from basics through exam readiness.",
+            "Students who need foundation work, more preparation time or a complete personalised path from basics through IELTS exam readiness.",
 
           focus: [
-            "Grammar and essential language foundation where required",
-            "Complete Listening, Reading, Writing and Speaking preparation",
-            "Question type techniques and exam approach",
-            "Progressive development from foundation to exam readiness"
+
+            "Grammar and essential foundation where required",
+
+            "Complete Listening, Reading, Writing and Speaking",
+
+            "Question type techniques and exam strategy",
+
+            "Development from foundation to exam readiness"
+
           ],
 
           support: [
+
             "Personal instructor attention",
+
             "Flexible scheduling",
-            "Five full mock tests",
-            "Access to the Until Desired Score batch support route"
+
+            "Five Full Mock Tests",
+
+            "Access to Until Desired Score Batch support"
+
           ],
 
           note:
-            "The student's actual timeline can vary because 1on1 scheduling and learning pace are flexible."
+            "The actual timeline may vary because 1on1 scheduling and learning pace are flexible."
+
         }
 
       ]
+
     }
 
   };
+
+
+
+  /* ========================================================
+     STATE
+  ======================================================== */
 
   const state = {
 
     mode:
       "batch",
 
-    selected: {
-      batch:
-        "batchCrash",
-
-      one:
-        "one10"
-    },
-
-    detailsOpen:
-      false
+    openCourse:
+      null
 
   };
+
+
+
+  /* ========================================================
+     HELPERS
+  ======================================================== */
 
   const $ = (
     selector,
@@ -525,6 +624,7 @@
     scope.querySelector(
       selector
     );
+
 
   const $$ = (
     selector,
@@ -536,13 +636,31 @@
       )
     );
 
-  const el = {
 
-    batchPicker:
-      $("#batch-picker"),
+  const prefersReducedMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
 
-    onePicker:
-      $("#one-picker"),
+
+
+  /* ========================================================
+     ELEMENTS
+  ======================================================== */
+
+  const elements = {
+
+    header:
+      $("#site-header"),
+
+    heroChoice:
+      $("#hero-choice"),
+
+    sticky:
+      $("#prep-sticky"),
+
+    courseSection:
+      $("#courses"),
 
     courseEyebrow:
       $("#course-eyebrow"),
@@ -553,233 +671,661 @@
     courseIntro:
       $("#course-intro"),
 
-    panel:
-      $("#course-panel"),
-
-    panelKicker:
-      $("#panel-kicker"),
-
-    panelTitle:
-      $("#panel-title"),
-
-    panelSummary:
-      $("#panel-summary"),
-
-    panelDuration:
-      $("#panel-duration"),
-
-    panelFacts:
-      $("#panel-facts"),
-
-    panelFit:
-      $("#panel-fit"),
-
-    panelFocus:
-      $("#panel-focus"),
-
-    panelSupport:
-      $("#panel-support"),
-
-    panelNote:
-      $("#panel-note"),
-
-    detailsToggle:
-      $("#details-toggle"),
-
-    details:
-      $("#course-details")
+    accordion:
+      $("#course-accordion")
 
   };
 
-  function currentData() {
 
-    return DATA[
+
+  /* ========================================================
+     GET CURRENT MODE
+  ======================================================== */
+
+  function getModeData() {
+
+    return COURSE_DATA[
       state.mode
     ];
 
   }
 
-  function currentPlan() {
 
-    const data =
-      currentData();
 
-    return (
-      data.plans.find(
-        plan =>
-          plan.id ===
-          state.selected[
-            state.mode
-          ]
-      ) ||
-      data.plans[0]
-    );
+  /* ========================================================
+     CREATE ELEMENT
+  ======================================================== */
+
+  function createElement(
+    tag,
+    className,
+    text
+  ) {
+
+    const element =
+      document.createElement(
+        tag
+      );
+
+
+    if (
+      className
+    ) {
+
+      element.className =
+        className;
+
+    }
+
+
+    if (
+      typeof text ===
+      "string"
+    ) {
+
+      element.textContent =
+        text;
+
+    }
+
+
+    return element;
 
   }
 
-  function makePlanCard(
-    plan,
-    mode
+
+
+  /* ========================================================
+     CREATE COURSE FACT
+  ======================================================== */
+
+  function createFact(
+    label,
+    value
   ) {
 
-    const button =
-      document.createElement(
-        "button"
+    const fact =
+      createElement(
+        "div",
+        "course-fact"
       );
 
-    button.type =
-      "button";
 
-    button.className =
-      "plan-card" +
-      (
-        plan.supportCard
-          ? " plan-card--support"
-          : ""
-      ) +
-      (
-        state.selected[
-          mode
-        ] ===
-        plan.id
-          ? " is-active"
-          : ""
+    const factLabel =
+      createElement(
+        "span",
+        "",
+        label
       );
 
-    button.setAttribute(
-      "aria-pressed",
-      String(
-        state.selected[
-          mode
-        ] ===
-        plan.id
-      )
+
+    const factValue =
+      createElement(
+        "strong",
+        "",
+        value
+      );
+
+
+    fact.append(
+      factLabel,
+      factValue
     );
 
-    button.dataset.plan =
-      plan.id;
 
-    const left =
+    return fact;
+
+  }
+
+
+
+  /* ========================================================
+     CREATE LIST
+  ======================================================== */
+
+  function createDetailList(
+    items
+  ) {
+
+    const list =
       document.createElement(
-        "span"
+        "ul"
       );
+
+
+    items.forEach(
+      item => {
+
+        const listItem =
+          document.createElement(
+            "li"
+          );
+
+
+        listItem.textContent =
+          item;
+
+
+        list.appendChild(
+          listItem
+        );
+
+      }
+    );
+
+
+    return list;
+
+  }
+
+
+
+  /* ========================================================
+     CREATE COURSE CARD
+  ======================================================== */
+
+  function createCourseCard(
+    course
+  ) {
+
+    const isOpen =
+      state.openCourse ===
+      course.id;
+
+
+    const card =
+      createElement(
+        "article",
+        "course-card"
+      );
+
+
+    card.dataset.courseId =
+      course.id;
+
+
+    if (
+      course.supportCard
+    ) {
+
+      card.classList.add(
+        "is-support"
+      );
+
+    }
+
+
+    if (
+      isOpen
+    ) {
+
+      card.classList.add(
+        "is-open"
+      );
+
+    }
+
+
+
+    /* ======================================================
+       CARD TOP
+    ======================================================= */
+
+    const top =
+      createElement(
+        "div",
+        "course-card__top"
+      );
+
+
+    const main =
+      createElement(
+        "div",
+        "course-card__main"
+      );
+
 
     const label =
-      document.createElement(
-        "span"
+      createElement(
+        "span",
+        "course-card__label",
+        course.label
       );
 
-    label.className =
-      "plan-card__label";
-
-    label.textContent =
-      plan.label;
 
     const name =
-      document.createElement(
-        "span"
+      createElement(
+        "h3",
+        "course-card__name",
+        course.name
       );
 
-    name.className =
-      "plan-card__name";
-
-    name.textContent =
-      plan.name;
 
     const description =
-      document.createElement(
-        "span"
+      createElement(
+        "p",
+        "course-card__description",
+        course.description
       );
 
-    description.className =
-      "plan-card__desc";
 
-    description.textContent =
-      plan.cardDescription;
-
-    left.append(
+    main.append(
       label,
       name,
       description
     );
 
+
+
     const metric =
-      document.createElement(
-        "span"
+      createElement(
+        "div",
+        "course-card__metric"
       );
 
-    metric.className =
-      "plan-card__metric";
 
-    const strong =
-      document.createElement(
-        "strong"
+    const metricValue =
+      createElement(
+        "strong",
+        "",
+        course.metric
       );
 
-    strong.textContent =
-      plan.metric;
 
-    const small =
-      document.createElement(
-        "small"
+    const metricLabel =
+      createElement(
+        "span",
+        "",
+        course.metricLabel
       );
 
-    small.textContent =
-      plan.metricLabel;
 
     metric.append(
-      strong,
-      small
+      metricValue,
+      metricLabel
     );
 
-    button.append(
-      left,
+
+    top.append(
+      main,
       metric
     );
 
-    button.addEventListener(
-      "click",
-      () => {
 
-        state.selected[
-          mode
-        ] =
-          plan.id;
+    card.appendChild(
+      top
+    );
 
-        renderPicker(
-          mode
+
+
+    /* ======================================================
+       ACTIONS
+    ======================================================= */
+
+    const actions =
+      createElement(
+        "div",
+        "course-card__actions"
+      );
+
+
+
+    const detailsButton =
+      createElement(
+        "button",
+        "course-detail-button"
+      );
+
+
+    detailsButton.type =
+      "button";
+
+
+    detailsButton.setAttribute(
+      "aria-expanded",
+      String(
+        isOpen
+      )
+    );
+
+
+    const detailsText =
+      createElement(
+        "span",
+        "",
+        isOpen
+          ? "Hide Details"
+          : "View Details"
+      );
+
+
+    const detailsIcon =
+      createElement(
+        "span",
+        "course-detail-button__icon",
+        "↓"
+      );
+
+
+    detailsIcon.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+
+    detailsButton.append(
+      detailsText,
+      detailsIcon
+    );
+
+
+
+    const admitButton =
+      createElement(
+        "a",
+        "course-admit-button",
+        "Admit Now"
+      );
+
+
+    admitButton.href =
+      "pay.html";
+
+
+    actions.append(
+      detailsButton,
+      admitButton
+    );
+
+
+    card.appendChild(
+      actions
+    );
+
+
+
+    /* ======================================================
+       EXPANDED DETAILS
+    ======================================================= */
+
+    const details =
+      createElement(
+        "div",
+        "course-card__details"
+      );
+
+
+    const detailsInner =
+      createElement(
+        "div",
+        "course-card__details-inner"
+      );
+
+
+
+    /* FACTS */
+
+    const facts =
+      createElement(
+        "div",
+        "course-facts"
+      );
+
+
+    course.facts.forEach(
+      (
+        [
+          factLabel,
+          factValue
+        ]
+      ) => {
+
+        facts.appendChild(
+          createFact(
+            factLabel,
+            factValue
+          )
         );
-
-        renderPanel();
 
       }
     );
 
-    return button;
+
+    detailsInner.appendChild(
+      facts
+    );
+
+
+
+    /* BEST FOR */
+
+    const bestFor =
+      createElement(
+        "div",
+        "course-best-for"
+      );
+
+
+    const bestForLabel =
+      createElement(
+        "strong",
+        "",
+        "Best For"
+      );
+
+
+    const bestForText =
+      createElement(
+        "p",
+        "",
+        course.bestFor
+      );
+
+
+    bestFor.append(
+      bestForLabel,
+      bestForText
+    );
+
+
+    detailsInner.appendChild(
+      bestFor
+    );
+
+
+
+    /* FOCUS + SUPPORT */
+
+    const columns =
+      createElement(
+        "div",
+        "course-detail-columns"
+      );
+
+
+    const focusColumn =
+      createElement(
+        "div",
+        "course-detail-column"
+      );
+
+
+    const focusHeading =
+      createElement(
+        "h4",
+        "",
+        "Preparation Focus"
+      );
+
+
+    focusColumn.append(
+      focusHeading,
+      createDetailList(
+        course.focus
+      )
+    );
+
+
+
+    const supportColumn =
+      createElement(
+        "div",
+        "course-detail-column"
+      );
+
+
+    const supportHeading =
+      createElement(
+        "h4",
+        "",
+        "Support Included"
+      );
+
+
+    supportColumn.append(
+      supportHeading,
+      createDetailList(
+        course.support
+      )
+    );
+
+
+    columns.append(
+      focusColumn,
+      supportColumn
+    );
+
+
+    detailsInner.appendChild(
+      columns
+    );
+
+
+
+    /* NOTE */
+
+    const note =
+      createElement(
+        "p",
+        "course-detail-note",
+        course.note
+      );
+
+
+    detailsInner.appendChild(
+      note
+    );
+
+
+
+    /* ADMIT AGAIN AT BOTTOM */
+
+    const detailFooter =
+      createElement(
+        "div",
+        "course-detail-footer"
+      );
+
+
+    const detailAdmit =
+      createElement(
+        "a",
+        "course-admit-button",
+        "Admit Now"
+      );
+
+
+    detailAdmit.href =
+      "pay.html";
+
+
+    detailFooter.appendChild(
+      detailAdmit
+    );
+
+
+    detailsInner.appendChild(
+      detailFooter
+    );
+
+
+    details.appendChild(
+      detailsInner
+    );
+
+
+    card.appendChild(
+      details
+    );
+
+
+
+    /* ======================================================
+       TOGGLE EVENT
+    ======================================================= */
+
+    detailsButton.addEventListener(
+      "click",
+      () => {
+
+        toggleCourse(
+          course.id
+        );
+
+      }
+    );
+
+
+    return card;
 
   }
 
-  function renderPicker(
-    mode
-  ) {
 
-    const target =
-      mode === "batch"
-        ? el.batchPicker
-        : el.onePicker;
 
-    target.innerHTML =
+  /* ========================================================
+     RENDER COURSE SECTION
+  ======================================================== */
+
+  function renderCourses() {
+
+    const data =
+      getModeData();
+
+
+    elements.courseEyebrow.textContent =
+      data.eyebrow;
+
+
+    elements.courseTitle.textContent =
+      data.heading;
+
+
+    elements.courseIntro.textContent =
+      data.intro;
+
+
+    elements.accordion.innerHTML =
       "";
 
-    DATA[
-      mode
-    ].plans.forEach(
-      plan => {
 
-        target.appendChild(
-          makePlanCard(
-            plan,
-            mode
+    elements.accordion.dataset.mode =
+      state.mode;
+
+
+    elements.accordion.classList.toggle(
+      "has-open",
+      Boolean(
+        state.openCourse
+      )
+    );
+
+
+    data.plans.forEach(
+      course => {
+
+        elements.accordion.appendChild(
+          createCourseCard(
+            course
           )
         );
 
@@ -788,206 +1334,125 @@
 
   }
 
-  function renderHeading() {
 
-    const data =
-      currentData();
 
-    el.courseEyebrow.textContent =
-      data.eyebrow;
+  /* ========================================================
+     TOGGLE ONE COURSE
 
-    el.courseTitle.textContent =
-      data.heading;
+     Only one course can be open at a time.
+  ======================================================== */
 
-    el.courseIntro.textContent =
-      data.intro;
-
-  }
-
-  function renderPanel() {
-
-    const plan =
-      currentPlan();
-
-    el.panel.classList.remove(
-      "is-changing"
-    );
-
-    void el.panel.offsetWidth;
-
-    el.panel.classList.add(
-      "is-changing"
-    );
-
-    el.panelKicker.textContent =
-      plan.label;
-
-    el.panelTitle.textContent =
-      plan.name;
-
-    el.panelSummary.textContent =
-      plan.summary;
-
-    el.panelDuration.innerHTML =
-      "";
-
-    const durationStrong =
-      document.createElement(
-        "strong"
-      );
-
-    durationStrong.textContent =
-      plan.duration;
-
-    const durationLabel =
-      document.createElement(
-        "span"
-      );
-
-    durationLabel.textContent =
-      plan.durationLabel;
-
-    el.panelDuration.append(
-      durationStrong,
-      durationLabel
-    );
-
-    el.panelFacts.innerHTML =
-      "";
-
-    plan.facts.forEach(
-      (
-        [
-          label,
-          value
-        ]
-      ) => {
-
-        const fact =
-          document.createElement(
-            "div"
-          );
-
-        fact.className =
-          "course-fact";
-
-        const factLabel =
-          document.createElement(
-            "span"
-          );
-
-        factLabel.textContent =
-          label;
-
-        const factValue =
-          document.createElement(
-            "strong"
-          );
-
-        factValue.textContent =
-          value;
-
-        fact.append(
-          factLabel,
-          factValue
-        );
-
-        el.panelFacts.appendChild(
-          fact
-        );
-
-      }
-    );
-
-    el.panelFit.textContent =
-      plan.bestFor;
-
-    el.panelFocus.innerHTML =
-      "";
-
-    plan.focus.forEach(
-      item => {
-
-        const li =
-          document.createElement(
-            "li"
-          );
-
-        li.textContent =
-          item;
-
-        el.panelFocus.appendChild(
-          li
-        );
-
-      }
-    );
-
-    el.panelSupport.innerHTML =
-      "";
-
-    plan.support.forEach(
-      item => {
-
-        const li =
-          document.createElement(
-            "li"
-          );
-
-        li.textContent =
-          item;
-
-        el.panelSupport.appendChild(
-          li
-        );
-
-      }
-    );
-
-    el.panelNote.textContent =
-      plan.note;
-
-    setDetails(
-      false
-    );
-
-  }
-
-  function setDetails(
-    open
+  function toggleCourse(
+    courseId
   ) {
 
-    state.detailsOpen =
-      open;
+    const wasOpen =
+      state.openCourse ===
+      courseId;
 
-    el.details.hidden =
-      !open;
 
-    el.detailsToggle.setAttribute(
-      "aria-expanded",
-      String(
-        open
-      )
-    );
+    state.openCourse =
+      wasOpen
+        ? null
+        : courseId;
 
-    const label =
-      $(
-        "span:first-child",
-        el.detailsToggle
-      );
+
+    renderCourses();
+
+
+    /*
+      When opening a card on mobile or a smaller laptop,
+      keep that selected card comfortably visible.
+
+      We only move the page if the card is outside the
+      comfortable visible area.
+    */
 
     if (
-      label
+      !wasOpen
     ) {
 
-      label.textContent =
-        open
-          ? "Hide course details"
-          : "View course details";
+      requestAnimationFrame(
+        () => {
+
+          const card =
+            $(
+              `[data-course-id="${courseId}"]`
+            );
+
+
+          if (
+            !card
+          ) {
+            return;
+          }
+
+
+          const rect =
+            card.getBoundingClientRect();
+
+
+          const headerHeight =
+            getHeaderHeight();
+
+
+          const stickyHeight =
+            elements.sticky
+              ? elements.sticky.offsetHeight
+              : 0;
+
+
+          const safeTop =
+            headerHeight +
+            stickyHeight +
+            18;
+
+
+          /*
+            Only scroll if the beginning of the selected card
+            is hidden above the sticky navigation.
+
+            Clicking a visible card will therefore NOT cause
+            an unnecessary jump.
+          */
+
+          if (
+            rect.top <
+            safeTop
+          ) {
+
+            const destination =
+              window.scrollY +
+              rect.top -
+              safeTop;
+
+
+            window.scrollTo({
+
+              top:
+                destination,
+
+              behavior:
+                prefersReducedMotion.matches
+                  ? "auto"
+                  : "smooth"
+
+            });
+
+          }
+
+        }
+      );
 
     }
 
   }
+
+
+
+  /* ========================================================
+     MODE SELECTOR
+  ======================================================== */
 
   function syncModeButtons() {
 
@@ -1000,10 +1465,12 @@
           button.dataset.mode ===
           state.mode;
 
+
         button.classList.toggle(
           "is-active",
           active
         );
+
 
         button.setAttribute(
           "aria-selected",
@@ -1017,148 +1484,390 @@
 
   }
 
+
+
   function setMode(
     mode,
-    scroll
+    source
   ) {
 
     if (
-      !DATA[
+      !COURSE_DATA[
         mode
       ]
     ) {
       return;
     }
 
+
     state.mode =
       mode;
 
+
+    /*
+      Switching Batch / 1on1 closes any expanded course.
+
+      This prevents old Batch details appearing while
+      viewing 1on1 and vice versa.
+    */
+
+    state.openCourse =
+      null;
+
+
     syncModeButtons();
 
-    el.batchPicker.hidden =
-      mode !==
-      "batch";
+    renderCourses();
 
-    el.onePicker.hidden =
-      mode !==
-      "one";
 
-    renderHeading();
 
-    renderPicker(
-      "batch"
-    );
+    /*
+      If selected from the hero, take the student directly
+      to the relevant course options.
 
-    renderPicker(
-      "one"
-    );
-
-    renderPanel();
+      If selected from the sticky navigation, they are
+      already inside the course area and remain there.
+    */
 
     if (
-      scroll
+      source ===
+      "hero"
     ) {
 
-      const header =
-        $(
-          "#site-header"
-        );
-
-      const sticky =
-        $(
-          "#prep-sticky"
-        );
-
-      const target =
-        $(
-          "#courses"
-        );
-
-      const offset =
-        (
-          header
-            ? header.offsetHeight
-            : 0
-        ) +
-        (
-          sticky
-            ? sticky.offsetHeight
-            : 0
-        ) +
-        14;
-
-      const top =
-        target
-          .getBoundingClientRect()
-          .top +
-        window.scrollY -
-        offset;
-
-      window.scrollTo({
-
-        top,
-
-        behavior:
-          window
-            .matchMedia(
-              "(prefers-reduced-motion: reduce)"
-            )
-            .matches
-            ? "auto"
-            : "smooth"
-
-      });
+      scrollToCourseSection();
 
     }
 
   }
 
-  $$(
-    "[data-mode]"
-  ).forEach(
-    button => {
 
-      button.addEventListener(
-        "click",
-        () => {
 
-          setMode(
-            button.dataset.mode,
-            Boolean(
-              button.closest(
-                ".prep-sticky"
-              )
-            )
+  /* ========================================================
+     SCROLL TO COURSE SECTION
+  ======================================================== */
+
+  function scrollToCourseSection() {
+
+    if (
+      !elements.courseSection
+    ) {
+      return;
+    }
+
+
+    const headerHeight =
+      getHeaderHeight();
+
+
+    const stickyHeight =
+      64;
+
+
+    const destination =
+      elements.courseSection
+        .getBoundingClientRect()
+        .top +
+      window.scrollY -
+      headerHeight -
+      stickyHeight -
+      12;
+
+
+    window.scrollTo({
+
+      top:
+        Math.max(
+          0,
+          destination
+        ),
+
+      behavior:
+        prefersReducedMotion.matches
+          ? "auto"
+          : "smooth"
+
+    });
+
+  }
+
+
+
+  /* ========================================================
+     HEADER HEIGHT
+
+     This fixes the previous problem where the sticky
+     preparation selector covered the course heading.
+  ======================================================== */
+
+  function getHeaderHeight() {
+
+    if (
+      !elements.header
+    ) {
+      return 0;
+    }
+
+
+    return elements.header.offsetHeight;
+
+  }
+
+
+
+  function updateHeaderHeightVariable() {
+
+    const headerHeight =
+      getHeaderHeight();
+
+
+    document.documentElement.style.setProperty(
+      "--ielts-header-height",
+      `${headerHeight}px`
+    );
+
+  }
+
+
+
+  /* ========================================================
+     SMART STICKY CONTROL
+
+     Hero selector visible:
+     sticky selector hidden.
+
+     Hero selector has left the screen AND user is inside
+     course section:
+     sticky selector visible.
+
+     User leaves course section:
+     sticky selector hidden again.
+  ======================================================== */
+
+  let stickyTicking =
+    false;
+
+
+  function updateStickySelector() {
+
+    stickyTicking =
+      false;
+
+
+    if (
+      !elements.heroChoice ||
+      !elements.courseSection ||
+      !elements.sticky
+    ) {
+      return;
+    }
+
+
+    const headerHeight =
+      getHeaderHeight();
+
+
+    const heroRect =
+      elements.heroChoice
+        .getBoundingClientRect();
+
+
+    const courseRect =
+      elements.courseSection
+        .getBoundingClientRect();
+
+
+    const stickyHeight =
+      elements.sticky.offsetHeight ||
+      64;
+
+
+    const heroHasGone =
+      heroRect.bottom <=
+      headerHeight + 8;
+
+
+    const courseHasStarted =
+      courseRect.top <=
+      headerHeight +
+      stickyHeight +
+      100;
+
+
+    const courseStillActive =
+      courseRect.bottom >
+      headerHeight +
+      stickyHeight +
+      50;
+
+
+    const shouldShow =
+      heroHasGone &&
+      courseHasStarted &&
+      courseStillActive;
+
+
+    elements.sticky.classList.toggle(
+      "is-visible",
+      shouldShow
+    );
+
+
+    elements.sticky.setAttribute(
+      "aria-hidden",
+      String(
+        !shouldShow
+      )
+    );
+
+  }
+
+
+
+  function requestStickyUpdate() {
+
+    if (
+      stickyTicking
+    ) {
+      return;
+    }
+
+
+    stickyTicking =
+      true;
+
+
+    requestAnimationFrame(
+      updateStickySelector
+    );
+
+  }
+
+
+
+  /* ========================================================
+     MODE CLICK EVENTS
+  ======================================================== */
+
+  function initModeButtons() {
+
+    $$(
+      "[data-mode]"
+    ).forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            setMode(
+              button.dataset.mode,
+              button.dataset.modeSource
+            );
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+
+  /* ========================================================
+     RESIZE
+  ======================================================== */
+
+  let resizeTimer;
+
+
+  function initResize() {
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        clearTimeout(
+          resizeTimer
+        );
+
+
+        resizeTimer =
+          setTimeout(
+            () => {
+
+              updateHeaderHeightVariable();
+
+              updateStickySelector();
+
+            },
+            120
           );
 
-        }
-      );
+      }
+    );
 
-    }
-  );
+  }
 
-  el.detailsToggle.addEventListener(
-    "click",
-    () => {
 
-      setDetails(
-        !state.detailsOpen
-      );
 
-    }
-  );
+  /* ========================================================
+     SCROLL
+  ======================================================== */
 
-  renderPicker(
-    "batch"
-  );
+  function initScroll() {
 
-  renderPicker(
-    "one"
-  );
+    window.addEventListener(
+      "scroll",
+      requestStickyUpdate,
+      {
+        passive:
+          true
+      }
+    );
 
-  setMode(
-    "batch",
-    false
-  );
+  }
+
+
+
+  /* ========================================================
+     INITIALIZE
+  ======================================================== */
+
+  function init() {
+
+    updateHeaderHeightVariable();
+
+    initModeButtons();
+
+    initResize();
+
+    initScroll();
+
+    syncModeButtons();
+
+    renderCourses();
+
+    updateStickySelector();
+
+  }
+
+
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      init
+    );
+
+  } else {
+
+    init();
+
+  }
 
 })();

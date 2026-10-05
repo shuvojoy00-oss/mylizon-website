@@ -143,6 +143,13 @@ function initDropdowns() {
       dropdown.classList.toggle("is-open", opening);
       trigger.setAttribute("aria-expanded", String(opening));
     });
+
+    dropdown.addEventListener("mouseleave", () => {
+      if (window.matchMedia("(min-width: 901px)").matches) {
+        dropdown.classList.remove("is-open");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
   });
 
   document.addEventListener("click", () => {

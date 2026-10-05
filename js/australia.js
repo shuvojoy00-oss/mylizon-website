@@ -56,10 +56,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!searchSheet) return;
     searchSheet.classList.add("is-open");
     document.body.style.overflow = "hidden";
-    window.setTimeout(() => searchInput && searchInput.focus(), 120);
+    const panel = searchSheet.querySelector(".au-sheet__panel");
+    if (panel) panel.scrollTop = 0;
+    window.setTimeout(() => {
+      if (!searchInput) return;
+      searchInput.focus({preventScroll:true});
+      searchInput.scrollIntoView({block:"start",behavior:"instant"});
+    }, 160);
   };
 
   if (searchToggle) searchToggle.addEventListener("click", openSearchSheet);
+  document.querySelectorAll("[data-au-search-toggle-hero]").forEach(el => el.addEventListener("click", openSearchSheet));
+  document.querySelectorAll("[data-au-guide-toggle-hero]").forEach(el => el.addEventListener("click", openSheet));
   document.querySelectorAll("[data-au-search-close]").forEach(el => el.addEventListener("click", closeSearchSheet));
 
   const pageSearchAliases = {
@@ -142,6 +150,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const normalizePageSearch = value => value.toLowerCase().replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim();
 
+  const levenshtein = (a,b) => {
+    const m = a.length, n = b.length;
+    if (!m) return n;
+    if (!n) return m;
+    const prev = Array.from({length:n+1},(_,i)=>i);
+    const curr = new Array(n+1);
+    for (let i=1;i<=m;i++) {
+      curr[0]=i;
+      for (let j=1;j<=n;j++) {
+        const cost = a[i-1] === b[j-1] ? 0 : 1;
+        curr[j] = Math.min(curr[j-1]+1, prev[j]+1, prev[j-1]+cost);
+      }
+      for (let j=0;j<=n;j++) prev[j]=curr[j];
+    }
+    return prev[n];
+  };
+
+  const fuzzyWordMatch = (queryWord, text) => {
+    if (queryWord.length < 4) return false;
+    const words = text.split(/\s+/).filter(Boolean);
+    return words.some(word => {
+      if (Math.abs(word.length - queryWord.length) > 2) return false;
+      const maxDistance = queryWord.length >= 8 ? 2 : 1;
+      return levenshtein(queryWord, word) <= maxDistance;
+    });
+  };
+
   const scorePageSearchItem = (item, query) => {
     const alias = pageSearchAliases[query] || query;
     const title = item.title.toLowerCase();
@@ -149,9 +184,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (title.startsWith(alias)) return 920;
     if (title.includes(alias)) return 840;
     if (item.text.includes(alias)) return 700;
+
     const words = alias.split(" ").filter(Boolean);
     if (words.length > 1 && words.every(word => item.text.includes(word))) return 620;
     if (words.some(word => word.length > 2 && item.text.includes(word))) return 420;
+
+    const fuzzyHits = words.filter(word => fuzzyWordMatch(word, title + " " + item.text));
+    if (fuzzyHits.length === words.length && words.length) return 360;
+    if (fuzzyHits.length) return 260;
+
     return 0;
   };
 

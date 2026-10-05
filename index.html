@@ -1,2151 +1,885 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>LizOn Education | IELTS & PTE — Designed for Desired Score</title>
-  <meta name="description" content="LizOn Education — IELTS & PTE programs, evaluation, guidance, and study abroad support. Start your journey with the right level." />
-  <meta name="theme-color" content="#0b2a1f" />
-
-<!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/logo-dark.png" sizes="32x32">
-
-  <style>
-    :root{
-      --bg1:#06140f;
-      --bg2:#0b2a1f;
-      --card:#0c2019cc;
-      --card2:#0a1a1480;
-      --line:#1d4a3a;
-      --text:#e9f3ef;
-      --muted:#b7c9c2;
-
-      --gold:#d7b24a;
-      --gold2:#b8922f;
-
-      --soft: 0 12px 40px rgba(0,0,0,.35);
-      --shadow2: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 22px;
-
-      --chipBg: rgba(10,26,20,.55);
-      --chipBd: rgba(29,74,58,.75);
-      --focus: rgba(215,178,74,.55);
-
-      --overlay: rgba(0,0,0,.55);
-
-      --ask-bg: rgba(6,20,15,.88);
-      --ask-panel: rgba(12,32,25,.94);
-      --ask-bd: rgba(29,74,58,.75);
-      --ask-bubble: rgba(255,255,255,.06);
-      --ask-bubble2: rgba(215,178,74,.12);
-
-      --surface: rgba(255,255,255,.06);
-      --surface2: rgba(255,255,255,.04);
-      --onGold:#142015;
-
-      --ok: #2cffb2;
-      --warn: #ffcc66;
-      --danger: #ff5a5a;
-      --violet: #b8a6ff;
-      --sky: #7fd7ff;
-    }
-
-    html[data-theme="light"]{
-      --bg1:#f5fbf8;
-      --bg2:#eaf6f0;
-      --card: rgba(255,255,255,.88);
-      --card2: rgba(255,255,255,.72);
-      --line: rgba(9,64,45,.18);
-      --text:#0b1b14;
-      --muted:#355247;
-
-      --chipBg: rgba(255,255,255,.78);
-      --chipBd: rgba(9,64,45,.18);
-
-      --soft: 0 14px 40px rgba(6,20,15,.10);
-      --shadow2: 0 18px 60px rgba(6,20,15,.10);
-
-      --overlay: rgba(0,0,0,.35);
-
-      --ask-bg: rgba(255,255,255,.88);
-      --ask-panel: rgba(255,255,255,.95);
-      --ask-bd: rgba(9,64,45,.18);
-      --ask-bubble: rgba(9,64,45,.06);
-      --ask-bubble2: rgba(215,178,74,.18);
-
-      --surface: rgba(255,255,255,.72);
-      --surface2: rgba(255,255,255,.58);
-      --onGold:#142015;
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1100px 700px at 20% 0%, rgba(215,178,74,.10), transparent 60%),
-        radial-gradient(1100px 700px at 80% 0%, rgba(72,255,191,.07), transparent 55%),
-        linear-gradient(180deg, var(--bg2), var(--bg1));
-      min-height:100vh;
-      overflow-x:hidden;
-    }
-    a{color:inherit; text-decoration:none}
-
-    .container{max-width:1100px; margin:0 auto; padding:22px 18px 200px}
-    @media (max-width:520px){ .container{padding:18px 14px 220px} }
-
-    /* =======================
-       Topbar
-    ======================= */
-    .topbar{
-      position:sticky; top:0;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(6,20,15,.90), rgba(6,20,15,.60));
-      border-bottom:1px solid rgba(29,74,58,.6);
-      z-index:50;
-    }
-    html[data-theme="light"] .topbar{
-      background: linear-gradient(180deg, rgba(245,251,248,.90), rgba(245,251,248,.64));
-      border-bottom:1px solid var(--line);
-    }
-    .topbar-inner{
-      max-width:1100px; margin:0 auto; padding:14px 18px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900; letter-spacing:.2px;
-      min-width:0;
-    }
-    .brand-logo{
-      width:38px; height:38px;
-      border-radius:12px;
-      padding:6px;
-      background: var(--chipBg);
-      border:1px solid var(--chipBd);
-      box-shadow: 0 0 0 3px rgba(215,178,74,.10);
-      flex:0 0 auto;
-    }
-    .brand .titleWrap{min-width:0}
-    .brand small{
-      display:block;
-      font-weight:750;
-      color:var(--muted);
-      margin-top:2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 60vw;
-    }
-
-    .topActions{
-      display:flex; align-items:center; gap:10px; flex:0 0 auto;
-    }
-    .iconSquare{
-      width:44px; height:44px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.75);
-      background: rgba(6,20,15,.72);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      transition:.18s ease;
-      user-select:none;
-      color: var(--text);
-    }
-    html[data-theme="light"] .iconSquare{ background: rgba(255,255,255,.86); border-color: rgba(9,64,45,.18); }
-    .iconSquare:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .iconSquare svg{ width:18px; height:18px; }
-
-    /* =======================
-       Buttons / chips
-    ======================= */
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 16px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.75);
-      background: var(--chipBg);
-      font-weight:950;
-      letter-spacing:.2px;
-      cursor:pointer;
-      transition:.18s ease;
-      text-align:center;
-      user-select:none;
-      gap:10px;
-      white-space:nowrap;
-      color: var(--text);
-    }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    .btn.primary{
-      background: linear-gradient(180deg, var(--gold), var(--gold2));
-      color: var(--onGold);
-      border-color: rgba(215,178,74,.85);
-      box-shadow: 0 18px 60px rgba(215,178,74,.12);
-    }
-
-    .btn.ghost{
-      background: transparent;
-      border-color: rgba(29,74,58,.65);
-    }
-    html[data-theme="light"] .btn.ghost{ background: rgba(255,255,255,.55); }
-
-    /* Special highlighted 1v1 button */
-    .btn.1v1{
-      position:relative;
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(215,178,74,.25), transparent 65%),
-        linear-gradient(180deg, rgba(12,32,25,.78), rgba(10,26,20,.55));
-      border-color: rgba(215,178,74,.55);
-      box-shadow: 0 18px 70px rgba(215,178,74,.14);
-    }
-    html[data-theme="light"] .btn.1v1{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(215,178,74,.30), transparent 65%),
-        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.78));
-    }
-    .btn.1v1 .badgeDot{
-      width:10px; height:10px; border-radius:999px;
-      background: var(--ok);
-      box-shadow: 0 0 0 4px rgba(44,255,178,.16);
-      flex:0 0 auto;
-    }
-
-    .btn.glow{
-      position:relative;
-      overflow:hidden;
-      border-color: rgba(127,215,255,.45);
-      background:
-        radial-gradient(520px 180px at 15% 30%, rgba(127,215,255,.22), transparent 60%),
-        linear-gradient(180deg, rgba(12,32,25,.78), rgba(10,26,20,.55));
-      box-shadow: 0 18px 60px rgba(127,215,255,.12);
-    }
-    html[data-theme="light"] .btn.glow{
-      background:
-        radial-gradient(520px 180px at 15% 30%, rgba(127,215,255,.22), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.78));
-    }
-
-    .btn.pulse{
-      animation: pulse 1.6s ease-in-out infinite;
-    }
-    @keyframes pulse{
-      0%,100%{ transform: translateY(0); box-shadow: 0 18px 70px rgba(215,178,74,.10); }
-      50%{ transform: translateY(-1px); box-shadow: 0 22px 90px rgba(215,178,74,.18); }
-    }
-
-    .chipRow{ display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 0; }
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.75);
-      background: var(--chipBg);
-      color: var(--muted);
-      font-weight:900;
-      font-size:12px;
-      white-space:nowrap;
-    }
-    .chip b{ color: var(--gold); }
-
-    .chip.action{
-      cursor:pointer;
-      transition:.18s ease;
-      user-select:none;
-    }
-    .chip.action:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    /* =======================
-       Hero
-    ======================= */
-    .hero{ padding:18px 0 12px; display:grid; gap:14px; }
-    .heroCard{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.72), rgba(10,26,20,.52));
-      box-shadow: var(--soft);
-      padding:22px;
-      position:relative;
-      overflow:hidden;
-    }
-    html[data-theme="light"] .heroCard{
-      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
-    }
-    .heroCard:before{
-      content:"";
-      position:absolute; inset:-120px auto auto -120px;
-      width:520px; height:520px;
-      background: radial-gradient(circle at 30% 30%, rgba(215,178,74,.18), transparent 62%);
-      pointer-events:none;
-    }
-    .heroTitle{
-      margin:10px 0 8px;
-      font-size:38px;
-      line-height:1.05;
-      letter-spacing:-.6px;
-      position:relative;
-    }
-    @media (max-width:520px){ .heroTitle{ font-size:30px; } }
-    .heroTitle span{ color: var(--gold); }
-
-    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; position:relative; }
-    @media (max-width:520px){ .ctaRow .btn{ width:100%; } }
-
-    .triplet{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-      margin-top:12px;
-      position:relative;
-    }
-    @media (max-width:900px){ .triplet{ grid-template-columns: 1fr; } }
-
-    /* =======================
-       Sections
-    ======================= */
-    .sectionTitle{
-      margin:22px 0 10px;
-      font-size:16px;
-      letter-spacing:.2px;
-      font-weight:1000;
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-    }
-    .sectionTitle small{ display:none; }
-
-    .grid3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
-    @media (max-width:920px){ .grid3{ grid-template-columns:1fr; } }
-
-    .card{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
-      box-shadow: var(--soft);
-      padding:16px;
-      display:grid;
-      gap:10px;
-      overflow:hidden;
-      position:relative;
-    }
-    html[data-theme="light"] .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
-    }
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      width:max-content;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.75);
-      background: var(--chipBg);
-      font-weight:950;
-      font-size:12px;
-      color: var(--muted);
-    }
-    .tag b{ color: var(--gold); }
-    .card h4{ margin:0; font-size:15px; font-weight:1000; }
-    .card p{ margin:0; color: var(--muted); font-weight:850; font-size:13px; line-height:1.55; }
-    .card .row{ display:flex; gap:10px; flex-wrap:wrap; }
-    .card .row .btn{ width:100%; }
-
-    /* =======================
-       Excellence (colored)
-    ======================= */
-    .exCard{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      box-shadow: var(--soft);
-      padding:16px;
-      display:grid;
-      gap:10px;
-      overflow:hidden;
-      position:relative;
-    }
-    .exCard:before{
-      content:"";
-      position:absolute; inset:-120px -120px auto auto;
-      width:420px; height:420px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 62%);
-      pointer-events:none;
-      opacity:.8;
-    }
-    .exCard h4{ margin:0; font-size:15px; font-weight:1000; position:relative; }
-    .exCard p{ margin:0; color: rgba(255,255,255,.86); font-weight:850; font-size:13px; line-height:1.55; position:relative; }
-    html[data-theme="light"] .exCard p{ color: rgba(11,27,20,.86); }
-
-    .exCard .mini{
-      display:flex; gap:8px; flex-wrap:wrap; position:relative;
-    }
-    .pill{
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.22);
-      background: rgba(255,255,255,.10);
-      font-weight:950;
-      font-size:12px;
-      white-space:nowrap;
-    }
-    html[data-theme="light"] .pill{
-      border:1px solid rgba(9,64,45,.18);
-      background: rgba(255,255,255,.70);
-      color: var(--text);
-    }
-
-    .exIELTS{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(215,178,74,.30), transparent 65%),
-        linear-gradient(180deg, rgba(11,42,31,.90), rgba(6,20,15,.74));
-    }
-    html[data-theme="light"] .exIELTS{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(215,178,74,.26), transparent 65%),
-        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.80));
-    }
-
-    .exPTE{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(127,215,255,.28), transparent 65%),
-        linear-gradient(180deg, rgba(8,38,34,.90), rgba(6,20,15,.74));
-    }
-    html[data-theme="light"] .exPTE{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(127,215,255,.22), transparent 65%),
-        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.80));
-    }
-
-    .exN2F{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(184,166,255,.26), transparent 65%),
-        linear-gradient(180deg, rgba(12,32,25,.90), rgba(6,20,15,.74));
-    }
-    html[data-theme="light"] .exN2F{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(184,166,255,.22), transparent 65%),
-        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.80));
-    }
-
-    /* =======================
-       Reviews
-    ======================= */
-    .review{
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
-      box-shadow: var(--soft);
-      padding:16px;
-      display:grid;
-      gap:10px;
-    }
-    html[data-theme="light"] .review{
-      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
-    }
-    .reviewTop{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
-    .stars{ display:inline-flex; gap:4px; align-items:center; }
-    .stars svg{ width:16px; height:16px; fill: rgba(215,178,74,.92); }
-    .who{ display:flex; gap:10px; align-items:center; font-weight:1000; }
-    .who small{display:block;color:var(--muted);font-weight:850;font-size:12px;margin-top:2px}
-    .avatar{
-      width:34px; height:34px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.55);
-      background: var(--surface2);
-      display:grid;
-      place-items:center;
-      color: var(--gold);
-      font-weight:1000;
-      flex:0 0 auto;
-    }
-    .review p{ margin:0; color: var(--muted); font-weight:850; line-height:1.55; }
-
-    /* =======================
-       Footer (card style)
-    ======================= */
-    .footer{
-      margin-top:18px;
-      padding:18px;
-      border-radius: var(--radius);
-      border:1px solid rgba(29,74,58,.7);
-      background: linear-gradient(180deg, rgba(12,32,25,.55), rgba(10,26,20,.40));
-      box-shadow: var(--soft);
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:16px;
-      align-items:start;
-      overflow:hidden;
-    }
-    html[data-theme="light"] .footer{
-      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.76));
-    }
-    .footer h3{ margin:0 0 8px; font-size:14px; font-weight:1000; }
-    .footer p{ margin:0; color: var(--muted); line-height:1.6; font-size:13px; }
-    .footer p strong{ color: var(--gold); }
-
-    .footer-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-    .iconbtn{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:900; font-size:13px;
-      transition:.18s ease;
-      white-space:nowrap;
-    }
-    .iconbtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    .siteMap{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    @media (max-width:520px){ .footer{ grid-template-columns:1fr; } .siteMap{ grid-template-columns:1fr; } }
-    .siteMap a{
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.65);
-      background: var(--surface2);
-      font-weight:900;
-      font-size:13px;
-      transition:.18s ease;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      color: var(--text);
-    }
-    .siteMap a:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-
-    .smallprint{
-      margin-top:12px;
-      font-size:12px;
-      color: rgba(183,201,194,.80);
-    }
-    html[data-theme="light"] .smallprint{ color: rgba(53,82,71,.75); }
-
-    /* =======================
-       Floating Bars + Controls
-    ======================= */
-    .bottomBar{
-      position:fixed;
-      left:0; right:0; bottom:0;
-      z-index:70;
-      padding:10px 12px;
-      background: rgba(6,20,15,.84);
-      backdrop-filter: blur(14px);
-      border-top: 1px solid rgba(29,74,58,.65);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    html[data-theme="light"] .bottomBar{
-      background: rgba(255,255,255,.88);
-      border-top:1px solid var(--line);
-    }
-    .bottomBar a{
-      width:min(1100px, 100%);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 14px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.75);
-      background: var(--surface2);
-      box-shadow: var(--soft);
-      font-weight:950;
-      max-width: calc(100vw - 24px);
-      color: var(--text);
-    }
-    .bottomBar b{ color: var(--gold); }
-    .dot{
-      width:10px; height:10px; border-radius:999px;
-      background: var(--ok);
-      box-shadow: 0 0 0 3px rgba(44,255,178,.15);
-      flex:0 0 auto;
-    }
-    .barLeft{ display:flex; align-items:center; gap:10px; min-width:0; }
-    .barRight{ color: var(--muted); font-weight:900; white-space:nowrap; }
-
-    /* Down scroll button */
-    .scrollNav{
-      position:fixed;
-      right:14px;
-      bottom:76px;
-      z-index:71;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      align-items:center;
-      justify-content:center;
-      pointer-events:auto;
-    }
-    .scrollBtn{
-      width:42px;
-      height:42px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.75);
-      background: rgba(6,20,15,.82);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      color: var(--text);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      transition:.18s ease;
-      user-select:none;
-    }
-    html[data-theme="light"] .scrollBtn{ background: rgba(255,255,255,.88); }
-    .scrollBtn:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .scrollBtn:focus{ outline:none; box-shadow: 0 0 0 4px var(--focus), var(--soft); }
-
-    .themeTiny{
-      position:fixed;
-      right:14px;
-      bottom:180px;
-      z-index:72;
-      width:42px;
-      height:42px;
-      border-radius:14px;
-      border:1px solid rgba(215,178,74,.35);
-      background: rgba(6,20,15,.82);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      transition:.18s ease;
-      user-select:none;
-      color: var(--text);
-    }
-    html[data-theme="light"] .themeTiny{
-      background: rgba(255,255,255,.88);
-      border-color: rgba(9,64,45,.18);
-    }
-    .themeTiny:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .themeTiny svg{ width:18px; height:18px; }
-
-    /* Up button */
-    .upFab{
-      position:fixed;
-      right:14px;
-      bottom:128px;
-      z-index:73;
-      width:42px;
-      height:42px;
-      border-radius:14px;
-      border:1px solid rgba(215,178,74,.40);
-      background: rgba(6,20,15,.82);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      transition:.18s ease;
-      user-select:none;
-      color: var(--text);
-    }
-    html[data-theme="light"] .upFab{ background: rgba(255,255,255,.88); border-color: rgba(9,64,45,.18); }
-    .upFab:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .upFab:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
-
-    /* AskLizOn FAB */
-    .askFab{
-      position:fixed;
-      left:14px;
-      bottom:76px;
-      z-index:73;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:12px 14px;
-      border-radius:999px;
-      border:1px solid rgba(215,178,74,.40);
-      background: var(--ask-bg);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      font-weight:1000;
-      cursor:pointer;
-      user-select:none;
-      max-width: calc(100vw - 28px);
-      color: var(--text);
-    }
-    .askFab:hover{ transform: translateY(-1px); }
-    .askFabLogo{
-      width:18px; height:18px;
-      border-radius:7px;
-      padding:2px;
-      border:1px solid rgba(29,74,58,.55);
-      background: var(--surface2);
-      flex:0 0 auto;
-    }
-    .askFab b{ color: var(--gold); }
-
-    /* Bottom-left icon-only sheet button */
-    .navFab{
-      position:fixed;
-      left:14px;
-      bottom:14px;
-      z-index:74;
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.78);
-      background: rgba(6,20,15,.86);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--soft);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      transition:.18s ease;
-      user-select:none;
-      color: var(--text);
-    }
-    html[data-theme="light"] .navFab{ background: rgba(255,255,255,.88); }
-    .navFab:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .navFab svg{ width:18px; height:18px; }
-
-    /* Overlay + Sheets */
-    .overlay{
-      position:fixed;
-      inset:0;
-      background: var(--overlay);
-      display:none;
-      z-index:1200;
-    }
-    .overlay.open{ display:block; }
-
-    .sheet{
-      position:fixed;
-      left:12px;
-      bottom:12px;
-      width:min(460px, calc(100vw - 24px));
-      border-radius:18px;
-      border:1px solid rgba(29,74,58,.75);
-      background: linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
-      box-shadow: var(--shadow2);
-      z-index:1201;
-      transform: translateY(130%);
-      transition: transform .22s ease;
-      overflow:hidden;
-    }
-    html[data-theme="light"] .sheet{
-      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-      border:1px solid rgba(9,64,45,.18);
-    }
-    .sheet.open{ transform: translateY(0); }
-    .sheetHead{
-      padding:12px 12px;
-      border-bottom:1px solid rgba(29,74,58,.55);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .sheetHead b{ font-weight:1000; }
-    .sheetClose{
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:1000;
-      cursor:pointer;
-      color: var(--text);
-    }
-    .sheetBody{
-      padding:12px;
-      display:grid;
-      gap:10px;
-    }
-    .sheetBody a, .sheetBody button{
-      padding:11px 12px;
-      border-radius:14px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:900;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      cursor:pointer;
-      text-align:left;
-      width:100%;
-      color: var(--text);
-    }
-    .sheetBody a strong{ color: var(--gold); }
-
-    .sheetChips{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-    .sheetChip{
-      flex: 1 1 calc(50% - 8px);
-      min-width: 150px;
-      padding:10px 10px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.70);
-      background: var(--surface2);
-      font-weight:950;
-      font-size:12.5px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      color: var(--text);
-      cursor:pointer;
-    }
-    .sheetChip strong{ color: var(--gold); }
-    @media (max-width:380px){
-      .sheetChip{ flex: 1 1 100%; min-width: 0; }
-    }
-
-    .divider{ height:1px; background: rgba(29,74,58,.55); margin: 2px 0; }
-
-    /* AskLizOn Panel (TAP ONLY) */
-    .askPanel{
-      position:fixed;
-      top:12px;
-      left:12px;
-      bottom:12px;
-      width:min(440px, calc(100vw - 24px));
-      border-radius: 18px;
-      border:1px solid var(--ask-bd);
-      background: var(--ask-panel);
-      box-shadow: var(--shadow2);
-      z-index:1201;
-      transform: translateX(-110%);
-      transition: transform .22s ease;
-      display:flex;
-      flex-direction:column;
-      overflow:hidden;
-      color: var(--text);
-    }
-    .askPanel.open{ transform: translateX(0); }
-
-    .askHead{
-      padding:12px 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      border-bottom:1px solid rgba(29,74,58,.55);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.00));
-    }
-    html[data-theme="light"] .askHead{
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
-      border-bottom:1px solid var(--line);
-    }
-    .askTitle{ display:flex; align-items:center; gap:10px; min-width:0; }
-    .askLogo{
-      width:34px; height:34px;
-      border-radius:12px;
-      padding:6px;
-      background: var(--chipBg);
-      border:1px solid var(--chipBd);
-      flex:0 0 auto;
-    }
-    .askTitle b{
-      font-weight:1000;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .askTitle small{
-      display:block;
-      color: var(--muted);
-      font-weight:850;
-      font-size:12px;
-      margin-top:2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 260px;
-    }
-    .askClose{
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:1000;
-      cursor:pointer;
-      user-select:none;
-      white-space:nowrap;
-      color: var(--text);
-    }
-
-    .askBody{
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      overflow:auto;
-      flex:1 1 auto;
-    }
-
-    .askMsg{
-      border-radius:18px;
-      border:1px solid rgba(29,74,58,.55);
-      background: var(--ask-bubble);
-      padding:12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.10);
-    }
-    .askMsg.gold{
-      background: var(--ask-bubble2);
-      border-color: rgba(215,178,74,.35);
-    }
-    .askMsg h4{ margin:0 0 6px; font-size:13.5px; font-weight:1000; }
-    .askMsg p{ margin:0; color: var(--muted); font-weight:850; font-size:13px; line-height:1.55; }
-
-    .tapRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-    .tap{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:11px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.65);
-      background: var(--chipBg);
-      font-weight:1000;
-      font-size:13px;
-      cursor:pointer;
-      user-select:none;
-      transition:.18s ease;
-      white-space:nowrap;
-      color: var(--text);
-    }
-    .tap:hover{ transform: translateY(-1px); border-color: rgba(215,178,74,.55); }
-    .tap.primary{
-      background: linear-gradient(180deg, var(--gold), var(--gold2));
-      color: var(--onGold);
-      border-color: rgba(215,178,74,.85);
-    }
-
-    /* =======================
-       Popups (modals)
-    ======================= */
-    .modalWrap{
-      position:fixed;
-      inset:0;
-      z-index:1400;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:16px;
-    }
-    .modalWrap.open{ display:flex; }
-    .modal{
-      width:min(520px, 100%);
-      border-radius:22px;
-      border:1px solid rgba(29,74,58,.75);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      transform: translateY(10px);
-      animation: pop .18s ease forwards;
-      background: linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
-      color: var(--text);
-    }
-    html[data-theme="light"] .modal{
-      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-      border:1px solid rgba(9,64,45,.18);
-    }
-    @keyframes pop{
-      to{ transform: translateY(0); }
-    }
-    .modalHead{
-      padding:14px 14px;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      border-bottom:1px solid rgba(29,74,58,.55);
-    }
-    html[data-theme="light"] .modalHead{ border-bottom:1px solid var(--line); }
-    .modalHead b{ font-size:14px; font-weight:1100; }
-    .modalHead small{ display:block; margin-top:4px; color: var(--muted); font-weight:850; line-height:1.45; }
-    .modalClose{
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(29,74,58,.7);
-      background: var(--chipBg);
-      font-weight:1000;
-      cursor:pointer;
-      color: var(--text);
-      white-space:nowrap;
-      flex:0 0 auto;
-    }
-    .modalBody{
-      padding:14px;
-      display:grid;
-      gap:12px;
-    }
-    .ribbon{
-      padding:10px 12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      font-weight:900;
-      line-height:1.55;
-      color: rgba(255,255,255,.88);
-    }
-    html[data-theme="light"] .ribbon{
-      border:1px solid rgba(9,64,45,.18);
-      background: rgba(255,255,255,.72);
-      color: var(--text);
-    }
-    .ribbon b{ color: var(--gold); }
-    .ribbon.danger b{ color: #ffe0e0; }
-    .modalActions{
-      display:flex; gap:10px; flex-wrap:wrap;
-    }
-    .modalActions .btn{ width:100%; }
-    @media (min-width:520px){
-      .modalActions .btn{ width:auto; }
-    }
-
-    .modal.pte{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(127,215,255,.20), transparent 65%),
-        radial-gradient(700px 260px at 80% 30%, rgba(215,178,74,.18), transparent 65%),
-        linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
-    }
-    html[data-theme="light"] .modal.pte{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(127,215,255,.18), transparent 65%),
-        radial-gradient(700px 260px at 80% 30%, rgba(215,178,74,.18), transparent 65%),
-        linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-    }
-
-    .modal.counselor{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(184,166,255,.22), transparent 65%),
-        linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
-    }
-    html[data-theme="light"] .modal.counselor{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(184,166,255,.20), transparent 65%),
-        linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-    }
-
-    .modal.mistake{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(255,90,90,.18), transparent 65%),
-        linear-gradient(180deg, rgba(12,32,25,.96), rgba(10,26,20,.92));
-    }
-    html[data-theme="light"] .modal.mistake{
-      background:
-        radial-gradient(700px 260px at 20% 30%, rgba(255,90,90,.16), transparent 65%),
-        linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-    }
-
-    /* Mobile placements */
-    @media (max-width:520px){
-      .askFab{ left:12px; bottom:74px; }
-      .navFab{ left:12px; bottom:14px; width:42px; height:42px; }
-      .scrollNav{ right:12px; bottom:74px; }
-      .scrollBtn{ width:40px; height:40px; }
-      .upFab{ right:12px; bottom:122px; width:40px; height:40px; }
-      .themeTiny{ right:12px; bottom:172px; width:40px; height:40px; }
-    }
-
-    /* Reduce motion respect */
-    @media (prefers-reduced-motion: reduce){
-      .btn.pulse{ animation:none; }
-      .modal{ animation:none; }
-      .btn:hover, .chip.action:hover, .iconSquare:hover, .iconbtn:hover, .siteMap a:hover, .tap:hover{ transform:none; }
-    }
-  </style>
-
-
-</style>
-
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '908763892197452');
-    fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none" 
-         src="https://www.facebook.com/tr?id=908763892197452&ev=PageView&noscript=1"/>
-  </noscript>
-  </head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LizOn Education | IELTS, PTE & Study Abroad</title>
+  <meta
+    name="description"
+    content="Begin better, become more with LizOn Education. Explore IELTS, PTE, free classes, real student results and study abroad guidance."
+  >
+  <meta name="theme-color" content="#fcfbf7">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="css/homepage-test.css">
+  <script src="js/homepage-test.js"></script>
+</head>
 
 <body>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html" aria-label="LizOn Education Home">
-        <img class="brand-logo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
-        <div class="titleWrap">
-          LizOn Education
-          <small>Designed for Desired Score</small>
-        </div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ======================================================
+       HEADER
+  ======================================================= -->
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner shell">
+
+      <a class="brand" href="#top" aria-label="LizOn Education home">
+        <img
+          class="brand__logo"
+          src="assets/logo/lizon-logo.png"
+          alt=""
+          width="42"
+          height="42"
+        >
+        <span class="brand__name">LizOn Education</span>
       </a>
 
-      <div class="topActions">
-        <button class="iconSquare" id="topMenuBtn" type="button" aria-label="Open menu">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M4 7h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+
+        <div class="nav-dropdown">
+          <button
+            class="nav-dropdown__trigger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="ielts-menu"
+          >
+            IELTS
+            <span class="nav-chevron" aria-hidden="true">⌄</span>
+          </button>
+
+          <div class="nav-dropdown__panel" id="ielts-menu">
+            <span class="nav-dropdown__eyebrow">IELTS</span>
+
+            <a class="nav-feature" href="ielts.html">
+              <strong>IELTS Courses</strong>
+              <span>Prepare with the right techniques.</span>
+            </a>
+
+            <a href="ieltsclass.html">Free IELTS Classes <span>↗</span></a>
+            <a href="#results">Student Results <span>↓</span></a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button
+            class="nav-dropdown__trigger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="pte-menu"
+          >
+            PTE
+            <span class="nav-chevron" aria-hidden="true">⌄</span>
+          </button>
+
+          <div class="nav-dropdown__panel" id="pte-menu">
+            <span class="nav-dropdown__eyebrow">PTE</span>
+
+            <a class="nav-feature" href="pte.html">
+              <strong>PTE Courses</strong>
+              <span>Build toward your better score.</span>
+            </a>
+
+            <a href="pteclass.html">Free PTE Classes <span>↗</span></a>
+            <a href="#results">Student Results <span>↓</span></a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button
+            class="nav-dropdown__trigger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="study-abroad-menu"
+          >
+            Study Abroad
+            <span class="nav-chevron" aria-hidden="true">⌄</span>
+          </button>
+
+          <div class="nav-dropdown__panel" id="study-abroad-menu">
+            <span class="nav-dropdown__eyebrow">GO GLOBAL</span>
+
+            <a class="nav-feature" href="studyabroad.html">
+              <strong>Explore Study Abroad</strong>
+              <span>From here, anywhere.</span>
+            </a>
+
+            <a href="assessment.html">Check Your Eligibility <span>↗</span></a>
+            <a href="#guidance">Talk to an Expert <span>↓</span></a>
+          </div>
+        </div>
+
+        <a class="desktop-nav__link" href="#results">Results</a>
+        <a class="desktop-nav__link" href="#free-learning">Free Classes</a>
+      </nav>
+
+      <a
+        class="header-contact"
+        href="https://wa.me/8801611611139"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Talk to Us
+        <span aria-hidden="true">↗</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        id="menu-toggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu__top">
+      <span class="mobile-menu__label">Explore LizOn</span>
+
+      <button
+        class="mobile-menu__close"
+        id="mobile-menu-close"
+        type="button"
+        aria-label="Close navigation"
+      >
+        ×
+      </button>
+    </div>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+
+      <details>
+        <summary>IELTS <span>+</span></summary>
+        <div class="mobile-nav__sub">
+          <a href="ielts.html">IELTS Courses</a>
+          <a href="ieltsclass.html">Free IELTS Classes</a>
+          <a href="#results">Student Results</a>
+        </div>
+      </details>
+
+      <details>
+        <summary>PTE <span>+</span></summary>
+        <div class="mobile-nav__sub">
+          <a href="pte.html">PTE Courses</a>
+          <a href="pteclass.html">Free PTE Classes</a>
+          <a href="#results">Student Results</a>
+        </div>
+      </details>
+
+      <details>
+        <summary>Study Abroad <span>+</span></summary>
+        <div class="mobile-nav__sub">
+          <a href="studyabroad.html">Explore Study Abroad</a>
+          <a href="assessment.html">Check Your Eligibility</a>
+          <a href="#guidance">Talk to an Expert</a>
+        </div>
+      </details>
+
+      <a class="mobile-nav__main" href="#results">Results</a>
+      <a class="mobile-nav__main" href="#free-learning">Free Classes</a>
+    </nav>
+
+    <div class="mobile-menu__contact">
+      <span>Ready when you are.</span>
+      <a
+        href="https://wa.me/8801611611139"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Talk to LizOn →
+      </a>
     </div>
   </div>
 
-  <main class="container" id="top">
+  <main id="main-content">
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="heroCard">
-        <div class="chipRow">
-          <span class="chip action" id="chipAsk" role="button" tabindex="0" aria-label="Open AskLizOn">
-            IELTS Batch <b>Designed for Desired Score</b> - ask
-          </span>
-          <span class="chip action" id="chipOffice" role="button" tabindex="0" aria-label="Go to footer with office details">
-            Dhaka office + helpline
-          </span>
+    <!-- ======================================================
+         HERO
+    ======================================================= -->
+    <section class="hero" id="top">
+      <div class="hero__atmosphere" aria-hidden="true"></div>
+
+      <svg
+        class="hero__journey"
+        viewBox="0 0 900 500"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M40 405 C260 420, 330 250, 520 265 S710 125, 870 95"
+          pathLength="1"
+        />
+        <circle cx="260" cy="367" r="5"/>
+        <circle cx="520" cy="265" r="5"/>
+        <circle cx="870" cy="95" r="6"/>
+      </svg>
+
+      <div class="shell hero__inner">
+
+        <div class="hero__content reveal">
+          <div class="journey-label" aria-label="Learn, Score, Fly">
+            <span>Learn</span>
+            <i aria-hidden="true"></i>
+            <span>Score</span>
+            <i aria-hidden="true"></i>
+            <span>Fly</span>
+          </div>
+
+          <h1 class="hero__title">
+            Begin Better,<br>
+            Become More<span class="gold-dot">.</span>
+          </h1>
+
+          <p class="hero__description">
+            Since 2019 - Your Next, begins here: IELTS - PTE - Study Abroad <br>
+Start from where you are. Go beyond the score, from now till you arrive abroad.
+          </p>
+
+          <div class="hero__actions">
+            <a class="button button--primary" href="https://www.mylizon.com/assessment.html">
+              Book 1on1 Consultation
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <a class="text-link" href="#goals">
+              Explore IELTS &amp; PTE
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
 
-        <h1 class="heroTitle">Learn<span>Accurate</span> — start from right level.</h1>
+        <div class="hero-proof reveal" aria-label="Real LizOn student results">
 
-        <div class="triplet" aria-label="Main programs">
-          <a class="btn primary pulse" id="btnIELTS" href="ielts.html#levels" aria-label="Explore IELTS">
-            IELTS
-          </a>
-          <a class="btn glow" id="btnPTE" href="pte.html" aria-label="Explore PTE">
-            PTE
-          </a>
-          <a class="btn" id="btnSA" href="studyabroad.html" aria-label="Explore Study Abroad">
-            Study Abroad
-          </a>
+          <article class="proof-card proof-card--primary">
+            <span class="proof-card__label">IELTS · STUDENT RESULT</span>
+            <div class="proof-card__placeholder result-preview result-preview--ielts">
+              <span>Real IELTS Result</span>
+              <small>Loading student evidence…</small>
+            </div>
+          </article>
+
+          <article class="proof-card proof-card--secondary">
+            <span class="proof-card__label">PTE · STUDENT RESULT</span>
+            <div class="proof-card__placeholder result-preview result-preview--pte">
+              <span>Real PTE Result</span>
+              <small>Loading student evidence…</small>
+            </div>
+          </article>
+          <article class="proof-card proof-card--visa">
+    <span class="proof-card__label">AUSTRALIA · VISA SUCCESS</span>
+    <img
+        src="assets/hero/visa-success-australia.png"
+        alt="Australia student visa success shared with LizOn Education"
+        decoding="async"
+    >
+</article>
+
+        </div>
+      </div>
+
+      <a class="hero__outcomes" href="#results">
+        <span>Real Outcomes</span>
+        <span aria-hidden="true">↓</span>
+      </a>
+    </section>
+
+    <!-- ======================================================
+         RESULTS
+    ======================================================= -->
+    <section class="results section" id="results">
+      <div class="results__word" aria-hidden="true">SCORE</div>
+
+      <div class="shell">
+        <header class="section-heading reveal">
+          <span class="eyebrow">Dreamed It. Did It.</span>
+
+          <h2>
+            Stories of Scores.<br>
+            </h2>
+
+          <p>
+              A selection of IELTS and PTE results shared by LizOn students.
+          </p>
+        </header>
+
+        <div
+          class="results-grid"
+          id="results-grid"
+          aria-live="polite"
+        >
+          <div class="results-loading">
+            <span class="results-loading__pulse"></span>
+            Loading real student results…
+          </div>
         </div>
 
-        <div class="ctaRow">
-          <a class="btn 1v1" href="1v1.html" aria-label="1v1">
-            <span class="badgeDot" aria-hidden="true"></span>
-            🔔 1v1
-          </a>
+        <div class="section-action reveal results-actions">
+    <button class="text-link text-link--button" id="show-more-results" type="button">
+        View More Results
+        <span aria-hidden="true">↓</span>
+    </button>
 
-          <button class="btn primary" id="instantHelpTop" type="button" aria-label="Get Instant Help">
-            Get Instant Help
+    <button class="text-link text-link--button results-close" id="close-results" type="button" hidden>
+        Close Results
+        <span aria-hidden="true">↑</span>
+    </button>
+</div>
+
+        <div class="proof-transition reveal">
+          <span>A score tells you what happened.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         STUDENT VOICES
+    ======================================================= -->
+    <section class="voices section" id="student-voices">
+      <div class="voices__wave" aria-hidden="true">
+        <svg viewBox="0 0 1200 180" preserveAspectRatio="none">
+          <path d="M0 90 C110 20 190 160 300 90 S490 20 600 90 S790 160 900 90 S1090 20 1200 90"/>
+        </svg>
+      </div>
+
+      <div class="shell">
+        <header class="section-heading section-heading--light reveal">
+          <span class="eyebrow eyebrow--gold">STUDENT VOICES</span>
+
+          <p class="voices__bridge">
+            The students tell you what it felt like.
+          </p>
+
+          <h2>
+            Love From<br>
+            Our Students.
+          </h2>
+
+          <p>
+            Voices that speak. Journeys that inspire.
+          </p>
+        </header>
+
+        <div class="featured-video reveal">
+          <button
+            class="video-card video-card--featured"
+            type="button"
+            data-video="https://youtu.be/aZnXglvvcGo"
+            aria-label="Play featured student story"
+          >
+            <img
+              src="https://img.youtube.com/vi/aZnXglvvcGo/maxresdefault.jpg"
+              alt="Student success story video"
+              loading="lazy"
+            >
+
+            <span class="video-card__shade"></span>
+
+            <span class="video-card__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M8.5 6.5L17 12l-8.5 5.5v-11z"/>
+              </svg>
+            </span>
+
+            <span class="video-card__meta">
+              <small>FEATURED STUDENT STORY</small>
+              <strong>Don't Just Dream, Achieve.</strong>
+            </span>
           </button>
-<a class="btn" id="bookAppointmentTop"
-   href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20book%20an%20appointment.%20IELTS%2FPTE%3A%20____%20Target%3A%20____%20Exam%20date%3A%20____%20(Source%3A%20Home_book_appointment_top)"
-   target="_blank"
-   rel="noopener"
-   aria-label="Book an appointment on WhatsApp"
-   onclick="trackEvent('Lead')">
-         Book Appointment
-          </a>
+        </div>
 
-          <a class="btn ghost" href="#learn">Start Learning</a>
+        <div class="video-strip">
+
+          <button
+            class="video-card reveal"
+            type="button"
+            data-video="https://youtu.be/dsmhnjPTOLc"
+            aria-label="Play student story"
+          >
+            <img
+              src="https://img.youtube.com/vi/dsmhnjPTOLc/hqdefault.jpg"
+              alt="LizOn student story"
+              loading="lazy"
+            >
+            <span class="video-card__shade"></span>
+            <span class="video-card__small-play" aria-hidden="true">▶</span>
+            <span class="video-card__meta">
+              <small>STUDENT STORY</small>
+              <strong>A Story of Success</strong>
+            </span>
+          </button>
+
+          <button
+            class="video-card reveal"
+            type="button"
+            data-video="https://youtu.be/osQ4Ccz9YhM"
+            aria-label="Play IELTS student reviews"
+          >
+            <img
+              src="https://img.youtube.com/vi/osQ4Ccz9YhM/hqdefault.jpg"
+              alt="IELTS student reviews"
+              loading="lazy"
+            >
+            <span class="video-card__shade"></span>
+            <span class="video-card__small-play" aria-hidden="true">▶</span>
+            <span class="video-card__meta">
+              <small>IELTS</small>
+              <strong>Real-Time Student Reviews</strong>
+            </span>
+          </button>
+
+          <button
+            class="video-card reveal"
+            type="button"
+            data-video="https://youtu.be/CNtfGdplgok"
+            aria-label="Play IELTS score review"
+          >
+            <img
+              src="https://img.youtube.com/vi/CNtfGdplgok/hqdefault.jpg"
+              alt="IELTS real score review"
+              loading="lazy"
+            >
+            <span class="video-card__shade"></span>
+            <span class="video-card__small-play" aria-hidden="true">▶</span>
+            <span class="video-card__meta">
+              <small>IELTS RESULT</small>
+              <strong>Jannat · Overall 7.5</strong>
+            </span>
+          </button>
+
+        </div>
+
+        <div class="section-action section-action--light reveal">
+          <a
+            class="text-link text-link--light"
+            href="https://www.youtube.com/@lizoneducation"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            See More Student Stories
+            <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- EXCELLENCE -->
-    <section id="excellence">
-      <div class="sectionTitle">Why students trust LizOn</div>
+    <!-- ======================================================
+         CHOOSE YOUR GOAL
+    ======================================================= -->
+    <section class="goals section" id="goals">
+      <div class="shell">
+        <header class="section-heading reveal">
+          <span class="eyebrow">YOUR NEXT MOVE</span>
 
-      <div class="grid3">
-        <div class="exCard exIELTS">
-          <span class="tag"><b>IELTS</b> — Mentored, corrected, improved</span>
-          <h4>Band-focused training (Starts: 27th January)</h4>
+          <h2>Begin Right. Better Next.</h2>
+
           <p>
-            Routine + correction + evaluation — so your score becomes stable, not lucky.
+            Move Toward What Matters. This Step will Change your Next.  
           </p>
-          <div class="mini">
-            <span class="pill">Feedback-driven</span>
-            <span class="pill">Real exam strategy</span>
-            <span class="pill">Level-based</span>
-          </div>
-          <div class="row">
-            <a class="btn primary" href="ielts.html#levels">Choose IELTS Level</a>
-            <a class="btn" href="computer.html">Computer IELTS</a>
-          </div>
-        </div>
+        </header>
 
-        <div class="exCard exPTE">
-          <span class="tag"><b>PTE</b> — Score-based learning</span>
-          <h4>Target score, then train the exact tasks</h4>
+        <div class="goal-grid">
+
+          <a class="goal-card reveal" href="ielts.html">
+            <div class="goal-card__media">
+              <img
+                src="assets/courses/ielts.png"
+                alt="IELTS preparation at LizOn Education"
+                loading="lazy"
+              >
+            </div>
+
+            <div class="goal-card__content">
+              <span>IELTS PREPARATION</span>
+              <h3>IELTS Courses</h3>
+              <p>Choose The Best course</p>
+              <i aria-hidden="true">↗</i>
+            </div>
+          </a>
+
+          <a class="goal-card reveal" href="pte.html">
+            <div class="goal-card__media">
+              <img
+                src="assets/courses/pte.png"
+                alt="PTE preparation at LizOn Education"
+                loading="lazy"
+              >
+            </div>
+
+            <div class="goal-card__content">
+              <span>PTE PREPARATION</span>
+              <h3>PTE Courses</h3>
+              <p>Choose The Best course</p>
+              <i aria-hidden="true">↗</i>
+            </div>
+          </a>
+
+          <a
+            class="goal-card goal-card--study reveal"
+            href="studyabroad.html"
+          >
+            <div class="goal-card__media">
+              <img
+                src="assets/courses/study-abroad.png"
+                alt="Study Abroad with LizOn Education"
+                loading="lazy"
+              >
+            </div>
+
+            <div class="goal-card__content">
+              <span>STUDY ABROAD</span>
+              <h3>Choose Your destination</h3>
+              <p>Open Your World</p>
+              <i aria-hidden="true">↗</i>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         FREE LEARNING
+    ======================================================= -->
+    <section class="free-learning section" id="free-learning">
+      <div class="shell">
+        <header class="section-heading reveal">
+          <span class="eyebrow">EXPERIENCE LIZON</span>
+
+          <h2>
+            Go <br>
+            Where Growth Takes You.
+          </h2>
+
           <p>
-            Templates + timing + accuracy — so your mock scores match your final score.
+            Explore free IELTS and PTE classes and experience LizOn's teaching style.
           </p>
-          <div class="mini">
-            <span class="pill">Task mastery</span>
-            <span class="pill">Mock + analysis</span>
-            <span class="pill">Speed training</span>
-          </div>
-          <div class="row">
-            <a class="btn primary" href="pte.html">Open PTE</a>
-            <a class="btn" href="1v1.html">See 1v1 </a>
-          </div>
-        </div>
+        </header>
 
-        <div class="exCard exN2F">
-          <span class="tag"><b>Study Abroad</b> — N2F support</span>
-          <h4>Country + intake + documents — clear plan</h4>
-          <p>
-            No confusion, no random submissions. One clean roadmap with counselor support.
-          </p>
-          <div class="mini">
-            <span class="pill">Document checklist</span>
-            <span class="pill">Visa guidance</span>
-            <span class="pill">Counselor support</span>
-          </div>
-          <div class="row">
-            <a class="btn primary" href="studyabroad.html">Open Study Abroad</a>
-           <a class="btn"
-   href="https://wa.me/8801608881545?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20Study%20Abroad%20guidance%20(N2F).%20Country%3A%20____%20Intake%3A%20____%20(Source%3A%20Home_excellence_n2f)"
-   target="_blank"
-   rel="noopener"
-   onclick="trackEvent('Lead')">
-   Talk to Counselor
-</a>
-          </div>
+        <div class="learning-grid">
+
+          <a class="learning-module reveal" href="ieltsclass.html">
+            <div class="learning-module__icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64">
+                <rect x="9" y="11" width="46" height="34" rx="8"/>
+                <path d="M26 22l15 6.5L26 35V22z"/>
+                <path d="M19 53h26"/>
+              </svg>
+            </div>
+
+            <span class="learning-module__type">IELTS · FREE CLASSES</span>
+            <h3>IELTS - Your Next Band Starts with Better Technique. </h3>
+
+            <span class="learning-module__link">
+              Explore Free Classes
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>
+
+          <a class="learning-module reveal" href="pteclass.html">
+            <div class="learning-module__icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64">
+                <rect x="9" y="11" width="46" height="34" rx="8"/>
+                <path d="M26 22l15 6.5L26 35V22z"/>
+                <path d="M17 52v-5M24 55V44M31 51v-3M38 55V42M45 52v-6"/>
+              </svg>
+            </div>
+
+            <span class="learning-module__type">PTE · FREE CLASSES</span>
+            <h3>PTE - Learn What Moves Your Score..</h3>
+
+            <span class="learning-module__link">
+              Explore Free Classes
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>
+
         </div>
       </div>
     </section>
 
-    <!-- LEARN -->
-    <section id="learn">
-      <div class="sectionTitle">Start Learning</div>
+    <!-- ======================================================
+         TEACHER
+    ======================================================= -->
+    <section class="teacher section" id="teacher">
+      <div class="teacher__geometry" aria-hidden="true"></div>
 
-      <div class="grid3">
-        <div class="card">
-          <span class="tag"><b>Listening</b></span>
-          <h4>IELTS Listening</h4>
-          <p>All question types + correct approach + practice guidance.</p>
-          <div class="row">
-            <a class="btn primary" href="ielts-listening.html">Open Listening</a>
-            <a class="btn" href="ielts.html#levels">Choose Level</a>
+      <div class="shell teacher__grid">
+
+        <div class="teacher__portrait reveal">
+          <img
+            src="assets/joy-sir/joy-sir-professional.png"
+            alt="Joy, founder and instructor at LizOn Education"
+            loading="lazy"
+          >
+        </div>
+
+        <div class="teacher__content reveal">
+          <span class="eyebrow">BEHIND THE METHOD</span>
+
+          <h2>
+            The Teacher<br>
+            Behind the Method.
+          </h2>
+
+          <blockquote>
+            Improve what matters, score what you need, move towards brighter future.  Build the score that opens the next door to Bigger Horizons.  
+          </blockquote>
+
+          <div class="teacher__identity">
+            <strong>Joy</strong>
+            <span>Founder &amp; Instructor · LizOn Education</span>
+          </div>
+
+          <div class="teacher__credentials" aria-label="Instructor credentials">
+            <span>IELTS</span>
+            <i></i>
+            <span>PTE</span>
+            <i></i>
+            <span>Abroad Guidence</span>
           </div>
         </div>
 
-        <div class="card">
-          <span class="tag"><b>Speaking</b></span>
-          <h4>IELTS Speaking</h4>
-          <p>Structure, ideas, fluency — stop hesitating and start speaking properly.</p>
-          <div class="row">
-            <a class="btn primary" href="ielts-speaking.html">Open Speaking</a>
-            <a class="btn" href="ielts-writing.html">Open Writing</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <span class="tag"><b>Reading</b></span>
-          <h4>IELTS Reading</h4>
-          <p>Strategy for passages + question types + avoid translation trap.</p>
-          <div class="row">
-            <a class="btn primary" href="ielts-reading.html">Open Reading</a>
-            <a class="btn" href="ielts-grammar.html">Open Grammar</a>
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- REVIEWS -->
-    <section id="reviews">
-      <div class="sectionTitle">Student words</div>
+    <!-- ======================================================
+         GUIDANCE / ASSESSMENT
+    ======================================================= -->
+    <section class="guidance section" id="guidance">
+      <div class="shell">
+        <div class="guidance__panel">
 
-      <div class="grid3">
-        <div class="review">
-          <div class="reviewTop">
-            <div class="who">
-              <div class="avatar">SR</div>
-              <div>
-                Sumi Rahman
-                <small>Reading speed + understanding</small>
-              </div>
-            </div>
-            <div class="stars" aria-label="5 stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-            </div>
+          <div class="guidance__content reveal">
+            <span class="eyebrow eyebrow--gold">YOUR NEXT STEP</span>
+
+            <h2>
+              Not Sure Where<br>
+              to Start?
+            </h2>
+
+            <h3>Your journey can start today.</h3>
+
+            <p>
+              Complete a short assessment and get 1-on-1 guidance from a LizOn expert on your next step.
+            </p>
+
+            <a class="button button--light" href="assessment.html">
+              Start Your Assessment
+              <span aria-hidden="true">→</span>
+            </a>
           </div>
-          <p>“Age ami Bangla theke translate kore portam. Ekhon skimming + scanning diye passage ta actually bujhi.”</p>
-        </div>
 
-        <div class="review">
-          <div class="reviewTop">
-            <div class="who">
-              <div class="avatar">MH</div>
-              <div>
-                Mehedi Hasan
-                <small>Listening score stable</small>
-              </div>
-            </div>
-            <div class="stars" aria-label="5 stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-            </div>
+          <div class="decision-path reveal" aria-label="Your goal, your situation, your next step">
+            <svg
+              class="decision-path__line"
+              viewBox="0 0 560 340"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path d="M35 270 C150 270 170 210 250 210 S350 100 520 70"/>
+              <path class="decision-path__ghost" d="M35 110 C170 110 180 190 250 210"/>
+              <path class="decision-path__ghost" d="M85 320 C150 320 180 250 250 210"/>
+              <circle cx="80" cy="270" r="7"/>
+              <circle cx="250" cy="210" r="8"/>
+              <circle cx="520" cy="70" r="11"/>
+            </svg>
+
+            <span class="decision-path__label decision-path__label--goal">
+              Your Goal
+            </span>
+
+            <span class="decision-path__label decision-path__label--situation">
+              Your Situation
+            </span>
+
+            <span class="decision-path__label decision-path__label--next">
+              Your Next Step
+            </span>
           </div>
-          <p>“Question type bujhe practice korar por panic komse. Ekhon guess na — decision.”</p>
-        </div>
 
-        <div class="review">
-          <div class="reviewTop">
-            <div class="who">
-              <div class="avatar">TN</div>
-              <div>
-                Tania Nahar
-                <small>Writing structure + ideas</small>
-              </div>
-            </div>
-            <div class="stars" aria-label="5 stars">
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.3 1.2-7L1 8.9l7.1-1L12 1.5l3.9 6.4 7.1 1-5 4.7 1.2 7z"/></svg>
-            </div>
-          </div>
-          <p>“Idea na thakle ami freeze hoye jetam. Ekhon structure fixed, examples clean — time e finish hoy.”</p>
-        </div>
-      </div>
-
-      <div class="ctaRow" style="margin-top:14px">
-        <a class="btn" href="https://www.facebook.com/lizoneducation/reviews" target="_blank" rel="noopener">
-          See Facebook Live Reviews
-        </a>
-        <button class="btn primary" id="instantGuidanceBtn" type="button">
-          Get Instant Help
-        </button>
-       <a class="btn"
-   href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20want%20to%20book%20an%20appointment.%20IELTS%2FPTE%3A%20____%20Target%3A%20____%20Exam%20date%3A%20____%20(Source%3A%20Home_book_appointment_reviews)"
-   target="_blank"
-   rel="noopener"
-   onclick="trackEvent('Lead')">
-   Book Appointment
-</a>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <section class="footer" id="footer" aria-label="Footer">
-      <div>
-        <h3>Contact & Location</h3>
-        <p>
-          <strong>Address:</strong> 51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214
-          <br />
-          <strong>IELTS/PTE Helpline:</strong> 01611611139
-          <br />
-          <strong>Study Abroad/Visa Support:</strong> 01608881545
-        </p>
-
-        <div class="footer-links">
-          <a class="iconbtn" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener">
-            <span aria-hidden="true">📍</span> Open Map
-          </a>
-
-          <a class="iconbtn" href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20Home_footer)" target="_blank" rel="noopener">
-            <span aria-hidden="true">💬</span> WhatsApp
-          </a>
-
-          <a class="iconbtn" href="tel:+8801611611139">
-            <span aria-hidden="true">📞</span> Call Helpline
-          </a>
-        </div>
-
-        <div class="smallprint">© <span id="year"></span> MyLizOn.com | LizOn Education</div>
-      </div>
-
-      <div>
-        <h3>All Pages</h3>
-        <p>Tap to open.</p>
-
-        <div class="siteMap" aria-label="Site map links">
-          <a href="1v1.html"><strong>1v1</strong> — What’s New?</a>
-          <a href="ielts.html#levels"><strong>IELTS</strong> — Levels</a>
-          <a href="ielts.html#pricing"><strong>IELTS</strong> — Pricing</a>
-          <a href="pte.html"><strong>PTE</strong> — Program</a>
-          <a href="studyabroad.html"><strong>Study Abroad</strong> — N2F</a>
-          <a href="ielts-grammar.html"><strong>IELTS Grammar</strong></a>
-          <a href="ielts-listening.html"><strong>IELTS Listening</strong></a>
-          <a href="ielts-reading.html"><strong>IELTS Reading</strong></a>
-          <a href="ielts-speaking.html"><strong>IELTS Speaking</strong></a>
-          <a href="ielts-writing.html"><strong>IELTS Writing</strong></a>
-          <a href="ielts-computer-based.html"><strong>Computer IELTS</strong></a>
-          <a href="ielts-faq-bangladesh.html"><strong>IELTS FAQ (BD)</strong></a>
-          <a href="about.html"><strong>About</strong> — LizOn</a>
-        </div>
-
-        <div class="footer-links" style="margin-top:10px;">
-          <a class="iconbtn" href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener">Facebook</a>
-          <a class="iconbtn" href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener">YouTube</a>
-          <a class="iconbtn" href="https://linkedin.com/company/lizon-education" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- Bottom guidance bar -->
-  <div class="bottomBar" aria-label="Need guidance bar">
-  <a href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance%20right%20now.%20(Source%3A%20Home_bottom_bar)"
-   target="_blank"
-   rel="noopener"
-   onclick="trackEvent('Lead')">
-      <div class="barLeft">
-        <span class="dot" aria-hidden="true"></span>
-        Need guidance? <b>Chat on WhatsApp</b>
-      </div>
-      <div class="barRight">Tap →</div>
-    </a>
-  </div>
+  <!-- ======================================================
+       FOOTER
+  ======================================================= -->
+  <footer class="footer">
+    <div class="footer__journey" aria-hidden="true"></div>
 
-  <!-- Up button -->
-  <button class="upFab" id="upFab" type="button" aria-label="Scroll to top">
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M12 5l-7 7h4v7h6v-7h4l-7-7z" fill="currentColor" opacity=".9"/>
-    </svg>
-  </button>
+    <div class="shell footer__main">
 
-  <!-- Theme toggle (icon only) -->
-  <button class="themeTiny" id="themeTiny" type="button" aria-label="Toggle theme">
-    <span id="themeIcon" aria-hidden="true"></span>
-  </button>
+      <div class="footer__brand">
+        <img
+          src="assets/logo/lizon-logo.png"
+          alt=""
+          width="52"
+          height="52"
+        >
 
-  <!-- AskLizOn FAB -->
-  <button class="askFab" id="askFab" type="button" aria-label="Open AskLizOn">
-    <img class="askFabLogo" src="assets/logo-dark.png" alt="" aria-hidden="true" />
-    Ask<b>LizOn</b>
-  </button>
+        <h2>
+          Begin Better,<br>
+          Become More.
+        </h2>
 
-  <!-- Bottom-left icon-only navigation -->
-  <button class="navFab" id="navFab" type="button" aria-label="Open navigation">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M4 7h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
+        <p>Learn — Score — Fly</p>
 
-  <!-- Overlay -->
-  <div class="overlay" id="overlay" aria-hidden="true"></div>
+        <div class="socials" aria-label="LizOn Education social media">
+          <a
+            href="https://www.facebook.com/lizoneducation"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+          >f</a>
 
-  <!-- Navigation sheet -->
-  <aside class="sheet" id="navSheet" role="dialog" aria-modal="true" aria-label="Navigation">
-    <div class="sheetHead">
-      <b>Navigate</b>
-      <button class="sheetClose" id="navClose" type="button" aria-label="Close">Close</button>
-    </div>
-    <div class="sheetBody">
+          <a
+            href="https://www.youtube.com/@lizoneducation"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+          >▶</a>
 
-      <a href="index.html"><strong>Home</strong><span>→</span></a>
-      <a href="1v1.html"><strong>🔔 1v1 - What’s New?</strong><span>→</span></a>
+          <a
+            href="https://www.instagram.com/@lizonedu/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >◎</a>
 
-      <div class="divider" aria-hidden="true"></div>
-
-      <div class="sheetChips" aria-label="Core Links">
-        <a class="sheetChip" href="ielts.html#levels"><span><strong>IELTS</strong> Levels</span><span>→</span></a>
-        <a class="sheetChip" href="ielts.html#pricing"><span><strong>IELTS</strong> Pricing</span><span>→</span></a>
-        <a class="sheetChip" href="pte.html"><span><strong>PTE</strong></span><span>→</span></a>
-        <a class="sheetChip" href="studyabroad.html"><span><strong>Study</strong> Abroad</span><span>→</span></a>
-      </div>
-
-      <div class="divider" aria-hidden="true"></div>
-
-      <div class="sheetChips" aria-label="IELTS Skills">
-        <a class="sheetChip" href="ielts-grammar.html"><span><strong>Grammar</strong></span><span>→</span></a>
-        <a class="sheetChip" href="ielts-listening.html"><span><strong>Listening</strong></span><span>→</span></a>
-        <a class="sheetChip" href="ielts-reading.html"><span><strong>Reading</strong></span><span>→</span></a>
-        <a class="sheetChip" href="ielts-speaking.html"><span><strong>Speaking</strong></span><span>→</span></a>
-        <a class="sheetChip" href="ielts-writing.html"><span><strong>Writing</strong></span><span>→</span></a>
-        <a class="sheetChip" href="ielts-computer-based.html"><span><strong>Computer</strong></span><span>→</span></a>
-      </div>
-
-      <div class="divider" aria-hidden="true"></div>
-
-      <div class="sheetChips" aria-label="Info">
-        <a class="sheetChip" href="ielts-faq-bangladesh.html"><span><strong>IELTS FAQ</strong></span><span>→</span></a>
-        <a class="sheetChip" href="about.html"><span><strong>About</strong></span><span>→</span></a>
-        <button class="sheetChip" id="openAskFromNav" type="button" aria-label="Open AskLizOn"><span><strong>AskLizOn</strong></span><span>→</span></button>
-        <a class="sheetChip" href="https://maps.app.goo.gl/JC9sikzCiSsQrNnH9" target="_blank" rel="noopener"><span><strong>Open Map</strong></span><span>→</span></a>
-      </div>
-
-      <div class="divider" aria-hidden="true"></div>
-
-      <div class="sheetChips" aria-label="Contact">
-       <a class="sheetChip"
-   href="https://wa.me/8801611611139?text=Assalamu%20Alaikum%20LizOn%20Education.%20I%20need%20guidance.%20(Source%3A%20Home_nav)"
-   target="_blank"
-   rel="noopener"
-   onclick="trackEvent('Lead')">
-   <span><strong>WhatsApp</strong></span>
-   <span>→</span>
-</a>
-        <a class="sheetChip" href="tel:+8801611611139"><span><strong>Call</strong></span><span>→</span></a>
-      </div>
-
-    </div>
-  </aside>
-
-  <!-- AskLizOn Panel -->
-  <aside class="askPanel" id="askPanel" aria-label="AskLizOn Panel" role="dialog" aria-modal="true">
-    <div class="askHead">
-      <div class="askTitle">
-        <img class="askLogo" src="assets/logo-dark.png" alt="LizOn Education Logo" />
-        <div style="min-width:0;">
-          <b>AskLizOn</b>
-          <small>Tap-only guidance — choose, learn, or get help</small>
-        </div>
-      </div>
-      <button class="askClose" id="askClose" type="button" aria-label="Close AskLizOn">Close</button>
-    </div>
-
-    <div class="askBody" id="askBody">
-      <div class="askMsg gold" data-step="0">
-        <h4>What do you want right now?</h4>
-        <p>Tap one. No typing needed.</p>
-        <div class="tapRow">
-          <button class="tap primary" data-action="choose_course">Choose Program</button>
-          <button class="tap" data-action="learn">Start Learning</button>
-          <button class="tap" data-action="know">Know Things (FAQ)</button>
-          <button class="tap" data-action="expert">Talk with Expert</button>
-          <button class="tap" data-action="visit">Visit Office (Dhaka)</button>
-          <button class="tap" data-action="abroad">Study Abroad (N2F)</button>
+          <a
+            href="https://www.tiktok.com/@lizoneducation/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok"
+          >♪</a>
         </div>
       </div>
 
-      <div id="askDynamic"></div>
-    </div>
-  </aside>
+      <div class="footer-nav">
 
-  <!-- Scroll down button -->
-  <div class="scrollNav" aria-label="Page scroll controls">
-    <button class="scrollBtn" id="scrollDown" type="button" aria-label="Scroll to bottom">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M12 19l7-7h-4V5H9v7H5l7 7z" fill="currentColor" opacity=".9"/>
-      </svg>
+        <details class="footer-group" open>
+          <summary>Learn <span>+</span></summary>
+          <div>
+            <a href="ielts.html">IELTS</a>
+            <a href="pte.html">PTE</a>
+            <a href="ieltsclass.html">Free IELTS Classes</a>
+            <a href="pteclass.html">Free PTE Classes</a>
+          </div>
+        </details>
+
+        <details class="footer-group" open>
+          <summary>Study Abroad <span>+</span></summary>
+          <div>
+            <a href="studyabroad.html">Study Abroad</a>
+            <a href="assessment.html">Check Your Eligibility</a>
+            <a href="#guidance">Study Abroad Support</a>
+          </div>
+        </details>
+
+        <details class="footer-group" open>
+          <summary>LizOn <span>+</span></summary>
+          <div>
+            <a href="https://www.mylizon.com/joy.html">Joy Sir</a>
+            <a href="#results">Student Results</a>
+            <a href="#student-voices">Student Stories</a>
+            <a href="mailto:lizonedu@gmail.com">Become a Partner</a>
+          </div>
+        </details>
+
+        <details class="footer-group footer-group--contact" open>
+          <summary>Connect <span>+</span></summary>
+          <div>
+            <a
+              class="footer-contact-link"
+              href="https://wa.me/8801611611139"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              01611 611139 ↗
+            </a>
+
+            <a
+              class="footer-contact-link"
+              href="mailto:lizonedu@gmail.com"
+            >
+              lizonedu@gmail.com ↗
+            </a>
+
+            <address>
+              51, Budhha Mandir Basabo<br>
+              Beside Morning Bell School<br>
+              Dhaka 1214
+            </address>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+    <div class="shell footer__bottom">
+      <p>© 2026 LizOn Education. All rights reserved.</p>
+
+      <button class="back-to-top" id="back-to-top" type="button">
+        Back to top
+        <span aria-hidden="true">↑</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ======================================================
+       RESULT LIGHTBOX
+  ======================================================= -->
+  <dialog class="media-dialog" id="result-dialog">
+    <button
+      class="media-dialog__close"
+      type="button"
+      aria-label="Close result"
+      data-dialog-close
+    >
+      ×
     </button>
-  </div>
 
-  <!-- POPUPS -->
-  <div class="modalWrap" id="modalWrap" aria-hidden="true">
-    <div class="modal" id="modalBox" role="dialog" aria-modal="true" aria-label="Popup">
-      <div class="modalHead">
-        <div>
-          <b id="modalTitle">Notice</b>
-          <small id="modalSub">Details</small>
-        </div>
-        <button class="modalClose" id="modalClose" type="button" aria-label="Close popup">Close</button>
-      </div>
-      <div class="modalBody" id="modalBody"></div>
+    <img id="result-dialog-image" src="" alt="">
+  </dialog>
+
+  <!-- ======================================================
+       VIDEO LIGHTBOX
+  ======================================================= -->
+  <dialog class="media-dialog media-dialog--video" id="video-dialog">
+    <button
+      class="media-dialog__close"
+      type="button"
+      aria-label="Close video"
+      data-video-close
+    >
+      ×
+    </button>
+
+    <div class="video-frame">
+      <iframe
+        id="video-frame"
+        title="LizOn student story"
+        src=""
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
     </div>
-  </div>
+  </dialog>
 
-  <script>
-    (function(){
-
-
-      // ===== META EVENT TRACKING =====
-function trackEvent(name){
-  if (typeof fbq !== 'undefined'){
-    fbq('track', name);
-  }
-}
-      // Year
-      const y = document.getElementById('year');
-      if (y) y.textContent = new Date().getFullYear();
-
-      // Theme
-      const root = document.documentElement;
-      const themeTiny = document.getElementById('themeTiny');
-      const themeIcon = document.getElementById('themeIcon');
-
-      function iconSun(){
-        return `
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" stroke="currentColor" stroke-width="2"/>
-            <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>`;
-      }
-      function iconMoon(){
-        return `
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 13.2A7.7 7.7 0 0 1 10.8 3a7.6 7.6 0 1 0 10.2 10.2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>`;
-      }
-      function setTheme(next){
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('lizon_theme', next);
-        const meta = document.querySelector('meta[name="theme-color"]');
-        if(meta) meta.setAttribute('content', next === 'light' ? '#eaf6f0' : '#0b2a1f');
-        if (themeIcon) themeIcon.innerHTML = (next === 'light') ? iconSun() : iconMoon();
-      }
-      const saved = localStorage.getItem('lizon_theme');
-      if (saved === 'light' || saved === 'dark') setTheme(saved);
-      else setTheme('dark');
-
-      if (themeTiny){
-        themeTiny.addEventListener('click', () => {
-          const current = root.getAttribute('data-theme') || 'dark';
-          setTheme(current === 'dark' ? 'light' : 'dark');
-        });
-      }
-
-      // Sound + Voice (tap feedback)
-      let audioCtx;
-      function ping(freq=660, dur=0.06){
-        try{
-          audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-          const o = audioCtx.createOscillator();
-          const g = audioCtx.createGain();
-          o.type = "sine";
-          o.frequency.value = freq;
-          g.gain.value = 0.0001;
-          o.connect(g);
-          g.connect(audioCtx.destination);
-          o.start();
-          const now = audioCtx.currentTime;
-          g.gain.exponentialRampToValueAtTime(0.12, now + 0.01);
-          g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
-          o.stop(now + dur + 0.01);
-        }catch(_){}
-      }
-      function speak(text){
-        try{
-          if (!('speechSynthesis' in window)) return;
-          if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-          const u = new SpeechSynthesisUtterance(text);
-          u.rate = 1.02;
-          u.pitch = 1.02;
-          u.volume = 0.9;
-          window.speechSynthesis.cancel();
-          window.speechSynthesis.speak(u);
-        }catch(_){}
-      }
-
-      const btnIELTS = document.getElementById('btnIELTS');
-      const btnPTE = document.getElementById('btnPTE');
-      const btnSA = document.getElementById('btnSA');
-
-      function tapFeedback(type){
-        if(type === 'ielts'){ ping(740); speak("Let's explore IELTS."); }
-        else if(type === 'pte'){ ping(620); speak("Let's explore PTE."); }
-        else { ping(540); speak("Let's explore Study Abroad."); }
-      }
-
-     if(btnIELTS){
-  btnIELTS.addEventListener('click', ()=>{
-    trackEvent('ViewContent');
-    tapFeedback('ielts');
-  });
-}
-
-if(btnPTE){
-  btnPTE.addEventListener('click', ()=>{
-    trackEvent('ViewContent');
-    tapFeedback('pte');
-  });
-}
-
-if(btnSA){
-  btnSA.addEventListener('click', ()=>{
-    trackEvent('ViewContent');
-    tapFeedback('sa');
-  });
-}
-
-      // Up button
-      const upFab = document.getElementById('upFab');
-      function atTop(){ return (window.scrollY || document.documentElement.scrollTop || 0) <= 2; }
-      function refreshUp(){
-        if (!upFab) return;
-        upFab.disabled = atTop();
-      }
-      if (upFab){
-        upFab.addEventListener('click', () => {
-          document.getElementById('top')?.scrollIntoView({behavior:'smooth', block:'start'});
-        });
-      }
-      window.addEventListener('scroll', refreshUp, {passive:true});
-      window.addEventListener('resize', refreshUp);
-      refreshUp();
-
-      // Scroll down button
-      const down = document.getElementById('scrollDown');
-      if (down){
-        down.addEventListener('click', () => {
-          window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-        });
-      }
-
-      // Overlay + sheets
-      const overlay = document.getElementById('overlay');
-
-      const navFab = document.getElementById('navFab');
-      const topMenuBtn = document.getElementById('topMenuBtn');
-      const navSheet = document.getElementById('navSheet');
-      const navClose = document.getElementById('navClose');
-
-      const askFab = document.getElementById('askFab');
-      const askPanel = document.getElementById('askPanel');
-      const askClose = document.getElementById('askClose');
-      const openAskFromNav = document.getElementById('openAskFromNav');
-
-      function closeAll(){
-        navSheet?.classList.remove('open');
-        askPanel?.classList.remove('open');
-        overlay?.classList.remove('open');
-        overlay?.setAttribute('aria-hidden','true');
-      }
-      function openNav(){
-        closeAll();
-        overlay?.classList.add('open');
-        overlay?.setAttribute('aria-hidden','false');
-        navSheet?.classList.add('open');
-      }
-      function openAsk(){
-        closeAll();
-        overlay?.classList.add('open');
-        overlay?.setAttribute('aria-hidden','false');
-        askPanel?.classList.add('open');
-        renderAskHome();
-      }
-
-      if (navFab) navFab.addEventListener('click', openNav);
-      if (topMenuBtn) topMenuBtn.addEventListener('click', openNav);
-      if (navClose) navClose.addEventListener('click', closeAll);
-      if (askFab) askFab.addEventListener('click', openAsk);
-      if (askClose) askClose.addEventListener('click', closeAll);
-      if (openAskFromNav) openAskFromNav.addEventListener('click', openAsk);
-
-      if (overlay) overlay.addEventListener('click', closeAll);
-      document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeAll(); });
-
-      navSheet?.addEventListener('click', (e)=>{
-        const a = e.target.closest('a');
-        if (a) closeAll();
-      });
-
-      // Chips as buttons
-      const chipAsk = document.getElementById('chipAsk');
-      const chipOffice = document.getElementById('chipOffice');
-      if (chipAsk){
-        chipAsk.addEventListener('click', openAsk);
-        chipAsk.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') openAsk(); });
-      }
-      if (chipOffice){
-        chipOffice.addEventListener('click', ()=> document.getElementById('footer')?.scrollIntoView({behavior:'smooth', block:'start'}));
-        chipOffice.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') document.getElementById('footer')?.scrollIntoView({behavior:'smooth', block:'start'}); });
-      }
-
-      // =====================================
-      // AskLizOn (TAP ONLY)
-      // =====================================
-      const askDynamic = document.getElementById('askDynamic');
-      const instantGuidanceBtn = document.getElementById('instantGuidanceBtn');
-      const instantHelpTop = document.getElementById('instantHelpTop');
-
-      const helpline = "01611611139";
-      const counselor = "01608881545";
-      const mapLink = "https://maps.app.goo.gl/JC9sikzCiSsQrNnH9";
-      const addressText = "51, Budhha Mandir Basabo (Beside Morning Bell School & Brac office), Dhaka 1214";
-
-      function waLink(text){
-        return "https://wa.me/8801611611139?text=" + encodeURIComponent(text);
-      }
-      function waCounselor(text){
-        return "https://wa.me/8801608881545?text=" + encodeURIComponent(text);
-      }
-
-      function clearDynamic(){
-        if (askDynamic) askDynamic.innerHTML = "";
-      }
-
-      function block(title, desc, buttons){
-        const wrap = document.createElement('div');
-        wrap.className = 'askMsg';
-        const h = document.createElement('h4');
-        h.textContent = title;
-        const p = document.createElement('p');
-        p.textContent = desc;
-        wrap.appendChild(h);
-        wrap.appendChild(p);
-
-        const row = document.createElement('div');
-        row.className = 'tapRow';
-
-        (buttons || []).forEach(b=>{
-          const el = document.createElement(b.tag || 'button');
-          el.className = 'tap' + (b.primary ? ' primary' : '');
-          if (b.tag === 'a'){
-            el.href = b.href;
-            el.textContent = b.label;
-            if (b.external){
-              el.target = "_blank";
-              el.rel = "noopener";
-            }
-          } else {
-            el.type = "button";
-            el.textContent = b.label;
-            el.dataset.action = b.action || "";
-          }
-          row.appendChild(el);
-        });
-
-        wrap.appendChild(row);
-        return wrap;
-      }
-
-      function renderAskHome(){
-        clearDynamic();
-        askDynamic.appendChild(
-          block(
-            "Quick guidance",
-            "Tap what you need.",
-            [
-              {tag:'a', label:'IELTS (Levels)', href:'ielts.html#levels', primary:true},
-              {tag:'a', label:'PTE Program', href:'pte.html'},
-              {tag:'a', label:'Study Abroad (N2F)', href:'studyabroad.html'},
-              {tag:'a', label:'🔔 1v1 - What’s New?', href:'1v1.html'}
-            ]
-          )
-        );
-      }
-
-      function renderChooseProgram(){
-        clearDynamic();
-        askDynamic.appendChild(
-          block(
-            "Choose program",
-            "Pick one and go to the right place.",
-            [
-              {tag:'a', label:'IELTS (Levels)', href:'ielts.html#levels', primary:true},
-              {tag:'a', label:'IELTS Pricing', href:'ielts.html#pricing'},
-              {tag:'a', label:'PTE Program', href:'pte.html'},
-              {tag:'a', label:'Study Abroad (N2F)', href:'studyabroad.html'}
-            ]
-          )
-        );
-        askDynamic.appendChild(
-          block(
-            "Need a human to confirm?",
-            "Tap to WhatsApp with a ready message.",
-            [
-              {tag:'a', label:'Talk with LizOn', href: waLink("Assalamu Alaikum LizOn Education. I want help choosing my program/level. IELTS/PTE: ____. Target: ____. Exam date: ____. (Source: AskLizOn_home_choose_program)"), external:true, primary:true}
-            ]
-          )
-        );
-      }
-
-      function renderLearn(){
-        clearDynamic();
-        askDynamic.appendChild(
-          block(
-            "Start learning (IELTS skills)",
-            "Pick what you need today.",
-            [
-              {tag:'a', label:'Listening', href:'ielts-listening.html', primary:true},
-              {tag:'a', label:'Reading', href:'ielts-reading.html'},
-              {tag:'a', label:'Writing', href:'ielts-writing.html'},
-              {tag:'a', label:'Speaking', href:'ielts-speaking.html'},
-              {tag:'a', label:'Grammar', href:'ielts-grammar.html'}
-            ]
-          )
-        );
-
-        askDynamic.appendChild(
-          block(
-            "Computer IELTS help",
-            "If your exam is computer-based, tap this first.",
-            [
-              {tag:'a', label:'Computer IELTS', href:'ielts-computer-based.html', primary:true},
-              {tag:'a', label:'IELTS FAQ (BD)', href:'ielts-faq-bangladesh.html'}
-            ]
-          )
-        );
-      }
-
-      function renderKnow(){
-        clearDynamic();
-        askDynamic.appendChild(
-          block(
-            "Know things (FAQ)",
-            "Most asked questions and Bangladesh-specific guidance.",
-            [
-              {tag:'a', label:'IELTS FAQ (Bangladesh)', href:'ielts-faq-bangladesh.html', primary:true},
-              {tag:'a', label:'1v1 - What’s New?', href:'1v1.html'},
-              {tag:'a', label:'About LizOn', href:'about.html'}
-            ]
-          )
-        );
-      }
-
-      function renderExpert(){
-        clearDynamic();
-        askDynamic.appendChild(
-          block(
-            "Talk with an expert",
-            "Choose what you need and we’ll handle the rest.",
-            [
-              {tag:'a', label:'IELTS/PTE guidance (WhatsApp)', href: waLink("Assalamu Alaikum LizOn Education. I need expert guidance. IELTS/PTE: ____. Target: ____. Exam date: ____. (Source: AskLizOn_home_expert)"), external:true, primary:true},
-              {tag:'a', label:'Study Abroad/Visa (Counselor)', href: waCounselor("Assalamu Alaikum LizOn Education. I need Study Abroad/Visa guidance (N2F). Country: ____. Intake: ____. (Source: AskLizOn_home_abroad)"), external:true}
-            ]
-          )
-        );
-
-        const extra = document.createElement('div');
-        extra.className = 'askMsg';
-        extra.innerHTML = `
-          <h4>Helpline</h4>
-          <p>IELTS/PTE: <b style="color:var(--gold)">${helpline}</b> • Study Abroad: <b style="color:var(--gold)">${counselor}</b></p>
-          <div class="tapRow">
-            <a class="tap primary" href="tel:+8801611611139">Call Helpline</a>
-            <a class="tap" href="tel:+8801608881545">Call Counselor</a>
-          </div>
-        `;
-        askDynamic.appendChild(extra);
-      }
-
-      function renderVisit(){
-        clearDynamic();
-        const v = document.createElement('div');
-        v.className = 'askMsg gold';
-        v.innerHTML = `
-          <h4>Visit LizOn Office (Dhaka)</h4>
-          <p><b style="color:var(--gold)">Address:</b> ${addressText}</p>
-          <div class="tapRow">
-            <a class="tap primary" href="${mapLink}" target="_blank" rel="noopener">Open Map</a>
-            <a class="tap" href="#footer" onclick="setTimeout(()=>{document.getElementById('askClose')?.click();},50)">Footer</a>
-            <a class="tap" href="tel:+8801611611139">Call Helpline</a>
-          </div>
-        `;
-        askDynamic.appendChild(v);
-      }
-
-      function renderAbroad(){
-        clearDynamic();
-        askDynamic.appendChild(
-          block(
-            "Study Abroad (N2F)",
-            "Tap what you want to do right now.",
-            [
-              {tag:'a', label:'Open Study Abroad Page', href:'studyabroad.html', primary:true},
-              {tag:'a', label:'Talk to Counselor', href: waCounselor("Assalamu Alaikum LizOn Education. I need Study Abroad guidance (N2F). Country: ____. Intake: ____. Budget: ____. (Source: AskLizOn_home_abroad_main)"), external:true},
-              {tag:'a', label:'Open Map (Visit Office)', href: mapLink, external:true}
-            ]
-          )
-        );
-
-        askDynamic.appendChild(
-          block(
-            "Visa / documents support",
-            "Tap to send a clear message.",
-            [
-              {tag:'a', label:'Start 상담 (WhatsApp)', href: waCounselor("Assalamu Alaikum LizOn Education. I need help with documents/visa process. Country: ____. Intake: ____. Current status: ____. (Source: AskLizOn_home_abroad_docs)"), external:true, primary:true}
-            ]
-          )
-        );
-      }
-
-      // Delegated taps inside AskLizOn panel
-      askPanel?.addEventListener('click', (e)=>{
-        const btn = e.target.closest('[data-action]');
-        if (!btn) return;
-        const action = btn.dataset.action;
-
-        if (action === "choose_course") renderChooseProgram();
-        else if (action === "learn") renderLearn();
-        else if (action === "know") renderKnow();
-        else if (action === "expert") renderExpert();
-        else if (action === "visit") renderVisit();
-        else if (action === "abroad") renderAbroad();
-      });
-
-      // Instant help buttons
-      function openAskInstant(){
-        closeAll();
-        overlay?.classList.add('open');
-        overlay?.setAttribute('aria-hidden','false');
-        askPanel?.classList.add('open');
-        renderAskHome();
-      }
-if (instantGuidanceBtn){
-  instantGuidanceBtn.addEventListener('click', () => {
-    trackEvent('Contact');
-    openAskInstant();
-  });
-}
-
-if (instantHelpTop){
-  instantHelpTop.addEventListener('click', () => {
-    trackEvent('Contact');
-    openAskInstant();
-  });
-}
-
-      // Smooth anchor scroll
-      document.addEventListener('click', (e)=>{
-        const a = e.target.closest('a[href^="#"]');
-        if(!a) return;
-        const href = a.getAttribute('href');
-        if(!href || href.length < 2) return;
-        const id = href.slice(1);
-        const target = document.getElementById(id);
-        if(target){
-          e.preventDefault();
-          target.scrollIntoView({behavior:'smooth', block:'start'});
-        }
-      });
-
-      // =====================================
-      // Popups (3 sequence, session-safe)
-      // =====================================
-      const modalWrap = document.getElementById('modalWrap');
-      const modalBox = document.getElementById('modalBox');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalSub = document.getElementById('modalSub');
-      const modalBody = document.getElementById('modalBody');
-      const modalClose = document.getElementById('modalClose');
-
-      function openModal({kind, title, sub, bodyNodes}){
-        if(!modalWrap || !modalBox) return;
-        modalBox.className = 'modal ' + (kind || '');
-        if(modalTitle) modalTitle.textContent = title || 'Notice';
-        if(modalSub) modalSub.textContent = sub || '';
-        if(modalBody){
-          modalBody.innerHTML = '';
-          (bodyNodes || []).forEach(n => modalBody.appendChild(n));
-        }
-        modalWrap.classList.add('open');
-        modalWrap.setAttribute('aria-hidden','false');
-      }
-      function closeModal(){
-        modalWrap?.classList.remove('open');
-        modalWrap?.setAttribute('aria-hidden','true');
-      }
-      modalClose?.addEventListener('click', closeModal);
-      modalWrap?.addEventListener('click', (e)=>{ if(e.target === modalWrap) closeModal(); });
-      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
-
-      function ribbon(text, cls){
-        const d = document.createElement('div');
-        d.className = 'ribbon' + (cls ? (' ' + cls) : '');
-        d.innerHTML = text;
-        return d;
-      }
-      function actions(btns){
-        const w = document.createElement('div');
-        w.className = 'modalActions';
-        (btns || []).forEach(b=>{
-          const el = document.createElement(b.tag || 'button');
-          el.className = 'btn' + (b.primary ? ' primary' : '');
-          el.textContent = b.label;
-          if(b.tag === 'a'){
-            el.href = b.href;
-            if(b.external){ el.target = '_blank'; el.rel = 'noopener'; }
-          } else {
-            el.type = 'button';
-            el.addEventListener('click', b.onClick || (()=>{}));
-          }
-          w.appendChild(el);
-        });
-        return w;
-      }
-
-      function dayKey(){
-        const d = new Date();
-        return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
-      }
-      function shouldShowPopups(){
-        const k = 'lizon_popups_day';
-        const last = localStorage.getItem(k);
-        const today = dayKey();
-        if(last === today) return false;
-        localStorage.setItem(k, today);
-        return true;
-      }
-
-      function showPopup1(){
-        openModal({
-          kind: 'pte',
-          title: 'IELTS',
-          sub: 'kotha bole bujhte hobe apnar actual problem gula, then suggest korte parbo apnr jonno konta best.
-.',
-          bodyNodes: [
-            ribbon('IELTS Full Journey .', ''),
-            ribbon('<b>IELTS Desperate</b> .', ''),
-            actions([
-              {tag:'a', label:'Explore IELTS', href:'ielts.html#levels', primary:true},
-              {tag:'a', label:'Expert Help', href: waLink('Assalamu Alaikum LizOn Education. My Target score: ____. Exam month: ____. (Source: Popup_PTE_EarlyBird)'), external:true}
-            ]),
-            actions([
-              {tag:'button', label:'Next', primary:false, onClick: ()=>{ closeModal(); setTimeout(showPopup2, 220); } }
-            ])
-          ]
-        });
-      }
-
-      function showPopup2(){
-        openModal({
-          kind: 'counselor',
-          title: 'Did you talk with a Proper Counselor yet?',
-          sub: 'One good conversation can save weeks of confusion.',
-          bodyNodes: [
-            ribbon('Country, intake, documents — ekta clean plan thakle decision easy hoy.', ''),
-            actions([
-              {tag:'button', label:'Get Instant Help', primary:true, onClick: ()=>{ closeModal(); openAskInstant(); } },
-              {tag:'a', label:'Book Appointment', href: waLink('Assalamu Alaikum LizOn Education. I want to book an appointment for proper guidance. IELTS/PTE/Study Abroad: ____. (Source: Popup_Counselor_Appointment)'), external:true}
-            ]),
-            actions([
-              {tag:'button', label:'Next', primary:false, onClick: ()=>{ closeModal(); setTimeout(showPopup3, 220); } }
-            ])
-          ]
-        });
-      }
-
-      function showPopup3(){
-        openModal({
-          kind: 'mistake',
-          title: 'Confusion or Mistake — is very common',
-          sub: 'It’s not you. It’s the system.',
-          bodyNodes: [
-            ribbon('<b>Red flag:</b> Random practice → random result.', 'danger'),
-            ribbon('Short fix: Choose a level, follow routine, get correction. তাহলেই progress visible.', ''),
-            actions([
-              {tag:'button', label:'Get Instant Help', primary:true, onClick: ()=>{ closeModal(); openAskInstant(); } },
-              {tag:'a', label:'Talk on WhatsApp', href: waLink('Assalamu Alaikum LizOn Education. I feel confused about my level/routine. Please guide me. Current level: ____. Target: ____. (Source: Popup_Mistake_Guidance)'), external:true}
-            ])
-          ]
-        });
-      }
-
-      window.addEventListener('load', ()=>{
-        if(shouldShowPopups()){
-          setTimeout(showPopup1, 650);
-        }
-      });
-
-    })();
-  </script>
 </body>
 </html>
-```0

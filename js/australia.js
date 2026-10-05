@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.setTimeout(() => {
       if (!searchInput) return;
       searchInput.focus({preventScroll:true});
-      searchInput.scrollIntoView({block:"start",behavior:"instant"});
+      searchInput.scrollIntoView({block:"start",behavior:"auto"});
     }, 160);
   };
 

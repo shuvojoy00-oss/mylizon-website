@@ -1655,23 +1655,246 @@ detailsInner.appendChild(
 
   /* ========================================================
      PTE SCORE STORIES
+
+     Images are loaded automatically from:
+     assets/results/pte
+
+     Add a new image to that folder and it will appear here
+     without editing this page again.
   ======================================================== */
 
-  function initPteResults() {
+  const PTE_RESULTS_API =
+    "https://api.github.com/repos/shuvojoy00-oss/mylizon-website/contents/assets/results/pte?ref=main";
 
-    const dialog =
-      $("#pte-result-dialog");
 
-    const image =
-      $("#pte-result-dialog-image");
+  const PTE_RESULT_FALLBACK = [
+
+    "assets/results/pte/699624236_1599255452210619_7323961056323092504_n.jpg",
+
+    "assets/results/pte/699624915_1599255458877285_7592624828092472839_n.jpg",
+
+    "assets/results/pte/699997075_1599255465543951_794520435271332787_n.jpg",
+
+    "assets/results/pte/700763342_1599255455543952_8853059976625922461_n.jpg",
+
+    "assets/results/pte/700800341_1601705711965593_4051639840730700763_n.jpg",
+
+    "assets/results/pte/701559009_1599255472210617_1659196166486214050_n.jpg",
+
+    "assets/results/pte/701582601_1599255468877284_152775484624212849_n.jpg",
+
+    "assets/results/pte/702209085_1601705658632265_1432942157915160583_n.jpg",
+
+    "assets/results/pte/702569886_1599255475543950_6631217968710696460_n.jpg",
+
+    "assets/results/pte/702570242_1599255462210618_4626382016570292017_n.jpg",
+
+    "assets/results/pte/703577830_1601705608632270_113755144754354356_n.jpg"
+
+  ];
+
+
+  const pteResultState = {
+
+    all:
+      [],
+
+    visible:
+      6
+
+  };
+
+
+  function isPteResultImage(
+    file
+  ) {
+
+    return (
+      file &&
+      file.type === "file" &&
+      /\.(png|jpe?g|webp|avif)$/i.test(
+        file.name || ""
+      )
+    );
+
+  }
+
+
+  function renderPteResults() {
+
+    const grid =
+      $("#pte-results-grid");
+
+    const moreButton =
+      $("#show-more-pte-results");
+
+    const closeButton =
+      $("#close-pte-results");
+
 
     if (
-      !dialog ||
-      !image
+      !grid
     ) {
       return;
     }
 
+
+    const visibleResults =
+      pteResultState.all.slice(
+        0,
+        pteResultState.visible
+      );
+
+
+    grid.innerHTML =
+      visibleResults
+        .map(
+          (
+            src,
+            index
+          ) => {
+
+            return `
+              <article class="result-card reveal is-visible">
+
+                <span class="result-card__label">
+                  PTE · STUDENT RESULT
+                </span>
+
+                <button
+                  type="button"
+                  data-pte-result-src="${src}"
+                  aria-label="View PTE student result ${index + 1}"
+                >
+
+                  <img
+                    src="${src}"
+                    alt="PTE student result shared with LizOn Education"
+                    loading="${index < 3 ? "eager" : "lazy"}"
+                    decoding="async"
+                  >
+
+                </button>
+
+              </article>
+            `;
+
+          }
+        )
+        .join("");
+
+
+    if (
+      moreButton
+    ) {
+
+      moreButton.hidden =
+        pteResultState.visible >=
+        pteResultState.all.length;
+
+    }
+
+
+    if (
+      closeButton
+    ) {
+
+      closeButton.hidden =
+        pteResultState.visible <=
+        6;
+
+    }
+
+
+    bindPteResultButtons();
+
+  }
+
+
+  async function loadPteResults() {
+
+    try {
+
+      const response =
+        await fetch(
+          PTE_RESULTS_API,
+          {
+            headers: {
+              "Accept":
+                "application/vnd.github+json"
+            }
+          }
+        );
+
+
+      if (
+        !response.ok
+      ) {
+        throw new Error(
+          "Could not load PTE results"
+        );
+      }
+
+
+      const files =
+        await response.json();
+
+
+      const results =
+        files
+          .filter(
+            isPteResultImage
+          )
+          .sort(
+            (
+              a,
+              b
+            ) =>
+              b.name.localeCompare(
+                a.name,
+                undefined,
+                {
+                  numeric:
+                    true
+                }
+              )
+          )
+          .map(
+            file =>
+              file.download_url
+          )
+          .filter(
+            Boolean
+          );
+
+
+      pteResultState.all =
+        results.length
+          ? results
+          : PTE_RESULT_FALLBACK;
+
+    } catch (
+      error
+    ) {
+
+      console.warn(
+        "Using local PTE result fallback.",
+        error
+      );
+
+
+      pteResultState.all =
+        PTE_RESULT_FALLBACK;
+
+    }
+
+
+    renderPteResults();
+
+  }
+
+
+  function bindPteResultButtons() {
 
     $$(
       "[data-pte-result-src]"
@@ -1682,18 +1905,9 @@ detailsInner.appendChild(
           "click",
           () => {
 
-            image.src =
-              button.dataset.pteResultSrc;
-
-            image.alt =
-              "PTE student result shared with LizOn Education";
-
-            if (
-              typeof dialog.showModal ===
-              "function"
-            ) {
-              dialog.showModal();
-            }
+            openPteResult(
+              button.dataset.pteResultSrc
+            );
 
           }
         );
@@ -1701,48 +1915,165 @@ detailsInner.appendChild(
       }
     );
 
+  }
 
-    const closeButton =
-      $(
-        "[data-pte-dialog-close]",
-        dialog
+
+  function openPteResult(
+    src
+  ) {
+
+    const dialog =
+      $("#pte-result-dialog");
+
+    const image =
+      $("#pte-result-dialog-image");
+
+
+    if (
+      !dialog ||
+      !image ||
+      !src
+    ) {
+      return;
+    }
+
+
+    image.src =
+      src;
+
+    image.alt =
+      "PTE student result shared with LizOn Education";
+
+
+    if (
+      typeof dialog.showModal ===
+      "function"
+    ) {
+
+      dialog.showModal();
+
+    }
+
+  }
+
+
+  function initPteResults() {
+
+    const dialog =
+      $("#pte-result-dialog");
+
+
+    if (
+      dialog
+    ) {
+
+      const closeButton =
+        $(
+          "[data-pte-dialog-close]",
+          dialog
+        );
+
+
+      closeButton?.addEventListener(
+        "click",
+        () => {
+
+          dialog.close();
+
+        }
       );
 
 
-    closeButton?.addEventListener(
-      "click",
-      () => {
+      dialog.addEventListener(
+        "click",
+        event => {
 
-        dialog.close();
+          if (
+            event.target ===
+            dialog
+          ) {
 
-      }
-    );
+            dialog.close();
 
+          }
 
-    dialog.addEventListener(
-      "click",
-      event => {
-
-        if (
-          event.target ===
-          dialog
-        ) {
-          dialog.close();
         }
-
-      }
-    );
+      );
 
 
-    dialog.addEventListener(
-      "close",
+      dialog.addEventListener(
+        "close",
+        () => {
+
+          const image =
+            $("#pte-result-dialog-image");
+
+
+          if (
+            image
+          ) {
+
+            image.src =
+              "";
+
+          }
+
+        }
+      );
+
+    }
+
+
+    const moreButton =
+      $("#show-more-pte-results");
+
+
+    moreButton?.addEventListener(
+      "click",
       () => {
 
-        image.src =
-          "";
+        pteResultState.visible +=
+          6;
+
+        renderPteResults();
 
       }
     );
+
+
+    const closeResultsButton =
+      $("#close-pte-results");
+
+
+    closeResultsButton?.addEventListener(
+      "click",
+      () => {
+
+        pteResultState.visible =
+          6;
+
+        renderPteResults();
+
+
+        const section =
+          $("#results");
+
+
+        section?.scrollIntoView({
+          behavior:
+            prefersReducedMotion.matches
+              ? "auto"
+              : "smooth",
+
+          block:
+            "start"
+        });
+
+      }
+    );
+
+
+    loadPteResults();
 
   }
 

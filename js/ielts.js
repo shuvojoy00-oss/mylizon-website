@@ -1949,6 +1949,421 @@ detailsInner.appendChild(
 
 
   /* ========================================================
+     IELTS SCORE STORIES
+
+     Images are loaded automatically from:
+     assets/results/ielts
+
+     Add a new image to that folder and it will appear here
+     without editing this page again.
+  ======================================================== */
+
+  const IELTS_RESULTS_API =
+    "https://api.github.com/repos/shuvojoy00-oss/mylizon-website/contents/assets/results/ielts?ref=main";
+
+
+  const IELTS_RESULT_FALLBACK = [
+
+    "assets/results/ielts/694129910_1596042069198624_8716469945302976711_n.jpg",
+
+    "assets/results/ielts/695753279_1596042122531952_2162575424079969370_n.jpg",
+
+    "assets/results/ielts/696227682_1596042149198616_6806450380861803922_n.jpg",
+
+    "assets/results/ielts/696359626_1596042235865274_4701816227566343418_n.jpg",
+
+    "assets/results/ielts/696410853_1596041999198631_8044688885627648774_n.jpg",
+
+    "assets/results/ielts/696604157_1596042219198609_5788358319808576478_n.jpg"
+  ];
+
+
+  const ieltsResultState = {
+
+    all:
+      [],
+
+    visible:
+      6
+
+  };
+
+
+  function isIeltsResultImage(
+    file
+  ) {
+
+    return (
+      file &&
+      file.type === "file" &&
+      /\.(png|jpe?g|webp|avif)$/i.test(
+        file.name || ""
+      )
+    );
+
+  }
+
+
+  function renderIeltsResults() {
+
+    const grid =
+      $("#ielts-results-grid");
+
+    const moreButton =
+      $("#show-more-ielts-results");
+
+    const closeButton =
+      $("#close-ielts-results");
+
+
+    if (
+      !grid
+    ) {
+      return;
+    }
+
+
+    const visibleResults =
+      ieltsResultState.all.slice(
+        0,
+        ieltsResultState.visible
+      );
+
+
+    grid.innerHTML =
+      visibleResults
+        .map(
+          (
+            src,
+            index
+          ) => {
+
+            return `
+              <article class="result-card reveal is-visible">
+
+                <span class="result-card__label">
+                  IELTS · STUDENT RESULT
+                </span>
+
+                <button
+                  type="button"
+                  data-ielts-result-src="${src}"
+                  aria-label="View IELTS student result ${index + 1}"
+                >
+
+                  <img
+                    src="${src}"
+                    alt="IELTS student result shared with LizOn Education"
+                    loading="${index < 3 ? "eager" : "lazy"}"
+                    decoding="async"
+                  >
+
+                </button>
+
+              </article>
+            `;
+
+          }
+        )
+        .join("");
+
+
+    if (
+      moreButton
+    ) {
+
+      moreButton.hidden =
+        ieltsResultState.visible >=
+        ieltsResultState.all.length;
+
+    }
+
+
+    if (
+      closeButton
+    ) {
+
+      closeButton.hidden =
+        ieltsResultState.visible <=
+        6;
+
+    }
+
+
+    bindIeltsResultButtons();
+
+  }
+
+
+  async function loadIeltsResults() {
+
+    try {
+
+      const response =
+        await fetch(
+          IELTS_RESULTS_API,
+          {
+            headers: {
+              "Accept":
+                "application/vnd.github+json"
+            }
+          }
+        );
+
+
+      if (
+        !response.ok
+      ) {
+        throw new Error(
+          "Could not load IELTS results"
+        );
+      }
+
+
+      const files =
+        await response.json();
+
+
+      const results =
+        files
+          .filter(
+            isIeltsResultImage
+          )
+          .sort(
+            (
+              a,
+              b
+            ) =>
+              b.name.localeCompare(
+                a.name,
+                undefined,
+                {
+                  numeric:
+                    true
+                }
+              )
+          )
+          .map(
+            file =>
+              file.download_url
+          )
+          .filter(
+            Boolean
+          );
+
+
+      ieltsResultState.all =
+        results.length
+          ? results
+          : IELTS_RESULT_FALLBACK;
+
+    } catch (
+      error
+    ) {
+
+      console.warn(
+        "Using local IELTS result fallback.",
+        error
+      );
+
+
+      ieltsResultState.all =
+        IELTS_RESULT_FALLBACK;
+
+    }
+
+
+    renderIeltsResults();
+
+  }
+
+
+  function bindIeltsResultButtons() {
+
+    $$(
+      "[data-ielts-result-src]"
+    ).forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            openIeltsResult(
+              button.dataset.ieltsResultSrc
+            );
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  function openIeltsResult(
+    src
+  ) {
+
+    const dialog =
+      $("#ielts-result-dialog");
+
+    const image =
+      $("#ielts-result-dialog-image");
+
+
+    if (
+      !dialog ||
+      !image ||
+      !src
+    ) {
+      return;
+    }
+
+
+    image.src =
+      src;
+
+    image.alt =
+      "IELTS student result shared with LizOn Education";
+
+
+    if (
+      typeof dialog.showModal ===
+      "function"
+    ) {
+
+      dialog.showModal();
+
+    }
+
+  }
+
+
+  function initIeltsResults() {
+
+    const dialog =
+      $("#ielts-result-dialog");
+
+
+    if (
+      dialog
+    ) {
+
+      const closeButton =
+        $(
+          "[data-ielts-dialog-close]",
+          dialog
+        );
+
+
+      closeButton?.addEventListener(
+        "click",
+        () => {
+
+          dialog.close();
+
+        }
+      );
+
+
+      dialog.addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target ===
+            dialog
+          ) {
+
+            dialog.close();
+
+          }
+
+        }
+      );
+
+
+      dialog.addEventListener(
+        "close",
+        () => {
+
+          const image =
+            $("#ielts-result-dialog-image");
+
+
+          if (
+            image
+          ) {
+
+            image.src =
+              "";
+
+          }
+
+        }
+      );
+
+    }
+
+
+    const moreButton =
+      $("#show-more-ielts-results");
+
+
+    moreButton?.addEventListener(
+      "click",
+      () => {
+
+        ieltsResultState.visible +=
+          6;
+
+        renderIeltsResults();
+
+      }
+    );
+
+
+    const closeResultsButton =
+      $("#close-ielts-results");
+
+
+    closeResultsButton?.addEventListener(
+      "click",
+      () => {
+
+        ieltsResultState.visible =
+          6;
+
+        renderIeltsResults();
+
+
+        const section =
+          $("#results");
+
+
+        section?.scrollIntoView({
+          behavior:
+            prefersReducedMotion.matches
+              ? "auto"
+              : "smooth",
+
+          block:
+            "start"
+        });
+
+      }
+    );
+
+
+    loadIeltsResults();
+
+  }
+
+
+
+  /* ========================================================
      INITIALIZE
   ======================================================== */
 
@@ -1967,6 +2382,8 @@ detailsInner.appendChild(
     renderCourses();
 
     updateStickySelector();
+
+    initIeltsResults();
 
   }
 

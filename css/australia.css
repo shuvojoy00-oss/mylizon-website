@@ -571,3 +571,287 @@ radial-gradient(circle at 12% 80%,rgba(184,154,94,.09),transparent 30%),var(--au
   #arrival::after{opacity:.015 !important}
   #matcher::before,#matcher::after{opacity:.013 !important}
 }
+
+/* ==========================================================
+   AUSTRALIA VISUALS INSIDE READING BLOCKS
+   This makes visuals visible inside cards, not only in empty space
+========================================================== */
+
+:root{
+  --au-svg-map: url("data:image/svg+xml,%3Csvg viewBox='0 0 540 450' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M74 193 102 124 156 92 214 104 261 78 323 97 360 132 409 145 452 194 467 250 444 304 400 330 361 376 315 367 271 396 221 370 173 373 137 340 94 324 70 277 81 234 57 213Z' fill='none' stroke='%23123f35' stroke-width='10' stroke-linejoin='round'/%3E%3Cpath d='M433 343 451 355 447 381 425 388 413 369Z' fill='none' stroke='%23123f35' stroke-width='8'/%3E%3C/svg%3E");
+
+  --au-svg-kangaroo: url("data:image/svg+xml,%3Csvg viewBox='0 0 360 280' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M75 224 C105 205 119 180 130 151 C142 120 170 98 202 103 C220 108 229 98 242 79 L265 42 L272 83 L300 61 L282 101 C304 116 315 135 306 151 C295 169 271 168 253 158 C248 188 233 207 214 221 L261 246 M206 220 L191 254 M146 168 C115 161 91 149 63 126 C92 133 115 132 139 126' fill='none' stroke='%23123f35' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  --au-svg-campus: url("data:image/svg+xml,%3Csvg viewBox='0 0 360 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23123f35' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M38 219 H321'/%3E%3Cpath d='M72 219 V118 H288 V219'/%3E%3Cpath d='M92 118 V86 H268 V118'/%3E%3Cpath d='M123 219 V150 M179 219 V150 M235 219 V150'/%3E%3Cpath d='M57 86 L180 40 L303 86'/%3E%3C/g%3E%3C/svg%3E");
+
+  --au-svg-airplane: url("data:image/svg+xml,%3Csvg viewBox='0 0 360 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28 130 L146 109 L223 51 L249 57 L201 105 L275 95 L303 107 L231 126 L201 167 L177 162 L191 130 L117 141 L85 167 L63 163 L80 136 L28 130Z' fill='none' stroke='%232d6889' stroke-width='8' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  --au-svg-opera: url("data:image/svg+xml,%3Csvg viewBox='0 0 420 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%232d6889' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M45 178 C98 87 143 46 202 35 C168 83 145 126 138 178'/%3E%3Cpath d='M138 178 C191 98 234 66 292 58 C258 101 238 138 233 178'/%3E%3Cpath d='M232 178 C278 121 317 98 363 95 C338 124 323 150 319 178'/%3E%3Cpath d='M32 181 H376'/%3E%3C/g%3E%3C/svg%3E");
+
+  --au-svg-stars: radial-gradient(circle at 25% 18%, #1f5a49 0 3px, transparent 4px),
+                  radial-gradient(circle at 61% 28%, #1f5a49 0 5px, transparent 6px),
+                  radial-gradient(circle at 78% 58%, #1f5a49 0 3px, transparent 4px),
+                  radial-gradient(circle at 52% 79%, #1f5a49 0 4px, transparent 5px),
+                  radial-gradient(circle at 34% 52%, #1f5a49 0 2px, transparent 3px);
+}
+
+/* make reading blocks able to hold visual layers */
+.au-card,
+.au-visa-step,
+.au-price-box,
+.au-fact,
+.au-time,
+.au-step,
+.au-uni,
+.au-sourcebox{
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.au-card > *,
+.au-visa-step > *,
+.au-price-box > *,
+.au-fact > *,
+.au-time > *,
+.au-step > *,
+.au-uni > *,
+.au-sourcebox > *{
+  position: relative;
+  z-index: 2;
+}
+
+/* generic visual layer */
+.au-card::before,
+.au-visa-step::before,
+.au-price-box::before,
+.au-fact::before,
+.au-time::before,
+.au-step::before,
+.au-uni::before,
+.au-sourcebox::before{
+  content: "";
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  width: 42%;
+  height: 42%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: .055;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* STUDY */
+#study .au-card:nth-child(1)::before,
+#study .au-card:nth-child(4)::before{
+  background-image: var(--au-svg-campus);
+  opacity: .05;
+}
+#study .au-card:nth-child(2)::before,
+#study .au-card:nth-child(5)::before{
+  background-image: var(--au-svg-map);
+  opacity: .042;
+}
+#study .au-card:nth-child(3)::before,
+#study .au-card:nth-child(6)::before{
+  background-image: var(--au-svg-stars);
+  background-size: 70% 70%;
+  opacity: .05;
+}
+
+/* UNIVERSITIES */
+#universities .au-uni:nth-child(3n+1)::before{
+  background-image: var(--au-svg-campus);
+  opacity: .045;
+}
+#universities .au-uni:nth-child(3n+2)::before{
+  background-image: var(--au-svg-map);
+  opacity: .038;
+}
+#universities .au-uni:nth-child(3n)::before{
+  background-image: var(--au-svg-stars);
+  background-size: 75% 75%;
+  opacity: .048;
+}
+
+/* MONEY */
+#money .au-price-box:nth-child(1)::before{
+  background-image: var(--au-svg-map);
+  opacity: .038;
+}
+#money .au-price-box:nth-child(2)::before{
+  background-image: var(--au-svg-campus);
+  opacity: .04;
+}
+#scholarships .au-card:nth-child(1)::before{
+  background-image: var(--au-svg-stars);
+  background-size: 78% 78%;
+}
+#scholarships .au-card:nth-child(2)::before{
+  background-image: var(--au-svg-map);
+}
+#scholarships .au-card:nth-child(3)::before{
+  background-image: var(--au-svg-campus);
+}
+#accommodation .au-card:nth-child(1)::before{
+  background-image: var(--au-svg-map);
+}
+#accommodation .au-card:nth-child(2)::before{
+  background-image: var(--au-svg-campus);
+}
+#accommodation .au-card:nth-child(3)::before{
+  background-image: var(--au-svg-opera);
+}
+
+/* VISA */
+#visa .au-visa-step:nth-child(1)::before{
+  background-image: var(--au-svg-campus);
+  opacity: .042;
+}
+#visa .au-visa-step:nth-child(2)::before{
+  background-image: var(--au-svg-map);
+  opacity: .032;
+}
+#visa .au-visa-step:nth-child(3)::before{
+  background-image: var(--au-svg-stars);
+  background-size: 68% 68%;
+  opacity: .048;
+}
+#visa .au-visa-step:nth-child(4)::before{
+  background-image: var(--au-svg-campus);
+  opacity: .036;
+}
+#visa .au-visa-step:nth-child(5)::before{
+  background-image: var(--au-svg-map);
+  opacity: .03;
+}
+#visa .au-visa-step:nth-child(6)::before{
+  background-image: var(--au-svg-stars);
+  background-size: 68% 68%;
+  opacity: .045;
+}
+#visa .au-visa-step:nth-child(7)::before{
+  background-image: var(--au-svg-airplane);
+  opacity: .03;
+}
+#visa .au-visa-step:nth-child(8)::before{
+  background-image: var(--au-svg-opera);
+  opacity: .028;
+}
+
+/* WORK & LIFE */
+#work-life .au-card:nth-child(1)::before,
+#work-life .au-card:nth-child(3)::before{
+  background-image: var(--au-svg-kangaroo);
+  opacity: .03;
+}
+#work-life .au-card:nth-child(2)::before{
+  background-image: var(--au-svg-map);
+  opacity: .03;
+}
+#student-jobs .au-card:nth-child(odd)::before{
+  background-image: var(--au-svg-kangaroo);
+  opacity: .026;
+}
+#student-jobs .au-card:nth-child(even)::before{
+  background-image: var(--au-svg-map);
+  opacity: .026;
+}
+#tax .au-card:nth-child(1)::before{
+  background-image: var(--au-svg-map);
+}
+#tax .au-card:nth-child(2)::before{
+  background-image: var(--au-svg-stars);
+  background-size: 70% 70%;
+}
+#tax .au-card:nth-child(3)::before{
+  background-image: var(--au-svg-kangaroo);
+  opacity: .024;
+}
+
+/* AFTER STUDY */
+#after-study .au-price-box::before{
+  background-image: var(--au-svg-map);
+  opacity: .03;
+}
+#after-study .au-card::before{
+  background-image: var(--au-svg-stars);
+  background-size: 70% 70%;
+  opacity: .045;
+}
+#regional .au-card:nth-child(1)::before{
+  background-image: var(--au-svg-map);
+}
+#regional .au-card:nth-child(2)::before{
+  background-image: var(--au-svg-kangaroo);
+  opacity: .026;
+}
+#pr .au-card::before,
+#points .au-price-box::before{
+  background-image: var(--au-svg-stars);
+  background-size: 72% 72%;
+  opacity: .042;
+}
+
+/* ARRIVAL */
+#arrival .au-time:nth-child(1)::before{
+  background-image: var(--au-svg-airplane);
+  opacity: .032;
+}
+#arrival .au-time:nth-child(2)::before{
+  background-image: var(--au-svg-opera);
+  opacity: .026;
+}
+#arrival .au-time:nth-child(3)::before{
+  background-image: var(--au-svg-map);
+  opacity: .026;
+}
+#arrival .au-time:nth-child(4)::before{
+  background-image: var(--au-svg-campus);
+  opacity: .032;
+}
+#flights .au-card::before{
+  background-image: var(--au-svg-airplane);
+  opacity: .03;
+}
+
+/* MATCHER + SOURCES */
+#matcher .au-card::before{
+  background-image: var(--au-svg-map);
+  opacity: .03;
+}
+#sources .au-sourcebox:nth-child(odd)::before{
+  background-image: var(--au-svg-stars);
+  background-size: 70% 70%;
+  opacity: .042;
+}
+#sources .au-sourcebox:nth-child(even)::before{
+  background-image: var(--au-svg-map);
+  opacity: .028;
+}
+
+/* mobile safety */
+@media (max-width: 700px){
+  .au-card::before,
+  .au-visa-step::before,
+  .au-price-box::before,
+  .au-fact::before,
+  .au-time::before,
+  .au-step::before,
+  .au-uni::before,
+  .au-sourcebox::before{
+    width: 48%;
+    height: 48%;
+    opacity: .045;
+  }
+
+  #visa .au-visa-step::before,
+  #arrival .au-time::before,
+  #student-jobs .au-card::before{
+    opacity: .038;
+  }
+}

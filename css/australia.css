@@ -513,3 +513,61 @@ radial-gradient(circle at 12% 80%,rgba(184,154,94,.09),transparent 30%),var(--au
   #work-life::before{right:-110px}
   #arrival::after{right:-120px}
 }
+
+/* ==========================================================
+   FOREGROUND AUSTRALIA MOTIFS
+   visible over cards, still non-interactive and very faint
+========================================================== */
+#study::before,
+#money::before,
+#visa::before,
+#work-life::before,
+#after-study::before,
+#after-study::after,
+#arrival::after,
+#matcher::before,
+#matcher::after{
+  z-index:6 !important;
+  pointer-events:none !important;
+  mix-blend-mode:multiply;
+}
+
+#study::before{opacity:.026 !important}
+#money::before{opacity:.022 !important}
+#visa::before{opacity:.018 !important}
+#work-life::before{opacity:.017 !important}
+#after-study::before{opacity:.016 !important}
+#after-study::after{opacity:.02 !important}
+#arrival::after{opacity:.018 !important}
+#matcher::before{opacity:.015 !important}
+#matcher::after{opacity:.018 !important}
+
+#study > *,
+#money > *,
+#visa > *,
+#work-life > *,
+#after-study > *,
+#arrival > *,
+#matcher > *{
+  position:relative;
+  z-index:2;
+}
+
+/* Search fallback suggestions */
+.au-search-suggestions{display:grid;gap:10px}
+.au-search-empty{display:grid;gap:5px}
+.au-search-empty span{color:var(--au-muted)}
+.au-search-suggestion-list{display:flex;flex-wrap:wrap;gap:8px}
+.au-search-suggestion-chip{border:1px solid #d7e4dd;border-radius:999px;background:linear-gradient(180deg,#fff 0%,#f6faf7 100%);padding:9px 12px;color:var(--au-green);font-size:11px;font-weight:800;cursor:pointer;box-shadow:0 5px 14px rgba(18,63,53,.04)}
+.au-search-suggestion-chip:hover{background:var(--au-green-soft);border-color:#c8ddd1}
+.au-search-suggestion-chip:active{transform:scale(.98)}
+
+@media(max-width:700px){
+  #study::before{opacity:.019 !important}
+  #money::before{opacity:.017 !important}
+  #visa::before{opacity:.015 !important}
+  #work-life::before{opacity:.014 !important}
+  #after-study::before,#after-study::after{opacity:.014 !important}
+  #arrival::after{opacity:.015 !important}
+  #matcher::before,#matcher::after{opacity:.013 !important}
+}

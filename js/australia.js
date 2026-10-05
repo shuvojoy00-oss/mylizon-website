@@ -180,6 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const scorePageSearchItem = (item, query) => {
     const alias = pageSearchAliases[query] || query;
     const title = item.title.toLowerCase();
+
     if (title === alias) return 1000;
     if (title.startsWith(alias)) return 920;
     if (title.includes(alias)) return 840;
@@ -187,13 +188,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const words = alias.split(" ").filter(Boolean);
     if (words.length > 1 && words.every(word => item.text.includes(word))) return 620;
-    if (words.some(word => word.length > 2 && item.text.includes(word))) return 420;
-
-    const fuzzyHits = words.filter(word => fuzzyWordMatch(word, title + " " + item.text));
-    if (fuzzyHits.length === words.length && words.length) return 360;
-    if (fuzzyHits.length) return 260;
 
     return 0;
+  };
+
+  const topicSuggestions = [
+    {label:"Documents", terms:["document","documents","documants","docoments","paperwork"], query:"documents"},
+    {label:"Police clearance", terms:["police","clearance","pcc","police clearance"], query:"police clearance"},
+    {label:"SOP & GS", terms:["sop","gs","statement of purpose","genuine student"], query:"sop"},
+    {label:"Universities", terms:["university","universities","uni","college"], query:"university"},
+    {label:"Bangladesh university sections", terms:["section 1","section 2","section 3","sections","cep"], query:"section 1"},
+    {label:"English / IELTS / PTE", terms:["english","ielts","pte","toefl"], query:"pte"},
+    {label:"Visa", terms:["visa","student visa","subclass 500"], query:"visa"},
+    {label:"Visa costs", terms:["visa fee","visa cost","cost visa"], query:"visa fee"},
+    {label:"Medical & biometrics", terms:["medical","biometric","biometrics","health exam"], query:"biometric"},
+    {label:"Financial documents", terms:["bank","salary bank","solvency","funds","finance","financial"], query:"bank"},
+    {label:"Work & jobs", terms:["work","job","jobs","employment","salary"], query:"work"},
+    {label:"Tax / TFN / Super", terms:["tax","tfn","super","superannuation"], query:"tax"},
+    {label:"OSHC", terms:["oshc","insurance","health cover"], query:"oshc"},
+    {label:"Scholarships", terms:["scholarship","scholarships","funding"], query:"scholarship"},
+    {label:"Accommodation", terms:["rent","accommodation","housing","room"], query:"rent"},
+    {label:"Post-study work / 485", terms:["485","psw","post study","graduate visa"], query:"485"},
+    {label:"PR & points", terms:["pr","points","migration","skilled"], query:"pr"},
+    {label:"Regional Australia", terms:["regional","region"], query:"regional"},
+    {label:"Intakes", terms:["intake","february","july","march","november"], query:"intake"},
+    {label:"Study gap", terms:["gap","study gap"], query:"gap"},
+    {label:"Low CGPA", terms:["cgpa","gpa","low cgpa"], query:"cgpa"},
+    {label:"Arrival & first week", terms:["arrival","airport","first week","landing"], query:"arrival"},
+    {label:"Flights", terms:["flight","airfare","ticket"], query:"flight"}
+  ];
+
+  const suggestionDistance = (query, topic) => {
+    const q = normalizePageSearch(query);
+    let best = Infinity;
+
+    topic.terms.forEach(term => {
+      const t = normalizePageSearch(term);
+      if (!t) return;
+
+      if (t.includes(q) || q.includes(t)) {
+        best = Math.min(best, Math.abs(t.length - q.length) * 0.25);
+      }
+
+      const distance = levenshtein(q, t);
+      const normalized = distance / Math.max(q.length, t.length, 1);
+      best = Math.min(best, normalized);
+    });
+
+    return best;
+  };
+
+  const getSuggestedTopics = query => {
+    const q = normalizePageSearch(query);
+
+    const ranked = topicSuggestions
+      .map(topic => ({topic, distance:suggestionDistance(q, topic)}))
+      .sort((a,b) => a.distance - b.distance);
+
+    const close = ranked.filter(item => item.distance <= .46).slice(0,4);
+    if (close.length) return close.map(item => item.topic);
+
+    return [
+      topicSuggestions.find(t => t.label === "Documents"),
+      topicSuggestions.find(t => t.label === "Universities"),
+      topicSuggestions.find(t => t.label === "Visa"),
+      topicSuggestions.find(t => t.label === "Work & jobs")
+    ].filter(Boolean);
   };
 
   const jumpToPageResult = item => {
@@ -207,22 +267,53 @@ document.addEventListener("DOMContentLoaded", () => {
     window.setTimeout(() => item.node.classList.remove("au-page-search-hit"),2300);
   };
 
+  const renderSuggestedTopics = (value, query) => {
+    const suggestions = getSuggestedTopics(query);
+    const wrapper = document.createElement("div");
+    wrapper.className = "au-search-suggestions";
+    wrapper.innerHTML = `
+      <div class="au-search-empty">
+        <strong>No exact match found for “${value}”.</strong>
+        <span>Maybe you meant one of these:</span>
+      </div>
+      <div class="au-search-suggestion-list"></div>`;
+
+    const list = wrapper.querySelector(".au-search-suggestion-list");
+
+    suggestions.forEach(topic => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "au-search-suggestion-chip";
+      button.textContent = topic.label;
+      button.addEventListener("click", () => {
+        searchInput.value = topic.query;
+        renderPageSearch(topic.query);
+      });
+      list.appendChild(button);
+    });
+
+    searchResults.appendChild(wrapper);
+  };
+
   const renderPageSearch = value => {
     if (!searchResults) return;
+
     const query = normalizePageSearch(value);
     searchResults.innerHTML = "";
+
     if (!query) {
       searchResults.innerHTML = '<div class="au-search-empty">Try a topic such as <strong>OSHC</strong>, <strong>PTE</strong>, <strong>police clearance</strong>, <strong>Section 1</strong>, <strong>485</strong> or <strong>salary bank statement</strong>.</div>';
       return;
     }
+
     const results = pageSearchItems
       .map(item => ({item,score:scorePageSearchItem(item,query)}))
-      .filter(result => result.score > 0)
+      .filter(result => result.score >= 620)
       .sort((a,b) => b.score-a.score)
       .slice(0,10);
 
     if (!results.length) {
-      searchResults.innerHTML = `<div class="au-search-empty">No close match for <strong>${value}</strong>. Try a shorter keyword, a university topic, visa document, cost, work rule or migration term.</div>`;
+      renderSuggestedTopics(value, query);
       return;
     }
 

@@ -57,7 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const bdSearch = document.querySelector("#bd-university-search");
   const bdStatus = document.querySelector("#bd-university-status");
+  const bdSuggestions = document.querySelector("#bd-university-suggestions");
   const bdUniversities = [...document.querySelectorAll("[data-bd-uni]")];
+
   const aliasMap = {
     "nsu":"north south university",
     "aiub":"american international university bangladesh",
@@ -78,15 +80,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "iut":"islamic university of technology",
     "sust":"shahjalal university of science and technology",
     "du":"university of dhaka",
-    "dhaka university":"university of dhaka",
     "cu":"university of chittagong",
-    "chittagong university":"university of chittagong",
     "ru":"university of rajshahi",
-    "rajshahi university":"university of rajshahi",
     "ju":"jahangirnagar university",
     "bup":"bangladesh university of professionals",
     "nu":"national university",
-    "national university bangladesh":"national university",
     "bau":"bangladesh agricultural university",
     "butex":"bangladesh university of textiles",
     "mbstu":"mawlana bhashani science and technology university",
@@ -94,13 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
     "hstu":"hajee mohammad danesh science and technology university",
     "nstu":"noakhali science and technology university",
     "jnu":"jagannath university",
-    "jagannath":"jagannath university",
     "ustc":"university of science and technology chittagong",
     "bubt":"bangladesh university of business & technology",
     "iubat":"international university of business agriculture and technology",
     "gub":"green university of bangladesh",
     "seu":"southeast university"
   };
+
   const normalize = value => value
     .toLowerCase()
     .replace(/&/g, "and")
@@ -108,40 +106,168 @@ document.addEventListener("DOMContentLoaded", () => {
     .replace(/\s+/g, " ")
     .trim();
 
-  if (bdSearch && bdUniversities.length) {
-    bdUniversities.forEach(item => {
-      item.dataset.searchText = normalize(item.textContent);
+  const reverseUniversityName = name => {
+    const cleaned = name.replace(/\([^)]*\)/g, "").trim();
+    const match = cleaned.match(/^university of (.+)$/i);
+    return match ? `${match[1]} university` : "";
+  };
+
+  const initials = name => {
+    const stop = new Set(["of","and","the","for","in","at","bangladesh"]);
+    return name
+      .replace(/\([^)]*\)/g, "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .filter(word => !stop.has(word.toLowerCase()))
+      .map(word => word[0])
+      .join("")
+      .toLowerCase();
+  };
+
+  if (bdSearch && bdUniversities.length && bdSuggestions) {
+    bdUniversities.forEach((item, index) => {
+      const name = item.textContent.trim();
+      const base = normalize(name);
+      const reversed = normalize(reverseUniversityName(name));
+      const acronym = initials(name);
+      const explicitAcronym = (name.match(/\(([^)]+)\)/) || [])[1] || "";
+      item.dataset.searchText = [base, reversed, acronym, normalize(explicitAcronym)].filter(Boolean).join(" ");
+      item.id = `bd-uni-${index + 1}`;
     });
 
-    bdSearch.addEventListener("input", () => {
-      const raw = bdSearch.value.trim();
-      const normalizedRaw = normalize(raw);
-      const resolved = aliasMap[normalizedRaw] || normalizedRaw;
-      let matches = 0;
+    let currentResults = [];
+    let activeIndex = -1;
 
-      bdUniversities.forEach(item => {
-        const hit = !resolved || item.dataset.searchText.includes(resolved);
-        item.hidden = !hit;
-        if (hit && resolved) matches += 1;
+    const closeSuggestions = () => {
+      bdSuggestions.innerHTML = "";
+      bdSuggestions.classList.remove("is-open");
+      bdSearch.setAttribute("aria-expanded", "false");
+      activeIndex = -1;
+    };
+
+    const jumpToInstitution = item => {
+      const section = item.dataset.section;
+      const detail = document.querySelector(`[data-bd-section="${section}"]`);
+      if (detail) detail.open = true;
+
+      bdUniversities.forEach(el => el.classList.remove("is-search-hit"));
+      item.classList.add("is-search-hit");
+
+      const targetTop = item.getBoundingClientRect().top + window.scrollY - 150;
+      window.scrollTo({top: targetTop, behavior:"smooth"});
+
+      bdSearch.value = item.textContent.trim();
+      bdStatus.innerHTML = `Found in <strong>Section ${section}</strong>. Jumped to <strong>${item.textContent.trim()}</strong>.`;
+      closeSuggestions();
+
+      window.setTimeout(() => item.classList.remove("is-search-hit"), 2400);
+    };
+
+    const scoreItem = (item, query) => {
+      const text = item.dataset.searchText || "";
+      const name = normalize(item.textContent);
+      const aliasResolved = aliasMap[query] || query;
+
+      if (name === aliasResolved) return 1000;
+      if (text.split(" ").includes(aliasResolved)) return 950;
+      if (name.startsWith(aliasResolved)) return 900;
+      if (text.startsWith(aliasResolved)) return 850;
+      if (text.includes(aliasResolved)) return 700;
+
+      const words = aliasResolved.split(" ").filter(Boolean);
+      if (words.length > 1 && words.every(word => text.includes(word))) return 600;
+
+      return 0;
+    };
+
+    const renderSuggestions = query => {
+      const q = normalize(query);
+
+      if (!q) {
+        closeSuggestions();
+        bdStatus.textContent = "Start typing. Tap a result to jump directly to its section.";
+        return;
+      }
+
+      currentResults = bdUniversities
+        .map(item => ({item, score: scoreItem(item, q)}))
+        .filter(result => result.score > 0)
+        .sort((a,b) => b.score - a.score || a.item.textContent.localeCompare(b.item.textContent))
+        .slice(0, 10);
+
+      bdSuggestions.innerHTML = "";
+
+      if (!currentResults.length) {
+        bdSuggestions.innerHTML = `
+          <div class="au-suggestion-empty">
+            <strong>No standalone Section 1/2/3 match yet.</strong>
+            <span>If this is a college, check the degree-awarding university on the certificate/transcript. If the awarding body is National University, search “NU” or “National University”.</span>
+          </div>`;
+        bdSuggestions.classList.add("is-open");
+        bdSearch.setAttribute("aria-expanded", "true");
+        bdStatus.innerHTML = `No standalone section match for <strong>${query}</strong>. Try the awarding university name or abbreviation.`;
+        activeIndex = -1;
+        return;
+      }
+
+      currentResults.forEach(({item}, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "au-suggestion";
+        button.setAttribute("role", "option");
+        button.dataset.index = String(index);
+        button.innerHTML = `
+          <span class="au-suggestion__name">${item.textContent.trim()}</span>
+          <span class="au-suggestion__section">Section ${item.dataset.section}</span>`;
+        button.addEventListener("mousedown", event => event.preventDefault());
+        button.addEventListener("click", () => jumpToInstitution(item));
+        bdSuggestions.appendChild(button);
       });
 
-      if (resolved) {
-        document.querySelectorAll(".au-section-lists details").forEach(detail => detail.open = true);
+      bdSuggestions.classList.add("is-open");
+      bdSearch.setAttribute("aria-expanded", "true");
+      bdStatus.innerHTML = `Showing <strong>${currentResults.length}</strong> best match${currentResults.length === 1 ? "" : "es"}. Keep typing to narrow the list.`;
+      activeIndex = -1;
+    };
+
+    const syncActiveSuggestion = () => {
+      const options = [...bdSuggestions.querySelectorAll(".au-suggestion")];
+      options.forEach((option, index) => option.classList.toggle("is-active", index === activeIndex));
+      if (activeIndex >= 0 && options[activeIndex]) {
+        options[activeIndex].scrollIntoView({block:"nearest"});
+      }
+    };
+
+    bdSearch.addEventListener("input", () => renderSuggestions(bdSearch.value));
+
+    bdSearch.addEventListener("focus", () => {
+      if (bdSearch.value.trim()) renderSuggestions(bdSearch.value);
+    });
+
+    bdSearch.addEventListener("keydown", event => {
+      if (!bdSuggestions.classList.contains("is-open")) {
+        if (event.key === "ArrowDown") renderSuggestions(bdSearch.value);
+        return;
       }
 
-      if (!bdStatus) return;
-
-      if (!resolved) {
-        bdStatus.innerHTML = "Search by full name, common abbreviation or college name.";
-      } else if (matches > 0) {
-        const aliasNote = aliasMap[normalizedRaw] ? ` <span>Matched “${raw}” to its common university name.</span>` : "";
-        bdStatus.innerHTML = `Found <strong>${matches}</strong> matching CEP-listed institution${matches === 1 ? "" : "s"}.${aliasNote}`;
-      } else {
-        const looksLikeCollege = /college|mohila|women.?s college|govt|government|degree college/i.test(raw);
-        bdStatus.innerHTML = looksLikeCollege
-          ? `<strong>No standalone Section 1/2/3 entry found for “${raw}”.</strong> For an affiliated college, check the <em>degree-awarding university</em> printed on the certificate/transcript. If the degree is awarded by National University, use National University’s current Section 2 classification and verify the college’s NU affiliation.`
-          : `<strong>“${raw}” is not in the current standalone Section 1/2/3 list shown here.</strong> This does not automatically mean the qualification is unacceptable. Check the awarding body, current Bangladesh recognition, and ask the target Australian provider for a formal assessment.`;
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, currentResults.length - 1);
+        syncActiveSuggestion();
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        syncActiveSuggestion();
+      } else if (event.key === "Enter" && activeIndex >= 0 && currentResults[activeIndex]) {
+        event.preventDefault();
+        jumpToInstitution(currentResults[activeIndex].item);
+      } else if (event.key === "Escape") {
+        closeSuggestions();
       }
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest("#bd-university-autocomplete")) closeSuggestions();
     });
   }
 

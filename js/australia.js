@@ -54,6 +54,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
+  const bdSearch = document.querySelector("#bd-university-search");
+  const bdUniversities = [...document.querySelectorAll("[data-bd-uni]")];
+  if (bdSearch && bdUniversities.length) {
+    bdSearch.addEventListener("input", () => {
+      const query = bdSearch.value.trim().toLowerCase();
+      bdUniversities.forEach(item => {
+        item.hidden = query && !item.textContent.toLowerCase().includes(query);
+      });
+      if (query) {
+        document.querySelectorAll(".au-section-lists details").forEach(detail => detail.open = true);
+      }
+    });
+  }
+
   const calc = document.querySelector("#earnings-calculator");
   if (calc) {
     const wage = calc.querySelector("[name=wage]");

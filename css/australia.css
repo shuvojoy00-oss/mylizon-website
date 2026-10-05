@@ -349,3 +349,167 @@ radial-gradient(circle at 12% 80%,rgba(184,154,94,.09),transparent 30%),var(--au
   .au-guide-toggle>span:first-child,.au-search-toggle>span:first-child{display:inline}
   .au-guide-toggle strong,.au-search-toggle strong{display:none}
 }
+
+/* ==========================================================
+   HERO TOOLS — EARLY GUIDE + SEARCH ENTRY
+========================================================== */
+.au-hero-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px;max-width:520px}
+.au-hero-tool{display:flex;align-items:center;gap:11px;min-height:58px;padding:10px 13px;border:1px solid #d7e4dd;border-radius:15px;background:linear-gradient(180deg,#ffffff 0%,#f7fbf8 100%);box-shadow:0 8px 22px rgba(18,63,53,.05);color:var(--au-green);text-align:left;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.au-hero-tool:hover{transform:translateY(-1px);border-color:#bfd5c8;box-shadow:0 12px 26px rgba(18,63,53,.08)}
+.au-hero-tool--search{background:linear-gradient(180deg,#ffffff 0%,#f5f9fc 100%);border-color:#d8e5ec}
+.au-hero-tool__icon{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:10px;background:var(--au-green-soft);font-size:15px}
+.au-hero-tool--search .au-hero-tool__icon{background:var(--au-blue-soft);color:var(--au-blue)}
+.au-hero-tool small{display:block;margin-bottom:2px;color:#758078;font-size:9px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+.au-hero-tool strong{display:block;font-size:13px;line-height:1.2}
+
+/* ==========================================================
+   SEARCH SHEET — IPHONE / MOBILE KEYBOARD SAFE
+========================================================== */
+.au-search-sheet .au-sheet__panel{top:max(72px,env(safe-area-inset-top));bottom:auto;max-height:calc(100dvh - max(82px,env(safe-area-inset-top)));padding-bottom:max(24px,env(safe-area-inset-bottom));border-radius:0 0 24px 24px;transform:translateY(-110%);overscroll-behavior:contain}
+.au-search-sheet.is-open .au-sheet__panel{transform:translateY(0)}
+.au-search-sheet .au-sheet__head{position:sticky;top:0;z-index:4;background:var(--au-ivory)}
+.au-page-search{position:relative}
+.au-page-search input{position:sticky;top:58px;z-index:3;background:#fff;box-shadow:0 8px 18px rgba(18,63,53,.05)}
+.au-page-search__hint{position:relative;z-index:1}
+.au-page-search__results{padding-bottom:12px}
+
+/* ==========================================================
+   CLASSIER STICKY MOBILE CONTROLS
+========================================================== */
+@media(max-width:700px){
+  .au-guide-sticky{background:rgba(252,251,247,.88);box-shadow:0 5px 18px rgba(18,63,53,.035)}
+  .au-guide-mobile-actions{gap:10px}
+  .au-guide-toggle,.au-search-toggle{min-height:50px;border-color:#d7e4dd;background:linear-gradient(180deg,#ffffff 0%,#f7fbf8 100%);box-shadow:0 7px 18px rgba(18,63,53,.055);padding:10px 13px}
+  .au-search-toggle{border-color:#d8e5ec;background:linear-gradient(180deg,#ffffff 0%,#f5f9fc 100%);color:#235f7e}
+  .au-guide-toggle:active,.au-search-toggle:active{transform:scale(.985)}
+  .au-hero-tools{max-width:none}
+}
+
+/* ==========================================================
+   AUSTRALIA-SPECIFIC VISUAL LANGUAGE
+   intentionally low opacity to preserve readability
+========================================================== */
+
+/* Study — Southern Cross */
+#study::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:260px;
+  height:260px;
+  right:1.5%;
+  top:10%;
+  opacity:.045;
+  background-image:
+    radial-gradient(circle at 25% 18%,#1f5a49 0 3px,transparent 4px),
+    radial-gradient(circle at 61% 28%,#1f5a49 0 5px,transparent 6px),
+    radial-gradient(circle at 78% 58%,#1f5a49 0 3px,transparent 4px),
+    radial-gradient(circle at 52% 79%,#1f5a49 0 4px,transparent 5px),
+    radial-gradient(circle at 34% 52%,#1f5a49 0 2px,transparent 3px);
+  pointer-events:none
+}
+
+/* Money — eucalyptus leaves */
+#money::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:310px;
+  height:310px;
+  right:-45px;
+  bottom:4%;
+  opacity:.035;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23123f35' stroke-width='6' stroke-linecap='round'%3E%3Cpath d='M50 260 C120 210 150 120 228 43'/%3E%3Cellipse cx='92' cy='213' rx='26' ry='12' transform='rotate(-32 92 213)'/%3E%3Cellipse cx='128' cy='165' rx='27' ry='12' transform='rotate(18 128 165)'/%3E%3Cellipse cx='167' cy='120' rx='25' ry='11' transform='rotate(-31 167 120)'/%3E%3Cellipse cx='205' cy='76' rx='23' ry='10' transform='rotate(22 205 76)'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none
+}
+
+/* Visa — Australia map / journey */
+#visa::before{
+  opacity:.032;
+  right:-4%;
+  top:3%;
+}
+
+/* Work & Life — kangaroo line silhouette */
+#work-life::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:330px;
+  height:270px;
+  right:-30px;
+  bottom:4%;
+  opacity:.028;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 360 280' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M75 224 C105 205 119 180 130 151 C142 120 170 98 202 103 C220 108 229 98 242 79 L265 42 L272 83 L300 61 L282 101 C304 116 315 135 306 151 C295 169 271 168 253 158 C248 188 233 207 214 221 L261 246 M206 220 L191 254 M146 168 C115 161 91 149 63 126 C92 133 115 132 139 126' fill='none' stroke='%23123f35' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  pointer-events:none
+}
+
+/* After Study — Australia map with route dots */
+#after-study::before{
+  opacity:.027;
+  left:-8%;
+  right:auto;
+  top:8%;
+}
+#after-study::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:240px;
+  height:240px;
+  right:2%;
+  bottom:8%;
+  opacity:.035;
+  background-image:
+    radial-gradient(circle at 18% 70%,#2d6889 0 4px,transparent 5px),
+    radial-gradient(circle at 44% 52%,#2d6889 0 3px,transparent 4px),
+    radial-gradient(circle at 68% 35%,#2d6889 0 4px,transparent 5px),
+    linear-gradient(35deg,transparent 48%,#2d6889 49% 50%,transparent 51%);
+  pointer-events:none
+}
+
+/* Arrival — Opera House-inspired sail lines */
+#arrival::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:360px;
+  height:190px;
+  right:-25px;
+  top:12%;
+  opacity:.028;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 420 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%232d6889' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M45 178 C98 87 143 46 202 35 C168 83 145 126 138 178'/%3E%3Cpath d='M138 178 C191 98 234 66 292 58 C258 101 238 138 233 178'/%3E%3Cpath d='M232 178 C278 121 317 98 363 95 C338 124 323 150 319 178'/%3E%3Cpath d='M32 181 H376'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none
+}
+
+/* Matcher — subtle map + stars */
+#matcher::before{opacity:.024}
+#matcher::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:220px;
+  height:180px;
+  left:2%;
+  bottom:7%;
+  opacity:.03;
+  background-image:
+    radial-gradient(circle at 18% 24%,#b89a5e 0 3px,transparent 4px),
+    radial-gradient(circle at 45% 35%,#b89a5e 0 4px,transparent 5px),
+    radial-gradient(circle at 69% 54%,#b89a5e 0 3px,transparent 4px),
+    radial-gradient(circle at 51% 78%,#b89a5e 0 3px,transparent 4px);
+  pointer-events:none
+}
+
+@media(max-width:700px){
+  #study::before,#money::before,#work-life::before,#after-study::after,#arrival::after,#matcher::after{transform:scale(.78);transform-origin:center;opacity:.022}
+  #money::before{right:-90px}
+  #work-life::before{right:-110px}
+  #arrival::after{right:-120px}
+}

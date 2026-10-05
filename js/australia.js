@@ -40,6 +40,173 @@ document.addEventListener("DOMContentLoaded", () => {
     sections.forEach(section => observer.observe(section));
   }
 
+
+  const searchToggle = document.querySelector("[data-au-search-toggle]");
+  const searchSheet = document.querySelector("#au-search-sheet");
+  const searchInput = document.querySelector("#au-page-search-input");
+  const searchResults = document.querySelector("#au-page-search-results");
+
+  const closeSearchSheet = () => {
+    if (!searchSheet) return;
+    searchSheet.classList.remove("is-open");
+    document.body.style.overflow = "";
+  };
+
+  const openSearchSheet = () => {
+    if (!searchSheet) return;
+    searchSheet.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    window.setTimeout(() => searchInput && searchInput.focus(), 120);
+  };
+
+  if (searchToggle) searchToggle.addEventListener("click", openSearchSheet);
+  document.querySelectorAll("[data-au-search-close]").forEach(el => el.addEventListener("click", closeSearchSheet));
+
+  const pageSearchAliases = {
+    "ielts":"english requirements",
+    "pte":"english requirements",
+    "toefl":"english requirements",
+    "sop":"genuine student sop provider statement",
+    "gs":"genuine student",
+    "police":"police clearance character documents",
+    "pcc":"police clearance character documents",
+    "salary":"salary bank statement employment evidence",
+    "job":"employment certificate experience letter student jobs",
+    "work":"work jobs earnings employment",
+    "tax":"tfn tax super",
+    "pr":"pr points skilled migration",
+    "psw":"temporary graduate 485 post study",
+    "485":"temporary graduate 485 post study",
+    "oshc":"oshc health cover",
+    "insurance":"oshc health cover",
+    "section 1":"bangladesh university sections",
+    "section 2":"bangladesh university sections",
+    "section 3":"bangladesh university sections",
+    "university section":"bangladesh university sections",
+    "college":"bangladesh university sections national university colleges",
+    "nu":"national university bangladesh university sections",
+    "bank":"financial documents bank statement source of funds",
+    "visa fee":"visa costs student visa base charge",
+    "biometric":"visa costs biometric",
+    "medical":"visa costs medical",
+    "spouse":"family spouse",
+    "family":"family spouse",
+    "regional":"regional australia",
+    "scholarship":"scholarships",
+    "rent":"accommodation city comparison",
+    "flight":"flight planning arrival",
+    "arrival":"arrival first week",
+    "intake":"intakes",
+    "cgpa":"low cgpa profile",
+    "gap":"study gap profile",
+    "hsc":"academic pathways hsc",
+    "masters":"academic pathways masters",
+    "research":"research masters phd",
+    "cricos":"cricos"
+  };
+
+  const pageSearchItems = [];
+  const searchableNodes = [...document.querySelectorAll(
+    "main h2, main h3, main summary, main .au-card, main .au-fact, main .au-time, main .au-visa-step, main tbody tr"
+  )];
+
+  const nearestSearchSection = node => {
+    const section = node.closest("section[id]");
+    if (section) return section;
+    return node.closest("[id]");
+  };
+
+  const cleanSearchText = value => value.replace(/\s+/g, " ").trim();
+
+  searchableNodes.forEach((node, index) => {
+    const text = cleanSearchText(node.textContent || "");
+    if (!text || text.length < 3) return;
+    const section = nearestSearchSection(node);
+    const sectionId = section ? section.id : "";
+    const sectionLabel = section && section.querySelector(".au-eyebrow")
+      ? cleanSearchText(section.querySelector(".au-eyebrow").textContent)
+      : "Australia Guide";
+    const heading = node.matches("h2,h3,summary")
+      ? text
+      : (node.querySelector("h3") ? cleanSearchText(node.querySelector("h3").textContent) : text.slice(0,90));
+    if (!node.id) node.id = `au-search-target-${index+1}`;
+    pageSearchItems.push({
+      node,
+      id: node.id,
+      title: heading,
+      text: text.toLowerCase(),
+      section: sectionLabel,
+      sectionId
+    });
+  });
+
+  const normalizePageSearch = value => value.toLowerCase().replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim();
+
+  const scorePageSearchItem = (item, query) => {
+    const alias = pageSearchAliases[query] || query;
+    const title = item.title.toLowerCase();
+    if (title === alias) return 1000;
+    if (title.startsWith(alias)) return 920;
+    if (title.includes(alias)) return 840;
+    if (item.text.includes(alias)) return 700;
+    const words = alias.split(" ").filter(Boolean);
+    if (words.length > 1 && words.every(word => item.text.includes(word))) return 620;
+    if (words.some(word => word.length > 2 && item.text.includes(word))) return 420;
+    return 0;
+  };
+
+  const jumpToPageResult = item => {
+    closeSearchSheet();
+    const details = item.node.closest("details");
+    if (details) details.open = true;
+    document.querySelectorAll(".au-page-search-hit").forEach(el => el.classList.remove("au-page-search-hit"));
+    item.node.classList.add("au-page-search-hit");
+    const top = item.node.getBoundingClientRect().top + window.scrollY - 145;
+    window.scrollTo({top,behavior:"smooth"});
+    window.setTimeout(() => item.node.classList.remove("au-page-search-hit"),2300);
+  };
+
+  const renderPageSearch = value => {
+    if (!searchResults) return;
+    const query = normalizePageSearch(value);
+    searchResults.innerHTML = "";
+    if (!query) {
+      searchResults.innerHTML = '<div class="au-search-empty">Try a topic such as <strong>OSHC</strong>, <strong>PTE</strong>, <strong>police clearance</strong>, <strong>Section 1</strong>, <strong>485</strong> or <strong>salary bank statement</strong>.</div>';
+      return;
+    }
+    const results = pageSearchItems
+      .map(item => ({item,score:scorePageSearchItem(item,query)}))
+      .filter(result => result.score > 0)
+      .sort((a,b) => b.score-a.score)
+      .slice(0,10);
+
+    if (!results.length) {
+      searchResults.innerHTML = `<div class="au-search-empty">No close match for <strong>${value}</strong>. Try a shorter keyword, a university topic, visa document, cost, work rule or migration term.</div>`;
+      return;
+    }
+
+    results.forEach(({item}) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "au-search-result";
+      const context = item.text.length > 135 ? item.text.slice(0,135) + "…" : item.text;
+      button.innerHTML = `
+        <span class="au-search-result__section">${item.section}</span>
+        <span class="au-search-result__title">${item.title}</span>
+        <span class="au-search-result__context">${context}</span>`;
+      button.addEventListener("click", () => jumpToPageResult(item));
+      searchResults.appendChild(button);
+    });
+  };
+
+  if (searchInput) {
+    searchInput.addEventListener("input", () => renderPageSearch(searchInput.value));
+    searchInput.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeSearchSheet();
+    });
+    renderPageSearch("");
+  }
+
   const filters = [...document.querySelectorAll("[data-uni-filter]")];
   const uniCards = [...document.querySelectorAll("[data-uni-card]")];
   filters.forEach(button => {

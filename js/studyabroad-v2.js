@@ -31,7 +31,8 @@
     ["malta","Malta","Europe","malta.html","MT"],
     ["china","China","Asia","china.html","CN"],
     ["turkey","Türkiye","Europe","turkey.html","TR"],
-    ["uae","United Arab Emirates","Asia","uae.html","AE"]
+    ["uae","United Arab Emirates","Asia","uae.html","AE"],
+    ["latvia","Latvia","Europe","latvia.html","LV"]
   ].map(([id,name,region,page,code]) => ({
     id,name,region,page,code,
     levels:["Bachelor","Masters","PhD"],

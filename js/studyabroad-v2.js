@@ -1,6 +1,7 @@
 (() => {
   const STORAGE_KEY = "lizon-studyabroad-preferences-v1";
   const PLAN_KEY = "lizon-studyabroad-plan-v1";
+  const HANDOFF_KEY = "lizon-studyabroad-handoff-v1";
 
   const fallbackCountries = [
     ["australia","Australia","Oceania","australia.html","AU"],
@@ -204,6 +205,118 @@
       ];
       action.textContent = messages[ready];
     }
+
+    renderHandoff();
+  }
+
+  function buildHandoffSummary() {
+    const lines = ["LizOn Study Abroad Plan"];
+
+    if (state.plan.shortlist.length) {
+      lines.push(`Shortlist: ${state.plan.shortlist.map(item => item.name).join(", ")}`);
+    }
+
+    if (state.preferences.size) {
+      lines.push(`Priorities: ${[...state.preferences].join(", ")}`);
+    }
+
+    if (state.plan.cost) {
+      lines.push(`Latest cost plan: ${state.plan.cost.countryName} · ${state.plan.cost.level}`);
+      lines.push(`First-year estimate: ${state.plan.cost.firstYearText}`);
+      lines.push(`Funding target: ${state.plan.cost.fundingText}`);
+      if (state.plan.cost.bdtText) lines.push(`BDT view: ${state.plan.cost.bdtText}`);
+    }
+
+    if (state.plan.timeline) {
+      lines.push(`Target intake: ${state.plan.timeline.countryName} · ${state.plan.timeline.intakeLabel} ${state.plan.timeline.year}`);
+      lines.push(`Planning status: ${state.plan.timeline.status}`);
+      lines.push(`Recommended preparation start: ${state.plan.timeline.recommendedStart}`);
+    }
+
+    const ready = planCompletion();
+    lines.push(`Plan completeness: ${ready}/4`);
+    lines.push("");
+    lines.push("I would like LizOn to review this plan and guide me on my next step.");
+
+    return {
+      text: lines.join("\n"),
+      ready,
+      hasContext: ready > 0
+    };
+  }
+
+  function persistHandoff(summary) {
+    try {
+      localStorage.setItem(HANDOFF_KEY, JSON.stringify({
+        summary: summary.text,
+        plan: state.plan,
+        priorities: [...state.preferences],
+        savedAt: new Date().toISOString()
+      }));
+    } catch (_) {}
+  }
+
+  function renderHandoff() {
+    const preview = $("#sa-handoff-preview");
+    const panel = preview?.closest(".sa-handoff-panel");
+    const status = $("#sa-handoff-status");
+    const whatsapp = $("#sa-handoff-whatsapp");
+    const assessment = $("#sa-handoff-assessment");
+    if (!preview || !panel) return;
+
+    const summary = buildHandoffSummary();
+    preview.textContent = summary.hasContext ? summary.text : "No Study Plan details saved yet.";
+    panel.classList.toggle("is-empty", !summary.hasContext);
+
+    if (status) {
+      status.classList.toggle("is-ready", summary.hasContext);
+      status.textContent = summary.hasContext
+        ? `${summary.ready} of 4 planning parts are ready. Review the preview before sharing it.`
+        : "Add something to My Study Plan and your handoff summary will appear here.";
+    }
+
+    if (whatsapp) {
+      const message = summary.hasContext
+        ? `Hi LizOn,\nI built a Study Abroad plan on MyLizOn.com.\n\n${summary.text}`
+        : "Hi LizOn, I would like guidance about studying abroad.";
+      whatsapp.href = `https://wa.me/8801608881545?text=${encodeURIComponent(message)}`;
+      whatsapp.setAttribute("aria-disabled", String(!summary.hasContext));
+    }
+
+    if (assessment) {
+      assessment.href = summary.hasContext ? "assessment.html?from=study-plan" : "assessment.html";
+    }
+
+    if (summary.hasContext) persistHandoff(summary);
+  }
+
+  async function copyHandoffSummary() {
+    const summary = buildHandoffSummary();
+    if (!summary.hasContext) return;
+
+    const button = $("#sa-handoff-copy");
+    try {
+      await navigator.clipboard.writeText(summary.text);
+      if (button) {
+        const original = button.textContent;
+        button.textContent = "Copied";
+        button.classList.add("is-copied");
+        setTimeout(() => {
+          button.textContent = original;
+          button.classList.remove("is-copied");
+        }, 1600);
+      }
+    } catch (_) {
+      const textarea = document.createElement("textarea");
+      textarea.value = summary.text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try { document.execCommand("copy"); } catch (_) {}
+      textarea.remove();
+    }
   }
 
   function setupPersonalPlan() {
@@ -227,10 +340,15 @@
 
     $("#sa-plan-clear")?.addEventListener("click", () => {
       state.plan = { shortlist: [], cost: null, timeline: null, updatedAt: null };
-      try { localStorage.removeItem(PLAN_KEY); } catch (_) {}
+      try {
+        localStorage.removeItem(PLAN_KEY);
+        localStorage.removeItem(HANDOFF_KEY);
+      } catch (_) {}
       renderPlan();
       refreshPlanButtons();
     });
+
+    $("#sa-handoff-copy")?.addEventListener("click", copyHandoffSummary);
   }
 
   function loadPreferences() {

@@ -438,6 +438,147 @@
       </div>
     </section>
 
+    <section class="sa-section sa-section--white" id="cost-calculator">
+      <div class="sa-shell">
+        <div class="sa-cost-layout">
+          <div>
+            <header class="sa-heading sa-reveal">
+              <span class="sa-eyebrow">REAL COST CALCULATOR</span>
+              <h2>Know the number before making the decision.</h2>
+              <p>
+                Start with the country guide figures, then replace them with the exact numbers from your offer letter, visa checklist and real travel plan.
+              </p>
+            </header>
+
+            <form class="sa-cost-form sa-reveal" id="sa-cost-form">
+              <label class="sa-field">
+                <span>Country</span>
+                <select id="sa-cost-country"></select>
+              </label>
+
+              <label class="sa-field">
+                <span>Study level</span>
+                <select id="sa-cost-level">
+                  <option value="Bachelor">Bachelor</option>
+                  <option value="Masters" selected>Masters</option>
+                  <option value="PhD">PhD</option>
+                </select>
+              </label>
+
+              <div class="sa-field sa-field--full" id="sa-cost-location-wrap" hidden>
+                <span>Location rule</span>
+                <select id="sa-cost-location"></select>
+              </div>
+
+              <label class="sa-field">
+                <span>Annual tuition</span>
+                <input id="sa-cost-tuition" type="number" min="0" step="0.01" inputmode="decimal">
+                <small id="sa-cost-tuition-hint">Enter the actual tuition if you already have an offer.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Scholarship / tuition waiver</span>
+                <input id="sa-cost-scholarship" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Amount deducted from tuition.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Tuition already paid</span>
+                <input id="sa-cost-paid" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Used when estimating remaining funding evidence.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Living budget for year 1</span>
+                <input id="sa-cost-living" type="number" min="0" step="0.01" inputmode="decimal">
+                <small id="sa-cost-living-hint">Prefilled from the current country guide where possible.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Partner / other adult</span>
+                <select id="sa-cost-adults">
+                  <option value="0">None</option>
+                  <option value="1">1 adult</option>
+                  <option value="2">2 adults</option>
+                </select>
+              </label>
+
+              <label class="sa-field">
+                <span>Children</span>
+                <select id="sa-cost-children">
+                  <option value="0">None</option>
+                  <option value="1">1 child</option>
+                  <option value="2">2 children</option>
+                  <option value="3">3 children</option>
+                </select>
+              </label>
+
+              <label class="sa-field">
+                <span>Insurance / health</span>
+                <input id="sa-cost-insurance" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Use your actual quote where required.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Flights / travel</span>
+                <input id="sa-cost-travel" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Use the realistic amount you expect to pay.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Housing setup / other</span>
+                <input id="sa-cost-setup" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Deposit, setup, medical, biometrics or other extras.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>1 local currency = BDT</span>
+                <input id="sa-cost-bdt-rate" type="number" min="0" step="0.01" placeholder="Optional" inputmode="decimal">
+                <small>Use the bank or transfer rate you actually plan to use.</small>
+              </label>
+
+              <div class="sa-field sa-field--full" id="sa-cost-school-funding-wrap" hidden>
+                <span>School / I-20 funding target</span>
+                <input id="sa-cost-school-funding" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Used for countries without one national maintenance figure.</small>
+              </div>
+
+              <button class="sa-button sa-button--primary sa-cost-submit" type="submit">
+                Calculate My First Year <span aria-hidden="true">→</span>
+              </button>
+            </form>
+          </div>
+
+          <aside class="sa-cost-summary sa-reveal" id="sa-cost-summary">
+            <span class="sa-cost-summary__eyebrow">YOUR ESTIMATE</span>
+            <h3 id="sa-cost-summary-title">Choose a country to begin.</h3>
+
+            <div class="sa-cost-big">
+              <span>First year planning cost</span>
+              <strong id="sa-cost-total">—</strong>
+              <small id="sa-cost-total-bdt"></small>
+            </div>
+
+            <div class="sa-cost-big sa-cost-big--soft">
+              <span>Funding target to prepare</span>
+              <strong id="sa-cost-funding">—</strong>
+              <small id="sa-cost-funding-bdt"></small>
+            </div>
+
+            <div class="sa-cost-breakdown" id="sa-cost-breakdown"></div>
+
+            <div class="sa-cost-note" id="sa-cost-rule-note">
+              Exact programme fees and immigration requirements always override this planning estimate.
+            </div>
+
+            <a class="sa-text-link" id="sa-cost-guide-link" href="#countries">
+              Open country guide <span aria-hidden="true">↗</span>
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <section class="sa-section sa-section--white" id="tools">
       <div class="sa-shell">
         <header class="sa-heading sa-reveal">

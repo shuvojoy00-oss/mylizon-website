@@ -24,6 +24,7 @@
   const state = {
     countries: [],
     intelligence: [],
+    costs: [],
     region: "All",
     level: "All",
     query: "",
@@ -134,6 +135,7 @@
     }
     renderCountries();
     populateCompareSelects();
+    populateCostCountrySelect();
   }
 
   function filteredCountries() {
@@ -653,6 +655,260 @@
     $("#sa-run-compare")?.addEventListener("click", runCompare);
   }
 
+  async function ensureCostData() {
+    if (state.costs.length) return state.costs;
+    try {
+      const response = await fetch("data/studyabroad-costs.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Cost data unavailable");
+      const data = await response.json();
+      state.costs = Array.isArray(data) ? data : [];
+    } catch (_) {
+      state.costs = [];
+    }
+    return state.costs;
+  }
+
+  function costCountry() {
+    const id = $("#sa-cost-country")?.value;
+    return state.costs.find(item => item.id === id) || null;
+  }
+
+  function currentCountryMeta(id) {
+    return state.countries.find(item => item.id === id) || null;
+  }
+
+  function formatCost(value, cost) {
+    if (!Number.isFinite(value)) return "—";
+    const maximumFractionDigits = Math.abs(value - Math.round(value)) > 0.001 ? 2 : 0;
+    const number = new Intl.NumberFormat("en-US", { maximumFractionDigits }).format(value);
+    if (cost?.symbol === "€" || cost?.symbol === "£" || cost?.symbol === "$") return `${cost.symbol}${number}`;
+    if (cost?.symbol === "A$" || cost?.symbol === "C$" || cost?.symbol === "NZ$") return `${cost.symbol}${number}`;
+    return `${cost?.symbol || cost?.currency || ""} ${number}`.trim();
+  }
+
+  function formatBDT(value, rate) {
+    if (!Number.isFinite(value) || !Number.isFinite(rate) || rate <= 0) return "";
+    return `≈ ৳${new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value * rate)} at your BDT rate`;
+  }
+
+  function tuitionPreset(cost, level) {
+    const t = cost?.tuition?.[level];
+    if (!t || !Number.isFinite(t.min) || !Number.isFinite(t.max)) return null;
+    return t.min === t.max ? t.min : Math.round((t.min + t.max) / 2);
+  }
+
+  function livingProfile(cost) {
+    if (!cost?.living) return { required: 0, planning: 0, note: "" };
+    if (cost.living.type === "location") {
+      const id = $("#sa-cost-location")?.value || cost.living.locations?.[0]?.id;
+      const location = cost.living.locations?.find(item => item.id === id) || cost.living.locations?.[0];
+      return {
+        required: Number(location?.requiredAnnual || 0),
+        planning: Number(location?.planningAnnual || location?.requiredAnnual || 0),
+        note: cost.living.note || ""
+      };
+    }
+    return {
+      required: Number(cost.living.requiredAnnual || 0),
+      planning: Number(cost.living.planningAnnual || cost.living.requiredAnnual || 0),
+      note: cost.living.note || ""
+    };
+  }
+
+  function familyFunding(cost) {
+    const adults = Number($("#sa-cost-adults")?.value || 0);
+    const children = Number($("#sa-cost-children")?.value || 0);
+    const dependants = adults + children;
+    if (!dependants || !cost?.family) return { amount: 0, note: dependants ? "No automatic family formula is stored for this destination. Add real family costs under housing setup / other." : "" };
+
+    const family = cost.family;
+    if (family.type === "householdTable") {
+      const size = 1 + dependants;
+      const total = Number(family.table?.[size]);
+      const base = Number(family.table?.[1] || 0);
+      if (Number.isFinite(total)) return { amount: Math.max(0, total - base), note: family.note || "" };
+      return { amount: 0, note: "The stored household table does not cover this family size. Check the current country guide." };
+    }
+
+    if (family.type === "locationMonthly9") {
+      const location = $("#sa-cost-location")?.value || "outside";
+      const per = Number(location === "london" ? family.londonAdult : family.outsideAdult);
+      return { amount: per * 9 * dependants, note: family.note || "" };
+    }
+
+    if (family.type === "monthlyFlat") {
+      return {
+        amount: (Number(family.adult || 0) * adults + Number(family.child || 0) * children) * 12,
+        note: family.note || ""
+      };
+    }
+
+    if (family.type === "firstPlusAdditional") {
+      const monthly = dependants > 0 ? Number(family.first || 0) + Math.max(0, dependants - 1) * Number(family.additional || 0) : 0;
+      return { amount: monthly * 12, note: family.note || "" };
+    }
+
+    return { amount: 0, note: family.note || "" };
+  }
+
+  function updateCostLocation(cost) {
+    const wrap = $("#sa-cost-location-wrap");
+    const select = $("#sa-cost-location");
+    if (!wrap || !select) return;
+    const locations = cost?.living?.type === "location" ? cost.living.locations || [] : [];
+    wrap.hidden = !locations.length;
+    if (!locations.length) {
+      select.innerHTML = "";
+      return;
+    }
+    const old = select.value;
+    select.innerHTML = locations.map(item => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.label)}</option>`).join("");
+    if (locations.some(item => item.id === old)) select.value = old;
+  }
+
+  function applyCostDefaults({ resetTuition = true } = {}) {
+    const cost = costCountry();
+    if (!cost) return;
+
+    updateCostLocation(cost);
+    const level = $("#sa-cost-level")?.value || "Masters";
+    const tuition = tuitionPreset(cost, level);
+    const tuitionInput = $("#sa-cost-tuition");
+    const tuitionHint = $("#sa-cost-tuition-hint");
+    if (tuitionInput && resetTuition) tuitionInput.value = tuition ?? "";
+
+    const t = cost.tuition?.[level];
+    if (tuitionHint) {
+      if (t && Number.isFinite(t.min) && Number.isFinite(t.max)) {
+        const range = t.min === t.max
+          ? `Guide default: ${formatCost(t.min, cost)}.`
+          : `Guide range: ${formatCost(t.min, cost)}–${formatCost(t.max, cost)}. Midpoint prefilled.`;
+        tuitionHint.textContent = `${range} ${t.label || "Replace with your exact offer-letter tuition."}`;
+      } else {
+        tuitionHint.textContent = cost.tuitionGuide || "No reliable national tuition default. Enter the exact programme fee.";
+      }
+    }
+
+    const living = livingProfile(cost);
+    const livingInput = $("#sa-cost-living");
+    if (livingInput) livingInput.value = living.planning || "";
+    const livingHint = $("#sa-cost-living-hint");
+    if (livingHint) livingHint.textContent = living.note || "Enter your realistic year-1 living budget.";
+
+    const schoolWrap = $("#sa-cost-school-funding-wrap");
+    if (schoolWrap) schoolWrap.hidden = !["school_defined","manual"].includes(cost.fundingMode);
+
+    const country = currentCountryMeta(cost.id);
+    const guideLink = $("#sa-cost-guide-link");
+    if (guideLink && country) guideLink.href = country.page;
+
+    calculateCost();
+  }
+
+  async function populateCostCountrySelect() {
+    const select = $("#sa-cost-country");
+    if (!select || !state.countries.length) return;
+    await ensureCostData();
+    const current = select.value;
+    const costIds = new Set(state.costs.map(item => item.id));
+    select.innerHTML = state.countries
+      .filter(country => costIds.has(country.id))
+      .map(country => `<option value="${escapeHtml(country.id)}">${escapeHtml(country.name)}</option>`)
+      .join("");
+    select.value = current && costIds.has(current) ? current : "australia";
+    applyCostDefaults();
+  }
+
+  function calculateCost() {
+    const cost = costCountry();
+    if (!cost) return;
+
+    const num = id => Math.max(0, Number($(id)?.value || 0));
+    const tuition = num("#sa-cost-tuition");
+    const scholarship = num("#sa-cost-scholarship");
+    const paid = num("#sa-cost-paid");
+    const livingBudget = num("#sa-cost-living");
+    const insurance = num("#sa-cost-insurance");
+    const travel = num("#sa-cost-travel");
+    const setup = num("#sa-cost-setup");
+    const bdtRate = num("#sa-cost-bdt-rate");
+    const schoolFunding = num("#sa-cost-school-funding");
+
+    const netTuition = Math.max(0, tuition - scholarship);
+    const outstandingTuition = Math.max(0, netTuition - paid);
+    const living = livingProfile(cost);
+    const family = familyFunding(cost);
+
+    const visa = Number(cost.visaFee || 0);
+    const mandatory = (cost.mandatoryFees || []).reduce((sum, item) => sum + Number(item.amount || 0), 0);
+    const fundingExtras = (cost.fundingExtras || []).reduce((sum, item) => sum + Number(item.amount || 0), 0);
+
+    const firstYear = netTuition + livingBudget + family.amount + visa + mandatory + insurance + travel + setup;
+
+    let fundingTarget = outstandingTuition + living.required + family.amount + fundingExtras;
+    if (cost.fundingMode === "school_defined" || cost.fundingMode === "manual") {
+      fundingTarget = schoolFunding;
+    }
+
+    const country = currentCountryMeta(cost.id);
+    $("#sa-cost-summary-title").textContent = country ? `${country.name} · ${$("#sa-cost-level")?.value || "Study"}` : "Your estimate";
+    $("#sa-cost-total").textContent = formatCost(firstYear, cost);
+    $("#sa-cost-funding").textContent = fundingTarget > 0 ? formatCost(fundingTarget, cost) : "Enter official target";
+    $("#sa-cost-total-bdt").textContent = formatBDT(firstYear, bdtRate);
+    $("#sa-cost-funding-bdt").textContent = formatBDT(fundingTarget, bdtRate);
+
+    const lines = [
+      ["Tuition after scholarship", netTuition],
+      ["Living budget", livingBudget],
+      ...(family.amount ? [["Family funding / budget", family.amount]] : []),
+      ...(visa ? [["Visa / permit fee", visa]] : []),
+      ...(mandatory ? [["Other stored mandatory fees", mandatory]] : []),
+      ...(insurance ? [["Insurance / health", insurance]] : []),
+      ...(travel ? [["Travel", travel]] : []),
+      ...(setup ? [["Setup / other", setup]] : [])
+    ];
+
+    $("#sa-cost-breakdown").innerHTML = lines.map(([label, value]) =>
+      `<div class="sa-cost-line"><span>${escapeHtml(label)}</span><strong>${formatCost(value, cost)}</strong></div>`
+    ).join("") +
+    `<div class="sa-cost-line sa-cost-line--total"><span>Tuition still unpaid</span><strong>${formatCost(outstandingTuition, cost)}</strong></div>`;
+
+    const notes = [
+      cost.fundingNote,
+      family.note,
+      !tuition ? "No tuition is currently entered, so the planning total may be incomplete." : "",
+      !cost.visaFee ? "No fixed visa fee is auto-added for this country. Check the guide and add it under setup / other if applicable." : "",
+      cost.lastVerified ? `Country cost data last reviewed: ${cost.lastVerified}.` : ""
+    ].filter(Boolean);
+
+    $("#sa-cost-rule-note").innerHTML = notes.map(note => `<div>${escapeHtml(note)}</div>`).join("");
+  }
+
+  function setupCostCalculator() {
+    const form = $("#sa-cost-form");
+    if (!form) return;
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      calculateCost();
+    });
+
+    $("#sa-cost-country")?.addEventListener("change", () => applyCostDefaults({ resetTuition: true }));
+    $("#sa-cost-level")?.addEventListener("change", () => applyCostDefaults({ resetTuition: true }));
+    $("#sa-cost-location")?.addEventListener("change", () => {
+      const cost = costCountry();
+      const living = livingProfile(cost);
+      if ($("#sa-cost-living")) $("#sa-cost-living").value = living.planning || "";
+      calculateCost();
+    });
+
+    ["#sa-cost-tuition","#sa-cost-scholarship","#sa-cost-paid","#sa-cost-living","#sa-cost-adults","#sa-cost-children","#sa-cost-insurance","#sa-cost-travel","#sa-cost-setup","#sa-cost-bdt-rate","#sa-cost-school-funding"]
+      .forEach(id => $(id)?.addEventListener("input", calculateCost));
+    ["#sa-cost-adults","#sa-cost-children"].forEach(id => $(id)?.addEventListener("change", calculateCost));
+
+    ensureCostData().then(() => populateCostCountrySelect());
+  }
+
   function setupUtilities() {
     $("#back-to-top")?.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -674,6 +930,7 @@
     setupExplorer();
     setupMatcher();
     setupCompare();
+    setupCostCalculator();
     setupUtilities();
     loadCountries();
     observeReveals();

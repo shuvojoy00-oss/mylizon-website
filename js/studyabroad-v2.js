@@ -133,6 +133,7 @@
       state.countries = fallbackCountries;
     }
     renderCountries();
+    populateCompareSelects();
   }
 
   function filteredCountries() {
@@ -525,6 +526,133 @@
     ensureIntelligence();
   }
 
+  function populateCompareSelects() {
+    const selects = [$("#sa-compare-1"), $("#sa-compare-2"), $("#sa-compare-3")].filter(Boolean);
+    if (!selects.length || !state.countries.length) return;
+
+    const defaults = ["australia", "newzealand", "uk"];
+    selects.forEach((select, index) => {
+      const current = select.value;
+      select.innerHTML = '<option value="">Choose a country</option>' +
+        state.countries.map(country =>
+          `<option value="${escapeHtml(country.id)}">${escapeHtml(country.name)}</option>`
+        ).join("");
+      select.value = current || defaults[index] || "";
+    });
+  }
+
+  function comparisonLabel(type, value) {
+    const maps = {
+      budget: {
+        1: "Lower cost potential",
+        2: "Mid range planning",
+        3: "Higher budget commonly needed"
+      },
+      family: {
+        1: "Restrictive or separate route",
+        2: "Conditional family route",
+        3: "Comparatively clearer route"
+      },
+      postStudy: {
+        1: "Shorter or limited route",
+        2: "Post study route available",
+        3: "Stronger or longer graduate route"
+      },
+      intake: {
+        1: "One main intake dominates",
+        2: "Main + selected secondary starts",
+        3: "Multiple common intake options"
+      }
+    };
+    return maps[type]?.[value] || "Check current guide";
+  }
+
+  function compareValue(intel, key) {
+    if (key === "budget") return comparisonLabel("budget", intel.budgetBand);
+    if (key === "family") return comparisonLabel("family", intel.familyScore);
+    if (key === "postStudy") return comparisonLabel("postStudy", intel.postStudyScore);
+    if (key === "intake") return comparisonLabel("intake", intel.intakeScore);
+    if (key === "lowGpa") return intel.lowGpa ? "Pathway / weaker profile guidance included" : "Needs individual checking";
+    if (key === "studyGap") return intel.studyGap ? "Study gap guidance included" : "Needs individual checking";
+    if (key === "scholarship") return intel.scholarship ? "Scholarship routes covered" : "Check provider funding";
+    if (key === "research") return intel.research ? "Research / PhD routes covered" : "Check research availability";
+    return "Check current guide";
+  }
+
+  async function runCompare() {
+    await ensureIntelligence();
+    const result = $("#sa-compare-results");
+    if (!result) return;
+
+    const ids = [$("#sa-compare-1")?.value, $("#sa-compare-2")?.value, $("#sa-compare-3")?.value]
+      .filter(Boolean)
+      .filter((id, index, list) => list.indexOf(id) === index);
+
+    if (ids.length < 2) {
+      result.innerHTML = '<div class="sa-compare-placeholder">Choose at least two different countries to compare.</div>';
+      return;
+    }
+
+    const intelMap = new Map(state.intelligence.map(item => [item.id, item]));
+    const countryMap = new Map(state.countries.map(item => [item.id, item]));
+    const selected = ids.map(id => ({
+      intel: intelMap.get(id),
+      country: countryMap.get(id)
+    })).filter(item => item.intel && item.country);
+
+    if (selected.length < 2) {
+      result.innerHTML = '<div class="sa-compare-placeholder">Comparison data is not ready for those destinations yet.</div>';
+      return;
+    }
+
+    while (selected.length < 3) selected.push(null);
+
+    const head = selected.map(item => item ? `
+      <div class="sa-compare-cell">
+        <div class="sa-compare-country">
+          <span class="sa-compare-country__code">${escapeHtml(item.country.code)}</span>
+          <strong>${escapeHtml(item.country.name)}</strong>
+        </div>
+        <a href="${escapeHtml(item.country.page)}">Open guide ↗</a>
+      </div>
+    ` : '<div class="sa-compare-cell"></div>').join("");
+
+    const rows = [
+      ["Budget planning", "budget"],
+      ["Family planning", "family"],
+      ["Post study route", "postStudy"],
+      ["Intake flexibility", "intake"],
+      ["Low GPA / pathway", "lowGpa"],
+      ["Study gap", "studyGap"],
+      ["Scholarships", "scholarship"],
+      ["Research", "research"]
+    ];
+
+    const body = rows.map(([label, key]) => `
+      <div class="sa-compare-row">
+        <div class="sa-compare-cell">${escapeHtml(label)}</div>
+        ${selected.map(item => item
+          ? `<div class="sa-compare-cell"><span class="sa-compare-tag">${escapeHtml(compareValue(item.intel, key))}</span></div>`
+          : '<div class="sa-compare-cell"></div>'
+        ).join("")}
+      </div>
+    `).join("");
+
+    result.innerHTML = `
+      <div class="sa-compare-table">
+        <div class="sa-compare-row sa-compare-row--head">
+          <div class="sa-compare-cell">Planning signal</div>
+          ${head}
+        </div>
+        ${body}
+      </div>
+    `;
+  }
+
+  function setupCompare() {
+    $("#sa-run-compare")?.addEventListener("click", runCompare);
+  }
+
   function setupUtilities() {
     $("#back-to-top")?.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -545,6 +673,7 @@
     setupPriorities();
     setupExplorer();
     setupMatcher();
+    setupCompare();
     setupUtilities();
     loadCountries();
     observeReveals();

@@ -1,5 +1,6 @@
 (() => {
   const STORAGE_KEY = "lizon-studyabroad-preferences-v1";
+  const PLAN_KEY = "lizon-studyabroad-plan-v1";
 
   const fallbackCountries = [
     ["australia","Australia","Oceania","australia.html","AU"],
@@ -24,7 +25,9 @@
     ["greece","Greece","Europe","greece.html","GR"],
     ["italy","Italy","Europe","italy.html","IT"],
     ["lithuania","Lithuania","Europe","lithuania.html","LT"],
-    ["estonia","Estonia","Europe","estonia.html","EE"]
+    ["estonia","Estonia","Europe","estonia.html","EE"],
+    ["hungary","Hungary","Europe","hungary.html","HU"],
+    ["malta","Malta","Europe","malta.html","MT"]
   ].map(([id,name,region,page,code]) => ({
     id,name,region,page,code,
     levels:["Bachelor","Masters","PhD"],
@@ -41,7 +44,8 @@
     region: "All",
     level: "All",
     query: "",
-    preferences: new Set()
+    preferences: new Set(),
+    plan: { shortlist: [], cost: null, timeline: null, updatedAt: null }
   };
 
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -55,6 +59,178 @@
       '"':"&quot;",
       "'":"&#039;"
     }[char]));
+  }
+
+  function loadPlan() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(PLAN_KEY) || "{}");
+      if (saved && typeof saved === "object") {
+        state.plan = {
+          shortlist: Array.isArray(saved.shortlist) ? saved.shortlist.slice(0, 5) : [],
+          cost: saved.cost && typeof saved.cost === "object" ? saved.cost : null,
+          timeline: saved.timeline && typeof saved.timeline === "object" ? saved.timeline : null,
+          updatedAt: saved.updatedAt || null
+        };
+      }
+    } catch (_) {
+      state.plan = { shortlist: [], cost: null, timeline: null, updatedAt: null };
+    }
+  }
+
+  function persistPlan() {
+    state.plan.updatedAt = new Date().toISOString();
+    try {
+      localStorage.setItem(PLAN_KEY, JSON.stringify(state.plan));
+    } catch (_) {}
+    renderPlan();
+    refreshPlanButtons();
+  }
+
+  function planCountryMeta(id) {
+    return currentCountryMeta(id) || fallbackCountries.find(item => item.id === id) || null;
+  }
+
+  function isCountrySaved(id) {
+    return state.plan.shortlist.some(item => item.id === id);
+  }
+
+  function togglePlanCountry(id) {
+    const index = state.plan.shortlist.findIndex(item => item.id === id);
+    if (index >= 0) {
+      state.plan.shortlist.splice(index, 1);
+      persistPlan();
+      return;
+    }
+
+    if (state.plan.shortlist.length >= 5) {
+      const summary = $("#sa-plan-action-summary");
+      if (summary) summary.textContent = "Your shortlist can hold up to five countries. Remove one before adding another.";
+      return;
+    }
+
+    const country = planCountryMeta(id);
+    if (!country) return;
+
+    state.plan.shortlist.push({
+      id: country.id,
+      name: country.name,
+      code: country.code || country.name.slice(0, 2).toUpperCase(),
+      page: country.page
+    });
+    persistPlan();
+  }
+
+  function refreshPlanButtons() {
+    $("[data-plan-country]").forEach(button => {
+      const saved = isCountrySaved(button.dataset.planCountry);
+      button.classList.toggle("is-saved", saved);
+      button.setAttribute("aria-pressed", String(saved));
+      button.textContent = saved ? "Saved to plan" : "Save to plan";
+    });
+  }
+
+  function planCompletion() {
+    return [
+      state.preferences.size > 0,
+      state.plan.shortlist.length > 0,
+      Boolean(state.plan.cost),
+      Boolean(state.plan.timeline)
+    ].filter(Boolean).length;
+  }
+
+  function renderPlan() {
+    const priorities = $("#sa-plan-priorities");
+    if (priorities) {
+      priorities.innerHTML = state.preferences.size
+        ? [...state.preferences].map(item => `<span>${escapeHtml(item)}</span>`).join("")
+        : '<span class="sa-plan-empty">Choose up to three priorities.</span>';
+    }
+
+    const shortlist = $("#sa-plan-shortlist");
+    if (shortlist) {
+      shortlist.innerHTML = state.plan.shortlist.length
+        ? state.plan.shortlist.map(item => `
+            <div class="sa-plan-country">
+              <div class="sa-plan-country__main">
+                <span class="sa-plan-country__code">${escapeHtml(item.code || item.name.slice(0,2))}</span>
+                <strong>${escapeHtml(item.name)}</strong>
+              </div>
+              <button type="button" data-plan-remove="${escapeHtml(item.id)}">Remove</button>
+            </div>
+          `).join("")
+        : '<span class="sa-plan-empty">Save countries from Explore or Best Fit.</span>';
+    }
+
+    const budget = $("#sa-plan-budget");
+    if (budget) {
+      if (state.plan.cost) {
+        const bdt = state.plan.cost.bdtText ? ` · ${escapeHtml(state.plan.cost.bdtText)}` : "";
+        budget.innerHTML = `
+          <strong>${escapeHtml(state.plan.cost.firstYearText)}</strong>
+          <span>${escapeHtml(state.plan.cost.countryName)} · ${escapeHtml(state.plan.cost.level)} · First-year planning cost${bdt}</span>
+          <span>Funding target: ${escapeHtml(state.plan.cost.fundingText || "Check official target")}</span>
+        `;
+      } else {
+        budget.innerHTML = '<strong>Not calculated yet</strong><span>Use the Real Cost Calculator to add a first-year estimate.</span>';
+      }
+    }
+
+    const intake = $("#sa-plan-intake");
+    if (intake) {
+      if (state.plan.timeline) {
+        intake.innerHTML = `
+          <strong>${escapeHtml(state.plan.timeline.countryName)} · ${escapeHtml(state.plan.timeline.intakeLabel)} ${escapeHtml(state.plan.timeline.year)}</strong>
+          <span>${escapeHtml(state.plan.timeline.status)} · Recommended start ${escapeHtml(state.plan.timeline.recommendedStart)}</span>
+        `;
+      } else {
+        intake.innerHTML = '<strong>No intake saved yet</strong><span>Build an Intake Planner timeline to save your target.</span>';
+      }
+    }
+
+    const ready = planCompletion();
+    const progressText = $("#sa-plan-progress-text");
+    const progressBar = $("#sa-plan-progress-bar");
+    if (progressText) progressText.textContent = `${ready} of 4 parts ready`;
+    if (progressBar) progressBar.style.width = `${ready * 25}%`;
+
+    const action = $("#sa-plan-action-summary");
+    if (action) {
+      const messages = [
+        "Start with your priorities or save a country you want to explore.",
+        "Good start. Add more of your shortlist, budget or intake so the plan becomes useful.",
+        "Your plan is taking shape. Complete the missing parts before moving into eligibility checking.",
+        "Almost ready. One more planning piece will give the counsellor much better context.",
+        "Your core planning picture is ready. The next step is to check eligibility against your real academic and financial profile."
+      ];
+      action.textContent = messages[ready];
+    }
+  }
+
+  function setupPersonalPlan() {
+    loadPlan();
+    renderPlan();
+
+    document.addEventListener("click", event => {
+      const saveButton = event.target.closest("[data-plan-country]");
+      if (saveButton) {
+        event.preventDefault();
+        togglePlanCountry(saveButton.dataset.planCountry);
+        return;
+      }
+
+      const removeButton = event.target.closest("[data-plan-remove]");
+      if (removeButton) {
+        event.preventDefault();
+        togglePlanCountry(removeButton.dataset.planRemove);
+      }
+    });
+
+    $("#sa-plan-clear")?.addEventListener("click", () => {
+      state.plan = { shortlist: [], cost: null, timeline: null, updatedAt: null };
+      try { localStorage.removeItem(PLAN_KEY); } catch (_) {}
+      renderPlan();
+      refreshPlanButtons();
+    });
   }
 
   function loadPreferences() {
@@ -110,6 +286,8 @@
         ? [...state.preferences].map(item => `<span>${escapeHtml(item)}</span>`).join("")
         : "None selected yet";
     }
+
+    renderPlan();
   }
 
   function setupPriorities() {
@@ -183,10 +361,15 @@
           <div class="sa-country-card__meta">${levels}</div>
           <h3>${escapeHtml(country.name)}</h3>
           <p>${escapeHtml(country.line || "Explore study options, costs and pathways.")}</p>
-          <a class="sa-country-card__link" href="${escapeHtml(country.page)}">
-            Explore ${escapeHtml(country.name)}
-            <span aria-hidden="true">↗</span>
-          </a>
+          <div class="sa-country-card__actions">
+            <a class="sa-country-card__link" href="${escapeHtml(country.page)}">
+              Explore ${escapeHtml(country.name)}
+              <span aria-hidden="true">↗</span>
+            </a>
+            <button class="sa-save-country ${isCountrySaved(country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(country.id)}" aria-pressed="${isCountrySaved(country.id)}">
+              ${isCountrySaved(country.id) ? "Saved to plan" : "Save to plan"}
+            </button>
+          </div>
         </div>
       </article>
     `;
@@ -206,6 +389,7 @@
     if (empty) empty.hidden = countries.length !== 0;
 
     observeReveals();
+    refreshPlanButtons();
   }
 
   function setupExplorer() {
@@ -496,6 +680,9 @@
           <a href="${escapeHtml(result.country.page)}">Open country guide ↗</a>
           <small>Verified ${escapeHtml(result.intel.lastVerified || "recently")}</small>
         </div>
+        <button class="sa-fit-card__save ${isCountrySaved(result.country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(result.country.id)}" aria-pressed="${isCountrySaved(result.country.id)}">
+          ${isCountrySaved(result.country.id) ? "Saved to plan" : "Save to plan"}
+        </button>
       </article>
     `;
   }
@@ -529,6 +716,7 @@
     grid.innerHTML = ranked.map(fitCard).join("");
     resultsWrap.hidden = false;
     if (count) count.textContent = `Top ${ranked.length} from ${intelligence.length} live guides`;
+    refreshPlanButtons();
     resultsWrap.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -630,6 +818,9 @@
           <strong>${escapeHtml(item.country.name)}</strong>
         </div>
         <a href="${escapeHtml(item.country.page)}">Open guide ↗</a>
+        <button class="sa-save-country ${isCountrySaved(item.country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(item.country.id)}" aria-pressed="${isCountrySaved(item.country.id)}">
+          ${isCountrySaved(item.country.id) ? "Saved to plan" : "Save to plan"}
+        </button>
       </div>
     ` : '<div class="sa-compare-cell"></div>').join("");
 
@@ -663,6 +854,7 @@
         ${body}
       </div>
     `;
+    refreshPlanButtons();
   }
 
   function setupCompare() {
@@ -833,7 +1025,7 @@
     applyCostDefaults();
   }
 
-  function calculateCost() {
+  function calculateCost({ saveToPlan = false } = {}) {
     const cost = costCountry();
     if (!cost) return;
 
@@ -905,6 +1097,19 @@
     ].filter(Boolean);
 
     $("#sa-cost-rule-note").innerHTML = notes.map(note => `<div>${escapeHtml(note)}</div>`).join("");
+
+    if (saveToPlan && !tuitionMissing && !livingMissing) {
+      state.plan.cost = {
+        countryId: cost.id,
+        countryName: country?.name || cost.id,
+        level,
+        firstYearText: formatCost(firstYear, cost),
+        fundingText: fundingTarget > 0 ? formatCost(fundingTarget, cost) : "Check official target",
+        bdtText: formatBDT(firstYear, bdtRate),
+        savedAt: new Date().toISOString()
+      };
+      persistPlan();
+    }
   }
 
   function setupCostCalculator() {
@@ -913,7 +1118,7 @@
 
     form.addEventListener("submit", event => {
       event.preventDefault();
-      calculateCost();
+      calculateCost({ saveToPlan: true });
     });
 
     $("#sa-cost-country")?.addEventListener("change", () => applyCostDefaults({ resetTuition: true }));
@@ -1135,10 +1340,11 @@
     const guide = $("#sa-timeline-guide-link");
     if (guide && country) guide.href = country.page;
 
+    let planningStatus = "Comfortable planning window";
     const status = $("#sa-timeline-status");
     if (status) {
       status.classList.remove("is-urgent","is-late");
-      let label = "Comfortable planning window";
+      let label = planningStatus;
       if (distance < Number(rule.startMonthsBefore || 10) && distance > Number(rule.visaMonthsBefore || 3) + 2) {
         label = "Start now";
         status.classList.add("is-urgent");
@@ -1146,6 +1352,7 @@
         label = "Compressed timeline. Verify deadlines now.";
         status.classList.add("is-late");
       }
+      planningStatus = label;
       status.querySelector("strong").textContent = label;
     }
 
@@ -1179,7 +1386,21 @@
     }).join("");
 
     const windowEl = $("#sa-timeline-window");
-    if (windowEl) windowEl.textContent = `Recommended start: ${formatTimelineMonth(shiftMonths(target, -Number(rule.startMonthsBefore || 10)))}`;
+    const recommendedStart = formatTimelineMonth(shiftMonths(target, -Number(rule.startMonthsBefore || 10)));
+    if (windowEl) windowEl.textContent = `Recommended start: ${recommendedStart}`;
+
+    state.plan.timeline = {
+      countryId: rule.id,
+      countryName: country?.name || rule.id,
+      intakeLabel: intake?.label || formatTimelineMonth(target),
+      year: String(year),
+      level: $("#sa-timeline-level")?.value || "Masters",
+      english: $("#sa-timeline-english")?.value || "not-started",
+      status: planningStatus,
+      recommendedStart,
+      savedAt: new Date().toISOString()
+    };
+    persistPlan();
 
     results.hidden = false;
     results.scrollIntoView({ behavior:"smooth", block:"start" });
@@ -1424,6 +1645,7 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     setupHeader();
+    setupPersonalPlan();
     setupPriorities();
     setupExplorer();
     setupMatcher();

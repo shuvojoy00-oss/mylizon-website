@@ -36,7 +36,8 @@
     ["romania","Romania","Europe","romania.html","RO"],
     ["czech","Czech Republic","Europe","czech.html","CZ"],
     ["portugal","Portugal","Europe","portugal.html","PT"],
-    ["slovenia","Slovenia","Europe","slovenia.html","SI"]
+    ["slovenia","Slovenia","Europe","slovenia.html","SI"],
+    ["serbia","Serbia","Europe","serbia.html","RS"]
   ].map(([id,name,region,page,code]) => ({
     id,name,region,page,code,
     levels:["Bachelor","Masters","PhD"],

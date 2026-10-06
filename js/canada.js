@@ -37,6 +37,36 @@ document.addEventListener("DOMContentLoaded", () => {
     sections.forEach(s=>obs.observe(s));
   }
 
+
+  const filters=[...document.querySelectorAll("[data-provider-filter]")];
+  const providerCards=[...document.querySelectorAll("[data-provider-card]")];
+  filters.forEach(btn=>btn.addEventListener("click",()=>{
+    filters.forEach(b=>b.classList.remove("is-active"));
+    btn.classList.add("is-active");
+    const filter=btn.dataset.providerFilter;
+    providerCards.forEach(card=>{
+      const tags=(card.dataset.tags||"").split(" ");
+      card.hidden=filter!=="all"&&!tags.includes(filter);
+    });
+  }));
+
+  const earnings=document.querySelector("#ca-earnings-calculator");
+  if(earnings){
+    const wage=earnings.querySelector("[name=wage]");
+    const hours=earnings.querySelector("[name=hours]");
+    const weekly=earnings.querySelector("[data-weekly]");
+    const monthly=earnings.querySelector("[data-monthly]");
+    const update=()=>{
+      const w=Math.max(0,Number(wage.value)||0);
+      const h=Math.min(24,Math.max(0,Number(hours.value)||0));
+      const wk=w*h;
+      weekly.textContent="CAD "+wk.toFixed(2);
+      monthly.textContent="CAD "+(wk*52/12).toFixed(2);
+    };
+    [wage,hours].forEach(el=>el.addEventListener("input",update));
+    update();
+  }
+
   const normalize=v=>v.toLowerCase().replace(/[^a-z0-9£\s]/g," ").replace(/\s+/g," ").trim();
 
   const levenshtein=(a,b)=>{

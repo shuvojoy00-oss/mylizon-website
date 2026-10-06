@@ -824,6 +824,8 @@
     if (!cost) return;
 
     const num = id => Math.max(0, Number($(id)?.value || 0));
+    const tuitionEl = $("#sa-cost-tuition");
+    const livingEl = $("#sa-cost-living");
     const tuition = num("#sa-cost-tuition");
     const scholarship = num("#sa-cost-scholarship");
     const paid = num("#sa-cost-paid");
@@ -843,6 +845,12 @@
     const mandatory = (cost.mandatoryFees || []).reduce((sum, item) => sum + Number(item.amount || 0), 0);
     const fundingExtras = (cost.fundingExtras || []).reduce((sum, item) => sum + Number(item.amount || 0), 0);
 
+    const level = $("#sa-cost-level")?.value || "Masters";
+    const tuitionRule = cost.tuition?.[level];
+    const tuitionCanBeZero = tuitionRule && Number(tuitionRule.min) === 0 && Number(tuitionRule.max) === 0;
+    const tuitionMissing = !tuitionCanBeZero && !String(tuitionEl?.value || "").trim();
+    const livingMissing = !String(livingEl?.value || "").trim();
+
     const firstYear = netTuition + livingBudget + family.amount + visa + mandatory + insurance + travel + setup;
 
     let fundingTarget = outstandingTuition + living.required + family.amount + fundingExtras;
@@ -852,9 +860,9 @@
 
     const country = currentCountryMeta(cost.id);
     $("#sa-cost-summary-title").textContent = country ? `${country.name} · ${$("#sa-cost-level")?.value || "Study"}` : "Your estimate";
-    $("#sa-cost-total").textContent = formatCost(firstYear, cost);
+    $("#sa-cost-total").textContent = tuitionMissing || livingMissing ? "Complete the inputs" : formatCost(firstYear, cost);
     $("#sa-cost-funding").textContent = fundingTarget > 0 ? formatCost(fundingTarget, cost) : "Enter official target";
-    $("#sa-cost-total-bdt").textContent = formatBDT(firstYear, bdtRate);
+    $("#sa-cost-total-bdt").textContent = tuitionMissing || livingMissing ? "" : formatBDT(firstYear, bdtRate);
     $("#sa-cost-funding-bdt").textContent = formatBDT(fundingTarget, bdtRate);
 
     const lines = [
@@ -876,7 +884,8 @@
     const notes = [
       cost.fundingNote,
       family.note,
-      !tuition ? "No tuition is currently entered, so the planning total may be incomplete." : "",
+      tuitionMissing ? "Enter the exact tuition before treating the first-year planning total as complete." : "",
+      livingMissing ? "Enter a realistic first-year living budget before treating the planning total as complete." : "",
       !cost.visaFee ? "No fixed visa fee is auto-added for this country. Check the guide and add it under setup / other if applicable." : "",
       cost.lastVerified ? `Country cost data last reviewed: ${cost.lastVerified}.` : ""
     ].filter(Boolean);

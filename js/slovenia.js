@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const guideLinks=[...document.querySelectorAll("[data-pt-guide-link]")];
-  const sections=[...document.querySelectorAll("[data-pt-section]")];
-  const guideSheet=document.querySelector("#pt-guide-sheet");
-  const searchSheet=document.querySelector("#pt-searpt-sheet");
-  const guideLabel=document.querySelector("[data-pt-guide-label]");
-  const searchInput=document.querySelector("#pt-page-searpt-input");
-  const searchResults=document.querySelector("#pt-page-searpt-results");
+  const guideLinks=[...document.querySelectorAll("[data-si-guide-link]")];
+  const sections=[...document.querySelectorAll("[data-si-section]")];
+  const guideSheet=document.querySelector("#si-guide-sheet");
+  const searchSheet=document.querySelector("#si-searsi-sheet");
+  const guideLabel=document.querySelector("[data-si-guide-label]");
+  const searchInput=document.querySelector("#si-page-searsi-input");
+  const searchResults=document.querySelector("#si-page-searsi-results");
 
   const closeGuide=()=>{if(guideSheet){guideSheet.classList.remove("is-open");document.body.style.overflow="";}};
   const openGuide=()=>{if(guideSheet){guideSheet.classList.add("is-open");document.body.style.overflow="hidden";}};
@@ -14,15 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if(!searchSheet)return;
     searchSheet.classList.add("is-open");
     document.body.style.overflow="hidden";
-    const panel=searchSheet.querySelector(".pt-sheet__panel");
+    const panel=searchSheet.querySelector(".si-sheet__panel");
     if(panel)panel.scrollTop=0;
     setTimeout(()=>searchInput?.focus({preventScroll:true}),120);
   };
 
-  document.querySelectorAll("[data-pt-guide-toggle],[data-pt-guide-toggle-hero]").forEach(el=>el.addEventListener("click",openGuide));
-  document.querySelectorAll("[data-pt-guide-close]").forEach(el=>el.addEventListener("click",closeGuide));
-  document.querySelectorAll("[data-pt-searpt-toggle],[data-pt-searpt-toggle-hero]").forEach(el=>el.addEventListener("click",openSearch));
-  document.querySelectorAll("[data-pt-searpt-close]").forEach(el=>el.addEventListener("click",closeSearch));
+  document.querySelectorAll("[data-si-guide-toggle],[data-si-guide-toggle-hero]").forEach(el=>el.addEventListener("click",openGuide));
+  document.querySelectorAll("[data-si-guide-close]").forEach(el=>el.addEventListener("click",closeGuide));
+  document.querySelectorAll("[data-si-searsi-toggle],[data-si-searsi-toggle-hero]").forEach(el=>el.addEventListener("click",openSearch));
+  document.querySelectorAll("[data-si-searsi-close]").forEach(el=>el.addEventListener("click",closeSearch));
   guideLinks.forEach(a=>a.addEventListener("click",closeGuide));
 
   if("IntersectionObserver" in window){
@@ -51,37 +51,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const normalize=v=>v.toLowerCase().replace(/[^a-z0-9₹$\s]/g," ").replace(/\s+/g," ").trim();
   const aliases={
-    "student visa":"residence visa study",
-    "d4":"residence visa study",
-    "residence":"higher education residence permit",
-    "work":"student work rights",
-    "part time":"student work rights",
-    "work permit":"student work rights",
-    "one year":"after graduation",
+    "student visa":"student residence new delhi",
+    "residence":"student residence new delhi",
+    "new delhi":"student residence new delhi",
+    "work":"student work employment",
+    "student work":"student work employment",
+    "part time":"student work employment",
+    "9 months":"after graduation",
     "post study":"after graduation",
     "job search":"after graduation",
     "scholarship":"scholarships",
     "erasmus":"scholarships",
     "english":"language",
-    "portuguese":"language",
+    "slovenian":"language",
     "tuition":"tuition",
     "living cost":"money",
-    "lisbon":"cities",
-    "porto":"cities",
-    "coimbra":"cities",
-    "braga":"cities",
+    "ljubljana":"cities",
+    "maribor":"cities",
+    "primorska":"cities",
     "family":"family",
     "spouse":"family",
-    "bangladesh":"visa bangladesh"
+    "bangladesh":"student residence new delhi"
   };
 
   const items=[];
-  [...document.querySelectorAll("main h2,main h3,main summary,main .pt-card,main .pt-fact,main .pt-price-box,main .pt-time,main .pt-visa-step")].forEach((node,i)=>{
+  [...document.querySelectorAll("main h2,main h3,main summary,main .si-card,main .si-fact,main .si-price-box,main .si-time,main .si-visa-step")].forEach((node,i)=>{
     const text=(node.textContent||"").replace(/\s+/g," ").trim();
     if(text.length<3)return;
     const section=node.closest("section[id]");
-    const label=section?.querySelector(".pt-eyebrow")?.textContent.trim()||"Portugal Guide";
-    if(!node.id)node.id="portugal-search-target-"+(i+1);
+    const label=section?.querySelector(".si-eyebrow")?.textContent.trim()||"Slovenia Guide";
+    if(!node.id)node.id="slovenia-search-target-"+(i+1);
     items.push({node,title:node.matches("h2,h3,summary")?text:(node.querySelector("h3")?.textContent.trim()||text.slice(0,90)),text:text.toLowerCase(),section:label});
   });
 
@@ -108,19 +107,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const q=normalize(value);
     searchResults.innerHTML="";
     if(!q){
-      searchResults.innerHTML='<div class="pt-search-empty">Try <strong>TR YÖS</strong>, <strong>Türkiye Scholarships</strong>, <strong>Mosaic Visa</strong>, <strong>residence permit</strong>, <strong>part time work</strong> or <strong>after graduation</strong>.</div>';
+      searchResults.innerHTML='<div class="si-search-empty">Try <strong>TR YÖS</strong>, <strong>Türkiye Scholarships</strong>, <strong>Mosaic Visa</strong>, <strong>residence permit</strong>, <strong>part time work</strong> or <strong>after graduation</strong>.</div>';
       return;
     }
     const results=items.map(item=>({item,s:score(item,q)})).filter(x=>x.s>=620).sort((a,b)=>b.s-a.s).slice(0,10);
     if(!results.length){
-      searchResults.innerHTML='<div class="pt-search-empty"><strong>No exact match found.</strong><br>Try TR YÖS, scholarship, student visa, residence permit, work, family, tuition or a city.</div>';
+      searchResults.innerHTML='<div class="si-search-empty"><strong>No exact match found.</strong><br>Try TR YÖS, scholarship, student visa, residence permit, work, family, tuition or a city.</div>';
       return;
     }
     results.forEach(({item})=>{
       const b=document.createElement("button");
-      b.className="pt-search-result";
+      b.className="si-search-result";
       b.type="button";
-      b.innerHTML='<span class="pt-search-result__section">'+item.section+'</span><span class="pt-search-result__title">'+item.title+'</span><span class="pt-search-result__context">'+item.text.slice(0,135)+(item.text.length>135?"…":"")+'</span>';
+      b.innerHTML='<span class="si-search-result__section">'+item.section+'</span><span class="si-search-result__title">'+item.title+'</span><span class="si-search-result__context">'+item.text.slice(0,135)+(item.text.length>135?"…":"")+'</span>';
       b.onclick=()=>jump(item);
       searchResults.appendChild(b);
     });

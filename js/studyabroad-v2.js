@@ -29,7 +29,8 @@
     ["estonia","Estonia","Europe","estonia.html","EE"],
     ["hungary","Hungary","Europe","hungary.html","HU"],
     ["malta","Malta","Europe","malta.html","MT"],
-    ["china","China","Asia","china.html","CN"]
+    ["china","China","Asia","china.html","CN"],
+    ["turkey","Türkiye","Europe","turkey.html","TR"]
   ].map(([id,name,region,page,code]) => ({
     id,name,region,page,code,
     levels:["Bachelor","Masters","PhD"],

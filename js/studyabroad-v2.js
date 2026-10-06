@@ -23,6 +23,7 @@
 
   const state = {
     countries: [],
+    intelligence: [],
     region: "All",
     level: "All",
     query: "",
@@ -33,7 +34,7 @@
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
   function escapeHtml(value = "") {
-    return value.replace(/[&<>"']/g, char => ({
+    return String(value).replace(/[&<>"']/g, char => ({
       "&":"&amp;",
       "<":"&lt;",
       ">":"&gt;",
@@ -87,6 +88,13 @@
       heroPrefs.textContent = count
         ? [...state.preferences].join(" · ")
         : "Budget · career · post study";
+    }
+
+    const matcherPrefs = $("#sa-match-priorities");
+    if (matcherPrefs) {
+      matcherPrefs.innerHTML = count
+        ? [...state.preferences].map(item => `<span>${escapeHtml(item)}</span>`).join("")
+        : "None selected yet";
     }
   }
 
@@ -275,6 +283,248 @@
     $$(".sa-reveal:not(.is-visible)").forEach(el => revealObserver.observe(el));
   }
 
+  async function ensureIntelligence() {
+    if (state.intelligence.length) return state.intelligence;
+    try {
+      const response = await fetch("data/studyabroad-intelligence.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Matcher data unavailable");
+      const data = await response.json();
+      state.intelligence = Array.isArray(data) ? data.filter(item => item.matcherReady) : [];
+    } catch (_) {
+      state.intelligence = [];
+    }
+    return state.intelligence;
+  }
+
+  function matcherInputs() {
+    return {
+      level: $("#sa-match-level")?.value || "Masters",
+      budget: Number($("#sa-match-budget")?.value || 0),
+      region: $("#sa-match-region")?.value || "Any",
+      concern: $("#sa-match-concern")?.value || "none",
+      family: $("#sa-match-family")?.value || "no",
+      priorities: [...state.preferences]
+    };
+  }
+
+  function scoreDestination(intel, country, input) {
+    let score = 0;
+    const reasons = [];
+    const cautions = [];
+
+    if ((intel.levels || []).includes(input.level)) {
+      score += 1;
+      reasons.push(`${input.level} study is covered in this destination guide.`);
+    }
+
+    if (input.region !== "Any") {
+      if (country.region === input.region) {
+        score += 3;
+        reasons.push(`Matches your ${input.region} preference.`);
+      } else {
+        score -= 1;
+      }
+    }
+
+    if (input.budget) {
+      if (intel.budgetBand <= input.budget) {
+        score += 4;
+        reasons.push("Broad budget level fits your selected comfort range.");
+      } else {
+        score -= (intel.budgetBand - input.budget) * 3;
+        cautions.push("This destination commonly needs a higher overall budget than the range you selected.");
+      }
+    }
+
+    if (input.concern === "lowGpa") {
+      if (intel.lowGpa) {
+        score += 3;
+        reasons.push("The guide includes low GPA or pathway considerations.");
+      } else {
+        score -= 2;
+        cautions.push("Low GPA or pathway flexibility is not a strong signal in the current guide.");
+      }
+    }
+
+    if (input.concern === "studyGap") {
+      if (intel.studyGap) {
+        score += 3;
+        reasons.push("The guide directly addresses study gap or credibility planning.");
+      } else {
+        score -= 2;
+        cautions.push("Your study gap would need more individual checking for this destination.");
+      }
+    }
+
+    if (input.family === "yes") {
+      if (intel.familyScore >= 3) {
+        score += 4;
+        reasons.push("Current family pathways are comparatively relevant to your plan.");
+      } else if (intel.familyScore === 2) {
+        score += 2;
+        reasons.push("Family routes exist, but conditions matter.");
+      } else {
+        score -= 2;
+        cautions.push(intel.familyNote || "Family options are restrictive or use a separate route.");
+      }
+    }
+
+    for (const priority of input.priorities) {
+      if (priority === "Affordable study") {
+        if (intel.budgetBand === 1) {
+          score += 4;
+          reasons.push("Lower cost potential is a stronger planning signal here.");
+        } else if (intel.budgetBand === 2) {
+          score += 2;
+          reasons.push("Costs can sit in a middle planning band depending on provider and city.");
+        }
+      }
+
+      if (priority === "Scholarship" && intel.scholarship) {
+        score += 2;
+        reasons.push("Scholarship routes are covered in the current guide.");
+      }
+
+      if (priority === "Career opportunities") {
+        score += intel.postStudyScore || 0;
+        if ((intel.postStudyScore || 0) >= 2) reasons.push("There is a meaningful graduate work route to investigate.");
+      }
+
+      if (priority === "Bring family") {
+        score += Math.max(0, (intel.familyScore || 0) - 1);
+      }
+
+      if (priority === "Post study work") {
+        score += (intel.postStudyScore || 0) * 1.5;
+        if ((intel.postStudyScore || 0) >= 2) reasons.push("Post study work is a notable planning factor here.");
+      }
+
+      if (priority === "Low GPA options") {
+        if (intel.lowGpa) {
+          score += 2;
+          reasons.push("The guide discusses alternatives for weaker academic profiles.");
+        } else {
+          score -= 1;
+        }
+      }
+
+      if (priority === "Study gap") {
+        if (intel.studyGap) {
+          score += 2;
+          reasons.push("Study gap evidence is directly discussed in the guide.");
+        } else {
+          score -= 1;
+        }
+      }
+
+      if (priority === "Research" && intel.research) {
+        score += 2;
+        reasons.push("Research and doctoral routes are included in the guide.");
+      }
+
+      if (priority === "Fast intake") {
+        score += intel.intakeScore || 0;
+        if ((intel.intakeScore || 0) >= 2) reasons.push("Multiple or secondary intake options are available to investigate.");
+      }
+    }
+
+    if (input.priorities.includes("Longer term pathway")) {
+      cautions.push("Long term residence is deliberately not auto-scored. It depends on future work, occupation and immigration rules.");
+    }
+
+    if (!cautions.length && input.family === "yes") {
+      cautions.push(intel.familyNote || "Recheck current family rules before making a decision.");
+    }
+
+    if (!cautions.length && input.priorities.includes("Post study work")) {
+      cautions.push(intel.postStudyNote || "Recheck current graduate work eligibility for your exact qualification.");
+    }
+
+    if (!cautions.length) {
+      cautions.push("This is a planning match, not an admission or visa prediction. Verify the exact programme and current official rules.");
+    }
+
+    return {
+      intel,
+      country,
+      score,
+      reasons: [...new Set(reasons)].slice(0, 4),
+      caution: cautions[0]
+    };
+  }
+
+  function fitCard(result, index) {
+    const strong = index < 3;
+    const label = strong ? "Strong fit to explore" : "Worth comparing";
+    const reasons = result.reasons.length
+      ? result.reasons.map(reason => `<li>${escapeHtml(reason)}</li>`).join("")
+      : "<li>Useful destination to compare against your current inputs.</li>";
+
+    return `
+      <article class="sa-fit-card ${strong ? "sa-fit-card--top" : ""}">
+        <div class="sa-fit-card__top">
+          <div class="sa-fit-card__country">
+            <span class="sa-fit-card__code">${escapeHtml(result.country.code || result.country.name.slice(0,2))}</span>
+            <strong>${escapeHtml(result.country.name)}</strong>
+          </div>
+          <span class="sa-fit-card__label ${strong ? "" : "sa-fit-card__label--compare"}">${label}</span>
+        </div>
+
+        <h4>Why it surfaced</h4>
+        <ul class="sa-fit-card__reasons">${reasons}</ul>
+
+        <div class="sa-fit-card__caution">${escapeHtml(result.caution)}</div>
+
+        <div class="sa-fit-card__actions">
+          <a href="${escapeHtml(result.country.page)}">Open country guide ↗</a>
+          <small>Verified ${escapeHtml(result.intel.lastVerified || "recently")}</small>
+        </div>
+      </article>
+    `;
+  }
+
+  async function runMatcher() {
+    const intelligence = await ensureIntelligence();
+    const resultsWrap = $("#sa-match-results");
+    const grid = $("#sa-match-results-grid");
+    const count = $("#sa-match-result-count");
+    if (!resultsWrap || !grid) return;
+
+    if (!intelligence.length) {
+      resultsWrap.hidden = false;
+      grid.innerHTML = '<div class="sa-country-empty">Matcher data could not be loaded. Please use the country guides or eligibility assessment.</div>';
+      if (count) count.textContent = "";
+      return;
+    }
+
+    const input = matcherInputs();
+    const countryMap = new Map(state.countries.map(country => [country.id, country]));
+
+    const ranked = intelligence
+      .map(intel => {
+        const country = countryMap.get(intel.id);
+        return country ? scoreDestination(intel, country, input) : null;
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score || a.country.name.localeCompare(b.country.name))
+      .slice(0, 6);
+
+    grid.innerHTML = ranked.map(fitCard).join("");
+    resultsWrap.hidden = false;
+    if (count) count.textContent = `Top ${ranked.length} from ${intelligence.length} live guides`;
+    resultsWrap.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function setupMatcher() {
+    const form = $("#sa-matcher-form");
+    if (!form) return;
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      runMatcher();
+    });
+    ensureIntelligence();
+  }
+
   function setupUtilities() {
     $("#back-to-top")?.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -294,6 +544,7 @@
     setupHeader();
     setupPriorities();
     setupExplorer();
+    setupMatcher();
     setupUtilities();
     loadCountries();
     observeReveals();

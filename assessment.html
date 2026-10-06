@@ -330,6 +330,28 @@
             line-height: 1.5;
         }
 
+        .saved-plan-note {
+            display: none;
+            margin: 0 0 24px;
+            padding: 14px 16px;
+            border: 1px solid rgba(212, 175, 55, 0.28);
+            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .saved-plan-note.visible {
+            display: block;
+        }
+
+        .saved-plan-note strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--gold);
+        }
+
         @media (max-width: 480px) {
             .container {
                 min-height: 100vh;
@@ -354,6 +376,10 @@
     <div class="screen active" id="screen-1">
         <h1>Study Abroad Starts Here</h1>
         <p class="subheadline">Find out where you currently stand and what your next step should be.</p>
+        <div class="saved-plan-note" id="saved-plan-note">
+            <strong>Saved Study Plan found</strong>
+            <span id="saved-plan-note-text">Your planning context will stay with this assessment.</span>
+        </div>
         <button class="btn-primary" style="margin-top: 50px;" onclick="nextScreen(2)">Find My Starting Point</button>
     </div>
 
@@ -555,8 +581,76 @@
         documents: '',
         timeline: '',
         calculated_stage: 1,
-        calculated_stage_name: ''
+        calculated_stage_name: '',
+        study_plan_summary: ''
     };
+
+    const STUDY_PLAN_HANDOFF_KEY = 'lizon-studyabroad-handoff-v1';
+
+    function normalizeSavedCountry(name) {
+        if (name === 'United Kingdom') return 'UK';
+        if (name === 'United States') return 'USA';
+        return name;
+    }
+
+    function ensureCountryCard(country) {
+        const grid = document.getElementById('country-grid');
+        if (!grid) return null;
+
+        const existing = [...grid.querySelectorAll('.option-card')]
+            .find(card => card.textContent.trim() === country);
+        if (existing) return existing;
+
+        const card = document.createElement('div');
+        card.className = 'option-card multi';
+        card.textContent = country;
+        card.addEventListener('click', () => toggleMultiOption(card, country));
+
+        const notSure = [...grid.querySelectorAll('.option-card')]
+            .find(item => item.textContent.trim() === 'Not Sure Yet');
+        grid.insertBefore(card, notSure || null);
+        return card;
+    }
+
+    function loadSavedStudyPlanContext() {
+        let saved = null;
+        try {
+            saved = JSON.parse(localStorage.getItem(STUDY_PLAN_HANDOFF_KEY) || 'null');
+        } catch (_) {}
+
+        if (!saved || !saved.summary) return;
+
+        answers.study_plan_summary = saved.summary;
+
+        const note = document.getElementById('saved-plan-note');
+        const noteText = document.getElementById('saved-plan-note-text');
+        const shortlist = Array.isArray(saved.plan?.shortlist) ? saved.plan.shortlist : [];
+        const priorities = Array.isArray(saved.priorities) ? saved.priorities : [];
+
+        if (note) note.classList.add('visible');
+        if (noteText) {
+            const parts = [];
+            if (shortlist.length) parts.push(`Shortlist: ${shortlist.map(item => item.name).join(', ')}`);
+            if (priorities.length) parts.push(`Priorities: ${priorities.join(', ')}`);
+            noteText.textContent = parts.length
+                ? parts.join(' · ')
+                : 'Your planning context will stay with this assessment.';
+        }
+
+        const fromPlan = new URLSearchParams(window.location.search).get('from') === 'study-plan';
+        if (!fromPlan || !shortlist.length) return;
+
+        const selected = shortlist.slice(0, 3).map(item => normalizeSavedCountry(item.name));
+        answers.countries = [...selected];
+
+        selected.forEach(country => {
+            const card = ensureCountryCard(country);
+            if (card) card.classList.add('selected');
+        });
+
+        const nextButton = document.getElementById('btn-country-next');
+        if (nextButton) nextButton.disabled = answers.countries.length === 0;
+    }
 
     const TOTAL_QUESTIONS = 8; // Screens 2 to 9
 
@@ -797,6 +891,8 @@
     }
 }
 
+    document.addEventListener('DOMContentLoaded', loadSavedStudyPlanContext);
+
     function openWhatsApp() {
         // Construct the message
         let engStatusText = answers.english_status;
@@ -821,7 +917,7 @@ I completed the Study Abroad Assessment.
 Name: ${answers.lead_name}
 Phone: ${answers.lead_phone}
 
-I would like to get my personalized roadmap.`;
+I would like to get my personalized roadmap.${answers.study_plan_summary ? `\n\n*Saved Study Plan:*\n${answers.study_plan_summary}` : ''}`;
 
         const encodedMsg = encodeURIComponent(msg);
         

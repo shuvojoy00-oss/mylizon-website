@@ -14,7 +14,16 @@
     ["finland","Finland","Europe","finland.html","FI"],
     ["netherlands","Netherlands","Europe","netherlands.html","NL"],
     ["norway","Norway","Europe","norway.html","NO"],
-    ["sweden","Sweden","Europe","sweden.html","SE"]
+    ["sweden","Sweden","Europe","sweden.html","SE"],
+    ["france","France","Europe","france.html","FR"],
+    ["poland","Poland","Europe","poland.html","PL"],
+    ["spain","Spain","Europe","spain.html","ES"],
+    ["austria","Austria","Europe","austria.html","AT"],
+    ["croatia","Croatia","Europe","croatia.html","HR"],
+    ["germany","Germany","Europe","germany.html","DE"],
+    ["greece","Greece","Europe","greece.html","GR"],
+    ["italy","Italy","Europe","italy.html","IT"],
+    ["lithuania","Lithuania","Europe","lithuania.html","LT"]
   ].map(([id,name,region,page,code]) => ({
     id,name,region,page,code,
     levels:["Bachelor","Masters","PhD"],
@@ -25,6 +34,7 @@
     countries: [],
     intelligence: [],
     costs: [],
+    timelines: [],
     region: "All",
     level: "All",
     query: "",
@@ -136,6 +146,7 @@
     renderCountries();
     populateCompareSelects();
     populateCostCountrySelect();
+    populateTimelineCountrySelect();
   }
 
   function filteredCountries() {
@@ -918,6 +929,280 @@
     ensureCostData().then(() => populateCostCountrySelect());
   }
 
+  async function ensureTimelineData() {
+    if (state.timelines.length) return state.timelines;
+    try {
+      const response = await fetch("data/studyabroad-timelines.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Timeline data unavailable");
+      const data = await response.json();
+      state.timelines = Array.isArray(data) ? data : [];
+    } catch (_) {
+      state.timelines = [];
+    }
+    return state.timelines;
+  }
+
+  function timelineRule() {
+    const id = $("#sa-timeline-country")?.value;
+    return state.timelines.find(item => item.id === id) || null;
+  }
+
+  function populateTimelineCountrySelect() {
+    const select = $("#sa-timeline-country");
+    if (!select || !state.countries.length) return;
+
+    ensureTimelineData().then(() => {
+      const ready = new Set(state.timelines.map(item => item.id));
+      const current = select.value;
+      select.innerHTML = state.countries
+        .filter(country => ready.has(country.id))
+        .map(country => `<option value="${escapeHtml(country.id)}">${escapeHtml(country.name)}</option>`)
+        .join("");
+
+      if (current && ready.has(current)) {
+        select.value = current;
+      } else if (ready.has("uk")) {
+        select.value = "uk";
+      }
+
+      populateTimelineIntakes();
+    });
+  }
+
+  function populateTimelineIntakes() {
+    const rule = timelineRule();
+    const select = $("#sa-timeline-intake");
+    if (!rule || !select) return;
+
+    const current = Number(select.value || 0);
+    select.innerHTML = (rule.intakes || [])
+      .map(item => `<option value="${item.month}">${escapeHtml(item.label)}</option>`)
+      .join("");
+
+    if ((rule.intakes || []).some(item => item.month === current)) {
+      select.value = String(current);
+    }
+
+    populateTimelineYears();
+    updateTimelineSummary(false);
+  }
+
+  function populateTimelineYears() {
+    const select = $("#sa-timeline-year");
+    const month = Number($("#sa-timeline-intake")?.value || 1);
+    if (!select) return;
+
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+    const firstYear = month > currentMonth ? currentYear : currentYear + 1;
+    const old = Number(select.value || 0);
+
+    const years = Array.from({ length: 5 }, (_, index) => firstYear + index);
+    select.innerHTML = years.map(year => `<option value="${year}">${year}</option>`).join("");
+    if (years.includes(old)) select.value = String(old);
+  }
+
+  function monthStart(year, month) {
+    return new Date(Number(year), Number(month) - 1, 1, 12, 0, 0, 0);
+  }
+
+  function shiftMonths(date, delta) {
+    return new Date(date.getFullYear(), date.getMonth() + delta, 1, 12, 0, 0, 0);
+  }
+
+  function monthDistance(from, to) {
+    return (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth());
+  }
+
+  function formatTimelineMonth(date) {
+    return new Intl.DateTimeFormat("en", { month: "short", year: "numeric" }).format(date);
+  }
+
+  function timelineStageDate(target, monthsBefore) {
+    return shiftMonths(target, -Math.max(0, monthsBefore));
+  }
+
+  function englishStageCopy(status) {
+    if (status === "ready") {
+      return "Confirm that your current English result or exemption is accepted by the exact programme. Do not retest unless the programme requires it.";
+    }
+    if (status === "preparing") {
+      return "Keep IELTS or PTE preparation moving while you confirm programme requirements. Aim to finish early enough to avoid delaying applications.";
+    }
+    return "Start IELTS or PTE planning now and check whether the destination or programme uses a different language requirement.";
+  }
+
+  function buildTimelineStages(rule, target) {
+    const level = $("#sa-timeline-level")?.value || "Masters";
+    const english = $("#sa-timeline-english")?.value || "not-started";
+    const application = Number(rule.applicationMonthsBefore || 8);
+    const visa = Number(rule.visaMonthsBefore || 3);
+    const start = Number(rule.startMonthsBefore || 10);
+
+    return [
+      {
+        monthsBefore:start,
+        title:"Profile + English plan",
+        copy:englishStageCopy(english)
+      },
+      {
+        monthsBefore:Math.max(application + 3, start - 2),
+        title:"Shortlist programmes",
+        copy:`Compare course fit, academic entry, intake availability, fees and scholarship timing for your ${level} plan.`
+      },
+      {
+        monthsBefore:Math.max(application + 1, start - 4),
+        title:"Prepare the application file",
+        copy:"Collect academic documents, passport, CV, references, statement or research material where required, and finish outstanding English evidence."
+      },
+      {
+        monthsBefore:application,
+        title:"Submit applications",
+        copy:"Apply early enough to handle conditions, document queries, scholarship rounds and programme-specific deadlines."
+      },
+      {
+        monthsBefore:Math.max(visa + 2, application - 3),
+        title:rule.offerStep || "Offer + conditions",
+        copy:"Complete admission conditions and any country-specific confirmation, sponsorship or pre-enrolment step."
+      },
+      {
+        monthsBefore:Math.max(visa + 1, 3),
+        title:"Lock the financial plan",
+        copy:"Confirm tuition due, scholarship, official funding evidence, sponsor documents and realistic first-year costs before visa submission."
+      },
+      {
+        monthsBefore:visa,
+        title:rule.visaStep || "Visa / permit preparation",
+        copy:"Use the current official checklist for your exact route. Medical, biometrics, insurance, police evidence or interviews may add time."
+      },
+      {
+        monthsBefore:1,
+        title:"Accommodation + departure",
+        copy:"Arrange housing, travel, insurance, arrival documents, airport plan and the first weeks of practical setup."
+      },
+      {
+        monthsBefore:0,
+        title:"Classes begin",
+        copy:"Arrive with enough time for registration, orientation and any residence-card or local setup required after entry.",
+        target:true
+      }
+    ].map((stage, index) => ({
+      ...stage,
+      index:index + 1,
+      date:timelineStageDate(target, stage.monthsBefore)
+    }));
+  }
+
+  function timelineBadge(stage, now, target) {
+    if (stage.target) return { label:"Target intake", className:"sa-timeline-badge" };
+
+    const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const stageMonth = new Date(stage.date.getFullYear(), stage.date.getMonth(), 1);
+
+    if (stageMonth < thisMonth && target > now) {
+      return { label:"Start now", className:"sa-timeline-badge sa-timeline-badge--late" };
+    }
+
+    if (stageMonth.getFullYear() === thisMonth.getFullYear() && stageMonth.getMonth() === thisMonth.getMonth()) {
+      return { label:"Now", className:"sa-timeline-badge sa-timeline-badge--now" };
+    }
+
+    return { label:"Recommended", className:"sa-timeline-badge" };
+  }
+
+  function updateTimelineSummary(showResults = true) {
+    const rule = timelineRule();
+    if (!rule) return;
+
+    const month = Number($("#sa-timeline-intake")?.value || rule.intakes?.[0]?.month || 1);
+    const year = Number($("#sa-timeline-year")?.value || new Date().getFullYear() + 1);
+    const target = monthStart(year, month);
+    const now = new Date();
+    const distance = monthDistance(now, target);
+    const country = currentCountryMeta(rule.id);
+    const intake = (rule.intakes || []).find(item => item.month === month);
+
+    const targetEl = $("#sa-timeline-target");
+    if (targetEl) targetEl.textContent = `${country?.name || rule.id} · ${intake?.label || formatTimelineMonth(target)} · ${year}`;
+
+    const special = $("#sa-timeline-special");
+    if (special) special.textContent = rule.specialTiming || "Always verify programme-specific deadlines.";
+
+    const guide = $("#sa-timeline-guide-link");
+    if (guide && country) guide.href = country.page;
+
+    const status = $("#sa-timeline-status");
+    if (status) {
+      status.classList.remove("is-urgent","is-late");
+      let label = "Comfortable planning window";
+      if (distance < Number(rule.startMonthsBefore || 10) && distance > Number(rule.visaMonthsBefore || 3) + 2) {
+        label = "Start now";
+        status.classList.add("is-urgent");
+      } else if (distance <= Number(rule.visaMonthsBefore || 3) + 2) {
+        label = "Compressed timeline. Verify deadlines now.";
+        status.classList.add("is-late");
+      }
+      status.querySelector("strong").textContent = label;
+    }
+
+    if (!showResults) return;
+
+    const stages = buildTimelineStages(rule, target);
+    const list = $("#sa-timeline-list");
+    const results = $("#sa-timeline-results");
+    if (!list || !results) return;
+
+    list.innerHTML = stages.map(stage => {
+      const badge = timelineBadge(stage, now, target);
+      const stageMonth = new Date(stage.date.getFullYear(), stage.date.getMonth(), 1);
+      const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const stateClass = stage.target ? " is-target" : (stageMonth <= currentMonth && target > now ? " is-now" : "");
+
+      return `
+        <article class="sa-timeline-item${stateClass}">
+          <span class="sa-timeline-dot">${String(stage.index).padStart(2,"0")}</span>
+          <div class="sa-timeline-date">
+            <strong>${escapeHtml(formatTimelineMonth(stage.date))}</strong>
+            <small>${stage.monthsBefore ? `${stage.monthsBefore} mo before` : "Intake month"}</small>
+          </div>
+          <div class="sa-timeline-copy">
+            <h4>${escapeHtml(stage.title)}</h4>
+            <p>${escapeHtml(stage.copy)}</p>
+          </div>
+          <span class="${badge.className}">${badge.label}</span>
+        </article>
+      `;
+    }).join("");
+
+    const windowEl = $("#sa-timeline-window");
+    if (windowEl) windowEl.textContent = `Recommended start: ${formatTimelineMonth(shiftMonths(target, -Number(rule.startMonthsBefore || 10)))}`;
+
+    results.hidden = false;
+    results.scrollIntoView({ behavior:"smooth", block:"start" });
+  }
+
+  function setupTimelinePlanner() {
+    const form = $("#sa-timeline-form");
+    if (!form) return;
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      updateTimelineSummary(true);
+    });
+
+    $("#sa-timeline-country")?.addEventListener("change", populateTimelineIntakes);
+    $("#sa-timeline-intake")?.addEventListener("change", () => {
+      populateTimelineYears();
+      updateTimelineSummary(false);
+    });
+    $("#sa-timeline-year")?.addEventListener("change", () => updateTimelineSummary(false));
+    $("#sa-timeline-level")?.addEventListener("change", () => updateTimelineSummary(false));
+    $("#sa-timeline-english")?.addEventListener("change", () => updateTimelineSummary(false));
+
+    ensureTimelineData().then(() => populateTimelineCountrySelect());
+  }
+
   function setupUtilities() {
     $("#back-to-top")?.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -940,6 +1225,7 @@
     setupMatcher();
     setupCompare();
     setupCostCalculator();
+    setupTimelinePlanner();
     setupUtilities();
     loadCountries();
     observeReveals();

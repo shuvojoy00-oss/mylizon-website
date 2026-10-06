@@ -23,7 +23,8 @@
     ["germany","Germany","Europe","germany.html","DE"],
     ["greece","Greece","Europe","greece.html","GR"],
     ["italy","Italy","Europe","italy.html","IT"],
-    ["lithuania","Lithuania","Europe","lithuania.html","LT"]
+    ["lithuania","Lithuania","Europe","lithuania.html","LT"],
+    ["estonia","Estonia","Europe","estonia.html","EE"]
   ].map(([id,name,region,page,code]) => ({
     id,name,region,page,code,
     levels:["Bachelor","Masters","PhD"],
@@ -35,6 +36,8 @@
     intelligence: [],
     costs: [],
     timelines: [],
+    radar: [],
+    radarFilter: "All",
     region: "All",
     level: "All",
     query: "",
@@ -1203,6 +1206,207 @@
     ensureTimelineData().then(() => populateTimelineCountrySelect());
   }
 
+  async function ensureRadarData() {
+    if (state.radar.length) return state.radar;
+    try {
+      const response = await fetch("data/studyabroad-radar.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Radar data unavailable");
+      const data = await response.json();
+      state.radar = Array.isArray(data) ? data : [];
+    } catch (_) {
+      state.radar = [];
+    }
+    return state.radar;
+  }
+
+  function radarToday() {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0);
+  }
+
+  function radarDate(item) {
+    const parts = String(item.effectiveDate || "").split("-").map(Number);
+    return new Date(parts[0] || 2000, (parts[1] || 1) - 1, parts[2] || 1, 12, 0, 0, 0);
+  }
+
+  function radarStatus(item) {
+    return radarDate(item) > radarToday() ? "upcoming" : "in-effect";
+  }
+
+  function formatRadarDate(item) {
+    return new Intl.DateTimeFormat("en-GB", {
+      day:"numeric",
+      month:"short",
+      year:"numeric"
+    }).format(radarDate(item));
+  }
+
+  function formatRadarVerified(value) {
+    const parts = String(value || "").split("-").map(Number);
+    if (!parts[0]) return "";
+    const date = new Date(parts[0], (parts[1] || 1) - 1, parts[2] || 1, 12, 0, 0, 0);
+    return new Intl.DateTimeFormat("en-GB", {
+      day:"numeric",
+      month:"long",
+      year:"numeric"
+    }).format(date);
+  }
+
+  function radarFilterMatch(item, filter) {
+    if (filter === "All") return true;
+    if (filter === "Coming next") return radarStatus(item) === "upcoming";
+    if (filter === "Work & post study") return ["Work rights","Post study"].includes(item.category);
+    return item.category === filter;
+  }
+
+  function sortedRadar(items = state.radar) {
+    const today = radarToday();
+    return [...items].sort((a, b) => {
+      const ad = radarDate(a);
+      const bd = radarDate(b);
+      const aFuture = ad > today;
+      const bFuture = bd > today;
+
+      if (aFuture !== bFuture) return aFuture ? -1 : 1;
+      if (aFuture && bFuture) return ad - bd || Number(b.priority || 0) - Number(a.priority || 0);
+      return bd - ad || Number(b.priority || 0) - Number(a.priority || 0);
+    });
+  }
+
+  function radarCountryCode(item) {
+    return currentCountryMeta(item.countryId)?.code || String(item.country || "").slice(0,2).toUpperCase();
+  }
+
+  function radarFeatureItem() {
+    const sorted = sortedRadar();
+    return sorted.find(item => radarStatus(item) === "upcoming") || sorted[0] || null;
+  }
+
+  function renderRadarFeature() {
+    const host = $("#sa-radar-feature");
+    if (!host) return;
+    const item = radarFeatureItem();
+
+    if (!item) {
+      host.innerHTML = '<div class="sa-radar-feature__loading">No verified Radar update is available right now.</div>';
+      return;
+    }
+
+    const status = radarStatus(item);
+    const date = radarDate(item);
+    const days = Math.ceil((date - radarToday()) / 86400000);
+    const timing = status === "upcoming"
+      ? (days === 1 ? "Tomorrow" : `${days} days away`)
+      : "In effect";
+
+    host.innerHTML = `
+      <div class="sa-radar-feature__inner">
+        <div>
+          <div class="sa-radar-feature__eyebrow">
+            <span class="sa-radar-chip sa-radar-chip--gold">${status === "upcoming" ? "Next confirmed change" : "Latest verified change"}</span>
+            <span class="sa-radar-chip">${escapeHtml(item.country)}</span>
+            <span class="sa-radar-chip">${escapeHtml(item.category)}</span>
+          </div>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p class="sa-radar-feature__summary">${escapeHtml(item.summary)}</p>
+        </div>
+
+        <div class="sa-radar-feature__side">
+          <span>${status === "upcoming" ? "Effective" : "In effect from"} · ${escapeHtml(formatRadarDate(item))}</span>
+          <p>${escapeHtml(item.impact)}</p>
+          <div class="sa-radar-feature__links">
+            <a href="${escapeHtml(item.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.sourceLabel)} ↗</a>
+            <a href="${escapeHtml(item.guidePage)}">Full country guide →</a>
+          </div>
+          <div style="margin-top:12px;color:rgba(255,255,255,.52);font-size:.65rem;font-weight:700">${escapeHtml(timing)}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function radarCard(item) {
+    const status = radarStatus(item);
+    const statusLabel = status === "upcoming" ? "Coming soon" : "In effect";
+
+    return `
+      <article class="sa-radar-card">
+        <div class="sa-radar-card__meta">
+          <div class="sa-radar-card__country">
+            <span class="sa-radar-card__code">${escapeHtml(radarCountryCode(item))}</span>
+            <strong>${escapeHtml(item.country)}</strong>
+          </div>
+          <span class="sa-radar-status ${status === "upcoming" ? "sa-radar-status--upcoming" : ""}">${statusLabel}</span>
+        </div>
+
+        <span class="sa-radar-card__category">${escapeHtml(item.category)}</span>
+        <h3>${escapeHtml(item.title)}</h3>
+        <p class="sa-radar-card__summary">${escapeHtml(item.summary)}</p>
+
+        <div class="sa-radar-card__impact">
+          <span>Why it matters</span>
+          <p>${escapeHtml(item.impact)}</p>
+        </div>
+
+        <div class="sa-radar-card__foot">
+          <div class="sa-radar-card__date">
+            <strong>${escapeHtml(formatRadarDate(item))}</strong>
+            <small>Verified ${escapeHtml(formatRadarVerified(item.lastVerified))}</small>
+          </div>
+
+          <div class="sa-radar-card__links">
+            <a href="${escapeHtml(item.officialUrl)}" target="_blank" rel="noopener noreferrer">Official source ↗</a>
+            <a href="${escapeHtml(item.guidePage)}">Country guide →</a>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderRadar() {
+    const grid = $("#sa-radar-grid");
+    if (!grid) return;
+
+    const feature = radarFeatureItem();
+    const filtered = sortedRadar(state.radar)
+      .filter(item => radarFilterMatch(item, state.radarFilter))
+      .filter(item => item.id !== feature?.id);
+
+    grid.innerHTML = filtered.map(radarCard).join("");
+
+    const count = $("#sa-radar-count");
+    if (count) count.textContent = `${filtered.length} update${filtered.length === 1 ? "" : "s"}`;
+
+    const empty = $("#sa-radar-empty");
+    if (empty) empty.hidden = filtered.length !== 0;
+
+    const latestVerified = state.radar
+      .map(item => item.lastVerified)
+      .filter(Boolean)
+      .sort()
+      .at(-1);
+    const verified = $("#sa-radar-verified");
+    if (verified && latestVerified) verified.textContent = `Last reviewed ${formatRadarVerified(latestVerified)}`;
+  }
+
+  function setupRadar() {
+    $(".sa-radar-filter").forEach(button => {
+      button.addEventListener("click", () => {
+        state.radarFilter = button.dataset.radarFilter || "All";
+        $(".sa-radar-filter").forEach(item => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+        renderRadar();
+      });
+    });
+
+    ensureRadarData().then(() => {
+      renderRadarFeature();
+      renderRadar();
+    });
+  }
+
   function setupUtilities() {
     $("#back-to-top")?.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1226,6 +1430,7 @@
     setupCompare();
     setupCostCalculator();
     setupTimelinePlanner();
+    setupRadar();
     setupUtilities();
     loadCountries();
     observeReveals();

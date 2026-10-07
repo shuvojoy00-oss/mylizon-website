@@ -57,9 +57,14 @@
   }
 
   function bindGenericCountrySearch(){
-    const input=document.querySelector('input[id$="-page-search-input"]');
-    const results=document.querySelector('[id$="-page-search-results"]');
-    const sheet=document.querySelector('[id$="-search-sheet"]');
+    const sheets=[...document.querySelectorAll('[id$="-search-sheet"],[class*="search-sheet"]')];
+    const sheet=sheets.find(el=>el.querySelector('input[type="search"]')) || null;
+    const input=document.querySelector('input[id$="-page-search-input"]')
+      || sheet?.querySelector('input[type="search"]')
+      || [...document.querySelectorAll('input[type="search"]')].find(el=>/search/i.test(el.id||""));
+    const results=document.querySelector('[id$="-page-search-results"]')
+      || sheet?.querySelector('[id*="search"][id*="result"],[class*="page-search__results"],[class*="search-results"]');
+
     if(!input || !results || input.dataset.sharedSearchBound) return;
     input.dataset.sharedSearchBound="true";
 
@@ -80,17 +85,22 @@
     };
 
     [...document.querySelectorAll("button")].forEach(button=>{
-      const attrs=[...button.attributes].map(a=>a.name).join(" ");
+      const attrs=[...button.attributes].map(a=>a.name).join(" ").toLowerCase();
       const text=button.textContent.toLowerCase();
-      if((/(search|searjp)/.test(attrs) && /toggle/.test(attrs)) || (text.includes("search") && !/close/.test(attrs))){
+      const looksLikeSearch=/(search|searjp|searde)/.test(attrs) || text.includes("search");
+      if(looksLikeSearch && (/toggle/.test(attrs) || text.includes("search")) && !/close/.test(attrs)){
         button.addEventListener("click",openSearch);
       }
-      if(/(search|searjp)/.test(attrs) && /close/.test(attrs)){
+      if(looksLikeSearch && /close/.test(attrs)){
         button.addEventListener("click",closeSearch);
       }
     });
+
     if(sheet){
-      sheet.querySelectorAll(".\au-sheet__backdrop,.uk-sheet__backdrop,.us-sheet__backdrop,[class$='sheet__backdrop']").forEach(el=>el.addEventListener("click",closeSearch));
+      [...sheet.querySelectorAll("button")].forEach(button=>{
+        const cls=String(button.className||"");
+        if(/backdrop|close/i.test(cls)) button.addEventListener("click",closeSearch);
+      });
     }
 
     const main=document.querySelector("main");
@@ -111,8 +121,9 @@
       }
       const tokens=q.split(/\s+/).filter(Boolean);
       const matches=index.map(item=>{
+        const title=item.title.toLowerCase();
         const hay=(item.title+" "+item.text).toLowerCase();
-        const score=tokens.reduce((n,t)=>n+(item.title.toLowerCase().includes(t)?4:hay.includes(t)?1:0),0);
+        const score=tokens.reduce((n,t)=>n+(title.includes(t)?4:hay.includes(t)?1:0),0);
         return {item,score};
       }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,10);
 
@@ -120,6 +131,7 @@
         results.innerHTML='<div class="sa-shared-search-empty">No close match found. Try a shorter keyword.</div>';
         return;
       }
+
       matches.forEach(({item})=>{
         const b=document.createElement("button");
         b.type="button";
@@ -134,6 +146,7 @@
         results.appendChild(b);
       });
     };
+
     input.addEventListener("input",render);
     input.addEventListener("keydown",e=>{if(e.key==="Escape") closeSearch();});
     render();

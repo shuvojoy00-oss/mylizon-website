@@ -18,6 +18,14 @@
             <a href="pteclass.html">Free PTE Classes <span>↗</span></a>
           </div>`;
         link.replaceWith(wrap);
+        const trigger=wrap.querySelector(".nav-dropdown__trigger");
+        trigger?.addEventListener("click",event=>{
+          if(!window.matchMedia("(min-width: 901px)").matches) return;
+          const expanded=trigger.getAttribute("aria-expanded")==="true";
+          document.querySelectorAll(".nav-dropdown__trigger").forEach(item=>item.setAttribute("aria-expanded","false"));
+          trigger.setAttribute("aria-expanded",String(!expanded));
+          event.stopPropagation();
+        });
       }
     }
     const mobile = document.querySelector(".mobile-nav");

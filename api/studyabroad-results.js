@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   try {
     const url = "https://api.github.com/repos/shuvojoy00-oss/mylizon-website/contents/assets/results/studyabroad?ref=main";
     const response = await fetch(url, {

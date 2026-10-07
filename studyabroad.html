@@ -14,7 +14,9 @@
 
   <link rel="stylesheet" href="css/homepage-test.css">
   <link rel="stylesheet" href="css/studyabroad-v2.css?v=20261007-4">
+  <link rel="stylesheet" href="css/studyabroad-shared.css?v=20261008-1">
   <script src="js/studyabroad-v2.js?v=20261007-4" defer></script>
+  <script src="js/studyabroad-shared.js?v=20261008-1" defer></script>
 </head>
 
 <body>
@@ -163,57 +165,29 @@
 
           <div class="sa-hero__micro" aria-label="Study abroad planning features">
             <span><i aria-hidden="true"></i>Profile first</span>
-            <span><i aria-hidden="true"></i>Real country guides</span>
+            <span><i aria-hidden="true"></i>In depth country guides</span>
             <span><i aria-hidden="true"></i>Bangladesh focused</span>
           </div>
         </div>
 
-        <aside class="sa-decision-card sa-reveal" aria-label="Example of a study abroad decision profile">
+        <aside class="sa-decision-card sa-reveal" aria-label="Your saved study plan">
           <div class="sa-decision-card__top">
             <span>Your Study Plan</span>
-            <span class="sa-decision-card__live">Decision preview</span>
+            <span class="sa-decision-card__live">Saved on this device</span>
           </div>
-
           <div class="sa-profile">
-            <span class="sa-profile__label">What matters to you</span>
+            <span class="sa-profile__label">Your priorities</span>
             <div class="sa-profile__main">
-              <strong>Start with priorities</strong>
-              <span id="sa-hero-preferences">Budget · career · post study</span>
+              <strong>What matters to you</strong>
+              <span id="sa-hero-preferences">Choose priorities to begin.</span>
             </div>
           </div>
-
-          <div class="sa-match-list">
-            <div class="sa-match">
-              <span class="sa-match__code">AU</span>
-              <div class="sa-match__name">
-                <strong>Australia</strong>
-                <small>Open the evidence before deciding.</small>
-              </div>
-              <span class="sa-match__status">Explore</span>
-            </div>
-
-            <div class="sa-match">
-              <span class="sa-match__code">NZ</span>
-              <div class="sa-match__name">
-                <strong>New Zealand</strong>
-                <small>Compare the route with your priorities.</small>
-              </div>
-              <span class="sa-match__status sa-match__status--soft">Compare</span>
-            </div>
-
-            <div class="sa-match">
-              <span class="sa-match__code">UK</span>
-              <div class="sa-match__name">
-                <strong>United Kingdom</strong>
-                <small>Check study, budget and future fit.</small>
-              </div>
-              <span class="sa-match__status sa-match__status--soft">Compare</span>
-            </div>
+          <div class="sa-match-list" id="sa-hero-plan-list">
+            <div class="sa-hero-plan-empty">No countries saved yet. Explore destinations and save the ones you want to compare later.</div>
           </div>
-
           <div class="sa-decision-card__foot">
-            <span>No fake percentage. No automatic promise.</span>
-            <strong>Reasons first.</strong>
+            <span>Your plan stays in this browser.</span>
+            <a href="#my-plan">Open My Study Plan →</a>
           </div>
         </aside>
       </div>
@@ -278,7 +252,7 @@
         <div class="sa-explorer-tools sa-reveal">
           <label class="sa-search">
             <span class="sr-only">Search a country</span>
-            <input id="sa-country-search" type="search" placeholder="Search a country or region" autocomplete="off">
+            <input id="sa-country-search" type="search" placeholder="Search a country" autocomplete="off">
           </label>
 
           <label class="sa-select">
@@ -290,14 +264,6 @@
               <option value="PhD">PhD</option>
             </select>
           </label>
-        </div>
-
-        <div class="sa-region-filters sa-reveal" role="group" aria-label="Filter countries by region">
-          <button class="sa-region-filter is-active" type="button" data-region="All" aria-pressed="true">All</button>
-          <button class="sa-region-filter" type="button" data-region="Europe" aria-pressed="false">Europe</button>
-          <button class="sa-region-filter" type="button" data-region="North America" aria-pressed="false">North America</button>
-          <button class="sa-region-filter" type="button" data-region="Oceania" aria-pressed="false">Oceania</button>
-          <button class="sa-region-filter" type="button" data-region="Asia" aria-pressed="false">Asia</button>
         </div>
 
         <div class="sa-country-grid" id="sa-country-grid" aria-live="polite"></div>
@@ -377,19 +343,9 @@
             </form>
 
             <p class="sa-matcher-disclaimer sa-reveal">
-              Planning tool only. Results are generated from the country guides currently published on LizOn and should be verified again before an application or financial decision.
+              Planning tool only. Use your shortlist as a starting point and verify your final options with a LizOn counsellor before applying or making a financial decision.
             </p>
           </div>
-
-          <aside class="sa-matcher-side sa-reveal">
-            <span class="sa-matcher-side__eyebrow">HOW IT THINKS</span>
-            <h3>No mystery percentage.</h3>
-            <div class="sa-matcher-rule"><span>01</span><p>Can the destination fit your selected budget level?</p></div>
-            <div class="sa-matcher-rule"><span>02</span><p>Do current family rules fit your plan?</p></div>
-            <div class="sa-matcher-rule"><span>03</span><p>Does the guide address your study gap or low GPA concern?</p></div>
-            <div class="sa-matcher-rule"><span>04</span><p>Do your saved priorities line up with the destination signals?</p></div>
-            <div class="sa-matcher-rule"><span>05</span><p>What should you verify before taking the next step?</p></div>
-          </aside>
         </div>
 
         <div class="sa-match-results" id="sa-match-results" hidden>
@@ -927,51 +883,26 @@
       <div class="sa-shell">
         <div class="sa-outcomes-head">
           <header class="sa-heading sa-reveal">
-            <span class="sa-eyebrow">REAL OUTCOMES</span>
-            <h2>Proof should be real, not decorative.</h2>
+            <span class="sa-eyebrow">WHERE STUDENTS HAVE GONE</span>
+            <h2>See where students have moved forward.</h2>
             <p>
-              We only use student evidence already shared through LizOn. No invented visa count. No fake offer statistic. No anonymous “success rate.”
+              Visa outcomes, university offers and student journeys shared by LizOn students. New Study Abroad result images added to the results folder can appear here automatically.
             </p>
           </header>
-
           <a class="sa-text-link sa-reveal" href="index.html#results">
             View More Student Results <span aria-hidden="true">↗</span>
           </a>
         </div>
 
-        <div class="sa-outcomes-grid">
+        <div class="sa-studyabroad-results" id="sa-studyabroad-results" aria-live="polite">
           <article class="sa-outcome-visa sa-reveal">
             <div class="sa-outcome-visa__media">
-              <img src="assets/hero/visa-success-australia.png" alt="Australia student visa success shared with LizOn Education" loading="lazy">
+              <img src="assets/hero/visa-success-australia.png" alt="Student visa outcome shared with LizOn Education" loading="lazy">
             </div>
             <div class="sa-outcome-visa__copy">
-              <span>AUSTRALIA · VISA SUCCESS</span>
-              <h3>A real result already shared by LizOn.</h3>
-              <p>Shown as student evidence, not as a promise that another applicant will receive the same outcome.</p>
-            </div>
-          </article>
-
-          <article class="sa-outcome-story sa-reveal">
-            <a href="https://youtu.be/aZnXglvvcGo" target="_blank" rel="noopener noreferrer" class="sa-outcome-story__media" aria-label="Watch featured LizOn student story">
-              <img src="https://img.youtube.com/vi/aZnXglvvcGo/maxresdefault.jpg" alt="Featured LizOn student story" loading="lazy">
-              <span aria-hidden="true">▶</span>
-            </a>
-            <div class="sa-outcome-story__copy">
-              <span>STUDENT STORY</span>
-              <h3>Hear the journey in the student’s own words.</h3>
-              <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener noreferrer">See more student stories ↗</a>
-            </div>
-          </article>
-
-          <article class="sa-outcome-proof sa-reveal">
-            <span class="sa-outcome-proof__eyebrow">ACADEMIC READINESS</span>
-            <h3>The score is part of the study abroad journey too.</h3>
-            <p>
-              IELTS and PTE results on the LizOn homepage show one part of the preparation process before admission and visa stages begin.
-            </p>
-            <div class="sa-outcome-proof__links">
-              <a href="index.html#results">Real IELTS + PTE Results →</a>
-              <a href="index.html#student-voices">Student Voices →</a>
+              <span>STUDENT OUTCOME</span>
+              <h3>Student journeys already shared with LizOn.</h3>
+              <p>Individual outcomes vary by profile, institution, visa route and timing.</p>
             </div>
           </article>
         </div>

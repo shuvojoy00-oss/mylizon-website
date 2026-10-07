@@ -41,7 +41,8 @@
     ["slovakia","Slovakia","Europe","slovakia.html","SK"],
     ["bulgaria","Bulgaria","Europe","bulgaria.html","BG"],
     ["singapore","Singapore","Asia","singapore.html","SG"],
-    ["qatar","Qatar","Asia","qatar.html","QA"]
+    ["qatar","Qatar","Asia","qatar.html","QA"],
+    ["saudi-arabia","Saudi Arabia","Asia","saudi-arabia.html","SA"]
   ].map(([id,name,region,page,code]) => ({
     id,name,region,page,code,
     levels:["Bachelor","Masters","PhD"],

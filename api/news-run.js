@@ -17,6 +17,31 @@ function authorized(req) {
   return adminToken(req) && adminToken(req) === process.env.ADMIN_TOKEN;
 }
 
+function trustedOfficialUrl(value) {
+  try {
+    const host = new URL(value).hostname.toLowerCase().replace(/^www\./, "");
+    const exact = [
+      "gov.uk","canada.ca","homeaffairs.gov.au","immi.homeaffairs.gov.au",
+      "immigration.govt.nz","education.govt.nz","uscis.gov","travel.state.gov",
+      "state.gov","europa.eu","service-public.fr","make-it-in-germany.com",
+      "migrationsverket.se","nyidanmark.dk","migri.fi","gov.pl","esteri.it",
+      "exteriores.gob.es","gov.ie","sem.admin.ch","ind.nl","udi.no",
+      "gov.mt","moi.gov.cy","gov.cy","gov.sg","ica.gov.sg","mom.gov.sg",
+      "gov.qa","edu.gov.qa","gov.sa","moe.gov.sa","gov.ae","u.ae",
+      "gov.cn","studyinkorea.go.kr","moj.go.jp","mofa.go.jp","gov.tr",
+      "ielts.org","britishcouncil.org","idp.com","pearsonpte.com",
+      "pearson.com","cambridgeenglish.org","cambridge.org"
+    ];
+    if (exact.some(d => host === d || host.endsWith("." + d))) return true;
+    if (/(^|\.)gov(\.|$)/.test(host) || /(^|\.)govt(\.|$)/.test(host)) return true;
+    if (/(^|\.)gouv(\.|$)/.test(host)) return true;
+    if (/\.edu\.[a-z]{2,}$/i.test(host) || /\.ac\.[a-z]{2,}$/i.test(host) || /\.edu$/i.test(host)) return true;
+    return false;
+  } catch {
+    return false;
+  }
+}
+
 module.exports = async (req, res) => {
   if (!["GET","POST"].includes(req.method)) return res.status(405).json({ ok:false, error:"Method not allowed" });
   if (!authorized(req)) return res.status(401).json({ ok:false, error:"Unauthorized" });
@@ -80,7 +105,8 @@ HTML may only use p,h2,h3,strong,ul,ol,li,a,blockquote.
       const dupe = await pool.query("select id from public.content_posts where source_url=$1 limit 1", [item.source_url]);
       if (dupe.rowCount) continue;
 
-      const verified = item.source_verified === true && Number(item.confidence || 0) >= 0.9;
+      const sourceTrusted = trustedOfficialUrl(item.source_url);
+      const verified = sourceTrusted && item.source_verified === true && Number(item.confidence || 0) >= 0.94;
       const status = verified ? "published" : "review";
       let slug = slugify(item.title_en || item.title_bn);
       const s = await pool.query("select 1 from public.content_posts where slug=$1", [slug]);
@@ -97,11 +123,11 @@ HTML may only use p,h2,h3,strong,ul,ol,li,a,blockquote.
         slug, item.title_bn, item.title_en || null, item.excerpt_bn || null, item.excerpt_en || null,
         cleanHtml(item.body_bn_html), cleanHtml(item.body_en_html || ""),
         ["study-abroad","ielts","pte"].includes(item.category) ? item.category : "study-abroad",
-        status, item.source_url, item.source_name || null, !!item.source_verified,
+        status, item.source_url, item.source_name || null, sourceTrusted && !!item.source_verified,
         ["critical","important","useful","general"].includes(item.importance) ? item.importance : "useful",
         Math.max(0, Math.min(1, Number(item.confidence || 0)))
       ]);
-      saved.push(r.rows[0]);
+      saved.push({...r.rows[0], source_trusted:sourceTrusted});
     }
 
     return res.json({ ok:true, found:Array.isArray(items)?items.length:0, saved });

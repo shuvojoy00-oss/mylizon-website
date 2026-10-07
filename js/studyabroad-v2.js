@@ -277,6 +277,7 @@
     const status = $("#sa-handoff-status");
     const whatsapp = $("#sa-handoff-whatsapp");
     const assessment = $("#sa-handoff-assessment");
+    const copy = $("#sa-handoff-copy");
     if (!preview || !panel) return;
 
     const summary = buildHandoffSummary();
@@ -289,6 +290,8 @@
         ? `${summary.ready} of 4 planning parts are ready. Review the preview before sharing it.`
         : "Add something to My Study Plan and your handoff summary will appear here.";
     }
+
+    if (copy) copy.disabled = !summary.hasContext;
 
     if (whatsapp) {
       const message = summary.hasContext
@@ -569,8 +572,10 @@
     const openMenu = () => {
       if (!menu || !toggle) return;
       menu.classList.add("is-open");
+      menu.removeAttribute("inert");
       menu.setAttribute("aria-hidden", "false");
       toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute("aria-label", "Close navigation");
       document.body.classList.add("menu-open");
       close?.focus();
     };
@@ -578,8 +583,10 @@
     const closeMenu = () => {
       if (!menu || !toggle) return;
       menu.classList.remove("is-open");
+      menu.setAttribute("inert", "");
       menu.setAttribute("aria-hidden", "true");
       toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Open navigation");
       document.body.classList.remove("menu-open");
     };
 

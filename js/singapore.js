@@ -64,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "s pass":"after graduation",
     "tuition grant":"tuition scholarships",
     "scholarship":"tuition scholarships",
-    "nus scholarship":"tuition scholarships",
     "english":"language",
     "tuition":"tuition scholarships",
     "living cost":"money",

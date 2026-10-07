@@ -38,3 +38,50 @@
 }
 
 .nav-dropdown__trigger[aria-expanded="true"] + .nav-dropdown__panel{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:translateY(0)!important}
+
+
+/* V5 country navigation and country-plan actions */
+.sa-country-save-button{
+  display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;
+  border:1px solid rgba(21,63,50,.18);border-radius:999px;background:#fff;color:#153f32;
+  cursor:pointer;font:inherit;font-size:.78rem;font-weight:800;transition:.2s ease;
+}
+.sa-country-save-button:hover{transform:translateY(-1px);border-color:rgba(21,63,50,.35)}
+.sa-country-save-button.is-saved{background:#edf3ef;border-color:rgba(21,63,50,.12)}
+.sa-country-save-button.is-limit{background:#f6efe0;color:#735d2b}
+
+.sa-country-nav{position:relative}
+.sa-country-mega{
+  width:min(760px,calc(100vw - 48px))!important;
+  max-width:none!important;
+  left:50%!important;right:auto!important;transform:translate(-50%,10px)!important;
+  padding:22px!important;
+}
+.sa-country-nav:hover .sa-country-mega,
+.sa-country-nav:focus-within .sa-country-mega,
+.sa-country-nav .nav-dropdown__trigger[aria-expanded="true"] + .sa-country-mega{
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  transform:translate(-50%,0)!important;
+}
+.sa-country-mega__head{
+  display:flex;align-items:end;justify-content:space-between;gap:20px;
+  padding:0 2px 14px;border-bottom:1px solid rgba(21,63,50,.1);margin-bottom:12px
+}
+.sa-country-mega__head strong{color:#18261f;font-size:.98rem}
+.sa-country-mega__head span{color:#7b8781;font-size:.7rem}
+.sa-country-mega__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px 14px}
+.sa-country-mega__grid a{
+  display:block;padding:8px 4px!important;border-radius:8px!important;color:#405149!important;
+  font-size:.73rem!important;font-weight:700!important;text-decoration:none!important
+}
+.sa-country-mega__grid a:hover{background:#edf3ef!important;color:#153f32!important}
+
+.sa-mobile-country-menu{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 8px}
+.sa-mobile-country-menu a{font-size:.78rem!important;padding:8px 4px!important}
+
+@media(max-width:900px){
+  .sa-country-save-button{width:100%;min-height:48px}
+}
+@media(max-width:620px){
+  .sa-mobile-country-menu{grid-template-columns:1fr 1fr}
+}

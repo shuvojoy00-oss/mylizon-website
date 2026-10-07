@@ -560,6 +560,11 @@
     const toggle = $("#menu-toggle");
     const menu = $("#mobile-menu");
     const close = $("#mobile-menu-close");
+    const desktopQuery = window.matchMedia("(min-width: 901px)");
+
+    const closeDesktopDropdowns = () => {
+      $(".nav-dropdown__trigger").forEach(item => item.setAttribute("aria-expanded", "false"));
+    };
 
     const openMenu = () => {
       if (!menu || !toggle) return;
@@ -567,6 +572,7 @@
       menu.setAttribute("aria-hidden", "false");
       toggle.setAttribute("aria-expanded", "true");
       document.body.classList.add("menu-open");
+      close?.focus();
     };
 
     const closeMenu = () => {
@@ -579,20 +585,47 @@
 
     toggle?.addEventListener("click", openMenu);
     close?.addEventListener("click", closeMenu);
-    $$(".mobile-menu a").forEach(link => link.addEventListener("click", closeMenu));
+    $(".mobile-menu a").forEach(link => link.addEventListener("click", closeMenu));
 
-    $$(".nav-dropdown__trigger").forEach(trigger => {
+    $(".nav-dropdown").forEach(dropdown => {
+      const trigger = $(".nav-dropdown__trigger", dropdown);
+      if (!trigger) return;
+
+      const openDropdown = () => {
+        if (!desktopQuery.matches) return;
+        closeDesktopDropdowns();
+        trigger.setAttribute("aria-expanded", "true");
+      };
+
+      const closeDropdown = () => {
+        if (!desktopQuery.matches) return;
+        trigger.setAttribute("aria-expanded", "false");
+      };
+
+      dropdown.addEventListener("mouseenter", openDropdown);
+      dropdown.addEventListener("mouseleave", closeDropdown);
+      dropdown.addEventListener("focusin", openDropdown);
+      dropdown.addEventListener("focusout", event => {
+        if (!dropdown.contains(event.relatedTarget)) closeDropdown();
+      });
+
       trigger.addEventListener("click", event => {
-        if (window.matchMedia("(max-width: 900px)").matches) return;
+        if (!desktopQuery.matches) return;
         const expanded = trigger.getAttribute("aria-expanded") === "true";
-        $$(".nav-dropdown__trigger").forEach(item => item.setAttribute("aria-expanded", "false"));
+        closeDesktopDropdowns();
         trigger.setAttribute("aria-expanded", String(!expanded));
         event.stopPropagation();
       });
     });
 
-    document.addEventListener("click", () => {
-      $$(".nav-dropdown__trigger").forEach(item => item.setAttribute("aria-expanded", "false"));
+    document.addEventListener("click", closeDesktopDropdowns);
+    document.addEventListener("keydown", event => {
+      if (event.key !== "Escape") return;
+      closeDesktopDropdowns();
+      if (menu?.classList.contains("is-open")) {
+        closeMenu();
+        toggle?.focus();
+      }
     });
   }
 
@@ -863,18 +896,22 @@
     ensureIntelligence();
   }
 
-  function populateCompareSelects() {
+  async function populateCompareSelects() {
     const selects = [$("#sa-compare-1"), $("#sa-compare-2"), $("#sa-compare-3")].filter(Boolean);
     if (!selects.length || !state.countries.length) return;
 
+    await ensureIntelligence();
+    const comparisonIds = new Set(state.intelligence.map(item => item.id));
+    const comparisonCountries = state.countries.filter(country => comparisonIds.has(country.id));
     const defaults = ["australia", "newzealand", "uk"];
+
     selects.forEach((select, index) => {
       const current = select.value;
       select.innerHTML = '<option value="">Choose a country</option>' +
-        state.countries.map(country =>
+        comparisonCountries.map(country =>
           `<option value="${escapeHtml(country.id)}">${escapeHtml(country.name)}</option>`
         ).join("");
-      select.value = current || defaults[index] || "";
+      select.value = current && comparisonIds.has(current) ? current : (defaults[index] || "");
     });
   }
 

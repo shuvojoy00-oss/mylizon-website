@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const guideLinks=[...document.querySelectorAll("[data-qa-guide-link]")];
   const sections=[...document.querySelectorAll("[data-qa-section]")];
   const guideSheet=document.querySelector("#qa-guide-sheet");
-  const searchSheet=document.querySelector("#qa-searqa-sheet");
+  const searchSheet=document.querySelector("#qa-search-sheet");
   const guideLabel=document.querySelector("[data-qa-guide-label]");
-  const searchInput=document.querySelector("#qa-page-searqa-input");
-  const searchResults=document.querySelector("#qa-page-searqa-results");
+  const searchInput=document.querySelector("#qa-page-search-input");
+  const searchResults=document.querySelector("#qa-page-search-results");
 
   const closeGuide=()=>{if(guideSheet){guideSheet.classList.remove("is-open");document.body.style.overflow="";}};
   const openGuide=()=>{if(guideSheet){guideSheet.classList.add("is-open");document.body.style.overflow="hidden";}};
@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll("[data-qa-guide-toggle],[data-qa-guide-toggle-hero]").forEach(el=>el.addEventListener("click",openGuide));
   document.querySelectorAll("[data-qa-guide-close]").forEach(el=>el.addEventListener("click",closeGuide));
-  document.querySelectorAll("[data-qa-searqa-toggle],[data-qa-searqa-toggle-hero]").forEach(el=>el.addEventListener("click",openSearch));
-  document.querySelectorAll("[data-qa-searqa-close]").forEach(el=>el.addEventListener("click",closeSearch));
+  document.querySelectorAll("[data-qa-search-toggle],[data-qa-search-toggle-hero]").forEach(el=>el.addEventListener("click",openSearch));
+  document.querySelectorAll("[data-qa-search-close]").forEach(el=>el.addEventListener("click",closeSearch));
   guideLinks.forEach(a=>a.addEventListener("click",closeGuide));
 
   if("IntersectionObserver" in window){

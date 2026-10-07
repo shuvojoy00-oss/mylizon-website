@@ -1,934 +1,1195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LizOn Study Abroad | Build A Future Abroad</title>
-<meta name="description" content="Build a future abroad by understanding where you are today. Explore your path, identify your next step, and start your study abroad journey with LizOn Study Abroad.">
-
-<style>
-:root{
-    --green:#134e3a;
-    --green-dark:#0f3b2d;
-    --gold:#c7a24a;
-    --gold-light:#e8d8ac;
-    --white:#ffffff;
-    --gray:#f5f7f6;
-    --text:#2b2b2b;
-    --border:#e6ece8;
-    --shadow:0 10px 35px rgba(19,78,58,.08);
-    --radius:22px;
-    --transition:.3s ease;
-    --max:1200px;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family:Inter,Segoe UI,Arial,sans-serif;
-    color:var(--text);
-    background:#fff;
-    line-height:1.65;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-img{
-    max-width:100%;
-}
-
-.container{
-    width:min(92%,var(--max));
-    margin:auto;
-}
-
-section{
-    padding:80px 0;
-}
-
-.section-light{
-    background:var(--gray);
-}
-
-.section-title{
-    text-align:center;
-    max-width:760px;
-    margin:0 auto 50px;
-}
-
-.section-title h2{
-    font-size:clamp(2rem,4vw,3rem);
-    line-height:1.15;
-    color:var(--green-dark);
-    margin-bottom:16px;
-}
-
-.section-title p{
-    color:#5e6a65;
-    font-size:1.05rem;
-}
-
-.topbar{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:rgba(255,255,255,.95);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--border);
-}
-
-.nav{
-    height:78px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-}
-
-.logo{
-    font-size:1.2rem;
-    font-weight:800;
-    color:var(--green);
-}
-.nav-dropdown{
-    position:relative;
-}
-
-.dropdown-btn{
-    background:var(--green);
-    color:#fff;
-    border:none;
-    padding:14px 22px;
-    border-radius:999px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.dropdown-menu{
-    position:absolute;
-    top:110%;
-    right:0;
-    width:280px;
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 15px 40px rgba(0,0,0,.12);
-
-    opacity:0;
-    visibility:hidden;
-    transform:translateY(10px);
-    transition:.25s ease;
-}
-
-.dropdown-menu a{
-    display:block;
-    padding:14px 16px;
-    color:var(--green-dark);
-    font-weight:600;
-}
-
-.dropdown-menu a:hover{
-    background:var(--gray);
-}
-
-.nav-dropdown:hover .dropdown-menu{
-    opacity:1;
-    visibility:visible;
-    transform:translateY(0);
-}
-.nav-links{
-    display:flex;
-    gap:26px;
-    align-items:center;
-}
-
-.nav-links a{
-    color:#41504a;
-    font-weight:600;
-    font-size:.95rem;
-}
-
-.btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    padding:14px 24px;
-    border-radius:999px;
-    font-weight:700;
-    transition:var(--transition);
-}
-
-.btn-primary{
-    background:var(--green);
-    color:#fff;
-}
-
-.btn-primary:hover{
-    background:var(--green-dark);
-    transform:translateY(-2px);
-}
-
-.btn-secondary{
-    border:1px solid var(--border);
-    background:#fff;
-    color:var(--green);
-}
-
-.btn-secondary:hover{
-    transform:translateY(-2px);
-    box-shadow:var(--shadow);
-}
-
-.hero{
-    padding:90px 0 70px;
-    background:
-    radial-gradient(circle at top right, rgba(199,162,74,.18), transparent 30%),
-    radial-gradient(circle at left center, rgba(19,78,58,.08), transparent 35%);
-}
-
-.hero-grid{
-    display:grid;
-    grid-template-columns:1.1fr .9fr;
-    gap:50px;
-    align-items:center;
-}
-
-.label{
-    display:inline-block;
-    padding:8px 14px;
-    background:#edf5f1;
-    color:var(--green);
-    border-radius:999px;
-    font-weight:700;
-    font-size:.85rem;
-    margin-bottom:18px;
-}
-
-.hero-title{
-    font-size:clamp(2.8rem,5vw,4.8rem);
-    line-height:1.05;
-    color:var(--green-dark);
-    margin-bottom:22px;
-    font-weight:800;
-}
-
-.hero-title span{
-    display:block;
-    margin-top:14px;
-    font-size:clamp(1.15rem,2vw,1.7rem);
-    color:var(--gold);
-    font-weight:700;
-    line-height:1.3;
-}
-
-.hero p{
-    font-size:1.1rem;
-    color:#56615d;
-    margin-bottom:32px;
-    max-width:650px;
-}
-
-.hero-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:14px;
-}
-
-.hero-visual{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:30px;
-    padding:35px;
-    box-shadow:var(--shadow);
-}
-
-.flow{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:16px;
-}
-
-.flow-box{
-    width:100%;
-    text-align:center;
-    padding:18px;
-    border-radius:18px;
-    font-weight:800;
-}
-
-.flow-box:nth-child(1){background:#edf5f1;color:var(--green);}
-.flow-box:nth-child(3){background:#f8f3e8;color:#8b6a16;}
-.flow-box:nth-child(5){background:#edf5f1;color:var(--green);}
-.flow-box:nth-child(7){background:var(--green);color:#fff;}
-
-.arrow{
-    color:var(--gold);
-    font-size:1.4rem;
-    font-weight:900;
-}
-
-.grid{
-    display:grid;
-    gap:24px;
-}
-
-.grid-3{
-    grid-template-columns:repeat(3,1fr);
-}
-
-.grid-2{
-    grid-template-columns:repeat(2,1fr);
-}
-
-.card{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:28px;
-    transition:var(--transition);
-    box-shadow:0 4px 15px rgba(0,0,0,.03);
-}
-
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:var(--shadow);
-}
-
-.card h3{
-    color:var(--green-dark);
-    margin-bottom:10px;
-}
-
-.card p{
-    color:#65716c;
-    margin-bottom:18px;
-}
-
-.card-link{
-    color:var(--green);
-    font-weight:700;
-}
-
-.statement{
-    max-width:900px;
-    margin:auto;
-    text-align:center;
-}
-
-.statement-large{
-    font-size:clamp(2rem,5vw,4rem);
-    color:var(--green-dark);
-    font-weight:800;
-    margin:25px 0;
-}
-
-.check-list{
-    list-style:none;
-    max-width:520px;
-    margin:25px auto 35px;
-}
-
-.check-list li{
-    padding:10px 0;
-    font-weight:600;
-    color:#54615b;
-}
-
-.check-list li::before{
-    content:"✓";
-    color:var(--gold);
-    font-weight:900;
-    margin-right:12px;
-}
-
-.roadmap{
-    max-width:700px;
-    margin:0 auto;
-}
-
-.step{
-    text-align:center;
-}
-
-.step-box{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:22px;
-    font-weight:700;
-    box-shadow:0 4px 15px rgba(0,0,0,.03);
-}
-
-.step-arrow{
-    text-align:center;
-    color:var(--gold);
-    font-size:1.6rem;
-    margin:14px 0;
-}
-
-.center-text{
-    text-align:center;
-    margin-top:30px;
-}
-
-.center-text p{
-    color:#5f6b66;
-    margin-bottom:22px;
-}
-
-.parent-box,
-.system-box,
-.final-cta{
-    background:linear-gradient(135deg,var(--green),var(--green-dark));
-    color:#fff;
-    border-radius:32px;
-    padding:55px 35px;
-    text-align:center;
-}
-
-.parent-box h2,
-.system-box h2,
-.final-cta h2{
-    font-size:clamp(2rem,4vw,3.2rem);
-    margin-bottom:16px;
-}
-
-.parent-box p,
-.system-box p,
-.final-cta p{
-    max-width:760px;
-    margin:0 auto 28px;
-    opacity:.92;
-}
-
-.system-question{
-    font-size:clamp(1.7rem,4vw,3rem);
-    font-weight:800;
-    margin:20px 0;
-}
-
-.footer{
-    background:#f7f8f8;
-    border-top:1px solid var(--border);
-    padding:50px 0 90px;
-}
-
-.footer-grid{
-    display:grid;
-    grid-template-columns:1fr auto;
-    gap:30px;
-}
-
-.footer-links{
-    display:flex;
-    flex-wrap:wrap;
-    gap:18px;
-}
-
-.footer-links a{
-    color:#50605a;
-    font-weight:600;
-}
-
-.footer-text{
-    color:#68746f;
-    margin-top:15px;
-}
-
-.reveal{
-    opacity:0;
-    transform:translateY(30px);
-    transition:.7s ease;
-}
-
-.reveal.active{
-    opacity:1;
-    transform:translateY(0);
-}
-
-.mobile-cta{
-    display:none;
-    position:fixed;
-    left:12px;
-    right:12px;
-    bottom:12px;
-    z-index:999;
-}
-
-.mobile-cta a{
-    width:100%;
-    justify-content:center;
-    box-shadow:0 10px 30px rgba(19,78,58,.25);
-}
-
-@media (max-width:980px){
-
-    .hero-grid{
-        grid-template-columns:1fr;
-    }
-
-    .grid-3{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .nav-links{
-        display:none;
-    }
-}
-
-@media (max-width:700px){
-
-    section{
-        padding:65px 0;
-    }
-
-    .grid-3,
-    .grid-2{
-        grid-template-columns:1fr;
-    }
-
-    .hero{
-        padding-top:70px;
-    }
-
-    .hero-buttons{
-        flex-direction:column;
-    }
-
-    .btn{
-        width:100%;
-    }
-
-    .footer-grid{
-        grid-template-columns:1fr;
-    }
-
-    .mobile-cta{
-        display:block;
-    }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Study Abroad from Bangladesh | LizOn Education</title>
+  <meta name="description" content="Explore study abroad destinations, find what fits your priorities, compare your options and build a clearer study abroad plan with LizOn Education.">
+  <meta name="theme-color" content="#fbfaf6">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/homepage-test.css">
+  <link rel="stylesheet" href="css/studyabroad-v2.css">
+  <script src="js/studyabroad-v2.js" defer></script>
 </head>
+
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
-<header class="topbar">
-    <div class="container nav">
-        <div class="logo">LizOn Study Abroad</div>
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner shell">
+      <a class="brand" href="index.html" aria-label="LizOn Education home">
+        <img class="brand__logo" src="assets/logo/lizon-logo.png" alt="" width="42" height="42">
+        <span class="brand__name">LizOn Education</span>
+      </a>
 
-        <nav class="nav-links">
-            <a href="#">Home</a>
-            <a href="find-your-path.html">Find Your Path</a>
-            <a href="assessment.html">Assessment</a>
-            <a href="why-lizon.html">Why LizOn</a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <div class="nav-dropdown">
+          <button class="nav-dropdown__trigger" type="button" aria-expanded="false" aria-controls="ielts-menu">
+            IELTS <span class="nav-chevron" aria-hidden="true">⌄</span>
+          </button>
+          <div class="nav-dropdown__panel" id="ielts-menu">
+            <span class="nav-dropdown__eyebrow">IELTS</span>
+            <a class="nav-feature" href="ielts.html">
+              <strong>IELTS Courses</strong>
+              <span>Prepare with the right techniques.</span>
+            </a>
+            <a href="ieltsclass.html">Free IELTS Classes <span>↗</span></a>
+            <a href="index.html#results">Student Results <span>↗</span></a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button class="nav-dropdown__trigger" type="button" aria-expanded="false" aria-controls="pte-menu">
+            PTE <span class="nav-chevron" aria-hidden="true">⌄</span>
+          </button>
+          <div class="nav-dropdown__panel" id="pte-menu">
+            <span class="nav-dropdown__eyebrow">PTE</span>
+            <a class="nav-feature" href="pte.html">
+              <strong>PTE Courses</strong>
+              <span>Build toward your better score.</span>
+            </a>
+            <a href="pteclass.html">Free PTE Classes <span>↗</span></a>
+            <a href="index.html#results">Student Results <span>↗</span></a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button class="nav-dropdown__trigger" type="button" aria-expanded="false" aria-controls="study-abroad-menu">
+            Study Abroad <span class="nav-chevron" aria-hidden="true">⌄</span>
+          </button>
+          <div class="nav-dropdown__panel" id="study-abroad-menu">
+            <span class="nav-dropdown__eyebrow">GO GLOBAL</span>
+            <a class="nav-feature" href="#countries">
+              <strong>Explore Countries</strong>
+              <span>From here, anywhere.</span>
+            </a>
+            <a href="assessment.html">Check Your Eligibility <span>↗</span></a>
+            <a href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">Talk to an Expert <span>↗</span></a>
+          </div>
+        </div>
+
+        <a class="desktop-nav__link" href="index.html#results">Results</a>
+        <a class="desktop-nav__link" href="index.html#free-learning">Free Classes</a>
+      </nav>
+
+      <a class="header-contact" href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">
+        Talk to Us <span aria-hidden="true">↗</span>
+      </a>
+
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>
+    <div class="mobile-menu__top">
+      <span class="mobile-menu__label">Explore LizOn</span>
+      <button class="mobile-menu__close" id="mobile-menu-close" type="button" aria-label="Close navigation">×</button>
+    </div>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <details>
+        <summary>IELTS <span>+</span></summary>
+        <div class="mobile-nav__sub">
+          <a href="ielts.html">IELTS Courses</a>
+          <a href="ieltsclass.html">Free IELTS Classes</a>
+          <a href="index.html#results">Student Results</a>
+        </div>
+      </details>
+
+      <details>
+        <summary>PTE <span>+</span></summary>
+        <div class="mobile-nav__sub">
+          <a href="pte.html">PTE Courses</a>
+          <a href="pteclass.html">Free PTE Classes</a>
+          <a href="index.html#results">Student Results</a>
+        </div>
+      </details>
+
+      <details open>
+        <summary>Study Abroad <span>+</span></summary>
+        <div class="mobile-nav__sub">
+          <a href="#priorities">What Matters to You</a>
+          <a href="#countries">Explore Countries</a>
+          <a href="#matcher">Find My Best Fit</a>
+          <a href="#compare">Compare Countries</a>
+          <a href="#cost-calculator">Cost Calculator</a>
+          <a href="#intake-planner">Intake Planner</a>
+          <a href="#my-plan">My Study Plan</a>
+          <a href="assessment.html">Check Your Eligibility</a>
+        </div>
+      </details>
+
+      <a class="mobile-nav__main" href="index.html#results">Results</a>
+      <a class="mobile-nav__main" href="index.html#free-learning">Free Classes</a>
+    </nav>
+
+    <div class="mobile-menu__contact">
+      <span>Planning your next move?</span>
+      <a href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">Talk to LizOn →</a>
+    </div>
+  </div>
+
+  <main id="main-content" class="sa-page">
+
+    <section class="sa-hero" id="top">
+      <div class="sa-shell sa-hero__grid">
+        <div class="sa-hero__content sa-reveal">
+          <span class="sa-eyebrow">LIZON STUDY ABROAD</span>
+          <h1 class="sa-hero__title">
+            From here,<br><span>Anywhere.</span>
+          </h1>
+          <p class="sa-hero__lead">
+            Your best destination starts with your profile, your budget and what you want from the future. Explore first. Compare clearly. Then make it personal.
+          </p>
+
+          <div class="sa-hero__actions">
+            <a class="sa-button sa-button--primary" href="#matcher">
+              Find My Best Fit <span aria-hidden="true">→</span>
+            </a>
+            <a class="sa-button sa-button--secondary" href="#countries">
+              Explore Countries
+            </a>
+            <a class="sa-text-link" href="#cost-calculator">
+              Calculate My Budget <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="sa-hero__micro" aria-label="Study abroad planning features">
+            <span><i aria-hidden="true"></i>Profile first</span>
+            <span><i aria-hidden="true"></i>Real country guides</span>
+            <span><i aria-hidden="true"></i>Bangladesh focused</span>
+          </div>
+        </div>
+
+        <aside class="sa-decision-card sa-reveal" aria-label="Example of a study abroad decision profile">
+          <div class="sa-decision-card__top">
+            <span>Your Study Plan</span>
+            <span class="sa-decision-card__live">Decision preview</span>
+          </div>
+
+          <div class="sa-profile">
+            <span class="sa-profile__label">What matters to you</span>
+            <div class="sa-profile__main">
+              <strong>Start with priorities</strong>
+              <span id="sa-hero-preferences">Budget · career · post study</span>
+            </div>
+          </div>
+
+          <div class="sa-match-list">
+            <div class="sa-match">
+              <span class="sa-match__code">AU</span>
+              <div class="sa-match__name">
+                <strong>Australia</strong>
+                <small>Open the evidence before deciding.</small>
+              </div>
+              <span class="sa-match__status">Explore</span>
+            </div>
+
+            <div class="sa-match">
+              <span class="sa-match__code">NZ</span>
+              <div class="sa-match__name">
+                <strong>New Zealand</strong>
+                <small>Compare the route with your priorities.</small>
+              </div>
+              <span class="sa-match__status sa-match__status--soft">Compare</span>
+            </div>
+
+            <div class="sa-match">
+              <span class="sa-match__code">UK</span>
+              <div class="sa-match__name">
+                <strong>United Kingdom</strong>
+                <small>Check study, budget and future fit.</small>
+              </div>
+              <span class="sa-match__status sa-match__status--soft">Compare</span>
+            </div>
+          </div>
+
+          <div class="sa-decision-card__foot">
+            <span>No fake percentage. No automatic promise.</span>
+            <strong>Reasons first.</strong>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--white" id="priorities">
+      <div class="sa-shell">
+        <div class="sa-priority-layout">
+          <div>
+            <header class="sa-heading sa-reveal">
+              <span class="sa-eyebrow">START WITH YOU</span>
+              <h2>What matters most for your future?</h2>
+              <p>
+                Pick up to three priorities. We save them on this device so the Study Abroad experience can gradually become more relevant to you.
+              </p>
+            </header>
+
+            <div class="sa-priorities sa-reveal" role="group" aria-label="Study abroad priorities">
+              <button class="sa-priority" type="button" data-preference="Affordable study" aria-pressed="false">Affordable Study</button>
+              <button class="sa-priority" type="button" data-preference="Scholarship" aria-pressed="false">Scholarship</button>
+              <button class="sa-priority" type="button" data-preference="Career opportunities" aria-pressed="false">Career Opportunities</button>
+              <button class="sa-priority" type="button" data-preference="Bring family" aria-pressed="false">Bring My Family</button>
+              <button class="sa-priority" type="button" data-preference="Post study work" aria-pressed="false">Post Study Work</button>
+              <button class="sa-priority" type="button" data-preference="Longer term pathway" aria-pressed="false">Longer Term Pathway</button>
+              <button class="sa-priority" type="button" data-preference="Low GPA options" aria-pressed="false">Low GPA Options</button>
+              <button class="sa-priority" type="button" data-preference="Study gap" aria-pressed="false">Study Gap</button>
+              <button class="sa-priority" type="button" data-preference="Research" aria-pressed="false">Research</button>
+              <button class="sa-priority" type="button" data-preference="Fast intake" aria-pressed="false">Fastest Intake</button>
+            </div>
+
+            <p class="sa-priority-status" id="sa-priority-status">Choose up to 3. You can change them anytime.</p>
+          </div>
+
+          <aside class="sa-preference-panel sa-reveal">
+            <small>Your priorities</small>
+            <h3>Build around what matters.</h3>
+            <div class="sa-preference-summary" id="sa-preference-summary">
+              <span>No priorities selected yet.</span>
+            </div>
+            <p>
+              These choices are not used to make automatic immigration promises. They become inputs for the evidence based matcher we build next.
+            </p>
+            <a class="sa-button" href="assessment.html">Check My Eligibility →</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--soft" id="countries">
+      <div class="sa-shell">
+        <div class="sa-explorer-head">
+          <header class="sa-heading sa-reveal">
+            <span class="sa-eyebrow">DESTINATIONS</span>
+            <h2>Explore your possibilities.</h2>
+            <p>
+              Search the country guides already available on LizOn. Each guide goes deeper into admission, money, visa, work, family and life after study.
+            </p>
+          </header>
+          <span class="sa-country-count" id="sa-country-count">Loading destinations</span>
+        </div>
+
+        <div class="sa-explorer-tools sa-reveal">
+          <label class="sa-search">
+            <span class="sr-only">Search a country</span>
+            <input id="sa-country-search" type="search" placeholder="Search a country or region" autocomplete="off">
+          </label>
+
+          <label class="sa-select">
+            <span class="sr-only">Filter by study level</span>
+            <select id="sa-level-filter">
+              <option value="All">All study levels</option>
+              <option value="Bachelor">Bachelor</option>
+              <option value="Masters">Masters</option>
+              <option value="PhD">PhD</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="sa-region-filters sa-reveal" role="group" aria-label="Filter countries by region">
+          <button class="sa-region-filter is-active" type="button" data-region="All" aria-pressed="true">All</button>
+          <button class="sa-region-filter" type="button" data-region="Europe" aria-pressed="false">Europe</button>
+          <button class="sa-region-filter" type="button" data-region="North America" aria-pressed="false">North America</button>
+          <button class="sa-region-filter" type="button" data-region="Oceania" aria-pressed="false">Oceania</button>
+          <button class="sa-region-filter" type="button" data-region="Asia" aria-pressed="false">Asia</button>
+        </div>
+
+        <div class="sa-country-grid" id="sa-country-grid" aria-live="polite"></div>
+        <div class="sa-country-empty" id="sa-country-empty" hidden>
+          No live country guide matches those filters yet. Try another search or region.
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--white" id="matcher">
+      <div class="sa-shell">
+        <div class="sa-matcher-layout">
+          <div>
+            <header class="sa-heading sa-reveal">
+              <span class="sa-eyebrow">FIND MY BEST FIT</span>
+              <h2>Build a shortlist around your reality.</h2>
+              <p>
+                Tell us the constraints that actually change the decision. The engine ranks destinations to explore and explains why. It does not predict admission or visa approval.
+              </p>
+            </header>
+
+            <form class="sa-matcher-form sa-reveal" id="sa-matcher-form">
+              <label class="sa-field">
+                <span>Study level</span>
+                <select id="sa-match-level" required>
+                  <option value="Masters">Masters</option>
+                  <option value="Bachelor">Bachelor</option>
+                  <option value="PhD">PhD</option>
+                </select>
+              </label>
+
+              <label class="sa-field">
+                <span>Overall budget comfort</span>
+                <select id="sa-match-budget" required>
+                  <option value="0">Flexible / still planning</option>
+                  <option value="1">Lower budget</option>
+                  <option value="2">Mid range budget</option>
+                  <option value="3">Higher budget possible</option>
+                </select>
+              </label>
+
+              <label class="sa-field">
+                <span>Preferred region</span>
+                <select id="sa-match-region">
+                  <option value="Any">No preference</option>
+                  <option value="Europe">Europe</option>
+                  <option value="North America">North America</option>
+                  <option value="Oceania">Oceania</option>
+                </select>
+              </label>
+
+              <label class="sa-field">
+                <span>Profile concern</span>
+                <select id="sa-match-concern">
+                  <option value="none">No major concern</option>
+                  <option value="lowGpa">Low GPA / CGPA</option>
+                  <option value="studyGap">Study gap</option>
+                </select>
+              </label>
+
+              <label class="sa-field">
+                <span>Family plan</span>
+                <select id="sa-match-family">
+                  <option value="no">Applying alone / not a priority</option>
+                  <option value="yes">Bringing partner or family matters</option>
+                </select>
+              </label>
+
+              <div class="sa-field sa-field--summary">
+                <span>Saved priorities</span>
+                <div class="sa-match-priorities" id="sa-match-priorities">None selected yet</div>
+              </div>
+
+              <button class="sa-button sa-button--primary sa-matcher-submit" type="submit">
+                Show My Best Fits <span aria-hidden="true">→</span>
+              </button>
+            </form>
+
+            <p class="sa-matcher-disclaimer sa-reveal">
+              Planning tool only. Results are generated from the country guides currently published on LizOn and should be verified again before an application or financial decision.
+            </p>
+          </div>
+
+          <aside class="sa-matcher-side sa-reveal">
+            <span class="sa-matcher-side__eyebrow">HOW IT THINKS</span>
+            <h3>No mystery percentage.</h3>
+            <div class="sa-matcher-rule"><span>01</span><p>Can the destination fit your selected budget level?</p></div>
+            <div class="sa-matcher-rule"><span>02</span><p>Do current family rules fit your plan?</p></div>
+            <div class="sa-matcher-rule"><span>03</span><p>Does the guide address your study gap or low GPA concern?</p></div>
+            <div class="sa-matcher-rule"><span>04</span><p>Do your saved priorities line up with the destination signals?</p></div>
+            <div class="sa-matcher-rule"><span>05</span><p>What should you verify before taking the next step?</p></div>
+          </aside>
+        </div>
+
+        <div class="sa-match-results" id="sa-match-results" hidden>
+          <div class="sa-match-results__head">
+            <div>
+              <span class="sa-eyebrow">YOUR SHORTLIST</span>
+              <h3>Best places to explore first.</h3>
+            </div>
+            <span id="sa-match-result-count"></span>
+          </div>
+          <div class="sa-match-results__grid" id="sa-match-results-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--soft" id="compare">
+      <div class="sa-shell">
+        <header class="sa-heading sa-heading--center sa-reveal">
+          <span class="sa-eyebrow">QUICK COMPARE</span>
+          <h2>Put three destinations on one screen.</h2>
+          <p>
+            Compare the planning signals that change a shortlist. Exact tuition, visa charges and living figures will feed the dedicated cost calculator next.
+          </p>
+        </header>
+
+        <div class="sa-compare-picker sa-reveal">
+          <label class="sa-field">
+            <span>Country 1</span>
+            <select id="sa-compare-1"></select>
+          </label>
+          <label class="sa-field">
+            <span>Country 2</span>
+            <select id="sa-compare-2"></select>
+          </label>
+          <label class="sa-field">
+            <span>Country 3</span>
+            <select id="sa-compare-3"></select>
+          </label>
+          <button class="sa-button sa-button--primary" id="sa-run-compare" type="button">
+            Compare Now <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="sa-compare-results sa-reveal" id="sa-compare-results" aria-live="polite">
+          <div class="sa-compare-placeholder">Choose up to three destinations to compare.</div>
+        </div>
+
+        <p class="sa-compare-note sa-reveal">
+          Broad planning comparison only. Immigration rules and institutional requirements can change, and exact eligibility always depends on the student's programme and circumstances.
+        </p>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--white" id="cost-calculator">
+      <div class="sa-shell">
+        <div class="sa-cost-layout">
+          <div>
+            <header class="sa-heading sa-reveal">
+              <span class="sa-eyebrow">REAL COST CALCULATOR</span>
+              <h2>Know the number before making the decision.</h2>
+              <p>
+                Start with the country guide figures, then replace them with the exact numbers from your offer letter, visa checklist and real travel plan.
+              </p>
+            </header>
+
+            <form class="sa-cost-form sa-reveal" id="sa-cost-form">
+              <label class="sa-field">
+                <span>Country</span>
+                <select id="sa-cost-country"></select>
+              </label>
+
+              <label class="sa-field">
+                <span>Study level</span>
+                <select id="sa-cost-level">
+                  <option value="Bachelor">Bachelor</option>
+                  <option value="Masters" selected>Masters</option>
+                  <option value="PhD">PhD</option>
+                </select>
+              </label>
+
+              <div class="sa-field sa-field--full" id="sa-cost-location-wrap" hidden>
+                <span>Location rule</span>
+                <select id="sa-cost-location"></select>
+              </div>
+
+              <label class="sa-field">
+                <span>Annual tuition</span>
+                <input id="sa-cost-tuition" type="number" min="0" step="0.01" inputmode="decimal">
+                <small id="sa-cost-tuition-hint">Enter the actual tuition if you already have an offer.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Scholarship / tuition waiver</span>
+                <input id="sa-cost-scholarship" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Amount deducted from tuition.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Tuition already paid</span>
+                <input id="sa-cost-paid" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Used when estimating remaining funding evidence.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Living budget for year 1</span>
+                <input id="sa-cost-living" type="number" min="0" step="0.01" inputmode="decimal">
+                <small id="sa-cost-living-hint">Prefilled from the current country guide where possible.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Partner / other adult</span>
+                <select id="sa-cost-adults">
+                  <option value="0">None</option>
+                  <option value="1">1 adult</option>
+                  <option value="2">2 adults</option>
+                </select>
+              </label>
+
+              <label class="sa-field">
+                <span>Children</span>
+                <select id="sa-cost-children">
+                  <option value="0">None</option>
+                  <option value="1">1 child</option>
+                  <option value="2">2 children</option>
+                  <option value="3">3 children</option>
+                </select>
+              </label>
+
+              <label class="sa-field">
+                <span>Insurance / health</span>
+                <input id="sa-cost-insurance" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Use your actual quote where required.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Flights / travel</span>
+                <input id="sa-cost-travel" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Use the realistic amount you expect to pay.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>Housing setup / other</span>
+                <input id="sa-cost-setup" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Deposit, setup, medical, biometrics or other extras.</small>
+              </label>
+
+              <label class="sa-field">
+                <span>1 local currency = BDT</span>
+                <input id="sa-cost-bdt-rate" type="number" min="0" step="0.01" placeholder="Optional" inputmode="decimal">
+                <small>Use the bank or transfer rate you actually plan to use.</small>
+              </label>
+
+              <div class="sa-field sa-field--full" id="sa-cost-school-funding-wrap" hidden>
+                <span>School / I-20 funding target</span>
+                <input id="sa-cost-school-funding" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+                <small>Used for countries without one national maintenance figure.</small>
+              </div>
+
+              <button class="sa-button sa-button--primary sa-cost-submit" type="submit">
+                Calculate My First Year <span aria-hidden="true">→</span>
+              </button>
+            </form>
+          </div>
+
+          <aside class="sa-cost-summary sa-reveal" id="sa-cost-summary">
+            <span class="sa-cost-summary__eyebrow">YOUR ESTIMATE</span>
+            <h3 id="sa-cost-summary-title">Choose a country to begin.</h3>
+
+            <div class="sa-cost-big">
+              <span>First year planning cost</span>
+              <strong id="sa-cost-total">—</strong>
+              <small id="sa-cost-total-bdt"></small>
+            </div>
+
+            <div class="sa-cost-big sa-cost-big--soft">
+              <span>Funding target to prepare</span>
+              <strong id="sa-cost-funding">—</strong>
+              <small id="sa-cost-funding-bdt"></small>
+            </div>
+
+            <div class="sa-cost-breakdown" id="sa-cost-breakdown"></div>
+
+            <div class="sa-cost-note" id="sa-cost-rule-note">
+              Exact programme fees and immigration requirements always override this planning estimate.
+            </div>
+
+            <a class="sa-text-link" id="sa-cost-guide-link" href="#countries">
+              Open country guide <span aria-hidden="true">↗</span>
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--soft" id="intake-planner">
+      <div class="sa-shell">
+        <div class="sa-timeline-layout">
+          <div>
+            <header class="sa-heading sa-reveal">
+              <span class="sa-eyebrow">INTAKE PLANNER</span>
+              <h2>Start from the intake. Work backwards.</h2>
+              <p>
+                Pick a destination and target intake. We turn that into a practical preparation sequence for English, applications, finances, visa and departure.
+              </p>
+            </header>
+
+            <form class="sa-timeline-form sa-reveal" id="sa-timeline-form">
+              <label class="sa-field">
+                <span>Country</span>
+                <select id="sa-timeline-country"></select>
+              </label>
+
+              <label class="sa-field">
+                <span>Study level</span>
+                <select id="sa-timeline-level">
+                  <option value="Bachelor">Bachelor</option>
+                  <option value="Masters" selected>Masters</option>
+                  <option value="PhD">PhD</option>
+                </select>
+              </label>
+
+              <label class="sa-field">
+                <span>Target intake</span>
+                <select id="sa-timeline-intake"></select>
+              </label>
+
+              <label class="sa-field">
+                <span>Target year</span>
+                <select id="sa-timeline-year"></select>
+              </label>
+
+              <label class="sa-field sa-field--full">
+                <span>English readiness</span>
+                <select id="sa-timeline-english">
+                  <option value="not-started">Not started IELTS / PTE yet</option>
+                  <option value="preparing">Preparing now</option>
+                  <option value="ready">Score ready / exemption confirmed</option>
+                </select>
+              </label>
+
+              <button class="sa-button sa-button--primary sa-timeline-submit" type="submit">
+                Build My Timeline <span aria-hidden="true">→</span>
+              </button>
+            </form>
+
+            <p class="sa-matcher-disclaimer sa-reveal">
+              These are recommended planning windows, not universal university deadlines. Always confirm the exact programme, scholarship and immigration dates.
+            </p>
+          </div>
+
+          <aside class="sa-timeline-summary sa-reveal">
+            <span class="sa-timeline-summary__eyebrow">TARGET</span>
+            <h3 id="sa-timeline-target">Choose an intake.</h3>
+
+            <div class="sa-timeline-status" id="sa-timeline-status">
+              <span>Planning status</span>
+              <strong>Ready when you are</strong>
+            </div>
+
+            <div class="sa-timeline-special" id="sa-timeline-special">
+              Country-specific timing notes will appear here.
+            </div>
+
+            <a class="sa-text-link" id="sa-timeline-guide-link" href="#countries">
+              Open country guide <span aria-hidden="true">↗</span>
+            </a>
+          </aside>
+        </div>
+
+        <div class="sa-timeline-results sa-reveal" id="sa-timeline-results" hidden>
+          <div class="sa-timeline-results__head">
+            <div>
+              <span class="sa-eyebrow">YOUR ROADMAP</span>
+              <h3>Recommended preparation windows.</h3>
+            </div>
+            <span id="sa-timeline-window"></span>
+          </div>
+
+          <div class="sa-timeline-list" id="sa-timeline-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--white" id="radar">
+      <div class="sa-shell">
+        <div class="sa-radar-head">
+          <header class="sa-heading sa-reveal">
+            <span class="sa-eyebrow">STUDY ABROAD RADAR</span>
+            <h2>Rules move. Your plan should too.</h2>
+            <p>
+              Important changes that can alter cost, family plans, work rights, application steps or what happens after graduation. Official sources first.
+            </p>
+          </header>
+
+          <div class="sa-radar-trust sa-reveal">
+            <span class="sa-radar-trust__dot" aria-hidden="true"></span>
+            <div>
+              <strong>Official-source verified</strong>
+              <small id="sa-radar-verified">Last reviewed 7 October 2026</small>
+            </div>
+          </div>
+        </div>
+
+        <article class="sa-radar-feature sa-reveal" id="sa-radar-feature">
+          <div class="sa-radar-feature__loading">Loading the next confirmed change…</div>
+        </article>
+
+        <div class="sa-radar-toolbar sa-reveal">
+          <div class="sa-radar-filters" role="group" aria-label="Filter Study Abroad Radar">
+            <button class="sa-radar-filter is-active" type="button" data-radar-filter="All" aria-pressed="true">All</button>
+            <button class="sa-radar-filter" type="button" data-radar-filter="Coming next" aria-pressed="false">Coming Next</button>
+            <button class="sa-radar-filter" type="button" data-radar-filter="Visa & family" aria-pressed="false">Visa & Family</button>
+            <button class="sa-radar-filter" type="button" data-radar-filter="Money" aria-pressed="false">Money</button>
+            <button class="sa-radar-filter" type="button" data-radar-filter="Work & post study" aria-pressed="false">Work & Post Study</button>
+            <button class="sa-radar-filter" type="button" data-radar-filter="Application process" aria-pressed="false">Application</button>
+          </div>
+
+          <span class="sa-radar-count" id="sa-radar-count">Loading updates</span>
+        </div>
+
+        <div class="sa-radar-grid" id="sa-radar-grid" aria-live="polite"></div>
+
+        <div class="sa-radar-empty" id="sa-radar-empty" hidden>
+          No Radar items match that filter yet.
+        </div>
+
+        <div class="sa-radar-foot sa-reveal">
+          <p>
+            Radar is for awareness, not legal advice. Before paying tuition or lodging an application, re-check the official source and the full country guide.
+          </p>
+          <a class="sa-text-link" href="assessment.html">
+            Make this personal <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--soft" id="my-plan">
+      <div class="sa-shell">
+        <div class="sa-plan-head">
+          <header class="sa-heading sa-reveal">
+            <span class="sa-eyebrow">MY STUDY PLAN</span>
+            <h2>Keep the decisions that matter.</h2>
+            <p>
+              Your shortlist, priorities, latest budget estimate and target intake stay saved on this device so you can return without starting again.
+            </p>
+          </header>
+
+          <div class="sa-plan-progress sa-reveal" aria-label="Study plan completion">
+            <span>Plan progress</span>
+            <strong id="sa-plan-progress-text">0 of 4 parts ready</strong>
+            <div class="sa-plan-progress__bar" aria-hidden="true">
+              <i id="sa-plan-progress-bar"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="sa-plan-grid">
+          <article class="sa-plan-card sa-reveal">
+            <div class="sa-plan-card__top">
+              <div>
+                <span class="sa-plan-card__eyebrow">01 · Priorities</span>
+                <h3>What matters to you</h3>
+              </div>
+              <a href="#priorities">Edit</a>
+            </div>
+            <div class="sa-plan-tags" id="sa-plan-priorities">
+              <span class="sa-plan-empty">Choose up to three priorities.</span>
+            </div>
+          </article>
+
+          <article class="sa-plan-card sa-reveal">
+            <div class="sa-plan-card__top">
+              <div>
+                <span class="sa-plan-card__eyebrow">02 · Shortlist</span>
+                <h3>Countries to keep</h3>
+              </div>
+              <a href="#countries">Explore</a>
+            </div>
+            <div class="sa-plan-shortlist" id="sa-plan-shortlist">
+              <span class="sa-plan-empty">Save countries from Explore or Best Fit.</span>
+            </div>
+          </article>
+
+          <article class="sa-plan-card sa-reveal">
+            <div class="sa-plan-card__top">
+              <div>
+                <span class="sa-plan-card__eyebrow">03 · Budget</span>
+                <h3>Latest cost estimate</h3>
+              </div>
+              <a href="#cost-calculator">Calculate</a>
+            </div>
+            <div class="sa-plan-budget" id="sa-plan-budget">
+              <strong>Not calculated yet</strong>
+              <span>Use the Real Cost Calculator to add a first-year estimate.</span>
+            </div>
+          </article>
+
+          <article class="sa-plan-card sa-reveal">
+            <div class="sa-plan-card__top">
+              <div>
+                <span class="sa-plan-card__eyebrow">04 · Intake</span>
+                <h3>Target timeline</h3>
+              </div>
+              <a href="#intake-planner">Plan</a>
+            </div>
+            <div class="sa-plan-intake" id="sa-plan-intake">
+              <strong>No intake saved yet</strong>
+              <span>Build an Intake Planner timeline to save your target.</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="sa-plan-action sa-reveal">
+          <div class="sa-plan-action__copy">
+            <span class="sa-eyebrow">NEXT STEP</span>
+            <h3>Your research should become one clear case.</h3>
+            <p id="sa-plan-action-summary">
+              Add a few decisions first. Then use your saved plan as the starting point for eligibility assessment and counsellor guidance.
+            </p>
+          </div>
+
+          <div class="sa-plan-action__buttons">
+            <a class="sa-button sa-button--primary" href="assessment.html">
+              Check My Eligibility <span aria-hidden="true">→</span>
+            </a>
+            <button class="sa-button sa-button--secondary" id="sa-plan-clear" type="button">
+              Clear My Plan
+            </button>
+          </div>
+        </div>
+
+        <p class="sa-plan-storage-note sa-reveal">
+          Saved locally in this browser. No account is required for this version.
+        </p>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--white" id="counsellor-handoff">
+      <div class="sa-shell">
+        <div class="sa-handoff-layout">
+          <div class="sa-handoff-copy sa-reveal">
+            <span class="sa-eyebrow">COUNSELLOR HANDOFF</span>
+            <h2>Start the conversation with context.</h2>
+            <p>
+              Your saved Study Plan becomes a short case summary. Review it first, then send it to LizOn or continue into the eligibility assessment.
+            </p>
+
+            <div class="sa-handoff-status" id="sa-handoff-status" aria-live="polite">
+              Add something to My Study Plan and your handoff summary will appear here.
+            </div>
+          </div>
+
+          <div class="sa-handoff-panel sa-reveal">
+            <div class="sa-handoff-panel__top">
+              <div>
+                <span>Preview</span>
+                <strong>What LizOn will receive</strong>
+              </div>
+              <button type="button" id="sa-handoff-copy" disabled>Copy summary</button>
+            </div>
+
+            <pre class="sa-handoff-preview" id="sa-handoff-preview">No Study Plan details saved yet.</pre>
+
+            <div class="sa-handoff-actions">
+              <a class="sa-button sa-button--primary" id="sa-handoff-whatsapp" href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">
+                Send to Counsellor <span aria-hidden="true">→</span>
+              </a>
+              <a class="sa-button sa-button--secondary" id="sa-handoff-assessment" href="assessment.html">
+                Continue Assessment
+              </a>
+            </div>
+
+            <p>
+              Nothing is sent automatically. You choose when to open WhatsApp or continue to the assessment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--soft" id="how-lizon-helps">
+      <div class="sa-shell">
+        <header class="sa-heading sa-reveal">
+          <span class="sa-eyebrow">HOW LIZON HELPS</span>
+          <h2>Guidance from where you are to where you’re going.</h2>
+          <p>
+            We do not begin with an application form. We begin by understanding your current stage, then help you prepare the parts that make the next decision possible.
+          </p>
+        </header>
+
+        <div class="sa-support-grid">
+          <article class="sa-support-card sa-reveal">
+            <span>01</span>
+            <h3>English Preparation</h3>
+            <p>IELTS or PTE preparation when language readiness is still the first barrier.</p>
+          </article>
+          <article class="sa-support-card sa-reveal">
+            <span>02</span>
+            <h3>Profile Assessment</h3>
+            <p>Academic background, study gap, English status, budget, family plans and timeline are considered together.</p>
+          </article>
+          <article class="sa-support-card sa-reveal">
+            <span>03</span>
+            <h3>Country + Course Selection</h3>
+            <p>Shortlist destinations and programmes around the student’s actual profile instead of choosing a country first.</p>
+          </article>
+          <article class="sa-support-card sa-reveal">
+            <span>04</span>
+            <h3>Application Support</h3>
+            <p>Organise the university application, conditions, documents and programme-specific requirements.</p>
+          </article>
+          <article class="sa-support-card sa-reveal">
+            <span>05</span>
+            <h3>Visa Guidance</h3>
+            <p>Prepare the correct route, financial evidence and current country-specific visa checklist.</p>
+          </article>
+          <article class="sa-support-card sa-reveal">
+            <span>06</span>
+            <h3>Before You Fly</h3>
+            <p>Plan accommodation, arrival, communication, work readiness and the practical transition to life abroad.</p>
+          </article>
+        </div>
+
+        <div class="sa-support-foot sa-reveal">
+          <p>Want to understand the full LizOn approach before speaking with a counsellor?</p>
+          <a class="sa-text-link" href="why-lizon.html">
+            See Why LizOn Works This Way <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--white" id="real-outcomes">
+      <div class="sa-shell">
+        <div class="sa-outcomes-head">
+          <header class="sa-heading sa-reveal">
+            <span class="sa-eyebrow">REAL OUTCOMES</span>
+            <h2>Proof should be real, not decorative.</h2>
+            <p>
+              We only use student evidence already shared through LizOn. No invented visa count. No fake offer statistic. No anonymous “success rate.”
+            </p>
+          </header>
+
+          <a class="sa-text-link sa-reveal" href="index.html#results">
+            View More Student Results <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="sa-outcomes-grid">
+          <article class="sa-outcome-visa sa-reveal">
+            <div class="sa-outcome-visa__media">
+              <img src="assets/hero/visa-success-australia.png" alt="Australia student visa success shared with LizOn Education" loading="lazy">
+            </div>
+            <div class="sa-outcome-visa__copy">
+              <span>AUSTRALIA · VISA SUCCESS</span>
+              <h3>A real result already shared by LizOn.</h3>
+              <p>Shown as student evidence, not as a promise that another applicant will receive the same outcome.</p>
+            </div>
+          </article>
+
+          <article class="sa-outcome-story sa-reveal">
+            <a href="https://youtu.be/aZnXglvvcGo" target="_blank" rel="noopener noreferrer" class="sa-outcome-story__media" aria-label="Watch featured LizOn student story">
+              <img src="https://img.youtube.com/vi/aZnXglvvcGo/maxresdefault.jpg" alt="Featured LizOn student story" loading="lazy">
+              <span aria-hidden="true">▶</span>
+            </a>
+            <div class="sa-outcome-story__copy">
+              <span>STUDENT STORY</span>
+              <h3>Hear the journey in the student’s own words.</h3>
+              <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener noreferrer">See more student stories ↗</a>
+            </div>
+          </article>
+
+          <article class="sa-outcome-proof sa-reveal">
+            <span class="sa-outcome-proof__eyebrow">ACADEMIC READINESS</span>
+            <h3>The score is part of the study abroad journey too.</h3>
+            <p>
+              IELTS and PTE results on the LizOn homepage show one part of the preparation process before admission and visa stages begin.
+            </p>
+            <div class="sa-outcome-proof__links">
+              <a href="index.html#results">Real IELTS + PTE Results →</a>
+              <a href="index.html#student-voices">Student Voices →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--soft" id="parents">
+      <div class="sa-shell">
+        <div class="sa-parent-layout">
+          <div class="sa-parent-copy sa-reveal">
+            <span class="sa-eyebrow">FOR PARENTS</span>
+            <h2>A study abroad decision belongs to the family too.</h2>
+            <p>
+              Parents usually need answers about safety, money, accommodation, education quality, work, career outcomes and what happens if the plan changes. Those questions deserve their own space.
+            </p>
+
+            <div class="sa-parent-topics">
+              <span>Safety + wellbeing</span>
+              <span>Real living expenses</span>
+              <span>Accommodation</span>
+              <span>Education quality</span>
+              <span>Career opportunities</span>
+              <span>Future planning</span>
+            </div>
+
+            <div class="sa-parent-actions">
+              <a class="sa-button sa-button--primary" href="parents.html">
+                Open Parent’s Guide <span aria-hidden="true">→</span>
+              </a>
+              <a class="sa-text-link" href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">
+                Parents can talk to us <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <aside class="sa-parent-panel sa-reveal">
+            <span class="sa-parent-panel__eyebrow">A BETTER FIRST QUESTION</span>
+            <blockquote>“Is this the right plan for this student?”</blockquote>
+            <p>
+              Two students can want the same country and still need completely different routes because their grades, English, budget, gap, goals and timing are different.
+            </p>
+            <a href="assessment.html">Understand the student’s starting point →</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--white" id="trust-method">
+      <div class="sa-shell">
+        <div class="sa-trust-layout">
+          <header class="sa-heading sa-reveal">
+            <span class="sa-eyebrow">HOW WE VERIFY</span>
+            <h2>Useful information needs a date and a source.</h2>
+            <p>
+              Study abroad rules change. So the platform separates stable planning guidance from immigration facts that need regular verification.
+            </p>
+          </header>
+
+          <div class="sa-trust-grid">
+            <article class="sa-trust-card sa-reveal">
+              <span>01</span>
+              <h3>Official source first</h3>
+              <p>Government, immigration, official university and recognised admissions sources are preferred for changing rules.</p>
+            </article>
+            <article class="sa-trust-card sa-reveal">
+              <span>02</span>
+              <h3>Verification dates</h3>
+              <p>Dynamic rules in Radar and the decision datasets carry a review date so students know when the information was checked.</p>
+            </article>
+            <article class="sa-trust-card sa-reveal">
+              <span>03</span>
+              <h3>No fake certainty</h3>
+              <p>Best Fit explains why a destination surfaced. It does not claim a visa percentage or guarantee admission.</p>
+            </article>
+            <article class="sa-trust-card sa-reveal">
+              <span>04</span>
+              <h3>Real cost versus visa funds</h3>
+              <p>The calculator keeps realistic spending separate from official financial evidence wherever the rules allow that distinction.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="sa-final-cta sa-reveal">
+          <div>
+            <span class="sa-eyebrow">YOUR NEXT STEP</span>
+            <h3>Explore first. Understand your case. Then decide.</h3>
+            <p>
+              Use the tools on this page for research, save what matters in My Study Plan, then move into assessment or counsellor guidance when you are ready.
+            </p>
+          </div>
+
+          <div class="sa-final-cta__actions">
+            <a class="sa-button sa-button--primary" href="#my-plan">
+              Open My Study Plan <span aria-hidden="true">→</span>
+            </a>
+            <a class="sa-button sa-button--secondary" href="assessment.html?from=study-plan">
+              Check My Eligibility
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sa-section sa-section--white" id="readiness">
+      <div class="sa-shell">
+        <header class="sa-heading sa-reveal">
+          <span class="sa-eyebrow">BEYOND ADMISSION</span>
+          <h2>Getting the offer is not the finish line.</h2>
+          <p>
+            A strong study abroad plan also prepares you for arrival, day to day student life and the transition from study into your next career step.
+          </p>
+        </header>
+
+        <div class="sa-tool-grid">
+          <article class="sa-tool-card sa-tool-card--dark sa-reveal">
+            <span class="sa-tool-card__number">01</span>
+            <h3>Arrive Prepared</h3>
+            <p>Plan accommodation, airport arrival, local registration, banking, communication, insurance and the first weeks before you fly.</p>
+            <span class="sa-tool-card__line" aria-hidden="true"></span>
+          </article>
+
+          <article class="sa-tool-card sa-reveal">
+            <span class="sa-tool-card__number">02</span>
+            <h3>Live Within the Rules</h3>
+            <p>Understand the work conditions, attendance expectations, visa responsibilities, family restrictions and practical costs that continue after arrival.</p>
+            <span class="sa-tool-card__line" aria-hidden="true"></span>
+          </article>
+
+          <article class="sa-tool-card sa-reveal">
+            <span class="sa-tool-card__number">03</span>
+            <h3>Prepare for What Comes Next</h3>
+            <p>Use your study period to build employability, local experience, professional networks and a realistic post study plan instead of waiting until graduation.</p>
+            <span class="sa-tool-card__line" aria-hidden="true"></span>
+          </article>
+        </div>
+
+        <div class="sa-foundation-note sa-reveal" style="margin-top:22px">
+          <div>
+            <h3>Your visa gets you there. Your preparation shapes what happens next.</h3>
+            <p>
+              Save your country, budget and intake decisions in My Study Plan, then take that context into assessment or counselling when you need personal guidance.
+            </p>
+          </div>
+          <a class="sa-button sa-button--primary" href="#my-plan">Open My Study Plan ↑</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer__journey" aria-hidden="true"></div>
+
+    <div class="shell footer__main">
+      <div class="footer__brand">
+        <img src="assets/logo/lizon-logo.png" alt="" width="52" height="52">
+        <h2>Begin Better,<br>Become More.</h2>
+        <p>Learn · Score · Fly</p>
+
+        <div class="socials" aria-label="LizOn Education social media">
+          <a href="https://www.facebook.com/lizoneducation" target="_blank" rel="noopener noreferrer" aria-label="Facebook">f</a>
+          <a href="https://www.youtube.com/@lizoneducation" target="_blank" rel="noopener noreferrer" aria-label="YouTube">▶</a>
+          <a href="https://www.instagram.com/lizonedu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">◎</a>
+          <a href="https://www.tiktok.com/@lizoneducation/" target="_blank" rel="noopener noreferrer" aria-label="TikTok">♪</a>
+        </div>
+      </div>
+
+      <div class="footer-nav">
+        <details class="footer-group" open>
+          <summary>Learn <span>+</span></summary>
+          <div>
+            <a href="ielts.html">IELTS</a>
+            <a href="pte.html">PTE</a>
+            <a href="ieltsclass.html">Free IELTS Classes</a>
+            <a href="pteclass.html">Free PTE Classes</a>
+          </div>
+        </details>
+
+        <details class="footer-group" open>
+          <summary>Study Abroad <span>+</span></summary>
+          <div>
+            <a href="#countries">Explore Countries</a>
+            <a href="assessment.html">Check Your Eligibility</a>
             <a href="parents.html">Parents Guide</a>
-            <a href="https://wa.me/8801611611139">WhatsApp</a>
-        </nav>
+          </div>
+        </details>
 
-       <div class="nav-dropdown">
-    <button class="dropdown-btn">
-        What's Holding You Back? ▾
-    </button>
+        <details class="footer-group" open>
+          <summary>LizOn <span>+</span></summary>
+          <div>
+            <a href="https://www.mylizon.com/joy.html">Joy Sir</a>
+            <a href="index.html#results">Student Results</a>
+            <a href="index.html#student-voices">Student Stories</a>
+            <a href="mailto:lizonedu@gmail.com">Become a Partner</a>
+          </div>
+        </details>
 
-    <div class="dropdown-menu">
-        <a href="study-gap.html">Study Gap</a>
-        <a href="low-gpa.html">Low GPA</a>
-        <a href="not-started-ielts.html">Haven't Started IELTS/PTE</a>
-        <a href="rejected-before.html">Rejected Before</a>
-        <a href="ready-to-apply.html">Ready To Apply</a>
-        <a href="parents.html">Parents Guide</a>
-        <a href="why-lizon.html">Why LizOn</a>
+        <details class="footer-group footer-group--contact" open>
+          <summary>Connect <span>+</span></summary>
+          <div>
+            <a class="footer-contact-link" href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">01608 881545 ↗</a>
+            <a class="footer-contact-link" href="mailto:lizonedu@gmail.com">lizonedu@gmail.com ↗</a>
+            <address>
+              51 Kazi Office Road, Basabo<br>
+              Beside Morning Bell School<br>
+              Dhaka 1214
+            </address>
+          </div>
+        </details>
+      </div>
     </div>
-</div>
+
+    <div class="shell footer__bottom">
+      <p>© 2026 LizOn Education. All rights reserved.</p>
+      <button class="back-to-top" id="back-to-top" type="button">
+        Back to top <span aria-hidden="true">↑</span>
+      </button>
     </div>
-</header>
-
-<section class="hero">
-    <div class="container hero-grid">
-
-        <div>
-            <span class="label">LizOn Study Abroad</span>
-
-         <h1 class="hero-title">
-    Build A Future Abroad.
-    <span>Start With Understanding Where You Are Today.</span>
-</h1>
-
-            <p>
-                Every study abroad journey is different.
-                Whether you're worried about a study gap, a low GPA, IELTS/PTE,
-                scholarships, or simply don't know what comes next, the first step
-                is understanding your starting point.
-            </p>
-
-            <div class="hero-buttons">
-                <a href="assessment.html" class="btn btn-primary">Find My Starting Point</a>
-                <a href="find-your-path.html" class="btn btn-secondary">Explore My Path</a>
-            </div>
-        </div>
-
-        <div class="hero-visual">
-            <div class="flow">
-                <div class="flow-box">Today</div>
-                <div class="arrow">↓</div>
-                <div class="flow-box">Assessment</div>
-                <div class="arrow">↓</div>
-                <div class="flow-box">Roadmap</div>
-                <div class="arrow">↓</div>
-                <div class="flow-box">Future Abroad</div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="reveal">
-    <div class="container">
-
-        <div class="section-title">
-            <h2>What's Holding You Back?</h2>
-            <p>Choose the situation that best matches where you are today.</p>
-        </div>
-
-        <div class="grid grid-3">
-
-            <div class="card">
-                <h3>Study Gap</h3>
-                <p>Understand your options and possible pathways.</p>
-                <a class="card-link" href="study-gap.html">Explore Path →</a>
-            </div>
-
-            <div class="card">
-                <h3>Low GPA</h3>
-                <p>Discover opportunities that fit your profile.</p>
-                <a class="card-link" href="low-gpa.html">Explore Path →</a>
-            </div>
-
-            <div class="card">
-                <h3>Haven't Started IELTS/PTE</h3>
-                <p>Know where language preparation fits in your journey.</p>
-                <a class="card-link" href="not-started-ielts.html">Explore Path →</a>
-            </div>
-
-            <div class="card">
-                <h3>Scholarships</h3>
-                <p>Learn how funding opportunities may fit your goals.</p>
-                <a class="card-link" href="scholarships.html">Explore Path →</a>
-            </div>
-
-            <div class="card">
-                <h3>Rejected Before</h3>
-                <p>Identify what may need improvement before reapplying.</p>
-                <a class="card-link" href="rejected-before.html">Explore Path →</a>
-            </div>
-
-            <div class="card">
-                <h3>Ready To Apply</h3>
-                <p>Take the next step with confidence and clarity.</p>
-                <a class="card-link" href="ready-to-apply.html">Explore Path →</a>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-<section class="section-light reveal">
-    <div class="container statement">
-
-        <div class="section-title">
-            <h2>Most Students Start With The Wrong Question</h2>
-        </div>
-
-        <div class="statement-large">
-            Which Country Should I Choose?
-        </div>
-
-        <ul class="check-list">
-            <li>Your profile</li>
-            <li>Your readiness</li>
-            <li>Your budget</li>
-            <li>Your options</li>
-            <li>Your next step</li>
-        </ul>
-
-        <a href="assessment.html" class="btn btn-primary">
-            Find My Starting Point
-        </a>
-
-    </div>
-</section>
-
-<section class="reveal">
-    <div class="container">
-
-        <div class="section-title">
-            <h2>Why Take The Assessment?</h2>
-            <p>The assessment helps identify your current stage and what should happen next.</p>
-        </div>
-
-        <div class="grid grid-3">
-            <div class="card"><h3>Identify Your Current Stage</h3></div>
-            <div class="card"><h3>Understand What Comes Next</h3></div>
-            <div class="card"><h3>Personalized Direction</h3></div>
-            <div class="card"><h3>Avoid Guesswork</h3></div>
-            <div class="card"><h3>Mobile Friendly</h3></div>
-            <div class="card"><h3>Takes Around 2 Minutes</h3></div>
-        </div>
-
-        <div class="center-text">
-            <a href="assessment.html" class="btn btn-primary">
-                Find My Starting Point
-            </a>
-        </div>
-
-    </div>
-</section>
-
-<section class="section-light reveal">
-    <div class="container">
-
-        <div class="section-title">
-            <h2>Every Journey Looks Different</h2>
-            <p>Most students move through similar stages.</p>
-        </div>
-
-        <div class="roadmap">
-
-            <div class="step">
-                <div class="step-box">Step 1<br>IELTS / PTE Preparation</div>
-            </div>
-
-            <div class="step-arrow">↓</div>
-
-            <div class="step">
-                <div class="step-box">Step 2<br>Documents & Budget Evaluation</div>
-            </div>
-
-            <div class="step-arrow">↓</div>
-
-            <div class="step">
-                <div class="step-box">Step 3<br>Country Shortlist</div>
-            </div>
-
-            <div class="step-arrow">↓</div>
-
-            <div class="step">
-                <div class="step-box">Step 4<br>University Options</div>
-            </div>
-
-            <div class="step-arrow">↓</div>
-
-            <div class="step">
-                <div class="step-box">Step 5<br>Application</div>
-            </div>
-
-            <div class="step-arrow">↓</div>
-
-            <div class="step">
-                <div class="step-box">Step 6<br>Visa</div>
-            </div>
-
-        </div>
-
-        <div class="center-text">
-            <p>
-                You do not need every answer today.<br>
-                You simply need to know what comes next.
-            </p>
-
-            <a href="assessment.html" class="btn btn-primary">
-                Find My Starting Point
-            </a>
-        </div>
-
-    </div>
-</section>
-
-<section class="reveal">
-    <div class="container">
-
-        <div class="section-title">
-            <h2>We Don't Just Help Students Apply.<br>We Help Students Become Ready.</h2>
-            <p>
-                Many agencies focus on applications.
-                We focus on helping students prepare for the opportunities ahead.
-            </p>
-        </div>
-
-        <div class="grid grid-3">
-            <div class="card"><h3>English Preparation</h3></div>
-            <div class="card"><h3>Profile Evaluation</h3></div>
-            <div class="card"><h3>Budget Planning</h3></div>
-            <div class="card"><h3>Application Support</h3></div>
-            <div class="card"><h3>Visa Guidance</h3></div>
-            <div class="card"><h3>Career Readiness</h3></div>
-        </div>
-
-        <div class="center-text">
-            <a href="why-lizon.html" class="btn btn-secondary">
-                Why LizOn →
-            </a>
-        </div>
-
-    </div>
-</section>
-
-<section class="section-light reveal">
-    <div class="container">
-
-        <div class="section-title">
-            <h2>Preparing For Life Beyond The Classroom</h2>
-            <p>
-                Studying abroad is not only about receiving an offer letter.
-                It is also about building the skills needed to succeed afterward.
-            </p>
-        </div>
-
-        <div class="grid grid-3">
-            <div class="card"><h3>Communication Skills</h3></div>
-            <div class="card"><h3>Workplace Readiness</h3></div>
-            <div class="card"><h3>Professional Etiquette</h3></div>
-            <div class="card"><h3>Digital Skills</h3></div>
-            <div class="card"><h3>Part-Time Job Preparation</h3></div>
-            <div class="card"><h3>Career Development</h3></div>
-        </div>
-
-    </div>
-</section>
-
-<section class="reveal">
-    <div class="container">
-
-        <div class="parent-box">
-            <h2>A Guide For Parents</h2>
-
-            <p>
-                Families often have questions about planning, safety,
-                cost, accommodation, and future opportunities.
-            </p>
-
-            <a href="parents.html" class="btn btn-secondary">
-                Explore Parent Guide
-            </a>
-        </div>
-
-    </div>
-</section>
-
-<section class="reveal">
-    <div class="container">
-
-        <div class="system-box">
-
-            <h2>Why We Built This System</h2>
-
-            <div class="system-question">
-                Most students ask:<br>
-                Which Country Should I Choose?
-            </div>
-
-            <div class="system-question">
-                We ask:<br>
-                Where Are You Today?
-            </div>
-
-            <p>
-                Understanding your current stage often makes every future
-                decision easier.
-            </p>
-
-            <a href="assessment.html" class="btn btn-secondary">
-                Find My Starting Point
-            </a>
-
-        </div>
-
-    </div>
-</section>
-
-<section class="reveal">
-    <div class="container">
-
-        <div class="final-cta">
-
-            <h2>Every Journey Starts Somewhere</h2>
-
-            <p>
-                You do not need every answer today.
-                Start by understanding where you are now and what should happen next.
-            </p>
-
-            <div class="hero-buttons" style="justify-content:center;">
-                <a href="assessment.html" class="btn btn-secondary">
-                    Find My Starting Point
-                </a>
-
-                <a href="https://wa.me/8801611611139" class="btn btn-secondary">
-                    Talk To A Counselor
-                </a>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-<footer class="footer">
-    <div class="container footer-grid">
-
-        <div>
-            <div class="logo">LizOn Study Abroad</div>
-
-            <div class="footer-text">
-                Build A Future Abroad.<br>
-                Start With Understanding Where You Are Today.
-            </div>
-        </div>
-
-        <div class="footer-links">
-            <a href="find-your-path.html">Find Your Path</a>
-            <a href="assessment.html">Assessment</a>
-            <a href="why-lizon.html">Why LizOn</a>
-            <a href="parents.html">Parents Guide</a>
-            <a href="https://wa.me/8801611611139">WhatsApp</a>
-        </div>
-
-    </div>
-</footer>
-
-<div class="mobile-cta">
-    <a href="assessment.html" class="btn btn-primary">
-        Find My Starting Point
-    </a>
-</div>
-
-<script>
-const reveals = document.querySelectorAll('.reveal');
-
-const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-        if(entry.isIntersecting){
-            entry.target.classList.add('active');
-        }
-    });
-},{threshold:.12});
-
-reveals.forEach(el=>observer.observe(el));
-</script>
-
+  </footer>
 </body>
 </html>

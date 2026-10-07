@@ -137,7 +137,7 @@
   }
 
   function refreshPlanButtons() {
-    $("[data-plan-country]").forEach(button => {
+    document.querySelectorAll("[data-plan-country]").forEach(button => {
       const saved = isCountrySaved(button.dataset.planCountry);
       button.classList.toggle("is-saved", saved);
       button.setAttribute("aria-pressed", String(saved));
@@ -566,7 +566,7 @@
     const desktopQuery = window.matchMedia("(min-width: 901px)");
 
     const closeDesktopDropdowns = () => {
-      $(".nav-dropdown__trigger").forEach(item => item.setAttribute("aria-expanded", "false"));
+      document.querySelectorAll(".nav-dropdown__trigger").forEach(item => item.setAttribute("aria-expanded", "false"));
     };
 
     const openMenu = () => {
@@ -592,9 +592,9 @@
 
     toggle?.addEventListener("click", openMenu);
     close?.addEventListener("click", closeMenu);
-    $(".mobile-menu a").forEach(link => link.addEventListener("click", closeMenu));
+    document.querySelectorAll(".mobile-menu a").forEach(link => link.addEventListener("click", closeMenu));
 
-    $(".nav-dropdown").forEach(dropdown => {
+    document.querySelectorAll(".nav-dropdown").forEach(dropdown => {
       const trigger = $(".nav-dropdown__trigger", dropdown);
       if (!trigger) return;
 
@@ -1787,10 +1787,10 @@
   }
 
   function setupRadar() {
-    $(".sa-radar-filter").forEach(button => {
+    document.querySelectorAll(".sa-radar-filter").forEach(button => {
       button.addEventListener("click", () => {
         state.radarFilter = button.dataset.radarFilter || "All";
-        $(".sa-radar-filter").forEach(item => {
+        document.querySelectorAll(".sa-radar-filter").forEach(item => {
           const active = item === button;
           item.classList.toggle("is-active", active);
           item.setAttribute("aria-pressed", String(active));

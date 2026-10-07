@@ -1,7 +1,6 @@
 (() => {
   const $ = id => document.getElementById(id);
   let token = sessionStorage.getItem("lizonAdminToken") || "";
-  let posts = [];
 
   async function api(url, opts={}) {
     opts.headers = {...(opts.headers||{}),"Content-Type":"application/json","x-admin-token":token};
@@ -55,12 +54,14 @@
   function clearForm(){
     $("post-id").value="";["title-bn","title-en","excerpt-bn","excerpt-en","source-name","source-url"].forEach(id=>$(id).value="");
     $("body-bn").innerHTML="";$("body-en").innerHTML="";$("category").value="study-abroad";$("content-type").value="news";$("status").value="draft";$("importance").value="useful";$("featured-check").checked=false;$("verified-check").checked=false;
+    $("save-message").textContent="";
   }
   $("new-post").addEventListener("click",clearForm);
 
   async function loadPosts(){
     try{
-      const d=await api("/api/content-admin");posts=d.posts||[];
+      const d=await api("/api/content-admin");
+      const posts=d.posts||[];
       $("admin-posts").innerHTML=posts.length?posts.map(p=>`<div class="admin-post" data-id="${p.id}"><strong>${p.title_bn}</strong><small class="${p.status==="review"?"review":""}">${p.category} · ${p.status}${p.ai_generated?" · AI":""}</small></div>`).join(""):"<p>No posts yet.</p>";
     }catch(e){$("admin-posts").innerHTML="<p>"+e.message+"</p>"}
   }
@@ -69,20 +70,15 @@
   $("admin-posts").addEventListener("click",async e=>{
     const row=e.target.closest("[data-id]");if(!row)return;
     try{
-      const list=await api("/api/content-admin");
-      const meta=(list.posts||[]).find(p=>p.id===Number(row.dataset.id)); if(!meta)return;
-      const pub=await fetch("/api/content?slug="+encodeURIComponent(meta.slug)).then(r=>r.json());
-      let full=pub.post;
-      if(!full){
-        $("save-message").textContent="Draft/review editing requires opening it after publish in this first admin build.";
-        return;
-      }
+      const d=await api("/api/content-admin?id="+encodeURIComponent(row.dataset.id));
+      const full=d.post;
       $("post-id").value=full.id;$("title-bn").value=full.title_bn||"";$("title-en").value=full.title_en||"";
       $("excerpt-bn").value=full.excerpt_bn||"";$("excerpt-en").value=full.excerpt_en||"";
       $("body-bn").innerHTML=full.body_bn||"";$("body-en").innerHTML=full.body_en||"";
-      $("category").value=full.category;$("content-type").value=full.content_type;$("status").value="published";
+      $("category").value=full.category;$("content-type").value=full.content_type;$("status").value=full.status;
       $("importance").value=full.importance||"useful";$("featured-check").checked=!!full.featured;$("verified-check").checked=!!full.source_verified;
       $("source-name").value=full.source_name||"";$("source-url").value=full.source_url||"";
+      $("save-message").textContent=full.ai_generated?"AI generated post loaded for review.":"Post loaded.";
       window.scrollTo({top:0,behavior:"smooth"});
     }catch(err){$("save-message").textContent=err.message}
   });

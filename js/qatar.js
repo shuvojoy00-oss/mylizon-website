@@ -51,32 +51,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const normalize=v=>v.toLowerCase().replace(/[^a-z0-9₹$\s]/g," ").replace(/\s+/g," ").trim();
   const aliases={
-    "student visa":"student visa qatar university",
-    "student pass":"student visa qatar university",
-    "scholarship":"international scholarship",
-    "international scholarship":"international scholarship",
-    "tuition grant":"international scholarship",
-    "work":"sahem student work",
-    "20 hours":"sahem student work",
-    "40 hours":"sahem student work",
-    "part time":"sahem student work",
-    "post study":"graduate visa extension",
-    "one year":"graduate visa extension",
-    "job search":"graduate visa extension",
-    "employment pass":"work residence after graduation",
-    "work permit":"work residence after graduation",
-    "family":"family",
-    "spouse":"family",
+    "student visa":"student visa residence",
+    "student pass":"student visa residence",
+    "qatar university":"universities",
+    "education city":"universities",
+    "20 hours":"student work rights",
+    "40 hours":"student work rights",
+    "sahem":"student work rights",
+    "work":"student work rights",
+    "one year":"after graduation",
+    "post study":"after graduation",
+    "job search":"after graduation",
+    "scholarship":"scholarships",
+    "international scholarship":"scholarships",
     "english":"language",
     "ielts":"language",
-    "toefl":"language",
     "tuition":"tuition",
-    "housing":"money",
     "living cost":"money",
     "doha":"cities",
-    "qatar university":"universities",
-    "hbku":"universities",
-    "bangladesh":"student visa qatar university"
+    "family":"family",
+    "spouse":"family",
+    "bangladesh":"student visa residence"
   };
 
   const items=[];

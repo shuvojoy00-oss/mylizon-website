@@ -82,11 +82,4 @@
       window.scrollTo({top:0,behavior:"smooth"});
     }catch(err){$("save-message").textContent=err.message}
   });
-
-  $("run-ai").addEventListener("click",async()=>{
-    const b=$("run-ai");b.disabled=true;b.textContent="Checking...";
-    try{const d=await api("/api/news-run",{method:"POST",body:"{}"});b.textContent=`Done · ${d.saved.length} saved`;await loadPosts()}
-    catch(e){b.textContent=e.message}
-    finally{setTimeout(()=>{b.disabled=false;b.textContent="Run AI News Check"},3500)}
-  });
 })();

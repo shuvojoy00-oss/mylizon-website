@@ -13,6 +13,20 @@ module.exports = async (req, res) => {
     const pool = getPool();
 
     if (req.method === "GET") {
+      const id = Number(req.query?.id || 0);
+      if (id) {
+        const r = await pool.query(`
+          select id, slug, title_bn, title_en, excerpt_bn, excerpt_en, body_bn, body_en,
+                 category, content_type, status, featured, source_name, source_url,
+                 source_verified, importance, ai_generated, ai_confidence,
+                 published_at, created_at, updated_at
+          from public.content_posts
+          where id=$1 limit 1
+        `, [id]);
+        if (!r.rows[0]) return res.status(404).json({ ok:false, error:"Post not found" });
+        return res.json({ ok:true, post:r.rows[0] });
+      }
+
       const r = await pool.query(`
         select id, slug, title_bn, title_en, category, content_type, status, featured,
                source_name, source_url, source_verified, importance, ai_generated,
@@ -56,6 +70,10 @@ module.exports = async (req, res) => {
     if (req.method === "PATCH") {
       const id = Number(body.id);
       if (!id) return res.status(400).json({ ok:false, error:"Missing id" });
+      const titleBn = String(body.title_bn || "").trim();
+      const bodyBn = cleanHtml(body.body_bn);
+      if (!titleBn || !bodyBn) return res.status(400).json({ ok:false, error:"Bangla title and article are required" });
+
       const status = allowed(body.status, ["draft","review","published","archived"], "draft");
       const r = await pool.query(`
         update public.content_posts set
@@ -69,8 +87,8 @@ module.exports = async (req, res) => {
           updated_at=now()
         where id=$15 returning id,slug,status
       `, [
-        String(body.title_bn || "").trim(), body.title_en || null, body.excerpt_bn || null,
-        body.excerpt_en || null, cleanHtml(body.body_bn), cleanHtml(body.body_en) || null,
+        titleBn, body.title_en || null, body.excerpt_bn || null,
+        body.excerpt_en || null, bodyBn, cleanHtml(body.body_en) || null,
         allowed(body.category, ["study-abroad","ielts","pte"], "study-abroad"),
         allowed(body.content_type, ["news","guide","suggestion","prediction","announcement"], "news"),
         status, !!body.featured, body.source_url || null, body.source_name || null,

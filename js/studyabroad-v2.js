@@ -1674,18 +1674,27 @@
     return item.category === filter;
   }
 
+  function radarIsCurrent(item) {
+    const today = radarToday();
+    const date = radarDate(item);
+    const ageDays = Math.floor((today - date) / 86400000);
+    return date > today || ageDays <= 120;
+  }
+
   function sortedRadar(items = state.radar) {
     const today = radarToday();
-    return [...items].sort((a, b) => {
-      const ad = radarDate(a);
-      const bd = radarDate(b);
-      const aFuture = ad > today;
-      const bFuture = bd > today;
+    return [...items]
+      .filter(radarIsCurrent)
+      .sort((a, b) => {
+        const ad = radarDate(a);
+        const bd = radarDate(b);
+        const aFuture = ad > today;
+        const bFuture = bd > today;
 
-      if (aFuture !== bFuture) return aFuture ? -1 : 1;
-      if (aFuture && bFuture) return ad - bd || Number(b.priority || 0) - Number(a.priority || 0);
-      return bd - ad || Number(b.priority || 0) - Number(a.priority || 0);
-    });
+        if (aFuture !== bFuture) return aFuture ? -1 : 1;
+        if (aFuture && bFuture) return ad - bd || Number(b.priority || 0) - Number(a.priority || 0);
+        return bd - ad || Number(b.priority || 0) - Number(a.priority || 0);
+      });
   }
 
   function radarCountryCode(item) {

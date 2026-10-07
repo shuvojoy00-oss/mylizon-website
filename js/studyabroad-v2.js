@@ -515,17 +515,37 @@
     `;
   }
 
+  function countryFlagUrl(country) {
+    const raw = String(country.code || "").toLowerCase();
+    const code = raw === "uk" ? "gb" : raw;
+    return code ? `https://flagcdn.com/w160/${encodeURIComponent(code)}.png` : "";
+  }
+
   function mobileCountryTemplate(country) {
+    const flag = countryFlagUrl(country);
     return `
-      <div class="sa-mobile-country-row">
-        <a href="${escapeHtml(country.page)}">
+      <a class="sa-mobile-country-card" href="${escapeHtml(country.page)}" style="--country-flag:url('${flag}')">
+        <span class="sa-mobile-country-card__code">${escapeHtml(country.code || country.name.slice(0,2).toUpperCase())}</span>
+        <strong>${escapeHtml(country.name)}</strong>
+        <span class="sa-mobile-country-card__open" aria-hidden="true">→</span>
+      </a>
+    `;
+  }
+
+  function mobileCountrySearchTemplate(country) {
+    return `
+      <article class="sa-mobile-country-search-result">
+        <div>
+          <span>${escapeHtml(country.code || country.name.slice(0,2).toUpperCase())}</span>
           <strong>${escapeHtml(country.name)}</strong>
-          <span aria-hidden="true">→</span>
-        </a>
-        <button class="sa-save-country ${isCountrySaved(country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(country.id)}" aria-pressed="${isCountrySaved(country.id)}">
-          ${isCountrySaved(country.id) ? "Saved" : "Save"}
-        </button>
-      </div>
+        </div>
+        <div class="sa-mobile-country-search-actions">
+          <a href="${escapeHtml(country.page)}">Explore</a>
+          <button class="sa-save-country ${isCountrySaved(country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(country.id)}" aria-pressed="${isCountrySaved(country.id)}">
+            ${isCountrySaved(country.id) ? "Saved to plan" : "Save to plan"}
+          </button>
+        </div>
+      </article>
     `;
   }
 
@@ -535,13 +555,30 @@
 
     const countries = filteredCountries();
     const mobile = window.matchMedia("(max-width: 620px)").matches;
-    grid.classList.toggle("is-mobile-list", mobile);
-    grid.innerHTML = mobile
-      ? countries.map(mobileCountryTemplate).join("")
-      : countries.map(cardTemplate).join("");
+    const searching = Boolean(state.query.trim());
+
+    grid.classList.toggle("is-mobile-list", mobile && searching);
+    grid.classList.toggle("is-mobile-marquee", mobile && !searching);
+
+    if (mobile && !searching) {
+      const cards = countries.map(mobileCountryTemplate).join("");
+      grid.innerHTML = `
+        <div class="sa-mobile-country-marquee" aria-label="Explore study destinations">
+          <div class="sa-mobile-country-track">${cards}${cards}</div>
+        </div>
+      `;
+    } else if (mobile) {
+      grid.innerHTML = countries.map(mobileCountrySearchTemplate).join("");
+    } else {
+      grid.innerHTML = countries.map(cardTemplate).join("");
+    }
 
     const count = $("#sa-country-count");
-    if (count) count.textContent = `${countries.length} destination${countries.length === 1 ? "" : "s"}`;
+    if (count) {
+      count.textContent = mobile && !searching
+        ? "Swipe or tap a country"
+        : `${countries.length} destination${countries.length === 1 ? "" : "s"}`;
+    }
 
     const empty = $("#sa-country-empty");
     if (empty) empty.hidden = countries.length !== 0;

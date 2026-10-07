@@ -154,6 +154,20 @@
     ].filter(Boolean).length;
   }
 
+  function renderHeroPlan() {
+    const host = $("#sa-hero-plan-list");
+    if (!host) return;
+    host.innerHTML = state.plan.shortlist.length
+      ? state.plan.shortlist.slice(0, 3).map(item => `
+          <a class="sa-hero-plan-country" href="${escapeHtml(item.page || "#my-plan")}">
+            <span>${escapeHtml(item.code || item.name.slice(0,2))}</span>
+            <strong>${escapeHtml(item.name)}</strong>
+            <small>Open guide →</small>
+          </a>
+        `).join("")
+      : '<div class="sa-hero-plan-empty">No countries saved yet. Explore destinations and save the ones you want to compare later.</div>';
+  }
+
   function renderPlan() {
     const priorities = $("#sa-plan-priorities");
     if (priorities) {
@@ -187,7 +201,7 @@
           <span>Funding target: ${escapeHtml(state.plan.cost.fundingText || "Check official target")}</span>
         `;
       } else {
-        budget.innerHTML = '<strong>Not calculated yet</strong><span>Use the Real Cost Calculator to add a first-year estimate.</span>';
+        budget.innerHTML = '<strong>Not calculated yet</strong><span>Use the Cost Planner to add a first-year estimate.</span>';
       }
     }
 
@@ -221,6 +235,7 @@
       action.textContent = messages[ready];
     }
 
+    renderHeroPlan();
     renderHandoff();
   }
 
@@ -413,7 +428,7 @@
     if (heroPrefs) {
       heroPrefs.textContent = count
         ? [...state.preferences].join(" · ")
-        : "Budget · career · post study";
+        : "Choose priorities to begin.";
     }
 
     const matcherPrefs = $("#sa-match-priorities");
@@ -486,28 +501,31 @@
       .map(level => `<span>${escapeHtml(level)}</span>`).join("");
 
     return `
-      <article class="sa-country-card sa-reveal" style="--delay:${Math.min(index, 7) * 45}ms">
-        <a class="sa-country-card__visual" href="${escapeHtml(country.page)}" aria-label="Explore ${escapeHtml(country.name)}">
+      <article class="sa-country-card sa-reveal" style="--delay:${Math.min(index, 7) * 35}ms">
+        <a class="sa-country-card__main" href="${escapeHtml(country.page)}" aria-label="Open ${escapeHtml(country.name)} guide">
           <span class="sa-country-card__code">${escapeHtml(country.code || country.name.slice(0,2).toUpperCase())}</span>
-          <span class="sa-country-card__region">${escapeHtml(country.region)}</span>
-          <span class="sa-country-card__orb" aria-hidden="true"></span>
-          <span class="sa-country-card__route" aria-hidden="true"></span>
-        </a>
-        <div class="sa-country-card__body">
-          <div class="sa-country-card__meta">${levels}</div>
           <h3>${escapeHtml(country.name)}</h3>
-          <p>${escapeHtml(country.line || "Explore study options, costs and pathways.")}</p>
-          <div class="sa-country-card__actions">
-            <a class="sa-country-card__link" href="${escapeHtml(country.page)}">
-              Explore ${escapeHtml(country.name)}
-              <span aria-hidden="true">↗</span>
-            </a>
-            <button class="sa-save-country ${isCountrySaved(country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(country.id)}" aria-pressed="${isCountrySaved(country.id)}">
-              ${isCountrySaved(country.id) ? "Saved to plan" : "Save to plan"}
-            </button>
-          </div>
-        </div>
+          <div class="sa-country-card__meta">${levels}</div>
+          <span class="sa-country-card__open">Open guide <span aria-hidden="true">→</span></span>
+        </a>
+        <button class="sa-save-country ${isCountrySaved(country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(country.id)}" aria-pressed="${isCountrySaved(country.id)}">
+          ${isCountrySaved(country.id) ? "Saved" : "Save"}
+        </button>
       </article>
+    `;
+  }
+
+  function mobileCountryTemplate(country) {
+    return `
+      <div class="sa-mobile-country-row">
+        <a href="${escapeHtml(country.page)}">
+          <strong>${escapeHtml(country.name)}</strong>
+          <span aria-hidden="true">→</span>
+        </a>
+        <button class="sa-save-country ${isCountrySaved(country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(country.id)}" aria-pressed="${isCountrySaved(country.id)}">
+          ${isCountrySaved(country.id) ? "Saved" : "Save"}
+        </button>
+      </div>
     `;
   }
 
@@ -516,7 +534,11 @@
     if (!grid) return;
 
     const countries = filteredCountries();
-    grid.innerHTML = countries.map(cardTemplate).join("");
+    const mobile = window.matchMedia("(max-width: 620px)").matches;
+    grid.classList.toggle("is-mobile-list", mobile);
+    grid.innerHTML = mobile
+      ? countries.map(mobileCountryTemplate).join("")
+      : countries.map(cardTemplate).join("");
 
     const count = $("#sa-country-count");
     if (count) count.textContent = `${countries.length} destination${countries.length === 1 ? "" : "s"}`;
@@ -531,11 +553,16 @@
   function setupExplorer() {
     const search = $("#sa-country-search");
     const level = $("#sa-level-filter");
+    const section = $("#countries");
 
     if (search) {
       search.addEventListener("input", event => {
         state.query = event.target.value;
+        section?.classList.toggle("is-searching", Boolean(state.query.trim()));
         renderCountries();
+        if (window.matchMedia("(max-width: 620px)").matches && state.query.trim()) {
+          search.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       });
     }
 
@@ -546,17 +573,7 @@
       });
     }
 
-    $$(".sa-region-filter").forEach(button => {
-      button.addEventListener("click", () => {
-        state.region = button.dataset.region;
-        $$(".sa-region-filter").forEach(item => {
-          const active = item === button;
-          item.classList.toggle("is-active", active);
-          item.setAttribute("aria-pressed", String(active));
-        });
-        renderCountries();
-      });
-    });
+    window.addEventListener("resize", () => renderCountries(), { passive: true });
   }
 
   function setupHeader() {
@@ -1820,6 +1837,25 @@
     });
   }
 
+  async function loadStudyAbroadResults() {
+    const host = $("#sa-studyabroad-results");
+    if (!host) return;
+    try {
+      const response = await fetch("/api/studyabroad-results", { cache: "no-store" });
+      if (!response.ok) return;
+      const data = await response.json();
+      const images = Array.isArray(data.images) ? data.images.slice(0, 6) : [];
+      if (!images.length) return;
+      host.innerHTML = images.map((item, index) => `
+        <article class="sa-study-result-card sa-reveal">
+          <img src="${escapeHtml(item.url)}" alt="LizOn Education Study Abroad student outcome ${index + 1}" loading="lazy">
+          <div><span>STUDENT OUTCOME</span><strong>Study Abroad journey shared with LizOn.</strong></div>
+        </article>
+      `).join("");
+      observeReveals();
+    } catch (_) {}
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     setupHeader();
     setupPersonalPlan();
@@ -1832,6 +1868,7 @@
     setupRadar();
     setupUtilities();
     loadCountries();
+    loadStudyAbroadResults();
     observeReveals();
   });
 })();

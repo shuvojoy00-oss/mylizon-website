@@ -1,58 +1,39 @@
-# Student Insights AI v1
+# Student Insights AI v1 — Zero Cost Mode
 
-## What this branch adds
+## Cost rule
+No paid AI API is used. There is no OPENAI_API_KEY requirement and no paid model call from the website.
 
-- Mobile first Student Insights feed
-- Categories: Study Abroad, IELTS, PTE
-- Bangla primary articles with optional English version
-- Browser text to speech Listen control
-- Search, Featured, automatic NEW treatment
-- Protected content admin with rich text editing
-- Draft, Needs Review, Published, Archived workflow
-- AI news runner with web search
-- Duplicate source protection
-- Server side official source trust gate
-- Daily Vercel Cron at 12:30 UTC (18:30 Bangladesh time, subject to plan scheduling precision)
+## Architecture
+- Manual posts: existing Postgres database + protected admin editor.
+- Automatic AI posts: ChatGPT scheduled task researches current official sources and writes structured content to `data/insights-auto.json` through the connected GitHub repository.
+- Student feed merges database posts and the static automated JSON feed.
+- Vercel deploys the GitHub update normally.
+- Listen uses browser SpeechSynthesis, so no text-to-speech API cost.
 
-## Existing environment variables reused
+## Content
+Categories: Study Abroad, IELTS, PTE.
+Bangla is primary. English is included when generated.
+Search, Featured, NEW labels and bilingual article reading are supported.
 
-- DATABASE_URL or another supported Postgres variable already used by api/_db.js
+## Automatic publishing safety
+The scheduled task must:
+1. Prefer official government, immigration, university and official IELTS/PTE provider sources.
+2. Verify the material claim against the primary source.
+3. Reject rumors, social posts, agent blogs and unverified claims.
+4. Avoid duplicates already present in the JSON file.
+5. Write for Bangladeshi students and preserve the official source URL.
+6. Keep at most the latest 100 automated posts in the JSON file.
+
+## Existing environment variables
+Only the variables already used by the current site are needed for manual publishing:
+- DATABASE_URL (or an already supported Postgres alias)
 - ADMIN_PASSWORD
 - ADMIN_TOKEN
 
-## New environment variables
-
-- OPENAI_API_KEY
-- CRON_SECRET
-- OPENAI_NEWS_MODEL (optional, defaults to gpt-6-luna)
-
-The AI news runner does not run without OPENAI_API_KEY. This is intentional so a deployment cannot accidentally create usage charges.
-
-Vercel Cron sends CRON_SECRET as a Bearer authorization header when the project has CRON_SECRET configured.
-
-## URLs after deployment
-
+## URLs
 - /insights.html
 - /article.html?slug=...
 - /admin-insights.html
-- /api/content
-- /api/content-admin
-- /api/news-run
 
-## Auto publish rules
-
-An AI story publishes automatically only when all of these are true:
-
-1. The research result marks the primary source verified.
-2. Confidence is at least 0.94.
-3. The source URL passes the server side official source or academic domain gate.
-
-Otherwise it is stored as Needs Review.
-
-## Database
-
-The public.content_posts table and indexes are created idempotently on first API use. No manual SQL migration is required for the initial version.
-
-## Launch note
-
-Do not add the public navigation link until the API deployment is confirmed with the production database and environment variables. This keeps the current site unaffected while the new content platform is tested.
+## Note
+This zero-cost mode relies on the user's existing ChatGPT scheduled-task access and connected GitHub account rather than a separately billed API.

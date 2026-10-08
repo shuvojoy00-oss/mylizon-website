@@ -1,37 +1,35 @@
-# LizOn IELTS Reading Practice
+# LizOn IELTS Reading Development Status
 
-Development branch only. Not approved for production.
+Branch: ielts-reading-practice. Production website unchanged.
 
-## Current implementation
-- Responsive split-screen passage and questions
-- Timed 60-minute demo with deadline persisted across refresh
-- Untimed practice mode
-- Answer entry and local progress recovery
-- Question navigation and review flags
-- Passage highlighting (currently limited to selections within one paragraph)
-- Notes and basic answer checking
+## Implemented in development branch
+- Three passage tabs in bottom navigation, each loading its corresponding passage and questions
+- Independently scrolling reading passage and question panels on desktop
+- Exam mode with a 60 minute wall clock deadline and automatic submission
+- Practice mode with elapsed timer and no automatic time limit
+- Question navigation, answer persistence, review flags and per passage notes
+- Highlight selections within a single passage paragraph; highlights saved per passage
+- Answer checking with multiple selection support
+- Original 40 question demonstration dataset (13, 13, 14)
+- Cambridge 1 through 21 library catalogue with 84 unpopulated slots
 
-## Known limitations / release blockers
-- Demo has only three original questions, not a full IELTS test.
-- Cambridge 1–21 questions and answer keys are NOT included. Reproduction requires appropriate rights.
-- Current demo does not implement all IELTS question types.
-- Highlighting does not persist across reload.
-- Review flags persist locally; notes persist locally.
-- The practice/exam timer needs browser-based validation including expiry, sleep, refresh and multiple tabs.
-- Scoring is demonstration-only, not an official IELTS band estimate.
-- Need keyboard and screen reader audit, responsive layout testing, and exam behaviour comparison against official IELTS familiarisation.
-- No production deployment or live testing has been performed.
+## Validation completed
+- JSON parsed successfully
+- Three passages, exactly 40 unique sequential question numbers
+- All questions have prompts and answer keys
+- Multiple selection answer keys correspond to their available choices
+- Required HTML controls present
 
-## Release criteria
-1. Authorised 40-question sample covering required question types.
-2. All answers, flags, notes and highlights reliably persist and restore.
-3. Correct timer, auto-submit and score mapping, tested in browsers.
-4. Responsive and accessible computer-delivered interface.
-5. Explicit content provenance and licence for every published test.
-6. Preview QA, then deliberate production deployment.
+## Remaining before production
+- Browser based runtime tests, accessibility and device QA
+- Full length realistic passages and all official IELTS Academic Reading item layouts, including multi blank tables, diagrams, flow charts and linked matching tasks
+- Refined answer review and band estimates based on verified conversion references
+- Test session reset, cross tab conflict handling, detailed user progress and submission edge cases
+- Production deployment verification
 
-## Content model
-Store each authorised test as structured JSON with book/test identifier, three passages, questions, answer keys and source/licence metadata. Do not publish empty Cambridge tests as available.
+## Licensing
+The 40 question sample is original demonstration content with intentionally short passages. It is not a genuine IELTS test and cannot predict an IELTS band.
+Cambridge books 1 through 21 are NOT imported or licensed by this implementation. Catalogue entries are placeholders and must not be represented as available tests.
 
-## Branch
-ielts-reading-practice
+## Release gate
+Do not merge to main or deploy until browser tests and content review pass.

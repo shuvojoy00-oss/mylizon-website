@@ -160,8 +160,160 @@
     render();
   }
 
-  document.addEventListener("DOMContentLoaded",()=>{
-    upgradeFreeClassesNav();
+
+
+  const PLAN_KEY = "lizon-studyabroad-plan-v1";
+
+  function flagCode(code){
+    return String(code || "").toLowerCase() === "uk" ? "gb" : String(code || "").toLowerCase();
+  }
+
+  async function loadSharedCountries(){
+    try{
+      const response=await fetch("data/studyabroad-countries.json",{cache:"no-store"});
+      if(!response.ok) return [];
+      const data=await response.json();
+      return Array.isArray(data)?data:[];
+    }catch(_){return []}
+  }
+
+  function readSharedPlan(){
+    try{
+      const raw=JSON.parse(localStorage.getItem(PLAN_KEY)||"{}");
+      return {
+        shortlist:Array.isArray(raw.shortlist)?raw.shortlist.slice(0,5):[],
+        cost:raw.cost&&typeof raw.cost==="object"?raw.cost:null,
+        timeline:raw.timeline&&typeof raw.timeline==="object"?raw.timeline:null,
+        updatedAt:raw.updatedAt||null
+      };
+    }catch(_){
+      return {shortlist:[],cost:null,timeline:null,updatedAt:null};
+    }
+  }
+
+  function writeSharedPlan(plan){
+    plan.updatedAt=new Date().toISOString();
+    try{localStorage.setItem(PLAN_KEY,JSON.stringify(plan));}catch(_){}
+    window.dispatchEvent(new CustomEvent("lizon-study-plan-updated",{detail:plan}));
+  }
+
+  function toggleSharedCountry(country){
+    const plan=readSharedPlan();
+    const index=plan.shortlist.findIndex(item=>item.id===country.id);
+    if(index>=0){
+      plan.shortlist.splice(index,1);
+      writeSharedPlan(plan);
+      return {saved:false,full:false};
+    }
+    if(plan.shortlist.length>=5) return {saved:false,full:true};
+    plan.shortlist.push({
+      id:country.id,
+      name:country.name,
+      code:country.code||country.name.slice(0,2).toUpperCase(),
+      page:country.page
+    });
+    writeSharedPlan(plan);
+    return {saved:true,full:false};
+  }
+
+  function addCountryHeroSave(countries){
+    const current=(location.pathname.split("/").pop()||"").toLowerCase();
+    if(!current || current==="studyabroad.html" || current==="studyabroad") return;
+    const country=countries.find(item=>String(item.page||"").toLowerCase()===current);
+    if(!country || document.querySelector("[data-shared-country-save]")) return;
+
+    const hero=document.querySelector("main section");
+    if(!hero) return;
+    const eligibility=hero.querySelector('a[href*="assessment"]');
+    const actionHost=eligibility?.parentElement || hero.querySelector('[class*="actions"]');
+    if(!actionHost) return;
+
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="sa-country-save-button";
+    button.setAttribute("data-shared-country-save","");
+    const refresh=()=>{
+      const saved=readSharedPlan().shortlist.some(item=>item.id===country.id);
+      button.classList.toggle("is-saved",saved);
+      button.setAttribute("aria-pressed",String(saved));
+      button.textContent=saved ? country.name+" Saved to My Plan" : "Save "+country.name+" to My Plan";
+    };
+    button.addEventListener("click",()=>{
+      const result=toggleSharedCountry(country);
+      if(result.full){
+        button.classList.add("is-limit");
+        button.textContent="My Plan already has 5 countries";
+        setTimeout(()=>{button.classList.remove("is-limit");refresh();},2200);
+        return;
+      }
+      refresh();
+    });
+    actionHost.appendChild(button);
+    refresh();
+  }
+
+  function setupExploreCountriesNav(countries){
+    const ordered=countries.slice().sort((a,b)=>a.name.localeCompare(b.name));
+    const desktop=document.querySelector(".desktop-nav");
+    if(desktop && !desktop.querySelector("#explore-countries-menu")){
+      const results=[...desktop.querySelectorAll("a.desktop-nav__link")].find(a=>a.textContent.trim()==="Results");
+      const wrap=document.createElement("div");
+      wrap.className="nav-dropdown sa-country-nav";
+      wrap.innerHTML=`
+        <button class="nav-dropdown__trigger" type="button" aria-expanded="false" aria-controls="explore-countries-menu">
+          Explore Countries <span class="nav-chevron" aria-hidden="true">⌄</span>
+        </button>
+        <div class="nav-dropdown__panel sa-country-mega" id="explore-countries-menu">
+          <div class="sa-country-mega__head"><strong>Study destinations</strong><span>Open a country guide</span></div>
+          <div class="sa-country-mega__grid">
+            ${ordered.map(c=>`<a href="${esc(c.page)}">${esc(c.name)}</a>`).join("")}
+          </div>
+        </div>`;
+      if(results) desktop.insertBefore(wrap,results); else desktop.appendChild(wrap);
+
+      const trigger=wrap.querySelector(".nav-dropdown__trigger");
+      const closeOthers=()=>document.querySelectorAll(".nav-dropdown__trigger").forEach(item=>{
+        if(item!==trigger) item.setAttribute("aria-expanded","false");
+      });
+      const open=()=>{if(window.matchMedia("(min-width:901px)").matches){closeOthers();trigger.setAttribute("aria-expanded","true");}};
+      const close=()=>{if(window.matchMedia("(min-width:901px)").matches)trigger.setAttribute("aria-expanded","false");};
+      wrap.addEventListener("mouseenter",open);
+      wrap.addEventListener("mouseleave",close);
+      wrap.addEventListener("focusin",open);
+      wrap.addEventListener("focusout",e=>{if(!wrap.contains(e.relatedTarget))close();});
+      trigger.addEventListener("click",e=>{
+        if(!window.matchMedia("(min-width:901px)").matches)return;
+        const expanded=trigger.getAttribute("aria-expanded")==="true";
+        closeOthers();
+        trigger.setAttribute("aria-expanded",String(!expanded));
+        e.stopPropagation();
+      });
+    }
+
+    const mobile=document.querySelector(".mobile-nav");
+    if(mobile && !mobile.querySelector("[data-shared-country-menu]")){
+      const results=[...mobile.querySelectorAll("a.mobile-nav__main")].find(a=>a.textContent.trim()==="Results");
+      const details=document.createElement("details");
+      details.setAttribute("data-shared-country-menu","");
+      details.innerHTML=`
+        <summary>Explore Countries <span>+</span></summary>
+        <div class="mobile-nav__sub sa-mobile-country-menu">
+          ${ordered.map(c=>`<a href="${esc(c.page)}">${esc(c.name)}</a>`).join("")}
+        </div>`;
+      if(results) mobile.insertBefore(details,results); else mobile.appendChild(details);
+    }
+
+    const freeDesktop=[...(desktop?.querySelectorAll("a.desktop-nav__link")||[])].find(a=>a.textContent.trim()==="Free Classes");
+    freeDesktop?.remove();
+    desktop?.querySelector("#free-classes-menu")?.closest(".nav-dropdown")?.remove();
+    const freeMobile=[...(mobile?.querySelectorAll("a.mobile-nav__main")||[])].find(a=>a.textContent.trim()==="Free Classes");
+    freeMobile?.remove();
+    mobile?.querySelector("[data-shared-free-classes]")?.remove();
+  }
+  document.addEventListener("DOMContentLoaded",async()=>{
+    const countries=await loadSharedCountries();
+    setupExploreCountriesNav(countries);
+    addCountryHeroSave(countries);
     buildCountryDirectory();
     bindGenericCountrySearch();
   });

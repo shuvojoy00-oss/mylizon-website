@@ -2851,3 +2851,143 @@ body.menu-open{overflow:hidden}
   #countries.is-searching .sa-explorer-tools{position:sticky;top:78px;z-index:20;padding:8px 0;background:var(--sa-paper)}
   #sa-country-search{scroll-margin-top:90px}
 }
+
+
+/* V5 mobile country discovery */
+@media(max-width:620px){
+  .sa-country-grid.is-mobile-marquee{
+    display:block!important;
+    overflow:hidden;
+    margin-inline:calc(50% - 50vw);
+    padding-inline:14px;
+  }
+  .sa-mobile-country-marquee{
+    overflow:hidden;
+    width:100%;
+    padding:3px 0 8px;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);
+  }
+  .sa-mobile-country-track{
+    display:flex;
+    width:max-content;
+    gap:10px;
+    animation:sa-country-marquee 38s linear infinite;
+    will-change:transform;
+  }
+  .sa-mobile-country-marquee:active .sa-mobile-country-track,
+  .sa-mobile-country-marquee:hover .sa-mobile-country-track,
+  .sa-mobile-country-marquee:focus-within .sa-mobile-country-track{
+    animation-play-state:paused;
+  }
+  .sa-mobile-country-card{
+    position:relative;
+    display:grid;
+    grid-template-columns:34px minmax(100px,auto) 20px;
+    align-items:center;
+    gap:9px;
+    min-width:178px;
+    min-height:64px;
+    overflow:hidden;
+    padding:10px 12px;
+    border:1px solid rgba(21,63,50,.12);
+    border-radius:17px;
+    background:linear-gradient(135deg,#f7faf7,#eef4f0);
+    color:var(--sa-ink);
+    text-decoration:none;
+    box-shadow:0 6px 18px rgba(17,45,35,.05);
+    isolation:isolate;
+  }
+  .sa-mobile-country-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-2;
+    background-image:var(--country-flag);
+    background-size:cover;
+    background-position:center;
+    opacity:.09;
+    filter:saturate(.75);
+  }
+  .sa-mobile-country-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background:linear-gradient(90deg,rgba(250,252,250,.96),rgba(250,252,250,.84));
+  }
+  .sa-mobile-country-card__code{
+    display:grid;
+    width:34px;height:34px;
+    place-items:center;
+    border-radius:10px;
+    background:var(--sa-green);
+    color:#fff;
+    font-size:.6rem;
+    font-weight:800;
+  }
+  .sa-mobile-country-card strong{
+    font-size:.84rem;
+    line-height:1.15;
+  }
+  .sa-mobile-country-card__open{
+    color:var(--sa-green);
+    font-weight:800;
+  }
+  .sa-country-grid.is-mobile-list{
+    display:grid!important;
+    gap:9px;
+  }
+  .sa-mobile-country-search-result{
+    display:grid;
+    gap:12px;
+    padding:14px;
+    border:1px solid var(--sa-line);
+    border-radius:17px;
+    background:#fff;
+  }
+  .sa-mobile-country-search-result > div:first-child{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .sa-mobile-country-search-result > div:first-child span{
+    display:grid;width:34px;height:34px;place-items:center;border-radius:10px;
+    background:#edf3ef;color:var(--sa-green);font-size:.6rem;font-weight:800;
+  }
+  .sa-mobile-country-search-result strong{font-size:.9rem}
+  .sa-mobile-country-search-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .sa-mobile-country-search-actions a,
+  .sa-mobile-country-search-actions button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:40px;
+    border-radius:12px;
+    font:inherit;
+    font-size:.72rem;
+    font-weight:800;
+  }
+  .sa-mobile-country-search-actions a{
+    background:var(--sa-green);
+    color:#fff;
+    text-decoration:none;
+  }
+  .sa-mobile-country-search-actions button{
+    border:1px solid var(--sa-line);
+    background:#f7f9f7;
+    color:var(--sa-green);
+  }
+  @keyframes sa-country-marquee{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+  }
+}
+@media(prefers-reduced-motion:reduce) and (max-width:620px){
+  .sa-mobile-country-track{animation:none}
+  .sa-mobile-country-marquee{overflow-x:auto}
+}

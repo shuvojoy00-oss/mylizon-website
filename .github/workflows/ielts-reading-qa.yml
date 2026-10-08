@@ -1,0 +1,24 @@
+name: IELTS Reading Browser QA
+on:
+  push:
+    branches: [ielts-reading-practice]
+    paths:
+      - 'ielts-practice.html'
+      - 'js/ielts-practice.js'
+      - 'css/ielts-practice.css'
+      - 'data/ielts-reading-sample.json'
+      - 'tests/ielts-reading.spec.cjs'
+      - '.github/workflows/ielts-reading-qa.yml'
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save @playwright/test
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test tests/ielts-reading.spec.cjs --browser=chromium --reporter=list

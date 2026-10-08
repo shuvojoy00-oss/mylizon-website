@@ -43,5 +43,5 @@ test('practice timer and multi select maximum',async({page})=>{
   await page.locator('#nav-12').click();
   const checks=page.locator('#question-12 input[type=checkbox]');
   await checks.nth(0).check();await checks.nth(1).check();await checks.nth(2).check();
-  await expect(checks.filter({checked:true})).toHaveCount(2);
+  await expect(page.locator('#question-12 input[type=checkbox]:checked')).toHaveCount(2);
 });

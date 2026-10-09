@@ -85,3 +85,20 @@ test('selection toolbar highlights passage text and notes collapse',async({page}
   await page.locator('#notes-toggle').click();
   await expect(page.locator('#notes-panel')).toBeHidden();
 });
+
+test('split divider resizes and selection offers four actions',async({page})=>{
+  await page.goto('http://127.0.0.1:8765/ielts-practice.html');
+  await page.locator('#start').click();
+  const divider=page.locator('#pane-divider');
+  await expect(divider).toBeVisible();
+  await divider.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(divider).toHaveAttribute('aria-valuenow','55');
+  await page.locator('#passage-content p').first().evaluate(el=>{const range=document.createRange();range.setStart(el.firstChild,0);range.setEnd(el.firstChild,12);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range)});
+  await expect(page.locator('#selection-toolbar button')).toHaveCount(4);
+  await page.locator('#selection-highlight').click();
+  await expect(page.locator('#passage-content mark')).toHaveCount(1);
+  await page.locator('#passage-content mark').first().evaluate(el=>{const range=document.createRange();range.selectNodeContents(el);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range)});
+  await page.locator('#selection-unhighlight').click();
+  await expect(page.locator('#passage-content mark')).toHaveCount(0);
+});

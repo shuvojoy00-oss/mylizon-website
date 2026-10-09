@@ -20,11 +20,10 @@ function getVoicesReady(){
  });
 }
 function pickBanglaVoice(voices){
- const exact=voices.find(v=>/^bn-BD$/i.test(v.lang));
- if(exact)return exact;
- const india=voices.find(v=>/^bn-IN$/i.test(v.lang));
- if(india)return india;
- return voices.find(v=>/^bn(?:-|_)/i.test(v.lang)||/bangla|bengali/i.test(v.name))||null;
+ return voices.find(v=>/^bn-BD$/i.test(v.lang))||
+        voices.find(v=>/^bn-IN$/i.test(v.lang))||
+        voices.find(v=>/^bn(?:-|_)/i.test(v.lang)||/bangla|bengali/i.test(v.name))||
+        null;
 }
 function pickEnglishVoice(voices){
  return voices.find(v=>/^en(-|_)/i.test(v.lang)&&/female|samantha|zira|victoria|ava|serena|google uk english female/i.test(v.name))||
@@ -33,63 +32,25 @@ function pickEnglishVoice(voices){
 function splitSentences(text){
  return String(text||"").replace(/\s+/g," ").match(/[^.!?।]+[.!?।]?/g)?.map(s=>s.trim()).filter(Boolean)||[];
 }
-function splitScripts(text){
- const out=[];let buf="",kind=null;
- const flush=()=>{if(buf.trim())out.push({text:buf.trim(),kind});buf=""};
- for(const ch of String(text||"")){
-   const next=/[\u0980-\u09FF]/.test(ch)?"bn":/[A-Za-z0-9]/.test(ch)?"en":"neutral";
-   if(next==="neutral"){buf+=ch;continue}
-   if(kind&&next!==kind){flush()}
-   if(!kind||next!==kind)kind=next;
-   buf+=ch;
- }
- flush();
- return out;
-}
-function setListenStatus(message,isError=false){
+function setListenStatus(message){
  const b=document.getElementById("listen");
- if(!b)return;
- b.textContent=message;
- b.classList.toggle("audio-error",!!isError);
+ if(b)b.textContent=message;
 }
-async function speakBanglaMixed(title,body){
+async function speakBangla(title,body){
  const voices=await getVoicesReady();
- const bnVoice=pickBanglaVoice(voices);
- const enVoice=pickEnglishVoice(voices);
- if(!bnVoice){
-   setListenStatus("বাংলা voice এই device এ পাওয়া যায়নি",true);
-   return;
- }
- const full=title+". "+body;
- const sentences=splitSentences(full);
- const queue=[];
- for(const sentence of sentences){
-   const question=/\?$/.test(sentence);
-   const pieces=splitScripts(sentence);
-   for(const piece of pieces){
-     if(!piece.text)continue;
-     queue.push({text:piece.text,kind:piece.kind,question});
-   }
- }
- if(!queue.length)return;
- let index=0;
+ const voice=pickBanglaVoice(voices);
+ const sentences=splitSentences(title+". "+body);
+ let i=0;
  const next=()=>{
-   if(index>=queue.length){setListenStatus("▶ শুনুন");return}
-   const part=queue[index++];
-   const u=new SpeechSynthesisUtterance(part.text);
-   if(part.kind==="bn"){
-     u.lang=bnVoice.lang||"bn-BD";
-     u.voice=bnVoice;
-     u.rate=1.08;
-     u.pitch=part.question?1.12:1;
-   }else{
-     u.lang=enVoice?.lang||"en-US";
-     if(enVoice)u.voice=enVoice;
-     u.rate=.92;
-     u.pitch=1;
-   }
-   u.onend=()=>setTimeout(next,part.question?90:20);
-   u.onerror=()=>{setListenStatus("বাংলা audio চালানো যায়নি",true)};
+   if(i>=sentences.length){setListenStatus("▶ শুনুন");return}
+   const text=sentences[i++];
+   const u=new SpeechSynthesisUtterance(text);
+   u.lang=voice?.lang||"bn-BD";
+   if(voice)u.voice=voice;
+   u.rate=1.08;
+   u.pitch=/\?$/.test(text)?1.12:1;
+   u.onend=()=>setTimeout(next,/\?$/.test(text)?90:30);
+   u.onerror=()=>setListenStatus("▶ শুনুন");
    speechSynthesis.speak(u);
  };
  setListenStatus("■ থামান");
@@ -97,24 +58,24 @@ async function speakBanglaMixed(title,body){
 }
 async function speakEnglish(title,body){
  const voices=await getVoicesReady();
- const u=new SpeechSynthesisUtterance(title+". "+body);
  const voice=pickEnglishVoice(voices);
+ const u=new SpeechSynthesisUtterance(title+". "+body);
  u.lang=voice?.lang||"en-US";
  if(voice)u.voice=voice;
  u.rate=.95;
  u.onend=()=>setListenStatus("▶ Listen");
- u.onerror=()=>setListenStatus("Audio unavailable",true);
+ u.onerror=()=>setListenStatus("▶ Listen");
  setListenStatus("■ Stop");
  speechSynthesis.speak(u);
 }
 async function speakCurrent(title,body){
- if(!("speechSynthesis" in window)){setListenStatus(lang==="bn"?"এই browser এ audio support নেই":"Audio unavailable",true);return}
+ if(!("speechSynthesis" in window))return;
  if(speechSynthesis.speaking||speechSynthesis.pending){
    speechSynthesis.cancel();
    setListenStatus(lang==="bn"?"▶ শুনুন":"▶ Listen");
    return;
  }
- if(lang==="bn")await speakBanglaMixed(title,body);
+ if(lang==="bn")await speakBangla(title,body);
  else await speakEnglish(title,body);
 }
 function render(){

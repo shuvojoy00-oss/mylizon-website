@@ -69,3 +69,17 @@ test('mobile layout shows both panes and passage tabs',async({page})=>{
   await page.locator('#passage-tabs button').nth(1).click();
   await expect(page.locator('#question-14')).toBeVisible();
 });
+
+test('selection toolbar highlights passage text and notes collapse',async({page})=>{
+  await page.goto('http://127.0.0.1:8765/ielts-practice.html');
+  await page.locator('#start').click();
+  await expect(page.locator('#passage-content p').first()).toBeVisible();
+  await page.locator('#passage-content p').first().evaluate(el=>{const range=document.createRange();range.setStart(el.firstChild,0);range.setEnd(el.firstChild,16);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range)});
+  await expect(page.locator('#selection-toolbar')).toBeVisible();
+  await page.locator('#selection-highlight').click();
+  await expect(page.locator('#passage-content mark').first()).toBeVisible();
+  await page.locator('#notes-toggle').click();
+  await expect(page.locator('#notes-panel')).toBeVisible();
+  await page.locator('#notes-toggle').click();
+  await expect(page.locator('#notes-panel')).toBeHidden();
+});

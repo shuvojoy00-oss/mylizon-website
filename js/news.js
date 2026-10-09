@@ -1,7 +1,7 @@
 (()=>{
 const $=s=>document.querySelector(s);
 const feed=$("#news-feed"),lead=$("#desktop-lead"),search=$("#news-search"),guide=$("#guide-result"),count=$("#result-count");
-let category=new URLSearchParams(location.search).get("category")||"all",posts=[],countries=[];
+const pageParams=new URLSearchParams(location.search);let category=pageParams.get("category")||"all",initialSearch=pageParams.get("search")||"",posts=[],countries=[];
 const countryAliases={
 australia:"Australia অস্ট্রেলিয়া austrlia austrelia australia",newzealand:"New Zealand নিউজিল্যান্ড NZ newzeland newzealnd",uk:"United Kingdom UK Britain যুক্তরাজ্য ইংল্যান্ড",canada:"Canada কানাডা caneda",usa:"United States USA US America আমেরিকা",ireland:"Ireland আয়ারল্যান্ড",belgium:"Belgium বেলজিয়াম",switzerland:"Switzerland সুইজারল্যান্ড",denmark:"Denmark ডেনমার্ক",finland:"Finland ফিনল্যান্ড",netherlands:"Netherlands Holland নেদারল্যান্ডস হল্যান্ড",norway:"Norway নরওয়ে",sweden:"Sweden সুইডেন",france:"France ফ্রান্স",poland:"Poland পোল্যান্ড",spain:"Spain স্পেন",austria:"Austria অস্ট্রিয়া",croatia:"Croatia ক্রোয়েশিয়া",germany:"Germany জার্মানি",greece:"Greece গ্রিস",italy:"Italy ইতালি",lithuania:"Lithuania লিথুয়ানিয়া",estonia:"Estonia এস্তোনিয়া",hungary:"Hungary হাঙ্গেরি",malta:"Malta মাল্টা",india:"India ভারত ইন্ডিয়া",china:"China চীন",turkey:"Türkiye Turkey তুরস্ক",uae:"United Arab Emirates UAE Dubai দুবাই আমিরাত",latvia:"Latvia লাটভিয়া",romania:"Romania রোমানিয়া romaniya",czech:"Czech Republic Czechia চেক রিপাবলিক",portugal:"Portugal পর্তুগাল",slovenia:"Slovenia স্লোভেনিয়া",serbia:"Serbia সার্বিয়া",slovakia:"Slovakia স্লোভাকিয়া",bulgaria:"Bulgaria বুলগেরিয়া",singapore:"Singapore সিঙ্গাপুর",qatar:"Qatar কাতার", "saudi-arabia":"Saudi Arabia সৌদি আরব Saudi",thailand:"Thailand থাইল্যান্ড",japan:"Japan জাপান",southkorea:"South Korea Korea দক্ষিণ কোরিয়া কোরিয়া"
 };
@@ -62,6 +62,6 @@ async function load(){
 $("#news-chips").addEventListener("click",e=>{const b=e.target.closest("[data-category]");if(!b)return;category=b.dataset.category;history.replaceState(null,"",category==="all"?"news.html":"news.html?category="+encodeURIComponent(category));document.querySelectorAll("#news-chips button").forEach(x=>x.classList.toggle("active",x===b));render()});
 search.addEventListener("input",()=>{clearTimeout(search._t);search._t=setTimeout(render,90)});
 $("#clear-search").addEventListener("click",()=>{search.value="";render()});
-document.querySelectorAll("#news-chips button").forEach(x=>x.classList.toggle("active",x.dataset.category===category));
+if(initialSearch)search.value=initialSearch;document.querySelectorAll("#news-chips button").forEach(x=>x.classList.toggle("active",x.dataset.category===category));
 load();
 })();

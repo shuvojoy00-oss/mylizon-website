@@ -1,5 +1,5 @@
 (()=>{
-const root=document.getElementById("news-article"),slug=new URLSearchParams(location.search).get("slug");let post,lang="bn",countries=[],audioPlayer=null,audioObjectUrl=null;
+const root=document.getElementById("news-article"),params=new URLSearchParams(location.search),slug=params.get("slug"),previewId=params.get("admin_preview");let post,lang="bn",countries=[],audioPlayer=null,audioObjectUrl=null;
 const esc=s=>String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
 const topicLinks=[["IELTS Writing","ielts.html"],["IELTS Speaking","ielts.html"],["IELTS Reading","ielts.html"],["IELTS Listening","ielts.html"],["IELTS","ielts.html"],["PTE Reading","pte.html"],["PTE Speaking","pte.html"],["PTE Writing","pte.html"],["PTE Listening","pte.html"],["PTE","pte.html"],["Study Abroad","studyabroad.html"],["Check Eligibility","assessment.html"],["eligibility","assessment.html"],["এলিজিবিলিটি","assessment.html"],["ATAS","uk.html"],["CAS","uk.html"],["Graduate Route","uk.html"],["CoE","australia.html"],["OSHC","australia.html"],["GS requirement","australia.html"],["Student Visa 500","australia.html"],["study permit","canada.html"],["F-1","usa.html"],["Student Pass","singapore.html"]];
 const countryBn={australia:"অস্ট্রেলিয়া",newzealand:"নিউজিল্যান্ড",uk:"যুক্তরাজ্য",canada:"কানাডা",usa:"আমেরিকা",ireland:"আয়ারল্যান্ড",belgium:"বেলজিয়াম",switzerland:"সুইজারল্যান্ড",denmark:"ডেনমার্ক",finland:"ফিনল্যান্ড",netherlands:"নেদারল্যান্ডস",norway:"নরওয়ে",sweden:"সুইডেন",france:"ফ্রান্স",poland:"পোল্যান্ড",spain:"স্পেন",austria:"অস্ট্রিয়া",croatia:"ক্রোয়েশিয়া",germany:"জার্মানি",greece:"গ্রিস",italy:"ইতালি",lithuania:"লিথুয়ানিয়া",estonia:"এস্তোনিয়া",hungary:"হাঙ্গেরি",malta:"মাল্টা",india:"ভারত",china:"চীন",turkey:"তুরস্ক",uae:"আমিরাত",latvia:"লাটভিয়া",romania:"রোমানিয়া",czech:"চেক রিপাবলিক",portugal:"পর্তুগাল",slovenia:"স্লোভেনিয়া",serbia:"সার্বিয়া",slovakia:"স্লোভাকিয়া",bulgaria:"বুলগেরিয়া",singapore:"সিঙ্গাপুর",qatar:"কাতার","saudi-arabia":"সৌদি আরব",thailand:"থাইল্যান্ড",japan:"জাপান",southkorea:"দক্ষিণ কোরিয়া"};
@@ -109,8 +109,23 @@ function render(){
  document.getElementById("listen").onclick=()=>speakCurrent(title,document.getElementById("body").innerText);
 }
 async function load(){
- if(!slug)throw 0;
+ if(!slug&&!previewId)throw 0;
  try{countries=await fetch("/data/studyabroad-countries.json").then(r=>r.json())}catch{countries=[]}
+ if(previewId){
+   try{
+     const d=await fetch("/api/content-admin?id="+encodeURIComponent(previewId),{credentials:"same-origin"}).then(r=>r.json());
+     if(d.ok){
+       post=d.post;
+       const banner=document.createElement("div");
+       banner.className="preview-banner";
+       banner.textContent="ADMIN PREVIEW · "+String(post.status||"draft").toUpperCase();
+       root.before(banner);
+       render();
+       return;
+     }
+   }catch{}
+   throw 0;
+ }
  try{const d=await fetch("/api/content?slug="+encodeURIComponent(slug)).then(r=>r.json());if(d.ok){post=d.post;render();return}}catch{}
  const d=await fetch("/data/insights-auto.json",{cache:"no-store"}).then(r=>r.json());post=(d.posts||[]).find(p=>p.slug===slug);if(!post)throw 0;render()
 }

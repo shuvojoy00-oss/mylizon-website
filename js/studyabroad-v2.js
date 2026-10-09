@@ -1773,30 +1773,26 @@
     const flag = countryFlagUrl({ code: radarCountryCode(item) });
 
     host.innerHTML = `
-      <details class="sa-radar-feature sa-radar-feature--compact">
-        <summary>
+      <article class="sa-radar-feature sa-radar-feature--lead">
+        <div class="sa-radar-feature__lead-main">
           <span class="sa-radar-disclosure__flag"><img src="${escapeHtml(flag)}" alt="" loading="lazy" width="34" height="23"></span>
-          <span class="sa-radar-feature__summary-title">
+          <div class="sa-radar-feature__summary-title">
             <small>${status === "upcoming" ? "Next confirmed change" : "Latest verified change"} · ${escapeHtml(item.country)}</small>
             <strong>${escapeHtml(item.title)}</strong>
-          </span>
-          <span class="sa-compact-chevron" aria-hidden="true"></span>
-        </summary>
-        <div class="sa-radar-feature__compact-body">
-          <p>${escapeHtml(item.summary)}</p>
-          <div class="sa-radar-feature__side">
-            <span>${status === "upcoming" ? "Effective" : "In effect from"} · ${escapeHtml(formatRadarDate(item))}</span>
-            <p>${escapeHtml(item.impact)}</p>
-            <div class="sa-radar-feature__links">
-              <a href="${escapeHtml(item.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.sourceLabel)} <span class="sa-slim-arrow" aria-hidden="true"></span></a>
-              <a href="${escapeHtml(item.guidePage)}">Full country guide <span class="sa-slim-arrow" aria-hidden="true"></span></a>
-            </div>
-            <small class="sa-radar-feature__timing">${escapeHtml(timing)}</small>
+            <p>${escapeHtml(item.summary)}</p>
           </div>
         </div>
-      </details>
+        <div class="sa-radar-feature__lead-side">
+          <span>${status === "upcoming" ? "Effective" : "In effect from"} · ${escapeHtml(formatRadarDate(item))}</span>
+          <p>${escapeHtml(item.impact)}</p>
+          <div class="sa-radar-feature__links">
+            <a href="${escapeHtml(item.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.sourceLabel)} <span class="sa-slim-arrow" aria-hidden="true"></span></a>
+            <a href="${escapeHtml(item.guidePage)}">Country guide <span class="sa-slim-arrow" aria-hidden="true"></span></a>
+          </div>
+          <small class="sa-radar-feature__timing">${escapeHtml(timing)}</small>
+        </div>
+      </article>
     `;
-    replaceLegacyArrows(host);
   }
 
   function radarCard(item) {
@@ -1894,21 +1890,22 @@
     if (countryRailFrame) cancelAnimationFrame(countryRailFrame);
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let pauseUntil = reduced ? Number.POSITIVE_INFINITY : Date.now() + 2200;
+    let pauseUntil = reduced ? Number.POSITIVE_INFINITY : Date.now() + 1400;
     let pointerDown = false;
     let dragged = false;
     let startX = 0;
     let startY = 0;
-    let lastX = 0;
+    let autoCarry = 0;
+    let lastTime = performance.now();
 
     const pauseForUser = () => {
-      pauseUntil = Date.now() + 10000;
+      pauseUntil = Date.now() + 5000;
     };
 
     rail.addEventListener("pointerdown", event => {
       pointerDown = true;
       dragged = false;
-      startX = lastX = event.clientX;
+      startX = event.clientX;
       startY = event.clientY;
       pauseForUser();
     }, { passive:true });
@@ -1918,7 +1915,6 @@
       const dx = Math.abs(event.clientX - startX);
       const dy = Math.abs(event.clientY - startY);
       if (dx > 7 && dx > dy) dragged = true;
-      lastX = event.clientX;
       pauseForUser();
     }, { passive:true });
 
@@ -1946,16 +1942,25 @@
       dragged = false;
     }, true);
 
-    const tick = () => {
+    const tick = now => {
       if (token !== countryRailToken || !document.body.contains(rail)) return;
       const track = rail.querySelector(".sa-mobile-country-track");
       if (!track) return;
 
+      const delta = Math.min(40, now - lastTime);
+      lastTime = now;
       const half = track.scrollWidth / 2;
       if (half > 0 && rail.scrollLeft >= half) rail.scrollLeft -= half;
+
       if (!reduced && !document.hidden && !pointerDown && Date.now() > pauseUntil) {
-        rail.scrollLeft += 0.18;
+        autoCarry += delta * 0.022;
+        if (autoCarry >= 1) {
+          const step = Math.floor(autoCarry);
+          rail.scrollLeft += step;
+          autoCarry -= step;
+        }
       }
+
       countryRailFrame = requestAnimationFrame(tick);
     };
 
@@ -1996,10 +2001,8 @@
     { id:"cost-calculator", label:"Calculate My First Year Cost", note:"Estimate tuition and living costs.", dashboard:true },
     { id:"intake-planner", label:"Create My Preparation Plan", note:"Plan English, application, finance, visa and departure.", dashboard:true },
     { id:"my-plan", label:"My Study Plan", note:"See everything you have saved.", dashboard:true },
-    { id:"radar", label:"Current Study Abroad Updates", note:"Open only the updates that matter to your plan.", dashboard:false },
     { id:"counsellor-handoff", label:"Talk to a Counsellor", note:"Turn your saved plan into one clear case.", dashboard:false },
     { id:"how-lizon-helps", label:"How LizOn Helps", note:"See the support available from preparation to visa.", dashboard:false },
-    { id:"real-outcomes", label:"Student Outcomes", note:"See where LizOn students have moved forward.", dashboard:false },
     { id:"parents", label:"For Parents", note:"Money, safety, study and future planning.", dashboard:false },
     { id:"readiness", label:"Before You Fly", note:"Prepare for arrival, student life and what comes next.", dashboard:false }
   ];
@@ -2049,8 +2052,13 @@
         if (!open) openCompactTool(config.id, true);
       });
       close.addEventListener("click", () => {
+        const mobile = window.matchMedia("(max-width: 820px)").matches;
         closeAllCompactTools();
-        section.scrollIntoView({ behavior:"smooth", block:"start" });
+        if (mobile) {
+          section.scrollIntoView({ behavior:"smooth", block:"start" });
+        } else {
+          dashboard.scrollIntoView({ behavior:"smooth", block:"start" });
+        }
       });
     });
 
@@ -2060,6 +2068,10 @@
     const countriesSection = document.getElementById("countries");
     const countriesSlot = countriesSection ? document.createComment("sa-countries-slot") : null;
     if (countriesSection && countriesSlot) countriesSection.before(countriesSlot);
+
+    const outcomesSection = document.getElementById("real-outcomes");
+    const outcomesSlot = outcomesSection ? document.createComment("sa-outcomes-slot") : null;
+    if (outcomesSection && outcomesSlot) outcomesSection.before(outcomesSlot);
 
     const dashboard = document.createElement("section");
     dashboard.className = "sa-planning-dashboard";
@@ -2187,12 +2199,24 @@
         }
       }
 
+      if (outcomesSection && outcomesSlot?.parentNode) {
+        if (mobile) {
+          const footer = document.querySelector("footer.footer");
+          footer?.parentNode?.insertBefore(outcomesSection, footer);
+        } else {
+          outcomesSlot.parentNode.insertBefore(outcomesSection, outcomesSlot.nextSibling);
+        }
+      }
+
       toolMap.forEach((item,id) => {
         restoreTool(id);
         item.section.hidden = !mobile && item.config.dashboard;
         item.body.hidden = mobile || item.config.dashboard;
         item.toggle.setAttribute("aria-expanded","false");
         item.section.classList.remove("is-compact-open","is-desktop-workspace-tool");
+        item.close.innerHTML = mobile
+          ? 'Close <span class="sa-compact-chevron is-up" aria-hidden="true"></span>'
+          : 'Make another plan <span class="sa-slim-arrow" aria-hidden="true"></span>';
         if (!mobile && !item.config.dashboard) {
           item.section.hidden = false;
           item.body.hidden = false;

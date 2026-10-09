@@ -219,7 +219,7 @@ async function load(){
    }catch{}
    throw 0;
  }
- try{const d=await fetch("/api/content?slug="+encodeURIComponent(slug)).then(r=>r.json());if(d.ok){post=d.post;try{const all=await fetch("/api/content?limit=100",{cache:"no-store"}).then(r=>r.json());allPosts=all.posts||[]}catch{allPosts=[]}render();return}}catch{}
+ try{const d=await fetch("/api/content?slug="+encodeURIComponent(slug)).then(r=>r.json());if(d.ok){post=d.post;try{const [manual,seed]=await Promise.all([fetch("/api/content?limit=100",{cache:"no-store"}).then(r=>r.json()),fetch("/data/insights-auto.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({posts:[]}))]);const seen=new Set();allPosts=[...(manual.posts||[]),...(seed.posts||[])].filter(p=>p&&p.slug&&!seen.has(p.slug)&&seen.add(p.slug))}catch{allPosts=[]}render();return}}catch{}
  const d=await fetch("/data/insights-auto.json",{cache:"no-store"}).then(r=>r.json());post=(d.posts||[]).find(p=>p.slug===slug);if(!post)throw 0;allPosts=(d.posts||[]);render()
 }
 if("speechSynthesis" in window)speechSynthesis.onvoiceschanged=()=>{};

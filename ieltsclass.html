@@ -251,7 +251,7 @@
 
     function render(){
       grid.innerHTML = courseData.map((course, courseIdx) => `
-        <article class="class-card">
+        <article class="class-card" id="ielts-course-${courseIdx}">
           <div class="class-player" id="player-${courseIdx}">
             <iframe src="https://www.youtube.com/embed/${course.lessons[0].id}?rel=0" allowfullscreen></iframe>
           </div>
@@ -263,7 +263,7 @@
             <div class="lesson-header"><span>COURSE CONTENT</span><span>${course.lessons.length} LESSONS</span></div>
             <div class="lesson-scroll">
               ${course.lessons.map((video, videoIdx) => `
-                <div class="lesson-item" onclick="changeVideo(${courseIdx}, '${video.id}')">
+                <div class="lesson-item" id="ielts-video-${video.id}" onclick="changeVideo(${courseIdx}, '${video.id}')">
                   <div class="lesson-icon">${videoIdx + 1}</div>
                   <div style="flex: 1;">${video.title}</div>
                   <div style="color: var(--brand); font-size: 11px;">▶ Watch</div>
@@ -281,6 +281,25 @@
     }
 
     render();
+
+    const requestedVideo = new URLSearchParams(location.search).get("video");
+    if(requestedVideo){
+      let foundCourse = -1;
+      courseData.some((course, index) => {
+        if(course.lessons.some(lesson => lesson.id === requestedVideo)){
+          foundCourse = index;
+          return true;
+        }
+        return false;
+      });
+      if(foundCourse >= 0){
+        changeVideo(foundCourse, requestedVideo);
+        setTimeout(() => {
+          const target = document.getElementById("ielts-course-" + foundCourse);
+          if(target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 120);
+      }
+    }
   </script>
 </body>
 </html>

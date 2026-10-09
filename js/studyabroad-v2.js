@@ -1764,67 +1764,69 @@
     const timing = status === "upcoming"
       ? (days === 1 ? "Tomorrow" : `${days} days away`)
       : "In effect";
+    const flag = countryFlagUrl({ code: radarCountryCode(item) });
 
     host.innerHTML = `
-      <div class="sa-radar-feature__inner">
-        <div>
-          <div class="sa-radar-feature__eyebrow">
-            <span class="sa-radar-chip sa-radar-chip--gold">${status === "upcoming" ? "Next confirmed change" : "Latest verified change"}</span>
-            <span class="sa-radar-chip">${escapeHtml(item.country)}</span>
-            <span class="sa-radar-chip">${escapeHtml(item.category)}</span>
+      <details class="sa-radar-feature sa-radar-feature--compact">
+        <summary>
+          <span class="sa-radar-disclosure__flag"><img src="${escapeHtml(flag)}" alt="" loading="lazy" width="34" height="23"></span>
+          <span class="sa-radar-feature__summary-title">
+            <small>${status === "upcoming" ? "Next confirmed change" : "Latest verified change"} · ${escapeHtml(item.country)}</small>
+            <strong>${escapeHtml(item.title)}</strong>
+          </span>
+          <span class="sa-compact-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="sa-radar-feature__compact-body">
+          <p>${escapeHtml(item.summary)}</p>
+          <div class="sa-radar-feature__side">
+            <span>${status === "upcoming" ? "Effective" : "In effect from"} · ${escapeHtml(formatRadarDate(item))}</span>
+            <p>${escapeHtml(item.impact)}</p>
+            <div class="sa-radar-feature__links">
+              <a href="${escapeHtml(item.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.sourceLabel)} <span class="sa-slim-arrow" aria-hidden="true"></span></a>
+              <a href="${escapeHtml(item.guidePage)}">Full country guide <span class="sa-slim-arrow" aria-hidden="true"></span></a>
+            </div>
+            <small class="sa-radar-feature__timing">${escapeHtml(timing)}</small>
           </div>
-          <h3>${escapeHtml(item.title)}</h3>
-          <p class="sa-radar-feature__summary">${escapeHtml(item.summary)}</p>
         </div>
-
-        <div class="sa-radar-feature__side">
-          <span>${status === "upcoming" ? "Effective" : "In effect from"} · ${escapeHtml(formatRadarDate(item))}</span>
-          <p>${escapeHtml(item.impact)}</p>
-          <div class="sa-radar-feature__links">
-            <a href="${escapeHtml(item.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.sourceLabel)} ↗</a>
-            <a href="${escapeHtml(item.guidePage)}">Full country guide →</a>
-          </div>
-          <div style="margin-top:12px;color:rgba(255,255,255,.52);font-size:.65rem;font-weight:700">${escapeHtml(timing)}</div>
-        </div>
-      </div>
+      </details>
     `;
+    replaceLegacyArrows(host);
   }
 
   function radarCard(item) {
     const status = radarStatus(item);
     const statusLabel = status === "upcoming" ? "Coming soon" : "In effect";
+    const flag = countryFlagUrl({ code: radarCountryCode(item) });
 
     return `
-      <article class="sa-radar-card">
-        <div class="sa-radar-card__meta">
-          <div class="sa-radar-card__country">
-            <span class="sa-radar-card__code">${escapeHtml(radarCountryCode(item))}</span>
-            <strong>${escapeHtml(item.country)}</strong>
-          </div>
+      <details class="sa-radar-card sa-radar-disclosure">
+        <summary class="sa-radar-disclosure__summary">
+          <span class="sa-radar-disclosure__flag"><img src="${escapeHtml(flag)}" alt="" loading="lazy" width="32" height="22"></span>
+          <span class="sa-radar-disclosure__title">
+            <small>${escapeHtml(item.country)} · ${escapeHtml(item.category)}</small>
+            <strong>${escapeHtml(item.title)}</strong>
+          </span>
           <span class="sa-radar-status ${status === "upcoming" ? "sa-radar-status--upcoming" : ""}">${statusLabel}</span>
-        </div>
-
-        <span class="sa-radar-card__category">${escapeHtml(item.category)}</span>
-        <h3>${escapeHtml(item.title)}</h3>
-        <p class="sa-radar-card__summary">${escapeHtml(item.summary)}</p>
-
-        <div class="sa-radar-card__impact">
-          <span>Why it matters</span>
-          <p>${escapeHtml(item.impact)}</p>
-        </div>
-
-        <div class="sa-radar-card__foot">
-          <div class="sa-radar-card__date">
-            <strong>${escapeHtml(formatRadarDate(item))}</strong>
-            <small>Verified ${escapeHtml(formatRadarVerified(item.lastVerified))}</small>
+          <span class="sa-compact-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="sa-radar-disclosure__body">
+          <p class="sa-radar-card__summary">${escapeHtml(item.summary)}</p>
+          <div class="sa-radar-card__impact">
+            <span>Why it matters</span>
+            <p>${escapeHtml(item.impact)}</p>
           </div>
-
-          <div class="sa-radar-card__links">
-            <a href="${escapeHtml(item.officialUrl)}" target="_blank" rel="noopener noreferrer">Official source ↗</a>
-            <a href="${escapeHtml(item.guidePage)}">Country guide →</a>
+          <div class="sa-radar-card__foot">
+            <div class="sa-radar-card__date">
+              <strong>${escapeHtml(formatRadarDate(item))}</strong>
+              <small>Verified ${escapeHtml(formatRadarVerified(item.lastVerified))}</small>
+            </div>
+            <div class="sa-radar-card__links">
+              <a href="${escapeHtml(item.officialUrl)}" target="_blank" rel="noopener noreferrer">Official source <span class="sa-slim-arrow" aria-hidden="true"></span></a>
+              <a href="${escapeHtml(item.guidePage)}">Country guide <span class="sa-slim-arrow" aria-hidden="true"></span></a>
+            </div>
           </div>
         </div>
-      </article>
+      </details>
     `;
   }
 

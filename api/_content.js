@@ -33,5 +33,11 @@ async function ensureContentSchema(){
 }
 function slugify(value){return String(value||"").toLowerCase().normalize("NFKD").replace(/[^a-z0-9\s-]/g,"").trim().replace(/\s+/g,"-").replace(/-+/g,"-").slice(0,90)||("post-"+Date.now())}
 function cleanHtml(value){return String(value||"").replace(/<script[\s\S]*?<\/script>/gi,"").replace(/<style[\s\S]*?<\/style>/gi,"").replace(/\son\w+\s*=\s*["'][^"']*["']/gi,"").replace(/javascript:/gi,"")}
-function adminToken(req){const h=req.headers||{};return h["x-admin-token"]||(h.authorization||"").replace(/^Bearer\s+/i,"")||""}
+function adminToken(req){
+ const h=req.headers||{};
+ const headerToken=h["x-admin-token"]||(h.authorization||"").replace(/^Bearer\s+/i,"");
+ if(headerToken)return headerToken;
+ const cookie=String(h.cookie||"").split(";").map(x=>x.trim()).find(x=>x.startsWith("lizon_admin="));
+ return cookie?decodeURIComponent(cookie.slice("lizon_admin=".length)):"";
+}
 module.exports={ensureContentSchema,slugify,cleanHtml,adminToken};

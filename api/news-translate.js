@@ -114,7 +114,8 @@ module.exports = async (req, res) => {
   if (req.method === "GET" && String(req.query?.health || "") === "1") {
     try {
       const result = await translatePlain("Student visa update", "bn");
-      return res.json({ ok: true, provider: result.provider, sample: result.text });
+      const html = await translateHtml("<h2>Student visa update</h2><p>Apply early and prepare your documents.</p>", "bn");
+      return res.json({ ok: true, provider: result.provider, sample: result.text, html_sample: html.text });
     } catch (e) {
       return res.status(502).json({ ok: false, error: String(e?.message || e) });
     }

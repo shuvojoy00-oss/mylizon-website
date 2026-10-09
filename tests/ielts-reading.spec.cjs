@@ -24,10 +24,12 @@ test('reading starts, navigates across 40 questions, saves answers, and submits'
   await expect(page.locator('#progress')).toHaveText('1 of 40 answered');
   await page.locator('#nav-40').click();
   await expect(page.locator('#question-40')).toBeVisible();
+  await page.locator('#notes-toggle').click();
   await page.locator('#notes').fill('My note');
   await page.reload();
   await page.getByRole('button',{name:'Start or resume test'}).click();
   await expect(page.locator('#question-40')).toBeVisible();
+  await page.locator('#notes-toggle').click();
   await expect(page.locator('#notes')).toHaveValue('My note');
   await expect(page.locator('#progress')).toHaveText('1 of 40 answered');
   page.once('dialog',dialog=>dialog.accept());

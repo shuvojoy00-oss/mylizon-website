@@ -45,7 +45,7 @@ async function playGeneratedBangla(title,body){
    setListenStatus("▶ শুনুন");
    return true;
  }
- if(slug!=="australia-student-visa-rules-october-2026")return false;
+ if(!slug)return false;
  try{
    setListenStatus("লোড হচ্ছে...");
    const response=await fetch("/api/news-audio?slug="+encodeURIComponent(slug),{cache:"default"});

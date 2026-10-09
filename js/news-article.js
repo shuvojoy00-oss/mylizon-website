@@ -26,7 +26,7 @@ function speakCurrent(title,body){
  if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();return}
  const full=title+". "+body,parts=lang==="bn"?splitSpeech(full):[full],voice=chooseVoice(lang);
  let i=0;
- const next=()=>{if(i>=parts.length)return;const text=parts[i++],u=new SpeechSynthesisUtterance(text);u.lang=lang==="bn"?"bn-BD":"en-US";u.voice=voice;u.rate=lang==="bn"?1.04:.95;u.pitch=lang==="bn"&&/\?$/.test(text)?1.08:1;u.onend=()=>setTimeout(next,lang==="bn"?45:0);u.onerror=()=>{};speechSynthesis.speak(u)};
+ const next=()=>{if(i>=parts.length)return;const text=parts[i++],u=new SpeechSynthesisUtterance(text);u.lang=lang==="bn"?"bn-BD":"en-US";u.voice=voice;u.rate=lang==="bn"?1.11:.95;u.pitch=lang==="bn"&&/\?$/.test(text)?1.18:1;u.onend=()=>setTimeout(next,lang==="bn"&&/\?$/.test(text)?120:lang==="bn"?55:0);u.onerror=()=>{};speechSynthesis.speak(u)};
  next();
 }
 function render(){

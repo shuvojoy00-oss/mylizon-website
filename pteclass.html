@@ -978,7 +978,7 @@
 
     function renderClasses(){
       classGrid.innerHTML = classes.map(item => `
-        <article class="class-card">
+        <article class="class-card" id="pte-class-${item.no}">
           <div class="class-player" id="player-${item.no}">
             <img src="${getThumbnail(item.videoId)}" alt="${item.title}" loading="lazy">
             <div
@@ -1032,6 +1032,18 @@
     }
 
     renderClasses();
+
+    const requestedClass = Number(new URLSearchParams(location.search).get("class") || 0);
+    if(requestedClass){
+      const item = classes.find(x => x.no === requestedClass);
+      if(item){
+        playVideo(item.no, item.videoId);
+        setTimeout(() => {
+          const target = document.getElementById("pte-class-" + item.no);
+          if(target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 120);
+      }
+    }
   </script>
 </body>
 </html>

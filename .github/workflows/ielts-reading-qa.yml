@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - run: node --check js/ielts-practice.js
       - run: npm install --no-save @playwright/test
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test tests/ielts-reading.spec.cjs --browser=chromium --workers=1 --reporter=list

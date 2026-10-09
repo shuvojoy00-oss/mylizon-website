@@ -17,6 +17,7 @@ test('reading starts, navigates across 40 questions, saves answers, and submits'
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   await page.goto('http://127.0.0.1:8765/ielts-practice.html');
   await page.getByRole('button',{name:'Start or resume test'}).click();
+  await expect(page.locator('#load-error')).toHaveText('');
   await expect(page.locator('#question-1')).toBeVisible();
   await expect(page.locator('#navigation button')).toHaveCount(40);
   await page.locator('#question-1 input[value="TRUE"]').check();
@@ -39,6 +40,7 @@ test('practice timer and multi select maximum',async({page})=>{
   await page.goto('http://127.0.0.1:8765/ielts-practice.html');
   await page.locator('#mode').selectOption('practice');
   await page.getByRole('button',{name:'Start or resume test'}).click();
+  await expect(page.locator('#load-error')).toHaveText('');
   await expect(page.locator('#clock')).toContainText('Elapsed');
   await page.locator('#nav-12').click();
   const checks=page.locator('#question-12 input[type=checkbox]');

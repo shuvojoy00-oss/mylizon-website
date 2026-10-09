@@ -45,3 +45,25 @@ test('practice timer and multi select maximum',async({page})=>{
   await checks.nth(0).check();await checks.nth(1).check();await checks.nth(2).click();
   await expect(page.locator('#question-12 input[type=checkbox]:checked')).toHaveCount(2);
 });
+
+test('results allow another attempt and show question review',async({page})=>{
+  await page.goto('http://127.0.0.1:8765/ielts-practice.html');
+  await page.locator('#start').click();
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#submit').click();
+  await expect(page.locator('#results')).toContainText('Question 40:');
+  await page.getByRole('button',{name:'Return to test selection'}).click();
+  await expect(page.locator('#setup')).toBeVisible();
+  await page.locator('#start').click();
+  await expect(page.locator('#progress')).toHaveText('0 of 40 answered');
+});
+test('mobile layout shows both panes and passage tabs',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('http://127.0.0.1:8765/ielts-practice.html');
+  await page.locator('#start').click();
+  await expect(page.locator('#passage')).toBeVisible();
+  await expect(page.locator('#questions')).toBeVisible();
+  await expect(page.locator('#passage-tabs button')).toHaveCount(3);
+  await page.locator('#passage-tabs button').nth(1).click();
+  await expect(page.locator('#question-14')).toBeVisible();
+});

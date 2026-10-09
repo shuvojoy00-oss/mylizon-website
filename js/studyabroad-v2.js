@@ -160,7 +160,7 @@
     host.innerHTML = state.plan.shortlist.length
       ? state.plan.shortlist.slice(0, 3).map(item => `
           <a class="sa-hero-plan-country" href="${escapeHtml(item.page || "#my-plan")}">
-            <span>${escapeHtml(item.code || item.name.slice(0,2))}</span>
+            ${countryFlagTile(item,"sa-hero-plan-country__flag")}
             <strong>${escapeHtml(item.name)}</strong>
             <small>Open guide →</small>
           </a>
@@ -182,7 +182,7 @@
         ? state.plan.shortlist.map(item => `
             <div class="sa-plan-country">
               <div class="sa-plan-country__main">
-                <span class="sa-plan-country__code">${escapeHtml(item.code || item.name.slice(0,2))}</span>
+                ${countryFlagTile(item,"sa-plan-country__flag")}
                 <strong>${escapeHtml(item.name)}</strong>
               </div>
               <button type="button" data-plan-remove="${escapeHtml(item.id)}">Remove</button>
@@ -503,7 +503,7 @@
     return `
       <article class="sa-country-card sa-reveal" style="--delay:${Math.min(index, 7) * 35}ms">
         <a class="sa-country-card__main" href="${escapeHtml(country.page)}" aria-label="Open ${escapeHtml(country.name)} guide">
-          <span class="sa-country-card__code">${escapeHtml(country.code || country.name.slice(0,2).toUpperCase())}</span>
+          ${countryFlagTile(country,"sa-country-card__flag")}
           <h3>${escapeHtml(country.name)}</h3>
           <div class="sa-country-card__meta">${levels}</div>
           <span class="sa-country-card__open">Open guide <span aria-hidden="true">→</span></span>
@@ -519,6 +519,12 @@
     const raw = String(country.code || "").toLowerCase();
     const code = raw === "uk" ? "gb" : raw;
     return code ? `https://flagcdn.com/w160/${encodeURIComponent(code)}.png` : "";
+  }
+
+  function countryFlagTile(country, className = "sa-country-flag") {
+    const flag = countryFlagUrl(country);
+    if (!flag) return "";
+    return `<span class="${className}"><img src="${escapeHtml(flag)}" alt="" loading="lazy" width="36" height="24"></span>`;
   }
 
   function mobileCountryTemplate(country) {
@@ -897,7 +903,7 @@
       <article class="sa-fit-card ${strong ? "sa-fit-card--top" : ""}">
         <div class="sa-fit-card__top">
           <div class="sa-fit-card__country">
-            <span class="sa-fit-card__code">${escapeHtml(result.country.code || result.country.name.slice(0,2))}</span>
+            ${countryFlagTile(result.country,"sa-fit-card__flag")}
             <strong>${escapeHtml(result.country.name)}</strong>
           </div>
           <span class="sa-fit-card__label ${strong ? "" : "sa-fit-card__label--compare"}">${label}</span>
@@ -1050,7 +1056,7 @@
     const head = selected.map(item => item ? `
       <div class="sa-compare-cell">
         <div class="sa-compare-country">
-          <span class="sa-compare-country__code">${escapeHtml(item.country.code)}</span>
+          ${countryFlagTile(item.country,"sa-compare-country__flag")}
           <strong>${escapeHtml(item.country.name)}</strong>
         </div>
         <a href="${escapeHtml(item.country.page)}">Open guide ↗</a>

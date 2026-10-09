@@ -1973,6 +1973,16 @@
     });
   }
 
+  function setupSlimArrowObserver() {
+    const root = document.querySelector(".sa-page");
+    if (!root) return;
+    const observer = new MutationObserver(mutations => {
+      if (!mutations.some(item => item.addedNodes.length)) return;
+      replaceLegacyArrows(root);
+    });
+    observer.observe(root,{childList:true,subtree:true});
+  }
+
   const compactToolConfig = [
     { id:"priorities", label:"Pick Your Priorities", note:"Choose up to 3 priorities.", dashboard:true },
     { id:"matcher", label:"Create My Best Fits", note:"See which destinations fit your profile.", dashboard:true },
@@ -2062,8 +2072,8 @@
     const workspace = document.createElement("div");
     workspace.className = "sa-desktop-tool-workspace";
     workspace.hidden = true;
-    dashboard.after(workspace);
     first.before(dashboard);
+    dashboard.after(workspace);
 
     function restoreTool(id) {
       const item = toolMap.get(id);
@@ -2352,6 +2362,7 @@
     setupUtilities();
     setupCompactStudyAbroadUX();
     setupResultSaving();
+    setupSlimArrowObserver();
     loadCountries();
     loadStudyAbroadResults();
     replaceLegacyArrows();

@@ -223,10 +223,59 @@ function renderRecommendations(){
    }
  }
 }
+function loadBrandImage(){
+ return new Promise((resolve,reject)=>{
+   const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src="assets/logo/lizon-logo.png";
+ });
+}
+function wrapCanvasText(ctx,text,maxWidth,maxLines){
+ const words=String(text||"").trim().split(/\s+/).filter(Boolean),lines=[];let line="";maxLines=maxLines||99;
+ for(const word of words){
+   const test=line?line+" "+word:word;
+   if(ctx.measureText(test).width<=maxWidth){line=test;continue}
+   if(line)lines.push(line);line=word;if(lines.length>=maxLines-1)break;
+ }
+ if(line&&lines.length<maxLines)lines.push(line);
+ if(words.length&&lines.length===maxLines){let last=lines[maxLines-1];while(last.length>1&&ctx.measureText(last+"…").width>maxWidth)last=last.slice(0,-1);lines[maxLines-1]=last.replace(/[\s,.]+$/,"")+"…"}
+ return lines;
+}
+function drawLines(ctx,lines,x,y,lineHeight){lines.forEach((line,i)=>ctx.fillText(line,x,y+i*lineHeight));return y+lines.length*lineHeight}
+async function createShareCardBlob(){
+ if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+ const canvas=document.createElement("canvas");canvas.width=1080;canvas.height=1350;const ctx=canvas.getContext("2d");
+ const title=lang==="bn"?(post.title_bn||post.title_en):(post.title_en||post.title_bn);
+ const excerpt=lang==="bn"?(post.excerpt_bn||post.excerpt_en):(post.excerpt_en||post.excerpt_bn);
+ const category=post.category==="study-abroad"?"STUDY ABROAD":String(post.category||"NEWS").toUpperCase();
+ const countryIds=currentCountryIds(),countryNames=countryIds.map(id=>(countries.find(c=>c.id===id)||{}).name||id).filter(Boolean);
+ const date=post.published_at?new Intl.DateTimeFormat(lang==="bn"?"bn-BD":"en-GB",{day:"numeric",month:"short",year:"numeric"}).format(new Date(post.published_at)):"";
+ const font=lang==="bn"?"Hind Siliguri":"Manrope";
+ ctx.fillStyle="#fbfaf6";ctx.fillRect(0,0,1080,1350);ctx.fillStyle="#103f31";ctx.fillRect(0,0,1080,18);
+ let logo=null;try{logo=await loadBrandImage()}catch(_e){}
+ if(logo){ctx.save();ctx.globalAlpha=.045;ctx.drawImage(logo,190,365,700,700);ctx.restore();ctx.drawImage(logo,850,72,92,92)}
+ ctx.textAlign="right";ctx.fillStyle="#173f31";ctx.font="800 30px Manrope";ctx.fillText("LizOn Education",825,112);ctx.font="700 16px Manrope";ctx.fillStyle="#718078";ctx.fillText("NEWS",825,141);
+ ctx.textAlign="left";ctx.fillStyle="#9a762d";ctx.font="800 22px Manrope";ctx.fillText(category,78,235);
+ const meta=[...countryNames.slice(0,2),date].filter(Boolean).join("   •   ");if(meta){ctx.fillStyle="#718078";ctx.font="650 20px Manrope";ctx.fillText(meta,78,276)}
+ ctx.fillStyle="#171a18";ctx.font="700 60px \""+font+"\", \"Noto Sans Bengali\", sans-serif";const titleLines=wrapCanvasText(ctx,title,920,7);let y=365;y=drawLines(ctx,titleLines,78,y,76);
+ if(excerpt){y+=44;ctx.fillStyle="#50635a";ctx.font="500 32px \""+font+"\", \"Noto Sans Bengali\", sans-serif";drawLines(ctx,wrapCanvasText(ctx,excerpt,900,5),78,y,48)}
+ ctx.fillStyle="#173f31";ctx.fillRect(78,1170,924,2);ctx.font="800 22px Manrope";ctx.fillStyle="#173f31";ctx.fillText("MyLizOn.com",78,1232);ctx.textAlign="right";ctx.fillText("Helpline 01611 611139",1002,1232);ctx.textAlign="left";ctx.font="600 16px Manrope";ctx.fillStyle="#718078";ctx.fillText("LizOn Education News",78,1272);
+ return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(Error("Could not create image")),"image/png",1));
+}
+function shareFilename(){const base=String(post&&post.slug||"lizon-news").replace(/[^a-z0-9-]+/gi,"-").replace(/^-+|-+$/g,"").slice(0,80)||"lizon-news";return base+".png"}
+function setShareStatus(message){const el=document.getElementById("share-status");if(el)el.textContent=message||""}
+async function saveNewsImage(){
+ try{setShareStatus(lang==="bn"?"ছবি তৈরি হচ্ছে…":"Creating image…");const blob=await createShareCardBlob(),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=shareFilename();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);setShareStatus(lang==="bn"?"ছবি সেভ হয়েছে":"Image saved")}catch(_e){setShareStatus(lang==="bn"?"ছবি তৈরি করা যায়নি":"Could not create image")}
+}
+async function shareNewsImage(){
+ try{setShareStatus(lang==="bn"?"শেয়ার তৈরি হচ্ছে…":"Preparing share…");const blob=await createShareCardBlob(),file=new File([blob],shareFilename(),{type:"image/png"});const title=lang==="bn"?(post.title_bn||post.title_en):(post.title_en||post.title_bn);
+   if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({files:[file],title,text:"LizOn Education News"});setShareStatus("");return}
+   if(navigator.share){await navigator.share({title,text:"LizOn Education News",url:location.href});setShareStatus("");return}
+   const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=shareFilename();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);setShareStatus(lang==="bn"?"Share সমর্থিত নয়, ছবিটি সেভ করা হয়েছে":"Sharing is unavailable, so the image was saved");
+ }catch(e){if(e&&e.name==="AbortError"){setShareStatus("");return}setShareStatus(lang==="bn"?"শেয়ার করা যায়নি":"Could not share")}
+}
 function render(){
  const title=lang==="bn"?post.title_bn:(post.title_en||post.title_bn),excerpt=lang==="bn"?post.excerpt_bn:(post.excerpt_en||post.excerpt_bn),body=lang==="bn"?post.body_bn:(post.body_en||post.body_bn),countryIds=String(post.country||"").split(",").map(x=>x.trim()).filter(Boolean),countryNames=countryIds.map(id=>(countries.find(c=>c.id===id)||{}).name||id);
  document.title=title+" | LizOn News";
- root.innerHTML=`<header class="article-head"><div class="meta"><span>${post.category==="study-abroad"?"Study Abroad":String(post.category).toUpperCase()}</span>${countryNames.length?`<span>• ${esc(countryNames.join(", "))}</span>`:""}${post.source_verified?'<span>• VERIFIED SOURCE</span>':""}</div><h1>${esc(title)}</h1>${excerpt?`<p class="article-dek">${esc(excerpt)}</p>`:""}<div class="article-actions"><button id="listen">▶ ${lang==="bn"?"শুনুন":"Listen"}</button><button data-lang="bn" class="${lang==="bn"?"active":""}">বাংলা</button><button data-lang="en" class="${lang==="en"?"active":""}">English</button></div></header>${post.image_url?`<img class="article-cover" src="${esc(post.image_url)}" alt="${esc(post.image_alt||"")}"><div class="article-caption">${esc(post.image_caption||"")}${post.image_credit?" · "+esc(post.image_credit):""}</div>`:""}<div class="article-body" id="body">${body}</div>${post.source_url?`<div class="article-source"><strong>${post.source_verified?"Official Source":"Source"}</strong><br><a href="${esc(post.source_url)}" target="_blank" rel="noopener">${esc(post.source_name||post.source_url)}</a></div>`:""}<div class="article-next" id="next"></div>`;
+ root.innerHTML=`<header class="article-head"><div class="meta"><span>${post.category==="study-abroad"?"Study Abroad":String(post.category).toUpperCase()}</span>${countryNames.length?`<span>• ${esc(countryNames.join(", "))}</span>`:""}${post.source_verified?'<span>• VERIFIED SOURCE</span>':""}</div><h1>${esc(title)}</h1>${excerpt?`<p class="article-dek">${esc(excerpt)}</p>`:""}<div class="article-actions"><button id="listen">▶ ${lang==="bn"?"শুনুন":"Listen"}</button><button data-lang="bn" class="${lang==="bn"?"active":""}">বাংলা</button><button data-lang="en" class="${lang==="en"?"active":""}">English</button></div></header>${post.image_url?`<img class="article-cover" src="${esc(post.image_url)}" alt="${esc(post.image_alt||"")}"><div class="article-caption">${esc(post.image_caption||"")}${post.image_credit?" · "+esc(post.image_credit):""}</div>`:""}<div class="article-body" id="body">${body}</div>${post.source_url?`<div class="article-source"><strong>${post.source_verified?"Official Source":"Source"}</strong><br><a href="${esc(post.source_url)}" target="_blank" rel="noopener">${esc(post.source_name||post.source_url)}</a></div>`:""}<section class="article-share"><div><span class="article-share__eyebrow">LIZON NEWS CARD</span><strong>${lang==="bn"?"এই খবরটি ছবি হিসেবে রাখুন বা শেয়ার করুন":"Save or share this story as an image"}</strong><small>${lang==="bn"?"LizOn branding সহ 4:5 image তৈরি হবে.":"A branded 4:5 LizOn image will be generated."}</small></div><div class="article-share__actions"><button type="button" id="save-news-image">Save Image</button><button type="button" id="share-news-image" class="primary">Share</button></div><span id="share-status" class="article-share__status" aria-live="polite"></span></section><div class="article-next" id="next"></div>`;
  linkBody(document.getElementById("body"));
  const next=document.getElementById("next"),selected=countryIds.map(id=>countries.find(c=>c.id===id)).filter(Boolean);
  if(post.category==="study-abroad"&&selected.length)next.innerHTML=`<strong>এই ${selected.length>1?"দেশগুলো":"দেশটি"} নিয়ে আরও জানতে চান?</strong><br>${selected.map(c=>`<a href="${c.page}">${esc(c.name)} guide →</a>`).join(" · ")}`;
@@ -234,6 +283,8 @@ function render(){
  else if(post.category==="pte")next.innerHTML='<strong>PTE preparation এ সাহায্য দরকার?</strong><br><a href="pteclass.html">Free PTE classes দেখুন →</a> · <a href="pte.html">PTE Courses →</a>';
  root.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{if("speechSynthesis" in window)speechSynthesis.cancel();if(audioPlayer&&!audioPlayer.paused){audioPlayer.pause();audioPlayer.currentTime=0}lang=b.dataset.lang;render()});
  document.getElementById("listen").onclick=()=>speakCurrent(title,document.getElementById("body").innerText);
+ document.getElementById("save-news-image").onclick=saveNewsImage;
+ document.getElementById("share-news-image").onclick=shareNewsImage;
  renderRecommendations();
 }
 async function load(){

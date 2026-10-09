@@ -1,22 +1,67 @@
 const { adminToken } = require("./_content");
 
-async function translateChunk(text, target) {
-  const source = target === "bn" ? "en" : "bn";
-  const url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
-    encodeURIComponent(source) + "&tl=" + encodeURIComponent(target) +
-    "&dt=t&q=" + encodeURIComponent(text);
-  const r = await fetch(url, {
-    headers: { "User-Agent": "Mozilla/5.0 LizOn-News-Desk" },
-    signal: AbortSignal.timeout(10000)
-  });
-  if (!r.ok) throw new Error("Translation service unavailable");
-  const data = await r.json();
-  return (data?.[0] || []).map(x => x?.[0] || "").join("");
+function parseGoogle(data) {
+  if (!data) return "";
+  if (Array.isArray(data)) {
+    if (Array.isArray(data[0])) {
+      return data[0].map(x => Array.isArray(x) ? (x[0] || "") : "").join("");
+    }
+    if (typeof data[0] === "string") return data[0];
+  }
+  if (Array.isArray(data.sentences)) {
+    return data.sentences.map(x => x?.trans || "").join("");
+  }
+  return "";
 }
 
-function splitText(text, max = 700) {
+async function requestJson(url, options = {}) {
+  const r = await fetch(url, { ...options, signal: AbortSignal.timeout(12000) });
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+
+async function translateChunk(text, target) {
+  const source = target === "bn" ? "en" : "bn";
+  const q = encodeURIComponent(text);
+  const attempts = [
+    {
+      name: "google-clients5",
+      url: "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=" + source + "&tl=" + target + "&q=" + q
+    },
+    {
+      name: "google-web",
+      url: "https://translate.google.com/translate_a/single?client=gtx&sl=" + source + "&tl=" + target + "&dt=t&dj=1&q=" + q
+    },
+    {
+      name: "google-api",
+      url: "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + source + "&tl=" + target + "&dt=t&dj=1&q=" + q
+    }
+  ];
+
+  let lastError = null;
+  for (const attempt of attempts) {
+    try {
+      const data = await requestJson(attempt.url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131 Safari/537.36",
+          "Accept": "application/json,text/plain,*/*",
+          "Accept-Language": "en-US,en;q=0.9"
+        }
+      });
+      const translated = parseGoogle(data);
+      if (translated) return { text: translated, provider: attempt.name };
+      lastError = new Error("Empty translation from " + attempt.name);
+    } catch (e) {
+      lastError = e;
+    }
+  }
+  throw lastError || new Error("Translation service unavailable");
+}
+
+function splitText(text, max = 650) {
   const value = String(text || "");
-  if (value.length <= max) return value ? [value] : [];
+  if (!value) return [];
+  if (value.length <= max) return [value];
   const chunks = [];
   let rest = value;
   while (rest.length) {
@@ -32,7 +77,7 @@ function splitText(text, max = 700) {
       rest.lastIndexOf("\n", max),
       rest.lastIndexOf(" ", max)
     );
-    if (cut < Math.floor(max * .55)) cut = max;
+    if (cut < Math.floor(max * 0.55)) cut = max;
     else cut += 1;
     chunks.push(rest.slice(0, cut));
     rest = rest.slice(cut);
@@ -40,48 +85,41 @@ function splitText(text, max = 700) {
   return chunks;
 }
 
-async function mapLimited(items, limit, worker) {
-  const out = new Array(items.length);
-  let index = 0;
-  async function run() {
-    while (true) {
-      const i = index++;
-      if (i >= items.length) return;
-      out[i] = await worker(items[i], i);
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, run));
-  return out;
-}
-
 async function translatePlain(text, target) {
-  const chunks = splitText(text, 700);
-  if (!chunks.length) return "";
-  const out = await mapLimited(chunks, 5, chunk => translateChunk(chunk, target));
-  return out.join("");
+  const chunks = splitText(text);
+  const translated = [];
+  let provider = "";
+  for (const chunk of chunks) {
+    const result = await translateChunk(chunk, target);
+    translated.push(result.text);
+    provider ||= result.provider;
+  }
+  return { text: translated.join(""), provider };
 }
 
 async function translateHtml(html, target) {
   const parts = String(html || "").split(/(<[^>]+>)/g);
-  const textIndexes = [];
+  let provider = "";
   for (let i = 0; i < parts.length; i++) {
-    if (parts[i] && !/^<[^>]+>$/.test(parts[i]) && parts[i].trim()) textIndexes.push(i);
+    const part = parts[i];
+    if (!part || /^<[^>]+>$/.test(part) || !part.trim()) continue;
+    const result = await translatePlain(part, target);
+    parts[i] = result.text;
+    provider ||= result.provider;
   }
-  await mapLimited(textIndexes, 5, async i => {
-    parts[i] = await translatePlain(parts[i], target);
-  });
-  return parts.join("");
+  return { text: parts.join(""), provider };
 }
 
 module.exports = async (req, res) => {
   if (req.method === "GET" && String(req.query?.health || "") === "1") {
     try {
-      const sample = await translatePlain("Student visa update", "bn");
-      return res.json({ ok: true, provider: "translation", sample });
+      const result = await translatePlain("Student visa update", "bn");
+      return res.json({ ok: true, provider: result.provider, sample: result.text });
     } catch (e) {
       return res.status(502).json({ ok: false, error: String(e?.message || e) });
     }
   }
+
   if (adminToken(req) !== process.env.ADMIN_TOKEN) {
     return res.status(401).json({ ok: false, error: "Unauthorized" });
   }
@@ -98,15 +136,15 @@ module.exports = async (req, res) => {
       return res.status(413).json({ ok: false, error: "Article is too long to translate at once" });
     }
 
-    const translation = format === "html"
+    const result = format === "html"
       ? await translateHtml(text, target)
       : await translatePlain(text, target);
 
-    return res.json({ ok: true, translation });
+    return res.json({ ok: true, translation: result.text, provider: result.provider });
   } catch (e) {
     const message = e?.name === "TimeoutError"
-      ? "Full article translation timed out. Please try again."
-      : String(e?.message || e);
+      ? "Translation timed out. Please try again."
+      : "Translation service failed. Please try again.";
     return res.status(502).json({ ok: false, error: message });
   }
 };

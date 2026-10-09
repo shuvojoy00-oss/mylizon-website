@@ -3596,3 +3596,211 @@ button:hover .sa-slim-arrow{transform:translateX(3px)}
   border:0!important;
   box-shadow:none!important;
 }
+
+
+/* =========================================================
+   STUDY ABROAD UX V6.1
+   Mobile cards, reliable auto rail, visible outcomes + Radar
+   ========================================================= */
+
+/* Desktop opened planning tools get a clear return action */
+@media(min-width:821px){
+  .sa-desktop-tool-workspace .sa-compact-close{
+    display:inline-flex!important;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    width:auto;
+    min-height:44px;
+    margin:28px 0 0;
+    padding:0 16px;
+    border:1px solid rgba(22,79,61,.13);
+    border-radius:999px;
+    background:#eef5f0;
+    color:#164f3d;
+    font:inherit;
+    font-size:.74rem;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .sa-desktop-tool-workspace .sa-compact-close:hover{
+    background:#e5efe8;
+  }
+}
+
+/* Lead Radar update: visible, concise, not another dropdown */
+.sa-radar-feature--lead{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
+  gap:22px;
+  padding:20px!important;
+  border:1px solid rgba(22,79,61,.11)!important;
+  border-radius:20px!important;
+  background:#f4f8f5!important;
+  color:#17382e!important;
+  box-shadow:none!important;
+}
+.sa-radar-feature__lead-main{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  align-items:start;
+  gap:13px;
+}
+.sa-radar-feature__lead-side{
+  padding:15px 16px;
+  border:1px solid rgba(22,79,61,.09);
+  border-radius:15px;
+  background:rgba(255,255,255,.68);
+}
+.sa-radar-feature__lead-main p,
+.sa-radar-feature__lead-side p{
+  margin:7px 0 0;
+  color:#5e6f67!important;
+  font-size:.78rem;
+  line-height:1.55;
+}
+.sa-radar-feature__lead-side > span{
+  display:block;
+  color:#a77f2e!important;
+  font-size:.66rem;
+  font-weight:800;
+  letter-spacing:.03em;
+}
+.sa-radar-feature__lead .sa-radar-feature__links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:12px;
+}
+.sa-radar-feature__lead .sa-radar-feature__links a{
+  display:inline-flex;
+  align-items:center;
+  color:#164f3d!important;
+  font-size:.7rem;
+  font-weight:800;
+  text-decoration:none;
+}
+
+/* Mobile collapsed sections should look like real cards, not divider rows */
+@media(max-width:820px){
+  .sa-page section[data-compact-tool]{
+    margin:10px 14px!important;
+    padding:0!important;
+    overflow:hidden;
+    border:1px solid rgba(22,79,61,.10)!important;
+    border-radius:20px;
+    background:linear-gradient(145deg,#f6faf7,#edf5ef)!important;
+    box-shadow:0 7px 20px rgba(17,45,35,.045);
+  }
+  .sa-page section[data-compact-tool] > .sa-shell{
+    width:auto!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0 16px!important;
+  }
+  .sa-mobile-tool-toggle{
+    min-height:92px!important;
+    padding:18px 0!important;
+  }
+  .sa-mobile-tool-toggle strong{
+    font-size:1rem!important;
+    letter-spacing:-.01em;
+  }
+  .sa-mobile-tool-toggle small{
+    max-width:260px;
+    font-size:.71rem!important;
+    line-height:1.42!important;
+  }
+  .sa-compact-body{
+    padding:2px 0 24px!important;
+    border-top:1px solid rgba(22,79,61,.08);
+  }
+  section.is-compact-open{
+    background:#fbfcf9!important;
+    box-shadow:0 12px 30px rgba(17,45,35,.07)!important;
+  }
+
+  /* Radar stays visibly present on mobile */
+  #radar{
+    display:block!important;
+    margin:18px 0 8px!important;
+    padding:34px 0!important;
+  }
+  #radar .sa-shell{
+    padding-top:0!important;
+    padding-bottom:0!important;
+  }
+  #radar .sa-heading{
+    margin-bottom:16px!important;
+  }
+  #radar .sa-heading h2{
+    font-size:1.55rem!important;
+  }
+  .sa-radar-feature--lead{
+    grid-template-columns:1fr;
+    gap:11px;
+    padding:14px!important;
+    border-radius:17px!important;
+  }
+  .sa-radar-feature__lead-side{
+    padding:12px 13px;
+  }
+  .sa-radar-feature__lead-main p,
+  .sa-radar-feature__lead-side p{
+    font-size:.75rem;
+  }
+
+  /* Student Outcomes is a normal visible destination near the footer */
+  #real-outcomes{
+    display:block!important;
+    margin:0!important;
+    padding:40px 0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:#f7faf7!important;
+    box-shadow:none!important;
+  }
+  #real-outcomes > .sa-shell{
+    width:min(100% - 28px,var(--sa-shell))!important;
+    margin-inline:auto!important;
+    padding:0!important;
+  }
+  #real-outcomes .sa-mobile-tool-toggle{
+    display:none!important;
+  }
+  #real-outcomes .sa-compact-body{
+    display:block!important;
+    padding:0!important;
+    border:0!important;
+  }
+  #real-outcomes .sa-compact-close{
+    display:none!important;
+  }
+  #real-outcomes .sa-outcomes-head{
+    gap:14px;
+  }
+  #real-outcomes .sa-studyabroad-results{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+  #real-outcomes .sa-study-result-card{
+    border-radius:16px!important;
+  }
+  #real-outcomes .sa-study-result-card div{
+    padding:11px!important;
+  }
+  #real-outcomes .sa-study-result-card strong{
+    font-size:.73rem!important;
+  }
+
+  /* The country rail must remain manually scrollable while auto movement runs */
+  .sa-mobile-country-marquee{
+    scroll-behavior:auto!important;
+    touch-action:pan-x pan-y!important;
+  }
+}
+
+/* Hero micro line can carry the longer end-to-end promise cleanly */
+.sa-hero__micro span:last-child{
+  white-space:normal;
+}

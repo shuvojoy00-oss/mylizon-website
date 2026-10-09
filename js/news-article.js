@@ -113,8 +113,40 @@ function detectLearningIntent(){
  const topic=(topics.find(([k])=>text.includes(k))||[])[1]||"";
  return{module,topic};
 }
-function resourceCard(type,title,desc,url,visual){
- return{kind:"resource",type,title,desc,url,visual:visual||type};
+function resourceCard(type,title,desc,url,visual,thumb){
+ return{kind:"resource",type,title,desc,url,visual:visual||type,thumb:thumb||""};
+}
+function ytThumb(id){return id?`https://i.ytimg.com/vi/${id}/hqdefault.jpg`:""}
+function pickIeltsClass(intent){
+ const map=[
+  {test:i=>i.topic==="MCQ"&&i.module==="reading",title:"MCQ and Passage Plan",id:"u4BWY_ed9GE"},
+  {test:i=>i.topic==="MCQ"&&i.module==="listening",title:"IELTS Listening MCQ Tricks",id:"vyDFMkBDPPM"},
+  {test:i=>i.topic==="Cue Card",title:"IELTS Speaking Part 2 Cue Card",id:"Gmchy83D6Ew"},
+  {test:i=>i.topic==="Writing Task 1",title:"Pie Chart Guidelines",id:"Cx-4qHh3FvE"},
+  {test:i=>i.topic==="Writing Task 2",title:"Structures & Planning",id:"d_HFFL8GA08"},
+  {test:i=>i.topic==="Heading Matching",title:"Heading Matching Guide",id:"mz8yXH0ATXw"},
+  {test:i=>i.topic==="True False Not Given",title:"TFNG Time Saving Method",id:"EHLEpDr2V5g"},
+  {test:i=>i.module==="reading",title:"Reading Question Answer Strategy",id:"F9UbZjrVx8I"},
+  {test:i=>i.module==="listening",title:"IELTS Listening Full Strategy",id:"Fg6bQ_kcs_A"},
+  {test:i=>i.module==="speaking",title:"Speaking Full Plan Practice",id:"y6qkHcb15bE"},
+  {test:i=>i.module==="writing",title:"Writing like an Examiner",id:"ytbbfnndo0c"},
+  {test:i=>i.module==="grammar",title:"Grammar Linkers & A speaking reality check",id:"e9gopVn68RU"}
+ ];
+ return map.find(x=>x.test(intent))||null;
+}
+function pickPteClass(intent){
+ const map=[
+  {test:i=>i.topic==="MCQ"&&i.module==="reading",title:"PTE Reading: Re Order Sentences & MCQ",no:2,id:"vQsm8p43Szw"},
+  {test:i=>i.topic==="MCQ"&&i.module==="listening",title:"PTE Listening MCQ & Select Missing Word",no:5,id:"AXphkM1DeLc"},
+  {test:i=>i.topic==="Fill in the Blanks",title:"PTE Reading FIB + Speaking ASQ",no:4,id:"O_f8ADEWpio"},
+  {test:i=>i.topic==="Write From Dictation",title:"PTE WFD, Dictation & Drag Drop",no:3,id:"ESTz-Fn15Sk"},
+  {test:i=>i.topic==="Read Aloud",title:"PTE Key Class: Read Aloud, DI, FIG, HIW",no:10,id:"6UFcwhzAawU"},
+  {test:i=>i.module==="writing",title:"PTE Writing: Essay Writing",no:8,id:"8W0PBaQbCxg"},
+  {test:i=>i.module==="speaking",title:"PTE Speaking: Re Tell Lecture",no:9,id:"NOK6e-P2CEc"},
+  {test:i=>i.module==="listening",title:"PTE Listening: SST, FIB, HIW",no:7,id:"vHnOqjwvbF4"},
+  {test:i=>i.module==="reading",title:"PTE Reading: Re Order Sentences & MCQ",no:2,id:"vQsm8p43Szw"}
+ ];
+ return map.find(x=>x.test(intent))||null;
 }
 function buildResources(){
  const resources=[],ids=currentCountryIds(),intent=detectLearningIntent();
@@ -127,13 +159,15 @@ function buildResources(){
    resources.push(resourceCard("Eligibility","Check Your Eligibility","Turn this information into a decision based on your own academic profile, budget and plans.","assessment.html","FIT"));
  }
  if(post.category==="ielts"){
-   const specific=[intent.module,intent.topic].filter(Boolean).join(" ");
-   resources.push(resourceCard("Free Class",specific?`Free IELTS ${specific} Class`:"Free IELTS Classes","Continue from this article into LizOn's free IELTS teaching inside the website.","ieltsclass.html#mainGrid","IELTS"));
+   const exact=pickIeltsClass(intent);
+   if(exact)resources.push(resourceCard("Free Class",exact.title,"Watch the LizOn class that matches this article topic.","ieltsclass.html?video="+encodeURIComponent(exact.id)+"#mainGrid","IELTS",ytThumb(exact.id)));
+   else resources.push(resourceCard("Free Class","Free IELTS Classes","Continue from this article into LizOn's free IELTS teaching inside the website.","ieltsclass.html#mainGrid","IELTS"));
    resources.push(resourceCard("Course","IELTS Courses","Choose the preparation route that fits your level and target score.","ielts.html","IELTS"));
  }
  if(post.category==="pte"){
-   const specific=[intent.module,intent.topic].filter(Boolean).join(" ");
-   resources.push(resourceCard("Free Class",specific?`Free PTE ${specific} Class`:"Free PTE Classes","Continue from this article into LizOn's free PTE question type classes.","pteclass.html#pte-classes","PTE"));
+   const exact=pickPteClass(intent);
+   if(exact)resources.push(resourceCard("Free Class",exact.title,"Watch the LizOn PTE class that matches this article topic.","pteclass.html?class="+encodeURIComponent(exact.no)+"#pte-classes","PTE",ytThumb(exact.id)));
+   else resources.push(resourceCard("Free Class","Free PTE Classes","Continue from this article into LizOn's free PTE question type classes.","pteclass.html#pte-classes","PTE"));
    resources.push(resourceCard("Course","PTE Courses","See LizOn's score focused PTE preparation options.","pte.html","PTE"));
  }
  return resources;
@@ -158,6 +192,7 @@ function getRelatedNews(limit=5){
 }
 function recVisual(item){
  if(item.kind==="news"&&item.image_url)return`<img src="${esc(item.image_url)}" alt="">`;
+ if(item.thumb)return`<img src="${esc(item.thumb)}" alt="${esc(item.title||"Free class")}" loading="lazy">`;
  return`<span>${esc(item.visual||item.type||"LIZON")}</span>`;
 }
 function recMarkup(item,compact=false){
@@ -224,4 +259,14 @@ async function load(){
 }
 if("speechSynthesis" in window)speechSynthesis.onvoiceschanged=()=>{};
 load().catch(()=>root.innerHTML='<p class="news-loading">Article পাওয়া যায়নি.</p>');
+
+function initArticleNewsTools(){
+ const form=document.getElementById("article-news-search-form"),input=document.getElementById("article-news-search");
+ if(form&&input)form.addEventListener("submit",e=>{
+   e.preventDefault();
+   const q=input.value.trim();
+   location.href=q?"news.html?search="+encodeURIComponent(q):"news.html";
+ });
+}
+initArticleNewsTools();
 })();

@@ -24,7 +24,7 @@ async function ensureContentSchema(){
  alter table public.content_posts add column if not exists image_credit text;
  alter table public.content_posts add column if not exists resource_key text;
  alter table public.content_posts drop constraint if exists content_posts_content_type_check;
- alter table public.content_posts add constraint content_posts_content_type_check check(content_type in('news','guide','suggestion','prediction','announcement','problem-solution'));
+ alter table public.content_posts add constraint content_posts_content_type_check check(content_type in('news','guide','suggestion','prediction','announcement','problem-solution','recent-questions','exam-intelligence','opportunity','outlook'));
  create index if not exists content_posts_status_published_idx on public.content_posts(status,published_at desc);
  create index if not exists content_posts_category_idx on public.content_posts(category,published_at desc);
  create index if not exists content_posts_country_idx on public.content_posts(country,published_at desc);

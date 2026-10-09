@@ -713,12 +713,63 @@ function initInternalLinks() {
   });
 }
 
+
+function initNewsNavigation() {
+  const desktop = document.querySelector(".desktop-nav");
+  if (desktop) {
+    if (![...desktop.querySelectorAll("a.desktop-nav__link")].some(a => a.textContent.trim() === "News")) {
+      const news = document.createElement("a");
+      news.className = "desktop-nav__link";
+      news.href = "news.html";
+      news.textContent = "News";
+      const results = [...desktop.querySelectorAll("a.desktop-nav__link")].find(a => a.textContent.trim() === "Results");
+      if (results) desktop.insertBefore(news, results); else desktop.appendChild(news);
+    }
+    const map = { "IELTS":"ielts", "PTE":"pte", "Study Abroad":"study-abroad" };
+    desktop.querySelectorAll(".nav-dropdown").forEach(drop => {
+      const label = drop.querySelector(".nav-dropdown__trigger")?.textContent.replace("⌄","").trim();
+      const cat = map[label];
+      const panel = drop.querySelector(".nav-dropdown__panel");
+      if (!cat || !panel || panel.querySelector('[data-news-link]')) return;
+      const a = document.createElement("a");
+      a.href = "news.html?category=" + cat;
+      a.setAttribute("data-news-link","");
+      a.innerHTML = label + ' News & Updates <span>↗</span>';
+      panel.appendChild(a);
+    });
+  }
+  const mobile = document.querySelector(".mobile-nav");
+  if (mobile) {
+    const map = { "IELTS":"ielts", "PTE":"pte", "Study Abroad":"study-abroad" };
+    mobile.querySelectorAll("details").forEach(d => {
+      const label = d.querySelector("summary")?.childNodes[0]?.textContent.trim() || d.querySelector("summary")?.textContent.replace("+","").trim();
+      const cat = map[label];
+      const sub = d.querySelector(".mobile-nav__sub");
+      if (!cat || !sub || sub.querySelector('[data-news-link]')) return;
+      const a = document.createElement("a");
+      a.href = "news.html?category=" + cat;
+      a.setAttribute("data-news-link","");
+      a.textContent = label + " News & Updates";
+      sub.appendChild(a);
+    });
+    if (![...mobile.querySelectorAll("a.mobile-nav__main")].some(a => a.textContent.trim() === "News")) {
+      const a = document.createElement("a");
+      a.className = "mobile-nav__main";
+      a.href = "news.html";
+      a.textContent = "News";
+      const results = [...mobile.querySelectorAll("a.mobile-nav__main")].find(x => x.textContent.trim() === "Results");
+      if (results) mobile.insertBefore(a,results); else mobile.appendChild(a);
+    }
+  }
+}
+
 /* ==========================================================
    INITIALIZE
 ========================================================== */
 
 function init() {
   initHeader();
+  initNewsNavigation();
   initDropdowns();
   initMobileMenu();
   initRevealAnimations();

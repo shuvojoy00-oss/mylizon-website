@@ -74,6 +74,14 @@ async function translateHtml(html, target) {
 }
 
 module.exports = async (req, res) => {
+  if (req.method === "GET" && String(req.query?.health || "") === "1") {
+    try {
+      const sample = await translatePlain("Student visa update", "bn");
+      return res.json({ ok: true, provider: "translation", sample });
+    } catch (e) {
+      return res.status(502).json({ ok: false, error: String(e?.message || e) });
+    }
+  }
   if (adminToken(req) !== process.env.ADMIN_TOKEN) {
     return res.status(401).json({ ok: false, error: "Unauthorized" });
   }

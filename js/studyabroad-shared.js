@@ -162,6 +162,26 @@
 
 
 
+
+  function setupNewsNavigation(){
+    const desktop=document.querySelector(".desktop-nav");
+    if(desktop){
+      if(![...desktop.querySelectorAll("a.desktop-nav__link")].some(a=>a.textContent.trim()==="News")){
+        const a=document.createElement("a");a.className="desktop-nav__link";a.href="news.html";a.textContent="News";
+        const results=[...desktop.querySelectorAll("a.desktop-nav__link")].find(x=>x.textContent.trim()==="Results");
+        if(results)desktop.insertBefore(a,results);else desktop.appendChild(a);
+      }
+      const map={"IELTS":"ielts","PTE":"pte","Study Abroad":"study-abroad"};
+      desktop.querySelectorAll(".nav-dropdown").forEach(d=>{const label=d.querySelector(".nav-dropdown__trigger")?.textContent.replace("⌄","").trim(),cat=map[label],panel=d.querySelector(".nav-dropdown__panel");if(!cat||!panel||panel.querySelector("[data-news-link]"))return;const a=document.createElement("a");a.href="news.html?category="+cat;a.setAttribute("data-news-link","");a.innerHTML=label+' News & Updates <span>↗</span>';panel.appendChild(a)});
+    }
+    const mobile=document.querySelector(".mobile-nav");
+    if(mobile){
+      const map={"IELTS":"ielts","PTE":"pte","Study Abroad":"study-abroad"};
+      mobile.querySelectorAll("details").forEach(d=>{const label=d.querySelector("summary")?.textContent.replace("+","").trim(),cat=map[label],sub=d.querySelector(".mobile-nav__sub");if(!cat||!sub||sub.querySelector("[data-news-link]"))return;const a=document.createElement("a");a.href="news.html?category="+cat;a.setAttribute("data-news-link","");a.textContent=label+" News & Updates";sub.appendChild(a)});
+      if(![...mobile.querySelectorAll("a.mobile-nav__main")].some(a=>a.textContent.trim()==="News")){const a=document.createElement("a");a.className="mobile-nav__main";a.href="news.html";a.textContent="News";mobile.appendChild(a)}
+    }
+  }
+
   const PLAN_KEY = "lizon-studyabroad-plan-v1";
 
   function flagCode(code){
@@ -311,6 +331,7 @@
     mobile?.querySelector("[data-shared-free-classes]")?.remove();
   }
   document.addEventListener("DOMContentLoaded",async()=>{
+    setupNewsNavigation();
     const countries=await loadSharedCountries();
     setupExploreCountriesNav(countries);
     addCountryHeroSave(countries);

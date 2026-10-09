@@ -19,42 +19,23 @@ function getVoicesReady(){
    finish();
  });
 }
-function pickBanglaVoice(voices){
- return voices.find(v=>/^bn-BD$/i.test(v.lang))||
-        voices.find(v=>/^bn-IN$/i.test(v.lang))||
-        voices.find(v=>/^bn(?:-|_)/i.test(v.lang)||/bangla|bengali/i.test(v.name))||
-        null;
-}
 function pickEnglishVoice(voices){
  return voices.find(v=>/^en(-|_)/i.test(v.lang)&&/female|samantha|zira|victoria|ava|serena|google uk english female/i.test(v.name))||
         voices.find(v=>/^en(-|_)/i.test(v.lang))||null;
-}
-function splitSentences(text){
- return String(text||"").replace(/\s+/g," ").match(/[^.!?।]+[.!?।]?/g)?.map(s=>s.trim()).filter(Boolean)||[];
 }
 function setListenStatus(message){
  const b=document.getElementById("listen");
  if(b)b.textContent=message;
 }
-async function speakBangla(title,body){
- const voices=await getVoicesReady();
- const voice=pickBanglaVoice(voices);
- const sentences=splitSentences(title+". "+body);
- let i=0;
- const next=()=>{
-   if(i>=sentences.length){setListenStatus("▶ শুনুন");return}
-   const text=sentences[i++];
-   const u=new SpeechSynthesisUtterance(text);
-   u.lang=voice?.lang||"bn-BD";
-   if(voice)u.voice=voice;
-   u.rate=1.08;
-   u.pitch=/\?$/.test(text)?1.12:1;
-   u.onend=()=>setTimeout(next,/\?$/.test(text)?90:30);
-   u.onerror=()=>setListenStatus("▶ শুনুন");
-   speechSynthesis.speak(u);
- };
+function speakBangla(title,body){
+ const u=new SpeechSynthesisUtterance(title+". "+body);
+ u.lang="bn-BD";
+ u.rate=1.05;
+ u.pitch=1;
+ u.onend=()=>setListenStatus("▶ শুনুন");
+ u.onerror=()=>setListenStatus("▶ শুনুন");
  setListenStatus("■ থামান");
- next();
+ speechSynthesis.speak(u);
 }
 async function speakEnglish(title,body){
  const voices=await getVoicesReady();
@@ -75,7 +56,7 @@ async function speakCurrent(title,body){
    setListenStatus(lang==="bn"?"▶ শুনুন":"▶ Listen");
    return;
  }
- if(lang==="bn")await speakBangla(title,body);
+ if(lang==="bn")speakBangla(title,body);
  else await speakEnglish(title,body);
 }
 function render(){

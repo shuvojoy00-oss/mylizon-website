@@ -10,7 +10,7 @@ async function ensureContentSchema(){
  excerpt_bn text,excerpt_en text,body_bn text not null,body_en text,
  category text not null check(category in('study-abroad','ielts','pte')),
  content_type text not null default 'news',
- status text not null default 'draft' check(status in('draft','review','published','archived')),
+ status text not null default 'draft',
  featured boolean not null default false,source_url text,source_name text,
  source_verified boolean not null default false,importance text default 'useful' check(importance in('critical','important','useful','general')),
  ai_generated boolean not null default false,ai_confidence numeric(4,3),
@@ -23,6 +23,8 @@ async function ensureContentSchema(){
  alter table public.content_posts add column if not exists image_caption text;
  alter table public.content_posts add column if not exists image_credit text;
  alter table public.content_posts add column if not exists resource_key text;
+ alter table public.content_posts drop constraint if exists content_posts_status_check;
+ alter table public.content_posts add constraint content_posts_status_check check(status in('draft','review','scheduled','published','archived'));
  alter table public.content_posts drop constraint if exists content_posts_content_type_check;
  alter table public.content_posts add constraint content_posts_content_type_check check(content_type in('news','guide','suggestion','prediction','announcement','problem-solution','recent-questions','exam-intelligence','opportunity','outlook'));
  create index if not exists content_posts_status_published_idx on public.content_posts(status,published_at desc);

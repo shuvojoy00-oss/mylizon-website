@@ -1996,7 +1996,12 @@
     { id:"cost-calculator", label:"Calculate My First Year Cost", note:"Estimate tuition and living costs.", dashboard:true },
     { id:"intake-planner", label:"Create My Preparation Plan", note:"Plan English, application, finance, visa and departure.", dashboard:true },
     { id:"my-plan", label:"My Study Plan", note:"See everything you have saved.", dashboard:true },
-    { id:"radar", label:"Current Study Abroad Updates", note:"Open only the updates that matter to your plan.", dashboard:false }
+    { id:"radar", label:"Current Study Abroad Updates", note:"Open only the updates that matter to your plan.", dashboard:false },
+    { id:"counsellor-handoff", label:"Talk to a Counsellor", note:"Turn your saved plan into one clear case.", dashboard:false },
+    { id:"how-lizon-helps", label:"How LizOn Helps", note:"See the support available from preparation to visa.", dashboard:false },
+    { id:"real-outcomes", label:"Student Outcomes", note:"See where LizOn students have moved forward.", dashboard:false },
+    { id:"parents", label:"For Parents", note:"Money, safety, study and future planning.", dashboard:false },
+    { id:"readiness", label:"Before You Fly", note:"Prepare for arrival, student life and what comes next.", dashboard:false }
   ];
 
   function setupCompactStudyAbroadUX() {
@@ -2051,6 +2056,10 @@
 
     const first = toolMap.get("priorities")?.section;
     if (!first) return;
+
+    const countriesSection = document.getElementById("countries");
+    const countriesSlot = countriesSection ? document.createComment("sa-countries-slot") : null;
+    if (countriesSection && countriesSlot) countriesSection.before(countriesSlot);
 
     const dashboard = document.createElement("section");
     dashboard.className = "sa-planning-dashboard";
@@ -2168,6 +2177,16 @@
       closeAllCompactTools();
       dashboard.hidden = mobile;
       workspace.hidden = true;
+
+      if (countriesSection && countriesSlot?.parentNode) {
+        if (mobile) {
+          const prioritySlot = slots.get("priorities");
+          prioritySlot?.parentNode?.insertBefore(countriesSection, prioritySlot);
+        } else {
+          countriesSlot.parentNode.insertBefore(countriesSection, countriesSlot.nextSibling);
+        }
+      }
+
       toolMap.forEach((item,id) => {
         restoreTool(id);
         item.section.hidden = !mobile && item.config.dashboard;
@@ -2179,6 +2198,14 @@
           item.body.hidden = false;
         }
       });
+
+      const hashId = location.hash.slice(1);
+      if (toolMap.has(hashId)) {
+        setTimeout(() => {
+          closeAllCompactTools();
+          openCompactTool(hashId, true);
+        }, 80);
+      }
     };
 
     let lastMobile = window.matchMedia("(max-width: 820px)").matches;

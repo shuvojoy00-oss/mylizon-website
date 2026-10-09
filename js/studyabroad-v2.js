@@ -524,23 +524,26 @@
   function mobileCountryTemplate(country) {
     const flag = countryFlagUrl(country);
     return `
-      <a class="sa-mobile-country-card" href="${escapeHtml(country.page)}" style="--country-flag:url('${flag}')">
-        <span class="sa-mobile-country-card__code">${escapeHtml(country.code || country.name.slice(0,2).toUpperCase())}</span>
+      <a class="sa-mobile-country-card" href="${escapeHtml(country.page)}" data-country-link>
+        <span class="sa-mobile-country-card__flag">
+          <img src="${escapeHtml(flag)}" alt="" loading="lazy" width="36" height="24">
+        </span>
         <strong>${escapeHtml(country.name)}</strong>
-        <span class="sa-mobile-country-card__open" aria-hidden="true">→</span>
+        <span class="sa-slim-arrow" aria-hidden="true"></span>
       </a>
     `;
   }
 
   function mobileCountrySearchTemplate(country) {
+    const flag = countryFlagUrl(country);
     return `
       <article class="sa-mobile-country-search-result">
-        <div>
-          <span>${escapeHtml(country.code || country.name.slice(0,2).toUpperCase())}</span>
+        <div class="sa-mobile-country-search-title">
+          <span class="sa-mobile-country-search-flag"><img src="${escapeHtml(flag)}" alt="" loading="lazy" width="36" height="24"></span>
           <strong>${escapeHtml(country.name)}</strong>
         </div>
         <div class="sa-mobile-country-search-actions">
-          <a href="${escapeHtml(country.page)}">Explore</a>
+          <a href="${escapeHtml(country.page)}">Explore <span class="sa-slim-arrow" aria-hidden="true"></span></a>
           <button class="sa-save-country ${isCountrySaved(country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(country.id)}" aria-pressed="${isCountrySaved(country.id)}">
             ${isCountrySaved(country.id) ? "Saved to plan" : "Save to plan"}
           </button>
@@ -567,6 +570,7 @@
           <div class="sa-mobile-country-track">${cards}${cards}</div>
         </div>
       `;
+      requestAnimationFrame(setupMobileCountryRail);
     } else if (mobile) {
       grid.innerHTML = countries.map(mobileCountrySearchTemplate).join("");
     } else {
@@ -585,6 +589,7 @@
 
     observeReveals();
     refreshPlanButtons();
+    replaceLegacyArrows();
   }
 
   function setupExplorer() {

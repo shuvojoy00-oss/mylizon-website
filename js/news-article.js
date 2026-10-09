@@ -1,5 +1,5 @@
 (()=>{
-const root=document.getElementById("news-article"),slug=new URLSearchParams(location.search).get("slug");let post,lang="bn",countries=[];
+const root=document.getElementById("news-article"),slug=new URLSearchParams(location.search).get("slug");let post,lang="bn",countries=[],audioPlayer=null,audioObjectUrl=null;
 const esc=s=>String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
 const topicLinks=[["IELTS Writing","ielts.html"],["IELTS Speaking","ielts.html"],["IELTS Reading","ielts.html"],["IELTS Listening","ielts.html"],["IELTS","ielts.html"],["PTE Reading","pte.html"],["PTE Speaking","pte.html"],["PTE Writing","pte.html"],["PTE Listening","pte.html"],["PTE","pte.html"],["Study Abroad","studyabroad.html"],["Check Eligibility","assessment.html"],["eligibility","assessment.html"],["এলিজিবিলিটি","assessment.html"]];
 const countryBn={australia:"অস্ট্রেলিয়া",newzealand:"নিউজিল্যান্ড",uk:"যুক্তরাজ্য",canada:"কানাডা",usa:"আমেরিকা",ireland:"আয়ারল্যান্ড",belgium:"বেলজিয়াম",switzerland:"সুইজারল্যান্ড",denmark:"ডেনমার্ক",finland:"ফিনল্যান্ড",netherlands:"নেদারল্যান্ডস",norway:"নরওয়ে",sweden:"সুইডেন",france:"ফ্রান্স",poland:"পোল্যান্ড",spain:"স্পেন",austria:"অস্ট্রিয়া",croatia:"ক্রোয়েশিয়া",germany:"জার্মানি",greece:"গ্রিস",italy:"ইতালি",lithuania:"লিথুয়ানিয়া",estonia:"এস্তোনিয়া",hungary:"হাঙ্গেরি",malta:"মাল্টা",india:"ভারত",china:"চীন",turkey:"তুরস্ক",uae:"আমিরাত",latvia:"লাটভিয়া",romania:"রোমানিয়া",czech:"চেক রিপাবলিক",portugal:"পর্তুগাল",slovenia:"স্লোভেনিয়া",serbia:"সার্বিয়া",slovakia:"স্লোভাকিয়া",bulgaria:"বুলগেরিয়া",singapore:"সিঙ্গাপুর",qatar:"কাতার","saudi-arabia":"সৌদি আরব",thailand:"থাইল্যান্ড",japan:"জাপান",southkorea:"দক্ষিণ কোরিয়া"};
@@ -37,6 +37,32 @@ function speakBangla(title,body){
  setListenStatus("■ থামান");
  speechSynthesis.speak(u);
 }
+async function playGeneratedBangla(title,body){
+ if(audioPlayer&&!audioPlayer.paused){
+   audioPlayer.pause();
+   audioPlayer.currentTime=0;
+   setListenStatus("▶ শুনুন");
+   return true;
+ }
+ if(slug!=="australia-student-visa-rules-october-2026")return false;
+ try{
+   setListenStatus("লোড হচ্ছে...");
+   const response=await fetch("/api/news-audio?slug="+encodeURIComponent(slug),{cache:"default"});
+   if(!response.ok)return false;
+   const blob=await response.blob();
+   if(audioObjectUrl)URL.revokeObjectURL(audioObjectUrl);
+   audioObjectUrl=URL.createObjectURL(blob);
+   audioPlayer=new Audio(audioObjectUrl);
+   audioPlayer.preload="auto";
+   audioPlayer.onplay=()=>setListenStatus("■ থামান");
+   audioPlayer.onended=()=>setListenStatus("▶ শুনুন");
+   audioPlayer.onerror=()=>setListenStatus("▶ শুনুন");
+   await audioPlayer.play();
+   return true;
+ }catch(_){
+   return false;
+ }
+}
 async function speakEnglish(title,body){
  const voices=await getVoicesReady();
  const voice=pickEnglishVoice(voices);
@@ -50,14 +76,24 @@ async function speakEnglish(title,body){
  speechSynthesis.speak(u);
 }
 async function speakCurrent(title,body){
- if(!("speechSynthesis" in window))return;
- if(speechSynthesis.speaking||speechSynthesis.pending){
-   speechSynthesis.cancel();
-   setListenStatus(lang==="bn"?"▶ শুনুন":"▶ Listen");
+ if(lang==="bn"){
+   if(audioPlayer&&!audioPlayer.paused){
+     audioPlayer.pause();
+     audioPlayer.currentTime=0;
+     setListenStatus("▶ শুনুন");
+     return;
+   }
+   const generated=await playGeneratedBangla(title,body);
+   if(generated)return;
+   if(!("speechSynthesis" in window))return;
+   if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();setListenStatus("▶ শুনুন");return}
+   speakBangla(title,body);
    return;
  }
- if(lang==="bn")speakBangla(title,body);
- else await speakEnglish(title,body);
+ if(!("speechSynthesis" in window))return;
+ if(audioPlayer&&!audioPlayer.paused){audioPlayer.pause();audioPlayer.currentTime=0}
+ if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();setListenStatus("▶ Listen");return}
+ await speakEnglish(title,body);
 }
 function render(){
  const title=lang==="bn"?post.title_bn:(post.title_en||post.title_bn),excerpt=lang==="bn"?post.excerpt_bn:(post.excerpt_en||post.excerpt_bn),body=lang==="bn"?post.body_bn:(post.body_en||post.body_bn);
@@ -68,7 +104,7 @@ function render(){
  if(post.category==="study-abroad"&&country)next.innerHTML=`<strong>এই দেশটি নিয়ে আরও জানতে চান?</strong><br><a href="${country.page}">Complete country guide →</a>`;
  else if(post.category==="ielts")next.innerHTML='<strong>IELTS এ এই সমস্যাটি আপনারও হচ্ছে?</strong><br><a href="ieltsclass.html">Free IELTS classes দেখুন →</a> · <a href="ielts.html">IELTS Courses →</a>';
  else if(post.category==="pte")next.innerHTML='<strong>PTE preparation এ সাহায্য দরকার?</strong><br><a href="pteclass.html">Free PTE classes দেখুন →</a> · <a href="pte.html">PTE Courses →</a>';
- root.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{speechSynthesis.cancel();lang=b.dataset.lang;render()});
+ root.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{if("speechSynthesis" in window)speechSynthesis.cancel();if(audioPlayer&&!audioPlayer.paused){audioPlayer.pause();audioPlayer.currentTime=0}lang=b.dataset.lang;render()});
  document.getElementById("listen").onclick=()=>speakCurrent(title,document.getElementById("body").innerText);
 }
 async function load(){

@@ -4,8 +4,8 @@ const BASE_URL = process.env.LIZON_BASE_URL || "https://www.mylizon.com";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const SECRET = process.env.NEWS_AUTOMATION_SECRET;
 const RUN_ID = process.env.GITHUB_RUN_ID ? `gh-${process.env.GITHUB_RUN_ID}` : `local-${Date.now()}`;
-const MODEL_PRIMARY = process.env.GEMINI_PRIMARY_MODEL || "gemini-3.8-flash";
-const MODEL_FALLBACK = process.env.GEMINI_FALLBACK_MODEL || "gemini-3.7-flash";
+const MODEL_PRIMARY = process.env.GEMINI_PRIMARY_MODEL || "gemini-3.1-flash-lite";
+const MODEL_FALLBACK = process.env.GEMINI_FALLBACK_MODEL || "gemini-3.5-flash";
 
 if (!GEMINI_API_KEY) throw new Error("GEMINI_API_KEY is missing");
 if (!SECRET) throw new Error("NEWS_AUTOMATION_SECRET is missing");

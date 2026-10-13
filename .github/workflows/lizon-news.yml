@@ -2,12 +2,6 @@ name: LizOn Daily News
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/lizon-news.yml"
-      - "automation/news-agent.js"
-      - "api/news-ingest.js"
   schedule:
     # 13:00 UTC = 19:00 Asia/Dhaka year-round
     - cron: "0 13 * * *"
@@ -17,7 +11,7 @@ permissions:
 
 concurrency:
   group: lizon-daily-news
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   publish:

@@ -176,7 +176,7 @@ async function gemini(model, prompt, schema){
           temperature:0.1,
           responseFormat:{
             text:{
-              mimeType:"application/json",
+              mimeType:"APPLICATION_JSON",
               schema
             }
           }

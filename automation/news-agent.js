@@ -64,6 +64,70 @@ function pickText(data){
   return data?.candidates?.[0]?.content?.parts?.map(p=>p.text||"").join("") || "";
 }
 
+const CANDIDATE_SCHEMA = {
+  type:"object",
+  additionalProperties:false,
+  properties:{
+    candidates:{
+      type:"array",
+      maxItems:5,
+      items:{
+        type:"object",
+        additionalProperties:false,
+        properties:{
+          category:{type:"string",enum:["study-abroad","ielts","pte"]},
+          content_type:{type:"string",enum:["news","guide","problem-solution","exam-intelligence","opportunity","outlook","announcement"]},
+          country:{type:"string"},
+          importance:{type:"string",enum:["critical","important","useful","general"]},
+          source_name:{type:"string"},
+          source_url:{type:"string"},
+          source_verified:{type:"boolean"},
+          reason:{type:"string"},
+          facts:{type:"array",items:{type:"string"},maxItems:8}
+        },
+        required:["category","content_type","country","importance","source_name","source_url","source_verified","reason","facts"]
+      }
+    }
+  },
+  required:["candidates"]
+};
+
+const ARTICLE_SCHEMA = {
+  type:"object",
+  additionalProperties:false,
+  properties:{
+    articles:{
+      type:"array",
+      maxItems:3,
+      items:{
+        type:"object",
+        additionalProperties:false,
+        properties:{
+          slug:{type:"string"},
+          title_bn:{type:"string"},
+          title_en:{type:"string"},
+          excerpt_bn:{type:"string"},
+          excerpt_en:{type:"string"},
+          body_bn:{type:"string"},
+          body_en:{type:"string"},
+          category:{type:"string",enum:["study-abroad","ielts","pte"]},
+          content_type:{type:"string",enum:["news","guide","problem-solution","exam-intelligence","opportunity","outlook","announcement"]},
+          country:{type:"string"},
+          keywords:{type:"string"},
+          source_name:{type:"string"},
+          source_url:{type:"string"},
+          source_verified:{type:"boolean"},
+          importance:{type:"string",enum:["critical","important","useful","general"]},
+          featured:{type:"boolean"},
+          ai_confidence:{type:"number",minimum:0.8,maximum:0.98}
+        },
+        required:["slug","title_bn","title_en","excerpt_bn","excerpt_en","body_bn","body_en","category","content_type","country","keywords","source_name","source_url","source_verified","importance","featured","ai_confidence"]
+      }
+    }
+  },
+  required:["articles"]
+};
+
 function decodeEntities(s){
   return String(s||"")
     .replace(/&nbsp;/gi," ")
@@ -100,27 +164,76 @@ function extractLinks(html, baseUrl){
   return links;
 }
 
-async function gemini(model, prompt){
+async function gemini(model, prompt, schema){
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
-  const body = {
-    contents:[{role:"user",parts:[{text:prompt}]}],
-    generationConfig:{temperature:0.15,responseMimeType:"application/json"}
-  };
-  const r = await fetch(url,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)});
-  const txt = await r.text();
-  if(!r.ok) throw new Error(`Gemini ${model} failed ${r.status}: ${txt.slice(0,500)}`);
-  const data = JSON.parse(txt);
-  const raw = stripFence(pickText(data));
-  if(!raw) throw new Error(`Gemini ${model} returned no text`);
-  return JSON.parse(raw);
+  let lastError;
+
+  for(let attempt=1;attempt<=2;attempt++){
+    try{
+      const body = {
+        contents:[{role:"user",parts:[{text:prompt}]}],
+        generationConfig:{
+          temperature:0.1,
+          responseFormat:{
+            text:{
+              mimeType:"application/json",
+              schema
+            }
+          }
+        }
+      };
+
+      const r = await fetch(url,{
+        method:"POST",
+        headers:{"content-type":"application/json"},
+        body:JSON.stringify(body),
+        signal:AbortSignal.timeout(180000)
+      });
+      const txt = await r.text();
+
+      if(!r.ok){
+        const err=new Error(`Gemini ${model} failed ${r.status}: ${txt.slice(0,700)}`);
+        if([429,500,502,503,504].includes(r.status) && attempt<2){
+          console.warn(`Gemini ${model} temporary error on attempt ${attempt}; retrying...`);
+          await sleep(8000);
+          continue;
+        }
+        throw err;
+      }
+
+      const data=JSON.parse(txt);
+      const raw=stripFence(pickText(data));
+      if(!raw) throw new Error(`Gemini ${model} returned no text`);
+
+      try{
+        return JSON.parse(raw);
+      }catch(parseError){
+        if(attempt<2){
+          console.warn(`Gemini ${model} returned invalid JSON on attempt ${attempt}; retrying...`);
+          await sleep(3000);
+          continue;
+        }
+        throw parseError;
+      }
+    }catch(e){
+      lastError=e;
+      if(attempt<2 && /timeout|aborted/i.test(String(e.message||e))){
+        await sleep(5000);
+        continue;
+      }
+      if(attempt>=2) break;
+    }
+  }
+
+  throw lastError || new Error(`Gemini ${model} failed`);
 }
 
-async function geminiWithFallback(prompt){
+async function geminiWithFallback(prompt, schema){
   try{
-    return await gemini(MODEL_PRIMARY,prompt);
+    return await gemini(MODEL_PRIMARY,prompt,schema);
   }catch(e){
     console.warn("Primary Gemini model failed, trying fallback:",e.message);
-    return await gemini(MODEL_FALLBACK,prompt);
+    return await gemini(MODEL_FALLBACK,prompt,schema);
   }
 }
 
@@ -259,7 +372,7 @@ Each candidate:
 Aim for editorial variety. Prefer truly recent official developments. If none are available, prefer one useful current official guidance article rather than weak filler.
 `;
 
-  return await geminiWithFallback(prompt);
+  return await geminiWithFallback(prompt,CANDIDATE_SCHEMA);
 }
 
 async function writeArticles(candidates, existing){
@@ -291,7 +404,7 @@ Only one article may have featured=true, and only if clearly important.
 Do not describe a guide or exam-intelligence article as breaking news.
 `;
 
-  const result = await geminiWithFallback(prompt);
+  const result = await geminiWithFallback(prompt,ARTICLE_SCHEMA);
   return (result.articles || []).slice(0,3);
 }
 

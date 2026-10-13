@@ -2,6 +2,12 @@ name: LizOn Daily News
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/lizon-news.yml"
+      - "automation/news-agent.js"
+      - "api/news-ingest.js"
   schedule:
     # 13:00 UTC = 19:00 Asia/Dhaka year-round
     - cron: "0 13 * * *"
@@ -25,6 +31,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
+      - name: Check News agent syntax
+        run: node --check automation/news-agent.js
+
+      - name: Wait for production News endpoint
+        run: |
+          for i in {1..24}; do
+            code="$(curl -s -o /dev/null -w "%{http_code}" https://www.mylizon.com/api/news-ingest || true)"
+            if [ "$code" != "404" ] && [ "$code" != "000" ]; then
+              echo "News endpoint is reachable with HTTP $code"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "News endpoint did not become reachable"
+          exit 1
 
       - name: Research, write and publish
         env:

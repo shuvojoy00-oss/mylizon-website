@@ -76,7 +76,7 @@ async function fetchExisting(){
 async function sourceReachable(url){
   try{
     const r = await fetch(url,{method:"GET",redirect:"follow",headers:{"user-agent":"Mozilla/5.0 LizOnNewsBot/1.0"},signal:AbortSignal.timeout(15000)});
-    return r.ok && /^https?:/i.test(r.url);
+    return (r.ok || [401,403,405].includes(r.status)) && /^https?:/i.test(r.url);
   }catch{return false}
 }
 async function ingest(post){

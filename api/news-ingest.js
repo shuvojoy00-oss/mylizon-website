@@ -21,6 +21,13 @@ function trim(value, max = 10000) {
   return String(value || "").trim().slice(0, max);
 }
 
+function safeArticleHtml(value) {
+  const cleaned = cleanHtml(trim(value, 50000));
+  return cleaned
+    .replace(/<\/?(?!p\b|h2\b|h3\b|strong\b|ul\b|ol\b|li\b|blockquote\b)[a-z][^>]*>/gi, "")
+    .replace(/<(p|h2|h3|strong|ul|ol|li|blockquote)\b[^>]*>/gi, "<$1>");
+}
+
 async function ensureAutomationSchema(pool) {
   await pool.query(`
     create table if not exists public.news_automation_runs(
@@ -80,8 +87,8 @@ module.exports = async (req, res) => {
 
     const titleBn = trim(body.title_bn, 500);
     const titleEn = trim(body.title_en, 500);
-    const bodyBn = cleanHtml(trim(body.body_bn, 50000));
-    const bodyEn = cleanHtml(trim(body.body_en, 50000));
+    const bodyBn = safeArticleHtml(body.body_bn);
+    const bodyEn = safeArticleHtml(body.body_en);
     const category = trim(body.category, 40);
     const contentType = trim(body.content_type, 40) || "news";
     const sourceUrl = trim(body.source_url, 2000);

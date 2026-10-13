@@ -1,0 +1,36 @@
+name: LizOn Daily News
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 13:00 UTC = 19:00 Asia/Dhaka year-round
+    - cron: "0 13 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lizon-daily-news
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Research, write and publish
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEWS_AUTOMATION_SECRET: ${{ secrets.NEWS_AUTOMATION_SECRET }}
+          LIZON_BASE_URL: https://www.mylizon.com
+          GEMINI_SEARCH_MODEL: gemini-2.5-flash
+          GEMINI_FALLBACK_MODEL: gemini-3.5-flash-lite
+        run: node automation/news-agent.js

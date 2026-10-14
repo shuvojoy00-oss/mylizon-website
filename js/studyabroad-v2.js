@@ -2447,76 +2447,64 @@
     const raw = (sourceElement.innerText || "").replace(/\n{3,}/g,"\n\n").trim();
     if (!raw) return;
 
-    const lines = raw.split("\n").map(line=>line.trim()).filter(Boolean).slice(0,24);
-    const canvas = document.createElement("canvas");
-    canvas.width = 1200;
-    canvas.height = 1500;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    ctx.fillStyle = "#f8faf7";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = "#123f31";
-    ctx.fillRect(0,0,canvas.width,170);
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "700 44px Manrope, Arial";
-    ctx.fillText("LizOn Education",74,82);
-    ctx.font = "500 24px Manrope, Arial";
-    ctx.fillText("Study Abroad Planning Result",74,126);
-
-    ctx.fillStyle = "#18392f";
-    ctx.font = "800 54px Manrope, Arial";
-    const titleWords = title.split(" ");
-    let titleLine="", ty=260;
-    for(const word of titleWords){
-      const test = titleLine ? titleLine+" "+word : word;
-      if(ctx.measureText(test).width > 1040){
-        ctx.fillText(titleLine,74,ty); ty+=66; titleLine=word;
-      } else titleLine=test;
-    }
-    if(titleLine){ctx.fillText(titleLine,74,ty);ty+=86;}
-
-    ctx.font = "500 27px Manrope, Arial";
-    ctx.fillStyle = "#40534b";
-    const wrap = (text,maxWidth) => {
-      const words=text.split(/\s+/); const out=[]; let line="";
+    const measure = document.createElement("canvas").getContext("2d");
+    if (!measure) return;
+    measure.font = "500 27px Manrope, Arial";
+    const wrapText=(text,maxWidth)=>{
+      const words=String(text||"").split(/\s+/).filter(Boolean),out=[];let line="";
       words.forEach(word=>{
         const test=line?line+" "+word:word;
-        if(ctx.measureText(test).width>maxWidth && line){out.push(line);line=word;}else line=test;
+        if(measure.measureText(test).width>maxWidth&&line){out.push(line);line=word}else line=test;
       });
-      if(line) out.push(line);
+      if(line)out.push(line);
       return out;
     };
+    const rawLines=raw.split("\n").map(line=>line.trim()).filter(Boolean);
+    const wrapped=[];
+    rawLines.forEach(line=>wrapped.push(...wrapText(line,1040), ""));
+    const bodyHeight=Math.max(800,wrapped.length*44+80);
+    const canvas=document.createElement("canvas");
+    canvas.width=1200;
+    canvas.height=Math.min(7000,360+bodyHeight+150);
+    const ctx=canvas.getContext("2d");
+    if(!ctx)return;
 
+    ctx.fillStyle="#f8faf7";ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#123f31";ctx.fillRect(0,0,canvas.width,170);
+
+    try{
+      const logo=await new Promise((resolve,reject)=>{const img=new Image();img.crossOrigin="anonymous";img.onload=()=>resolve(img);img.onerror=reject;img.src="/assets/logo/lizon-logo.png"});
+      ctx.drawImage(logo,70,42,76,76);
+    }catch{}
+
+    ctx.fillStyle="#ffffff";ctx.font="700 44px Manrope, Arial";ctx.fillText("LizOn Education",166,82);
+    ctx.font="500 24px Manrope, Arial";ctx.fillText("Study Abroad Planning Result",166,126);
+
+    ctx.fillStyle="#18392f";ctx.font="800 52px Manrope, Arial";
+    let ty=250;
+    const titleLines=wrapText(title,1040);
+    titleLines.forEach(line=>{ctx.fillText(line,74,ty);ty+=64});
+    ty+=28;
+
+    ctx.font="500 27px Manrope, Arial";ctx.fillStyle="#40534b";
     let y=ty;
-    for(const line of lines){
-      const wrapped=wrap(line,1040).slice(0,3);
-      for(const row of wrapped){
-        if(y>1320) break;
-        ctx.fillText(row,74,y);
-        y+=42;
-      }
-      y+=14;
-      if(y>1320) break;
+    for(const line of wrapped){
+      if(y>canvas.height-170)break;
+      if(!line){y+=18;continue}
+      ctx.fillText(line,74,y);y+=42;
     }
 
-    ctx.strokeStyle = "#d6e3db";
-    ctx.beginPath();ctx.moveTo(74,1375);ctx.lineTo(1126,1375);ctx.stroke();
-    ctx.fillStyle = "#6b7c74";
-    ctx.font = "600 22px Manrope, Arial";
-    ctx.fillText("Planning snapshot · Verify final decisions before applying",74,1422);
-    ctx.fillStyle = "#123f31";
-    ctx.font = "700 22px Manrope, Arial";
-    ctx.fillText("MyLizOn.com  ·  Study Abroad Helpline 01608 881545",74,1464);
+    const footY=canvas.height-105;
+    ctx.strokeStyle="#d6e3db";ctx.beginPath();ctx.moveTo(74,footY-35);ctx.lineTo(1126,footY-35);ctx.stroke();
+    ctx.fillStyle="#6b7c74";ctx.font="600 20px Manrope, Arial";ctx.fillText("Planning snapshot · Verify final decisions before applying",74,footY);
+    ctx.fillStyle="#123f31";ctx.font="700 20px Manrope, Arial";ctx.fillText("MyLizOn.com  ·  Study Abroad Helpline 01608 881545",74,footY+40);
 
-    const blob = await new Promise(resolve=>canvas.toBlob(resolve,"image/png",0.95));
-    if (!blob) return;
-    const fileName = "LizOn-"+title.replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")+".png";
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png",0.95));
+    if(!blob)return;
+    const fileName="LizOn-"+title.replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")+".png";
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1200);
   }
 
   function setupResultSaving() {
@@ -2574,7 +2562,7 @@
       .foot{margin:20px 34px 30px;padding-top:15px;border-top:1px solid #d8e3dc;font-size:12px;color:#586b62}
       @media print{button{display:none}}
     </style></head><body>
-      <div class="head"><h1>LizOn Education</h1><p>${title}</p></div>
+      <div class="head"><img src="${location.origin}/assets/logo/lizon-logo.png" alt="" style="width:54px;height:54px;object-fit:contain;vertical-align:middle;margin-right:14px"><span style="display:inline-block;vertical-align:middle"><h1>LizOn Education</h1><p>${title}</p></span></div>
       <div class="body">${escapeHtml(text)}</div>
       <div class="foot"><strong>MyLizOn.com</strong> · Study Abroad Helpline 01608 881545 · 51 Kazi Office Road, Basabo, Dhaka 1214</div>
       <script>setTimeout(()=>window.print(),350)<\/script>

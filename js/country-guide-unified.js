@@ -19,7 +19,7 @@
   const compactGlobalNavigation=()=>{
     const panel=document.querySelector("#study-abroad-menu");
     if(panel){
-      panel.innerHTML='<span class="nav-dropdown__eyebrow">STUDY ABROAD</span><a class="nav-feature" href="studyabroad.html#countries"><strong>Explore Countries</strong><span>All destinations in one place.</span></a><a href="assessment.html">Check Your Eligibility <span>↗</span></a><a href="#country-updates">Country Updates <span>↗</span></a><a href="news.html?category=study-abroad" data-news-link>Study Abroad News & Updates <span>↗</span></a><a href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">Talk to an Expert <span>↗</span></a>';
+      panel.innerHTML='<span class="nav-dropdown__eyebrow">STUDY ABROAD</span><a href="studyabroad.html"><strong>Study Abroad Main Page</strong> <span>↗</span></a><a class="nav-feature" href="studyabroad.html#countries"><strong>Explore Countries</strong><span>All destinations in one place.</span></a><a href="assessment.html">Check Your Eligibility <span>↗</span></a><a href="#country-updates">Country Updates <span>↗</span></a><a href="news.html?category=study-abroad" data-news-link>Study Abroad News & Updates <span>↗</span></a><a href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">Talk to an Expert <span>↗</span></a>';
     }
     document.querySelectorAll(".desktop-nav__link").forEach(a=>{
       const href=(a.getAttribute("href")||"").toLowerCase();
@@ -29,14 +29,14 @@
     document.querySelectorAll(".mobile-nav__sub").forEach(sub=>{
       const parent=sub.closest("details");
       if(parent && /study abroad/i.test(parent.querySelector("summary")?.textContent||"")){
-        sub.innerHTML='<a href="studyabroad.html#countries">Explore Countries</a><a href="assessment.html">Check Your Eligibility</a><a href="#country-updates">Country Updates</a><a href="news.html?category=study-abroad">Study Abroad News & Updates</a><a href="https://wa.me/8801608881545">Talk to an Expert</a>';
+        sub.innerHTML='<a href="studyabroad.html">Study Abroad Main Page</a><a href="studyabroad.html#countries">Explore Countries</a><a href="assessment.html">Check Your Eligibility</a><a href="#country-updates">Country Updates</a><a href="news.html?category=study-abroad">Study Abroad News & Updates</a><a href="https://wa.me/8801608881545">Talk to an Expert</a>';
       }
     });
     document.querySelectorAll("footer details.footer-group").forEach(group=>{
       if(/study abroad/i.test(group.querySelector("summary")?.textContent||"")){
         group.dataset.lizonStudyFooter="true";
         const box=group.querySelector("div");
-        if(box) box.innerHTML='<a href="studyabroad.html#countries">Explore Countries</a><a href="assessment.html">Check Your Eligibility</a><a href="#country-updates">Country Updates</a><a href="https://wa.me/8801608881545">Talk to an Expert</a>';
+        if(box) box.innerHTML='<a href="studyabroad.html">Study Abroad Main Page</a><a href="studyabroad.html#countries">Explore Countries</a><a href="assessment.html">Check Your Eligibility</a><a href="#country-updates">Country Updates</a><a href="https://wa.me/8801608881545">Talk to an Expert</a>';
         group.removeAttribute("open");
       }
     });
@@ -60,7 +60,9 @@
   const findSearchSheet=()=>document.querySelector('[id$="search-sheet"],[class*="search-sheet"]');
   const openSheet=sheet=>{
     if(!sheet)return;
-    [findGuideSheet(),findSearchSheet()].filter(Boolean).forEach(other=>{if(other!==sheet)other.classList.remove("is-open")});
+    [findGuideSheet(),findSearchSheet()].filter(Boolean).forEach(other=>{
+      if(other!==sheet){other.classList.remove("is-open");other.setAttribute("aria-hidden","true")}
+    });
     sheet.classList.add("is-open");
     sheet.setAttribute("aria-hidden","false");
     syncScrollLock();
@@ -144,19 +146,25 @@
     }
     const guideButton=actions.querySelector(".lizon-guide-button");
     const searchButton=actions.querySelector(".lizon-search-button");
-    guideButton?.addEventListener("click",()=>{
-      const sheet=findGuideSheet();
-      const opened=toggleSheet(sheet);
-      guideButton.setAttribute("aria-expanded",opened?"true":"false");
+    const handleGuideToggle=e=>{
+      e.preventDefault();e.stopPropagation();
+      const sheet=findGuideSheet(); if(!sheet)return;
+      const opened=guideButton?.getAttribute("aria-expanded")!=="true";
+      if(opened)openSheet(sheet);else closeSheet(sheet);
+      guideButton?.setAttribute("aria-expanded",opened?"true":"false");
       searchButton?.setAttribute("aria-expanded","false");
-    });
-    searchButton?.addEventListener("click",()=>{
-      const sheet=findSearchSheet();
-      const opened=toggleSheet(sheet);
-      searchButton.setAttribute("aria-expanded",opened?"true":"false");
+    };
+    const handleSearchToggle=e=>{
+      e.preventDefault();e.stopPropagation();
+      const sheet=findSearchSheet(); if(!sheet)return;
+      const opened=searchButton?.getAttribute("aria-expanded")!=="true";
+      if(opened)openSheet(sheet);else closeSheet(sheet);
+      searchButton?.setAttribute("aria-expanded",opened?"true":"false");
       guideButton?.setAttribute("aria-expanded","false");
-      if(opened)setTimeout(()=>sheet?.querySelector('input[type="search"]')?.focus(),80);
-    });
+      if(opened)setTimeout(()=>sheet?.querySelector('input[type="search"]')?.focus({preventScroll:true}),100);
+    };
+    guideButton?.addEventListener("click",handleGuideToggle,true);
+    searchButton?.addEventListener("click",handleSearchToggle,true);
     guideButton?.setAttribute("aria-expanded","false");
     searchButton?.setAttribute("aria-expanded","false");
     const guideSheet=findGuideSheet();

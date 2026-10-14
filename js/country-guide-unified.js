@@ -81,6 +81,7 @@
     actions.querySelector(".lizon-search-button")?.addEventListener("click",()=>{
       const sheet=findSearchSheet();openSheet(sheet);setTimeout(()=>sheet?.querySelector('input[type="search"]')?.focus(),80);
     });
+    if(![...nav.querySelectorAll("a")].some(a=>(a.getAttribute("href")||"")==="#country-updates")){const u=document.createElement("a");u.href="#country-updates";u.textContent="Country Updates";nav.appendChild(u)}
     nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{}));
   };
 

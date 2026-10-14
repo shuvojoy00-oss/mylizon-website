@@ -80,7 +80,7 @@
       if(sheet){
         sheet.classList.add("is-open");
         sheet.setAttribute("aria-hidden","false");
-        document.body.style.overflow="hidden";
+        document.body.classList.add("menu-open");
       }
       setTimeout(()=>input.focus(),40);
     };
@@ -88,7 +88,7 @@
       if(sheet){
         sheet.classList.remove("is-open");
         sheet.setAttribute("aria-hidden","true");
-        document.body.style.overflow="";
+        if(!document.querySelector(".mobile-menu.is-open,[class*=\"sheet\"].is-open,dialog[open]")) document.body.classList.remove("menu-open");
       }
     };
 
@@ -172,12 +172,12 @@
         if(results)desktop.insertBefore(a,results);else desktop.appendChild(a);
       }
       const map={"IELTS":"ielts","PTE":"pte","Study Abroad":"study-abroad"};
-      desktop.querySelectorAll(".nav-dropdown").forEach(d=>{const label=d.querySelector(".nav-dropdown__trigger")?.textContent.replace("⌄","").trim(),cat=map[label],panel=d.querySelector(".nav-dropdown__panel");if(!cat||!panel||panel.querySelector("[data-news-link]"))return;const a=document.createElement("a");a.href="news.html?category="+cat;a.setAttribute("data-news-link","");a.innerHTML=label+' News & Updates <span>↗</span>';panel.appendChild(a)});
+      desktop.querySelectorAll(".nav-dropdown").forEach(d=>{const label=d.querySelector(".nav-dropdown__trigger")?.textContent.replace("⌄","").trim(),cat=map[label],panel=d.querySelector(".nav-dropdown__panel");if(!cat||!panel)return;const exists=[...panel.querySelectorAll("a")].some(a=>a.dataset.newsLink!==undefined||(a.getAttribute("href")||"").includes("news.html?category="+cat)||a.textContent.trim()===label+" News & Updates");if(exists)return;const a=document.createElement("a");a.href="news.html?category="+cat;a.setAttribute("data-news-link","");a.innerHTML=label+' News & Updates <span>↗</span>';panel.appendChild(a)});
     }
     const mobile=document.querySelector(".mobile-nav");
     if(mobile){
       const map={"IELTS":"ielts","PTE":"pte","Study Abroad":"study-abroad"};
-      mobile.querySelectorAll("details").forEach(d=>{const label=d.querySelector("summary")?.textContent.replace("+","").trim(),cat=map[label],sub=d.querySelector(".mobile-nav__sub");if(!cat||!sub||sub.querySelector("[data-news-link]"))return;const a=document.createElement("a");a.href="news.html?category="+cat;a.setAttribute("data-news-link","");a.textContent=label+" News & Updates";sub.appendChild(a)});
+      mobile.querySelectorAll("details").forEach(d=>{const label=d.querySelector("summary")?.textContent.replace("+","").trim(),cat=map[label],sub=d.querySelector(".mobile-nav__sub");if(!cat||!sub)return;const exists=[...sub.querySelectorAll("a")].some(a=>a.dataset.newsLink!==undefined||(a.getAttribute("href")||"").includes("news.html?category="+cat)||a.textContent.trim()===label+" News & Updates");if(exists)return;const a=document.createElement("a");a.href="news.html?category="+cat;a.setAttribute("data-news-link","");a.textContent=label+" News & Updates";sub.appendChild(a)});
       if(![...mobile.querySelectorAll("a.mobile-nav__main")].some(a=>a.textContent.trim()==="News")){const a=document.createElement("a");a.className="mobile-nav__main";a.href="news.html";a.textContent="News";mobile.appendChild(a)}
     }
   }

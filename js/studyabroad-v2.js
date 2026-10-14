@@ -1926,6 +1926,8 @@
         <div class="sa-radar-feature__lead-side">
           <span>${status === "upcoming" ? "Effective" : "In effect from"} · ${escapeHtml(formatRadarDate(item))}</span>
           <p>${escapeHtml(item.impact)}</p>
+          ${item.affected ? `<div class="sa-radar-specific"><strong>Who this affects</strong><span>${escapeHtml(item.affected)}</span></div>` : ""}
+          ${item.action ? `<div class="sa-radar-specific"><strong>What to do now</strong><span>${escapeHtml(item.action)}</span></div>` : ""}
           <div class="sa-radar-feature__links">
             <a href="${escapeHtml(item.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.sourceLabel)} <span class="sa-slim-arrow" aria-hidden="true"></span></a>
             <a href="${escapeHtml(item.guidePage)}">Country guide <span class="sa-slim-arrow" aria-hidden="true"></span></a>
@@ -1958,6 +1960,8 @@
             <span>Why it matters</span>
             <p>${escapeHtml(item.impact)}</p>
           </div>
+          ${item.affected ? `<div class="sa-radar-card__impact"><span>Who this affects</span><p>${escapeHtml(item.affected)}</p></div>` : ""}
+          ${item.action ? `<div class="sa-radar-card__impact"><span>What to do now</span><p>${escapeHtml(item.action)}</p></div>` : ""}
           <div class="sa-radar-card__foot">
             <div class="sa-radar-card__date">
               <strong>${escapeHtml(formatRadarDate(item))}</strong>

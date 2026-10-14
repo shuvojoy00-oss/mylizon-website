@@ -173,6 +173,202 @@
       : '<div class="sa-hero-plan-empty">No countries saved yet. Explore destinations and save the ones you want to compare later.</div>';
   }
 
+  async function comparisonTableImageBlob(snapshot = state.lastComparison || state.plan.comparison) {
+    if (!snapshot || !Array.isArray(snapshot.countries) || !snapshot.countries.length) return null;
+
+    const countries = snapshot.countries.slice(0, 3);
+    const rows = Array.isArray(snapshot.rows) ? snapshot.rows : [];
+    const canvas = document.createElement("canvas");
+    const width = 1800;
+    const margin = 78;
+    const labelWidth = 315;
+    const usable = width - margin * 2;
+    const countryWidth = (usable - labelWidth) / countries.length;
+    const headerTop = 185;
+    const countryHeaderH = 132;
+    const footerH = 165;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+
+    const wrap = (text, maxWidth, font) => {
+      ctx.font = font;
+      const words = String(text || "").split(/\s+/).filter(Boolean);
+      const lines = [];
+      let line = "";
+      words.forEach(word => {
+        const test = line ? line + " " + word : word;
+        if (ctx.measureText(test).width > maxWidth && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = test;
+        }
+      });
+      if (line) lines.push(line);
+      return lines.length ? lines : [""];
+    };
+
+    const rowLayouts = rows.map(row => {
+      const labelLines = wrap(row.label, labelWidth - 38, "700 24px Arial");
+      const valueLines = countries.map((country, index) =>
+        wrap(row.values?.[index] || "—", countryWidth - 42, "500 22px Arial")
+      );
+      const lineCount = Math.max(labelLines.length, ...valueLines.map(lines => lines.length));
+      return {
+        row,
+        labelLines,
+        valueLines,
+        height: Math.max(106, 42 + lineCount * 31)
+      };
+    });
+
+    const tableHeight = countryHeaderH + rowLayouts.reduce((sum, item) => sum + item.height, 0);
+    const height = Math.max(1050, headerTop + tableHeight + footerH);
+    canvas.width = width;
+    canvas.height = height;
+
+    ctx.fillStyle = "#f7faf8";
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = "#123f31";
+    ctx.fillRect(0, 0, width, 150);
+
+    try {
+      const logo = await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = "/assets/logo/lizon-logo.png";
+      });
+      ctx.drawImage(logo, margin, 38, 72, 72);
+    } catch {}
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "700 39px Arial";
+    ctx.fillText("LizOn Education", margin + 96, 76);
+    ctx.font = "500 21px Arial";
+    ctx.fillText("Study Abroad Country Comparison", margin + 96, 111);
+
+    const x0 = margin;
+    let y = headerTop;
+
+    ctx.fillStyle = "#173f33";
+    ctx.font = "800 40px Arial";
+    ctx.fillText("Compare Countries", x0, y - 28);
+
+    const roundedRect = (x, yy, w, h, r) => {
+      const rr = Math.min(r, w / 2, h / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + rr, yy);
+      ctx.arcTo(x + w, yy, x + w, yy + h, rr);
+      ctx.arcTo(x + w, yy + h, x, yy + h, rr);
+      ctx.arcTo(x, yy + h, x, yy, rr);
+      ctx.arcTo(x, yy, x + w, yy, rr);
+      ctx.closePath();
+    };
+
+    roundedRect(x0, y, usable, tableHeight, 18);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.strokeStyle = "#cfded6";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = "#eaf3ee";
+    roundedRect(x0, y, usable, countryHeaderH, 18);
+    ctx.fill();
+
+    const cols = [labelWidth, ...countries.map(() => countryWidth)];
+    let cx = x0;
+    ctx.strokeStyle = "#d5e1db";
+    ctx.lineWidth = 2;
+    cols.slice(0, -1).forEach(colW => {
+      cx += colW;
+      ctx.beginPath();
+      ctx.moveTo(cx, y);
+      ctx.lineTo(cx, y + tableHeight);
+      ctx.stroke();
+    });
+
+    ctx.fillStyle = "#607169";
+    ctx.font = "800 17px Arial";
+    ctx.fillText("PLANNING SIGNAL", x0 + 24, y + 73);
+
+    countries.forEach((country, index) => {
+      const x = x0 + labelWidth + index * countryWidth;
+      ctx.fillStyle = "#173f33";
+      ctx.font = "800 27px Arial";
+      const nameLines = wrap(country.name, countryWidth - 38, "800 27px Arial").slice(0, 2);
+      nameLines.forEach((line, lineIndex) => {
+        ctx.fillText(line, x + 22, y + 56 + lineIndex * 31);
+      });
+    });
+
+    y += countryHeaderH;
+    rowLayouts.forEach((layout, rowIndex) => {
+      if (rowIndex % 2 === 1) {
+        ctx.fillStyle = "#fbfdfc";
+        ctx.fillRect(x0, y, usable, layout.height);
+      }
+
+      ctx.strokeStyle = "#dbe5df";
+      ctx.beginPath();
+      ctx.moveTo(x0, y);
+      ctx.lineTo(x0 + usable, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#173f33";
+      ctx.font = "700 24px Arial";
+      layout.labelLines.forEach((line, lineIndex) => {
+        ctx.fillText(line, x0 + 24, y + 40 + lineIndex * 30);
+      });
+
+      layout.valueLines.forEach((lines, colIndex) => {
+        const x = x0 + labelWidth + colIndex * countryWidth;
+        ctx.fillStyle = "#43554d";
+        ctx.font = "500 22px Arial";
+        lines.forEach((line, lineIndex) => {
+          ctx.fillText(line, x + 22, y + 39 + lineIndex * 31);
+        });
+      });
+
+      y += layout.height;
+    });
+
+    const footY = height - 112;
+    ctx.strokeStyle = "#d5e1db";
+    ctx.beginPath();
+    ctx.moveTo(margin, footY - 30);
+    ctx.lineTo(width - margin, footY - 30);
+    ctx.stroke();
+
+    ctx.fillStyle = "#65756d";
+    ctx.font = "500 19px Arial";
+    ctx.fillText("Planning comparison only. Verify current country guides and official sources before applying.", margin, footY);
+    ctx.fillStyle = "#123f31";
+    ctx.font = "700 20px Arial";
+    ctx.fillText("MyLizOn.com  ·  Study Abroad Helpline 01608 881545", margin, footY + 38);
+
+    return await new Promise(resolve => canvas.toBlob(resolve, "image/png", 0.96));
+  }
+
+  async function downloadComparisonTableImage(snapshot = state.lastComparison || state.plan.comparison) {
+    const blob = await comparisonTableImageBlob(snapshot);
+    if (!blob) return false;
+    const names = (snapshot?.countries || []).map(item => item.name).join("-").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "");
+    const fileName = `LizOn-Country-Comparison-${names || "Result"}.png`;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1400);
+    return true;
+  }
+
   function comparisonSnapshotText(snapshot) {
     if (!snapshot || !Array.isArray(snapshot.countries)) return "";
     const lines = ["LizOn Country Comparison", snapshot.countries.map(item => item.name).join(" vs ")];
@@ -1211,21 +1407,42 @@
 
   async function shareComparison(snapshot = state.lastComparison || state.plan.comparison) {
     if (!snapshot) return;
-    const text = comparisonSnapshotText(snapshot);
     const status = $("#sa-compare-action-status");
+    const blob = await comparisonTableImageBlob(snapshot);
+    if (!blob) {
+      if (status) status.textContent = "Comparison image could not be prepared.";
+      return;
+    }
+
+    const names = (snapshot.countries || []).map(item => item.name).join("-").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "");
+    const file = new File([blob], `LizOn-Country-Comparison-${names || "Result"}.png`, { type:"image/png" });
+
     try {
-      if (navigator.share) {
-        await navigator.share({ title:"LizOn Country Comparison", text });
-        if (status) status.textContent = "Comparison shared.";
+      if (navigator.canShare?.({ files:[file] })) {
+        await navigator.share({
+          title:"LizOn Country Comparison",
+          text:"Country comparison from MyLizOn.com",
+          files:[file]
+        });
+        if (status) status.textContent = "Comparison table shared.";
         return;
       }
-      const subject = encodeURIComponent("LizOn Country Comparison");
-      const body = encodeURIComponent(text + "\n\nMyLizOn.com · 01608 881545");
-      window.location.href = `mailto:?subject=${subject}&body=${body}`;
-      if (status) status.textContent = "Opening your email app with the full comparison.";
-    } catch (_) {
-      try { await navigator.clipboard?.writeText(text); } catch {}
-      if (status) status.textContent = "Sharing was cancelled. The full comparison is ready to copy.";
+
+      if (navigator.clipboard && window.ClipboardItem) {
+        await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+        if (status) status.textContent = "Comparison table image copied. Paste it into email, Messenger or another app.";
+        return;
+      }
+
+      await downloadComparisonTableImage(snapshot);
+      if (status) status.textContent = "Comparison table image saved. You can attach it wherever you want to share it.";
+    } catch (error) {
+      if (error?.name === "AbortError") {
+        if (status) status.textContent = "Sharing was cancelled.";
+        return;
+      }
+      await downloadComparisonTableImage(snapshot);
+      if (status) status.textContent = "Comparison table image saved because direct image sharing is not supported here.";
     }
   }
 
@@ -1240,7 +1457,7 @@
         if (status) status.textContent = "Full comparison saved to My Abroad Plan.";
       }
       if (event.target.closest("#sa-share-comparison")) shareComparison();
-      if (event.target.closest("#sa-image-comparison")) exportStudyResult("Country Comparison", $("#sa-compare-results"));
+      if (event.target.closest("#sa-image-comparison")) downloadComparisonTableImage();
     });
   }
 

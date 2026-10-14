@@ -61,7 +61,8 @@
     level: "All",
     query: "",
     preferences: new Set(),
-    plan: { shortlist: [], cost: null, timeline: null, updatedAt: null }
+    plan: { shortlist: [], cost: null, timeline: null, comparison: null, updatedAt: null },
+    lastComparison: null
   };
 
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -85,11 +86,12 @@
           shortlist: Array.isArray(saved.shortlist) ? saved.shortlist.slice(0, 5) : [],
           cost: saved.cost && typeof saved.cost === "object" ? saved.cost : null,
           timeline: saved.timeline && typeof saved.timeline === "object" ? saved.timeline : null,
+          comparison: saved.comparison && typeof saved.comparison === "object" ? saved.comparison : null,
           updatedAt: saved.updatedAt || null
         };
       }
     } catch (_) {
-      state.plan = { shortlist: [], cost: null, timeline: null, updatedAt: null };
+      state.plan = { shortlist: [], cost: null, timeline: null, comparison: null, updatedAt: null };
     }
   }
 
@@ -168,6 +170,63 @@
       : '<div class="sa-hero-plan-empty">No countries saved yet. Explore destinations and save the ones you want to compare later.</div>';
   }
 
+  function comparisonSnapshotText(snapshot) {
+    if (!snapshot || !Array.isArray(snapshot.countries)) return "";
+    const lines = ["LizOn Country Comparison", snapshot.countries.map(item => item.name).join(" vs ")];
+    (snapshot.rows || []).forEach(row => {
+      lines.push("");
+      lines.push(row.label);
+      (row.values || []).forEach((value, index) => {
+        const country = snapshot.countries[index];
+        if (country && value) lines.push(`${country.name}: ${value}`);
+      });
+    });
+    lines.push("");
+    lines.push("Planning comparison only. Check the current country guide and official sources before applying.");
+    return lines.join("\n");
+  }
+
+  function renderSavedComparison() {
+    const grid = document.querySelector(".sa-plan-grid");
+    if (!grid) return;
+    let card = document.querySelector("#sa-plan-comparison-card");
+    if (!state.plan.comparison) {
+      if (card) card.remove();
+      return;
+    }
+    if (!card) {
+      card = document.createElement("article");
+      card.id = "sa-plan-comparison-card";
+      card.className = "sa-plan-card sa-plan-card--comparison";
+      grid.appendChild(card);
+    }
+    const snapshot = state.plan.comparison;
+    const countries = (snapshot.countries || []).map(item => item.name).join(" · ");
+    const rows = (snapshot.rows || []).map(row => `
+      <div class="sa-saved-compare-row">
+        <strong>${escapeHtml(row.label)}</strong>
+        <div>${(row.values || []).map((value, index) => {
+          const country = snapshot.countries?.[index];
+          return country && value ? `<span><b>${escapeHtml(country.name)}</b>${escapeHtml(value)}</span>` : "";
+        }).join("")}</div>
+      </div>
+    `).join("");
+    card.innerHTML = `
+      <div class="sa-plan-card__top">
+        <div>
+          <span class="sa-plan-card__eyebrow">Saved Comparison</span>
+          <h3>${escapeHtml(countries)}</h3>
+        </div>
+        <a href="#compare">Compare again</a>
+      </div>
+      <div class="sa-saved-compare">${rows}</div>
+      <div class="sa-saved-compare__actions">
+        <button type="button" id="sa-plan-share-comparison">Share Result</button>
+        <button type="button" id="sa-plan-remove-comparison">Remove</button>
+      </div>
+    `;
+  }
+
   function renderPlan() {
     const priorities = $("#sa-plan-priorities");
     if (priorities) {
@@ -236,6 +295,7 @@
     }
 
     renderHeroPlan();
+    renderSavedComparison();
     renderHandoff();
   }
 
@@ -261,6 +321,11 @@
       lines.push(`Target intake: ${state.plan.timeline.countryName} · ${state.plan.timeline.intakeLabel} ${state.plan.timeline.year}`);
       lines.push(`Planning status: ${state.plan.timeline.status}`);
       lines.push(`Recommended preparation start: ${state.plan.timeline.recommendedStart}`);
+    }
+
+    if (state.plan.comparison) {
+      lines.push("");
+      lines.push(comparisonSnapshotText(state.plan.comparison));
     }
 
     const ready = planCompletion();
@@ -372,7 +437,7 @@
     });
 
     $("#sa-plan-clear")?.addEventListener("click", () => {
-      state.plan = { shortlist: [], cost: null, timeline: null, updatedAt: null };
+      state.plan = { shortlist: [], cost: null, timeline: null, comparison: null, updatedAt: null };
       try {
         localStorage.removeItem(PLAN_KEY);
         localStorage.removeItem(HANDOFF_KEY);
@@ -382,6 +447,13 @@
     });
 
     $("#sa-handoff-copy")?.addEventListener("click", copyHandoffSummary);
+    document.addEventListener("click", event => {
+      if (event.target.closest("#sa-plan-share-comparison")) shareComparison(state.plan.comparison);
+      if (event.target.closest("#sa-plan-remove-comparison")) {
+        state.plan.comparison = null;
+        persistPlan();
+      }
+    });
   }
 
   function loadPreferences() {
@@ -1013,20 +1085,34 @@
     return maps[type]?.[value] || "Check current guide";
   }
 
-  function compareValue(intel, key) {
-    if (key === "budget") return comparisonLabel("budget", intel.budgetBand);
-    if (key === "family") return comparisonLabel("family", intel.familyScore);
-    if (key === "postStudy") return comparisonLabel("postStudy", intel.postStudyScore);
-    if (key === "intake") return comparisonLabel("intake", intel.intakeScore);
-    if (key === "lowGpa") return intel.lowGpa ? "Pathway / weaker profile guidance included" : "Needs individual checking";
-    if (key === "studyGap") return intel.studyGap ? "Study gap guidance included" : "Needs individual checking";
-    if (key === "scholarship") return intel.scholarship ? "Scholarship routes covered" : "Check provider funding";
-    if (key === "research") return intel.research ? "Research / PhD routes covered" : "Check research availability";
+  function compareValue(item, key) {
+    const intel = item.intel || {};
+    const cost = item.cost || {};
+    const timeline = item.timeline || {};
+    if (key === "budget") {
+      const hasPreset = Object.values(cost.tuition || {}).some(v => v && Number.isFinite(v.min) && Number.isFinite(v.max));
+      return hasPreset
+        ? `${comparisonLabel("budget", intel.budgetBand)}. Guide-backed tuition defaults are available; replace them with the exact offer.`
+        : `${comparisonLabel("budget", intel.budgetBand)}. Use the exact programme tuition and city living budget from the current guide.`;
+    }
+    if (key === "family") return intel.familyNote || comparisonLabel("family", intel.familyScore);
+    if (key === "postStudy") return intel.postStudyNote || comparisonLabel("postStudy", intel.postStudyScore);
+    if (key === "intake") {
+      const labels = (timeline.intakes || []).map(x => x.label).filter(Boolean);
+      return labels.length ? labels.join(" · ") : comparisonLabel("intake", intel.intakeScore);
+    }
+    if (key === "work") return intel.workDuringStudy
+      ? "Student work is available under country-specific limits or authorization. Open the guide for the exact rule."
+      : "Do not assume an open student-work right. Check the guide for any permitted work or authorization route.";
+    if (key === "lowGpa") return intel.lowGpa ? "Alternative, pathway or profile-based options are worth checking." : "More selective profile. Exact programme assessment is important.";
+    if (key === "studyGap") return intel.studyGap ? "A study gap can be assessed with explanation and supporting profile evidence." : "Study-gap acceptance needs individual programme checking.";
+    if (key === "scholarship") return intel.scholarship ? "Scholarship or funded-study routes are covered in the country guide." : "Funding is mainly institution-specific. Check current provider awards.";
+    if (key === "research") return intel.research ? "Research and PhD pathways are available to explore." : "Research availability should be checked programme by programme.";
     return "Check current guide";
   }
 
   async function runCompare() {
-    await ensureIntelligence();
+    await Promise.all([ensureIntelligence(), ensureCostData(), ensureTimelineData()]);
     const result = $("#sa-compare-results");
     if (!result) return;
 
@@ -1041,16 +1127,45 @@
 
     const intelMap = new Map(state.intelligence.map(item => [item.id, item]));
     const countryMap = new Map(state.countries.map(item => [item.id, item]));
-    const selected = ids.map(id => ({
-      intel: intelMap.get(id),
-      country: countryMap.get(id)
-    })).filter(item => item.intel && item.country);
+    const costMap = new Map(state.costs.map(item => [item.id, item]));
+    const timelineMap = new Map(state.timelines.map(item => [item.id, item]));
+    const selectedActual = ids.map(id => ({
+      intel: intelMap.get(id) || {},
+      country: countryMap.get(id),
+      cost: costMap.get(id) || {},
+      timeline: timelineMap.get(id) || {}
+    })).filter(item => item.country);
 
-    if (selected.length < 2) {
-      result.innerHTML = '<div class="sa-compare-placeholder">Comparison data is not ready for those destinations yet.</div>';
+    if (selectedActual.length < 2) {
+      result.innerHTML = '<div class="sa-compare-placeholder">Comparison data could not be loaded for those destinations.</div>';
       return;
     }
 
+    const rows = [
+      ["Budget planning", "budget"],
+      ["Family planning", "family"],
+      ["Post study route", "postStudy"],
+      ["Main intakes", "intake"],
+      ["Work during study", "work"],
+      ["Low GPA / pathway", "lowGpa"],
+      ["Study gap", "studyGap"],
+      ["Scholarships", "scholarship"],
+      ["Research", "research"]
+    ];
+
+    const snapshot = {
+      countries: selectedActual.map(item => ({
+        id:item.country.id,name:item.country.name,code:item.country.code,page:item.country.page
+      })),
+      rows: rows.map(([label,key]) => ({
+        label,
+        values:selectedActual.map(item => compareValue(item,key))
+      })),
+      createdAt:new Date().toISOString()
+    };
+    state.lastComparison = snapshot;
+
+    const selected = [...selectedActual];
     while (selected.length < 3) selected.push(null);
 
     const head = selected.map(item => item ? `
@@ -1060,28 +1175,14 @@
           <strong>${escapeHtml(item.country.name)}</strong>
         </div>
         <a href="${escapeHtml(item.country.page)}">Open guide ↗</a>
-        <button class="sa-save-country ${isCountrySaved(item.country.id) ? "is-saved" : ""}" type="button" data-plan-country="${escapeHtml(item.country.id)}" aria-pressed="${isCountrySaved(item.country.id)}">
-          ${isCountrySaved(item.country.id) ? "Saved to plan" : "Save to plan"}
-        </button>
       </div>
     ` : '<div class="sa-compare-cell"></div>').join("");
-
-    const rows = [
-      ["Budget planning", "budget"],
-      ["Family planning", "family"],
-      ["Post study route", "postStudy"],
-      ["Intake flexibility", "intake"],
-      ["Low GPA / pathway", "lowGpa"],
-      ["Study gap", "studyGap"],
-      ["Scholarships", "scholarship"],
-      ["Research", "research"]
-    ];
 
     const body = rows.map(([label, key]) => `
       <div class="sa-compare-row">
         <div class="sa-compare-cell">${escapeHtml(label)}</div>
         ${selected.map(item => item
-          ? `<div class="sa-compare-cell"><span class="sa-compare-tag">${escapeHtml(compareValue(item.intel, key))}</span></div>`
+          ? `<div class="sa-compare-cell"><span class="sa-compare-tag">${escapeHtml(compareValue(item, key))}</span></div>`
           : '<div class="sa-compare-cell"></div>'
         ).join("")}
       </div>
@@ -1095,12 +1196,47 @@
         </div>
         ${body}
       </div>
+      <div class="sa-compare-result-actions">
+        <button class="sa-button sa-button--primary" id="sa-save-comparison" type="button">Save Result</button>
+        <button class="sa-button sa-button--secondary" id="sa-share-comparison" type="button">Share Result</button>
+        <span id="sa-compare-action-status" aria-live="polite"></span>
+      </div>
     `;
-    refreshPlanButtons();
+  }
+
+  async function shareComparison(snapshot = state.lastComparison || state.plan.comparison) {
+    if (!snapshot) return;
+    const text = comparisonSnapshotText(snapshot);
+    const status = $("#sa-compare-action-status");
+    try {
+      if (navigator.share) {
+        await navigator.share({ title:"LizOn Country Comparison", text });
+        if (status) status.textContent = "Comparison shared.";
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+        if (status) status.textContent = "Full comparison copied. Paste it anywhere to share.";
+      } else {
+        const area=document.createElement("textarea");
+        area.value=text;document.body.appendChild(area);area.select();document.execCommand("copy");area.remove();
+        if (status) status.textContent = "Full comparison copied.";
+      }
+    } catch (_) {
+      if (status) status.textContent = "Sharing was cancelled.";
+    }
   }
 
   function setupCompare() {
     $("#sa-run-compare")?.addEventListener("click", runCompare);
+    $("#sa-compare-results")?.addEventListener("click", event => {
+      if (event.target.closest("#sa-save-comparison")) {
+        if (!state.lastComparison) return;
+        state.plan.comparison = JSON.parse(JSON.stringify(state.lastComparison));
+        persistPlan();
+        const status = $("#sa-compare-action-status");
+        if (status) status.textContent = "Full comparison saved to My Study Plan.";
+      }
+      if (event.target.closest("#sa-share-comparison")) shareComparison();
+    });
   }
 
   async function ensureCostData() {
@@ -1314,6 +1450,8 @@
     $("#sa-cost-funding-bdt").textContent = formatBDT(fundingTarget, bdtRate);
 
     const lines = [
+      ["Annual tuition", tuition],
+      ...(scholarship ? [["Scholarship / tuition waiver", -scholarship]] : []),
       ["Tuition after scholarship", netTuition],
       ["Living budget", livingBudget],
       ...(family.amount ? [["Family funding / budget", family.amount]] : []),

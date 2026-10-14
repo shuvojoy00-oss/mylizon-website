@@ -38,6 +38,23 @@ const ALLOWED_SOURCE_HOSTS = [
   "cambridgeenglish.org","pearsonpte.com","pearson.com"
 ];
 
+const COUNTRY_IDS = {
+  "australia":"australia","new zealand":"newzealand","newzealand":"newzealand","united kingdom":"uk","uk":"uk",
+  "canada":"canada","united states":"usa","united states of america":"usa","usa":"usa","ireland":"ireland",
+  "belgium":"belgium","switzerland":"switzerland","denmark":"denmark","finland":"finland","netherlands":"netherlands",
+  "norway":"norway","sweden":"sweden","france":"france","poland":"poland","spain":"spain","austria":"austria",
+  "croatia":"croatia","germany":"germany","greece":"greece","italy":"italy","lithuania":"lithuania","estonia":"estonia",
+  "hungary":"hungary","malta":"malta","india":"india","china":"china","turkey":"turkey","türkiye":"turkey",
+  "united arab emirates":"uae","uae":"uae","latvia":"latvia","romania":"romania","czech republic":"czech","czechia":"czech",
+  "portugal":"portugal","slovenia":"slovenia","serbia":"serbia","slovakia":"slovakia","bulgaria":"bulgaria",
+  "singapore":"singapore","qatar":"qatar","saudi arabia":"saudi-arabia","thailand":"thailand","japan":"japan",
+  "south korea":"southkorea","korea":"southkorea"
+};
+function canonicalCountry(value){
+  const key=String(value||"").trim().toLowerCase();
+  return COUNTRY_IDS[key] || (Object.values(COUNTRY_IDS).includes(key)?key:"");
+}
+
 function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 function norm(s){ return String(s||"").toLowerCase().replace(/[^a-z0-9\u0980-\u09ff]+/g," ").trim(); }
 
@@ -323,7 +340,7 @@ const CORE_RULES = `
 You are the LizOn Education News Desk for Bangladeshi students.
 Today is ${TODAY}.
 Research all three verticals: Study Abroad, IELTS and PTE using ONLY the official-source extracts supplied below.
-Publish only material that changes what a Bangladeshi student should know, decide, prepare, spend, avoid, practise or do next.
+Publish only material that changes what a Bangladeshi student should know, decide, prepare, spend, avoid, practise or do next. For a country-specific Study Abroad item, set country to the canonical LizOn destination id such as australia, newzealand, uk, canada, germany, qatar, saudi-arabia, thailand, japan or southkorea. Use an empty country only when the item is genuinely multi-country or global.
 Never invent dates, policies, reported questions, score rules or source URLs.
 Policy status must be distinguished as Proposed, Announced, Confirmed or Effective where relevant.
 Recently reported questions must never be invented. Only use them if an official supplied source explicitly supports them.
@@ -437,6 +454,7 @@ async function main(){
     const articles=await writeArticles(candidates,existing);
 
     for(const article of articles){
+      if(article.category==="study-abroad") article.country=canonicalCountry(article.country);
       if(!article.source_verified || !hostAllowed(article.source_url)){ rejected++; continue; }
       if(existing.some(p=>similar(p.title_en||p.title_bn,article.title_en||article.title_bn)>0.82)){ rejected++; continue; }
 

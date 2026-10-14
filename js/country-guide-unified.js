@@ -51,6 +51,22 @@
     const rail=findGuideRail(); if(!rail)return;
     rail.classList.add("lizon-country-guide-rail");
     document.body.classList.add("lizon-has-fixed-country-guide");
+    const syncFixedGuide=()=>{
+      const header=document.querySelector(".site-header");
+      const hh=Math.round(header?.getBoundingClientRect().height||70);
+      document.documentElement.style.setProperty("--lizon-header-h",hh+"px");
+      requestAnimationFrame(()=>{
+        const gh=Math.round(rail.getBoundingClientRect().height||58);
+        document.documentElement.style.setProperty("--lizon-guide-h",gh+"px");
+      });
+    };
+    syncFixedGuide();
+    window.addEventListener("resize",syncFixedGuide,{passive:true});
+    if("ResizeObserver" in window){
+      const ro=new ResizeObserver(syncFixedGuide);
+      const header=document.querySelector(".site-header"); if(header)ro.observe(header);
+      ro.observe(rail);
+    }
     const inner=rail.firstElementChild || rail;
     inner.classList.add("lizon-country-guide-rail-inner");
     const originalActions=inner.querySelector('[class*="guide-mobile-actions"]');

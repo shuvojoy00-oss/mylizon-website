@@ -398,3 +398,95 @@ body.lizon-has-fixed-country-guide main{
   .lizon-toolbar-copy small{font-size:7px}
   .lizon-toolbar-copy strong{font-size:13px}
 }
+
+
+/* Country hero journey layer */
+.lizon-country-route-visual{
+  position:relative;
+  display:grid;
+  grid-template-columns:48px minmax(140px,1fr) 48px;
+  align-items:center;
+  width:min(330px,100%);
+  min-height:74px;
+  margin:8px 0 18px auto;
+  padding:8px 10px;
+  border:1px solid rgba(18,63,49,.10);
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 12% 50%,rgba(31,106,77,.11),transparent 28%),
+    radial-gradient(circle at 88% 48%,rgba(162,61,73,.10),transparent 28%),
+    linear-gradient(180deg,rgba(255,255,255,.94),rgba(248,251,249,.88));
+  box-shadow:0 12px 34px rgba(18,63,49,.07);
+  overflow:hidden;
+}
+.lizon-country-route-visual::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(120deg,transparent 20%,rgba(185,155,84,.05) 44%,transparent 68%);
+  pointer-events:none;
+}
+.lizon-route-flag{
+  position:relative;
+  z-index:2;
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:34px;
+  border:1px solid rgba(18,63,49,.12);
+  border-radius:10px;
+  background:#fff;
+  box-shadow:0 6px 16px rgba(18,63,49,.08);
+  overflow:hidden;
+}
+.lizon-route-flag img{width:100%;height:100%;object-fit:cover}
+.lizon-route-svg{position:relative;z-index:1;width:100%;height:62px;overflow:visible}
+.lizon-route-shadow{
+  fill:none;
+  stroke:rgba(18,63,49,.08);
+  stroke-width:6;
+  stroke-linecap:round;
+}
+.lizon-route-path{
+  fill:none;
+  stroke:url(#lizonRouteGradient);
+  stroke-width:2.4;
+  stroke-linecap:round;
+  stroke-dasharray:3 9;
+  animation:lizonRouteDash 4.8s linear infinite;
+}
+.lizon-route-plane{
+  fill:#173f33;
+  filter:url(#lizonRouteGlow);
+  animation:lizonRoutePlane 4.8s ease-in-out infinite;
+  transform-origin:center;
+}
+.lizon-route-pulse{fill:#fff;stroke:#1f6a4d;stroke-width:2}
+.lizon-route-pulse--end{stroke:#a23d49}
+@keyframes lizonRouteDash{to{stroke-dashoffset:-48}}
+@keyframes lizonRoutePlane{
+  0%,100%{transform:translate(148px,30px) rotate(9deg)}
+  50%{transform:translate(174px,19px) rotate(15deg)}
+}
+
+@media(max-width:700px){
+  .lizon-country-route-visual{
+    grid-template-columns:44px minmax(120px,1fr) 44px;
+    width:min(100%,320px);
+    min-height:68px;
+    margin:12px auto 18px;
+    padding:7px 9px;
+    border-radius:18px;
+  }
+  .lizon-route-flag{width:42px;height:31px;border-radius:9px}
+  .lizon-route-svg{height:56px}
+}
+@media(min-width:701px){
+  .lizon-country-route-visual{
+    transform:translateX(6px);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .lizon-route-path,.lizon-route-plane{animation:none!important}
+}

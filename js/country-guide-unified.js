@@ -233,6 +233,49 @@
     return iso ? `https://flagcdn.com/w160/${iso}.png` : "";
   };
 
+  const addHeroJourney=async()=>{
+    const meta=await countryMetaFromPage();if(!meta)return;
+    const hero=document.querySelector('main section[class*="hero"],main [class*="-hero"]');
+    if(!hero||hero.querySelector(".lizon-country-route-visual"))return;
+    const content=hero.querySelector('[class*="hero__content"],[class*="hero__copy"],[class*="hero-copy"]')
+      || hero.querySelector('[class*="-hero__grid"]')?.firstElementChild
+      || hero.querySelector('[class*="-shell"],.shell')?.firstElementChild
+      || hero.firstElementChild;
+    if(!content)return;
+    const destFlag=flagUrl(meta.code);
+    if(!destFlag)return;
+    const route=document.createElement("div");
+    route.className="lizon-country-route-visual";
+    route.setAttribute("aria-hidden","true");
+    route.innerHTML=`
+      <span class="lizon-route-flag lizon-route-flag--bd"><img src="https://flagcdn.com/w160/bd.png" alt=""></span>
+      <svg class="lizon-route-svg" viewBox="0 0 320 86" focusable="false">
+        <defs>
+          <linearGradient id="lizonRouteGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#1d6a4d"/>
+            <stop offset=".52" stop-color="#b99b54"/>
+            <stop offset="1" stop-color="#a23d49"/>
+          </linearGradient>
+          <filter id="lizonRouteGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path class="lizon-route-shadow" d="M42 61 C112 11 207 10 279 58"/>
+        <path class="lizon-route-path" d="M42 61 C112 11 207 10 279 58"/>
+        <circle class="lizon-route-pulse lizon-route-pulse--start" cx="42" cy="61" r="4"/>
+        <circle class="lizon-route-pulse lizon-route-pulse--end" cx="279" cy="58" r="4"/>
+        <g class="lizon-route-plane" transform="translate(160 23) rotate(12)">
+          <path d="M-15 1 15-7 19-4 6 3 13 10 9 12 1 6-6 12-10 11-6 4-16 5Z"/>
+        </g>
+      </svg>
+      <span class="lizon-route-flag lizon-route-flag--destination"><img src="${destFlag}" alt=""></span>
+    `;
+    const marker=content.querySelector('[class*="kicker"],[class*="eyebrow"]');
+    if(marker?.parentNode) marker.parentNode.insertBefore(route,marker.nextSibling);
+    else content.prepend(route);
+  };
+
   const PHOTO_LABELS={
     hero:"Student life",profile:"Profile planning",study:"Study",money:"Living & budget",
     visa:"Visa & travel",work:"Work while studying",after:"After study",arrival:"Arrival",cities:"Life in the city"
@@ -346,7 +389,7 @@
     host.appendChild(note);
   };
 
-  ready(()=>{compactGlobalNavigation();unifyGuide();genericClose();buildSearch();addCountryVisuals();addCountryUpdates();addVisualSourceNote();releaseScrollIfSafe();
+  ready(()=>{compactGlobalNavigation();unifyGuide();genericClose();buildSearch();addHeroJourney();addCountryVisuals();addCountryUpdates();addVisualSourceNote();releaseScrollIfSafe();
     window.addEventListener("pageshow",releaseScrollIfSafe,{passive:true});
     document.addEventListener("visibilitychange",()=>{if(!document.hidden)releaseScrollIfSafe()});
     const mo=new MutationObserver(releaseScrollIfSafe);mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:["class","aria-hidden"]});

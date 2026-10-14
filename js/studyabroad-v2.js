@@ -371,7 +371,7 @@
       status.classList.toggle("is-ready", summary.hasContext);
       status.textContent = summary.hasContext
         ? `${summary.ready} of 4 planning parts are ready. Review the preview before sharing it.`
-        : "Add something to My Study Plan and your handoff summary will appear here.";
+        : "Add something to My Abroad Plan and your handoff summary will appear here.";
     }
 
     if (copy) copy.disabled = !summary.hasContext;
@@ -450,6 +450,7 @@
     });
 
     $("#sa-handoff-copy")?.addEventListener("click", copyHandoffSummary);
+    $("#sa-plan-pdf")?.addEventListener("click", exportAbroadPlanPdf);
     document.addEventListener("click", event => {
       if (event.target.closest("#sa-plan-share-comparison")) shareComparison(state.plan.comparison);
       if (event.target.closest("#sa-plan-remove-comparison")) {
@@ -1200,8 +1201,9 @@
         ${body}
       </div>
       <div class="sa-compare-result-actions">
-        <button class="sa-button sa-button--primary" id="sa-save-comparison" type="button">Save Result</button>
+        <button class="sa-button sa-button--primary" id="sa-save-comparison" type="button">Save to Plan</button>
         <button class="sa-button sa-button--secondary" id="sa-share-comparison" type="button">Share Result</button>
+        <button class="sa-button sa-button--secondary" id="sa-image-comparison" type="button">Save as Image</button>
         <span id="sa-compare-action-status" aria-live="polite"></span>
       </div>
     `;
@@ -1215,16 +1217,15 @@
       if (navigator.share) {
         await navigator.share({ title:"LizOn Country Comparison", text });
         if (status) status.textContent = "Comparison shared.";
-      } else if (navigator.clipboard) {
-        await navigator.clipboard.writeText(text);
-        if (status) status.textContent = "Full comparison copied. Paste it anywhere to share.";
-      } else {
-        const area=document.createElement("textarea");
-        area.value=text;document.body.appendChild(area);area.select();document.execCommand("copy");area.remove();
-        if (status) status.textContent = "Full comparison copied.";
+        return;
       }
+      const subject = encodeURIComponent("LizOn Country Comparison");
+      const body = encodeURIComponent(text + "\n\nMyLizOn.com · 01608 881545");
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      if (status) status.textContent = "Opening your email app with the full comparison.";
     } catch (_) {
-      if (status) status.textContent = "Sharing was cancelled.";
+      try { await navigator.clipboard?.writeText(text); } catch {}
+      if (status) status.textContent = "Sharing was cancelled. The full comparison is ready to copy.";
     }
   }
 
@@ -1236,9 +1237,10 @@
         state.plan.comparison = JSON.parse(JSON.stringify(state.lastComparison));
         persistPlan();
         const status = $("#sa-compare-action-status");
-        if (status) status.textContent = "Full comparison saved to My Study Plan.";
+        if (status) status.textContent = "Full comparison saved to My Abroad Plan.";
       }
       if (event.target.closest("#sa-share-comparison")) shareComparison();
+      if (event.target.closest("#sa-image-comparison")) exportStudyResult("Country Comparison", $("#sa-compare-results"));
     });
   }
 
@@ -1353,6 +1355,31 @@
     if (locations.some(item => item.id === old)) select.value = old;
   }
 
+  async function loadLiveBdtRate(cost) {
+    const input = $("#sa-cost-bdt-rate");
+    if (!input || !cost?.currency) return;
+    input.placeholder = "Loading live rate…";
+    try {
+      const response = await fetch(`/api/fx?base=${encodeURIComponent(cost.currency)}`, { cache:"no-store" });
+      if (!response.ok) throw new Error("FX unavailable");
+      const data = await response.json();
+      const rate = Number(data.rate);
+      if (!Number.isFinite(rate) || rate <= 0) throw new Error("Invalid FX");
+      input.value = rate.toFixed(rate >= 10 ? 2 : 4);
+      input.dataset.liveFx = "true";
+      const hint = input.parentElement?.querySelector("small");
+      if (hint) {
+        const stamp = data.updated_at ? new Date(data.updated_at).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}) : "today";
+        hint.textContent = `Live planning rate: 1 ${cost.currency} ≈ ৳${Number(rate.toFixed(2)).toLocaleString("en-US")} · checked ${stamp}. Your bank/card rate can differ.`;
+      }
+      calculateCost();
+    } catch (_) {
+      input.placeholder = "Enter current BDT rate";
+      const hint = input.parentElement?.querySelector("small");
+      if (hint) hint.textContent = "Live rate could not be loaded. Enter the bank or transfer rate you plan to use.";
+    }
+  }
+
   function applyCostDefaults({ resetTuition = true } = {}) {
     const cost = costCountry();
     if (!cost) return;
@@ -1389,6 +1416,7 @@
     const guideLink = $("#sa-cost-guide-link");
     if (guideLink && country) guideLink.href = country.page;
 
+    loadLiveBdtRate(cost);
     calculateCost();
   }
 
@@ -2145,7 +2173,7 @@
     { id:"compare", label:"Compare 3 Countries", note:"Compare the destinations you are considering.", dashboard:true },
     { id:"cost-calculator", label:"Calculate My First Year Cost", note:"Estimate tuition and living costs.", dashboard:true },
     { id:"intake-planner", label:"Create My Preparation Plan", note:"Plan English, application, finance, visa and departure.", dashboard:true },
-    { id:"my-plan", label:"My Study Plan", note:"See everything you have saved.", dashboard:true },
+    { id:"my-plan", label:"My Abroad Plan", note:"See everything you have saved.", dashboard:true },
     { id:"counsellor-handoff", label:"Talk to a Counsellor", note:"Turn your saved plan into one clear case.", dashboard:false },
     { id:"how-lizon-helps", label:"How LizOn Helps", note:"See the support available from preparation to visa.", dashboard:false },
     { id:"parents", label:"For Parents", note:"Money, safety, study and future planning.", dashboard:false },
@@ -2226,7 +2254,7 @@
         <div class="sa-planning-dashboard__head">
           <span class="sa-eyebrow">PLAN YOUR STUDY ABROAD</span>
           <h2>Choose what you want to work on.</h2>
-          <p>Open one planning tool at a time. Your choices stay connected in My Study Plan.</p>
+          <p>Open one planning tool at a time. Your choices stay connected in My Abroad Plan.</p>
         </div>
         <div class="sa-planning-dashboard__grid">
           ${compactToolConfig.filter(item=>item.dashboard).map((item,index)=>`
@@ -2398,98 +2426,92 @@
     if (trust) trust.hidden = true;
   }
 
+  async function shareResultText(title, sourceElement) {
+    if (!sourceElement) return;
+    const text = (sourceElement.innerText || "").replace(/\n{3,}/g,"\n\n").trim();
+    if (!text) return;
+    const full = `LizOn Education · ${title}\n\n${text}\n\nMyLizOn.com · Study Abroad Helpline 01608 881545`;
+    try {
+      if (navigator.share) {
+        await navigator.share({title:`LizOn Education · ${title}`,text:full});
+        return;
+      }
+      window.location.href = `mailto:?subject=${encodeURIComponent("LizOn Education · "+title)}&body=${encodeURIComponent(full)}`;
+    } catch (_) {
+      try { await navigator.clipboard?.writeText(full); } catch {}
+    }
+  }
+
   async function exportStudyResult(title, sourceElement) {
     if (!sourceElement) return;
     const raw = (sourceElement.innerText || "").replace(/\n{3,}/g,"\n\n").trim();
     if (!raw) return;
 
-    const lines = raw.split("\n").map(line=>line.trim()).filter(Boolean).slice(0,24);
-    const canvas = document.createElement("canvas");
-    canvas.width = 1200;
-    canvas.height = 1500;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    ctx.fillStyle = "#f8faf7";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = "#123f31";
-    ctx.fillRect(0,0,canvas.width,170);
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "700 44px Manrope, Arial";
-    ctx.fillText("LizOn Education",74,82);
-    ctx.font = "500 24px Manrope, Arial";
-    ctx.fillText("Study Abroad Planning Result",74,126);
-
-    ctx.fillStyle = "#18392f";
-    ctx.font = "800 54px Manrope, Arial";
-    const titleWords = title.split(" ");
-    let titleLine="", ty=260;
-    for(const word of titleWords){
-      const test = titleLine ? titleLine+" "+word : word;
-      if(ctx.measureText(test).width > 1040){
-        ctx.fillText(titleLine,74,ty); ty+=66; titleLine=word;
-      } else titleLine=test;
-    }
-    if(titleLine){ctx.fillText(titleLine,74,ty);ty+=86;}
-
-    ctx.font = "500 27px Manrope, Arial";
-    ctx.fillStyle = "#40534b";
-    const wrap = (text,maxWidth) => {
-      const words=text.split(/\s+/); const out=[]; let line="";
+    const measure = document.createElement("canvas").getContext("2d");
+    if (!measure) return;
+    measure.font = "500 27px Manrope, Arial";
+    const wrapText=(text,maxWidth)=>{
+      const words=String(text||"").split(/\s+/).filter(Boolean),out=[];let line="";
       words.forEach(word=>{
         const test=line?line+" "+word:word;
-        if(ctx.measureText(test).width>maxWidth && line){out.push(line);line=word;}else line=test;
+        if(measure.measureText(test).width>maxWidth&&line){out.push(line);line=word}else line=test;
       });
-      if(line) out.push(line);
+      if(line)out.push(line);
       return out;
     };
+    const rawLines=raw.split("\n").map(line=>line.trim()).filter(Boolean);
+    const wrapped=[];
+    rawLines.forEach(line=>wrapped.push(...wrapText(line,1040), ""));
+    const bodyHeight=Math.max(800,wrapped.length*44+80);
+    const canvas=document.createElement("canvas");
+    canvas.width=1200;
+    canvas.height=Math.min(7000,360+bodyHeight+150);
+    const ctx=canvas.getContext("2d");
+    if(!ctx)return;
 
+    ctx.fillStyle="#f8faf7";ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#123f31";ctx.fillRect(0,0,canvas.width,170);
+
+    try{
+      const logo=await new Promise((resolve,reject)=>{const img=new Image();img.crossOrigin="anonymous";img.onload=()=>resolve(img);img.onerror=reject;img.src="/assets/logo/lizon-logo.png"});
+      ctx.drawImage(logo,70,42,76,76);
+    }catch{}
+
+    ctx.fillStyle="#ffffff";ctx.font="700 44px Manrope, Arial";ctx.fillText("LizOn Education",166,82);
+    ctx.font="500 24px Manrope, Arial";ctx.fillText("Study Abroad Planning Result",166,126);
+
+    ctx.fillStyle="#18392f";ctx.font="800 52px Manrope, Arial";
+    let ty=250;
+    const titleLines=wrapText(title,1040);
+    titleLines.forEach(line=>{ctx.fillText(line,74,ty);ty+=64});
+    ty+=28;
+
+    ctx.font="500 27px Manrope, Arial";ctx.fillStyle="#40534b";
     let y=ty;
-    for(const line of lines){
-      const wrapped=wrap(line,1040).slice(0,3);
-      for(const row of wrapped){
-        if(y>1320) break;
-        ctx.fillText(row,74,y);
-        y+=42;
-      }
-      y+=14;
-      if(y>1320) break;
+    for(const line of wrapped){
+      if(y>canvas.height-170)break;
+      if(!line){y+=18;continue}
+      ctx.fillText(line,74,y);y+=42;
     }
 
-    ctx.strokeStyle = "#d6e3db";
-    ctx.beginPath();ctx.moveTo(74,1375);ctx.lineTo(1126,1375);ctx.stroke();
-    ctx.fillStyle = "#6b7c74";
-    ctx.font = "600 22px Manrope, Arial";
-    ctx.fillText("Planning snapshot · Verify final decisions before applying",74,1422);
-    ctx.fillStyle = "#123f31";
-    ctx.font = "700 22px Manrope, Arial";
-    ctx.fillText("MyLizOn.com",74,1464);
+    const footY=canvas.height-105;
+    ctx.strokeStyle="#d6e3db";ctx.beginPath();ctx.moveTo(74,footY-35);ctx.lineTo(1126,footY-35);ctx.stroke();
+    ctx.fillStyle="#6b7c74";ctx.font="600 20px Manrope, Arial";ctx.fillText("Planning snapshot · Verify final decisions before applying",74,footY);
+    ctx.fillStyle="#123f31";ctx.font="700 20px Manrope, Arial";ctx.fillText("MyLizOn.com  ·  Study Abroad Helpline 01608 881545",74,footY+40);
 
-    const blob = await new Promise(resolve=>canvas.toBlob(resolve,"image/png",0.95));
-    if (!blob) return;
-    const fileName = "LizOn-"+title.replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")+".png";
-    const file = new File([blob],fileName,{type:"image/png"});
-    if (navigator.canShare?.({files:[file]})) {
-      try {
-        await navigator.share({files:[file],title:"LizOn Education Study Abroad Result"});
-        return;
-      } catch (error) {
-        if (error?.name === "AbortError") return;
-      }
-    }
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png",0.95));
+    if(!blob)return;
+    const fileName="LizOn-"+title.replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")+".png";
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1200);
   }
 
   function setupResultSaving() {
     const targets = [
-      { id:"sa-match-results", title:"My Best Fits" },
-      { id:"sa-compare-results", title:"Country Comparison" },
-      { id:"sa-cost-summary", title:"First Year Cost" },
-      { id:"sa-timeline-results", title:"Preparation Plan" }
+      { id:"sa-match-results", title:"My Best Fits", pdf:false },
+      { id:"sa-cost-summary", title:"First Year Cost", pdf:false },
+      { id:"sa-timeline-results", title:"Preparation Plan", pdf:true }
     ];
 
     const refresh = () => {
@@ -2498,14 +2520,26 @@
         if (!host || host.hidden) return;
         const text = (host.innerText || "").trim();
         if (!text || /Choose up to|Choose at least|not ready/i.test(text)) return;
-        if (host.querySelector("[data-save-result]")) return;
-        const button = document.createElement("button");
-        button.type="button";
-        button.className="sa-save-result";
-        button.setAttribute("data-save-result","");
-        button.innerHTML = 'Save Result <span class="sa-slim-arrow" aria-hidden="true"></span>';
-        button.addEventListener("click",()=>exportStudyResult(target.title,host));
-        host.appendChild(button);
+        let actions = host.querySelector(".sa-result-export-actions");
+        if (!actions) {
+          actions = document.createElement("div");
+          actions.className = "sa-result-export-actions";
+          const image = document.createElement("button");
+          image.type="button"; image.className="sa-save-result";
+          image.textContent="Save as Image";
+          image.addEventListener("click",()=>exportStudyResult(target.title,host));
+          const share=document.createElement("button");
+          share.type="button";share.className="sa-save-result";share.textContent="Share Result";
+          share.addEventListener("click",()=>shareResultText(target.title,host));
+          actions.append(image,share);
+          if(target.pdf){
+            const pdf=document.createElement("button");
+            pdf.type="button";pdf.className="sa-save-result";pdf.textContent="Save as PDF";
+            pdf.addEventListener("click",()=>exportPreparationPdf(target.title,host));
+            actions.appendChild(pdf);
+          }
+          host.appendChild(actions);
+        }
       });
     };
 
@@ -2515,6 +2549,33 @@
       if (host) observer.observe(host,{childList:true,subtree:true,attributes:true,attributeFilter:["hidden"]});
     });
     refresh();
+  }
+
+  async function exportPreparationPdf(title, sourceElement) {
+    const text=(sourceElement?.innerText||"").replace(/\n{3,}/g,"\n\n").trim();
+    if(!text)return;
+    const html=`<!doctype html><html><head><meta charset="utf-8"><title>${title}</title><style>
+      body{font-family:Arial,sans-serif;margin:0;color:#173b30;background:#fff}
+      .head{background:#123f31;color:#fff;padding:28px 34px}
+      .head h1{margin:0 0 8px;font-size:26px}.head p{margin:0;opacity:.9}
+      .body{padding:30px 34px;white-space:pre-wrap;line-height:1.6;font-size:13px}
+      .foot{margin:20px 34px 30px;padding-top:15px;border-top:1px solid #d8e3dc;font-size:12px;color:#586b62}
+      @media print{button{display:none}}
+    </style></head><body>
+      <div class="head"><img src="${location.origin}/assets/logo/lizon-logo.png" alt="" style="width:54px;height:54px;object-fit:contain;vertical-align:middle;margin-right:14px"><span style="display:inline-block;vertical-align:middle"><h1>LizOn Education</h1><p>${title}</p></span></div>
+      <div class="body">${escapeHtml(text)}</div>
+      <div class="foot"><strong>MyLizOn.com</strong> · Study Abroad Helpline 01608 881545 · 51 Kazi Office Road, Basabo, Dhaka 1214</div>
+      <script>setTimeout(()=>window.print(),350)<\/script>
+    </body></html>`;
+    const win=window.open("","_blank","noopener,noreferrer");
+    if(!win)return;
+    win.document.open();win.document.write(html);win.document.close();
+  }
+
+  async function exportAbroadPlanPdf() {
+    const summary=buildHandoffSummary();
+    if(!summary.hasContext)return;
+    await exportPreparationPdf("My Abroad Plan",{innerText:summary.text});
   }
 
   function setupUtilities() {

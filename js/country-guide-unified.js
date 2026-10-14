@@ -19,7 +19,7 @@
   const compactGlobalNavigation=()=>{
     const panel=document.querySelector("#study-abroad-menu");
     if(panel){
-      panel.innerHTML='<span class="nav-dropdown__eyebrow">STUDY ABROAD</span><a class="nav-feature" href="studyabroad.html#countries"><strong>Explore Countries</strong><span>All destinations in one place.</span></a><a href="assessment.html">Check Your Eligibility <span>↗</span></a><a href="#country-updates">Country Updates <span>↗</span></a><a href="news.html?category=study-abroad">Study Abroad News & Updates <span>↗</span></a><a href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">Talk to an Expert <span>↗</span></a>';
+      panel.innerHTML='<span class="nav-dropdown__eyebrow">STUDY ABROAD</span><a class="nav-feature" href="studyabroad.html#countries"><strong>Explore Countries</strong><span>All destinations in one place.</span></a><a href="assessment.html">Check Your Eligibility <span>↗</span></a><a href="#country-updates">Country Updates <span>↗</span></a><a href="news.html?category=study-abroad" data-news-link>Study Abroad News & Updates <span>↗</span></a><a href="https://wa.me/8801608881545" target="_blank" rel="noopener noreferrer">Talk to an Expert <span>↗</span></a>';
     }
     document.querySelectorAll(".desktop-nav__link").forEach(a=>{
       const href=(a.getAttribute("href")||"").toLowerCase();
@@ -41,11 +41,25 @@
       }
     });
   };
+  const anyOverlayOpen=()=>Boolean(
+    document.querySelector(".mobile-menu.is-open,[class*=\"sheet\"].is-open,dialog[open]")
+  );
+  const syncScrollLock=()=>{
+    if(anyOverlayOpen()){
+      document.body.classList.add("menu-open");
+    }else{
+      document.body.classList.remove("menu-open");
+      document.body.style.overflow="";
+      document.documentElement.style.overflow="";
+    }
+  };
+  const releaseScrollIfSafe=()=>requestAnimationFrame(syncScrollLock);
+
   const findGuideRail=()=>document.querySelector('div[class*="guide-sticky"]');
   const findGuideSheet=()=>[...document.querySelectorAll('[id$="guide-sheet"],[class*="sheet"]')].find(x=>!/search/i.test(x.id||"") && /guide/i.test(x.id||x.className||""));
   const findSearchSheet=()=>document.querySelector('[id$="search-sheet"],[class*="search-sheet"]');
-  const openSheet=sheet=>{if(!sheet)return;sheet.classList.add("is-open");sheet.setAttribute("aria-hidden","false");document.body.classList.add("menu-open")};
-  const closeSheet=sheet=>{if(!sheet)return;sheet.classList.remove("is-open");sheet.setAttribute("aria-hidden","true");document.body.classList.remove("menu-open")};
+  const openSheet=sheet=>{if(!sheet)return;sheet.classList.add("is-open");sheet.setAttribute("aria-hidden","false");syncScrollLock()};
+  const closeSheet=sheet=>{if(!sheet)return;sheet.classList.remove("is-open");sheet.setAttribute("aria-hidden","true");releaseScrollIfSafe()};
 
   const unifyGuide=()=>{
     const rail=findGuideRail(); if(!rail)return;
@@ -66,6 +80,11 @@
       const ro=new ResizeObserver(syncFixedGuide);
       const header=document.querySelector(".site-header"); if(header)ro.observe(header);
       ro.observe(rail);
+    }
+    const duplicateGuide=document.querySelector("#guide");
+    if(duplicateGuide&&duplicateGuide!==rail){
+      const links=duplicateGuide.querySelectorAll('a[href^="#"]');
+      if(links.length>=5 && (duplicateGuide.textContent||"").trim().length<900) duplicateGuide.classList.add("lizon-duplicate-guide-intro");
     }
     const inner=rail.firstElementChild || rail;
     inner.classList.add("lizon-country-guide-rail-inner");
@@ -99,7 +118,7 @@
       const sheet=findSearchSheet();openSheet(sheet);setTimeout(()=>sheet?.querySelector('input[type="search"]')?.focus(),80);
     });
     if(![...nav.querySelectorAll("a")].some(a=>(a.getAttribute("href")||"")==="#country-updates")){const u=document.createElement("a");u.href="#country-updates";u.textContent="Country Updates";nav.appendChild(u)}
-    nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{}));
+    nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",releaseScrollIfSafe));
   };
 
   const genericClose=()=>{
@@ -207,36 +226,37 @@
     visa:"Visa & travel",work:"Work while studying",after:"After study",arrival:"Arrival",cities:"Life in the city"
   };
 
+  const usedPhotoUrls=new Set();
   const photoCard=async(type,meta,hero=false)=>{
-    const figure=document.createElement("figure");
-    figure.className=hero?"lizon-country-photo lizon-country-photo--hero":`lizon-country-photo lizon-country-photo--${type}`;
-    figure.innerHTML=`<div class="lizon-country-photo__loading"></div><figcaption><span>${PHOTO_LABELS[type]||"Student journey"}</span><strong>${escape(meta.name)}</strong></figcaption>`;
-    try{
-      const response=await fetch(`/api/country-visual?country=${encodeURIComponent(meta.id)}&type=${encodeURIComponent(type)}`,{cache:"force-cache"});
-      if(!response.ok)throw new Error("visual unavailable");
-      const data=await response.json();
-      if(!data?.image)throw new Error("visual unavailable");
-      const img=document.createElement("img");
-      img.src=data.image;
-      img.alt=`${meta.name} ${PHOTO_LABELS[type]||"student life"} visual`;
-      img.loading=hero?"eager":"lazy";
-      img.decoding="async";
-      figure.prepend(img);
-      const loading=figure.querySelector(".lizon-country-photo__loading"); if(loading)loading.remove();
-      const cap=figure.querySelector("figcaption");
-      if(cap){
-        const credit=document.createElement("a");
-        credit.className="lizon-country-photo__credit";
-        credit.href=data.original||"#";
-        credit.target="_blank";credit.rel="noopener noreferrer";
-        credit.textContent=`${data.source||"Image"} · ${data.license||"licensed"}`;
-        cap.appendChild(credit);
-      }
-    }catch{
-      figure.remove();
-      return null;
+    for(let skip=0;skip<5;skip++){
+      const figure=document.createElement("figure");
+      figure.className=hero?"lizon-country-photo lizon-country-photo--hero":`lizon-country-photo lizon-country-photo--${type}`;
+      figure.innerHTML=`<div class="lizon-country-photo__loading"></div><figcaption><span>${PHOTO_LABELS[type]||"Student journey"}</span><strong>${escape(meta.name)}</strong></figcaption>`;
+      try{
+        const response=await fetch(`/api/country-visual?country=${encodeURIComponent(meta.id)}&type=${encodeURIComponent(type)}&skip=${skip}`,{cache:"force-cache"});
+        if(!response.ok)continue;
+        const data=await response.json();
+        if(!data?.image||usedPhotoUrls.has(data.image))continue;
+        usedPhotoUrls.add(data.image);
+        const img=document.createElement("img");
+        img.src=data.image;
+        img.alt=`${meta.name} ${PHOTO_LABELS[type]||"student life"} visual`;
+        img.loading=hero?"eager":"lazy";
+        img.decoding="async";
+        img.referrerPolicy="no-referrer";
+        figure.prepend(img);
+        const loading=figure.querySelector(".lizon-country-photo__loading"); if(loading)loading.remove();
+        const cap=figure.querySelector("figcaption");
+        if(cap){
+          const credit=document.createElement("span");
+          credit.className="lizon-country-photo__credit";
+          credit.textContent="Visual source · Wikimedia Commons";
+          cap.appendChild(credit);
+        }
+        return figure;
+      }catch{}
     }
-    return figure;
+    return null;
   };
 
   const addCountryVisuals=async()=>{
@@ -250,9 +270,11 @@
       }
     }
     const scenes=[
-      ["#eligibility,#start","profile"],["#study,#universities,#providers,#institutions","study"],
-      ["#money,#costs,#tuition","money"],["#visa","visa"],["#work,#work-life","work"],
-      ["#after-study","after"],["#arrival","arrival"],["#cities","cities"]
+      ["#study,#universities,#providers,#institutions","study"],
+      ["#money,#costs,#tuition","money"],
+      ["#visa","visa"],
+      ["#work,#work-life","work"],
+      ["#after-study,#arrival","after"]
     ];
     const used=new Set();
     for(const [selector,type] of scenes){
@@ -301,5 +323,20 @@
     }catch{}
   };
 
-  ready(()=>{compactGlobalNavigation();unifyGuide();genericClose();buildSearch();addCountryVisuals();addCountryUpdates()});
+  const addVisualSourceNote=()=>{
+    const sources=document.querySelector("#sources");
+    if(!sources||sources.querySelector("[data-lizon-visual-source]"))return;
+    const host=sources.querySelector('[class*="-source-grid"],[class*="-sources"],[class*="-shell"],.shell')||sources;
+    const note=document.createElement("div");
+    note.setAttribute("data-lizon-visual-source","");
+    note.className="lizon-visual-source-note";
+    note.innerHTML='<strong>Visual source</strong><span>Destination photography is sourced from Wikimedia Commons and displayed under the applicable Commons license.</span><a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons ↗</a>';
+    host.appendChild(note);
+  };
+
+  ready(()=>{compactGlobalNavigation();unifyGuide();genericClose();buildSearch();addCountryVisuals();addCountryUpdates();addVisualSourceNote();releaseScrollIfSafe();
+    window.addEventListener("pageshow",releaseScrollIfSafe,{passive:true});
+    document.addEventListener("visibilitychange",()=>{if(!document.hidden)releaseScrollIfSafe()});
+    const mo=new MutationObserver(releaseScrollIfSafe);mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:["class","aria-hidden"]});
+  });
 })();

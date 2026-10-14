@@ -29,6 +29,7 @@
     ["estonia","Estonia","Europe","estonia.html","EE"],
     ["hungary","Hungary","Europe","hungary.html","HU"],
     ["malta","Malta","Europe","malta.html","MT"],
+    ["india","India","Asia","india.html","IN"],
     ["china","China","Asia","china.html","CN"],
     ["turkey","Türkiye","Europe","turkey.html","TR"],
     ["uae","United Arab Emirates","Asia","uae.html","AE"],
@@ -43,7 +44,9 @@
     ["singapore","Singapore","Asia","singapore.html","SG"],
     ["qatar","Qatar","Asia","qatar.html","QA"],
     ["saudi-arabia","Saudi Arabia","Asia","saudi-arabia.html","SA"],
-    ["thailand","Thailand","Asia","thailand.html","TH"]
+    ["thailand","Thailand","Asia","thailand.html","TH"],
+    ["japan","Japan","Asia","japan.html","JP"],
+    ["southkorea","South Korea","Asia","southkorea.html","KR"]
   ].map(([id,name,region,page,code]) => ({
     id,name,region,page,code,
     levels:["Bachelor","Masters","PhD"],

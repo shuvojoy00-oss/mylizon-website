@@ -64,6 +64,9 @@
     const uni=main?.querySelector("#universities,#providers,#institutions");
     if(uni && ![...nav.querySelectorAll("a")].some(a=>/universit|provider|institution/i.test(a.textContent))){
       const a=document.createElement("a");a.href="#"+uni.id;a.textContent=uni.id==="universities"?"Universities":"Study Options";nav.appendChild(a);
+    } else if(!uni) {
+      const studyLink=[...nav.querySelectorAll("a")].find(a=>(a.getAttribute("href")||"")==="#study");
+      if(studyLink && !/universit/i.test(studyLink.textContent)) studyLink.textContent="Study & Universities";
     }
     if(!inner.querySelector(".lizon-country-guide-name")){
       const label=document.createElement("span");label.className="lizon-country-guide-name";label.textContent=countryName()+" Guide";inner.insertBefore(label,nav);

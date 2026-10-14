@@ -46,41 +46,58 @@ module.exports=async(req,res)=>{
  const city=CITIES[country],name=NAMES[country];
  if(!city||!name)return res.status(400).json({ok:false,error:"Unknown destination"});
  const build=TYPE_TERMS[type]||TYPE_TERMS.hero;
- const q=build(city,name);
- const params=new URLSearchParams({
-  action:"query",format:"json",origin:"*",generator:"search",gsrsearch:q,gsrnamespace:"6",gsrlimit:"30",
-  prop:"imageinfo",iiprop:"url|size|mime|extmetadata",iiurlwidth:"1600"
- });
+ const queries=[build(city,name)];
+ const fallback={
+   hero:[`${city} ${name} skyline`,`${city} ${name} architecture`],
+   study:[`${name} university campus`,`${city} university architecture`],
+   money:[`${city} residential architecture`,`${city} apartment building`],
+   visa:[`${city} airport terminal`,`${name} international airport`],
+   work:[`${city} business district`,`${city} office architecture`],
+   after:[`${name} university campus`,`${city} business district`],
+   arrival:[`${city} airport terminal`,`${city} railway station`],
+   cities:[`${city} city skyline`,`${city} street architecture`]
+ };
+ for(const q of (fallback[type]||fallback.hero)) if(!queries.includes(q)) queries.push(q);
+
  try{
-  const r=await fetch("https://commons.wikimedia.org/w/api.php?"+params.toString(),{
-   headers:{"user-agent":"LizOnEducation/1.0 (study-abroad visual selector)","accept":"application/json"},
-   signal:AbortSignal.timeout(10000)
-  });
-  if(!r.ok)throw new Error("Commons "+r.status);
-  const j=await r.json();
-  const pages=Object.values(j?.query?.pages||{});
-  const scored=pages.map(p=>{
-    const i=p.imageinfo?.[0],title=String(p.title||"").replace(/^File:/,"");
-    if(!i||bad.test(title))return null;
-    if(!/^image\/(jpeg|png|webp)$/i.test(i.mime||""))return null;
-    const w=Number(i.width||0),h=Number(i.height||0);
-    if(w<900||h<520)return null;
-    const ratio=w/Math.max(1,h); if(ratio<1.18||ratio>3.8)return null;
-    let score=0;
-    const low=title.toLowerCase(),ql=q.toLowerCase();
-    if(low.includes(city.toLowerCase()))score+=8;
-    if(low.includes(name.toLowerCase()))score+=6;
-    if(type==="study"&&/univers|campus|student/.test(low))score+=6;
-    if(type==="visa"||type==="arrival"){if(/airport|terminal|travel/.test(low))score+=6;}
-    if(type==="after"&&/graduat|commencement|student/.test(low))score+=6;
-    if(type==="money"&&/student|housing|residence|dorm/.test(low))score+=5;
-    if(type==="work"&&/student|cafe|coffee|office|work/.test(low))score+=4;
-    if(type==="cities"&&/city|street|skyline|center|centre/.test(low))score+=4;
-    if(preferred[type]?.test(low))score+=10;
-    score+=Math.min(5,w/1200);
-    if(/night|sunset|aerial|panorama/.test(low))score+=1;
-    return {p,i,title,score};
-  }).filter(Boolean).sort((a,b)=>b.score-a.score);
+  const pool=[];
+  for(const q of queries){
+    const params=new URLSearchParams({
+      action:"query",format:"json",origin:"*",generator:"search",gsrsearch:q,gsrnamespace:"6",gsrlimit:"30",
+      prop:"imageinfo",iiprop:"url|size|mime|extmetadata",iiurlwidth:"1600"
+    });
+    const r=await fetch("https://commons.wikimedia.org/w/api.php?"+params.toString(),{
+      headers:{"user-agent":"LizOnEducation/1.0 (study-abroad visual selector)","accept":"application/json"},
+      signal:AbortSignal.timeout(10000)
+    });
+    if(!r.ok)continue;
+    const j=await r.json();
+    for(const p of Object.values(j?.query?.pages||{})){
+      const i=p.imageinfo?.[0],title=String(p.title||"").replace(/^File:/,"");
+      if(!i||bad.test(title))continue;
+      if(!/^image\/(jpeg|png|webp)$/i.test(i.mime||""))continue;
+      const w=Number(i.width||0),h=Number(i.height||0);
+      if(w<800||h<450)continue;
+      const ratio=w/Math.max(1,h); if(ratio<1.08||ratio>4.2)continue;
+      let score=0;
+      const low=title.toLowerCase();
+      if(low.includes(city.toLowerCase()))score+=8;
+      if(low.includes(name.toLowerCase()))score+=6;
+      if(preferred[type]?.test(low))score+=10;
+      score+=Math.min(5,w/1200);
+      if(/night|sunset|aerial|panorama/.test(low))score+=1;
+      if(/interior|exterior|building|architecture|terminal|station|campus|library|skyline|district|street/.test(low))score+=3;
+      pool.push({p,i,title,score});
+    }
+    if(pool.length>=12)break;
+  }
+  const seen=new Map();
+  for(const item of pool){
+    const key=item.i.thumburl||item.i.url;
+    const current=seen.get(key);
+    if(!current||item.score>current.score)seen.set(key,item);
+  }
+  const scored=[...seen.values()].sort((a,b)=>b.score-a.score);
   const best=scored[skip]||scored[0];
   if(!best)return res.status(404).json({ok:false,error:"No suitable photograph found"});
   const md=best.i.extmetadata||{};

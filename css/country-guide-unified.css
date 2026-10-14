@@ -149,3 +149,143 @@ main [class*="-hero"] [class*="-shell"]{position:relative;z-index:3}
   pointer-events:none;
 }
 .lizon-country-update-card--brief{background:linear-gradient(145deg,#ffffff,#f1f7f3)}
+
+
+/* Fixed country guide controls */
+.lizon-country-guide-rail{
+  position:fixed!important;
+  top:var(--lizon-header-h,70px)!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  z-index:950!important;
+  transform:none!important;
+}
+body.lizon-has-fixed-country-guide main{
+  padding-top:var(--lizon-guide-h,58px)!important;
+}
+@media(max-width:700px){
+  .lizon-country-guide-rail{top:var(--lizon-header-h,70px)!important}
+  body.lizon-has-fixed-country-guide main{padding-top:var(--lizon-guide-h,62px)!important}
+  main section[id]{scroll-margin-top:calc(var(--lizon-header-h,70px) + var(--lizon-guide-h,62px) + 14px)!important}
+}
+@media(min-width:701px){
+  main section[id]{scroll-margin-top:calc(var(--lizon-header-h,82px) + var(--lizon-guide-h,58px) + 16px)!important}
+}
+
+/* Remove the previous illustrated SVG treatment */
+.lizon-country-scene,.lizon-country-hero-visual{display:none!important}
+
+/* Real editorial photography */
+.lizon-country-photo{
+  position:relative;
+  overflow:hidden;
+  margin:22px 0 30px auto;
+  width:min(440px,38%);
+  min-height:250px;
+  border-radius:24px;
+  background:#e8f0eb;
+  box-shadow:0 18px 44px rgba(17,54,42,.12);
+  isolation:isolate;
+}
+.lizon-country-photo img{
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:250px;
+  aspect-ratio:16/10;
+  object-fit:cover;
+}
+.lizon-country-photo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 46%,rgba(9,28,22,.72) 100%);
+  pointer-events:none;
+}
+.lizon-country-photo figcaption{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:16px;
+  z-index:2;
+  display:grid;
+  gap:3px;
+  color:#fff;
+}
+.lizon-country-photo figcaption span{
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  opacity:.82;
+}
+.lizon-country-photo figcaption strong{
+  font-size:21px;
+  line-height:1.05;
+}
+.lizon-country-photo__credit{
+  justify-self:start;
+  margin-top:5px;
+  color:rgba(255,255,255,.76);
+  font-size:9px;
+  font-weight:650;
+  text-decoration:none;
+}
+.lizon-country-photo__loading{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(110deg,rgba(255,255,255,0) 20%,rgba(255,255,255,.55) 38%,rgba(255,255,255,0) 56%),
+    #e7efea;
+  background-size:220% 100%;
+  animation:lizonPhotoLoading 1.3s linear infinite;
+}
+@keyframes lizonPhotoLoading{to{background-position:-220% 0}}
+
+.lizon-country-photo--hero{
+  grid-column:1/-1;
+  width:100%;
+  max-width:none;
+  min-height:300px;
+  margin:28px 0 0;
+}
+.lizon-country-photo--hero img{
+  min-height:300px;
+  max-height:420px;
+  aspect-ratio:21/8;
+}
+.lizon-country-photo--hero figcaption{
+  left:24px;
+  bottom:20px;
+}
+.lizon-country-photo--hero figcaption strong{font-size:26px}
+
+@media(min-width:901px){
+  section[id] .lizon-country-photo{
+    float:right;
+    margin-left:34px;
+  }
+  section[id] .lizon-country-photo + *{clear:none}
+}
+@media(max-width:900px){
+  .lizon-country-photo,
+  .lizon-country-photo--hero{
+    float:none;
+    width:100%;
+    margin:18px 0 26px;
+    border-radius:20px;
+  }
+  .lizon-country-photo img,
+  .lizon-country-photo--hero img{
+    min-height:220px;
+    max-height:none;
+    aspect-ratio:16/10;
+  }
+}
+@media(max-width:700px){
+  .lizon-country-photo{border-radius:18px}
+  .lizon-country-photo figcaption{left:15px;right:15px;bottom:14px}
+  .lizon-country-photo figcaption strong{font-size:19px}
+  .lizon-country-photo__credit{font-size:8px}
+}

@@ -3840,3 +3840,149 @@ button:hover .sa-slim-arrow{transform:translateX(3px)}
   .sa-result-export-actions{display:grid;grid-template-columns:1fr}
   .sa-result-export-actions .sa-save-result,.sa-compare-result-actions .sa-button{width:100%}
 }
+
+
+/* Bangladesh to world journey */
+.sa-world-journey{
+  position:relative;
+  grid-column:1/-1;
+  grid-row:2;
+  min-height:300px;
+  margin-top:6px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:34px;
+  background:
+    radial-gradient(circle at 74% 37%,rgba(200,166,88,.13),transparent 20%),
+    radial-gradient(circle at 28% 35%,rgba(71,131,107,.14),transparent 27%),
+    linear-gradient(145deg,#102f27 0%,#173f33 60%,#203a31 100%);
+  box-shadow:0 28px 70px rgba(15,47,38,.15);
+  overflow:hidden;
+  isolation:isolate;
+}
+.sa-world-journey::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(120deg,transparent 10%,rgba(255,255,255,.028) 36%,transparent 60%);
+  pointer-events:none;
+}
+.sa-world-journey__glow{
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  filter:blur(10px);
+  opacity:.24;
+  pointer-events:none;
+}
+.sa-world-journey__glow--one{
+  left:-70px;
+  bottom:-100px;
+  background:radial-gradient(circle,rgba(89,153,126,.6),transparent 68%);
+}
+.sa-world-journey__glow--two{
+  right:-40px;
+  top:-90px;
+  background:radial-gradient(circle,rgba(190,151,70,.5),transparent 70%);
+}
+.sa-world-journey svg{
+  position:relative;
+  z-index:1;
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:300px;
+}
+.sa-world-grid path{
+  fill:none;
+  stroke:rgba(255,255,255,.035);
+  stroke-width:1;
+}
+.sa-world-land path{
+  fill:url(#saWorldFill);
+  opacity:.20;
+  stroke:rgba(255,255,255,.08);
+  stroke-width:1.2;
+}
+.sa-world-routes path{
+  fill:none;
+  stroke:url(#saWorldRoute);
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-dasharray:4 11;
+  opacity:.88;
+  animation:saWorldRouteFlow 6.5s linear infinite;
+}
+.sa-world-routes path:nth-child(2n){animation-duration:7.6s;opacity:.7}
+.sa-world-routes path:nth-child(3n){animation-duration:5.8s;opacity:.82}
+.sa-world-destinations circle{
+  fill:#d8bb76;
+  stroke:rgba(255,255,255,.72);
+  stroke-width:2;
+  filter:drop-shadow(0 0 7px rgba(216,187,118,.6));
+}
+.sa-world-origin circle:first-child{
+  fill:rgba(79,156,122,.18);
+  stroke:rgba(115,190,157,.76);
+  stroke-width:2;
+  animation:saWorldOriginPulse 2.8s ease-out infinite;
+}
+.sa-world-origin circle:last-child{
+  fill:#e0be6d;
+  stroke:#fff;
+  stroke-width:2;
+}
+.sa-world-plane{
+  fill:#f4e6bc;
+  filter:drop-shadow(0 4px 9px rgba(0,0,0,.25));
+}
+.sa-world-plane--one{animation:saWorldPlaneOne 5s ease-in-out infinite}
+.sa-world-plane--two{animation:saWorldPlaneTwo 5.8s ease-in-out infinite}
+@keyframes saWorldRouteFlow{to{stroke-dashoffset:-90}}
+@keyframes saWorldOriginPulse{
+  0%{r:11;opacity:.9}
+  70%,100%{r:27;opacity:0}
+}
+@keyframes saWorldPlaneOne{
+  0%,100%{transform:translate(642px,103px) rotate(-25deg)}
+  50%{transform:translate(610px,86px) rotate(-29deg)}
+}
+@keyframes saWorldPlaneTwo{
+  0%,100%{transform:translate(839px,276px) rotate(37deg)}
+  50%{transform:translate(862px,301px) rotate(42deg)}
+}
+
+@media(max-width:900px){
+  .sa-hero__content{grid-row:1}
+  .sa-world-journey{
+    grid-column:1;
+    grid-row:2;
+    min-height:285px;
+    margin-top:4px;
+    border-radius:27px;
+  }
+  .sa-decision-card{grid-row:3}
+  .sa-world-journey svg{
+    min-height:285px;
+    transform:scale(1.08);
+    transform-origin:center;
+  }
+}
+@media(max-width:600px){
+  .sa-world-journey{
+    min-height:310px;
+    margin-inline:-3px;
+    border-radius:23px;
+  }
+  .sa-world-journey svg{
+    min-height:310px;
+    width:118%;
+    margin-left:-9%;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .sa-world-routes path,
+  .sa-world-origin circle:first-child,
+  .sa-world-plane{animation:none!important}
+}

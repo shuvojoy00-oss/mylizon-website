@@ -730,7 +730,9 @@ function initNewsNavigation() {
       const label = drop.querySelector(".nav-dropdown__trigger")?.textContent.replace("⌄","").trim();
       const cat = map[label];
       const panel = drop.querySelector(".nav-dropdown__panel");
-      if (!cat || !panel || panel.querySelector('[data-news-link]')) return;
+      if (!cat || !panel) return;
+      const exists=[...panel.querySelectorAll("a")].some(a=>a.dataset.newsLink!==undefined||(a.getAttribute("href")||"").includes("news.html?category="+cat)||a.textContent.trim()===label+" News & Updates");
+      if (exists) return;
       const a = document.createElement("a");
       a.href = "news.html?category=" + cat;
       a.setAttribute("data-news-link","");
@@ -745,7 +747,9 @@ function initNewsNavigation() {
       const label = d.querySelector("summary")?.childNodes[0]?.textContent.trim() || d.querySelector("summary")?.textContent.replace("+","").trim();
       const cat = map[label];
       const sub = d.querySelector(".mobile-nav__sub");
-      if (!cat || !sub || sub.querySelector('[data-news-link]')) return;
+      if (!cat || !sub) return;
+      const exists=[...sub.querySelectorAll("a")].some(a=>a.dataset.newsLink!==undefined||(a.getAttribute("href")||"").includes("news.html?category="+cat)||a.textContent.trim()===label+" News & Updates");
+      if (exists) return;
       const a = document.createElement("a");
       a.href = "news.html?category=" + cat;
       a.setAttribute("data-news-link","");

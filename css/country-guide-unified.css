@@ -33,3 +33,45 @@ footer .footer-group[data-lizon-study-footer] div{display:grid!important}
  .lizon-country-guide-rail [class*="guide__label"]{display:none!important}
  .lizon-country-guide-rail [class*="guide-mobile-actions"]{display:none!important}
 }
+
+
+/* Country identity visuals */
+main section{position:relative}
+.lizon-country-scene{position:absolute;right:clamp(14px,4vw,54px);top:clamp(18px,3vw,42px);z-index:0;display:grid;justify-items:end;gap:5px;max-width:190px;pointer-events:none;opacity:.14}
+.lizon-country-scene__flags{display:flex;align-items:center;gap:7px}
+.lizon-country-scene__flags img{width:42px;height:28px;object-fit:cover;border-radius:5px;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.lizon-country-scene__flags span{font-weight:900;color:#174438}
+.lizon-country-scene strong{font-size:10px;letter-spacing:.12em;color:#174438}
+.lizon-country-scene>span{font-size:11px;color:#486158;text-align:right}
+main section::after{pointer-events:none}
+@media(min-width:900px){
+  main section[id]::before{content:"";position:absolute;right:-20px;bottom:10px;width:210px;height:140px;background-image:var(--lizon-destination-flag);background-size:contain;background-position:center;background-repeat:no-repeat;opacity:.018;filter:saturate(.9);pointer-events:none}
+}
+
+/* Country updates */
+.lizon-country-updates{padding:72px 0 62px;background:#f5f8f5;border-top:1px solid rgba(18,63,49,.08)}
+.lizon-country-updates__shell{width:min(calc(100% - 36px),1240px);margin:0 auto}
+.lizon-country-updates__head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:24px}
+.lizon-country-updates__head small{display:block;margin-bottom:8px;color:#174438;font-size:10px;font-weight:900;letter-spacing:.13em}
+.lizon-country-updates__head h2{margin:0;max-width:760px;color:#173d31;font-size:clamp(30px,4vw,50px);line-height:1.03;letter-spacing:-.035em}
+.lizon-country-updates__head p{max-width:760px;margin:12px 0 0;color:#69766f;line-height:1.65}
+.lizon-country-updates__head a{flex:0 0 auto;color:#174438;font-size:12px;font-weight:850;text-decoration:none}
+.lizon-country-updates__track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(290px,1fr);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.lizon-country-updates__track::-webkit-scrollbar{display:none}
+.lizon-country-update-card{display:grid;align-content:start;gap:10px;min-height:220px;padding:22px;border:1px solid rgba(18,63,49,.1);border-radius:20px;background:#fff;box-shadow:0 12px 34px rgba(18,63,49,.05);scroll-snap-align:start;text-decoration:none}
+.lizon-country-update-card small{color:#a46b22;font-size:9px;font-weight:900;letter-spacing:.1em}
+.lizon-country-update-card strong{color:#173d31;font-size:19px;line-height:1.25}
+.lizon-country-update-card span{color:#66746d;font-size:13px;line-height:1.6}
+.lizon-country-update-card b{margin-top:auto;color:#174438;font-size:11px}
+.lizon-country-update-card--empty{max-width:620px}
+.lizon-search-result--fallback{border-style:dashed}
+
+@media(max-width:700px){
+  .lizon-country-scene{right:15px;top:18px;max-width:130px;opacity:.11}
+  .lizon-country-scene__flags img{width:34px;height:22px}
+  .lizon-country-scene>span{display:none}
+  .lizon-country-updates{padding:52px 0 46px}
+  .lizon-country-updates__head{display:grid;gap:12px;align-items:start}
+  .lizon-country-updates__head h2{font-size:34px}
+  .lizon-country-updates__track{margin-right:-18px;padding-right:18px;grid-auto-columns:82vw}
+}

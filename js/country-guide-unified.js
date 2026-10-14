@@ -58,8 +58,25 @@
   const findGuideRail=()=>document.querySelector('div[class*="guide-sticky"]');
   const findGuideSheet=()=>[...document.querySelectorAll('[id$="guide-sheet"],[class*="sheet"]')].find(x=>!/search/i.test(x.id||"") && /guide/i.test(x.id||x.className||""));
   const findSearchSheet=()=>document.querySelector('[id$="search-sheet"],[class*="search-sheet"]');
-  const openSheet=sheet=>{if(!sheet)return;sheet.classList.add("is-open");sheet.setAttribute("aria-hidden","false");syncScrollLock()};
-  const closeSheet=sheet=>{if(!sheet)return;sheet.classList.remove("is-open");sheet.setAttribute("aria-hidden","true");releaseScrollIfSafe()};
+  const openSheet=sheet=>{
+    if(!sheet)return;
+    [findGuideSheet(),findSearchSheet()].filter(Boolean).forEach(other=>{if(other!==sheet)other.classList.remove("is-open")});
+    sheet.classList.add("is-open");
+    sheet.setAttribute("aria-hidden","false");
+    syncScrollLock();
+  };
+  const closeSheet=sheet=>{
+    if(!sheet)return;
+    sheet.classList.remove("is-open");
+    sheet.setAttribute("aria-hidden","true");
+    releaseScrollIfSafe();
+  };
+  const toggleSheet=sheet=>{
+    if(!sheet)return false;
+    const willOpen=!sheet.classList.contains("is-open");
+    if(willOpen)openSheet(sheet);else closeSheet(sheet);
+    return willOpen;
+  };
 
   const unifyGuide=()=>{
     const rail=findGuideRail(); if(!rail)return;
@@ -125,9 +142,46 @@
         </button>`;
       inner.appendChild(actions);
     }
-    actions.querySelector(".lizon-guide-button")?.addEventListener("click",()=>openSheet(findGuideSheet()));
-    actions.querySelector(".lizon-search-button")?.addEventListener("click",()=>{
-      const sheet=findSearchSheet();openSheet(sheet);setTimeout(()=>sheet?.querySelector('input[type="search"]')?.focus(),80);
+    const guideButton=actions.querySelector(".lizon-guide-button");
+    const searchButton=actions.querySelector(".lizon-search-button");
+    guideButton?.addEventListener("click",()=>{
+      const sheet=findGuideSheet();
+      const opened=toggleSheet(sheet);
+      guideButton.setAttribute("aria-expanded",opened?"true":"false");
+      searchButton?.setAttribute("aria-expanded","false");
+    });
+    searchButton?.addEventListener("click",()=>{
+      const sheet=findSearchSheet();
+      const opened=toggleSheet(sheet);
+      searchButton.setAttribute("aria-expanded",opened?"true":"false");
+      guideButton?.setAttribute("aria-expanded","false");
+      if(opened)setTimeout(()=>sheet?.querySelector('input[type="search"]')?.focus(),80);
+    });
+    guideButton?.setAttribute("aria-expanded","false");
+    searchButton?.setAttribute("aria-expanded","false");
+    const guideSheet=findGuideSheet();
+    const searchSheet=findSearchSheet();
+    [guideSheet,searchSheet].forEach((sheet,index)=>{
+      if(!sheet)return;
+      const panel=sheet.querySelector('[class*="sheet__panel"]')||sheet;
+      if(!panel.querySelector(".lizon-shared-sheet-close")){
+        const close=document.createElement("button");
+        close.type="button";
+        close.className="lizon-shared-sheet-close";
+        close.setAttribute("aria-label","Close");
+        close.innerHTML="×";
+        close.addEventListener("click",()=>{
+          closeSheet(sheet);
+          (index===0?guideButton:searchButton)?.setAttribute("aria-expanded","false");
+        });
+        panel.appendChild(close);
+      }
+      if(index===0){
+        sheet.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",()=>{
+          closeSheet(sheet);
+          guideButton?.setAttribute("aria-expanded","false");
+        }));
+      }
     });
     if(![...nav.querySelectorAll("a")].some(a=>(a.getAttribute("href")||"")==="#country-updates")){const u=document.createElement("a");u.href="#country-updates";u.textContent="Country Updates";nav.appendChild(u)}
     nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",releaseScrollIfSafe));
@@ -139,6 +193,8 @@
       if(!(t instanceof Element))return;
       if(t.matches('[class*="sheet__backdrop"],[class*="sheet__close"]')){
         const sheet=t.closest('[class*="sheet"]'); closeSheet(sheet);
+        document.querySelector(".lizon-guide-button")?.setAttribute("aria-expanded","false");
+        document.querySelector(".lizon-search-button")?.setAttribute("aria-expanded","false");
       }
     },true);
   };

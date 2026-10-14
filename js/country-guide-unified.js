@@ -110,7 +110,19 @@
     let actions=inner.querySelector(".lizon-country-guide-actions");
     if(!actions){
       actions=document.createElement("div");actions.className="lizon-country-guide-actions";
-      actions.innerHTML='<button class="lizon-guide-button" type="button">Guide</button><button class="lizon-search-button" type="button">Search</button>';
+      actions.innerHTML=`
+        <button class="lizon-guide-button" type="button" aria-label="Open country guide">
+          <span class="lizon-toolbar-icon lizon-toolbar-icon--guide" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 5.5h6.2c1.1 0 2 .9 2 2v11H7.1A2.1 2.1 0 0 1 5 16.4V5.5Zm14 0h-3.7c-1.1 0-2 .9-2 2v11h3.6a2.1 2.1 0 0 0 2.1-2.1V5.5Z"/><path d="M8 9h2.5M8 12h2.5M15.5 9H18M15.5 12H18"/></svg>
+          </span>
+          <span class="lizon-toolbar-copy"><small>COUNTRY</small><strong>Guide</strong></span>
+        </button>
+        <button class="lizon-search-button" type="button" aria-label="Search this country guide">
+          <span class="lizon-toolbar-icon lizon-toolbar-icon--search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 4.5 4.5"/></svg>
+          </span>
+          <span class="lizon-toolbar-copy"><small>FIND ANYTHING</small><strong>Search</strong></span>
+        </button>`;
       inner.appendChild(actions);
     }
     actions.querySelector(".lizon-guide-button")?.addEventListener("click",()=>openSheet(findGuideSheet()));

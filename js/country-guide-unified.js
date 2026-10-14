@@ -81,6 +81,11 @@
       const header=document.querySelector(".site-header"); if(header)ro.observe(header);
       ro.observe(rail);
     }
+    const duplicateGuide=document.querySelector("#guide");
+    if(duplicateGuide&&duplicateGuide!==rail){
+      const links=duplicateGuide.querySelectorAll('a[href^="#"]');
+      if(links.length>=5 && (duplicateGuide.textContent||"").trim().length<900) duplicateGuide.classList.add("lizon-duplicate-guide-intro");
+    }
     const inner=rail.firstElementChild || rail;
     inner.classList.add("lizon-country-guide-rail-inner");
     const originalActions=inner.querySelector('[class*="guide-mobile-actions"]');
@@ -221,34 +226,37 @@
     visa:"Visa & travel",work:"Work while studying",after:"After study",arrival:"Arrival",cities:"Life in the city"
   };
 
+  const usedPhotoUrls=new Set();
   const photoCard=async(type,meta,hero=false)=>{
-    const figure=document.createElement("figure");
-    figure.className=hero?"lizon-country-photo lizon-country-photo--hero":`lizon-country-photo lizon-country-photo--${type}`;
-    figure.innerHTML=`<div class="lizon-country-photo__loading"></div><figcaption><span>${PHOTO_LABELS[type]||"Student journey"}</span><strong>${escape(meta.name)}</strong></figcaption>`;
-    try{
-      const response=await fetch(`/api/country-visual?country=${encodeURIComponent(meta.id)}&type=${encodeURIComponent(type)}`,{cache:"force-cache"});
-      if(!response.ok)throw new Error("visual unavailable");
-      const data=await response.json();
-      if(!data?.image)throw new Error("visual unavailable");
-      const img=document.createElement("img");
-      img.src=data.image;
-      img.alt=`${meta.name} ${PHOTO_LABELS[type]||"student life"} visual`;
-      img.loading=hero?"eager":"lazy";
-      img.decoding="async";
-      figure.prepend(img);
-      const loading=figure.querySelector(".lizon-country-photo__loading"); if(loading)loading.remove();
-      const cap=figure.querySelector("figcaption");
-      if(cap){
-        const credit=document.createElement("span");
-        credit.className="lizon-country-photo__credit";
-        credit.textContent=`${data.source||"Wikimedia Commons"} · licensed visual`;
-        cap.appendChild(credit);
-      }
-    }catch{
-      figure.remove();
-      return null;
+    for(let skip=0;skip<5;skip++){
+      const figure=document.createElement("figure");
+      figure.className=hero?"lizon-country-photo lizon-country-photo--hero":`lizon-country-photo lizon-country-photo--${type}`;
+      figure.innerHTML=`<div class="lizon-country-photo__loading"></div><figcaption><span>${PHOTO_LABELS[type]||"Student journey"}</span><strong>${escape(meta.name)}</strong></figcaption>`;
+      try{
+        const response=await fetch(`/api/country-visual?country=${encodeURIComponent(meta.id)}&type=${encodeURIComponent(type)}&skip=${skip}`,{cache:"force-cache"});
+        if(!response.ok)continue;
+        const data=await response.json();
+        if(!data?.image||usedPhotoUrls.has(data.image))continue;
+        usedPhotoUrls.add(data.image);
+        const img=document.createElement("img");
+        img.src=data.image;
+        img.alt=`${meta.name} ${PHOTO_LABELS[type]||"student life"} visual`;
+        img.loading=hero?"eager":"lazy";
+        img.decoding="async";
+        img.referrerPolicy="no-referrer";
+        figure.prepend(img);
+        const loading=figure.querySelector(".lizon-country-photo__loading"); if(loading)loading.remove();
+        const cap=figure.querySelector("figcaption");
+        if(cap){
+          const credit=document.createElement("span");
+          credit.className="lizon-country-photo__credit";
+          credit.textContent="Visual source · Wikimedia Commons";
+          cap.appendChild(credit);
+        }
+        return figure;
+      }catch{}
     }
-    return figure;
+    return null;
   };
 
   const addCountryVisuals=async()=>{
@@ -262,9 +270,11 @@
       }
     }
     const scenes=[
-      ["#eligibility,#start","profile"],["#study,#universities,#providers,#institutions","study"],
-      ["#money,#costs,#tuition","money"],["#visa","visa"],["#work,#work-life","work"],
-      ["#after-study","after"],["#arrival","arrival"],["#cities","cities"]
+      ["#study,#universities,#providers,#institutions","study"],
+      ["#money,#costs,#tuition","money"],
+      ["#visa","visa"],
+      ["#work,#work-life","work"],
+      ["#after-study,#arrival","after"]
     ];
     const used=new Set();
     for(const [selector,type] of scenes){

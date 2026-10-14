@@ -273,54 +273,30 @@
   }
 
   function setupExploreCountriesNav(countries){
-    const ordered=countries.slice().sort((a,b)=>a.name.localeCompare(b.name));
     const desktop=document.querySelector(".desktop-nav");
-    if(desktop && !desktop.querySelector("#explore-countries-menu")){
-      const results=[...desktop.querySelectorAll("a.desktop-nav__link")].find(a=>a.textContent.trim()==="Results");
-      const wrap=document.createElement("div");
-      wrap.className="nav-dropdown sa-country-nav";
-      wrap.innerHTML=`
-        <button class="nav-dropdown__trigger" type="button" aria-expanded="false" aria-controls="explore-countries-menu">
-          Explore Countries <span class="nav-chevron" aria-hidden="true">⌄</span>
-        </button>
-        <div class="nav-dropdown__panel sa-country-mega" id="explore-countries-menu">
-          <div class="sa-country-mega__head"><strong>Study destinations</strong><span>Open a country guide</span></div>
-          <div class="sa-country-mega__grid">
-            ${ordered.map(c=>`<a href="${esc(c.page)}">${esc(c.name)}</a>`).join("")}
-          </div>
-        </div>`;
-      if(results) desktop.insertBefore(wrap,results); else desktop.appendChild(wrap);
+    const mobile=document.querySelector(".mobile-nav");
 
-      const trigger=wrap.querySelector(".nav-dropdown__trigger");
-      const closeOthers=()=>document.querySelectorAll(".nav-dropdown__trigger").forEach(item=>{
-        if(item!==trigger) item.setAttribute("aria-expanded","false");
-      });
-      const open=()=>{if(window.matchMedia("(min-width:901px)").matches){closeOthers();trigger.setAttribute("aria-expanded","true");}};
-      const close=()=>{if(window.matchMedia("(min-width:901px)").matches)trigger.setAttribute("aria-expanded","false");};
-      wrap.addEventListener("mouseenter",open);
-      wrap.addEventListener("mouseleave",close);
-      wrap.addEventListener("focusin",open);
-      wrap.addEventListener("focusout",e=>{if(!wrap.contains(e.relatedTarget))close();});
-      trigger.addEventListener("click",e=>{
-        if(!window.matchMedia("(min-width:901px)").matches)return;
-        const expanded=trigger.getAttribute("aria-expanded")==="true";
-        closeOthers();
-        trigger.setAttribute("aria-expanded",String(!expanded));
-        e.stopPropagation();
-      });
+    desktop?.querySelector("#explore-countries-menu")?.closest(".nav-dropdown")?.remove();
+    mobile?.querySelector("[data-shared-country-menu]")?.remove();
+
+    const studyDesktop=[...document.querySelectorAll(".nav-dropdown")].find(d=>/Study Abroad/i.test(d.querySelector(".nav-dropdown__trigger")?.textContent||""));
+    const studyPanel=studyDesktop?.querySelector(".nav-dropdown__panel");
+    if(studyPanel && ![...studyPanel.querySelectorAll("a")].some(a=>/Explore Countries/i.test(a.textContent))){
+      const a=document.createElement("a");a.href="studyabroad.html#countries";a.textContent="Explore Countries";
+      studyPanel.prepend(a);
     }
 
-    const mobile=document.querySelector(".mobile-nav");
-    if(mobile && !mobile.querySelector("[data-shared-country-menu]")){
-      const results=[...mobile.querySelectorAll("a.mobile-nav__main")].find(a=>a.textContent.trim()==="Results");
-      const details=document.createElement("details");
-      details.setAttribute("data-shared-country-menu","");
-      details.innerHTML=`
-        <summary>Explore Countries <span>+</span></summary>
-        <div class="mobile-nav__sub sa-mobile-country-menu">
-          ${ordered.map(c=>`<a href="${esc(c.page)}">${esc(c.name)}</a>`).join("")}
-        </div>`;
-      if(results) mobile.insertBefore(details,results); else mobile.appendChild(details);
+    const studyMobile=[...document.querySelectorAll(".mobile-nav details")].find(d=>/Study Abroad/i.test(d.querySelector("summary")?.textContent||""));
+    const sub=studyMobile?.querySelector(".mobile-nav__sub");
+    if(sub){
+      [...sub.querySelectorAll("a")].forEach(a=>{
+        const text=a.textContent.trim();
+        const keep=/Explore Countries|Eligibility|Country Updates|News|Talk to/i.test(text);
+        if(!keep) a.remove();
+      });
+      if(![...sub.querySelectorAll("a")].some(a=>/Explore Countries/i.test(a.textContent))){
+        const a=document.createElement("a");a.href="studyabroad.html#countries";a.textContent="Explore Countries";sub.prepend(a);
+      }
     }
 
     const freeDesktop=[...(desktop?.querySelectorAll("a.desktop-nav__link")||[])].find(a=>a.textContent.trim()==="Free Classes");
@@ -330,6 +306,7 @@
     freeMobile?.remove();
     mobile?.querySelector("[data-shared-free-classes]")?.remove();
   }
+
   document.addEventListener("DOMContentLoaded",async()=>{
     setupNewsNavigation();
     const countries=await loadSharedCountries();

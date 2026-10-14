@@ -31,6 +31,7 @@ const SOURCES = [
   {category:"pte", name:"Pearson PTE Preparation", url:"https://www.pearsonpte.com/preparation"}
 ];
 
+const TRUSTED_GUIDE_HOSTS = new Set();
 const ALLOWED_SOURCE_HOSTS = [
   "immi.homeaffairs.gov.au","homeaffairs.gov.au","immigration.govt.nz","canada.ca","gov.uk",
   "state.gov","uscis.gov","irishimmigration.ie","ind.nl","migri.fi","migrationsverket.se","udi.no",
@@ -69,7 +70,7 @@ function similar(a,b){
 function hostAllowed(url){
   try{
     const h = new URL(url).hostname.toLowerCase().replace(/^www\./,"");
-    return ALLOWED_SOURCE_HOSTS.some(x => h === x || h.endsWith("." + x));
+    return TRUSTED_GUIDE_HOSTS.has(h) || ALLOWED_SOURCE_HOSTS.some(x => h === x || h.endsWith("." + x));
   }catch{return false}
 }
 
@@ -87,7 +88,7 @@ const CANDIDATE_SCHEMA = {
   properties:{
     candidates:{
       type:"array",
-      maxItems:5,
+      maxItems:8,
       items:{
         type:"object",
         additionalProperties:false,
@@ -115,7 +116,7 @@ const ARTICLE_SCHEMA = {
   properties:{
     articles:{
       type:"array",
-      maxItems:3,
+      maxItems:5,
       items:{
         type:"object",
         additionalProperties:false,
@@ -278,9 +279,10 @@ async function fetchSource(source){
     if(text.length<250) return null;
     return {
       category:source.category,
+      country:source.country || "",
       source_name:source.name,
       source_url:r.url || source.url,
-      text,
+      text: source.compact ? text.slice(0,1800) : text,
       links:extractLinks(html,r.url || source.url).slice(0,30)
     };
   }catch(e){
@@ -289,12 +291,54 @@ async function fetchSource(source){
   }
 }
 
+async function discoverCountrySources(){
+  const out=[];
+  try{
+    const r=await fetch(`${BASE_URL}/data/studyabroad-countries.json`,{headers:{"accept":"application/json"},signal:AbortSignal.timeout(15000)});
+    if(!r.ok) return out;
+    const countries=await r.json();
+    for(let i=0;i<countries.length;i+=6){
+      const batch=await Promise.all(countries.slice(i,i+6).map(async country=>{
+        try{
+          const pageUrl=new URL(country.page,BASE_URL).toString();
+          const pr=await fetch(pageUrl,{headers:{"user-agent":"Mozilla/5.0 LizOnNewsBot/1.0"},signal:AbortSignal.timeout(12000)});
+          if(!pr.ok)return [];
+          const html=await pr.text();
+          const sourceStart=Math.max(html.search(/id=["']sources["']/i),html.search(/SOURCE CENTRE|OFFICIAL SOURCES/i));
+          const sourceHtml=sourceStart>=0?html.slice(sourceStart,sourceStart+24000):html.slice(-26000);
+          const links=extractLinks(sourceHtml,pageUrl)
+            .filter(x=>{
+              try{
+                const h=new URL(x.url).hostname.toLowerCase().replace(/^www\./,"");
+                return !/mylizon\.com|wa\.me|facebook\.com|youtube\.com|instagram\.com|tiktok\.com/i.test(h);
+              }catch{return false}
+            })
+            .slice(0,2);
+          links.forEach(x=>{try{TRUSTED_GUIDE_HOSTS.add(new URL(x.url).hostname.toLowerCase().replace(/^www\./,""))}catch{}});
+          return links.map((x,index)=>({
+            category:"study-abroad",
+            country:country.id,
+            name:`${country.name} official source ${index+1}`,
+            url:x.url,
+            compact:true
+          }));
+        }catch{return []}
+      }));
+      out.push(...batch.flat());
+      await sleep(180);
+    }
+  }catch(e){console.warn("Country source discovery failed:",e.message)}
+  return out;
+}
+
 async function buildCorpus(){
   const chunks=[];
-  for(let i=0;i<SOURCES.length;i+=6){
-    const batch=await Promise.all(SOURCES.slice(i,i+6).map(fetchSource));
+  const countrySources=await discoverCountrySources();
+  const all=[...SOURCES,...countrySources];
+  for(let i=0;i<all.length;i+=6){
+    const batch=await Promise.all(all.slice(i,i+6).map(fetchSource));
     chunks.push(...batch.filter(Boolean));
-    await sleep(300);
+    await sleep(250);
   }
   return chunks;
 }
@@ -360,6 +404,7 @@ async function research(existing, corpus){
 
   const compactCorpus = corpus.map(s=>({
     category:s.category,
+    country:s.country || "",
     source_name:s.source_name,
     source_url:s.source_url,
     text:s.text,

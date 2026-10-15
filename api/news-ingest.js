@@ -104,11 +104,10 @@ module.exports = async (req, res) => {
     let slug = slugify(body.slug || titleEn || titleBn);
     const duplicate = await pool.query(
       `select id,slug,title_en,source_url from public.content_posts
-       where lower(coalesce(source_url,''))=lower($1)
-          or lower(slug)=lower($2)
-          or lower(coalesce(title_en,''))=lower($3)
+       where lower(slug)=lower($1)
+          or lower(coalesce(title_en,''))=lower($2)
        limit 1`,
-      [sourceUrl, slug, titleEn]
+      [slug, titleEn]
     );
     if (duplicate.rows[0]) return res.status(409).json({ ok: false, duplicate: true, post: duplicate.rows[0] });
 

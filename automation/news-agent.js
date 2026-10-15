@@ -378,7 +378,11 @@ async function logRun(status, details={}){
   }catch(e){ console.warn("Run log failed:",e.message); }
 }
 
-const TODAY = new Date().toISOString().slice(0,10);
+const TODAY = new Intl.DateTimeFormat("en-CA", {timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+function dhakaDate(date){
+  if(!date || Number.isNaN(new Date(date).getTime())) return "";
+  return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date(date));
+}
 
 const CORE_RULES = `
 You are the LizOn Education News Desk for Bangladeshi students.
@@ -476,6 +480,12 @@ async function main(){
 
   try{
     const existing=await fetchExisting();
+    const todayPublished=existing.filter(p=>p.ai_generated===true && dhakaDate(p.published_at)===TODAY);
+    if(todayPublished.length){
+      console.log(`Daily AI news already published for ${TODAY} Asia/Dhaka: ${todayPublished.length}; skipping retry.`);
+      await logRun("completed",{published_count:todayPublished.length,message:"Already published today; scheduled retry skipped"});
+      return;
+    }
     const corpus=await buildCorpus();
 
     const coverage={
@@ -514,7 +524,7 @@ async function main(){
       await sleep(800);
     }
 
-    if(!published) console.log("No article passed all publication checks today.");
+    if(!published) throw new Error("No article published for today: all candidates rejected, duplicate, or unavailable. Retry required.");
 
     await logRun("completed",{
       researched,

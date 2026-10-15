@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     );
 
     const slug = String(req.query?.slug || "").trim();
-    const fields = `id,slug,title_bn,title_en,excerpt_bn,excerpt_en,body_bn,body_en,category,content_type,country,keywords,featured,source_url,source_name,source_verified,importance,image_url,image_alt,image_caption,image_credit,resource_key,published_at,updated_at`;
+    const fields = `id,slug,title_bn,title_en,excerpt_bn,excerpt_en,body_bn,body_en,category,content_type,country,keywords,featured,source_url,source_name,source_verified,importance,ai_generated,image_url,image_alt,image_caption,image_credit,resource_key,published_at,updated_at`;
 
     if (slug) {
       const r = await pool.query(

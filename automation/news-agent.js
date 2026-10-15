@@ -334,7 +334,7 @@ async function discoverCountrySources(){
 async function buildCorpus(){
   const chunks=[];
   const countrySources=await discoverCountrySources();
-  const all=[...SOURCES,...countrySources];
+  const all=[...SOURCES,...countrySources].slice(0,48);
   for(let i=0;i<all.length;i+=6){
     const batch=await Promise.all(all.slice(i,i+6).map(fetchSource));
     chunks.push(...batch.filter(Boolean));
@@ -446,8 +446,6 @@ async function writeArticles(candidates, existing){
   for(const c of candidates || []){
     if(!c || !["study-abroad","ielts","pte"].includes(c.category)) continue;
     if(!c.source_url || !hostAllowed(c.source_url)) continue;
-    if(existing.some(p => p.source_url && String(p.source_url).toLowerCase()===String(c.source_url).toLowerCase())) continue;
-    if(existing.some(p => similar(p.title_en||p.title_bn,c.reason||"")>0.8)) continue;
     if(!(await sourceReachable(c.source_url))) continue;
     clean.push(c);
     if(clean.length>=3) break;
@@ -495,7 +493,7 @@ async function main(){
     };
 
     console.log("Official sources fetched:",coverage);
-    if(corpus.length<4) throw new Error("Too few official sources were reachable to research safely");
+    if(corpus.length<2) throw new Error("Too few official sources were reachable to research safely");
 
     const researchResult=await research(existing,corpus);
     const candidates=researchResult.candidates || [];

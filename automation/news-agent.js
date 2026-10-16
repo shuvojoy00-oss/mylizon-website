@@ -441,15 +441,17 @@ Aim for editorial variety. Prefer truly recent official developments. If none ar
   return await geminiWithFallback(prompt,CANDIDATE_SCHEMA);
 }
 
-async function writeArticles(candidates, existing){
+async function writeArticles(candidates, existing, corpus){
   const clean=[];
   for(const c of candidates || []){
     if(!c || !["study-abroad","ielts","pte"].includes(c.category)) continue;
     if(!c.source_url || !hostAllowed(c.source_url)) continue;
-    if(!(await sourceReachable(c.source_url))) continue;
+    const supported=corpus.some(s=>s.source_url===c.source_url || s.links.some(l=>l.url===c.source_url));
+    if(!supported){console.warn("Rejected candidate without matching fetched official source:",c.source_url);continue;}
     clean.push(c);
     if(clean.length>=3) break;
   }
+  console.log("Verified article candidates:",clean.length);
   if(!clean.length) return [];
 
   const prompt = CORE_RULES + `
@@ -496,7 +498,15 @@ async function main(){
     if(corpus.length<2) throw new Error("Too few official sources were reachable to research safely");
 
     const researchResult=await research(existing,corpus);
-    const candidates=researchResult.candidates || [];
+    let candidates=researchResult.candidates || [];
+    console.log("Gemini research candidates:",candidates.length);
+    if(!candidates.length){
+      console.warn("Research returned zero candidates; requesting a sourced student guidance article.");
+      const useful=corpus.filter(s=>["ielts","pte","study-abroad"].includes(s.category)).slice(0,5);
+      const backup=await geminiWithFallback(CORE_RULES+`\nChoose one useful, factual student guide from these official extracts. Use only statements explicitly supported by the extracts. Do not invent a new policy or breaking news. Return 1 candidate in the same schema.\n${JSON.stringify(useful)}`,CANDIDATE_SCHEMA);
+      candidates=backup.candidates||[];
+      console.log("Backup research candidates:",candidates.length);
+    }
 
     const researched={
       study_abroad:coverage.study_abroad>0,
@@ -504,12 +514,13 @@ async function main(){
       pte:coverage.pte>0
     };
 
-    const articles=await writeArticles(candidates,existing);
+    const articles=await writeArticles(candidates,existing,corpus);
+    console.log("Gemini completed articles:",articles.length);
 
     for(const article of articles){
       if(article.category==="study-abroad") article.country=canonicalCountry(article.country);
-      if(!article.source_verified || !hostAllowed(article.source_url)){ rejected++; continue; }
-      if(existing.some(p=>similar(p.title_en||p.title_bn,article.title_en||article.title_bn)>0.82)){ rejected++; continue; }
+      if(!article.source_verified || !hostAllowed(article.source_url)){ rejected++; console.warn("Rejected article: source verification",article.title_en);continue; }
+      if(existing.some(p=>similar(p.title_en||p.title_bn,article.title_en||article.title_bn)>0.82)){ rejected++; console.warn("Rejected article: duplicate title",article.title_en);continue; }
 
       const result=await ingest(article);
       if(result.duplicate){

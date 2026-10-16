@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
       `select ${fields}
        from public.content_posts
        where ${where.join(" and ")}
-       order by featured desc,published_at desc nulls last,created_at desc
+       order by published_at desc nulls last,created_at desc
        limit $${values.length}`,
       values
     );

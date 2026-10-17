@@ -795,3 +795,17 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
+
+
+/* LizOn sitewide assistant, loaded after DOM readiness on public pages. */
+(()=> {
+  const inject=()=>{
+    if(document.getElementById("lizonGuide") || document.querySelector('script[src*="lizon-guide.js"]')) return;
+    const css=document.createElement("link");
+    css.rel="stylesheet";css.href="/css/lizon-guide.css";document.head.appendChild(css);
+    const script=document.createElement("script");script.src="/js/lizon-guide.js";
+    document.body.appendChild(script);
+  };
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",inject,{once:true});
+  else inject();
+})();

@@ -1,0 +1,55 @@
+name: Refresh LizOn Assistant Knowledge
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.html'
+      - 'data/studyabroad-*.json'
+      - 'data/lizon-public-*.json'
+      - 'scripts/build-lizon-knowledge.mjs'
+      - '.github/workflows/lizon-knowledge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lizon-assistant-knowledge-main
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build knowledge from latest public site
+        run: node scripts/build-lizon-knowledge.mjs
+      - name: Publish the updated knowledge file
+        run: |
+          if git diff --quiet -- data/lizon-knowledge.json; then
+            echo "Knowledge unchanged"
+            exit 0
+          fi
+          git config user.name "lizon-knowledge-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/lizon-knowledge.json
+          git commit -m "chore: refresh LizOn public assistant knowledge [skip ci]"
+          for n in 1 2 3; do
+            if git push origin main; then
+              echo "Website assistant knowledge updated"
+              exit 0
+            fi
+            git pull --rebase origin main
+            node scripts/build-lizon-knowledge.mjs
+            git add data/lizon-knowledge.json
+            git commit --amend --no-edit
+          done
+          echo "::error::Unable to publish assistant knowledge automatically"
+          exit 1

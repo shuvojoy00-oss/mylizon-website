@@ -274,7 +274,8 @@ async function streamGemini(req,res,question,history,selected,guide){
  res.setHeader("X-Accel-Buffering","no");
  if(typeof res.flushHeaders==="function")res.flushHeaders();
  let answer="",buffer="",finished=false,emitted="";
- const links=guide.links;
+ const wantsLinks=/\b(link|page|website|read|class|course|lesson|guide|teacher|instructor|find|where|show|materials?)\b|লিংক|ক্লাস|কোথায়|কোথায়|দেখতে|পড়তে/i.test(question);
+ const links=wantsLinks? (guide.links.length?guide.links:createLinks(selected)).slice(0,2):[];
  const decoder=new TextDecoder();
  function handleFrame(frame){
   for(const line of frame.split("\n")){
@@ -311,7 +312,7 @@ async function streamGemini(req,res,question,history,selected,guide){
  }catch{}
  finally{clearTimeout(timeout);controller.abort();}
  if(!answer.trim())emit(res,{delta:guide.answer,mode:"guided"});
- emit(res,{done:true,links:answer.trim()?[]:links,mode:answer.trim()&&finished?"gemini":"guided"});
+ emit(res,{done:true,links,mode:answer.trim()&&finished?"gemini":"guided"});
  res.end();
  return true;
 }

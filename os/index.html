@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>LizOn OS | Admissions Workspace</title>
+<meta name="theme-color" content="#0b291d">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div id="gate" class="gate" role="status">
+  <img src="../assets/logo/lizon-logo.png" width="60" height="60" alt="LizOn">
+  <h1>LizOn OS</h1><p id="gateMessage">Checking your secure staff access...</p>
+  <a href="../portal/login.html" id="signInLink" hidden>Sign in to LizOn Portal</a>
+</div>
+<div id="workspace" class="workspace" hidden>
+  <aside class="sidebar">
+    <div class="identity"><img src="../assets/logo/lizon-logo.png" alt="" width="38" height="38">
+      <div><b>LizOn OS</b><small>Admissions workspace</small></div>
+    </div>
+    <nav aria-label="Workspace"><a class="active" href="#overview">Overview</a><a href="#leads">Leads and students</a><a href="#followups">Follow ups</a><a href="../portal/index.html">Student portal</a><a href="../index.html">Public website</a></nav>
+    <div class="sidebar-bottom"><span id="signedInAs"></span><button id="signOut" class="subtle" type="button">Sign out</button></div>
+  </aside>
+  <main>
+    <header class="header">
+      <div><span class="eyebrow">LIZON EDUCATION</span><h1>Admissions & Lead Management</h1><p>Every inquiry deserves a clear next step.</p></div>
+      <div class="header-actions"><button id="refresh" class="secondary" type="button">Refresh</button><button id="addLead" type="button">+ New lead</button></div>
+    </header>
+    <div id="notice" role="status" aria-live="polite" hidden></div>
+    <section id="overview" class="stats" aria-label="Admissions overview">
+      <article><span>Total visible leads</span><strong id="statTotal">0</strong></article>
+      <article><span>Follow ups due</span><strong id="statDue">0</strong></article>
+      <article><span>Interested</span><strong id="statInterested">0</strong></article>
+      <article><span>Recorded payments</span><strong id="statPaid">৳0</strong></article>
+    </section>
+    <section class="content" id="leads">
+      <div class="list-panel">
+        <div class="panel-heading"><div><span class="eyebrow">PIPELINE</span><h2>Leads</h2></div><span id="resultCount" class="counter">0</span></div>
+        <div class="filters"><label class="sr-only" for="search">Search leads</label><input id="search" type="search" placeholder="Search name, phone, country, course">
+          <label class="sr-only" for="statusFilter">Status</label><select id="statusFilter"><option value="">All statuses</option><option value="new">New</option><option value="contacted">Contacted</option><option value="interested">Interested</option><option value="consultation">Consultation</option><option value="enrolled">Enrolled</option><option value="lost">Lost</option></select></div>
+        <div id="leadsList" class="lead-list"><p class="empty">Loading leads...</p></div>
+      </div>
+      <div class="detail-panel" id="detail">
+        <div id="noSelection" class="no-selection"><h2>Select a lead</h2><p>Review the inquiry, update progress, set the next follow up and keep your team aligned.</p></div>
+        <div id="selectedView" hidden>
+          <div class="detail-heading"><div><span class="eyebrow">STUDENT PROFILE</span><h2 id="detailName"></h2><p id="detailContact"></p></div><span id="detailPriority" class="priority"></span></div>
+          <dl class="profile-grid">
+            <div><dt>Interest</dt><dd id="detailInterest"></dd></div><div><dt>Source</dt><dd id="detailSource"></dd></div>
+            <div><dt>Country</dt><dd id="detailCountry"></dd></div><div><dt>Course / Program</dt><dd id="detailCourse"></dd></div>
+            <div><dt>Budget</dt><dd id="detailBudget"></dd></div><div><dt>Created</dt><dd id="detailCreated"></dd></div>
+          </dl>
+          <form id="updateLeadForm" class="edit-form">
+            <label>Status <select id="editStatus"><option value="new">New</option><option value="contacted">Contacted</option><option value="interested">Interested</option><option value="consultation">Consultation</option><option value="enrolled">Enrolled</option><option value="lost">Lost</option></select></label>
+            <label>Priority <select id="editPriority"><option value="normal">Normal</option><option value="high">High</option><option value="urgent">Urgent</option></select></label>
+            <label>Assigned staff <select id="editAssignee"><option value="">Unassigned</option></select></label>
+            <label id="followups">Next follow up <input id="editFollowup" type="date"></label>
+            <label>Total course fee (BDT) <input id="editFeeTotal" type="number" min="0" step="1" inputmode="numeric"></label>
+            <label>Payments recorded (BDT) <input id="editFeePaid" type="number" min="0" step="1" inputmode="numeric"></label>
+            <label class="full">Private case notes <textarea id="editNotes" rows="3" maxlength="4000" placeholder="Record only information necessary for counseling"></textarea></label>
+            <button type="submit" id="saveLead" class="full">Save changes</button>
+          </form>
+          <section class="timeline"><h3>Activity timeline</h3><div id="activityList"></div>
+            <form id="activityForm"><label for="activityBody" class="sr-only">Activity note</label><textarea id="activityBody" maxlength="1200" rows="2" required placeholder="Meeting outcome, call note or next action..."></textarea><button type="submit" class="secondary">Add note</button></form>
+          </section>
+        </div>
+      </div>
+    </section>
+    <footer class="footer"><span>LizOn OS pilot • Restricted to authorized staff • No automated messaging</span><button id="exportCsv" type="button" class="subtle">Export visible leads as CSV</button></footer>
+  </main>
+</div>
+<dialog id="newLeadDialog">
+  <form id="newLeadForm" class="new-form">
+    <div class="dialog-head"><div><span class="eyebrow">LIZON OS</span><h2>New student inquiry</h2></div><button type="button" id="closeDialog" class="secondary">Close</button></div>
+    <div class="form-grid">
+      <label>Full name *<input name="full_name" required maxlength="120"></label>
+      <label>Phone / WhatsApp *<input name="phone" required inputmode="tel" maxlength="35"></label>
+      <label>Email<input name="email" type="email" maxlength="160"></label>
+      <label>Interest<select name="interest"><option value="study_abroad">Study Abroad</option><option value="ielts">IELTS</option><option value="pte">PTE</option><option value="spoken">Spoken English</option><option value="other">Other</option></select></label>
+      <label>Source<select name="source"><option value="manual">Manual entry</option><option value="website">Website</option><option value="facebook">Facebook</option><option value="messenger">Messenger</option><option value="whatsapp">WhatsApp</option><option value="referral">Referral</option><option value="call">Phone call</option></select></label>
+      <label>Priority<select name="priority"><option value="normal">Normal</option><option value="high">High</option><option value="urgent">Urgent</option></select></label>
+      <label>Preferred country<input name="country" maxlength="100"></label><label>Interested course / program<input name="course" maxlength="120"></label>
+      <label>Budget (BDT)<input name="budget_bdt" type="number" min="0" step="1"></label><label>Next follow up<input name="next_followup" type="date"></label>
+      <label class="full">Notes<textarea name="notes" rows="3" maxlength="4000"></textarea></label>
+    </div>
+    <p class="privacy">Record student contact details only when you have a legitimate reason to contact them. Never enter passwords, passport scans or banking details here.</p>
+    <button type="submit" id="submitLead">Save lead</button>
+  </form>
+</dialog>
+<script type="module" src="./app.js"></script>
+</body></html>

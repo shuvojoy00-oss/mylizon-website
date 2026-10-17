@@ -44,6 +44,9 @@ function relevance(query,doc){
   if(w.length>=4 && [...hay].some(t=>Math.abs(t.length-w.length)<=1&&editDistance(t,w)<=1)){s+=.9;continue;}
  }
  if(!s)return 0;
+ const topic=tokens(query);
+ if(doc.url==="/ieltsclass.html"&&topic.includes("ielts")&&topic.some(x=>["writing","reading","listening","speaking","class","lesson","free"].includes(x)))s+=10;
+ if(doc.url==="/pteclass.html"&&topic.includes("pte")&&topic.some(x=>["writing","reading","listening","speaking","class","lesson","free"].includes(x)))s+=10;
  const strong=new Set(["ielts","pte","australia","canada","uk","germany","joy","teacher","staff","scholarship","visa","course","fee","writing","speaking","listening","reading"]);
  for(const key of strong)if(q.includes(key) && (u.includes(key)||title.includes(key)))s+=6;
  return (s / Math.sqrt(q.length) + Math.min(2, q.filter(w=>body.includes(w)).length*.16))*(doc.url==="/index.html"?.65:1);
@@ -60,6 +63,7 @@ function isRelevantToQuestion(question,selected){
  if(!top || !q.length)return false;
  const inTop=new Set(tokens(top.text+" "+top.title+" "+top.url));
  const coverage=q.filter(w=>inTop.has(w)||[...inTop].some(t=>w.length>4&&editDistance(w,t)<=1)).length;
+ if(q.some(w=>w.length>=4 && top.url.toLowerCase().includes(w)))return true;
  if(q.length>=2 && coverage/q.length<=.5)return false;
  return true;
 }

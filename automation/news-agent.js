@@ -383,6 +383,11 @@ function dhakaDate(date){
   if(!date || Number.isNaN(new Date(date).getTime())) return "";
   return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date(date));
 }
+function dhakaHour(date){
+  if(!date || Number.isNaN(new Date(date).getTime())) return -1;
+  const parts=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Dhaka",hour:"2-digit",hourCycle:"h23"}).formatToParts(new Date(date));
+  return Number(parts.find(p=>p.type==="hour")?.value ?? -1);
+}
 
 const CORE_RULES = `
 You are the LizOn Education News Desk for Bangladeshi students.
@@ -517,10 +522,10 @@ async function main(){
 
   try{
     const existing=await fetchExisting();
-    const todayPublished=existing.filter(p=>p.ai_generated===true && dhakaDate(p.published_at)===TODAY);
+    const todayPublished=existing.filter(p=>p.ai_generated===true && dhakaDate(p.published_at)===TODAY && dhakaHour(p.published_at)>=19);
     if(todayPublished.length){
-      console.log(`Daily AI news already published for ${TODAY} Asia/Dhaka: ${todayPublished.length}; skipping retry.`);
-      await logRun("completed",{published_count:todayPublished.length,message:"Already published today; scheduled retry skipped"});
+      console.log(`Daily AI news already published after 19:00 for ${TODAY} Asia/Dhaka: ${todayPublished.length}; skipping retry.`);
+      await logRun("completed",{published_count:todayPublished.length,message:"Already published after 19:00 Dhaka today; scheduled retry skipped"});
       return;
     }
     const corpus=await buildCorpus();

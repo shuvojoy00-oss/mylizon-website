@@ -797,11 +797,15 @@ if (document.readyState === "loading") {
 }
 
 
-/* LizOn sitewide assistant, loaded across shared public pages. */
+/* LizOn sitewide assistant, loaded after DOM readiness on public pages. */
 (()=> {
-  if(document.querySelector('script[src*="lizon-guide.js"]')) return;
-  const css=document.createElement("link");
-  css.rel="stylesheet";css.href="/css/lizon-guide.css";document.head.appendChild(css);
-  const script=document.createElement("script");script.src="/js/lizon-guide.js";script.defer=true;
-  document.head.appendChild(script);
+  const inject=()=>{
+    if(document.getElementById("lizonGuide") || document.querySelector('script[src*="lizon-guide.js"]')) return;
+    const css=document.createElement("link");
+    css.rel="stylesheet";css.href="/css/lizon-guide.css";document.head.appendChild(css);
+    const script=document.createElement("script");script.src="/js/lizon-guide.js";
+    document.body.appendChild(script);
+  };
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",inject,{once:true});
+  else inject();
 })();

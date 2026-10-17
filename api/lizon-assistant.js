@@ -60,16 +60,10 @@ function createLinks(selected){
  }
  return links.length?links:DEFAULT_LINKS.slice(0,4);
 }
-function safeHost(h){return /^(?:[a-z0-9-]+\.)*vercel\.app$|^(?:www\.)?mylizon\.com$/i.test(h) ? h : "www.mylizon.com";}
-async function knowledge(req){
- const host=safeHost((req.headers["x-forwarded-host"]||req.headers.host||"").split(",")[0].trim().split(":")[0]);
- const response=await fetch("https://"+host+"/data/lizon-knowledge.json",{signal:AbortSignal.timeout(5000)});
- if(!response.ok)throw new Error("Knowledge index unavailable");
- const raw=await response.text();if(raw.length>2700000)throw new Error("Knowledge index too large");
- const parsed=JSON.parse(raw);
- if(!Array.isArray(parsed.entries))throw new Error("Invalid index");
- return parsed;
-}
+// Bundled public knowledge travels with each deployment, including SSO-protected previews.
+// This avoids fetching our own protected preview URL and refreshes when the site redeploys.
+const siteKnowledge = require("../data/lizon-knowledge.json");
+function knowledge(){return siteKnowledge;}
 function fallback(question,selected){
  if(!selected.length){
   if(/[\u0980-\u09FF]/.test(question))return "এই বিষয়ে ওয়েবসাইটে নির্ভরযোগ্য তথ্য খুঁজে পেলাম না। আপনি IELTS, PTE বা Study Abroad সম্পর্কে প্রশ্ন করতে পারেন। নির্দিষ্ট তথ্যের জন্য LizOn টিমের সঙ্গে যোগাযোগ করুন।";

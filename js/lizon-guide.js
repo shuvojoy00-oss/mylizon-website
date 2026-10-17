@@ -34,7 +34,7 @@ root.innerHTML=`
       <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14-8-4 16-3-6-7-2Z"/><path d="m12 14 7-10"/></svg>
      </button>
    </form>
-   <p class="lg-note">LizOn virtual assistant. Please verify fees, admission and visa matters with a counselor.</p>
+   <p class="lg-note">LizOn virtual assistant. AI replies may be processed by Google. Avoid sharing private data; verify fees and visas with our team.</p>
  </section>`;
 document.body.append(root);
 const $=q=>root.querySelector(q),panel=$(".lg-panel"),launcher=$(".lg-launcher"),history=$(".lg-history"),form=$(".lg-form"),field=$("#lgQuestion"),send=$(".lg-send");
@@ -77,24 +77,81 @@ function draw(){
 function toggle(open){panel.hidden=!open;launcher.setAttribute("aria-expanded",String(open));if(open){draw();field.focus();}else launcher.focus();}
 function thinking(){const node=el("div","lg-message lg-assistant lg-thinking");const av=el("div","lg-avatar");const img=document.createElement("img");img.src="/assets/logo/lizon-logo.png";img.alt="";img.width=25;img.height=25;av.append(img);
  const dots=el("div","lg-bubble");dots.innerHTML='<span></span><span></span><span></span>';node.append(av,dots);history.append(node);history.scrollTop=history.scrollHeight;return node;}
+
+function addLinksToLiveBubble(messageNode,links){
+ const panel=messageNode.querySelector(".lg-bubble");
+ const allowed=(Array.isArray(links)?links:[]).filter(x=>safeLink(x)).slice(0,3);
+ if(!allowed.length)return;
+ const div=el("div","lg-links");
+ for(const link of allowed){
+  const href=safeLink(link),a=el("a",null,String(link.title||"View page").slice(0,65)+" ↗");a.href=href;
+  if(href.startsWith("https://")){a.target="_blank";a.rel="noopener noreferrer";}
+  div.append(a);
+ }
+ panel.append(div);
+}
 async function ask(prompt){
  const question=String(prompt||"").trim().slice(0,650);if(!question||busy)return;
  const past=messages.slice(-8).map(m=>({role:m.role,text:m.text}));
  bubble(question,"user");
  field.value="";field.style.height="";
  busy=true;send.disabled=true;
- const load=thinking(),abort=new AbortController(),timeout=setTimeout(()=>abort.abort(),14000);
+ const load=thinking(),abort=new AbortController(),timeout=setTimeout(()=>abort.abort(),26000);
+ let node=null,liveAnswer="",receivedLinks=[],done=false;
  try{
-  const res=await fetch("/api/lizon-assistant",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:question,history:past}),signal:abort.signal});
-  const data=await res.json();
-  load.remove();
-  if(!res.ok)throw Error(data.error||"Unable to connect");
-  if(!data.answer)throw Error("No answer available");
-  bubble(data.answer,"assistant",Array.isArray(data.links)?data.links:[]);
+  const res=await fetch("/api/lizon-assistant",{
+   method:"POST",headers:{"Content-Type":"application/json","Accept":"text/event-stream"},
+   body:JSON.stringify({message:question,history:past,stream:true}),signal:abort.signal
+  });
+  if(!res.ok){let reason="Could not connect";try{const d=await res.json();reason=d.error||reason;}catch{}throw Error(reason);}
+  const contentType=res.headers.get("Content-Type")||"";
+  if(contentType.includes("text/event-stream")&&res.body){
+   load.remove();
+   node=bubble("","assistant",[],false);
+   const p=node.querySelector(".lg-bubble p");
+   const reader=res.body.getReader(),decoder=new TextDecoder();
+   let buffer="";
+   const processFrame=frame=>{
+    for(const line of frame.split("\n")){
+     if(!line.startsWith("data:"))continue;
+     let event;try{event=JSON.parse(line.slice(5).trim());}catch{continue;}
+     if(typeof event.delta==="string"){
+      liveAnswer+=event.delta;
+      p.textContent=liveAnswer;
+      history.scrollTop=history.scrollHeight;
+     }
+     if(event.done===true){done=true;receivedLinks=Array.isArray(event.links)?event.links:[];}
+    }
+   };
+   while(true){
+    const chunk=await reader.read();
+    if(chunk.done)break;
+    buffer+=decoder.decode(chunk.value,{stream:true}).replace(/\r\n/g,"\n");
+    let cursor;while((cursor=buffer.indexOf("\n\n"))!==-1){
+     processFrame(buffer.slice(0,cursor));buffer=buffer.slice(cursor+2);
+    }
+   }
+   if(buffer.trim())processFrame(buffer);
+   if(!liveAnswer.trim())throw Error("Empty assistant response");
+   addLinksToLiveBubble(node,receivedLinks);
+   messages.push({role:"assistant",text:liveAnswer,links:receivedLinks});
+   messages=messages.slice(-maxMessages);persist();
+  }else{
+   const data=await res.json();load.remove();
+   if(!data.answer)throw Error("No answer");
+   bubble(data.answer,"assistant",Array.isArray(data.links)?data.links:[]);
+  }
  }catch(error){
   load.remove();
-  const message="I couldn't search the website right now. Please try again, or contact the LizOn team directly.";
-  bubble(message,"assistant",[{title:"Talk to LizOn",url:"https://wa.me/8801611611139"},{title:"Explore Study Abroad",url:"/studyabroad.html"},{title:"IELTS courses",url:"/ielts.html"}]);
+  const fallback="Sorry, the conversation was interrupted. Could you send that again? You can also message the LizOn team directly.";
+  if(node){
+   if(!liveAnswer.trim())node.remove();
+   else {
+    node.querySelector(".lg-bubble p").textContent=liveAnswer;
+    messages.push({role:"assistant",text:liveAnswer,links:[]});messages=messages.slice(-maxMessages);persist();
+   }
+  }
+  if(!liveAnswer.trim())bubble(fallback,"assistant",[{title:"Talk to LizOn",url:"https://wa.me/8801611611139"}]);
  }finally{clearTimeout(timeout);busy=false;send.disabled=false;field.focus();}
 }
 launcher.addEventListener("click",()=>toggle(panel.hidden));

@@ -301,7 +301,8 @@ async function streamGemini(req,res,question,history,selected,guide){
   while(true){
    const {done,value}=await reader.read();
    if(done)break;
-   buffer+=decoder.decode(value,{stream:true}).replace(/\r\n/g,"\n");
+   buffer+=decoder.decode(value,{stream:true});
+   buffer=buffer.replace(/\r\n/g,"\n");
    let idx;
    while((idx=buffer.indexOf("\n\n"))>=0){
     const frame=buffer.slice(0,idx);buffer=buffer.slice(idx+2);handleFrame(frame);

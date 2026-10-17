@@ -551,8 +551,22 @@ async function main(){
       pte:coverage.pte>0
     };
 
-    const articles=await writeArticles(candidates,existing,corpus);
+    let articles=await writeArticles(candidates,existing,corpus);
     console.log("Gemini completed articles:",articles.length);
+    if(!articles.length){
+      console.warn("No publishable article after first generation pass; retrying research with one fetched official source per category.");
+      const retrySources=["study-abroad","ielts","pte"].map(category=>corpus.find(s=>s.category===category)).filter(Boolean);
+      const retryPrompt=CORE_RULES+`
+Choose exactly one useful, factual student guidance or exam-intelligence candidate from these fetched official extracts. Prefer the strongest source. The source_url MUST be copied exactly from that source object's source_url. Use only facts explicitly supported by its text. Do not invent dates, policies, fees, deadlines or score rules. Return {"candidates":[one candidate]} using the required schema.
+Fetched sources:
+${JSON.stringify(retrySources)}
+`;
+      const retryResearch=await geminiWithFallback(retryPrompt,CANDIDATE_SCHEMA);
+      const retryCandidates=retryResearch.candidates||[];
+      console.log("Final recovery research candidates:",retryCandidates.length);
+      if(retryCandidates.length) articles=await writeArticles(retryCandidates,existing,corpus);
+      console.log("Final recovery articles:",articles.length);
+    }
 
     for(const article of articles){
       if(article.category==="study-abroad") article.country=canonicalCountry(article.country);

@@ -11,7 +11,7 @@ const DEFAULT_LINKS=[
 ];
 const hits=new Map();
 const map={
- "কোথায়":"","কোথায়":"","আমার":"","আপনাদের":"","মধ্যে":"","who":"","where":"","which":"","are":"","does":"","could":"","would":"","can":"","i":"","am":"","our":"","their":"","the":"","please":"","tell":"","details":"","information":"","more":"","from":"","on":"","have":"","as":"","any":"","me":"","ausralia":"australia","austraila":"australia","ayelts":"ielts","ielts":"ielts","aiyelts":"ielts","আইইএলটিএস":"ielts","আইল্টস":"ielts","ielst":"ielts",
+ "কোথায়":"","কোথায়":"","আমার":"","আপনাদের":"","মধ্যে":"","who":"","where":"","which":"","are":"","does":"","could":"","would":"","can":"","i":"","am":"","our":"","their":"","the":"","please":"","tell":"","details":"","information":"","more":"","from":"","on":"","have":"","as":"","any":"","me":"","chai":"","chay":"","learn":"","need":"","ausralia":"australia","austraila":"australia","ayelts":"ielts","ielts":"ielts","aiyelts":"ielts","আইইএলটিএস":"ielts","আইল্টস":"ielts","ielst":"ielts",
  "pti":"pte","পিটিই":"pte","পিটে":"pte","pte":"pte",
  "study":"study","studi":"study","stady":"study","studdy":"study","abrod":"abroad","abroud":"abroad","aboard":"abroad",
  "বিদেশ":"abroad","বিদেশে":"abroad","যেতে":"abroad","jabo":"abroad","jete":"abroad","studyabroad":"abroad",
@@ -46,7 +46,7 @@ function relevance(query,doc){
  if(!s)return 0;
  const strong=new Set(["ielts","pte","australia","canada","uk","germany","joy","teacher","staff","scholarship","visa","course","fee","writing","speaking","listening","reading"]);
  for(const key of strong)if(q.includes(key) && (u.includes(key)||title.includes(key)))s+=6;
- return s / Math.sqrt(q.length) + Math.min(2, q.filter(w=>body.includes(w)).length*.16);
+ return (s / Math.sqrt(q.length) + Math.min(2, q.filter(w=>body.includes(w)).length*.16))*(doc.url==="/index.html"?.65:1);
 }
 function rank(question,docs){
  const candidates=docs.map(d=>({d,score:relevance(question,d)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
@@ -60,7 +60,7 @@ function isRelevantToQuestion(question,selected){
  if(!top || !q.length)return false;
  const inTop=new Set(tokens(top.text+" "+top.title+" "+top.url));
  const coverage=q.filter(w=>inTop.has(w)||[...inTop].some(t=>w.length>4&&editDistance(w,t)<=1)).length;
- if(q.length>=2 && coverage/q.length<.5)return false;
+ if(q.length>=2 && coverage/q.length<=.5)return false;
  return true;
 }
 function createLinks(selected){

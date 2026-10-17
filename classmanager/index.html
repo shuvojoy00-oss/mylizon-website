@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#124b37">
+<meta name="description" content="LizOn Education private institute management pilot.">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="../assets/logo/lizon-logo.png">
+<title>LizOn Class Manager · Pilot</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#172921;background:#f3f7f4;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit}
+.header{height:68px;position:sticky;top:0;z-index:12;background:#fff;border-bottom:1px solid #dbe8df;display:flex;justify-content:space-between;align-items:center;padding:0 24px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.03em}.brand img{width:42px;height:42px;object-fit:contain;border-radius:8px}.brand small{display:block;font-size:11px;font-weight:500;color:#668072;letter-spacing:0}
+.shell{max-width:1340px;margin:auto;display:grid;grid-template-columns:206px minmax(0,1fr);min-height:calc(100vh - 68px)}
+.sidebar{padding:28px 12px;border-right:1px solid #dce9df;background:#fff}.sidebar h5{color:#88988e;margin:0 12px 17px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.nav{display:flex;flex-direction:column;gap:5px}.nav button{display:flex;gap:12px;align-items:center;text-align:left;background:transparent;border:0;border-radius:12px;padding:13px;color:#5c6f61;font-weight:650}.nav button.active,.nav button:hover{background:#e9f4eb;color:#075e3a}
+.main{min-width:0;padding:28px 32px 60px}.topline{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+h1{font-size:clamp(25px,3vw,34px);letter-spacing:-.045em;margin:0 0 6px}h2{font-size:19px;letter-spacing:-.03em;margin:0}h3{font-size:15px;margin:0 0 12px}p{line-height:1.55}.muted{color:#7b8d81}.sub{color:#698274;font-size:13px;margin:0}
+.pilot{background:#fff3df;color:#8b5a08;border:1px solid #f4d8a7;padding:12px 14px;border-radius:13px;font-size:13px;margin-bottom:22px;line-height:1.55}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.stat,.panel{background:#fff;border:1px solid #e0eae3;border-radius:17px;box-shadow:0 2px 9px #153b2410}.stat{padding:22px}.stat span{font-size:12px;color:#70877a}.stat strong{display:block;font-size:28px;letter-spacing:-.05em;margin:9px 0 0}.panel{padding:20px;margin-bottom:18px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.btn{border:1px solid #d4e2d8;border-radius:11px;padding:10px 14px;background:white;color:#1a4730;font-weight:650;font-size:13px}.btn:hover{border-color:#739c83}.btn.primary{background:#126743;color:white;border-color:#126743}.btn.primary:hover{background:#095137}.btn.warn{color:#b14032}.btn.tiny{padding:6px 9px;font-size:12px;border-radius:8px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.stack{display:flex;flex-direction:column;gap:9px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:#7a8e80;font-size:11px;letter-spacing:.04em;font-weight:700;text-transform:uppercase}th,td{padding:13px 10px;border-bottom:1px solid #edf1ed;white-space:nowrap}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}
+.tag{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:5px 8px;color:#306e49;background:#e7f5ec}.tag.orange{color:#94641f;background:#fff1d9}.tag.red{color:#a23f35;background:#ffeae6}.tag.gray{color:#6b7772;background:#f0f2f0}
+input,select,textarea{background:#fff;border:1px solid #cfddd3;border-radius:10px;padding:11px 12px;width:100%;color:#193323;min-height:42px}input:focus,select:focus,textarea:focus{outline:2px solid #99cbae;border-color:#207248}input[type="date"],input[type="month"]{max-width:200px}
+label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:650;color:#486553}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.fields .wide{grid-column:1 / -1}
+.empty{padding:32px;text-align:center;color:#7b8c80;background:#fafcfb;border:1px dashed #d5e3d8;border-radius:12px;font-size:14px}
+.bar{height:8px;background:#e7eee9;border-radius:10px;overflow:hidden}.bar>i{display:block;background:#228253;height:100%;border-radius:10px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.student-card{padding:17px;border:1px solid #e4ece5;border-radius:13px;background:#fcfdfc}.student-card h3{margin:0 0 6px}.student-card p{font-size:12px;color:#698274;margin:5px 0}
+dialog{border:0;border-radius:20px;box-shadow:0 15px 80px #06170e50;max-width:650px;width:calc(100% - 24px);padding:0}dialog::backdrop{background:#0d281e9e}.modal-head{padding:20px 23px;border-bottom:1px solid #e0e9e1;display:flex;justify-content:space-between;align-items:center}.modal-body{padding:22px 23px;max-height:65vh;overflow:auto}.modal-actions{padding:16px 23px;border-top:1px solid #e0e9e1;display:flex;justify-content:flex-end;gap:10px}
+.mobile-nav{display:none}.rightnote{font-size:11px;color:#8b9b8e}.receipt{display:none}.brandmark{font-size:11px;border:1px solid #d5e9da;padding:5px 9px;border-radius:9px;color:#0d6740}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.main{padding:23px}.shell{grid-template-columns:170px minmax(0,1fr)}}
+@media(max-width:700px){.header{height:61px;padding:0 16px}.brand img{height:36px;width:36px}.shell{display:block;min-height:calc(100vh - 61px)}.sidebar{display:none}.main{padding:18px 13px 100px}.grid{gap:10px}.stat{padding:15px}.stat strong{font-size:24px}.panel{padding:15px}.cards,.grid.two{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.fields .wide{grid-column:auto}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:15;padding:6px 3px calc(6px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #d7e7da;justify-content:space-around;overflow-x:auto}.mobile-nav button{min-width:56px;flex:1;background:none;border:0;padding:8px 1px;color:#668071;font-size:10px;font-weight:650}.mobile-nav button.active{color:#086438}.mobile-nav b{display:block;font-size:19px;margin-bottom:3px}.topline{align-items:start}.pilot{font-size:12px}table{font-size:12px}th,td{padding:10px 8px}}
+@media print{body.printing-report .main{display:block!important;padding:0!important}body.printing-report #receipt{display:none!important}body{background:#fff}.header,.sidebar,.mobile-nav,.main,.no-print,dialog{display:none!important}.receipt{display:block!important;margin:0 auto;width:86mm;padding:12mm 8mm;color:#152f20;font:13px Arial}.receipt h1{font-size:20px;text-align:center;margin-bottom:6px}.receipt .line{border-top:1px solid #888;margin:16px 0}.receipt table td{padding:7px}.receipt .terms{font-size:10px;color:#444}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="brand"><img src="../assets/logo/lizon-logo.png" alt="LizOn Education"><div>LizOn Class Manager<small>Institute Operations · Pilot</small></div></div>
+  <div class="row"><span class="brandmark">Local Pilot</span><button class="btn tiny" id="installBtn" type="button">Install App</button></div>
+</header>
+<div class="shell">
+<aside class="sidebar"><h5>WORKSPACE</h5><nav class="nav" id="desktopNav"></nav><div style="padding:18px 10px;font-size:11px;color:#98a99b">LizOn Education<br>Made for your internal team</div></aside>
+<main class="main">
+  <div class="pilot"><strong>Pilot mode · Device only.</strong> Data entered here is saved only in this browser on this device. There is no staff authentication or cloud synchronization yet. For security, use fictional/test data until a protected backend is connected. Export backups regularly.</div>
+  <div class="topline"><div><h1 id="pageTitle">Overview</h1><p class="sub" id="pageSub">All your institute operations at a glance</p></div><div class="row" id="pageActions"></div></div>
+  <div id="view"></div>
+</main>
+</div>
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation"></nav>
+<dialog id="modal"><form id="editForm" method="dialog"><div class="modal-head"><h2 id="modalTitle">New</h2><button class="btn tiny" type="button" id="closeModal">Close</button></div><div class="modal-body" id="modalFields"></div><div class="modal-actions"><button type="button" class="btn" id="cancelModal">Cancel</button><button type="submit" class="btn primary">Save changes</button></div></form></dialog>
+<div id="receipt" class="receipt"></div>
+<script>
+"use strict";
+(function(){
+const KEY="lizon-class-manager-local-pilot-v1";
+const newState=()=>({version:1,students:[],classes:[],attendance:[],progress:[],payments:[]});
+let db;
+try{db=JSON.parse(localStorage.getItem(KEY)||"null")||newState()}catch(e){db=newState()}
+for(const key of ["students","classes","attendance","progress","payments"]){if(!Array.isArray(db[key]))db[key]=[]}
+let page="overview",selectedDate=localDate(new Date()),month=selectedDate.slice(0,7),query="",editing=null,saveForm=null,deferredInstall=null;
+const navs=[["overview","⌂","Overview"],["routine","▦","Routine"],["students","♙","Students"],["progress","◉","Progress"],["payments","৳","Payments"],["reports","▥","Reports"]];
+const $=(s)=>document.querySelector(s);
+const esc=(s)=>String(s??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money=(n)=>"৳"+Math.round(Number(n)||0).toLocaleString("en-BD");
+const dateObj=(str)=>new Date(str+"T12:00:00");
+function localDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+const niceDate=(s)=>s?dateObj(s).toLocaleDateString("en-BD",{day:"numeric",month:"short",year:"numeric"}):"Not set";
+const uid=()=>String(Date.now())+Math.random().toString(36).slice(2,8);
+const student=(id)=>db.students.find((s)=>s.id===id);
+const received=(id)=>db.payments.filter(p=>p.studentId===id).reduce((a,p)=>a+Number(p.amount||0),0);
+const due=(s)=>Math.max(0,Number(s.fee||0)-received(s.id));
+const statusOf=(cl,date)=>db.attendance.find(a=>a.classId===cl.id&&a.date===date)?.status||"Scheduled";
+const weekDays=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const toMinutes=(t)=>{let x=String(t||"00:00").split(":").map(Number);return (x[0]||0)*60+(x[1]||0)};
+const classMatches=(c,d)=>c.active!==false&&((c.type==="once"&&c.date===d)||(c.type==="weekly"&&Number(c.day)===dateObj(d).getDay()&&(!c.starts||c.starts<=d)));
+const todayClasses=(d)=>db.classes.filter(c=>classMatches(c,d)&&student(c.studentId)).sort((a,b)=>a.time.localeCompare(b.time));
+const overlapping=(a,b)=>a.id!==b.id&&a.teacher&&b.teacher&&a.teacher.trim().toLowerCase()===b.teacher.trim().toLowerCase()&&toMinutes(a.time)<toMinutes(b.time)+Number(b.duration||60)&&toMinutes(b.time)<toMinutes(a.time)+Number(a.duration||60);
+const conflicting=(c,d)=>todayClasses(d).some(o=>overlapping(c,o));
+const tag=(t,kind)=>'<span class="tag '+(kind||"")+'">'+esc(t)+'</span>';
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){alert("Device storage is full or blocked. Please export your backup.")}}
+function notice(s){const n=document.createElement("div");n.textContent=s;n.style.cssText="position:fixed;z-index:99;bottom:100px;left:50%;transform:translateX(-50%);background:#123b2a;color:white;padding:12px 18px;border-radius:10px;box-shadow:0 4px 22px #0003;max-width:90%;text-align:center";document.body.appendChild(n);setTimeout(()=>n.remove(),2900)}
+function table(headers,rows){return rows.length?'<div class="table-wrap"><table><thead><tr>'+headers.map(x=>"<th>"+esc(x)+"</th>").join("")+'</tr></thead><tbody>'+rows.join("")+'</tbody></table></div>':empty()}
+function empty(msg){return '<div class="empty">'+esc(msg||"No records yet. Use Add New to get started.")+"</div>"}
+function btn(txt,act,id,extra){return '<button type="button" class="btn tiny '+(extra||"")+'" data-action="'+esc(act)+'" data-id="'+esc(id||"")+'">'+esc(txt)+"</button>"}
+function panel(title,content,action){return '<section class="panel"><div class="panel-head"><h2>'+title+'</h2>'+(action||"")+"</div>"+content+"</section>"}
+function stat(label,value){return '<div class="stat"><span>'+label+'</span><strong>'+value+"</strong></div>"}
+function top(title,sub,actions){$("#pageTitle").textContent=title;$("#pageSub").textContent=sub;$("#pageActions").innerHTML=actions||""}
+function nav(){let html=navs.map(([id,ico,name])=>'<button data-nav="'+id+'" class="'+(page===id?"active":"")+'"><b>'+ico+'</b><span>'+name+"</span></button>").join("");$("#desktopNav").innerHTML=html;$("#mobileNav").innerHTML=html}
+function render(){nav();if(page==="overview")dashboard();if(page==="routine")routine();if(page==="students")students();if(page==="progress")progress();if(page==="payments")payments();if(page==="reports")reports()}
+function dashboard(){
+let current=todayClasses(localDate(new Date())),balance=db.students.reduce((a,s)=>a+due(s),0),complete=current.filter(c=>statusOf(c,localDate(new Date()))==="Present").length;
+top("Institute Overview","Your daily classroom and financial snapshot",'<button class="btn primary" data-action="newClass">+ Add Class</button>');
+let blocks='<div class="grid">'+stat("Active Students",db.students.filter(s=>s.active!==false).length)+stat("Classes Today",current.length)+stat("Today Present",complete)+stat("Total Outstanding",money(balance))+"</div>";
+let rows=current.map(c=>{let s=student(c.studentId),st=statusOf(c,localDate(new Date()));return '<tr><td>'+esc(c.time)+'</td><td>'+esc(s?.name)+'</td><td>'+esc(c.teacher||"—")+'</td><td>'+tag(st,st==="Present"?"":st==="Absent"?"red":"orange")+'</td><td>'+btn("Open","goRoutine")+"</td></tr>"});
+let debt=db.students.filter(s=>due(s)>0).sort((a,b)=>due(b)-due(a)).slice(0,5).map(s=>'<tr><td>'+esc(s.name)+'</td><td>'+esc(s.course||"—")+'</td><td>'+money(due(s))+'</td><td>'+tag(s.deadline&&s.deadline<localDate(new Date())?"Overdue":"Unpaid",s.deadline&&s.deadline<localDate(new Date())?"red":"orange")+"</td></tr>");
+$("#view").innerHTML=blocks+panel("Today's Classes",table(["Time","Student","Instructor","Attendance",""],rows),btn("View Routine","goRoutine"))+panel("Outstanding Fees",table(["Student","Course","Due","Status"],debt),btn("View Payments","goPayments"));
+}
+function routine(){
+top("Class Routine","Create and monitor daily, weekly and one time lessons",'<button class="btn primary" data-action="newClass">+ Add Class</button>');
+const items=todayClasses(selectedDate);
+let head='<div class="row"><label>Class Date<input type="date" id="routineDate" value="'+selectedDate+'"></label><button class="btn" data-action="today">Today</button><span class="sub">'+esc(weekDays[dateObj(selectedDate).getDay()])+'</span></div>';
+let rows=items.map(c=>{let s=student(c.studentId),st=statusOf(c,selectedDate),bad=conflicting(c,selectedDate);
+return '<tr><td>'+esc(c.time)+'</td><td>'+esc(s?.name||"")+'</td><td>'+esc(c.teacher||"—")+'</td><td>'+esc(c.mode||"Offline")+'</td><td>'+tag(st,st==="Absent"?"red":st==="Scheduled"?"orange":"")+(bad?" "+tag("Teacher clash","red"):"")+'</td><td><div class="row">'+btn("Present","attendPresent",c.id)+btn("Absent","attendAbsent",c.id)+btn("Cancel","attendCancelled",c.id)+btn("Edit","editClass",c.id)+"</div></td></tr>"});
+let rules=db.classes.map(c=>'<tr><td>'+esc(student(c.studentId)?.name||"Removed student")+'</td><td>'+esc(c.type==="weekly"?weekDays[c.day]:niceDate(c.date))+'</td><td>'+esc(c.time)+'</td><td>'+esc(c.teacher||"—")+'</td><td>'+btn("Edit","editClass",c.id)+' '+btn("Delete","deleteClass",c.id,"warn")+'</td></tr>');
+$("#view").innerHTML=panel("Daily Schedule",head+table(["Time","Student","Teacher","Mode","Status","Actions"],rows))+panel("All Scheduled Classes",table(["Student","Day / Date","Time","Teacher","Manage"],rules));
+}
+function students(){
+top("Students","Enrollments, course fees and student records",'<button class="btn primary" data-action="newStudent">+ Add Student</button>');
+let list=db.students.filter(s=>(s.name+" "+(s.studentCode||"")+" "+(s.course||"")).toLowerCase().includes(query.toLowerCase()));
+let rows=list.map(s=>'<tr><td>'+esc(s.name)+'<div class="sub">'+esc(s.studentCode||"No ID")+'</div></td><td>'+esc(s.course||"—")+'</td><td>'+esc(s.teacher||"—")+'</td><td>'+money(s.fee)+'</td><td>'+money(due(s))+'</td><td>'+tag(s.active!==false?"Active":"Inactive",s.active!==false?"":"gray")+'</td><td>'+btn("Edit","editStudent",s.id)+' '+btn("Delete","deleteStudent",s.id,"warn")+'</td></tr>');
+$("#view").innerHTML=panel("Student Directory",'<div class="row" style="margin-bottom:12px"><input id="searchStudents" style="max-width:370px" placeholder="Search by name, ID or course" value="'+esc(query)+'"><span class="sub">'+list.length+" student(s)</span></div>"+table(["Student","Course","Teacher","Total Fee","Due","Status","Manage"],rows));
+}
+function progress(){
+top("Course Progress","Track completed lessons, targets and recent updates",'<button class="btn primary" data-action="newProgress">+ Update Progress</button>');
+let rows=db.progress.map(p=>{let s=student(p.studentId),percent=Math.min(100,Math.round(100*Number(p.completed||0)/Math.max(1,Number(p.total||1))));return '<tr><td>'+esc(s?.name||"Removed student")+'</td><td>'+esc(p.course||s?.course||"—")+'</td><td><div style="min-width:95px"><div class="row" style="justify-content:space-between"><span>'+Number(p.completed||0)+' / '+Number(p.total||0)+'</span><span>'+percent+'%</span></div><div class="bar"><i style="width:'+percent+'%"></i></div></div></td><td>'+esc(p.note||"—")+'</td><td>'+btn("Update","editProgress",p.id)+' '+btn("Delete","deleteProgress",p.id,"warn")+'</td></tr>'});
+$("#view").innerHTML=panel("Learning Progress",table(["Student","Course","Classes","Note","Actions"],rows));
+}
+function payments(){
+const total=db.payments.reduce((s,p)=>s+Number(p.amount||0),0),dues=db.students.reduce((s,p)=>s+due(p),0);
+top("Payments","Record fee collections, monitor dues and print receipts",'<button class="btn primary" data-action="newPayment">+ Record Payment</button>');
+let recent=db.payments.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(p=>'<tr><td>'+niceDate(p.date)+'</td><td>'+esc(student(p.studentId)?.name||"Removed student")+'</td><td>'+money(p.amount)+'</td><td>'+esc(p.method||"Cash")+'</td><td>'+btn("Receipt","receipt",p.id)+' '+btn("Delete","deletePayment",p.id,"warn")+'</td></tr>');
+let duesRows=db.students.filter(s=>due(s)>0).sort((a,b)=>due(b)-due(a)).map(s=>'<tr><td>'+esc(s.name)+'</td><td>'+money(s.fee)+'</td><td>'+money(received(s.id))+'</td><td>'+money(due(s))+'</td><td>'+niceDate(s.deadline)+'</td></tr>');
+$("#view").innerHTML='<div class="grid two">'+stat("Total Collected",money(total))+stat("Outstanding Balance",money(dues))+"</div>"+panel("Payment History",table(["Date","Student","Amount","Method","Manage"],recent))+panel("Student Dues",table(["Student","Course Fee","Paid","Due","Deadline"],duesRows));
+}
+function reports(){
+top("Reports & Backups","Review monthly collection, attendance and export data",'<button class="btn" data-action="downloadCsv">Export CSV</button>');
+let pm=db.payments.filter(p=>p.date.slice(0,7)===month),at=db.attendance.filter(a=>a.date.slice(0,7)===month),classCount=at.filter(a=>a.status==="Present").length,abs=at.filter(a=>a.status==="Absent").length;
+let stats='<div class="grid">'+stat("Payments This Month",money(pm.reduce((a,p)=>a+Number(p.amount||0),0)))+stat("Payments Count",pm.length)+stat("Classes Attended",classCount)+stat("Classes Absent",abs)+'</div>';
+let topLine='<div class="row"><label>Report month<input id="reportMonth" type="month" value="'+esc(month)+'"></label><button class="btn" data-action="printReport">Print Report</button></div>';
+let rows=pm.map(p=>'<tr><td>'+niceDate(p.date)+'</td><td>'+esc(student(p.studentId)?.name||"Removed student")+'</td><td>'+money(p.amount)+'</td><td>'+esc(p.method||"Cash")+'</td></tr>');
+let backup='<div class="stack"><p class="sub">Device storage may be cleared by your browser. Download and store regular backups securely. Import replaces all local data.</p><div class="row"><button class="btn primary" data-action="exportBackup">Download JSON Backup</button><label class="btn" style="display:block">Import Backup<input type="file" id="importBackup" accept=".json,application/json" style="position:absolute;width:1px;height:1px;opacity:0"></label><button class="btn" data-action="demoData">Load Fictional Demo</button><button class="btn warn" data-action="clearData">Clear Local Data</button></div></div>';
+$("#view").innerHTML=panel("Monthly Report",topLine+stats+table(["Date","Student","Amount","Method"],rows))+panel("Data Backup & Testing",backup);
+}
+function showModal(title,fields,onSave){$("#modalTitle").textContent=title;$("#modalFields").innerHTML='<div class="fields">'+fields+'</div>';saveForm=onSave;$("#modal").showModal()}
+const field=(name,label,val,type,req,extra)=>'<label>'+esc(label)+'<input name="'+esc(name)+'" type="'+(type||"text")+'" value="'+esc(val??"")+'" '+(req?"required":"")+' '+(extra||"")+'></label>';
+const selectField=(name,label,opts,value)=>'<label>'+esc(label)+'<select name="'+name+'" required>'+opts.map(([v,t])=>'<option value="'+esc(v)+'" '+(String(v)===String(value)?"selected":"")+'>'+esc(t)+'</option>').join("")+'</select></label>';
+const stuOptions=(id)=>[['',"Select student"],...db.students.map(s=>[s.id,s.name+" · "+(s.studentCode||s.course||"Student")])];
+function studentForm(id){
+let s=db.students.find(x=>x.id===id)||{};
+showModal(id?"Edit Student":"New Student",field("name","Student Name",s.name,"text",true)+field("studentCode","Student ID",s.studentCode)+field("course","Course",s.course,"text",true)+field("phone","Phone",s.phone,"tel")+field("teacher","Teacher",s.teacher)+field("fee","Total Course Fee (BDT)",s.fee||0,"number",true,'min="0" step="1"')+field("deadline","Payment Deadline",s.deadline,"date")+field("enrolled","Enrollment Date",s.enrolled||selectedDate,"date")+selectField("active","Status",[["true","Active"],["false","Inactive"]],String(s.active!==false))+field("notes","Notes",s.notes),f=>{
+if(db.students.some(x=>x.studentCode&&x.studentCode===f.studentCode&&x.id!==id)){alert("Student ID already exists");return false}
+let obj={...s,id:s.id||uid(),name:f.name.trim(),studentCode:f.studentCode.trim(),course:f.course.trim(),phone:f.phone.trim(),teacher:f.teacher.trim(),fee:Math.max(0,Number(f.fee)),deadline:f.deadline,enrolled:f.enrolled,active:f.active==="true",notes:f.notes};
+if(!obj.name||!obj.course)return false;
+if(id)db.students=db.students.map(x=>x.id===id?obj:x);else db.students.push(obj);return true});
+}
+function classForm(id){
+if(!db.students.length){alert("First add a student.");studentForm();return}
+let c=db.classes.find(x=>x.id===id)||{};
+showModal(id?"Edit Class":"Schedule a Class",selectField("studentId","Student",stuOptions(),c.studentId)+selectField("type","Repeat",[["weekly","Every Week"],["once","One Time"]],c.type||"weekly")+selectField("day","Day of Week",weekDays.map((d,i)=>[i,d]),c.day??dateObj(selectedDate).getDay())+field("date","Date (for One Time only)",c.date||selectedDate,"date")+field("time","Starting Time",c.time||"18:00","time",true)+field("duration","Duration (minutes)",c.duration||60,"number",true,'min="15" max="360"')+field("teacher","Instructor",c.teacher||student(c.studentId)?.teacher||"")+selectField("mode","Mode",[["Offline","Offline"],["Online","Online"]],c.mode||"Offline")+field("starts","Weekly Starts From",c.starts||selectedDate,"date")+selectField("active","Schedule Status",[["true","Active"],["false","Paused"]],String(c.active!==false)),f=>{
+if(!f.studentId)return false;
+let obj={...c,id:c.id||uid(),studentId:f.studentId,type:f.type,day:Number(f.day),date:f.date,time:f.time,duration:Number(f.duration),teacher:f.teacher.trim(),mode:f.mode,starts:f.starts,active:f.active==="true"};
+if(obj.type==="once"&&!obj.date){alert("Choose a date for a one time class.");return false}
+const checkDay=obj.type==="once"?obj.date:selectedDate;
+const clashes=db.classes.filter(x=>x.id!==obj.id&&classMatches(x,checkDay)&&classMatches(obj,checkDay)).some(x=>overlapping(x,obj));
+if(clashes&&!confirm("Instructor schedule overlaps another class. Save anyway?"))return false;
+if(id)db.classes=db.classes.map(x=>x.id===id?obj:x);else db.classes.push(obj);
+return true});
+}
+function progressForm(id){
+if(!db.students.length){alert("First add a student.");studentForm();return}
+let p=db.progress.find(x=>x.id===id)||{};
+showModal(id?"Update Progress":"New Progress",selectField("studentId","Student",stuOptions(),p.studentId)+field("course","Course / Module",p.course||"","text",true)+field("completed","Completed Classes",p.completed||0,"number",true,'min="0"')+field("total","Total Classes",p.total||15,"number",true,'min="1"')+field("note","Progress Notes",p.note),f=>{
+if(!f.studentId||Number(f.completed)>Number(f.total)){alert("Please select a student and ensure completed classes do not exceed the total.");return false}
+let obj={...p,id:p.id||uid(),studentId:f.studentId,course:f.course,completed:Number(f.completed),total:Number(f.total),note:f.note,updated:localDate(new Date())};
+if(id)db.progress=db.progress.map(x=>x.id===id?obj:x);else db.progress.push(obj);return true});
+}
+function paymentForm(){
+if(!db.students.length){alert("First add a student.");studentForm();return}
+showModal("Record Fee Payment",selectField("studentId","Student",stuOptions(),"")+field("amount","Amount Received (BDT)",0,"number",true,'min="1" step="1"')+field("date","Received Date",localDate(new Date()),"date",true)+selectField("method","Payment Method",[["Cash","Cash"],["bKash","bKash"],["Nagad","Nagad"],["Bank","Bank"],["Other","Other"]],"Cash")+field("note","Payment Note",""),f=>{
+if(!f.studentId||Number(f.amount)<=0||!f.date)return false;
+db.payments.push({id:uid(),studentId:f.studentId,amount:Number(f.amount),date:f.date,method:f.method,note:f.note});return true});
+}
+function attendance(cId,status){
+let before=db.attendance.find(a=>a.classId===cId&&a.date===selectedDate);
+if(before)before.status=status;else db.attendance.push({id:uid(),classId:cId,date:selectedDate,status});save();render();notice("Attendance saved");
+}
+function del(collection,id){
+if(!confirm("Delete this record? This cannot be undone without a backup."))return;
+if(collection==="students"){
+if(db.classes.some(c=>c.studentId===id)||db.payments.some(p=>p.studentId===id)||db.progress.some(p=>p.studentId===id)){alert("This student has linked classes, progress or payments. Remove linked records first, or set student status to Inactive.");return}
+}
+if(collection==="classes")db.attendance=db.attendance.filter(a=>a.classId!==id);
+db[collection]=db[collection].filter(x=>x.id!==id);save();render();notice("Record deleted");
+}
+function download(name,content,mime){const file=new Blob([content],{type:mime}),url=URL.createObjectURL(file),a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
+function csvRows(rows){return rows.map(row=>row.map(x=>'"'+String(x??"").replace(/"/g,'""')+'"').join(",")).join("\r\n")}
+function receipt(id){
+let p=db.payments.find(x=>x.id===id);if(!p)return;
+let s=student(p.studentId);
+$("#receipt").innerHTML='<h1>LizOn Education</h1><p style="text-align:center">Money Receipt<br>51 Kazi Office Road, Basabo, Dhaka 1214</p><div class="line"></div><table><tr><td>Receipt Number</td><td>'+esc("LZ"+p.id.slice(-9))+'</td></tr><tr><td>Date</td><td>'+niceDate(p.date)+'</td></tr><tr><td>Student</td><td>'+esc(s?.name||"Removed student")+'</td></tr><tr><td>Student ID</td><td>'+esc(s?.studentCode||"—")+'</td></tr><tr><td>Course</td><td>'+esc(s?.course||"—")+'</td></tr><tr><td>Amount Paid</td><td><strong>'+money(p.amount)+'</strong></td></tr><tr><td>Method</td><td>'+esc(p.method)+'</td></tr><tr><td>Remaining Due</td><td>'+money(s?due(s):0)+'</td></tr></table><div class="line"></div><p class="terms">1. Payment is not refundable.<br>2. Subject to the student consent and applicable privacy policies, educational content sharing requires separate authorization.</p><p style="text-align:right;margin-top:35px">Authorized Signature</p>';
+window.print();
+}
+function install(){if(deferredInstall){deferredInstall.prompt();deferredInstall.userChoice.finally(()=>deferredInstall=null);return}
+alert("Android: Open the app in Chrome, then browser menu → Add to Home screen / Install app.\n\niPhone: Open in Safari, tap Share → Add to Home Screen.\n\nFor reliable installation the app must be hosted over HTTPS.")}
+function demo(){
+if(db.students.length||db.classes.length||db.payments.length){if(!confirm("Replace ALL existing local records with fictional demo data? Export your backup first."))return}
+let a={id:uid(),name:"Demo Student A",studentCode:"DEMO001",course:"IELTS 1 on 1",phone:"",teacher:"Demo Teacher",fee:15000,deadline:localDate(new Date()),enrolled:localDate(new Date()),active:true,notes:"Sample only"};
+let b={...a,id:uid(),name:"Demo Student B",studentCode:"DEMO002",course:"PTE Complete",fee:9000};
+db=newState();db.students=[a,b];db.classes=[{id:uid(),studentId:a.id,type:"weekly",day:dateObj(localDate(new Date())).getDay(),date:"",time:"18:00",duration:60,teacher:"Demo Teacher",mode:"Offline",starts:localDate(new Date()),active:true},{id:uid(),studentId:b.id,type:"once",date:localDate(new Date()),day:0,time:"20:00",duration:60,teacher:"Demo Teacher",mode:"Online",starts:localDate(new Date()),active:true}];db.progress=[{id:uid(),studentId:a.id,course:"IELTS 1 on 1",completed:4,total:15,note:"Practice in progress"}];db.payments=[{id:uid(),studentId:a.id,amount:5000,date:localDate(new Date()),method:"Cash",note:"Demo only"}];save();render();notice("Fictional demo records loaded");
+}
+const actions={
+newStudent:()=>studentForm(),editStudent:id=>studentForm(id),deleteStudent:id=>del("students",id),
+newClass:()=>classForm(),editClass:id=>classForm(id),deleteClass:id=>del("classes",id),
+newProgress:()=>progressForm(),editProgress:id=>progressForm(id),deleteProgress:id=>del("progress",id),
+newPayment:()=>paymentForm(),deletePayment:id=>del("payments",id),receipt:receipt,
+attendPresent:id=>attendance(id,"Present"),attendAbsent:id=>attendance(id,"Absent"),attendCancelled:id=>attendance(id,"Cancelled"),
+goRoutine:()=>{page="routine";render()},goPayments:()=>{page="payments";render()},today:()=>{selectedDate=localDate(new Date());render()},
+exportBackup:()=>download("lizon-backup-"+localDate(new Date())+".json",JSON.stringify(db,null,2),"application/json"),
+downloadCsv:()=>download("lizon-payments-"+month+".csv","\ufeff"+csvRows([["Date","Student","Student ID","Course","Amount BDT","Method"],...db.payments.filter(p=>p.date.slice(0,7)===month).map(p=>[p.date,student(p.studentId)?.name,student(p.studentId)?.studentCode,student(p.studentId)?.course,p.amount,p.method])]),"text/csv;charset=utf-8"),
+printReport:()=>{document.body.classList.add("printing-report");window.print();setTimeout(()=>document.body.classList.remove("printing-report"),500)},demoData:demo,clearData:()=>{if(confirm("Delete all local records? Export a backup first.")&&confirm("Last confirmation: permanently clear all local records?")){db=newState();save();render()}}
+};
+document.addEventListener("click",e=>{
+let nv=e.target.closest("[data-nav]");if(nv){page=nv.dataset.nav;query="";render();window.scrollTo(0,0);return}
+let el=e.target.closest("[data-action]");if(el){const fn=actions[el.dataset.action];if(fn)fn(el.dataset.id)}
+});
+document.addEventListener("input",e=>{
+if(e.target.id==="searchStudents"){query=e.target.value;const pos=e.target.selectionStart;render();const next=$("#searchStudents");if(next){next.focus();next.setSelectionRange(pos,pos)}}
+});
+document.addEventListener("change",async e=>{
+if(e.target.id==="routineDate"){selectedDate=e.target.value;render()}
+if(e.target.id==="reportMonth"){month=e.target.value;render()}
+if(e.target.id==="importBackup"){
+let file=e.target.files[0];if(!file)return;
+if(file.size>2_000_000){alert("Backup file exceeds 2 MB.");return}
+try{let parsed=JSON.parse(await file.text());if(!parsed||parsed.version!==1||!["students","classes","attendance","progress","payments"].every(k=>Array.isArray(parsed[k])))throw Error("Invalid LizOn backup format");
+if(confirm("Import replaces all local data. Continue?")){db=parsed;save();render();notice("Backup imported successfully")}}catch(err){alert("Unable to import: "+err.message)}
+}
+});
+$("#editForm").addEventListener("submit",e=>{
+e.preventDefault();if(!saveForm)return;
+let form={};for(const [k,v] of new FormData(e.target).entries())form[k]=String(v);
+try{if(saveForm(form)===false)return;save();$("#modal").close();render();notice("Saved successfully")}catch(err){alert("Save failed: "+err.message)}
+});
+$("#closeModal").onclick=$("#cancelModal").onclick=()=>$("#modal").close();
+$("#installBtn").addEventListener("click",install);
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e});
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
+render();
+})();
+</script>
+</body>
+</html>

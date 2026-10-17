@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { QUESTION_TYPES } from '../question-types.mjs';
+import { scoreSingle,scoreMultiChoice,scoreBlanks,scoreReorder,scoreDictation,inspectEssayForm,inspectSwtForm,inspectSstForm,scoreRubricTraits } from '../scoring.mjs';
+
+test('all 22 official question families are registered exactly once',()=>{assert.equal(QUESTION_TYPES.length,22);assert.equal(new Set(QUESTION_TYPES.map(q=>q.id)).size,22);assert.equal(QUESTION_TYPES.filter(q=>q.expertContentReview).length,7);});
+test('one correct choice earns 1 point',()=>assert.equal(scoreSingle('B','b').earned,1));
+test('MCMA gives one for correct and subtracts one for an incorrect selected option',()=>{assert.equal(scoreMultiChoice(['A','B'],['A','C']).earned,0);assert.equal(scoreMultiChoice(['A','B'],['A','B','B']).earned,2);});
+test('negative marks cannot reduce item below zero',()=>assert.equal(scoreMultiChoice(['A'],['B','C']).earned,0));
+test('dropdown and type-in blanks earn per gap',()=>assert.deepEqual(scoreBlanks(['higher','research'],['Higher','teaching']).matches,[true,false]));
+test('reorder checks each correct adjacent pair rather than absolute position',()=>assert.equal(scoreReorder(['a','b','c','d'],['b','c','a','d']).earned,1));
+test('reorder rejects inconsistent items',()=>assert.throws(()=>scoreReorder(['a','b'],['a','a'])));
+test('dictation aligns duplicated words without counting the same response word twice',()=>assert.equal(scoreDictation('Research research improves learning','Research improves learning').earned,3));
+test('dictation rejects spelling differences',()=>assert.equal(scoreDictation('Researchers share findings','researcher share findings').earned,2));
+test('essay full form credit at 200 and 300 words',()=>{for(const count of [200,300])assert.equal(inspectEssayForm(Array(count).fill('academic').join(' ')+'.').form,2);});
+test('essay partial form credit at 120, 199, 301 and 380 words',()=>{for(const count of [120,199,301,380])assert.equal(inspectEssayForm(Array(count).fill('academic').join(' ')+'.').form,1);});
+test('essay zero form at 119 and 381 words',()=>{for(const count of [119,381])assert.equal(inspectEssayForm(Array(count).fill('academic').join(' ')+'.').form,0);});
+test('essay uppercase or no punctuation gets zero form',()=>{assert.equal(inspectEssayForm(Array(220).fill('ACADEMIC').join(' ')+'.').form,0);assert.equal(inspectEssayForm(Array(220).fill('academic').join(' ')).form,0);});
+test('SWT requires 5-75 words AND validated single complete sentence',()=>{assert.equal(inspectSwtForm('A good summary covers the central argument.',{oneCompleteSentence:true}).form,1);assert.equal(inspectSwtForm('A good summary covers the central argument.').form,0);});
+test('SST full form 50-70 words and partial 40-49 or 71-100',()=>{assert.equal(inspectSstForm(Array(50).fill('academic').join(' ')+'.').form,2);assert.equal(inspectSstForm(Array(49).fill('academic').join(' ')+'.').form,1);assert.equal(inspectSstForm(Array(39).fill('academic').join(' ')+'.').form,0);});
+test('content gate blocks other traits',()=>assert.equal(scoreRubricTraits({content:0,form:2,grammar:2},{content:6,form:2,grammar:2},{gateOnContent:true}).earned,0));
+test('invalid evaluator trait rejected',()=>assert.throws(()=>scoreRubricTraits({content:7},{content:6},{gateOnContent:true})));

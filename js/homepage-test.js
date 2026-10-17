@@ -795,3 +795,13 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
+
+
+/* LizOn sitewide assistant, loaded across shared public pages. */
+(()=> {
+  if(document.querySelector('script[src*="lizon-guide.js"]')) return;
+  const css=document.createElement("link");
+  css.rel="stylesheet";css.href="/css/lizon-guide.css";document.head.appendChild(css);
+  const script=document.createElement("script");script.src="/js/lizon-guide.js";script.defer=true;
+  document.head.appendChild(script);
+})();

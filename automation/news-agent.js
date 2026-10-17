@@ -449,7 +449,7 @@ async function writeArticles(candidates, existing, corpus){
       u.hostname = u.hostname.toLowerCase().replace(/^www\./, "");
       u.pathname = u.pathname.replace(/\/+$/, "") || "/";
       u.searchParams.sort();
-      return u.toString().replace(/\\/$/, "");
+      return u.origin + u.pathname + u.search;
     } catch { return ""; }
   };
   const clean=[];

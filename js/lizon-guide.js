@@ -1,42 +1,108 @@
-/* LizOn Quick Guide v1. Free, deterministic, and private: no API or data collection. */
+/* LizOn conversational website guide. Messages stay in this browser tab only.
+ * All website answers are sourced from the current public site index.
+ */
 (()=>{"use strict";
-const knowledge=[
-  {words:["ielts","writing","speaking","listening","reading","band"],answer:"LizOn offers IELTS preparation, one to one guidance and free lessons. Start with our IELTS course details or explore free IELTS classes.",links:[["IELTS courses","ielts.html"],["Free IELTS classes","ieltsclass.html"]]},
-  {words:["pte","pearson"],answer:"Explore LizOn PTE preparation, class topics and free recorded lessons. A counselor can help you choose a suitable learning plan.",links:[["PTE courses","pte.html"],["Free PTE classes","pteclass.html"]]},
-  {words:["abroad","study","visa","australia","canada","uk","germany","university","scholarship","দেশ","বিদেশ","ভিসা"],answer:"Your study abroad options depend on academics, English proficiency, budget, institution and intake. Our country guides can help you explore, and the assessment helps organize your profile. Final eligibility needs counselor verification.",links:[["Explore countries","studyabroad.html"],["Check my profile","assessment.html"],["Talk to Study Abroad counselor","https://wa.me/8801608881545"]]},
-  {words:["fee","cost","price","discount","offer","টাকা","ফি"],answer:"Course fees and promotions can change. Please contact our team for the current fee, course duration and available class times before paying.",links:[["IELTS courses","ielts.html"],["PTE courses","pte.html"],["Contact admissions","https://wa.me/8801611611139"]]},
-  {words:["free","lesson","video","class","practice","মক","ক্লাস"],answer:"You can explore LizOn's free IELTS and PTE learning libraries before selecting a full course.",links:[["IELTS free classes","ieltsclass.html"],["PTE free classes","pteclass.html"]]},
-  {words:["address","office","location","where","basabo","ঠিকানা"],answer:"LizOn Education is located at 51 Kazi Office Road, beside Morning Bell School, Buddha Mandir, Basabo, Dhaka 1214.",links:[["Contact admissions","https://wa.me/8801611611139"]]},
-  {words:["contact","counselor","call","appointment","admission","ভর্তি","যোগাযোগ"],answer:"You can speak with LizOn Education admissions on 01611 611139. For Study Abroad consultations, contact 01608 881545.",links:[["Admissions WhatsApp","https://wa.me/8801611611139"],["Study Abroad WhatsApp","https://wa.me/8801608881545"]]}
-];
-const root=document.createElement("div");root.id="lizonGuide";root.className="lizon-guide";root.innerHTML=
-  '<button class="lg-launcher" type="button" aria-haspopup="dialog" aria-expanded="false">Ask LizOn <span aria-hidden="true">↗</span></button>'+
-  '<section class="lg-panel" role="dialog" aria-label="Ask LizOn quick guide" hidden>'+
-  '<header class="lg-header"><div><strong>Ask LizOn</strong><small>Quick Guide • Predefined answers</small></div><button class="lg-close" type="button" aria-label="Close quick guide">×</button></header>'+
-  '<div class="lg-history" role="log" aria-live="polite"></div>'+
-  '<div class="lg-shortcuts"><button type="button" data-ask="IELTS courses">IELTS</button><button type="button" data-ask="PTE classes">PTE</button><button type="button" data-ask="Study Abroad eligibility">Study Abroad</button><button type="button" data-ask="Course fees">Fees</button></div>'+
-  '<form class="lg-form"><label class="lg-sr" for="lgQuestion">Your question</label><input id="lgQuestion" maxlength="200" placeholder="Ask about courses or study abroad..." required><button type="submit" aria-label="Send question">Send</button></form>'+
-  '<p class="lg-disclaimer">General guidance only. No personal data is saved. Ask a counselor for verified eligibility, fees or visa requirements.</p></section>';
+if(document.getElementById("lizonGuide"))return;
+const MEMORY="lizon-guest-chat-v2",maxMessages=16;
+const el=(tag,cls,text)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(text!=null)x.textContent=text;return x;};
+const root=el("div","lizon-guide");root.id="lizonGuide";
+root.innerHTML=`
+ <button class="lg-launcher" aria-expanded="false" aria-controls="lgPanel" type="button">
+   <span class="lg-launcher-icon" aria-hidden="true">✳</span><span>Ask LizOn</span>
+ </button>
+ <section class="lg-panel" id="lgPanel" role="dialog" aria-label="Ask LizOn" hidden>
+   <header class="lg-header">
+     <div class="lg-header-identity"><img src="/assets/logo/lizon-logo.png" width="34" height="34" alt="">
+       <div><strong>LizOn</strong><small>Here to guide your next step</small></div></div>
+     <div class="lg-header-controls"><button type="button" class="lg-clear" title="Clear chat" aria-label="Clear chat">↺</button><button type="button" class="lg-close" title="Close" aria-label="Close chat">×</button></div>
+   </header>
+   <div class="lg-history" role="log" aria-live="polite" aria-relevant="additions"></div>
+   <section class="lg-suggestions" aria-label="Suggested questions">
+    <span>YOU CAN ASK</span>
+    <div class="lg-chips">
+     <button type="button" data-ask="I want to prepare for IELTS. Where should I start?">IELTS preparation</button>
+     <button type="button" data-ask="Show me free PTE classes">Free PTE classes</button>
+     <button type="button" data-ask="I want to study in Australia, where can I find the guide?">Study Abroad</button>
+     <button type="button" data-ask="Who are LizOn teachers?">Teachers</button>
+    </div>
+   </section>
+   <div class="lg-human"><span>Need a person?</span><a class="lg-human-link" href="https://wa.me/8801611611139" target="_blank" rel="noopener noreferrer">Message our team ↗</a></div>
+   <form class="lg-form">
+     <label for="lgQuestion" class="lg-sr">Ask LizOn anything</label>
+     <textarea id="lgQuestion" rows="1" maxlength="650" placeholder="Type in বাংলা, English or Banglish..." required></textarea>
+     <button type="submit" class="lg-send" aria-label="Send message" title="Send message">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14-8-4 16-3-6-7-2Z"/><path d="m12 14 7-10"/></svg>
+     </button>
+   </form>
+   <p class="lg-note">Based on public LizOn information. Verify fees, admission and visas with a counselor.</p>
+ </section>`;
 document.body.append(root);
-const launcher=root.querySelector(".lg-launcher"),panel=root.querySelector(".lg-panel"),history=root.querySelector(".lg-history"),input=root.querySelector("input");
-function toggle(open){panel.hidden=!open;launcher.setAttribute("aria-expanded",String(open));if(open){if(!history.childElementCount)reply("Welcome to LizOn Education. Choose a topic or ask a question about IELTS, PTE or Study Abroad.",[]);input.focus();}else launcher.focus();}
-function reply(message,links,fromUser=false){
-  const line=document.createElement("div");line.className="lg-message"+(fromUser?" lg-user":"");
-  const p=document.createElement("p");p.textContent=message;line.append(p);
-  if(links&&links.length){const refs=document.createElement("div");refs.className="lg-links";for(const [label,href] of links){const a=document.createElement("a");a.href=href;a.textContent=label;if(href.startsWith("https://")){a.target="_blank";a.rel="noopener noreferrer";}refs.append(a);}line.append(refs);}
-  history.append(line);history.scrollTop=history.scrollHeight;
+const $=q=>root.querySelector(q),panel=$(".lg-panel"),launcher=$(".lg-launcher"),history=$(".lg-history"),form=$(".lg-form"),field=$("#lgQuestion"),send=$(".lg-send");
+let messages=[],busy=false;
+try{const cached=JSON.parse(sessionStorage.getItem(MEMORY)||"[]");if(Array.isArray(cached))messages=cached.filter(m=>["user","assistant"].includes(m.role)&&typeof m.text==="string").slice(-maxMessages);}catch{}
+function persist(){try{sessionStorage.setItem(MEMORY,JSON.stringify(messages.slice(-maxMessages)));}catch{}}
+function safeLink(link){
+ const url=String(link.url||"");
+ if(/^\/[a-z0-9/_-]+(?:\.html)?(?:#[a-z0-9_-]+)?$/i.test(url))return url;
+ if(/^https:\/\/(?:wa\.me\/8801\d{9}|(?:www\.)?mylizon\.com\/[\w\-./#?=]*)$/i.test(url))return url;
+ return null;
 }
-function answer(q){
-  const trimmed=String(q||"").trim().slice(0,200);if(!trimmed)return;
-  reply(trimmed,[],true);
-  const text=trimmed.toLowerCase();
-  const match=knowledge.map((k,i)=>({k,score:k.words.filter(w=>text.includes(w)).length,i})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.i-b.i)[0]?.k;
-  if(match)reply(match.answer,match.links);
-  else reply("I can guide you to IELTS, PTE, Study Abroad resources or our counselors. For a personal case, speak with the relevant LizOn team.",[["IELTS courses","ielts.html"],["PTE courses","pte.html"],["Study Abroad","studyabroad.html"],["Talk to LizOn","https://wa.me/8801611611139"]]);
+function bubble(text,role,links=[],save=true){
+ const item=el("div","lg-message "+(role==="user"?"lg-user":"lg-assistant"));
+ if(role!=="user"){const av=el("div","lg-avatar");const img=document.createElement("img");img.src="/assets/logo/lizon-logo.png";img.alt="";img.width=25;img.height=25;av.append(img);item.append(av);}
+ const content=el("div","lg-bubble");const p=el("p",null,text);content.append(p);
+ if(links.length&&role!=="user"){
+  const box=el("div","lg-links");
+  for(const link of links.slice(0,5)){
+   const href=safeLink(link);if(!href)continue;
+   const a=el("a",null,String(link.title||"View page").slice(0,65)+" ↗");a.href=href;
+   if(href.startsWith("https://")){a.target="_blank";a.rel="noopener noreferrer";}
+   box.append(a);
+  }
+  content.append(box);
+ }
+ item.append(content);history.append(item);history.scrollTop=history.scrollHeight;
+ if(save){messages.push({role,text,links:links.map(x=>({title:x.title,url:x.url}))});messages=messages.slice(-maxMessages);persist();}
+ return item;
+}
+function welcome(){
+ const initial="Hello! I'm LizOn's website guide. Ask me about IELTS, PTE, our courses, teachers, free classes, or studying abroad. You can write in বাংলা, English or Banglish.";
+ bubble(initial,"assistant",[],false);
+}
+function draw(){
+ history.replaceChildren();
+ if(!messages.length)welcome();
+ else for(const m of messages)bubble(m.text,m.role,m.links||[],false);
+}
+function toggle(open){panel.hidden=!open;launcher.setAttribute("aria-expanded",String(open));if(open){draw();field.focus();}else launcher.focus();}
+function thinking(){const node=el("div","lg-message lg-assistant lg-thinking");const av=el("div","lg-avatar");const img=document.createElement("img");img.src="/assets/logo/lizon-logo.png";img.alt="";img.width=25;img.height=25;av.append(img);
+ const dots=el("div","lg-bubble");dots.innerHTML='<span></span><span></span><span></span>';node.append(av,dots);history.append(node);history.scrollTop=history.scrollHeight;return node;}
+async function ask(prompt){
+ const question=String(prompt||"").trim().slice(0,650);if(!question||busy)return;
+ const past=messages.slice(-8).map(m=>({role:m.role,text:m.text}));
+ bubble(question,"user");
+ field.value="";field.style.height="";
+ busy=true;send.disabled=true;
+ const load=thinking(),abort=new AbortController(),timeout=setTimeout(()=>abort.abort(),14000);
+ try{
+  const res=await fetch("/api/lizon-assistant",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:question,history:past}),signal:abort.signal});
+  const data=await res.json();
+  load.remove();
+  if(!res.ok)throw Error(data.error||"Unable to connect");
+  if(!data.answer)throw Error("No answer available");
+  bubble(data.answer,"assistant",Array.isArray(data.links)?data.links:[]);
+ }catch(error){
+  load.remove();
+  const message="I couldn't search the website right now. Please try again, or contact the LizOn team directly.";
+  bubble(message,"assistant",[{title:"Talk to LizOn",url:"https://wa.me/8801611611139"},{title:"Explore Study Abroad",url:"/studyabroad.html"},{title:"IELTS courses",url:"/ielts.html"}]);
+ }finally{clearTimeout(timeout);busy=false;send.disabled=false;field.focus();}
 }
 launcher.addEventListener("click",()=>toggle(panel.hidden));
-root.querySelector(".lg-close").addEventListener("click",()=>toggle(false));
-root.querySelector(".lg-form").addEventListener("submit",e=>{e.preventDefault();answer(input.value);input.value="";input.focus();});
-root.querySelectorAll("[data-ask]").forEach(b=>b.addEventListener("click",()=>answer(b.dataset.ask)));
+$(".lg-close").addEventListener("click",()=>toggle(false));
+$(".lg-clear").addEventListener("click",()=>{messages=[];persist();draw();field.focus();});
+form.addEventListener("submit",e=>{e.preventDefault();ask(field.value);});
+field.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();ask(field.value);}});
+field.addEventListener("input",()=>{field.style.height="auto";field.style.height=Math.min(field.scrollHeight,110)+"px";});
+root.querySelectorAll("[data-ask]").forEach(b=>b.addEventListener("click",()=>ask(b.dataset.ask)));
 root.addEventListener("keydown",e=>{if(e.key==="Escape"&&!panel.hidden)toggle(false);});
 })();

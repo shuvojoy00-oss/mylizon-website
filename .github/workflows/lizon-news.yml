@@ -3,11 +3,15 @@ name: LizOn Daily News
 on:
   workflow_dispatch:
   schedule:
-    # 13:00 UTC = 19:00 Asia/Dhaka year-round
+    # Primary publication: 19:00 Asia/Dhaka (13:00 UTC).
     - cron: "0 13 * * *"
-    # Retry at 20:00 and 21:00 Dhaka if the first run produces no article.
-    - cron: "0 14 * * *"
-    - cron: "0 15 * * *"
+    # Recovery checks run off the hour to reduce scheduler congestion.
+    # The agent skips immediately once an article is published after 19:00 Dhaka.
+    - cron: "15 13 * * *"
+    - cron: "15 14 * * *"
+    - cron: "15 15 * * *"
+    - cron: "15 16 * * *"
+    - cron: "15 17 * * *"
 
 permissions:
   contents: read

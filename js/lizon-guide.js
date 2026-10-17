@@ -3,7 +3,7 @@
  */
 (()=>{"use strict";
 if(document.getElementById("lizonGuide"))return;
-const MEMORY="lizon-guest-chat-v2",maxMessages=16;
+const MEMORY="lizon-guest-chat-v3",maxMessages=16;
 const el=(tag,cls,text)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(text!=null)x.textContent=text;return x;};
 const root=el("div","lizon-guide");root.id="lizonGuide";
 root.innerHTML=`
@@ -13,7 +13,7 @@ root.innerHTML=`
  <section class="lg-panel" id="lgPanel" role="dialog" aria-label="Ask LizOn" hidden>
    <header class="lg-header">
      <div class="lg-header-identity"><img src="/assets/logo/lizon-logo.png" width="34" height="34" alt="">
-       <div><strong>LizOn</strong><small>Here to guide your next step</small></div></div>
+       <div><strong>LizOn</strong><small>Here to help you find your way</small></div></div>
      <div class="lg-header-controls"><button type="button" class="lg-clear" title="Clear chat" aria-label="Clear chat">↺</button><button type="button" class="lg-close" title="Close" aria-label="Close chat">×</button></div>
    </header>
    <div class="lg-history" role="log" aria-live="polite" aria-relevant="additions"></div>
@@ -34,7 +34,7 @@ root.innerHTML=`
       <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14-8-4 16-3-6-7-2Z"/><path d="m12 14 7-10"/></svg>
      </button>
    </form>
-   <p class="lg-note">Based on public LizOn information. Verify fees, admission and visas with a counselor.</p>
+   <p class="lg-note">LizOn virtual assistant. Please verify fees, admission and visa matters with a counselor.</p>
  </section>`;
 document.body.append(root);
 const $=q=>root.querySelector(q),panel=$(".lg-panel"),launcher=$(".lg-launcher"),history=$(".lg-history"),form=$(".lg-form"),field=$("#lgQuestion"),send=$(".lg-send");
@@ -62,7 +62,7 @@ function bubble(text,role,links=[],save=true){
   content.append(box);
  }
  item.append(content);history.append(item);history.scrollTop=history.scrollHeight;
- if(save){messages.push({role,text,links:links.map(x=>({title:x.title,url:x.url}))});messages=messages.slice(-maxMessages);persist();}
+ if(save){messages.push({role,text,links:links.map(x=>({title:x.title,url:x.url}))});messages=messages.slice(-maxMessages);persist();if(role==="user")$(".lg-suggestions").hidden=true;}
  return item;
 }
 function welcome(){
@@ -70,7 +70,7 @@ function welcome(){
  bubble(initial,"assistant",[],false);
 }
 function draw(){
- history.replaceChildren();
+ history.replaceChildren();$(".lg-suggestions").hidden=messages.some(m=>m.role==="user");
  if(!messages.length)welcome();
  else for(const m of messages)bubble(m.text,m.role,m.links||[],false);
 }

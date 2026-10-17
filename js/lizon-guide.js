@@ -126,7 +126,8 @@ async function ask(prompt){
    while(true){
     const chunk=await reader.read();
     if(chunk.done)break;
-    buffer+=decoder.decode(chunk.value,{stream:true}).replace(/\r\n/g,"\n");
+    buffer+=decoder.decode(chunk.value,{stream:true});
+    buffer=buffer.replace(/\r\n/g,"\n");
     let cursor;while((cursor=buffer.indexOf("\n\n"))!==-1){
      processFrame(buffer.slice(0,cursor));buffer=buffer.slice(cursor+2);
     }

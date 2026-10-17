@@ -442,14 +442,28 @@ Aim for editorial variety. Prefer truly recent official developments. If none ar
 }
 
 async function writeArticles(candidates, existing, corpus){
+  const normalizeUrl = value => {
+    try {
+      const u = new URL(String(value || ""));
+      u.hash = "";
+      u.hostname = u.hostname.toLowerCase().replace(/^www\\./, "");
+      u.pathname = u.pathname.replace(/\\/+$/, "") || "/";
+      u.searchParams.sort();
+      return u.toString().replace(/\\/$/, "");
+    } catch { return ""; }
+  };
   const clean=[];
   for(const c of candidates || []){
     if(!c || !["study-abroad","ielts","pte"].includes(c.category)) continue;
     if(!c.source_url || !hostAllowed(c.source_url)) continue;
-    const supported=corpus.some(s=>s.source_url===c.source_url || s.links.some(l=>l.url===c.source_url));
+    const wanted=normalizeUrl(c.source_url);
+    const supported=corpus.some(s=>
+      normalizeUrl(s.source_url)===wanted ||
+      (s.links||[]).some(l=>normalizeUrl(l.url)===wanted)
+    );
     if(!supported){console.warn("Rejected candidate without matching fetched official source:",c.source_url);continue;}
-    clean.push(c);
-    if(clean.length>=3) break;
+    if(!clean.some(x=>normalizeUrl(x.source_url)===wanted)) clean.push(c);
+    if(clean.length>=5) break;
   }
   console.log("Verified article candidates:",clean.length);
   if(!clean.length) return [];
@@ -459,19 +473,42 @@ Using ONLY the candidate facts and source URLs below, write publishable articles
 Candidates:
 ${JSON.stringify(clean)}
 
-Return {"articles":[...]}.
+Return {"articles":[...]} with at least one complete article if the supplied evidence supports a useful student guide, exam-intelligence, problem-solution, or current update.
 Each article must contain:
 slug, title_bn, title_en, excerpt_bn, excerpt_en, body_bn, body_en, category, content_type, country, keywords, source_name, source_url, source_verified, importance, featured, ai_confidence.
 body_bn and body_en must use only these safe HTML tags: p,h2,h3,strong,ul,ol,li,blockquote.
 Do not place external links inside body HTML.
+Use the exact source_url and source_name from the matching candidate. Do not invent a source URL.
 Set source_verified=true.
 Set ai_confidence between 0.80 and 0.98.
 Only one article may have featured=true, and only if clearly important.
 Do not describe a guide or exam-intelligence article as breaking news.
 `;
 
-  const result = await geminiWithFallback(prompt,ARTICLE_SCHEMA);
-  return (result.articles || []).slice(0,3);
+  const canonicalize = raw => (raw||[]).filter(a=>a && a.title_bn && a.title_en && a.body_bn && a.body_en).map(a=>{
+    const url=normalizeUrl(a.source_url);
+    let match=clean.find(c=>normalizeUrl(c.source_url)===url);
+    if(!match && clean.length===1) match=clean[0];
+    if(!match) {
+      console.warn("Rejected generated article with unsupported source URL:",a.source_url);
+      return null;
+    }
+    return {...a,category:match.category,source_name:match.source_name,source_url:match.source_url,source_verified:true};
+  }).filter(Boolean).slice(0,3);
+
+  let result=await geminiWithFallback(prompt,ARTICLE_SCHEMA);
+  let articles=canonicalize(result.articles);
+  console.log("Gemini completed valid articles:",articles.length);
+  if(!articles.length){
+    console.warn("Article generation returned no usable articles; retrying once with explicit single-article instructions.");
+    const retryPrompt=prompt+`
+RETRY REQUIREMENT: return exactly one complete bilingual article based on the strongest candidate above. The source_url must be copied exactly from that candidate. Do not return an empty articles array. Do not invent facts; if the source only supports guidance, label it as a guide rather than breaking news.
+`;
+    result=await geminiWithFallback(retryPrompt,ARTICLE_SCHEMA);
+    articles=canonicalize(result.articles);
+    console.log("Retry produced valid articles:",articles.length);
+  }
+  return articles;
 }
 
 async function main(){
@@ -502,7 +539,7 @@ async function main(){
     console.log("Gemini research candidates:",candidates.length);
     if(!candidates.length){
       console.warn("Research returned zero candidates; requesting a sourced student guidance article.");
-      const useful=corpus.filter(s=>["ielts","pte","study-abroad"].includes(s.category)).slice(0,5);
+      const useful=["study-abroad","ielts","pte"].map(category=>corpus.find(s=>s.category===category)).filter(Boolean);
       const backup=await geminiWithFallback(CORE_RULES+`\nChoose one useful, factual student guide from these official extracts. Use only statements explicitly supported by the extracts. Do not invent a new policy or breaking news. Return 1 candidate in the same schema.\n${JSON.stringify(useful)}`,CANDIDATE_SCHEMA);
       candidates=backup.candidates||[];
       console.log("Backup research candidates:",candidates.length);

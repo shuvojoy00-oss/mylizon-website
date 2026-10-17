@@ -31,3 +31,17 @@ The preview currently uses **grounded retrieval**, not an active generative AI m
 - Check Vercel/hosting eligibility for business use.
 
 No paid API, CRM database migration, or production website merge has been performed.
+
+## Gemini real-time preview connection (October 17)
+- Real-time response streaming was implemented using Gemini's `streamGenerateContent?alt=sse` and server-mediated SSE to the browser. Words can appear progressively, while source links arrive after the response.
+- The Vercel project now has branch-scoped encrypted preview variables `LIZON_ASSISTANT_AI=enabled` and `LIZON_ASSISTANT_MODEL=gemini-3.1-flash-lite`.
+- **Outstanding**: `GEMINI_API_KEY` is **not** configured in Vercel. The news automation's key exists as a GitHub Actions secret, which GitHub correctly does not let us read or transfer automatically through the available connector. The preview therefore continues using its local conversation guide, and is **not** yet connected to a Gemini API.
+- One authorized account owner must add an API key in Vercel Project Settings → Environment Variables. Name: `GEMINI_API_KEY`, type: Sensitive or Encrypted, target: Preview, branch: `lizon-os-mvp-20261017`. Then redeploy the branch and test.
+- To honor no-new-costs, confirm the Google AI project is **Free** and not linked to paid billing before using the key; a model with a free tier can still be billed when a paid-tier project key is used. A separate free-tier Google AI Studio project is safer than sharing the news workflow's quota.
+- Gemini free-tier prompts may be used by Google to improve products. The browser displays a warning not to share private data, and the server blocks common contact numbers, email addresses and identification/banking indicators from being sent to Gemini. These filters are not an absolute guarantee, so do not request private records in this phase.
+- Serverless in-memory rate limits are only best effort. Before public production, add an account-level rate-limit budget or durable quota guard and confirm cost controls.
+
+### Verification performed
+- Both JavaScript modules pass syntax checks.
+- A mocked Gemini SSE response produced multiple streamed delta events and a completed message on the server.
+- Public preview deployed successfully. Real Gemini API end-to-end verification is **not possible until the Vercel key is configured**.

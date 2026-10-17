@@ -446,8 +446,8 @@ async function writeArticles(candidates, existing, corpus){
     try {
       const u = new URL(String(value || ""));
       u.hash = "";
-      u.hostname = u.hostname.toLowerCase().replace(/^www\\./, "");
-      u.pathname = u.pathname.replace(/\\/+$/, "") || "/";
+      u.hostname = u.hostname.toLowerCase().replace(/^www\./, "");
+      u.pathname = u.pathname.replace(/\/+$/, "") || "/";
       u.searchParams.sort();
       return u.toString().replace(/\\/$/, "");
     } catch { return ""; }

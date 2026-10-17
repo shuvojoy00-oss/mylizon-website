@@ -11,7 +11,7 @@ const DEFAULT_LINKS=[
 ];
 const hits=new Map();
 const map={
- "ayelts":"ielts","ielts":"ielts","aiyelts":"ielts","আইইএলটিএস":"ielts","আইল্টস":"ielts","ielst":"ielts",
+ "কোথায়":"","কোথায়":"","আমার":"","আপনাদের":"","মধ্যে":"","who":"","where":"","which":"","are":"","does":"","could":"","would":"","can":"","i":"","am":"","our":"","their":"","the":"","please":"","tell":"","details":"","information":"","more":"","from":"","on":"","have":"","as":"","any":"","me":"","ausralia":"australia","austraila":"australia","ayelts":"ielts","ielts":"ielts","aiyelts":"ielts","আইইএলটিএস":"ielts","আইল্টস":"ielts","ielst":"ielts",
  "pti":"pte","পিটিই":"pte","পিটে":"pte","pte":"pte",
  "study":"study","studi":"study","stady":"study","studdy":"study","abrod":"abroad","abroud":"abroad","aboard":"abroad",
  "বিদেশ":"abroad","বিদেশে":"abroad","যেতে":"abroad","jabo":"abroad","jete":"abroad","studyabroad":"abroad",
@@ -24,7 +24,7 @@ const map={
 function tokens(value){
  return String(value||"").normalize("NFKC").toLowerCase()
    .replace(/[.,?!;:'"()\[\]{}\/@#*_+=<>~|—–-]/g," ")
-   .split(/[^\p{L}\p{N}]+/u).map(x=>(map[x]??x))
+   .split(/[^\p{L}\p{M}\p{N}]+/u).map(x=>(map[x]??x))
    .filter(x=>x.length>=2 && !/^[0-9]+$/.test(x)).slice(0,150);
 }
 function editDistance(a,b){
@@ -44,6 +44,8 @@ function relevance(query,doc){
   if(w.length>=4 && [...hay].some(t=>Math.abs(t.length-w.length)<=1&&editDistance(t,w)<=1)){s+=.9;continue;}
  }
  if(!s)return 0;
+ const strong=new Set(["ielts","pte","australia","canada","uk","germany","joy","teacher","staff","scholarship","visa","course","fee","writing","speaking","listening","reading"]);
+ for(const key of strong)if(q.includes(key) && (u.includes(key)||title.includes(key)))s+=6;
  return s / Math.sqrt(q.length) + Math.min(2, q.filter(w=>body.includes(w)).length*.16);
 }
 function rank(question,docs){
@@ -51,6 +53,15 @@ function rank(question,docs){
  const selected=[],byPage=new Map();
  for(const item of candidates){if(selected.length===7)break;const url=item.d.url, count=byPage.get(url)||0;if(count>=2)continue;selected.push(item);byPage.set(url,count+1);}
  return selected;
+}
+function isRelevantToQuestion(question,selected){
+ if(!selected.length)return false;
+ const q=[...new Set(tokens(question))].filter(x=>x.length>2),top=selected[0]?.d;
+ if(!top || !q.length)return false;
+ const inTop=new Set(tokens(top.text+" "+top.title+" "+top.url));
+ const coverage=q.filter(w=>inTop.has(w)||[...inTop].some(t=>w.length>4&&editDistance(w,t)<=1)).length;
+ if(q.length>=2 && coverage/q.length<.5)return false;
+ return true;
 }
 function createLinks(selected){
  const links=[],seen=new Set();
@@ -70,7 +81,10 @@ function fallback(question,selected){
   return "I couldn't find verified information about that on LizOn's public pages yet. Try asking about IELTS, PTE, Study Abroad, courses or teachers, or contact our team for specific guidance.";
  }
  const best=selected[0].d;
- const snippet=best.text.replace(/\s+/g," ").trim().slice(0,390);
+ const words=[...new Set(tokens(question))];
+ const sentences=best.text.replace(/\s+/g," ").trim().split(/(?<=[.!?।])\s+/).filter(s=>s.length>18);
+ const choices=sentences.map(s=>({s,score:tokens(s).filter(w=>words.includes(w)).length})).sort((a,b)=>b.score-a.score);
+ const snippet=(choices.length?choices.slice(0,3).map(c=>c.s).join(" "):best.text).slice(0,410);
  if(/[\u0980-\u09FF]/.test(question))return "LizOn ওয়েবসাইটে এই তথ্য পেয়েছি:\n\n"+snippet+"\n\nবিস্তারিত জানতে নিচের পেজটি দেখুন। চাইলে আরেকটি প্রশ্ন করতে পারেন।";
  return "Here's what I found on LizOn's website:\n\n"+snippet+"\n\nOpen the linked page for details, or ask me a follow-up question.";
 }
@@ -115,7 +129,7 @@ module.exports=async function handler(req,res){
   const idx=await knowledge(req),combined=history.filter(x=>x.role==="user").slice(-2).map(x=>x.text).join(" ")+" "+question;
   let ranked=rank(question,idx.entries);
   if(ranked.length<2 && history.length) ranked=rank(combined,idx.entries);
-  const relevant=ranked.filter(r=>r.score>0);
+  const relevant=isRelevantToQuestion(question,ranked)?ranked.filter(r=>r.score>0):[];
   const links=createLinks(relevant);
   const ai=await useGemini(question,history,relevant);
   const answer=ai||fallback(question,relevant);

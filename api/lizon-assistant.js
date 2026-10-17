@@ -132,7 +132,7 @@ module.exports=async function handler(req,res){
   const history=Array.isArray(payload.history)?payload.history.slice(-6).filter(x=>x&&["user","assistant"].includes(x.role)).map(x=>({role:x.role,text:String(x.text||"").slice(0,350)})):[];
   const idx=await knowledge(req),combined=history.filter(x=>x.role==="user").slice(-2).map(x=>x.text).join(" ")+" "+question;
   let ranked=rank(question,idx.entries);
-  if(ranked.length<2 && history.length) ranked=rank(combined,idx.entries);
+  if(history.length && (ranked.length<2 || /^(what about|how about|and |how much|how many|tell me more|is it|what is the|what about its|আর |এটার |ওটার |এতে |কত |এটা |সেখানে )/i.test(question))) ranked=rank(combined,idx.entries);
   const relevant=isRelevantToQuestion(question,ranked)?ranked.filter(r=>r.score>0):[];
   const links=createLinks(relevant);
   const ai=await useGemini(question,history,relevant);

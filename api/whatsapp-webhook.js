@@ -2,6 +2,18 @@ const crypto = require("crypto");
 
 const MAX_BODY_BYTES = 1_000_000;
 
+function sendText(res, statusCode, message) {
+  res.statusCode = statusCode;
+  res.setHeader("Content-Type", "text/plain; charset=utf-8");
+  return res.end(message);
+}
+
+function sendJson(res, statusCode, payload) {
+  res.statusCode = statusCode;
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  return res.end(JSON.stringify(payload));
+}
+
 function readRawBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
@@ -37,38 +49,38 @@ module.exports = async (req, res) => {
     const expectedToken = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN;
 
     if (!expectedToken) {
-      return res.status(503).type("text/plain").send("Webhook verification is not configured");
+      return sendText(res, 503, "Webhook verification is not configured");
     }
     if (mode === "subscribe" && token && token === expectedToken && challenge) {
-      return res.status(200).type("text/plain").send(challenge);
+      return sendText(res, 200, challenge);
     }
-    return res.status(403).type("text/plain").send("Webhook verification failed");
+    return sendText(res, 403, "Webhook verification failed");
   }
 
   if (req.method === "POST") {
     const appSecret = process.env.META_APP_SECRET;
     if (!appSecret) {
-      return res.status(503).json({ ok: false, error: "Webhook signature verification is not configured" });
+      return sendJson(res, 503, { ok: false, error: "Webhook signature verification is not configured" });
     }
 
     try {
       const rawBody = await readRawBody(req);
       const signature = req.headers["x-hub-signature-256"];
       if (!isValidSignature(rawBody, signature, appSecret)) {
-        return res.status(401).json({ ok: false, error: "Invalid webhook signature" });
+        return sendJson(res, 401, { ok: false, error: "Invalid webhook signature" });
       }
 
       // This endpoint intentionally does not store message content or personal data.
       // It acknowledges valid Meta events; event-specific processing can be added later.
-      return res.status(200).json({ ok: true });
+      return sendJson(res, 200, { ok: true });
     } catch (error) {
       const status = Number(error?.statusCode) || 400;
-      return res.status(status).json({ ok: false, error: status === 413 ? "Payload too large" : "Invalid webhook request" });
+      return sendJson(res, status, { ok: false, error: status === 413 ? "Payload too large" : "Invalid webhook request" });
     }
   }
 
   res.setHeader("Allow", "GET, POST");
-  return res.status(405).json({ ok: false, error: "Method not allowed" });
+  return sendJson(res, 405, { ok: false, error: "Method not allowed" });
 };
 
 module.exports.config = {

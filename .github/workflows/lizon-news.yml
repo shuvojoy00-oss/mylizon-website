@@ -2,6 +2,12 @@ name: LizOn Daily News
 
 on:
   workflow_dispatch:
+    inputs:
+      test_three_categories:
+        description: "Publish and verify one Study Abroad, one IELTS and one PTE article immediately"
+        required: false
+        type: boolean
+        default: false
   schedule:
     # Primary publication: 19:00 Asia/Dhaka (13:00 UTC).
     - cron: "0 13 * * *"
@@ -50,12 +56,12 @@ jobs:
           exit 1
 
       - name: Record test start time
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || inputs.test_three_categories == true
         run: echo "NEWS_TEST_STARTED_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
 
       - name: Research, write and publish
         env:
-          NEWS_TEST_THREE_CATEGORIES: ${{ github.event_name == 'push' && 'true' || 'false' }}
+          NEWS_TEST_THREE_CATEGORIES: ${{ github.event_name == 'push' || inputs.test_three_categories == true }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           NEWS_AUTOMATION_SECRET: ${{ secrets.NEWS_AUTOMATION_SECRET }}
           LIZON_BASE_URL: https://www.mylizon.com
@@ -65,7 +71,7 @@ jobs:
 
 
       - name: Verify Study Abroad, IELTS and PTE are all newly published
-        if: github.event_name == 'push' && success()
+        if: (github.event_name == 'push' || inputs.test_three_categories == true) && success()
         run: |
           feed="$(curl --fail --silent --show-error --max-time 20 -H 'Cache-Control: no-cache' 'https://www.mylizon.com/api/content?limit=10')"
           echo "$feed"

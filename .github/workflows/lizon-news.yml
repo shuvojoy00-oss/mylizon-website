@@ -64,7 +64,7 @@ jobs:
           for i in {1..12}; do
             result="$(curl --fail --silent --show-error --max-time 15 -H 'Cache-Control: no-cache' https://www.mylizon.com/api/news-health || true)"
             echo "Publication verification attempt $i: $result"
-            if echo "$result" | node -e 'let s="";process.stdin.on("data",d=>s+=d);process.stdin.on("end",()=>{try{const j=JSON.parse(s);process.exit(j.ok && (process.env.GITHUB_EVENT_NAME === 'schedule' ? j.published_after_schedule : j.published_today) ? 0 : 1)}catch{process.exit(1)}})'; then
+            if echo "$result" | node -e 'let s="";process.stdin.on("data",d=>s+=d);process.stdin.on("end",()=>{try{const j=JSON.parse(s);process.exit(j.ok && (process.env.GITHUB_EVENT_NAME === \"schedule\" ? j.published_after_schedule : j.published_today) ? 0 : 1)}catch{process.exit(1)}})'; then
               echo "Verified: the required AI news article exists in production database."
               exit 0
             fi

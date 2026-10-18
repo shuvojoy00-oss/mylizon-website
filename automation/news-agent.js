@@ -407,8 +407,9 @@ Return JSON only.
 
 async function research(existing, corpus){
   const recent = existing.slice(0,50).map(p=>({
-    title_en:p.title_en,title_bn:p.title_bn,category:p.category,
-    source_url:p.source_url,published_at:p.published_at
+    title_en:p.title_en,title_bn:p.title_bn,excerpt_en:p.excerpt_en,excerpt_bn:p.excerpt_bn,
+    body_en:htmlToText(p.body_en||"").slice(0,700),body_bn:htmlToText(p.body_bn||"").slice(0,700),
+    category:p.category,source_url:p.source_url,published_at:p.published_at
   }));
 
   const compactCorpus = corpus.map(s=>({
@@ -440,7 +441,7 @@ Each candidate:
  "reason":"",
  "facts":["fact directly supported by supplied source extract"]
 }
-Aim for editorial variety. Prefer truly recent official developments. If none are available, prefer one useful current official guidance article rather than weak filler.
+Aim for editorial variety. Prefer truly recent official developments. If none are available, prefer one useful current official guidance article rather than weak filler. Before selecting, compare the actual subject and factual event with the recent titles, excerpts, and body summaries. Do not republish the same event, policy change, or practical point with a different headline. If a recent article already covered the same specific fact, choose a different supported topic or guide.
 When NEWS_TEST_THREE_CATEGORIES=true, return exactly three candidates: one study-abroad, one ielts, and one pte. Choose one distinct, useful item for each category and do not repeat the topics or titles in the recent library.
 `;
 
@@ -507,7 +508,7 @@ Do not describe a guide or exam-intelligence article as breaking news.
   if(process.env.NEWS_TEST_THREE_CATEGORIES==="true"){
     const required=["study-abroad","ielts","pte"];
     const generated=[];
-    const recent=existing.slice(0,50).map(p=>({title_en:p.title_en,title_bn:p.title_bn,category:p.category,source_url:p.source_url,published_at:p.published_at}));
+    const recent=existing.slice(0,50).map(p=>({title_en:p.title_en,title_bn:p.title_bn,excerpt_en:p.excerpt_en,excerpt_bn:p.excerpt_bn,body_en:htmlToText(p.body_en||"").slice(0,700),body_bn:htmlToText(p.body_bn||"").slice(0,700),category:p.category,source_url:p.source_url,published_at:p.published_at}));
     for(const category of required){
       const candidate=clean.find(c=>c.category===category);
       if(!candidate) throw new Error("Test run missing a verified candidate for category: "+category);
@@ -516,7 +517,7 @@ Create exactly ONE complete bilingual LizOn News article for the category "${cat
 ${JSON.stringify(candidate)}
 Recent LizOn articles to avoid repeating:
 ${JSON.stringify(recent)}
-The article category MUST be "${category}". Copy source_url and source_name exactly from the candidate. Do not invent dates, policies, prices, deadlines, score rules, or facts. If the evidence supports guidance rather than a new development, label it as guide, problem-solution, or exam-intelligence, not breaking news.
+The article category MUST be "${category}". Copy source_url and source_name exactly from the candidate. Do not invent dates, policies, prices, deadlines, score rules, or facts. If the evidence supports guidance rather than a new development, label it as guide, problem-solution, or exam-intelligence, not breaking news. Do not cover a specific event or factual point already covered by any recent article, even if the headline is different. Use the recent article excerpts and bodies to avoid semantic duplicates.
 Return {"articles":[one complete article]} with all required schema fields. Write natural Bangla and clear English. Use only p,h2,h3,strong,ul,ol,li,blockquote tags in body fields. Do not include external links inside article bodies. Keep title and angle clearly distinct from the recent articles.
 `;
       let result=await geminiWithFallback(singlePrompt,ARTICLE_SCHEMA);
@@ -587,7 +588,7 @@ async function main(){
         if(!categorySources.length) throw new Error("No fetched official source available for test category: "+category);
         const categoryPrompt=CORE_RULES+`
 Return exactly ONE research candidate and its facts for category "${category}" only, using only the supplied official source extracts. Avoid these recent articles and angles:
-${JSON.stringify(existing.slice(0,50).map(p=>({title_en:p.title_en,title_bn:p.title_bn,category:p.category,source_url:p.source_url})))}
+${JSON.stringify(existing.slice(0,50).map(p=>({title_en:p.title_en,title_bn:p.title_bn,excerpt_en:p.excerpt_en,excerpt_bn:p.excerpt_bn,body_en:htmlToText(p.body_en||"").slice(0,700),body_bn:htmlToText(p.body_bn||"").slice(0,700),category:p.category,source_url:p.source_url,published_at:p.published_at})))}
 The candidate category must be exactly "${category}". source_url must exactly match a source_url or link URL supplied below. Do not invent a current policy, date, price, deadline or test rule. Useful verified guidance is acceptable if no new update is evidenced.
 Official extracts:
 ${JSON.stringify(categorySources)}

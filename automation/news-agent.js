@@ -441,6 +441,7 @@ Each candidate:
  "facts":["fact directly supported by supplied source extract"]
 }
 Aim for editorial variety. Prefer truly recent official developments. If none are available, prefer one useful current official guidance article rather than weak filler.
+When NEWS_TEST_THREE_CATEGORIES=true, return exactly three candidates: one study-abroad, one ielts, and one pte. Choose one distinct, useful item for each category and do not repeat the topics or titles in the recent library.
 `;
 
   return await geminiWithFallback(prompt,CANDIDATE_SCHEMA);
@@ -467,8 +468,9 @@ async function writeArticles(candidates, existing, corpus){
       (s.links||[]).some(l=>normalizeUrl(l.url)===wanted)
     );
     if(!supported){console.warn("Rejected candidate without matching fetched official source:",c.source_url);continue;}
+    if(process.env.NEWS_TEST_THREE_CATEGORIES==="true" && clean.some(x=>x.category===c.category)) continue;
     if(!clean.some(x=>normalizeUrl(x.source_url)===wanted)) clean.push(c);
-    if(clean.length>=5) break;
+    if(clean.length>=(process.env.NEWS_TEST_THREE_CATEGORIES==="true"?3:5)) break;
   }
   console.log("Verified article candidates:",clean.length);
   if(!clean.length) return [];
@@ -493,6 +495,7 @@ Do not describe a guide or exam-intelligence article as breaking news.
   const canonicalize = raw => (raw||[]).filter(a=>a && a.title_bn && a.title_en && a.body_bn && a.body_en).map(a=>{
     const url=normalizeUrl(a.source_url);
     let match=clean.find(c=>normalizeUrl(c.source_url)===url);
+    if(!match && a.category) match=clean.find(c=>c.category===a.category);
     if(!match && clean.length===1) match=clean[0];
     if(!match) {
       console.warn("Rejected generated article with unsupported source URL:",a.source_url);
@@ -500,6 +503,37 @@ Do not describe a guide or exam-intelligence article as breaking news.
     }
     return {...a,category:match.category,source_name:match.source_name,source_url:match.source_url,source_verified:true};
   }).filter(Boolean).slice(0,3);
+
+  if(process.env.NEWS_TEST_THREE_CATEGORIES==="true"){
+    const required=["study-abroad","ielts","pte"];
+    const generated=[];
+    const recent=existing.slice(0,50).map(p=>({title_en:p.title_en,title_bn:p.title_bn,category:p.category,source_url:p.source_url,published_at:p.published_at}));
+    for(const category of required){
+      const candidate=clean.find(c=>c.category===category);
+      if(!candidate) throw new Error("Test run missing a verified candidate for category: "+category);
+      const singlePrompt=CORE_RULES+`
+Create exactly ONE complete bilingual LizOn News article for the category "${category}" using ONLY this verified candidate and its supported facts:
+${JSON.stringify(candidate)}
+Recent LizOn articles to avoid repeating:
+${JSON.stringify(recent)}
+The article category MUST be "${category}". Copy source_url and source_name exactly from the candidate. Do not invent dates, policies, prices, deadlines, score rules, or facts. If the evidence supports guidance rather than a new development, label it as guide, problem-solution, or exam-intelligence, not breaking news.
+Return {"articles":[one complete article]} with all required schema fields. Write natural Bangla and clear English. Use only p,h2,h3,strong,ul,ol,li,blockquote tags in body fields. Do not include external links inside article bodies. Keep title and angle clearly distinct from the recent articles.
+`;
+      let result=await geminiWithFallback(singlePrompt,ARTICLE_SCHEMA);
+      let article=canonicalize(result.articles).find(a=>a.category===category);
+      if(!article){
+        console.warn("Retrying test article generation for category:",category);
+        result=await geminiWithFallback(singlePrompt+`
+RETRY: Return exactly one complete article. Use the supplied candidate's exact source_url and source_name. Ensure the category is exactly "${category}" and every required field is populated.
+`,ARTICLE_SCHEMA);
+        article=canonicalize(result.articles).find(a=>a.category===category);
+      }
+      if(!article) throw new Error("Could not generate a valid test article for category: "+category);
+      generated.push(article);
+      console.log("Generated test article:",category,article.title_en);
+    }
+    return generated;
+  }
 
   let result=await geminiWithFallback(prompt,ARTICLE_SCHEMA);
   let articles=canonicalize(result.articles);
@@ -518,12 +552,14 @@ RETRY REQUIREMENT: return exactly one complete bilingual article based on the st
 
 async function main(){
   let published=0,rejected=0;
+  const publishedCategories=[];
+  const testThreeCategories=process.env.NEWS_TEST_THREE_CATEGORIES==="true";
   await logRun("started",{researched:{study_abroad:false,ielts:false,pte:false}});
 
   try{
     const existing=await fetchExisting();
     const todayPublished=existing.filter(p=>p.ai_generated===true && dhakaDate(p.published_at)===TODAY && dhakaHour(p.published_at)>=19);
-    if(todayPublished.length){
+    if(todayPublished.length && !testThreeCategories){
       console.log(`Daily AI news already published after 19:00 for ${TODAY} Asia/Dhaka: ${todayPublished.length}; skipping retry.`);
       await logRun("completed",{published_count:todayPublished.length,message:"Already published after 19:00 Dhaka today; scheduled retry skipped"});
       return;
@@ -542,6 +578,30 @@ async function main(){
     const researchResult=await research(existing,corpus);
     let candidates=researchResult.candidates || [];
     console.log("Gemini research candidates:",candidates.length);
+    if(testThreeCategories){
+      const required=["study-abroad","ielts","pte"];
+      for(const category of required){
+        const valid=candidates.find(c=>c && c.category===category && c.source_url && hostAllowed(c.source_url));
+        if(valid) continue;
+        const categorySources=corpus.filter(s=>s.category===category).map(s=>({category:s.category,source_name:s.source_name,source_url:s.source_url,text:s.text,links:s.links}));
+        if(!categorySources.length) throw new Error("No fetched official source available for test category: "+category);
+        const categoryPrompt=CORE_RULES+`
+Return exactly ONE research candidate and its facts for category "${category}" only, using only the supplied official source extracts. Avoid these recent articles and angles:
+${JSON.stringify(existing.slice(0,50).map(p=>({title_en:p.title_en,title_bn:p.title_bn,category:p.category,source_url:p.source_url})))}
+The candidate category must be exactly "${category}". source_url must exactly match a source_url or link URL supplied below. Do not invent a current policy, date, price, deadline or test rule. Useful verified guidance is acceptable if no new update is evidenced.
+Official extracts:
+${JSON.stringify(categorySources)}
+Return {"candidates":[one candidate]}.
+`;
+        const result=await geminiWithFallback(categoryPrompt,CANDIDATE_SCHEMA);
+        const candidate=(result.candidates||[]).find(x=>x && x.category===category && x.source_url && hostAllowed(x.source_url));
+        if(!candidate) throw new Error("Could not find a valid official-source research candidate for test category: "+category);
+        candidates.push(candidate);
+        console.log("Recovered missing test candidate:",category,candidate.source_url);
+      }
+      candidates=required.map(category=>candidates.find(x=>x && x.category===category)).filter(Boolean);
+      if(candidates.length!==3) throw new Error("Test run requires one candidate for each of Study Abroad, IELTS and PTE.");
+    }
     if(!candidates.length){
       console.warn("Research returned zero candidates; requesting a sourced student guidance article.");
       const useful=["study-abroad","ielts","pte"].map(category=>corpus.find(s=>s.category===category)).filter(Boolean);
@@ -584,11 +644,16 @@ ${JSON.stringify(retrySources)}
         console.log("Duplicate skipped:",article.title_en);
       }else{
         published++;
-        console.log("Published:",result.post?.slug || article.title_en);
+        publishedCategories.push(article.category);
+        console.log("Published:",article.category,result.post?.slug || article.title_en);
       }
       await sleep(800);
     }
 
+    if(testThreeCategories){
+      const missing=["study-abroad","ielts","pte"].filter(category=>!publishedCategories.includes(category));
+      if(missing.length) throw new Error("Three-category test failed. No newly published article for: "+missing.join(", "));
+    }
     if(!published) throw new Error("No article published for today: all candidates rejected, duplicate, or unavailable. Retry required.");
 
     await logRun("completed",{

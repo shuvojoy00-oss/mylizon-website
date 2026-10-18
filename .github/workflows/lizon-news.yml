@@ -1,6 +1,10 @@
 name: LizOn Daily News
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'automation/news-agent.js'
   workflow_dispatch:
   schedule:
     # Primary publication: 19:00 Asia/Dhaka (13:00 UTC).
@@ -49,14 +53,46 @@ jobs:
           echo "News endpoint did not become reachable"
           exit 1
 
+      - name: Record test start time
+        if: github.event_name == 'push'
+        run: echo "NEWS_TEST_STARTED_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
+
       - name: Research, write and publish
         env:
+          NEWS_TEST_THREE_CATEGORIES: ${{ github.event_name == 'push' && 'true' || 'false' }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           NEWS_AUTOMATION_SECRET: ${{ secrets.NEWS_AUTOMATION_SECRET }}
           LIZON_BASE_URL: https://www.mylizon.com
           GEMINI_PRIMARY_MODEL: gemini-3.1-flash-lite
           GEMINI_FALLBACK_MODEL: gemini-3.5-flash
         run: node automation/news-agent.js
+
+
+      - name: Verify Study Abroad, IELTS and PTE are all newly published
+        if: github.event_name == 'push' && success()
+        run: |
+          feed="$(curl --fail --silent --show-error --max-time 20 -H 'Cache-Control: no-cache' 'https://www.mylizon.com/api/content?limit=10')"
+          echo "$feed"
+          echo "$feed" | node -e '
+            let s="";
+            process.stdin.on("data",d=>s+=d);
+            process.stdin.on("end",()=>{
+              try {
+                const j=JSON.parse(s);
+                const start=Number(process.env.NEWS_TEST_STARTED_EPOCH||0)*1000;
+                const required=["study-abroad","ielts","pte"];
+                const posts=(j.posts||[]).filter(p=>new Date(p.published_at).getTime()>=start && p.ai_generated===true);
+                const categories=[...new Set(posts.map(p=>p.category))];
+                console.log("Newly published test articles:", JSON.stringify(posts.map(p=>({category:p.category,title:p.title_en,published_at:p.published_at}))));
+                const missing=required.filter(c=>!categories.includes(c));
+                if(!j.ok || missing.length) {
+                  console.error("Missing newly published categories:",missing.join(", "));
+                  process.exit(1);
+                }
+                console.log("PASS: one newly published article exists for each required category.");
+              } catch(e) { console.error(e); process.exit(1); }
+            });
+          '
 
       - name: Verify article is published in production
         if: success()

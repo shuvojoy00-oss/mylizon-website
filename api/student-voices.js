@@ -11,7 +11,9 @@ async function setup(db){
  await db.query(`CREATE TABLE IF NOT EXISTS voice_categories (id BIGSERIAL PRIMARY KEY, name TEXT NOT NULL UNIQUE)`);
  await db.query(`CREATE TABLE IF NOT EXISTS student_voices (id BIGSERIAL PRIMARY KEY, category_id BIGINT REFERENCES voice_categories(id) ON DELETE RESTRICT, title TEXT NOT NULL, youtube_url TEXT NOT NULL, video_id VARCHAR(11) NOT NULL, published BOOLEAN NOT NULL DEFAULT TRUE, sort_order INTEGER NOT NULL DEFAULT 0, seed_key TEXT UNIQUE, created_at TIMESTAMPTZ DEFAULT NOW())`);
  for(const name of ["IELTS","PTE","Study Abroad","Spoken English","FEATURED STUDENT STORY","STUDENT STORY","IELTS RESULT"])await db.query("INSERT INTO voice_categories(name) VALUES($1) ON CONFLICT(name) DO NOTHING",[name]);
- for(const [key,cat,title,url,order] of seeds)await db.query("INSERT INTO student_voices(seed_key,category_id,title,youtube_url,video_id,sort_order) SELECT $1,id,$3,$4,$5,$6 FROM voice_categories WHERE name=$2 ON CONFLICT(seed_key) DO NOTHING",[key,cat,title,url,youtubeId(url),order]);
+ await db.query("CREATE TABLE IF NOT EXISTS voice_migrations (name TEXT PRIMARY KEY)");
+ const seeded=await db.query("INSERT INTO voice_migrations(name) VALUES('initial-four') ON CONFLICT DO NOTHING RETURNING name");
+ if(seeded.rowCount){for(const [key,cat,title,url,order] of seeds)await db.query("INSERT INTO student_voices(seed_key,category_id,title,youtube_url,video_id,sort_order) SELECT $1,id,$3,$4,$5,$6 FROM voice_categories WHERE name=$2 ON CONFLICT(seed_key) DO NOTHING",[key,cat,title,url,youtubeId(url),order]);}
 }
 module.exports=async(req,res)=>{
  res.setHeader("Cache-Control","no-store");

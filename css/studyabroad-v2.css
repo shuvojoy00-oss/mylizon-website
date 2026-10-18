@@ -4079,3 +4079,30 @@ button:hover .sa-slim-arrow{transform:translateX(3px)}
 @keyframes saBdPulse{0%{r:12;opacity:.85}75%,100%{r:31;opacity:0}}
 @media(max-width:600px){.sa-hero .sa-jet--three{display:none}.sa-hero .sa-world-routes .sa-route:nth-child(n+12),.sa-hero .sa-world-destinations .sa-destination:nth-child(n+12){display:none}}
 @media(prefers-reduced-motion:reduce){.sa-hero .sa-world-real-map,.sa-hero .sa-bd-marker,.sa-hero .sa-world-routes .sa-route,.sa-hero .sa-world-destinations .sa-destination,.sa-hero .sa-jet,.sa-hero .sa-bd-pulse{animation:none!important;opacity:1!important}.sa-hero .sa-world-routes .sa-route{stroke-dashoffset:0!important}}
+
+/* Final entrance polish: a true left-to-right map reveal and flag rising out of depth. */
+.sa-hero .sa-world-real-map{
+  opacity:.34!important;
+  clip-path:inset(0 100% 0 0);
+  animation:saWorldUncover .65s cubic-bezier(.18,.7,.28,1) both!important;
+}
+.sa-hero .sa-bd-position{opacity:1}
+.sa-hero .sa-bd-marker{
+  opacity:0;
+  transform:translate3d(-17px,0,0) scale(.72);
+  transform-origin:40px 27px;
+  transform-box:view-box;
+  animation:saFlagDepthReveal .48s cubic-bezier(.16,1,.3,1) .35s both!important;
+}
+@keyframes saWorldUncover{
+  0%{clip-path:inset(0 100% 0 0);opacity:.34}
+  100%{clip-path:inset(0 0 0 0);opacity:.34}
+}
+@keyframes saFlagDepthReveal{
+  0%{opacity:0;transform:translate3d(-17px,0,0) scale(.72);filter:blur(3px)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+}
+@media(prefers-reduced-motion:reduce){
+  .sa-hero .sa-world-real-map{animation:none!important;clip-path:none!important}
+  .sa-hero .sa-bd-marker{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
+}

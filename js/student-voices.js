@@ -1,14 +1,14 @@
 (() => {
-const track=document.getElementById("voices-track"),prev=document.getElementById("voices-prev"),next=document.getElementById("voices-next"),pause=document.getElementById("voices-pause");
+const track=document.getElementById("voices-track"),prev=document.getElementById("voices-prev"),next=document.getElementById("voices-next");
 if(!track)return;
-let timer=null,paused=false,hovered=false,visible=true;
+let timer=null,hovered=false,visible=true,interactionUntil=0,resumeTimer=null;
 const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
 function stop(){if(timer){clearInterval(timer);timer=null}}
-function interval(){stop();if(paused||hovered||!visible||reduced.matches||track.children.length<2||document.hidden)return;timer=setInterval(()=>move(1),4800)}
-function manual(){paused=true;pause.textContent="Resume";pause.setAttribute("aria-pressed","true");stop()}
+function interval(){stop();if(hovered||Date.now()<interactionUntil||!visible||reduced.matches||track.children.length<2||document.hidden)return;timer=setInterval(()=>move(1),2200)}
+function manual(){interactionUntil=Date.now()+3500;stop();clearTimeout(resumeTimer);resumeTimer=setTimeout(interval,3600)}
 function move(direction){const first=track.querySelector(".voices-carousel__card");if(!first)return;const gap=parseFloat(getComputedStyle(track).gap)||18;const step=first.getBoundingClientRect().width+gap;const end=track.scrollWidth-track.clientWidth;if(end<2)return;let target=track.scrollLeft+direction*step;if(target>end+3)target=0;if(target<0)target=end;track.scrollTo({left:target,behavior:reduced.matches?"auto":"smooth"})}
 prev.addEventListener("click",()=>{manual();move(-1)});next.addEventListener("click",()=>{manual();move(1)});
-pause.addEventListener("click",()=>{paused=!paused;pause.textContent=paused?"Resume":"Pause";pause.setAttribute("aria-pressed",String(paused));interval()});
+
 track.addEventListener("mouseenter",()=>{hovered=true;stop()});track.addEventListener("mouseleave",()=>{hovered=false;interval()});
 track.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse")manual()});
 track.addEventListener("wheel",manual,{passive:true});track.addEventListener("keydown",e=>{if(["ArrowLeft","ArrowRight"].includes(e.key))manual()});

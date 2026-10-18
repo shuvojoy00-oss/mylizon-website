@@ -4131,3 +4131,19 @@ button:hover .sa-slim-arrow{transform:translateX(3px)}
  .sa-hero .sa-world-real-map{animation:none!important;opacity:.34!important;filter:grayscale(1) sepia(.55) hue-rotate(80deg) saturate(.8) brightness(.9)!important}
  .sa-hero .sa-bd-marker{animation:none!important;opacity:1!important;filter:none!important}
 }
+
+/* Route launch: each line visibly travels from Bangladesh to its destination. */
+.sa-hero .sa-world-routes .sa-route{
+  stroke-dasharray:4 8!important;
+  stroke-dashoffset:0;
+  animation:saRouteTravel 1.15s cubic-bezier(.35,.05,.2,1) both,saRouteDrift 7s linear 3s infinite!important;
+  animation-delay:calc(.55s + var(--route)*.075s),3s!important;
+}
+@keyframes saRouteTravel{
+  0%{stroke-dasharray:0 100;stroke-dashoffset:0;opacity:1}
+  10%{stroke-dasharray:0 100;stroke-dashoffset:0;opacity:1}
+  100%{stroke-dasharray:100 0;stroke-dashoffset:0;opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+ .sa-hero .sa-world-routes .sa-route{animation:none!important;stroke-dasharray:4 8!important;stroke-dashoffset:0!important}
+}

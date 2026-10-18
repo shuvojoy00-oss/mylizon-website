@@ -4147,3 +4147,26 @@ button:hover .sa-slim-arrow{transform:translateX(3px)}
 @media(prefers-reduced-motion:reduce){
  .sa-hero .sa-world-routes .sa-route{animation:none!important;stroke-dasharray:4 8!important;stroke-dashoffset:0!important}
 }
+
+/* Genuine outward travel: animated masks reveal the existing dotted routes
+   from the Bangladesh origin to each endpoint, in rapid succession. */
+.sa-hero .sa-world-routes .sa-route{
+  stroke-dasharray:4 8!important;
+  stroke-dashoffset:0;
+  animation:saRouteDrift 7s linear 2.9s infinite!important;
+}
+.sa-hero .sa-route-reveal{
+  stroke-dasharray:100 100;
+  stroke-dashoffset:100;
+  animation:saRouteDepart .7s cubic-bezier(.28,.1,.2,1) both;
+  animation-delay:calc(.58s + var(--route)*.11s);
+}
+@keyframes saRouteDepart{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+.sa-hero .sa-world-destinations .sa-destination{
+  animation:saDestinationLand .22s ease-out both!important;
+  animation-delay:calc(1.24s + var(--route)*.11s)!important;
+}
+@media(prefers-reduced-motion:reduce){
+ .sa-hero .sa-route-reveal{animation:none!important;stroke-dashoffset:0!important}
+ .sa-hero .sa-world-routes .sa-route{animation:none!important}
+}

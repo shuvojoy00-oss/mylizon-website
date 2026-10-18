@@ -4053,3 +4053,29 @@ button:hover .sa-slim-arrow{transform:translateX(3px)}
  .sa-hero .sa-world-journey svg{height:100%;min-height:0}
 }
 @media(max-width:600px){.sa-hero .sa-world-journey{aspect-ratio:1.55;min-height:0}.sa-hero .sa-world-journey svg{min-height:0}}
+
+/* Bangladesh first: cinematic three-second introduction, then ambient movement */
+.sa-hero .sa-world-journey svg{overflow:visible}
+.sa-hero .sa-world-real-map{opacity:.32!important;filter:grayscale(1) sepia(.55) hue-rotate(80deg) saturate(.8) brightness(.9)!important;animation:saMapArrive .45s ease-out both}
+.sa-hero .sa-world-grid{opacity:.3}
+.sa-hero .sa-world-routes .sa-route{
+ fill:none;stroke:#146e4d!important;stroke-width:2.6!important;
+ stroke-linecap:round;stroke-dasharray:4 8;opacity:.92!important;
+ stroke-dashoffset:100;animation:saRouteDraw 1.35s ease-out both,saRouteDrift 7s linear 3s infinite!important;
+ animation-delay:calc(.5s + var(--route)*.09s),3s!important;
+}
+.sa-hero .sa-world-routes .sa-route:nth-child(3n){stroke:#b58b43!important}
+.sa-hero .sa-world-destinations .sa-destination{fill:#1b7552!important;stroke:#fff;stroke-width:2;opacity:0;animation:saDestinationLand .3s ease-out both;animation-delay:calc(1.25s + var(--route)*.095s)}
+.sa-hero .sa-bd-marker{animation:saBangladeshArrive .45s cubic-bezier(.2,1.5,.5,1) both;transform-box:fill-box;transform-origin:center}
+.sa-hero .sa-bd-pulse{fill:rgba(28,114,77,.12);stroke:#1b8056;stroke-width:2;animation:saBdPulse 2.8s ease-out .3s infinite}
+.sa-hero .sa-jet{opacity:0;animation:saJetEnter .4s ease-out 2.3s both;filter:drop-shadow(0 2px 2px rgba(15,54,39,.16))}
+.sa-hero .sa-jet--three{animation-delay:2.65s}
+@keyframes saMapArrive{from{opacity:0}to{opacity:.32}}
+@keyframes saBangladeshArrive{from{opacity:0;scale:.7}to{opacity:1;scale:1}}
+@keyframes saRouteDraw{from{stroke-dasharray:0 100;stroke-dashoffset:100}to{stroke-dasharray:4 8;stroke-dashoffset:0}}
+@keyframes saRouteDrift{from{stroke-dashoffset:0}to{stroke-dashoffset:-96}}
+@keyframes saDestinationLand{from{opacity:0;scale:.3;transform-origin:center}to{opacity:1;scale:1;transform-origin:center}}
+@keyframes saJetEnter{to{opacity:1}}
+@keyframes saBdPulse{0%{r:12;opacity:.85}75%,100%{r:31;opacity:0}}
+@media(max-width:600px){.sa-hero .sa-jet--three{display:none}.sa-hero .sa-world-routes .sa-route:nth-child(n+12),.sa-hero .sa-world-destinations .sa-destination:nth-child(n+12){display:none}}
+@media(prefers-reduced-motion:reduce){.sa-hero .sa-world-real-map,.sa-hero .sa-bd-marker,.sa-hero .sa-world-routes .sa-route,.sa-hero .sa-world-destinations .sa-destination,.sa-hero .sa-jet,.sa-hero .sa-bd-pulse{animation:none!important;opacity:1!important}.sa-hero .sa-world-routes .sa-route{stroke-dashoffset:0!important}}

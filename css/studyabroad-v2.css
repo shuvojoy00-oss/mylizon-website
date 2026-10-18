@@ -4106,3 +4106,28 @@ button:hover .sa-slim-arrow{transform:translateX(3px)}
   .sa-hero .sa-world-real-map{animation:none!important;clip-path:none!important}
   .sa-hero .sa-bd-marker{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
 }
+
+/* Soft focus entrance: map and Bangladesh flag emerge in place through transparency. */
+.sa-hero .sa-world-real-map{
+  clip-path:none!important;
+  opacity:.34!important;
+  animation:saMapSoftFocus .8s ease-out both!important;
+}
+.sa-hero .sa-bd-marker{
+  opacity:1;
+  transform:none!important;
+  filter:none;
+  animation:saFlagSoftFocus .65s ease-out .18s both!important;
+}
+@keyframes saMapSoftFocus{
+  0%{opacity:0;filter:grayscale(1) sepia(.55) hue-rotate(80deg) saturate(.8) brightness(.9) blur(4px)}
+  100%{opacity:.34;filter:grayscale(1) sepia(.55) hue-rotate(80deg) saturate(.8) brightness(.9) blur(0)}
+}
+@keyframes saFlagSoftFocus{
+  0%{opacity:0;filter:blur(4px)}
+  100%{opacity:1;filter:blur(0)}
+}
+@media(prefers-reduced-motion:reduce){
+ .sa-hero .sa-world-real-map{animation:none!important;opacity:.34!important;filter:grayscale(1) sepia(.55) hue-rotate(80deg) saturate(.8) brightness(.9)!important}
+ .sa-hero .sa-bd-marker{animation:none!important;opacity:1!important;filter:none!important}
+}

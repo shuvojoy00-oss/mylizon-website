@@ -2580,3 +2580,45 @@ address {
 .hero-story__caption{display:block;margin-top:7px;font-size:10px;letter-spacing:.025em;opacity:.7}
 @media(max-width:720px){.hero-story{width:min(100%,350px);margin:12px 0 14px}.hero-story__scene{height:98px}.hero-story__student{top:6px}.hero-story__desk{bottom:10px}.hero-story__globe{font-size:76px}.hero-story__browser{transform:scale(.87)}.hero-story__form,.hero-story__result{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.hero-story__stage,.hero-story__timeline span,.hero-story__pencil,.hero-story__pin,.hero-story__plane,.hero-story__result strong{animation:none!important}.hero-story__stage{opacity:0}.hero-story__stage--fly{opacity:1;transform:none}}
+
+/* Open canvas, cumulative seven-step journey. No colored card background. */
+.hero-journey{position:relative;width:min(100%,650px);margin:15px 0 22px;color:#245b44;isolation:isolate}
+.hero-journey__track{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;align-items:start;position:relative}
+.hero-journey__track:before{content:"";position:absolute;top:43px;left:6%;right:6%;border-top:2px dashed #b7c9ac;z-index:-1}
+.hero-journey__step{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;min-width:0;opacity:0;transform:translateY(14px) scale(.82);animation:hero-journey-appear 12s both infinite}
+.hero-journey__visual{height:85px;width:100%;max-width:85px;display:grid;place-items:center;position:relative;color:#276a4d}
+.hero-journey__step b{font-size:clamp(10px,1.1vw,13px);font-weight:900;line-height:1.1;color:inherit}
+.hero-journey__step small{font-size:9px;line-height:1.2;opacity:.76;color:inherit}
+.hero-journey__ending{position:relative;text-align:center;color:#b38b37;font-size:12px;font-weight:900;letter-spacing:.12em;margin-top:13px;opacity:0;animation:hero-journey-finale 12s infinite}
+.story-phone{width:48px;height:77px;border:4px solid #215c46;border-radius:10px;background:#f7f8ef;box-shadow:0 4px 8px #174d3925;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:5px 3px;transform:rotate(-7deg)}
+.story-phone__search{white-space:nowrap;overflow:hidden;display:block;border:1px solid #c4d7c7;border-radius:8px;color:#235c43;font-size:5px;padding:4px 1px;width:0;animation:story-type 12s infinite}
+.story-phone__result{font-size:6px;color:#176f46;background:#e1f0dc;border-radius:3px;padding:4px 1px;opacity:0;animation:story-search-hit 12s infinite}
+.story-admission{width:65px;height:64px;padding:8px 5px;border:2px solid #a8bdad;border-radius:6px;background:#fffdf3;box-shadow:0 3px 8px #1c4c3520;display:flex;flex-direction:column;gap:5px;transform:rotate(4deg)}
+.story-admission span{font-size:6px;font-weight:900;color:#245a43}.story-admission i{height:5px;background:#d4dfd1;border-radius:4px}.story-admission i:nth-of-type(2){width:65%}.story-admission b{font-size:8px;color:#188154}
+.story-teacher{position:relative;display:flex;align-items:end;gap:3px;height:70px}.story-person{font-size:25px;color:#d2a66d;position:relative;align-self:end}.story-person:after{content:"";display:block;width:20px;height:25px;border-radius:8px 8px 2px 2px;background:#23634b;margin-top:-7px}.story-person--student{font-size:19px}.story-person--student:after{width:15px;height:19px;background:#8cba9d}
+.story-board{display:block;padding:8px 3px;border:3px solid #b6a17b;border-radius:3px;background:#e8f0e2;color:#37694f;font-size:9px;font-weight:800;line-height:1.6;align-self:center}
+.story-scorecard{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fffdf2;border:2px solid #d4bd87;border-radius:8px;padding:8px 13px;box-shadow:0 5px 12px #204d3420;transform:rotate(-6deg)}.story-scorecard span{font-size:8px;font-weight:900}.story-scorecard i{height:5px;width:31px;border-radius:5px;background:#cbd6c5}.story-scorecard strong{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#25714e;color:#e8cb84;font-size:21px}
+.story-counsel{display:flex;flex-direction:column;gap:6px;align-items:start}.story-counsel span{font-size:7px;font-weight:800;padding:7px 5px;border-radius:9px;background:#e5efdf;color:#205840;box-shadow:0 3px 8px #24503b12;white-space:nowrap}.story-counsel span+span{background:#f4e5c4;align-self:end}
+.story-map{font-size:76px;line-height:1;color:#317353;position:relative}.story-map span{position:absolute;top:10px;right:4px;font-size:19px}
+.story-flight{display:grid;place-items:center;position:relative;height:75px}.story-flight>span{font-size:39px;color:#cba24f;display:block;animation:story-takeoff 12s infinite}.story-flight svg{position:absolute;bottom:0;width:80px;height:30px;color:#c5a566}
+@keyframes story-takeoff{0%,73%{transform:translate(-15px,15px) rotate(-14deg)}84%,100%{transform:translate(9px,-10px) rotate(-14deg)}}
+@keyframes story-type{0%,2%{width:0}7%,100%{width:100%}}
+@keyframes story-search-hit{0%,7%{opacity:0}10%,100%{opacity:1}}
+@keyframes hero-journey-finale{0%,76%{opacity:0;transform:translateY(8px)}82%,95%{opacity:1;transform:translateY(0)}100%{opacity:0}}
+@media(max-width:720px){.hero-journey{width:100%;margin:14px 0 18px}.hero-journey__track{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:12px;column-gap:4px}.hero-journey__track:before{display:none}.hero-journey__visual{height:67px;transform:scale(.83);transform-origin:bottom center}.hero-journey__step small{font-size:8px}.hero-journey__step b{font-size:11px}.hero-journey__ending{margin-top:10px}}
+@media(prefers-reduced-motion:reduce){.hero-journey__step,.hero-journey__ending,.story-phone__search,.story-phone__result,.story-flight>span{animation:none!important;opacity:1!important;transform:none!important}.story-phone__search{width:100%}}
+
+@keyframes hero-journey-show-0{0%,0.0%{opacity:0;transform:translateY(14px) scale(.82)}5.0%,94%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(0) scale(1)}}
+.hero-journey__step--discover{animation-name:hero-journey-show-0}
+@keyframes hero-journey-show-1{0%,10.3%{opacity:0;transform:translateY(14px) scale(.82)}15.4%,94%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(0) scale(1)}}
+.hero-journey__step--enroll{animation-name:hero-journey-show-1}
+@keyframes hero-journey-show-2{0%,20.7%{opacity:0;transform:translateY(14px) scale(.82)}25.8%,94%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(0) scale(1)}}
+.hero-journey__step--learn{animation-name:hero-journey-show-2}
+@keyframes hero-journey-show-3{0%,31.1%{opacity:0;transform:translateY(14px) scale(.82)}36.2%,94%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(0) scale(1)}}
+.hero-journey__step--score{animation-name:hero-journey-show-3}
+@keyframes hero-journey-show-4{0%,41.5%{opacity:0;transform:translateY(14px) scale(.82)}46.6%,94%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(0) scale(1)}}
+.hero-journey__step--counsel{animation-name:hero-journey-show-4}
+@keyframes hero-journey-show-5{0%,51.9%{opacity:0;transform:translateY(14px) scale(.82)}57.0%,94%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(0) scale(1)}}
+.hero-journey__step--country{animation-name:hero-journey-show-5}
+@keyframes hero-journey-show-6{0%,62.3%{opacity:0;transform:translateY(14px) scale(.82)}67.4%,94%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(0) scale(1)}}
+.hero-journey__step--fly{animation-name:hero-journey-show-6}

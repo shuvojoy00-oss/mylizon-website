@@ -560,8 +560,8 @@ async function main(){
   try{
     const existing=await fetchExisting();
     const todayPublished=existing.filter(p=>p.ai_generated===true && dhakaDate(p.published_at)===TODAY && dhakaHour(p.published_at)>=19);
-    const targetCategories=["study-abroad","ielts","pte"].filter(category=>!todayPublished.some(p=>p.category===category));
-    if(!targetCategories.length && !process.env.GITHUB_EVENT_NAME?.includes("workflow_dispatch")){
+    const targetCategories=["study-abroad","ielts","pte"].filter(category=>process.env.NEWS_TEST_THREE_CATEGORIES==="true" && process.env.GITHUB_EVENT_NAME!=="schedule" ? true : !todayPublished.some(p=>p.category===category));
+    if(!targetCategories.length){
       console.log(`Daily AI news already published after 19:00 for ${TODAY} Asia/Dhaka: ${todayPublished.length}; skipping retry.`);
       await logRun("completed",{published_count:todayPublished.length,message:"Already published after 19:00 Dhaka today; scheduled retry skipped"});
       return;

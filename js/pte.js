@@ -1186,6 +1186,11 @@ detailsInner.appendChild(
             link.href = "https://wa.me/8801939029000?text=" + encodeURIComponent("Hello LizOn, I would like to ask about the next PTE " + (card.querySelector(".course-card__name")?.textContent || "") + " batch.");
             link.textContent = "Ask about next batch";
           }
+          const bottom = card.querySelector(".course-detail-footer .course-admit-button");
+          if (bottom) {
+            bottom.href = link?.href || "#";
+            bottom.textContent = "Ask about next batch";
+          }
           // Keep the original expand/collapse handler and its course-specific details.
         }
       });

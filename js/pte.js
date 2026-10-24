@@ -1177,7 +1177,7 @@ detailsInner.appendChild(
           notice.textContent = "This batch is full. No new admissions are available at the moment.";
           card.querySelector(".course-card__actions")?.after(notice);
           if (link) {
-            link.href = "https://wa.me/8801624475432?text=" + encodeURIComponent("Hello LizOn, I would like to ask about the next PTE " + (card.querySelector(".course-card__name")?.textContent || "") + " batch.");
+            link.href = "https://wa.me/8801939029000?text=" + encodeURIComponent("Hello LizOn, I would like to ask about the next PTE " + (card.querySelector(".course-card__name")?.textContent || "") + " batch.");
             link.textContent = "Ask about next batch";
           }
           // Keep the original expand/collapse handler and its course-specific details.

@@ -1450,23 +1450,32 @@ detailsInner.appendChild(
       }
     );
 
-    // Batch cards link to dedicated pages. One-on-one remains unchanged.
+    // Only the active batch links to its own page. Full batches retain original details.
     if (state.mode === "batch") {
-      const target = "ielts-full-batch.html";
       elements.accordion.querySelectorAll(".course-card").forEach(card => {
+        const isActive = card.dataset.courseId === "batchFull";
         const link = card.querySelector(".course-admit-button");
-        if (link) {
-          link.href = target;
-          link.textContent = "View Details";
-        }
         const detail = card.querySelector(".course-detail-button");
-        if (detail) {
-          detail.textContent = "View Details";
-          detail.addEventListener("click", event => {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            window.location.href = target;
-          }, true);
+        if (isActive) {
+          if (link) { link.href = "ielts-full-batch.html"; link.textContent = "View Full Course"; }
+          if (detail) {
+            detail.addEventListener("click", event => {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+              window.location.href = "ielts-full-batch.html";
+            }, true);
+          }
+        } else {
+          card.classList.add("batch-unavailable");
+          const notice = document.createElement("p");
+          notice.className = "batch-full-notice";
+          notice.textContent = "This batch is full. No new admissions are available at the moment.";
+          card.querySelector(".course-card__actions")?.after(notice);
+          if (link) {
+            link.href = "https://wa.me/8801624475432?text=" + encodeURIComponent("Hello LizOn, I would like to ask about the next IELTS " + (card.querySelector(".course-card__name")?.textContent || "") + " batch.");
+            link.textContent = "Ask about next batch";
+          }
+          // Keep the original expand/collapse handler and its course-specific details.
         }
       });
     }

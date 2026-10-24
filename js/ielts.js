@@ -1450,6 +1450,29 @@ detailsInner.appendChild(
       }
     );
 
+    // Batch-specific details are maintained in the shared batch catalog.
+    // The one-on-one experience remains unchanged.
+    if (state.mode === "batch") {
+      elements.accordion.querySelectorAll(".course-card").forEach(card => {
+        const chosen = card.dataset.courseId === "batchFull";
+        const target = chosen ? "batch.html?course=ielts-full" : "batch.html";
+        const action = card.querySelector(".course-admit-button");
+        if (action) {
+          action.href = target;
+          action.textContent = chosen ? "Explore Current Batch" : "Batch Full · Explore Active Batch";
+        }
+        const detail = card.querySelector(".course-detail-button");
+        if (detail) {
+          detail.addEventListener("click", event => {
+            event.stopImmediatePropagation();
+            window.location.href = target;
+          }, true);
+          detail.textContent = chosen ? "View Full Course Details" : "Batch Full · View Alternative";
+        }
+      });
+    }
+
+
   }
 
 

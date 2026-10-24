@@ -1452,18 +1452,16 @@ detailsInner.appendChild(
 
     // Batch cards link to dedicated pages. One-on-one remains unchanged.
     if (state.mode === "batch") {
-      const activeId = "batchFull";
       const target = "ielts-full-batch.html";
       elements.accordion.querySelectorAll(".course-card").forEach(card => {
-        const chosen = card.dataset.courseId === activeId;
         const link = card.querySelector(".course-admit-button");
         if (link) {
           link.href = target;
-          link.textContent = chosen ? "View Course Details" : "Batch Full · Explore Active Batch";
+          link.textContent = "View Details";
         }
         const detail = card.querySelector(".course-detail-button");
         if (detail) {
-          detail.textContent = chosen ? "View Details" : "Batch Full · See Alternative";
+          detail.textContent = "View Details";
           detail.addEventListener("click", event => {
             event.preventDefault();
             event.stopImmediatePropagation();
@@ -1472,7 +1470,6 @@ detailsInner.appendChild(
         }
       });
     }
-
 
   }
 

@@ -1450,6 +1450,12 @@ detailsInner.appendChild(
       }
     );
 
+    if (!document.getElementById("lizon-full-batch-style")) {
+      const style = document.createElement("style");
+      style.id = "lizon-full-batch-style";
+      style.textContent = ".batch-unavailable{border-color:#e5b2b2!important}.batch-full-notice{margin:12px 20px 18px;padding:13px 16px;border-radius:10px;background:#fff0f0;color:#9c2626;border:1px solid #f1c6c6;font-weight:700;line-height:1.5}";
+      document.head.appendChild(style);
+    }
     // Only the active batch links to its own page. Full batches retain original details.
     if (state.mode === "batch") {
       elements.accordion.querySelectorAll(".course-card").forEach(card => {

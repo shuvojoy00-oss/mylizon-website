@@ -448,7 +448,7 @@ When NEWS_TEST_THREE_CATEGORIES=true, return exactly three candidates: one study
   return await geminiWithFallback(prompt,CANDIDATE_SCHEMA);
 }
 
-async function writeArticles(candidates, existing, corpus){
+async function writeArticles(candidates, existing, corpus, targetCategories=["study-abroad","ielts","pte"]){
   const normalizeUrl = value => {
     try {
       const u = new URL(String(value || ""));
@@ -469,7 +469,7 @@ async function writeArticles(candidates, existing, corpus){
       (s.links||[]).some(l=>normalizeUrl(l.url)===wanted)
     );
     if(!supported){console.warn("Rejected candidate without matching fetched official source:",c.source_url);continue;}
-    if(process.env.NEWS_TEST_THREE_CATEGORIES==="true" && clean.some(x=>x.category===c.category)) continue;
+    if(process.env.NEWS_TEST_THREE_CATEGORIES==="true" && (!targetCategories.includes(c.category) || clean.some(x=>x.category===c.category))) continue;
     if(!clean.some(x=>normalizeUrl(x.source_url)===wanted)) clean.push(c);
     if(clean.length>=(process.env.NEWS_TEST_THREE_CATEGORIES==="true"?3:5)) break;
   }
@@ -506,7 +506,7 @@ Do not describe a guide or exam-intelligence article as breaking news.
   }).filter(Boolean).slice(0,3);
 
   if(process.env.NEWS_TEST_THREE_CATEGORIES==="true"){
-    const required=["study-abroad","ielts","pte"];
+    const required=targetCategories;
     const generated=[];
     const recent=existing.slice(0,50).map(p=>({title_en:p.title_en,title_bn:p.title_bn,excerpt_en:p.excerpt_en,excerpt_bn:p.excerpt_bn,body_en:htmlToText(p.body_en||"").slice(0,700),body_bn:htmlToText(p.body_bn||"").slice(0,700),category:p.category,source_url:p.source_url,published_at:p.published_at}));
     for(const category of required){
@@ -554,13 +554,14 @@ RETRY REQUIREMENT: return exactly one complete bilingual article based on the st
 async function main(){
   let published=0,rejected=0;
   const publishedCategories=[];
-  const testThreeCategories=process.env.NEWS_TEST_THREE_CATEGORIES==="true";
+  const testThreeCategories=process.env.NEWS_TEST_THREE_CATEGORIES==="true" || process.env.GITHUB_EVENT_NAME==="schedule";
   await logRun("started",{researched:{study_abroad:false,ielts:false,pte:false}});
 
   try{
     const existing=await fetchExisting();
     const todayPublished=existing.filter(p=>p.ai_generated===true && dhakaDate(p.published_at)===TODAY && dhakaHour(p.published_at)>=19);
-    if(todayPublished.length && !testThreeCategories){
+    const targetCategories=["study-abroad","ielts","pte"].filter(category=>!todayPublished.some(p=>p.category===category));
+    if(!targetCategories.length && !process.env.GITHUB_EVENT_NAME?.includes("workflow_dispatch")){
       console.log(`Daily AI news already published after 19:00 for ${TODAY} Asia/Dhaka: ${todayPublished.length}; skipping retry.`);
       await logRun("completed",{published_count:todayPublished.length,message:"Already published after 19:00 Dhaka today; scheduled retry skipped"});
       return;
@@ -580,7 +581,7 @@ async function main(){
     let candidates=researchResult.candidates || [];
     console.log("Gemini research candidates:",candidates.length);
     if(testThreeCategories){
-      const required=["study-abroad","ielts","pte"];
+      const required=targetCategories;
       for(const category of required){
         const valid=candidates.find(c=>c && c.category===category && c.source_url && hostAllowed(c.source_url));
         if(valid) continue;
@@ -601,7 +602,7 @@ Return {"candidates":[one candidate]}.
         console.log("Recovered missing test candidate:",category,candidate.source_url);
       }
       candidates=required.map(category=>candidates.find(x=>x && x.category===category)).filter(Boolean);
-      if(candidates.length!==3) throw new Error("Test run requires one candidate for each of Study Abroad, IELTS and PTE.");
+      if(candidates.length!==required.length) throw new Error("Run requires a verified candidate for each missing category.");
     }
     if(!candidates.length){
       console.warn("Research returned zero candidates; requesting a sourced student guidance article.");
@@ -617,7 +618,7 @@ Return {"candidates":[one candidate]}.
       pte:coverage.pte>0
     };
 
-    let articles=await writeArticles(candidates,existing,corpus);
+    let articles=await writeArticles(candidates,existing,corpus,targetCategories);
     console.log("Gemini completed articles:",articles.length);
     if(!articles.length){
       console.warn("No publishable article after first generation pass; retrying research with one fetched official source per category.");
@@ -630,7 +631,7 @@ ${JSON.stringify(retrySources)}
       const retryResearch=await geminiWithFallback(retryPrompt,CANDIDATE_SCHEMA);
       const retryCandidates=retryResearch.candidates||[];
       console.log("Final recovery research candidates:",retryCandidates.length);
-      if(retryCandidates.length) articles=await writeArticles(retryCandidates,existing,corpus);
+      if(retryCandidates.length) articles=await writeArticles(retryCandidates,existing,corpus,targetCategories);
       console.log("Final recovery articles:",articles.length);
     }
 
@@ -652,8 +653,8 @@ ${JSON.stringify(retrySources)}
     }
 
     if(testThreeCategories){
-      const missing=["study-abroad","ielts","pte"].filter(category=>!publishedCategories.includes(category));
-      if(missing.length) throw new Error("Three-category test failed. No newly published article for: "+missing.join(", "));
+      const missing=targetCategories.filter(category=>!publishedCategories.includes(category));
+      if(missing.length) throw new Error("Daily category coverage incomplete. Will retry missing categories: "+missing.join(", "));
     }
     if(!published) throw new Error("No article published for today: all candidates rejected, duplicate, or unavailable. Retry required.");
 

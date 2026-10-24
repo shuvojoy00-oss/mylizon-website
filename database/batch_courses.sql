@@ -7,8 +7,8 @@ create table if not exists public.batch_courses (
  updated_at timestamptz not null default now()
 );
 alter table public.batch_courses enable row level security;
--- Only open/full courses can be read by the public. Hidden courses are not exposed.
-create policy "Public active batch read" on public.batch_courses for select to anon, authenticated using (status in ('open','full') or exists(select 1 from public.profiles p where p.id=auth.uid() and p.role in ('admin','super_admin')));
+-- Public metadata can be read; public UI suppresses hidden batches. Never store secrets in details.
+create policy "Public active batch read" on public.batch_courses for select to anon, authenticated using (true);
 create policy "Admin batch insert" on public.batch_courses for insert to authenticated with check (exists(select 1 from public.profiles p where p.id=auth.uid() and p.role in ('admin','super_admin')));
 create policy "Admin batch update" on public.batch_courses for update to authenticated using (exists(select 1 from public.profiles p where p.id=auth.uid() and p.role in ('admin','super_admin'))) with check (exists(select 1 from public.profiles p where p.id=auth.uid() and p.role in ('admin','super_admin')));
 create policy "Admin batch delete" on public.batch_courses for delete to authenticated using (exists(select 1 from public.profiles p where p.id=auth.uid() and p.role in ('admin','super_admin')));

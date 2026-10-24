@@ -1155,24 +1155,25 @@ detailsInner.appendChild(
       }
     );
 
-    // Batch-specific details are maintained in the shared batch catalog.
-    // The one-on-one experience remains unchanged.
+    // Batch cards link to dedicated pages. One-on-one remains unchanged.
     if (state.mode === "batch") {
+      const activeId = "batchCrash";
+      const target = "pte-crash-batch.html";
       elements.accordion.querySelectorAll(".course-card").forEach(card => {
-        const chosen = card.dataset.courseId === "batchCrash";
-        const target = chosen ? "batch.html?course=pte-crash" : "batch.html";
-        const action = card.querySelector(".course-admit-button");
-        if (action) {
-          action.href = target;
-          action.textContent = chosen ? "Explore Current Batch" : "Batch Full · Explore Active Batch";
+        const chosen = card.dataset.courseId === activeId;
+        const link = card.querySelector(".course-admit-button");
+        if (link) {
+          link.href = target;
+          link.textContent = chosen ? "View Course Details" : "Batch Full · Explore Active Batch";
         }
         const detail = card.querySelector(".course-detail-button");
         if (detail) {
+          detail.textContent = chosen ? "View Details" : "Batch Full · See Alternative";
           detail.addEventListener("click", event => {
+            event.preventDefault();
             event.stopImmediatePropagation();
             window.location.href = target;
           }, true);
-          detail.textContent = chosen ? "View Full Course Details" : "Batch Full · View Alternative";
         }
       });
     }

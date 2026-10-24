@@ -77,7 +77,7 @@ jobs:
       - name: Research, write and publish
         if: steps.publish_window.outputs.skip != 'true'
         env:
-          NEWS_TEST_THREE_CATEGORIES: ${{ github.event_name == 'push' || inputs.test_three_categories == true }}
+          NEWS_TEST_THREE_CATEGORIES: ${{ github.event_name == 'schedule' || inputs.test_three_categories == true }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           NEWS_AUTOMATION_SECRET: ${{ secrets.NEWS_AUTOMATION_SECRET }}
           LIZON_BASE_URL: https://www.mylizon.com

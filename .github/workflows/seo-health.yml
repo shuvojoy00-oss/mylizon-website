@@ -1,0 +1,22 @@
+name: LizOn SEO Health Monitoring
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '37 3 * * 1'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check live sitemap and metadata
+        run: python3 automation/seo-health-check.py
+      - name: Upload read-only SEO audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lizon-seo-health-report
+          path: seo-health-report.json
+          retention-days: 30

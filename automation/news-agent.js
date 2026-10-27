@@ -511,7 +511,7 @@ Do not describe a guide or exam-intelligence article as breaking news.
     const recent=existing.slice(0,50).map(p=>({title_en:p.title_en,title_bn:p.title_bn,excerpt_en:p.excerpt_en,excerpt_bn:p.excerpt_bn,body_en:htmlToText(p.body_en||"").slice(0,700),body_bn:htmlToText(p.body_bn||"").slice(0,700),category:p.category,source_url:p.source_url,published_at:p.published_at}));
     for(const category of required){
       const candidate=clean.find(c=>c.category===category);
-      if(!candidate) throw new Error("Test run missing a verified candidate for category: "+category);
+      if(!candidate){console.warn("No candidate for category:",category);continue;}
       const singlePrompt=CORE_RULES+`
 Create exactly ONE complete bilingual LizOn News article for the category "${category}" using ONLY this verified candidate and its supported facts:
 ${JSON.stringify(candidate)}
@@ -520,16 +520,22 @@ ${JSON.stringify(recent)}
 The article category MUST be "${category}". Copy source_url and source_name exactly from the candidate. Do not invent dates, policies, prices, deadlines, score rules, or facts. If the evidence supports guidance rather than a new development, label it as guide, problem-solution, or exam-intelligence, not breaking news. Do not cover a specific event or factual point already covered by any recent article, even if the headline is different. Use the recent article excerpts and bodies to avoid semantic duplicates.
 Return {"articles":[one complete article]} with all required schema fields. Write natural Bangla and clear English. Use only p,h2,h3,strong,ul,ol,li,blockquote tags in body fields. Do not include external links inside article bodies. Keep title and angle clearly distinct from the recent articles.
 `;
-      let result=await geminiWithFallback(singlePrompt,ARTICLE_SCHEMA);
-      let article=canonicalize(result.articles).find(a=>a.category===category);
-      if(!article){
-        console.warn("Retrying test article generation for category:",category);
-        result=await geminiWithFallback(singlePrompt+`
-RETRY: Return exactly one complete article. Use the supplied candidate's exact source_url and source_name. Ensure the category is exactly "${category}" and every required field is populated.
-`,ARTICLE_SCHEMA);
+      let article=null;
+      try {
+        let result=await geminiWithFallback(singlePrompt,ARTICLE_SCHEMA);
         article=canonicalize(result.articles).find(a=>a.category===category);
+        if(!article){
+          console.warn("Retrying article generation for category:",category);
+          result=await geminiWithFallback(singlePrompt+"\\nReturn one complete article with the exact source URL and required fields.",ARTICLE_SCHEMA);
+          article=canonicalize(result.articles).find(a=>a.category===category);
+        }
+      }catch(e){
+        console.error("Category generation failed; other categories will continue:",category,e.message);
       }
-      if(!article) throw new Error("Could not generate a valid test article for category: "+category);
+      if(!article){
+        console.warn("No valid article for category; next scheduled recovery will retry:",category);
+        continue;
+      }
       generated.push(article);
       console.log("Generated test article:",category,article.title_en);
     }
@@ -586,7 +592,7 @@ async function main(){
         const valid=candidates.find(c=>c && c.category===category && c.source_url && hostAllowed(c.source_url));
         if(valid) continue;
         const categorySources=corpus.filter(s=>s.category===category).map(s=>({category:s.category,source_name:s.source_name,source_url:s.source_url,text:s.text,links:s.links}));
-        if(!categorySources.length) throw new Error("No fetched official source available for test category: "+category);
+        if(!categorySources.length){console.warn("No sources for category; continuing with other categories:",category);continue;}
         const categoryPrompt=CORE_RULES+`
 Return exactly ONE research candidate and its facts for category "${category}" only, using only the supplied official source extracts. Avoid these recent articles and angles:
 ${JSON.stringify(existing.slice(0,50).map(p=>({title_en:p.title_en,title_bn:p.title_bn,excerpt_en:p.excerpt_en,excerpt_bn:p.excerpt_bn,body_en:htmlToText(p.body_en||"").slice(0,700),body_bn:htmlToText(p.body_bn||"").slice(0,700),category:p.category,source_url:p.source_url,published_at:p.published_at})))}
@@ -595,14 +601,17 @@ Official extracts:
 ${JSON.stringify(categorySources)}
 Return {"candidates":[one candidate]}.
 `;
-        const result=await geminiWithFallback(categoryPrompt,CANDIDATE_SCHEMA);
-        const candidate=(result.candidates||[]).find(x=>x && x.category===category && x.source_url && hostAllowed(x.source_url));
-        if(!candidate) throw new Error("Could not find a valid official-source research candidate for test category: "+category);
+        let candidate;
+        try{
+          const result=await geminiWithFallback(categoryPrompt,CANDIDATE_SCHEMA);
+          candidate=(result.candidates||[]).find(x=>x && x.category===category && x.source_url && hostAllowed(x.source_url));
+        }catch(e){console.warn("Candidate research failed for category:",category,e.message);}
+        if(!candidate){console.warn("No candidate for category:",category);continue;}
         candidates.push(candidate);
         console.log("Recovered missing test candidate:",category,candidate.source_url);
       }
       candidates=required.map(category=>candidates.find(x=>x && x.category===category)).filter(Boolean);
-      if(candidates.length!==required.length) throw new Error("Run requires a verified candidate for each missing category.");
+      if(candidates.length!==required.length) console.warn("Some missing categories will be retried by the next scheduled run.");
     }
     if(!candidates.length){
       console.warn("Research returned zero candidates; requesting a sourced student guidance article.");

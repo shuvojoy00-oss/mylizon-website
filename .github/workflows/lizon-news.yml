@@ -60,14 +60,14 @@ jobs:
         if: steps.publish_window.outputs.skip != 'true'
         run: |
           for i in {1..24}; do
-            code="$(curl -s -o /dev/null -w "%{http_code}" https://www.mylizon.com/api/news-ingest || true)"
-            if [ "$code" != "404" ] && [ "$code" != "000" ]; then
-              echo "News endpoint is reachable with HTTP $code"
+            code="$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 https://www.mylizon.com/api/news-health || true)"
+            if [ "$code" = "200" ]; then
+              echo "News health endpoint is healthy with HTTP $code"
               exit 0
             fi
             sleep 5
           done
-          echo "News endpoint did not become reachable"
+          echo "News health endpoint never returned HTTP 200 (database or deployment unavailable)"
           exit 1
 
       - name: Record test start time

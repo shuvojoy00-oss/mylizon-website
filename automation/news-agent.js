@@ -408,17 +408,17 @@ Return JSON only.
 async function research(existing, corpus){
   const recent = existing.slice(0,50).map(p=>({
     title_en:p.title_en,title_bn:p.title_bn,excerpt_en:p.excerpt_en,excerpt_bn:p.excerpt_bn,
-    body_en:htmlToText(p.body_en||"").slice(0,700),body_bn:htmlToText(p.body_bn||"").slice(0,700),
+    body_en:htmlToText(p.body_en||"").slice(0,220),body_bn:htmlToText(p.body_bn||"").slice(0,220),
     category:p.category,source_url:p.source_url,published_at:p.published_at
   }));
 
-  const compactCorpus = corpus.map(s=>({
+  const compactCorpus = corpus.slice(0,30).map(s=>({
     category:s.category,
     country:s.country || "",
     source_name:s.source_name,
     source_url:s.source_url,
-    text:s.text,
-    links:s.links
+    text:s.text.slice(0,2200),
+    links:s.links.slice(0,12)
   }));
 
   const prompt = CORE_RULES + `
@@ -649,7 +649,9 @@ ${JSON.stringify(retrySources)}
       if(!article.source_verified || !hostAllowed(article.source_url)){ rejected++; console.warn("Rejected article: source verification",article.title_en);continue; }
       if(existing.some(p=>similar(p.title_en||p.title_bn,article.title_en||article.title_bn)>0.82)){ rejected++; console.warn("Rejected article: duplicate title",article.title_en);continue; }
 
-      const result=await ingest(article);
+      let result;
+      try { result=await ingest(article); }
+      catch(e){rejected++;console.error("Publication endpoint rejected category:",article.category,e.message);continue;}
       if(result.duplicate){
         rejected++;
         console.log("Duplicate skipped:",article.title_en);
@@ -665,7 +667,7 @@ ${JSON.stringify(retrySources)}
       const missing=targetCategories.filter(category=>!publishedCategories.includes(category));
       if(missing.length) throw new Error("Daily category coverage incomplete. Will retry missing categories: "+missing.join(", "));
     }
-    if(!published) throw new Error("No article published for today: all candidates rejected, duplicate, or unavailable. Retry required.");
+    if(!published && !todayPublished.length) throw new Error("No article published for today: all candidates rejected, duplicate, or unavailable. Retry required.");
 
     await logRun("completed",{
       researched,

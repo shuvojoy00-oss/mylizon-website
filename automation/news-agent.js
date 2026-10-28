@@ -247,12 +247,25 @@ async function gemini(model, prompt, schema){
 }
 
 async function geminiWithFallback(prompt, schema){
-  try{
-    return await gemini(MODEL_PRIMARY,prompt,schema);
-  }catch(e){
-    console.warn("Primary Gemini model failed, trying fallback:",e.message);
-    return await gemini(MODEL_FALLBACK,prompt,schema);
+  // Independent model capacity pools prevent one overloaded model from stopping daily publication.
+  const models=[MODEL_PRIMARY,MODEL_FALLBACK,"gemini-3.5-flash-lite","gemini-3.8-flash","gemini-2.5-flash-lite","gemini-2.5-flash"];
+  const unique=[...new Set(models.filter(Boolean))];
+  const failures=[];
+  for(let i=0;i<unique.length;i++){
+    const model=unique[i];
+    try{
+      console.log("Trying Gemini model:",model);
+      return await gemini(model,prompt,schema);
+    }catch(e){
+      const message=String(e.message||e);
+      failures.push(model+": "+message.slice(0,210));
+      console.warn("Gemini model unavailable:",model,message.slice(0,350));
+      // Invalid credentials should not be hidden by a long chain of retries.
+      if(/failed (401|403):/.test(message)) throw e;
+      if(i<unique.length-1) await sleep(Math.min(30000,2000*Math.pow(2,i)));
+    }
   }
+  throw new Error("All Gemini model options failed: "+failures.join(" | "));
 }
 
 async function fetchExisting(){

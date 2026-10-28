@@ -42,23 +42,13 @@ jobs:
       - name: Check News agent syntax
         run: node --check automation/news-agent.js
 
-      - name: Check publishing window in Dhaka
-        id: publish_window
-        env:
-          EVENT_NAME: ${{ github.event_name }}
+      - name: Log Bangladesh publishing time
         run: |
-          hour="$(TZ=Asia/Dhaka date +%H)"
-          echo "Dhaka hour: $hour"
-          if [ "$EVENT_NAME" = "schedule" ] && [ "$((10#$hour))" -lt 19 ]; then
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "Delayed scheduled attempt arrived after midnight. Skipping rather than publishing for the next day."
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
+          echo "Bangladesh time: $(TZ=Asia/Dhaka date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "GitHub event: $GITHUB_EVENT_NAME"
 
       - name: Wait for production News endpoint
-        if: steps.publish_window.outputs.skip != 'true'
-        run: |
+                run: |
           for i in {1..24}; do
             code="$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 https://www.mylizon.com/api/news-health || true)"
             if [ "$code" = "200" ]; then
@@ -71,12 +61,11 @@ jobs:
           exit 1
 
       - name: Record test start time
-        if: steps.publish_window.outputs.skip != 'true' && (github.event_name == 'push' || inputs.test_three_categories == true)
+        if: (github.event_name == 'push' || inputs.test_three_categories == true)
         run: echo "NEWS_TEST_STARTED_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
 
       - name: Research, write and publish
-        if: steps.publish_window.outputs.skip != 'true'
-        env:
+                env:
           NEWS_TEST_THREE_CATEGORIES: ${{ github.event_name == 'schedule' || inputs.test_three_categories == true }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           NEWS_AUTOMATION_SECRET: ${{ secrets.NEWS_AUTOMATION_SECRET }}
@@ -87,7 +76,7 @@ jobs:
 
 
       - name: Verify Study Abroad, IELTS and PTE are all newly published
-        if: steps.publish_window.outputs.skip != 'true' && (github.event_name == 'push' || inputs.test_three_categories == true) && success()
+        if: (github.event_name == 'push' || inputs.test_three_categories == true) && success()
         run: |
           feed="$(curl --fail --silent --show-error --max-time 20 -H 'Cache-Control: no-cache' 'https://www.mylizon.com/api/content?limit=10')"
           echo "$feed"
@@ -113,7 +102,7 @@ jobs:
           '
 
       - name: Verify article is published in production
-        if: steps.publish_window.outputs.skip != 'true' && success()
+        if: success()
         run: |
           for i in {1..12}; do
             result="$(curl --fail --silent --show-error --max-time 15 -H 'Cache-Control: no-cache' https://www.mylizon.com/api/news-health || true)"

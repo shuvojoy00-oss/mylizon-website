@@ -8,11 +8,15 @@ on:
         required: false
         type: boolean
         default: false
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/lizon-news.yml"
   schedule:
     # Primary publication: 19:00 Asia/Dhaka (13:00 UTC).
     - cron: "0 13 * * *"
     # Recovery checks run off the hour to reduce scheduler congestion.
-    # The agent skips immediately once an article is published after 19:00 Dhaka.
+    # Recovery attempts check the database and retry missing articles.
     - cron: "15 13 * * *"
     - cron: "15 14 * * *"
     - cron: "15 15 * * *"
@@ -48,7 +52,7 @@ jobs:
           echo "GitHub event: $GITHUB_EVENT_NAME"
 
       - name: Wait for production News endpoint
-                run: |
+        run: |
           for i in {1..24}; do
             code="$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 https://www.mylizon.com/api/news-health || true)"
             if [ "$code" = "200" ]; then
@@ -65,7 +69,7 @@ jobs:
         run: echo "NEWS_TEST_STARTED_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
 
       - name: Research, write and publish
-                env:
+        env:
           NEWS_TEST_THREE_CATEGORIES: ${{ github.event_name == 'schedule' || inputs.test_three_categories == true }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           NEWS_AUTOMATION_SECRET: ${{ secrets.NEWS_AUTOMATION_SECRET }}

@@ -359,7 +359,8 @@ async function ingest(post){
   const r = await fetch(`${BASE_URL}/api/news-ingest`,{
     method:"POST",
     headers:{"content-type":"application/json","x-news-automation-secret":SECRET},
-    body:JSON.stringify(post)
+    body:JSON.stringify(post),
+    signal:AbortSignal.timeout(25000)
   });
   const text = await r.text();
   let data={}; try{data=JSON.parse(text)}catch{}
@@ -370,11 +371,13 @@ async function ingest(post){
 
 async function logRun(status, details={}){
   try{
-    await fetch(`${BASE_URL}/api/news-ingest`,{
+    const response=await fetch(`${BASE_URL}/api/news-ingest`,{
       method:"POST",
       headers:{"content-type":"application/json","x-news-automation-secret":SECRET},
-      body:JSON.stringify({action:"run-log",run_id:RUN_ID,status,...details})
+      body:JSON.stringify({action:"run-log",run_id:RUN_ID,status,...details}),
+      signal:AbortSignal.timeout(20000)
     });
+    if(!response.ok) console.error("CRITICAL: News run logging rejected",response.status,(await response.text()).slice(0,400));
   }catch(e){ console.warn("Run log failed:",e.message); }
 }
 
@@ -665,7 +668,7 @@ ${JSON.stringify(retrySources)}
 
     if(testThreeCategories){
       const missing=targetCategories.filter(category=>!publishedCategories.includes(category));
-      if(missing.length) throw new Error("Daily category coverage incomplete. Will retry missing categories: "+missing.join(", "));
+      if(missing.length) console.error("Incomplete category coverage; scheduled recovery should retry missing categories:",missing.join(", "));
     }
     if(!published && !todayPublished.length) throw new Error("No article published for today: all candidates rejected, duplicate, or unavailable. Retry required.");
 

@@ -19,7 +19,7 @@ for l in lessons:
   html=p.read_text(encoding="utf-8")
   for label,pat in [("title",r"<title>[^<]+</title>"),("description",r'<meta name="description" content="[^"]+'),("canonical",r'<link rel="canonical" href="'+re.escape(url)+'"'),("video",re.escape(l["videoId"])),("viewport",r'name="viewport"'),("main",r"<main(?:\s|>)"),("language",r'<html[^>]+lang='),("structured_data",r'application/ld\+json')]:
    if not re.search(pat,html,re.I):row["issues"].append("missing_"+label)
-  if l["id"]!="ielts-032" and "ob.observe(el)})();</script>" not in html:row["issues"].append("animation_js_unexpected")
+  if l["id"]!="ielts-032" and not ("ob.observe(el)})();</script>" in html or "els.forEach(el=>io.observe(el))" in html):row["issues"].append("animation_js_unexpected")
  if not row["sitemap"]:row["issues"].append("not_in_sitemap")
  results.append(row)
 issue_count=sum(bool(r["issues"]) for r in results)

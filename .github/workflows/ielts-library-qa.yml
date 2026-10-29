@@ -1,0 +1,36 @@
+name: IELTS Library Browser and Indexing QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'ielts-lesson-*.html'
+      - 'ielts-true-false-not-given.html'
+      - 'css/ielts-lesson-library.css'
+      - 'data/ielts-lessons.json'
+      - 'sitemap.xml'
+      - 'automation/ielts-*'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check all 72 local pages and sitemap
+        run: python3 automation/ielts-library-audit.py
+      - name: Prepare browser tests
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium webkit
+      - name: Test desktop, Android viewport and iPhone WebKit viewport
+        run: node automation/ielts-browser-qa.cjs
+      - name: Upload QA reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ielts-library-qa
+          path: |
+            ielts-library-source-audit.json
+            ielts-browser-qa-report.json
+          if-no-files-found: ignore

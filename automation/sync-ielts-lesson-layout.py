@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Build full, static IELTS lesson pages using the approved TFNG page shell."""
+"""Build full, static IELTS lesson pages using the approved TFNG page shell.
+
+Source-page QA now accepts the approved scroll animation observer.
+"""
 from pathlib import Path
 import html,json,re,datetime
 

@@ -1,0 +1,48 @@
+name: Knowledge Library Full Lesson Inventory
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/ielts-lessons.json'
+      - 'data/pte-lessons.json'
+      - 'sitemap.xml'
+      - 'ielts-lesson-*.html'
+      - 'pte-*.html'
+      - 'ielts-true-false-not-given.html'
+      - 'automation/knowledge-library-inventory.py'
+      - 'automation/knowledge-library-page-qa.py'
+      - '.github/workflows/knowledge-library-inventory.yml'
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build full read-only IELTS and PTE catalog report
+        run: python3 automation/knowledge-library-inventory.py
+      - name: Check report counts and published lesson quality flags
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('docs/seo/knowledge-library-full-inventory.json').read_text())
+          assert len(r['lessons']) == r['counts']['ielts_catalog'] + r['counts']['pte_catalog']
+          ids=[(x['platform'],x['id']) for x in r['lessons']]
+          assert len(ids)==len(set(ids)), 'Duplicate lesson ID'
+          assert all(x.get('title') for x in r['lessons']), 'Missing title'
+          print('Inventory validated:',len(ids),'lesson entries')
+          print('Published PTE lessons:',r['counts']['pte_published_in_repo'])
+          print('This is not a content-quality approval or live API verification.')
+          PY
+      - name: Validate page metadata, lesson links and original examples
+        run: python3 automation/knowledge-library-page-qa.py
+      - name: Save complete JSON inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: lizon-knowledge-library-inventory
+          path: |
+            docs/seo/knowledge-library-full-inventory.json
+            docs/seo/knowledge-library-page-qa.json
+          if-no-files-found: error

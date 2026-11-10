@@ -18,15 +18,18 @@ class Scan(HTMLParser):
 def slug(t):return re.sub(r"(^-+|-+$)","",re.sub(r"[^a-z0-9]+","-",t.lower()))
 def ielts_page(l):
     return "ielts-true-false-not-given.html" if l["id"]=="ielts-032" else "ielts-lesson-"+l["id"][-3:]+"-"+slug(l["title"])+".html"
-PTE_PAGES={
-    "speaking-3":"pte-repeat-sentence.html",
+PTE_ALIASES={
     "speaking-2":"pte-describe-image.html",
     "speaking-5":"pte-summarize-group-discussion.html",
     "speaking-6":"pte-respond-to-a-situation.html",
     "reading-5":"pte-reading-reorder-paragraphs.html",
     "reading-1":"pte-reading-fill-in-blanks.html",
 }
-PAGE_SET={ielts_page(l) for l in IELTS}|set(PTE_PAGES.values())|{"ielts-matching-headings.html"}
+def pte_page(l):
+    return PTE_ALIASES.get(l["id"]) or "pte-lesson-"+l["id"]+"-"+slug(l["title"])+".html"
+PUBLISHED_PTE=[l for l in PTE if l.get("status")=="published"]
+PAGE_SET={ielts_page(l) for l in IELTS}|{pte_page(l) for l in PUBLISHED_PTE}|{"ielts-matching-headings.html","pte-question-types.html"}
+SITEMAP=(ROOT/"sitemap.xml").read_text(encoding="utf-8")
 report={"checks":[],"warnings":[],"errors":[]}
 for name in sorted(PAGE_SET):
     p=ROOT/name
@@ -46,6 +49,14 @@ for name in sorted(PAGE_SET):
         if lesson and lesson.get("videoId") not in content:report["errors"].append(name+": video id differs from catalog")
         if lesson and "data-ielts-notes-id=\""+lesson["id"]+"\"" not in content:
             report["errors"].append(name+": live notes widget missing or mismatched")
+    pte_lesson=next((l for l in PUBLISHED_PTE if pte_page(l)==name),None)
+    if pte_lesson:
+        expected_link="/pteclass.html?lesson="+pte_lesson["id"]
+        if expected_link not in content:report["errors"].append(name+": incorrect PTE classroom link")
+        if pte_lesson.get("videoId") and pte_lesson["videoId"] not in content and name.startswith("pte-lesson-"):
+            report["errors"].append(name+": expected PTE lesson video ID absent")
+    if name.startswith("pte-lesson-") and BASE+name not in SITEMAP:
+        report["errors"].append(name+": PTE guide missing from sitemap")
     for tag,a in scan.attrs:
         if tag=="a":
             href=a.get("href","")
@@ -55,7 +66,7 @@ for name in sorted(PAGE_SET):
                     report["warnings"].append(name+": target missing locally: "+target)
     if '<section class="lizon-original-worked"' in content:
         if not re.search(r"original (teaching|practice) (example|scenario)",content,re.I):report["warnings"].append(name+": original example label not found")
-        if "Show the reasoning" not in content and "Show the explanation" not in content:
+        if "<summary" not in content:
             report["warnings"].append(name+": missing explanation toggle")
     if '<section class="lizon-specific-example"' in content:
         if "Original practice example" not in content:report["errors"].append(name+": unlabelled example")

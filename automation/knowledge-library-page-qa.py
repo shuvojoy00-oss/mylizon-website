@@ -54,7 +54,7 @@ for name in sorted(PAGE_SET):
                 if target and target.endswith(".html") and not (ROOT/target).exists():
                     report["warnings"].append(name+": target missing locally: "+target)
     if '<section class="lizon-original-worked"' in content:
-        if "Original practice" not in content:report["warnings"].append(name+": original example label not found")
+        if not re.search(r"original (teaching|practice) (example|scenario)",content,re.I):report["warnings"].append(name+": original example label not found")
         if "Show the reasoning" not in content and "Show the explanation" not in content:
             report["warnings"].append(name+": missing explanation toggle")
     if '<section class="lizon-specific-example"' in content:

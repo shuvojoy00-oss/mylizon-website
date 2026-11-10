@@ -1,0 +1,31 @@
+name: PTE Knowledge Library Browser QA
+on:
+  pull_request:
+    paths:
+      - 'pte-lesson-*.html'
+      - 'pte-*.html'
+      - 'css/knowledge-library-pte.css'
+      - 'data/pte-lessons.json'
+      - 'automation/pte-library-browser-qa.cjs'
+      - '.github/workflows/pte-library-browser-qa.yml'
+permissions:
+  contents: read
+jobs:
+  pte-browser-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browsers
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium webkit
+      - name: Test all 26 published lessons on desktop, Android and iPhone
+        run: node automation/pte-library-browser-qa.cjs
+      - name: Save browser QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pte-knowledge-library-browser-qa
+          path: pte-library-browser-qa-report.json
+          if-no-files-found: ignore

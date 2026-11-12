@@ -714,6 +714,50 @@ function initInternalLinks() {
 }
 
 
+/* ==========================================================
+   PRACTICE PORTAL — SHARED SITE NAVIGATION
+========================================================== */
+
+function initPracticePortalNavigation() {
+  const url = "https://www.lizoneducation.com.bd/";
+  const makeLink = (className) => {
+    const link = document.createElement("a");
+    link.className = className;
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Practice Portal";
+    return link;
+  };
+
+  const desktop = document.querySelector(".desktop-nav");
+  if (desktop && !desktop.querySelector('a[href="https://www.lizoneducation.com.bd/"]')) {
+    const link = makeLink("desktop-nav__link");
+    const results = [...desktop.querySelectorAll("a.desktop-nav__link")]
+      .find(a => a.textContent.trim() === "Results");
+    if (results) desktop.insertBefore(link, results);
+    else desktop.appendChild(link);
+  }
+
+  const mobile = document.querySelector(".mobile-nav");
+  if (mobile && !mobile.querySelector('a[href="https://www.lizoneducation.com.bd/"]')) {
+    const link = makeLink("mobile-nav__main");
+    const results = [...mobile.querySelectorAll("a.mobile-nav__main")]
+      .find(a => a.textContent.trim() === "Results");
+    if (results) mobile.insertBefore(link, results);
+    else mobile.appendChild(link);
+  }
+
+  document.querySelectorAll(".footer-nav").forEach(footer => {
+    const learn = [...footer.querySelectorAll(".footer-group")]
+      .find(group => group.querySelector("summary")?.textContent.trim().startsWith("Learn"));
+    const links = learn?.querySelector("div");
+    if (links && !links.querySelector('a[href="https://www.lizoneducation.com.bd/"]')) {
+      links.appendChild(makeLink(""));
+    }
+  });
+}
+
 function initNewsNavigation() {
   const desktop = document.querySelector(".desktop-nav");
   if (desktop) {
@@ -774,6 +818,7 @@ function initNewsNavigation() {
 function init() {
   initHeader();
   initNewsNavigation();
+  initPracticePortalNavigation();
   initDropdowns();
   initMobileMenu();
   initRevealAnimations();

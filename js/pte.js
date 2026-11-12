@@ -1155,6 +1155,47 @@ detailsInner.appendChild(
       }
     );
 
+    if (!document.getElementById("lizon-full-batch-style")) {
+      const style = document.createElement("style");
+      style.id = "lizon-full-batch-style";
+      style.textContent = ".batch-unavailable{border-color:#e5b2b2!important}.batch-full-notice{margin:12px 20px 18px;padding:13px 16px;border-radius:10px;background:#fff0f0;color:#9c2626;border:1px solid #f1c6c6;font-weight:700;line-height:1.5}";
+      document.head.appendChild(style);
+    }
+    // Only the active batch links to its own page. Full batches retain original details.
+    if (state.mode === "batch") {
+      elements.accordion.querySelectorAll(".course-card").forEach(card => {
+        const isActive = card.dataset.courseId === "batchCrash";
+        const link = card.querySelector(".course-admit-button");
+        const detail = card.querySelector(".course-detail-button");
+        if (isActive) {
+          if (link) { link.href = "pte-crash-batch.html"; link.textContent = "View Full Course"; }
+          if (detail) {
+            detail.addEventListener("click", event => {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+              window.location.href = "pte-crash-batch.html";
+            }, true);
+          }
+        } else {
+          card.classList.add("batch-unavailable");
+          const notice = document.createElement("p");
+          notice.className = "batch-full-notice";
+          notice.textContent = "This batch is full. No new admissions are available at the moment.";
+          card.querySelector(".course-card__actions")?.after(notice);
+          if (link) {
+            link.href = "https://wa.me/8801939029000?text=" + encodeURIComponent("Hello LizOn, I would like to ask about the next PTE " + (card.querySelector(".course-card__name")?.textContent || "") + " batch.");
+            link.textContent = "Ask about next batch";
+          }
+          const bottom = card.querySelector(".course-detail-footer .course-admit-button");
+          if (bottom) {
+            bottom.href = link?.href || "#";
+            bottom.textContent = "Ask about next batch";
+          }
+          // Keep the original expand/collapse handler and its course-specific details.
+        }
+      });
+    }
+
   }
 
 
